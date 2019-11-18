@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         class PublicKeyActionJob : KeyActionJobBase
         {
             public PublicKeyActionJob()
-                : base(new KeyActionCommonData(), new[] { new KeyMappingData() })
+                : base(new KeyActionCommonData(Guid.NewGuid(), KeyActionKind.Replace), new[] { new KeyMappingData() })
             { }
 
             public bool PublicTestMapping(IReadOnlyKeyMappingData mapping, bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
@@ -196,11 +196,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         [TestMethod]
         public void Constructor_Test()
         {
-            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(), new KeyMappingData()));
-            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData() { ReplaceKey = Key.A }, new KeyMappingData() { Key = Key.A }));
-            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(), new KeyMappingData()));
-            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData() { ReplaceKey = Key.A }, new KeyMappingData() { Key = Key.A }));
-            new KeyActionReplaceJob(new KeyActionReplaceData() { ReplaceKey = Key.B }, new KeyMappingData() { Key = Key.A });
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(Guid.NewGuid(), Key.None), new KeyMappingData()));
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(Guid.NewGuid(), Key.A), new KeyMappingData() { Key = Key.A }));
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(Guid.NewGuid(), Key.None), new KeyMappingData()));
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionReplaceJob(new KeyActionReplaceData(Guid.NewGuid(), Key.A), new KeyMappingData() { Key = Key.A }));
+            new KeyActionReplaceJob(new KeyActionReplaceData(new Guid(), Key.B), new KeyMappingData() { Key = Key.A });
             Assert.IsTrue(true);
         }
 
@@ -215,27 +215,27 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         [TestMethod]
         public void Constructor_Test()
         {
-            Assert.ThrowsException<ArgumentException>(() => new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData()));
-            Assert.ThrowsException<ArgumentException>(() => new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { }));
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Shift = ModifierKey.Left });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Shift = ModifierKey.Right });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Shift = ModifierKey.Any });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Control = ModifierKey.All });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Control = ModifierKey.Left });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Control = ModifierKey.Right });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Control = ModifierKey.Any });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Control = ModifierKey.All });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Alt = ModifierKey.All });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Alt = ModifierKey.Left });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Alt = ModifierKey.Right });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Alt = ModifierKey.Any });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Alt = ModifierKey.All });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Super = ModifierKey.All });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Super = ModifierKey.Left });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Super = ModifierKey.Right });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Super = ModifierKey.Any });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Super = ModifierKey.All });
-            new KeyActionDisableJob(new KeyActionDisableData(), new KeyMappingData() { Key = Key.A });
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData()));
+            Assert.ThrowsException<ArgumentException>(() => new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { }));
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Shift = ModifierKey.Left });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Shift = ModifierKey.Right });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Shift = ModifierKey.Any });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Control = ModifierKey.All });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Control = ModifierKey.Left });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Control = ModifierKey.Right });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Control = ModifierKey.Any });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Control = ModifierKey.All });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Alt = ModifierKey.All });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Alt = ModifierKey.Left });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Alt = ModifierKey.Right });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Alt = ModifierKey.Any });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Alt = ModifierKey.All });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Super = ModifierKey.All });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Super = ModifierKey.Left });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Super = ModifierKey.Right });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Super = ModifierKey.Any });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Super = ModifierKey.All });
+            new KeyActionDisableJob(new KeyActionDisableData(Guid.NewGuid(), false), new KeyMappingData() { Key = Key.A });
             Assert.IsTrue(true);
         }
 
@@ -245,6 +245,16 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
     [TestClass]
     public class KeyActionPressJobTest
     {
+        #region define
+
+        class KeyActionPressedData : KeyActionPressedDataBase
+        {
+            public KeyActionPressedData()
+                : base(Guid.NewGuid(), KeyActionKind.Replace)
+            { }
+        }
+
+        #endregion
         #region function
 
         [TestMethod]

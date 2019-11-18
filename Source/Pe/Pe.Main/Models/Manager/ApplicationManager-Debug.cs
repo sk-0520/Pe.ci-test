@@ -117,50 +117,32 @@ echo end
             dbgKeyActionAssistant.SelfJobInputId = dbgKeyActionChecker.SelfJobInputId;
 
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData() {
-                    KeyActionId = Guid.NewGuid(),
-                    KeyActionKind = KeyActionKind.Disable,
-                },
+                new KeyActionDisableData(Guid.NewGuid(), false),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.X,
                 }
             ));
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData() {
-                    KeyActionId = Guid.NewGuid(),
-                    KeyActionKind = KeyActionKind.Disable,
-                    StopEnable = true,
-                },
+                new KeyActionDisableData(Guid.NewGuid(), false),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.L,
                 }
             ));
             dbgKeyActionChecker.DisableJobs.Add(new KeyActionDisableJob(
-                new KeyActionDisableData() {
-                    KeyActionId = Guid.NewGuid(),
-                    KeyActionKind = KeyActionKind.Disable,
-                },
+                new KeyActionDisableData(Guid.NewGuid(), false),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.E,
                     Super = ModifierKey.Any,
                 }
             ));
             dbgKeyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
-                new KeyActionReplaceData() {
-                    KeyActionId = Guid.NewGuid(),
-                    KeyActionKind = KeyActionKind.Replace,
-                    ReplaceKey = System.Windows.Input.Key.LeftShift,
-                },
+                new KeyActionReplaceData(Guid.NewGuid(), Key.LeftShift),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.LeftCtrl,
                 }
             ));
             dbgKeyActionChecker.ReplaceJobs.Add(new KeyActionReplaceJob(
-                new KeyActionReplaceData() {
-                    KeyActionId = Guid.NewGuid(),
-                    KeyActionKind = KeyActionKind.Replace,
-                    ReplaceKey = System.Windows.Input.Key.X,
-                },
+                new KeyActionReplaceData(Guid.NewGuid(), Key.X),
                 new KeyMappingData() {
                     Key = System.Windows.Input.Key.RightShift,
                 }

@@ -97,11 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 }
                 var keyConverter = new KeyConverter();
                 var item = items[0];
-                var data = new KeyActionReplaceData() {
-                    KeyActionId = item.KeyActionId,
-                    KeyActionKind = item.KeyActionKind,
-                    ReplaceKey = (Key)keyConverter.ConvertFromInvariantString(item.KeyActionContent),
-                };
+                var data = new KeyActionReplaceData(item.KeyActionId, (Key)keyConverter.ConvertFromInvariantString(item.KeyActionContent));
                 var mapping = ConvertKeyMapping(item);
 
                 return new KeyActionReplaceJob(data, mapping);
@@ -115,13 +111,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 if(1 < items.Count) {
                     Logger.LogWarning("入力無効処理に不要な設定項目あり: {0}", id);
                 }
-                var keyConverter = new KeyConverter();
                 var item = items[0];
-                var data = new KeyActionDisableData() {
-                    KeyActionId = item.KeyActionId,
-                    KeyActionKind = item.KeyActionKind,
-                    StopEnable = Convert.ToBoolean(item.KeyActionContent),
-                };
+                var data = new KeyActionDisableData(item.KeyActionId, Convert.ToBoolean(item.KeyActionOption));
                 var mapping = ConvertKeyMapping(item);
 
                 return new KeyActionDisableJob(data, mapping);
@@ -130,7 +121,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         KeyActionLauncherItemJob CreateLauncherItemJob(IReadOnlyList<KeyActionData> items)
         {
-            throw new Exception();
+            var keyActionContentLauncherItemTransfer = new EnumTransfer<KeyActionContentLauncherItem>();
+
+            var item = items[0];
+            var data = new KeyActionLauncherItemData(item.KeyActionId, keyActionContentLauncherItemTransfer.ToEnum(item.KeyActionContent), Guid.Parse(item.KeyActionOption));
+            var mapping = items.Select(i => ConvertKeyMapping(i));
+            return new KeyActionLauncherItemJob(data, mapping);
         }
 
         public IEnumerable<KeyActionPressedJobBase> CreatePressedJobs()

@@ -116,105 +116,91 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         All,
     }
 
-    public interface IReadOnlyKeyActionCommonData
+    public class KeyActionCommonData : DataBase
     {
+        public KeyActionCommonData(Guid keyActionId, KeyActionKind keyActionKind)
+        {
+            KeyActionId = keyActionId;
+            KeyActionKind = keyActionKind;
+        }
+
         #region property
 
-        Guid KeyActionId { get; }
-        KeyActionKind KeyActionKind { get; }
+        public Guid KeyActionId { get; }
+        public KeyActionKind KeyActionKind { get; }
 
         #endregion
     }
 
-    public class KeyActionCommonData : DataBase, IReadOnlyKeyActionCommonData
+    public class KeyActionReplaceData : KeyActionCommonData
     {
-        #region IReadOnlyKeyActionCommonData
+        public KeyActionReplaceData(Guid keyActionId, Key replaceKey)
+            : base(keyActionId, KeyActionKind.Replace)
+        {
+            ReplaceKey = replaceKey;
+        }
 
-        public Guid KeyActionId { get; set; }
-        public KeyActionKind KeyActionKind { get; set; }
-
-        #endregion
-    }
-
-    public interface IReadOnlyKeyActionReplaceData : IReadOnlyKeyActionCommonData
-    {
         #region property
 
         /// <summary>
         /// 置き換えキー。
         /// NOTE: IReadOnlyKeyMappingData にするか悩んだけどいいだろもう
         /// </summary>
-        Key ReplaceKey { get; }
+        public Key ReplaceKey { get; }
 
         #endregion
     }
 
-    public class KeyActionReplaceData : KeyActionCommonData, IReadOnlyKeyActionReplaceData
+    public class KeyActionDisableData : KeyActionCommonData
     {
-        #region IReadOnlyKeyActionReplaceData
+        public KeyActionDisableData(Guid keyActionId, bool stopEnable)
+            : base(keyActionId, KeyActionKind.Disable)
+        {
+            StopEnable = stopEnable;
+        }
 
-        /// <summary>
-        /// <see cref="IReadOnlyKeyActionReplaceData.ReplaceKey"/>
-        /// </summary>
-        public Key ReplaceKey { get; set; }
-
-        #endregion
-    }
-
-    public interface IReadOnlyKeyActionDisableData : IReadOnlyKeyActionCommonData
-    {
         #region property
 
         /// <summary>
         /// 完全に無視するか。
         /// </summary>
-        bool StopEnable { get; }
+        public bool StopEnable { get; set; }
 
         #endregion
     }
 
-    public class KeyActionDisableData : KeyActionCommonData, IReadOnlyKeyActionDisableData
+    public abstract class KeyActionPressedDataBase : KeyActionCommonData
     {
-        #region IReadOnlyKeyActionDisableData
-
-        public bool StopEnable {get;set;}
-
-        #endregion
+        public KeyActionPressedDataBase(Guid keyActionId, KeyActionKind keyActionKind)
+            : base(keyActionId, keyActionKind)
+        { }
     }
 
-    public interface IReadOnlyKeyActionPressedData : IReadOnlyKeyActionCommonData
-    { }
-
-    public class KeyActionPressedData : KeyActionCommonData, IReadOnlyKeyActionPressedData
-    { }
-
-    public interface IReadOnlyKeyActionLauncherItemData : IReadOnlyKeyActionPressedData
+    public class KeyActionLauncherItemData : KeyActionPressedDataBase
     {
+        public KeyActionLauncherItemData(Guid keyActionId, KeyActionContentLauncherItem launcherItemKind, Guid launcherItemId)
+            : base(keyActionId, KeyActionKind.LauncherItem)
+        {
+            LauncherItemKind = launcherItemKind;
+            LauncherItemId = launcherItemId;
+        }
+
         #region property
 
-        KeyActionContentLauncherItem LauncherItemKind { get; }
+        public KeyActionContentLauncherItem LauncherItemKind { get; }
+        public Guid LauncherItemId { get; }
 
         #endregion
     }
 
-    public class KeyActionLauncherItemData : KeyActionPressedData, IReadOnlyKeyActionLauncherItemData
+    public class KeyActionLauncherToolbarData : KeyActionPressedDataBase
     {
-        #region IReadOnlyKeyActionLauncherItemData
+        public KeyActionLauncherToolbarData(Guid keyActionId)
+            : base(keyActionId, KeyActionKind.LauncherToolbar)
+        {
+        }
 
-        public KeyActionContentLauncherItem LauncherItemKind { get; set; }
-
-        #endregion
-    }
-
-    public interface IReadOnlyKeyActionLauncherToolbarData : IReadOnlyKeyActionPressedData
-    {
         #region property
-        #endregion
-    }
-
-    public class KeyActionLauncherToolbarData : KeyActionPressedData, IReadOnlyKeyActionLauncherToolbarData
-    {
-        #region IReadOnlyKeyActionLauncherToolbarData
         #endregion
     }
 
@@ -245,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class KeyActionData: DataBase
+    public class KeyActionData : DataBase
     {
         #region property
 

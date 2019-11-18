@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
     public abstract class KeyActionJobBase
     {
-        public KeyActionJobBase(IReadOnlyKeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        public KeyActionJobBase(KeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingData> mappings)
         {
             CommonData = commonData;
             Mappings = mappings.ToList();
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region property
 
-        public IReadOnlyKeyActionCommonData CommonData { get; }
+        public KeyActionCommonData CommonData { get; }
         protected IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
 
         #endregion
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     }
 
     public abstract class KeyActionJobBase<TActionData> : KeyActionJobBase
-        where TActionData : IReadOnlyKeyActionCommonData
+        where TActionData : KeyActionCommonData
     {
         public KeyActionJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
@@ -83,9 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class KeyActionReplaceJob : KeyActionJobBase<IReadOnlyKeyActionReplaceData>
+    public sealed class KeyActionReplaceJob : KeyActionJobBase<KeyActionReplaceData>
     {
-        public KeyActionReplaceJob(IReadOnlyKeyActionReplaceData actionData, IReadOnlyKeyMappingData mapping)
+        public KeyActionReplaceJob(KeyActionReplaceData actionData, IReadOnlyKeyMappingData mapping)
             : base(actionData, new[] { mapping })
         {
             if(ActionData.ReplaceKey == System.Windows.Input.Key.None) {
@@ -136,9 +136,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public sealed class KeyActionDisableJob : KeyActionJobBase<IReadOnlyKeyActionDisableData>
+    public sealed class KeyActionDisableJob : KeyActionJobBase<KeyActionDisableData>
     {
-        public KeyActionDisableJob(IReadOnlyKeyActionDisableData actionData, IReadOnlyKeyMappingData mapping)
+        public KeyActionDisableJob(KeyActionDisableData actionData, IReadOnlyKeyMappingData mapping)
             : base(actionData, new[] { mapping })
         {
             if(mapping.Key == System.Windows.Input.Key.None) {
@@ -191,9 +191,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public abstract class KeyActionPressedJobBase: KeyActionJobBase<IReadOnlyKeyActionPressedData>
+    public abstract class KeyActionPressedJobBase: KeyActionJobBase<KeyActionPressedDataBase>
     {
-        public KeyActionPressedJobBase(IReadOnlyKeyActionPressedData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        public KeyActionPressedJobBase(KeyActionPressedDataBase actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
             if(Mappings.Count == 0) {
@@ -274,7 +274,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     }
 
     public abstract class KeyActionPressedJobBase<TActionData> : KeyActionPressedJobBase
-        where TActionData : IReadOnlyKeyActionPressedData
+        where TActionData : KeyActionPressedDataBase
     {
         public KeyActionPressedJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
@@ -300,16 +300,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
     }
 
-    public sealed class KeyActionPressJob : KeyActionPressedJobBase<IReadOnlyKeyActionPressedData>
+    public sealed class KeyActionPressJob : KeyActionPressedJobBase<KeyActionPressedDataBase>
     {
-        public KeyActionPressJob(IReadOnlyKeyActionPressedData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        public KeyActionPressJob(KeyActionPressedDataBase actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         { }
     }
 
-    public sealed class KeyActionLauncherItemJob : KeyActionPressedJobBase<IReadOnlyKeyActionLauncherItemData>
+    public sealed class KeyActionLauncherItemJob : KeyActionPressedJobBase<KeyActionLauncherItemData>
     {
-        public KeyActionLauncherItemJob(IReadOnlyKeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        public KeyActionLauncherItemJob(KeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
         }
