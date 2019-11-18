@@ -161,8 +161,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void OpenExtendsExecuteView(Screen screen)
         {
-            var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
-            element.StartView();
+            DispatcherWapper.Begin(() => {
+                var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
+                element.StartView();
+            });
         }
 
         public void OpenExtendsExecuteViewWidthArgument(string argument, Screen screen)

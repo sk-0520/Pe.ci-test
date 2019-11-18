@@ -97,6 +97,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MouseHooker.Unregister();
         }
 
+        void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
+        {
+            switch(job) {
+                case KeyActionLauncherItemJob launcherItemJob:
+                    Logger.LogInformation("キーからの起動: アイテム = {0}, キー = {1}", launcherItemJob.PressedData.LauncherItemId, launcherItemJob.CommonData.KeyActionId);
+
+                    NativeMethods.GetCursorPos(out var podPoint);
+                    var deviceCursorLocation = PodStructUtility.Convert(podPoint);
+                    var screen = Screen.FromDevicePoint(deviceCursorLocation);
+                    var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
+                    switch(launcherItemJob.PressedData.LauncherItemKind) {
+                        case KeyActionContentLauncherItem.Execute:
+                            element.Execute(screen);
+                            break;
+                        case KeyActionContentLauncherItem.ExtendsExecute:
+                            element.OpenExtendsExecuteView(screen);
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         Task ExecuteKeyDownJobsAsync(IReadOnlyCollection<KeyActionJobBase> jobs, in ModifierKeyStatus modifierKeyStatus)
         {
             var localModifierKeyStatus = modifierKeyStatus;
@@ -110,36 +137,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             break;
 
                         case KeyActionKind.Disable:
-                            break;
-
-
-                        case KeyActionKind.LauncherItem: {
-                                var launcherItemJob = (KeyActionLauncherItemJob)job;
-                                if(!launcherItemJob.IsAllHit) {
-                                    Logger.LogTrace("待機中: {0}", job.CommonData.KeyActionId);
-                                    break;
-                                }
-                                Logger.LogInformation("キーからの起動: アイテム = {0}, キー = {1}", launcherItemJob.PressedData.LauncherItemId, launcherItemJob.CommonData.KeyActionId);
-
-                                NativeMethods.GetCursorPos(out var podPoint);
-                                var deviceCursorLocation = PodStructUtility.Convert(podPoint);
-                                var screen = Screen.FromDevicePoint(deviceCursorLocation);
-                                var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
-                                switch(launcherItemJob.PressedData.LauncherItemKind) {
-                                    case KeyActionContentLauncherItem.Execute:
-                                        element.Execute(screen);
-                                        break;
-                                    case KeyActionContentLauncherItem.ExtendsExecute:
-                                        element.OpenExtendsExecuteView(screen);
-                                        break;
-                                    default:
-                                        throw new NotImplementedException();
-                                }
-                            }
+                            // なんもしないです。。。
                             break;
 
                         default:
-                            throw new NotImplementedException();
+                            if(job is KeyActionPressedJobBase pressedJob) {
+                                if(!pressedJob.IsAllHit) {
+                                    Logger.LogTrace("待機中: {0}", job.CommonData.KeyActionId);
+                                    break;
+                                }
+                                pressedJob.Reset();
+                                ExecuteKeyPressedJob(pressedJob);
+                                break;
+                            } else {
+                                throw new NotImplementedException();
+                            }
                     }
                 }
             });
