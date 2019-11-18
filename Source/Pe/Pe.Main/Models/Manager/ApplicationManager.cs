@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         public ApplicationManager(ApplicationInitializer initializer)
         {
-            LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) +"."+nameof(initializer.LoggerFactory));
+            LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.LoggerFactory));
             Logger = LoggerFactory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
@@ -372,6 +372,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             StopHook();
 
+            Logger.LogDebug("遅延書き込み処理停止");
+            var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
+            var lazyWriterItemMap = new Dictionary<IDatabaseLazyWriter, IDisposable>();
+            foreach(var lazyWriter in lazyWriterPack.Items) {
+                lazyWriter.Flush();
+                var pausing = lazyWriter.Pause();
+                lazyWriterItemMap.Add(lazyWriter, pausing);
+            }
+
             bool isSubmit;
             using(var container = ApplicationDiContainer.Scope()) {
                 container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
@@ -394,6 +403,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
                 StartHook();
+            }
+
+            Logger.LogDebug("遅延書き込み処理再開");
+            foreach(var pair in lazyWriterItemMap) {
+                pair.Value.Dispose();
             }
         }
 
