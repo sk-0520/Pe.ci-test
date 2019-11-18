@@ -232,7 +232,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     var keyEvent = isDown ? KeyDown : KeyUp;
                     Stopwatch? stopwatch = null;
                     if(keyEvent != null) {
-                        if(Logger.IsEnabled(LogLevel.Trace)) {
+                        var logging = Logger.IsEnabled(LogLevel.Trace) || Logger.IsEnabled(LogLevel.Warning);
+                        if(logging) {
                             stopwatch = new Stopwatch();
                             stopwatch.Start();
                             Logger.LogTrace("キーボード {0} フック 実装部 開始", isUp ? nameof(KeyDown) : nameof(KeyUp));
@@ -246,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                             return new IntPtr(1);
                         }
 
-                        if(Logger.IsEnabled(LogLevel.Trace)) {
+                        if(logging) {
                             Debug.Assert(stopwatch != null);
                             stopwatch.Stop();
                             if(TimeSpan.FromMilliseconds(300) < stopwatch.Elapsed) {
