@@ -438,9 +438,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen)
+        public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, Screen screen)
         {
-            return OrderManager.CreateCustomizeLauncherItemElement(launcherItemId, iconElement, screen);
+            return OrderManager.CreateCustomizeLauncherItemElement(launcherItemId, screen);
         }
 
         public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)

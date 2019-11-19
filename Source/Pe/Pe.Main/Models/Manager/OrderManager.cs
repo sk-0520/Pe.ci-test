@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
-        LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen);
+        LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, Screen screen);
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen);
 
@@ -132,9 +132,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
             }
 
-            public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen)
+            public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, Screen screen)
             {
-                var customizeLauncherItemElement = DiContainer.Build<LauncherItemCustomizeElement>(launcherItemId, iconElement, screen);
+                var customizeLauncherItemElement = DiContainer.Build<LauncherItemCustomizeElement>(launcherItemId, screen);
                 customizeLauncherItemElement.Initialize();
                 return customizeLauncherItemElement;
             }
