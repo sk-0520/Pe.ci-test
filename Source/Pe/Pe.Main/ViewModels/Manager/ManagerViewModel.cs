@@ -71,6 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         }
 
+
         #endregion
 
         #region command

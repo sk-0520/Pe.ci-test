@@ -371,6 +371,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public void OpenSettingView()
         {
             StopHook();
+            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
             Logger.LogDebug("遅延書き込み処理停止");
             var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
@@ -412,6 +413,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     pair.Key.ClearStock();
                 }
                 pair.Value.Dispose();
+            }
+
+            if(changing.Success) {
+                changing.SuccessValue?.Dispose();
             }
         }
 
