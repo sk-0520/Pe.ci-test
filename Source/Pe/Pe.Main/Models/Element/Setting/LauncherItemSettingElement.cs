@@ -44,6 +44,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #endregion
 
+        #region function
+
+        public void RemoveItem(Guid launcherItemId)
+        {
+            var item = CustomizeItems.First(i => i.LauncherItemId == launcherItemId);
+            CustomizeItems.Remove(item);
+            LauncherItemIds.Remove(item.LauncherItemId);
+            item.Dispose();
+        }
+
+        #endregion
+
         #region ElementBase
 
         protected override void InitializeImpl()

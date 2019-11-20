@@ -43,6 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         IDispatcherWapper DispatcherWapper { get; }
         public bool IsSubmit { get; private set; }
 
+        /// <summary>
+        /// 設定開始時に存在するランチャーアイテムID
+        /// </summary>
+        ISet<Guid> InitialLauncherItemIds { get; } = new HashSet<Guid>();
         public ObservableCollection<Guid> LauncherItemIds { get; } = new ObservableCollection<Guid>();
         public ObservableCollection<LauncherIconElement> LauncherIconElements { get; } = new ObservableCollection<LauncherIconElement>();
 
@@ -63,6 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 LauncherItemIds.SetRange(launcherItemsEntityDao.SelectAllLauncherItemIds());
             }
+            InitialLauncherItemIds.SetRange(LauncherItemIds);
 
             // アイコン自体は設定中でも書き込み・不明アイコン追加OK
             foreach(var launcherItemId in LauncherItemIds) {

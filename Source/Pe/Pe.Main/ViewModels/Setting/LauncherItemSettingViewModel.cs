@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -27,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             CustomizeItems = CustomizeCollection.GetCollectionView();
         }
 
-        #region function
+        #region property
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemCustomizeElement, LauncherItemCustomizeViewModel> CustomizeCollection { get; }
         public ICollectionView CustomizeItems { get; }
@@ -41,6 +43,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        #endregion
+
+        #region command
+
+        public ICommand AddItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                // 登録するアイテム種別を選択
+            }
+        ));
+        public ICommand RemoveSelectedItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                if(SelectedCustomizeItem == null) {
+                    return;
+                }
+                Model.RemoveItem(SelectedCustomizeItem.LauncherItemId);
+                SelectedCustomizeItem = null;
+            }
+        ));
+        #endregion
+
+        #region function
         #endregion
     }
 }

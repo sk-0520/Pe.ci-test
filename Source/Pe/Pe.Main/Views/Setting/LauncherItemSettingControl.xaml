@@ -32,8 +32,8 @@
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Content="+" />
-        <Button Grid.Column="1" Content="-" />
+        <Button Grid.Column="0" Content="+" Command="{Binding Item.AddItemCommand, ElementName=root}" />
+        <Button Grid.Column="1" Content="-" Command="{Binding Item.RemoveSelectedItemCommand, ElementName=root}" />
         <TextBox Grid.Column="2" />
       </Grid>
 
