@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -11,10 +12,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public class SettingViewModel : SingleModelViewModelBase<SettingElement>, IViewLifecycleReceiver
     {
-        public SettingViewModel(SettingElement model, ILoggerFactory loggerFactory)
+        public SettingViewModel(SettingElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            LauncherItemSetting = new LauncherItemSettingViewModel(Model.LauncherItemSetting, LoggerFactory);
+            LauncherItemSetting = new LauncherItemSettingViewModel(Model.LauncherItemSetting, dispatcherWapper, LoggerFactory);
         }
 
         #region property

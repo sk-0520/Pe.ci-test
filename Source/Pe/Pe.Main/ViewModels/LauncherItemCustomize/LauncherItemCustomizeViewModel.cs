@@ -15,6 +15,8 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -26,13 +28,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeViewModel(LauncherItemCustomizeElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            Icon = new LauncherIconViewModel(model.Icon, dispatcherWapper, loggerFactory);
+        }
 
         #region property
 
         public RequestSender CloseRequest { get; } = new RequestSender();
+
+        public LauncherIconViewModel Icon { get; }
 
         public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems
         {
@@ -49,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             }
         }
 
+        public LauncherItemCustomizeCommonViewModel Common => (LauncherItemCustomizeCommonViewModel)CustomizeItems.Find(i => i is LauncherItemCustomizeCommonViewModel)!;
         #endregion
 
         #region command

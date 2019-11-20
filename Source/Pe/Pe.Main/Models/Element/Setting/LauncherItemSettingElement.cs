@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             foreach(var launcherItemId in LauncherItemIds) {
                 var iconElement = LauncherIconElements.First(i => i.LauncherItemId == launcherItemId);
                 var customizeElement = new LauncherItemCustomizeElement(launcherItemId, Screen.PrimaryScreen, OrderManager, ClipboardManager, NotifyManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, iconElement, LoggerFactory);
+                customizeElement.Initialize();
                 CustomizeItems.Add(customizeElement);
             }
         }
