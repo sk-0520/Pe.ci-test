@@ -19,7 +19,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <TabControl Grid.Row="0">
+    <TabControl Grid.Row="0" TabStripPlacement="Left">
       <TabItem Header="general">
       </TabItem>
       <TabItem Header="launcher">
