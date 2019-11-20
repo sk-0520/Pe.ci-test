@@ -41,6 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         IDatabaseStatementLoader StatementLoader { get; }
         static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
+        int RetryMaxCount { get; } = 5;
+        TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(1);
+
         #endregion
 
         #region function
@@ -234,13 +237,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         protected override async Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken)
         {
-            var existisResult = await LoadExistsImageAsync().ConfigureAwait(false);
-            if(existisResult.Success) {
-                return existisResult.SuccessValue;
+            var counter = new Counter(RetryMaxCount);
+            foreach(var count in counter) {
+                try {
+                    var existisResult = await LoadExistsImageAsync().ConfigureAwait(false);
+                    if(existisResult.Success) {
+                        return existisResult.SuccessValue;
+                    }
+
+                    var image = await MakeImageAsync(cancellationToken).ConfigureAwait(false);
+                    return image;
+                } catch(SynchronizationLockException ex) {
+                    if(count.IsLast) {
+                        Logger.LogError(ex, "アイコン取得待機失敗: 全試行 {0}回 失敗", count.MaxCount);
+                        return null;
+                    } else {
+                        Logger.LogWarning(ex, "アイコン取得待機失敗: {0}/{1}回 失敗, 再試行待機 {2}", count.CurrentCount, count.MaxCount, RetryWaitTime);
+                        await Task.Delay(RetryWaitTime).ConfigureAwait(false);
+                    }
+                }
             }
 
-            var image = await MakeImageAsync(cancellationToken).ConfigureAwait(false);
-            return image;
+            throw new NotImplementedException();
         }
 
         #endregion
