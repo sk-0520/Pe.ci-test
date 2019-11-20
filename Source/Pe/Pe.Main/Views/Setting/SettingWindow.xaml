@@ -3,6 +3,9 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+
+  xmlns:main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
+
   Title="SettingWindow"
   Width="800"
   Height="450"
@@ -20,6 +23,7 @@
       <TabItem Header="general">
       </TabItem>
       <TabItem Header="launcher">
+        <main_views_setting:LauncherItemSettingControl Item="{Binding LauncherItemSetting}" />
       </TabItem>
       <TabItem Header="toolbar">
       </TabItem>

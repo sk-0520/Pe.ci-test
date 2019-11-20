@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugStdIoExecute();
             //DebugHook();
             //DebugKeyAction();
+            DebugSetting();
         }
 
         void DebugCustomize()
@@ -176,6 +177,10 @@ echo end
             dbgKeyboradHooker.Register();
         }
 
+        void DebugSetting()
+        {
+            OpenSettingView();
+        }
         void DebugColorPicker()
         {
             using(var di = ApplicationDiContainer.CreateChildContainer()) {

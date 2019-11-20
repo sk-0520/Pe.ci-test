@@ -386,6 +386,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             using(var container = ApplicationDiContainer.Scope()) {
                 container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
                 var element = container.Build<SettingElement>();
+                element.Initialize();
                 var view = container.Build<SettingWindow>();
                 WindowManager.Register(new WindowItem(WindowKind.Setting, view));
                 view.ShowDialog();

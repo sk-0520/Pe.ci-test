@@ -13,9 +13,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         public SettingViewModel(SettingElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            LauncherItemSetting = new LauncherItemSettingViewModel(Model.LauncherItemSetting, LoggerFactory);
+        }
 
         #region property
+
+        public LauncherItemSettingViewModel LauncherItemSetting { get; }
         #endregion
 
         #region command
