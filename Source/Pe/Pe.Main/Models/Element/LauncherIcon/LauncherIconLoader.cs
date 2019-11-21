@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -269,5 +270,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #endregion
 
+    }
+
+    public static class LauncherIconLoaderPackFactory
+    {
+        #region funtion
+
+        public static IconImageLoaderPack Create(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        {
+            var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
+                .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory))
+            ;
+            var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
+            return iconImageLoaderPack;
+        }
+
+        #endregion
     }
 }

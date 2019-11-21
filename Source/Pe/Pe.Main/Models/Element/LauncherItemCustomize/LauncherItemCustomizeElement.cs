@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeElementBase(Guid launcherItemId, LauncherIconElement launcherIconElement, IClipboardManager clipboardManager, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeElementBase(Guid launcherItemId, IClipboardManager clipboardManager, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         public LauncherItemKind Kind { get; protected set; }
         public bool IsEnabledCommandLauncher { get; protected set; }
 
-        public IconData? IconData { get; protected set; }
-        public string? Comment { get; protected set; }
+        public IconData IconData { get; protected set; } = new IconData();
+        public string Comment { get; protected set; } = string.Empty;
 
         protected bool ViewCreated { get; set; }
 
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
     public class LauncherItemCustomizeElement : LauncherItemCustomizeElementBase, IViewShowStarter, IViewCloseReceiver
     {
         public LauncherItemCustomizeElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
-            : base(launcherItemId, launcherIconElement, clipboardManager, loggerFactory)
+            : base(launcherItemId, clipboardManager, launcherIconElement, loggerFactory)
         {
             OrderManager = orderManager;
             NotifyManager = notifyManager;

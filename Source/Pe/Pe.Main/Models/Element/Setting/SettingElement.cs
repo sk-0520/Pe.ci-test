@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             DispatcherWapper = dispatcherWapper;
             IdFactory  = idFactory;
 
-            LauncherItemSetting = new LauncherItemSettingElement(LauncherItemIds, LauncherIconElements, OrderManager, ClipboardManager, NotifyManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, IdFactory, LoggerFactory);
+            LauncherItemSetting = new LauncherItemSettingElement(LauncherItemIds, LauncherIconElements, OrderManager, ClipboardManager, NotifyManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, IdFactory, DispatcherWapper, LoggerFactory);
         }
 
         #region property
@@ -73,10 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             // アイコン自体は設定中でも書き込み・不明アイコン追加OK
             foreach(var launcherItemId in LauncherItemIds) {
-                var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                    .Select(i => new LauncherIconLoader(launcherItemId, i, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWapper, LoggerFactory))
-                ;
-                var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
+                var iconImageLoaderPack = LauncherIconLoaderPackFactory.Create(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWapper, LoggerFactory);
                 var iconElement = new LauncherIconElement(launcherItemId, iconImageLoaderPack, LoggerFactory);
                 LauncherIconElements.Add(iconElement);
             }

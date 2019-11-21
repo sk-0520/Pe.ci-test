@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -33,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public RequestSender ScrollItemRequest { get; } = new RequestSender();
+
         ModelViewModelObservableCollectionManagerBase<LauncherItemCustomizeElementBase, LauncherItemCustomizeViewModel> CustomizeCollection { get; }
         public ICollectionView CustomizeItems { get; }
 
@@ -58,20 +61,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public ICommand AddFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                IsOpendAddItemMenu = false;
-                Model.CreateItem(LauncherItemKind.File);
+                CreateItem(LauncherItemKind.File);
             }
         ));
         public ICommand AddStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                IsOpendAddItemMenu = false;
-                Model.CreateItem(LauncherItemKind.StoreApp);
+                CreateItem(LauncherItemKind.StoreApp);
             }
         ));
         public ICommand AddAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                IsOpendAddItemMenu = false;
-                Model.CreateItem(LauncherItemKind.Addon);
+                CreateItem(LauncherItemKind.Addon);
             }
         ));
 
@@ -87,6 +87,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region function
+
+        void CreateItem(LauncherItemKind kind)
+        {
+            IsOpendAddItemMenu = false;
+            var launcherItemId = Model.CreateItem(kind);
+            var newItem = CustomizeCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
+            SelectedCustomizeItem = newItem;
+            ScrollItemRequest.Send();
+        }
+
         #endregion
     }
 }
