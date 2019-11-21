@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherItemSettingViewModel(LauncherItemSettingElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            CustomizeCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemCustomizeSettingElement, LauncherItemCustomizeViewModel>(Model.CustomizeItems, LoggerFactory) {
+            CustomizeCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemCustomizeElementBase, LauncherItemCustomizeViewModel>(Model.CustomizeItems, LoggerFactory) {
                 ToViewModel = m => new LauncherItemCustomizeViewModel(m, dispatcherWapper, LoggerFactory),
             };
             CustomizeItems = CustomizeCollection.GetCollectionView();
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemCustomizeSettingElement, LauncherItemCustomizeViewModel> CustomizeCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherItemCustomizeElementBase, LauncherItemCustomizeViewModel> CustomizeCollection { get; }
         public ICollectionView CustomizeItems { get; }
 
         public LauncherItemCustomizeViewModel? SelectedCustomizeItem

@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
 
-        public ObservableCollection<LauncherItemCustomizeSettingElement> CustomizeItems { get; } = new ObservableCollection<LauncherItemCustomizeSettingElement>();
+        public ObservableCollection<LauncherItemCustomizeElementBase> CustomizeItems { get; } = new ObservableCollection<LauncherItemCustomizeElementBase>();
 
         #endregion
 
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             foreach(var launcherItemId in LauncherItemIds) {
                 var iconElement = LauncherIconElements.First(i => i.LauncherItemId == launcherItemId);
-                var customizeElement = new LauncherItemCustomizeSettingElement(launcherItemId, iconElement, ClipboardManager, LoggerFactory);
+                var customizeElement = new LauncherItemCustomizeElement(launcherItemId, Screen.PrimaryScreen, OrderManager, ClipboardManager, NotifyManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, iconElement, LoggerFactory);
                 customizeElement.Initialize();
                 CustomizeItems.Add(customizeElement);
             }
