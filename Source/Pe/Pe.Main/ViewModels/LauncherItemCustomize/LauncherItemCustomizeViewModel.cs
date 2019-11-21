@@ -20,7 +20,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeViewModel : SingleModelViewModelBase<LauncherItemCustomizeElement>, IViewLifecycleReceiver, ILauncherItemId
+    public class LauncherItemCustomizeViewModel : SingleModelViewModelBase<LauncherItemCustomizeElementBase>, IViewLifecycleReceiver, ILauncherItemId
     {
         #region variable
 
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeViewModel(LauncherItemCustomizeElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeViewModel(LauncherItemCustomizeElementBase model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             Icon = new LauncherIconViewModel(model.Icon, dispatcherWapper, loggerFactory);

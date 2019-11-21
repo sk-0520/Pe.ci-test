@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
@@ -18,12 +19,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region variable
 
         LauncherItemCustomizeViewModel? _selectedCustomizeItem;
+        bool _isOpendAddItemMenu;
         #endregion
 
         public LauncherItemSettingViewModel(LauncherItemSettingElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            CustomizeCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemCustomizeElement, LauncherItemCustomizeViewModel>(Model.CustomizeItems, LoggerFactory) {
+            CustomizeCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemCustomizeSettingElement, LauncherItemCustomizeViewModel>(Model.CustomizeItems, LoggerFactory) {
                 ToViewModel = m => new LauncherItemCustomizeViewModel(m, dispatcherWapper, LoggerFactory),
             };
             CustomizeItems = CustomizeCollection.GetCollectionView();
@@ -31,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemCustomizeElement, LauncherItemCustomizeViewModel> CustomizeCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherItemCustomizeSettingElement, LauncherItemCustomizeViewModel> CustomizeCollection { get; }
         public ICollectionView CustomizeItems { get; }
 
         public LauncherItemCustomizeViewModel? SelectedCustomizeItem
@@ -43,15 +45,36 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        public bool IsOpendAddItemMenu
+        {
+            get => this._isOpendAddItemMenu;
+            set => SetProperty(ref this._isOpendAddItemMenu, value);
+        }
+
+
         #endregion
 
         #region command
 
-        public ICommand AddItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand AddFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                // 登録するアイテム種別を選択
+                IsOpendAddItemMenu = false;
+                Model.CreateItem(LauncherItemKind.File);
             }
         ));
+        public ICommand AddStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                IsOpendAddItemMenu = false;
+                Model.CreateItem(LauncherItemKind.StoreApp);
+            }
+        ));
+        public ICommand AddAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                IsOpendAddItemMenu = false;
+                Model.CreateItem(LauncherItemKind.Addon);
+            }
+        ));
+
         public ICommand RemoveSelectedItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(SelectedCustomizeItem == null) {

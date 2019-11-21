@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeEnvironmentVariableViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeEnvironmentVariableViewModel(LauncherItemCustomizeElementBase model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class SettingElement : ElementBase, IViewCloseReceiver
     {
-        public SettingElement(IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public SettingElement(IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             OrderManager = orderManager;
@@ -28,8 +28,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
             DispatcherWapper = dispatcherWapper;
+            IdFactory  = idFactory;
 
-            LauncherItemSetting = new LauncherItemSettingElement(LauncherItemIds, LauncherIconElements, OrderManager, ClipboardManager, NotifyManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+            LauncherItemSetting = new LauncherItemSettingElement(LauncherItemIds, LauncherIconElements, OrderManager, ClipboardManager, NotifyManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, IdFactory, LoggerFactory);
         }
 
         #region property
@@ -41,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IDispatcherWapper DispatcherWapper { get; }
+        IIdFactory IdFactory { get; }
         public bool IsSubmit { get; private set; }
 
         /// <summary>

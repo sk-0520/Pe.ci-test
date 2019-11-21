@@ -32,7 +32,18 @@
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Content="+" Command="{Binding Item.AddItemCommand, ElementName=root}" />
+        <Grid Grid.Column="0">
+          <ToggleButton x:Name="createPopup" Content="+" IsChecked="{Binding Item.IsOpendAddItemMenu, ElementName=root}" />
+          <Popup IsOpen="{Binding IsChecked, ElementName=createPopup}" Style="{StaticResource PopupMenu}">
+            <Border Style="{StaticResource PopupMenuBorder}">
+              <StackPanel>
+                <MenuItem Header="file" Command="{Binding Item.AddFileItemCommand, ElementName=root}" />
+                <MenuItem Header="store" Command="{Binding Item.AddStoreAppItemCommand, ElementName=root}" />
+                <MenuItem Header="addon" Command="{Binding Item.AddAddonItemCommand, ElementName=root}" />
+              </StackPanel>
+            </Border>
+          </Popup>
+        </Grid>
         <Button Grid.Column="1" Content="-" Command="{Binding Item.RemoveSelectedItemCommand, ElementName=root}" />
         <TextBox Grid.Column="2" />
       </Grid>

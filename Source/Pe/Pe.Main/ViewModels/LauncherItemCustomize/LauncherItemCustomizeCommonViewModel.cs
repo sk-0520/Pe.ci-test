@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         bool _isEnabledCommandLauncher;
         #endregion
 
-        public LauncherItemCustomizeCommonViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeCommonViewModel(LauncherItemCustomizeElementBase model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

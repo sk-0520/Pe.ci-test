@@ -6,6 +6,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
@@ -17,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherItemSettingElement : ElementBase
     {
-        public LauncherItemSettingElement(ObservableCollection<Guid> launcherItemIds, ObservableCollection<LauncherIconElement> launcherIconElements, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemSettingElement(ObservableCollection<Guid> launcherItemIds, ObservableCollection<LauncherIconElement> launcherIconElements, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemIds = launcherItemIds;
@@ -28,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
+            IdFactory = idFactory;
         }
 
         #region property
@@ -39,8 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        IIdFactory IdFactory { get; }
 
-        public ObservableCollection<LauncherItemCustomizeElement> CustomizeItems { get; } = new ObservableCollection<LauncherItemCustomizeElement>();
+        public ObservableCollection<LauncherItemCustomizeSettingElement> CustomizeItems { get; } = new ObservableCollection<LauncherItemCustomizeSettingElement>();
 
         #endregion
 
@@ -54,6 +57,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             item.Dispose();
         }
 
+        public Guid CreateItem(LauncherItemKind kind)
+        {
+            var newItemId = IdFactory.CreateLauncherItemId();
+            LauncherItemIds.Add(newItemId);
+
+
+
+            return newItemId;
+        }
+
         #endregion
 
         #region ElementBase
@@ -62,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             foreach(var launcherItemId in LauncherItemIds) {
                 var iconElement = LauncherIconElements.First(i => i.LauncherItemId == launcherItemId);
-                var customizeElement = new LauncherItemCustomizeElement(launcherItemId, Screen.PrimaryScreen, OrderManager, ClipboardManager, NotifyManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, iconElement, LoggerFactory);
+                var customizeElement = new LauncherItemCustomizeSettingElement(launcherItemId, iconElement, ClipboardManager, LoggerFactory);
                 customizeElement.Initialize();
                 CustomizeItems.Add(customizeElement);
             }

@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    public abstract class LauncherItemCustomizeElementBase : ElementBase, ILauncherItemId
     {
         #region variable
 
@@ -21,48 +21,119 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeElementBase(Guid launcherItemId, LauncherIconElement launcherIconElement, IClipboardManager clipboardManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
-
-            OrderManager = orderManager;
             ClipboardManager = clipboardManager;
-            NotifyManager = notifyManager;
-            MainDatabaseBarrier = mainDatabaseBarrier;
-            FileDatabaseBarrier = fileDatabaseBarrier;
-            StatementLoader = statementLoader;
-
             Icon = launcherIconElement;
         }
 
         #region property
-
-        public Guid LauncherItemId { get; }
-
-        IOrderManager OrderManager { get; }
-        IClipboardManager ClipboardManager { get; }
-        INotifyManager NotifyManager { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
         public LauncherIconElement Icon { get; }
+        protected IClipboardManager ClipboardManager { get; }
 
-        bool ViewCreated { get; set; }
+        public string Name { get; protected set; } = string.Empty;
+        public string Code { get; protected set; } = string.Empty;
+        public LauncherItemKind Kind { get; protected set; }
+        public bool IsEnabledCommandLauncher { get; protected set; }
+
+        public IconData? IconData { get; protected set; }
+        public string? Comment { get; protected set; }
+
+        protected bool ViewCreated { get; set; }
 
         public bool IsVisible
         {
             get => this._isVisible;
-            private set => SetProperty(ref this._isVisible, value);
+            protected set => SetProperty(ref this._isVisible, value);
         }
 
-        public string Name { get; private set; } = string.Empty;
-        public string Code { get; private set; } = string.Empty;
-        public LauncherItemKind Kind { get; private set; }
-        public bool IsEnabledCommandLauncher { get; private set; }
 
-        public IconData? IconData { get; private set; }
-        public string? Comment { get; private set; }
+        #endregion
+
+        #region function
+        public abstract LauncherFileData LoadFileData();
+
+        public abstract IReadOnlyCollection<LauncherEnvironmentVariableData> LoadEnvironmentVariableItems();
+
+
+        public abstract IReadOnlyCollection<string> LoadTags();
+
+        public abstract void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags);
+
+        #endregion
+
+        #region ElementBase
+        #endregion
+
+        #region ILauncherItemId
+        public Guid LauncherItemId { get; }
+        #endregion
+
+        #region IViewShowStarter
+
+        public bool CanStartShowView
+        {
+            get
+            {
+                if(ViewCreated) {
+                    return false;
+                }
+
+                return IsVisible;
+            }
+        }
+
+        public virtual void StartView()
+        {
+            ViewCreated = true;
+        }
+
+        #endregion
+
+        #region IViewCloseReceiver
+
+        public bool ReceiveViewUserClosing()
+        {
+            IsVisible = false;
+            return true;
+        }
+        public bool ReceiveViewClosing()
+        {
+            return true;
+        }
+
+        public virtual void ReceiveViewClosed()
+        {
+            ViewCreated = false;
+        }
+
+
+        #endregion
+
+    }
+
+    public class LauncherItemCustomizeElement : LauncherItemCustomizeElementBase, IViewShowStarter, IViewCloseReceiver
+    {
+        public LauncherItemCustomizeElement(Guid launcherItemId, Screen screen, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, ILoggerFactory loggerFactory)
+            : base(launcherItemId, launcherIconElement, clipboardManager, loggerFactory)
+        {
+            OrderManager = orderManager;
+            NotifyManager = notifyManager;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            FileDatabaseBarrier = fileDatabaseBarrier;
+            StatementLoader = statementLoader;
+        }
+
+        #region property
+
+
+        IOrderManager OrderManager { get; }
+        INotifyManager NotifyManager { get; }
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
 
         #endregion
 
@@ -83,7 +154,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        public LauncherFileData LoadFileData()
+        #endregion
+
+        #region LauncherItemCustomizeElementBase
+
+        public override LauncherFileData LoadFileData()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -91,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        public IReadOnlyCollection<LauncherEnvironmentVariableData> LoadEnvironmentVariableItems()
+        public override IReadOnlyCollection<LauncherEnvironmentVariableData> LoadEnvironmentVariableItems()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -100,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         }
 
 
-        public IReadOnlyCollection<string> LoadTags()
+        public override IReadOnlyCollection<string> LoadTags()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -108,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags)
+        public override void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags)
         {
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -137,61 +212,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             NotifyManager.SendLauncherItemChanged(LauncherItemId);
         }
 
-        #endregion
-
-        #region ElementBase
-
         protected override void InitializeImpl()
         {
             LoadLauncherItem();
         }
 
-        #endregion
-
-        #region IViewShowStarter
-
-        public bool CanStartShowView
-        {
-            get
-            {
-                if(ViewCreated) {
-                    return false;
-                }
-
-                return IsVisible;
-            }
-        }
-
-        public void StartView()
+        public override void StartView()
         {
             var windowItem = OrderManager.CreateCustomizeLauncherItemWindow(this);
             windowItem.Window.Show();
-            ViewCreated = true;
+
+            base.StartView();
         }
-
-        #endregion
-
-        #region IViewCloseReceiver
-
-        public bool ReceiveViewUserClosing()
-        {
-            IsVisible = false;
-            return true;
-        }
-        public bool ReceiveViewClosing()
-        {
-            return true;
-        }
-
-        public void ReceiveViewClosed()
+        public override void ReceiveViewClosed()
         {
             NotifyManager.SendCustomizeLauncherItemExited(LauncherItemId);
 
-            ViewCreated = false;
+            base.ReceiveViewClosed();
         }
 
-
         #endregion
+
 
     }
 }
