@@ -398,23 +398,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             environmentParameters.SettingFile.CopyTo(settingDatabaseFile.FullName);
             environmentParameters.FileFile.CopyTo(fileDatabaseFile.FullName);
 
-            using(var container = ApplicationDiContainer.Scope()) {
-                var factory = new ApplicationDatabaseFactoryPack(
-                    new ApplicationDatabaseFactory(settingDatabaseFile),
-                    new ApplicationDatabaseFactory(fileDatabaseFile),
-                    new ApplicationDatabaseFactory()
-                );
-                var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+            var container = ApplicationDiContainer.Scope();
+            var factory = new ApplicationDatabaseFactoryPack(
+                new ApplicationDatabaseFactory(settingDatabaseFile),
+                new ApplicationDatabaseFactory(fileDatabaseFile),
+                new ApplicationDatabaseFactory()
+            );
+            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
 
-                container
-                    .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
-                ;
+            container
+                .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
+            ;
 
-                SettingElement = container.Build<SettingContainerElement>();
-                SettingElement.Closed += Element_Closed;
-                SettingElement.Initialize();
-                SettingElement.StartView();
-            }
+            SettingElement = container.Build<SettingContainerElement>();
+            SettingElement.Closed += Element_Closed;
+            SettingElement.Initialize();
+            SettingElement.StartView();
 
             void Element_Closed(object? sender, System.EventArgs e)
             {
@@ -432,7 +431,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     DisposeElements();
 
                     //TODO: 設定用DBを永続用DBと切り替え
-                    var stoppings = ApplicationDiContainer.Get<IDatabaseAccessorPack>().Items
+                    var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
+                    var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
                         .Select(i => i.StopConnection())
                         .ToList()
                     ;
@@ -464,6 +464,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 SettingElement.Dispose();
                 SettingElement = null;
+                container.UnregisterDatabase();
+                container.Dispose();
             }
 
 

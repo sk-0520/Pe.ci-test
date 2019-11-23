@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -69,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
 
         public static TContainer RegisterDatabase<TContainer>(this TContainer @this, ApplicationDatabaseFactoryPack factoryPack, LazyWriterWaitTimePack lazyWriterWaitTimePack, ILoggerFactory loggerFactory)
-            where TContainer: IDiRegisterContainer
+            where TContainer : IDiRegisterContainer
         {
             var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
 
@@ -108,6 +109,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             return @this;
         }
+
+        public static void UnregisterDatabase(this IDiRegisterContainer @this)
+        {
+            var unregisters = new Action[] {
+                () => @this.Unregister<IDatabaseFactoryPack>(),
+                () => @this.Unregister<IDatabaseAccessorPack>(),
+                () => @this.Unregister<IDatabaseBarrierPack>(),
+                () => @this.Unregister<IReaderWriterLockerPack>(),
+                () => @this.Unregister<IDatabaseLazyWriterPack>(),
+
+                () => @this.Unregister<IMainDatabaseBarrier>(),
+                () => @this.Unregister<IFileDatabaseBarrier>(),
+                () => @this.Unregister<ITemporaryDatabaseBarrier>(),
+
+                () => @this.Unregister<IMainDatabaseLazyWriter>(),
+                () => @this.Unregister<IFileDatabaseLazyWriter>(),
+                () => @this.Unregister<ITemporaryDatabaseLazyWriter>(),
+            };
+
+            foreach(var unreg in unregisters.Reverse()) {
+                unreg();
+            }
+        }
+
         #endregion
     }
 }
