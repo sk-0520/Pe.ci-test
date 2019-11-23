@@ -51,6 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set
             {
                 var prev = this._selectedItem;
+                if(prev != null) {
+                    if(prev.Item.Validate()) {
+                        prev.Item.Save();
+                    }
+                }
+
                 SetProperty(ref this._selectedItem, value);
             }
         }

@@ -216,7 +216,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
-        protected bool Validate()
+        public bool Validate()
         {
             if(HasErrors || HasChildrenErros()) {
                 return false;

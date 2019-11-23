@@ -425,9 +425,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 SettingElement.Closed -= Element_Closed;
 
                 if(SettingElement.IsSubmit) {
-                    Logger.LogInformation("設定は保存されなかったため現在要素継続");
-                    StartHook();
-                } else {
                     Logger.LogInformation("設定適用のため現在表示要素の破棄");
                     CloseViews();
                     DisposeElements();
@@ -449,6 +446,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("設定適用のため各要素生成");
                     RebuildHook();
                     ExecuteElements();
+                } else {
+                    Logger.LogInformation("設定は保存されなかったため現在要素継続");
+                    StartHook();
                 }
 
                 Logger.LogDebug("遅延書き込み処理再開");
