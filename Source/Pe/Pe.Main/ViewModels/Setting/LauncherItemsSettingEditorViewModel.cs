@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
@@ -32,12 +34,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 ToViewModel = m => LauncherItemWithIconViewModel.Create(new LauncherItemCustomizeEditorViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, LoggerFactory), LoggerFactory),
             };
             Items = ItemCollection.GetCollectionView();
+
+            DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = CanDragStart,
+                DragEnterAction = DragOrverOrEnter,
+                DragOverAction = DragOrverOrEnter,
+                DragLeaveAction = DragLeave,
+                DropAction = Drop,
+                GetDragParameter = GetDragParameter,
+            };
         }
+
 
         #region property
 
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
         public RequestSender ScrollToTopCustomizeRequest { get; } = new RequestSender();
+
+        public IDragAndDrop DragAndDrop { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> ItemCollection { get; }
         public ICollectionView Items { get; }
@@ -93,6 +107,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();
         }
+
+        #region DragAndDrop
+
+        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e) =>  ResultSuccessValue.Failure<DragParameter>();
+        private bool CanDragStart(UIElement sender, MouseEventArgs e) => false;
+
+        private void DragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Drop(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+
+        #endregion
 
         #endregion
     }

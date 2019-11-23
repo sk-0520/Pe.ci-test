@@ -8,6 +8,7 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
@@ -65,6 +66,9 @@
       </Grid>
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.Items, ElementName=root}">
+        <i:Interaction.Behaviors>
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
+        </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel
