@@ -106,20 +106,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class PropertyChangedHooker : DisposerBase
     {
-        public PropertyChangedHooker(IDispatcherWapper dispatcherWapper, ILogger logger)
+        public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILogger logger)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             Logger = logger;
         }
-        public PropertyChangedHooker(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
-        protected IDispatcherWapper DispatcherWapper { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILogger Logger { get; }
 
         protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWapper.Invoke(() => {
+            DispatcherWrapper.Invoke(() => {
                 foreach(var raisePropertyName in raisePropertyNames) {
                     raiser(raisePropertyName);
                 }
@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWapper.Invoke(() => {
+            DispatcherWrapper.Invoke(() => {
                 foreach(var raiseCommand in raiseDelegateCommands) {
                     raiseCommand.RaiseCanExecuteChanged();
                 }
@@ -366,7 +366,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             if(raiseCommands.Count != 0) {
                 // 個別にやる方法はわからん
-                DispatcherWapper.Invoke(() => {
+                DispatcherWrapper.Invoke(() => {
                     CommandManager.InvalidateRequerySuggested();
                 });
             }
@@ -379,7 +379,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWapper.Begin(() => {
+            DispatcherWrapper.Begin(() => {
                 foreach(var callback in callbacks) {
                     callback();
                 }

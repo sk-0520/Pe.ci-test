@@ -59,17 +59,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
     public class LauncherExecutor
     {
-        public LauncherExecutor(IOrderManager orderManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherExecutor(IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             OrderManager = orderManager;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
 
         IOrderManager OrderManager { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         ILogger Logger { get; }
 
         #endregion
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
                 stdioElement = OrderManager.CreateStandardInputOutputElement($"{result.Process.StartInfo.FileName}", process, screen);
-                DispatcherWapper.Invoke(() => {
+                DispatcherWrapper.Invoke(() => {
                     stdioElement.StartView();
                 });
             }
@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 stdioElement!.PreparateReceiver();
                 // 受信前に他の処理を終わらせるため少し待つ
-                DispatcherWapper.Begin(() => {
+                DispatcherWrapper.Begin(() => {
                     stdioElement!.RunReceiver();
                 }, DispatcherPriority.ApplicationIdle);
             }

@@ -21,13 +21,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
 
         #endregion
 
-        public LauncherIconViewModel(LauncherIconElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherIconViewModel(LauncherIconElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            Small = new IconViewerViewModel(Model.IconImageLoaderPack.Small, dispatcherWapper, LoggerFactory);
-            Normal = new IconViewerViewModel(Model.IconImageLoaderPack.Normal, dispatcherWapper, LoggerFactory);
-            Big = new IconViewerViewModel(Model.IconImageLoaderPack.Big, dispatcherWapper, LoggerFactory);
-            Large = new IconViewerViewModel(Model.IconImageLoaderPack.Large, dispatcherWapper, LoggerFactory);
+            Small = new IconViewerViewModel(Model.IconImageLoaderPack.Small, dispatcherWrapper, LoggerFactory);
+            Normal = new IconViewerViewModel(Model.IconImageLoaderPack.Normal, dispatcherWrapper, LoggerFactory);
+            Big = new IconViewerViewModel(Model.IconImageLoaderPack.Big, dispatcherWrapper, LoggerFactory);
+            Large = new IconViewerViewModel(Model.IconImageLoaderPack.Large, dispatcherWrapper, LoggerFactory);
         }
 
         #region property

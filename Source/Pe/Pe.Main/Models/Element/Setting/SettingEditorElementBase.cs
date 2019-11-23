@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public abstract class SettingEditorElementBase : ElementBase
     {
-        public SettingEditorElementBase(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public SettingEditorElementBase(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             ClipboardManager = clipboardManager;
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             StatementLoader = statementLoader;
 
             IdFactory = idFactory;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected IIdFactory IdFactory { get; }
-        protected IDispatcherWapper DispatcherWapper { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
         #endregion
 
         #region function

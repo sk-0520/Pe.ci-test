@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 diContainer
                     .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
-                    .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
+                    .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, loggerFactory)) {
@@ -288,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Temporary)
                 */
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
-                .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
+                .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
 

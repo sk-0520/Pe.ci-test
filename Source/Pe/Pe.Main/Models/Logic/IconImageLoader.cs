@@ -19,18 +19,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconBox iconBox, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public IconImageLoaderBase(IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             IconBox = iconBox;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             RunningStatusImpl = new RunningStatus(LoggerFactory);
         }
 
         #region property
 
         public IconBox IconBox { get; }
-        protected IDispatcherWapper DispatcherWapper { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
 
         RunningStatus RunningStatusImpl { get; }
         public IRunningStatus RunningStatus => RunningStatusImpl;
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 }
                 stream.Position = 0;
                 BitmapSource? iconImage = null;
-                DispatcherWapper.Invoke(() => {
+                DispatcherWrapper.Invoke(() => {
                     var imageLoader = new ImageLoader(LoggerFactory);
                     iconImage = imageLoader.Load(stream);
                     FreezableUtility.SafeFreeze(iconImage);
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var scaleX = iconSize.Width / (double)bitmapSource.PixelWidth;
                 var scaleY = iconSize.Height / (double)bitmapSource.PixelHeight;
                 Logger.LogTrace("scale: {0}x{1}", scaleX, scaleY);
-                DispatcherWapper.Get(() => {
+                DispatcherWrapper.Get(() => {
                     var transformedBitmap = FreezableUtility.GetSafeFreeze(new TransformedBitmap(bitmapSource, new ScaleTransform(scaleX, scaleY)));
                     return FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap));
                 });
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogDebug("画像ファイルとして読み込み {0}", path);
                     var imageLoader = new ImageLoader(LoggerFactory);
                     using(var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        DispatcherWapper.Invoke(() => {
+                        DispatcherWrapper.Invoke(() => {
                             var image = imageLoader.Load(stream);
                             iconImage = FreezableUtility.GetSafeFreeze(image);
                         });
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", path);
                     var iconLoader = new IconLoader(LoggerFactory);
-                    DispatcherWapper.Invoke(() => {
+                    DispatcherWrapper.Invoke(() => {
                         var image = iconLoader.Load(path, new IconSize(IconBox), iconData.Index);
                         iconImage = FreezableUtility.GetSafeFreeze(image!);
                     });

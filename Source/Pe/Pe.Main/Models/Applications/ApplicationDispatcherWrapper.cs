@@ -9,9 +9,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     /// <summary>
     /// UI スレッドであれやこれや頑張る。
     /// </summary>
-    public sealed class ApplicationDispatcherWapper : DispatcherWapper
+    public sealed class ApplicationDispatcherWrapper : DispatcherWrapper
     {
-        public ApplicationDispatcherWapper()
+        public ApplicationDispatcherWrapper()
             : base(Application.Current.Dispatcher)
         { }
 

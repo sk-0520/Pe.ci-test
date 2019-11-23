@@ -14,8 +14,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
     public class NoteFontViewModel : FontViewModel
     {
-        public NoteFontViewModel(FontElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(model, dispatcherWapper, loggerFactory)
+        public NoteFontViewModel(FontElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
         { }
 
         #region property

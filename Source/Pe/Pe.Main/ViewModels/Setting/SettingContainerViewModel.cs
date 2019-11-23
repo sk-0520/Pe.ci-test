@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -18,10 +19,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public SettingContainerViewModel(SettingContainerElement model, ILoggerFactory loggerFactory)
+        public SettingContainerViewModel(SettingContainerElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, LoggerFactory);
+            DispatcherWrapper = dispatcherWrapper;
+
+            LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new List<ISettingEditorViewModel>() {
                 LauncherItemsSettingEditor,
@@ -30,6 +33,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #region property
+
+        IDispatcherWrapper DispatcherWrapper { get; }
 
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
 

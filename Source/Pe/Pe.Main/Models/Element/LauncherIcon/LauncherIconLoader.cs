@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
     public class LauncherIconLoader : IconImageLoaderBase, ILauncherItemId
     {
-        public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(iconBox, dispatcherWapper, loggerFactory)
+        public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(iconBox, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -230,10 +230,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
     {
         #region funtion
 
-        public static IconImageLoaderPack CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public static IconImageLoaderPack CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory))
+                .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWrapper, loggerFactory))
             ;
             var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
             return iconImageLoaderPack;

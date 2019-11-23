@@ -35,8 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #endregion
 
-        public LauncherFileViewModel(LauncherItemElement model, Screen screen, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
-            : base(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory)
+        public LauncherFileViewModel(LauncherItemElement model, Screen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+            : base(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory)
         { }
 
         #region property

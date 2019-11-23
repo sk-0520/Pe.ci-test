@@ -22,11 +22,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
     public class LauncherItemCustomizeContainerViewModel : SingleModelViewModelBase<LauncherItemCustomizeContainerElement>, IViewLifecycleReceiver, ILauncherItemId
     {
-        public LauncherItemCustomizeContainerViewModel(LauncherItemCustomizeContainerElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeContainerViewModel(LauncherItemCustomizeContainerElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             Editor = new LauncherItemCustomizeEditorViewModel(Model.Editor, loggerFactory);
-            Icon = new LauncherIconViewModel(model.Icon, dispatcherWapper, loggerFactory);
+            Icon = new LauncherIconViewModel(model.Icon, dispatcherWrapper, loggerFactory);
         }
 
         #region property

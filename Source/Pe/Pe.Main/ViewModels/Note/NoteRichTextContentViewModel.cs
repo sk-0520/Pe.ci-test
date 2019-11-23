@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
     public class NoteRichTextContentViewModel : NoteContentViewModelBase, IFlushable
     {
-        public NoteRichTextContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(model, clipboardManager, dispatcherWapper, loggerFactory)
+        public NoteRichTextContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, clipboardManager, dispatcherWrapper, loggerFactory)
         {
             TextChangeLazyAction = new LazyAction("RTF変更抑制", TimeSpan.FromSeconds(2), LoggerFactory);
         }
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 var noteContentConverter = new NoteContentConverter(LoggerFactory);
                 using(var stream = noteContentConverter.ToRtfStream(content)) {
-                    DispatcherWapper.Invoke(() => {
+                    DispatcherWrapper.Invoke(() => {
                         var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                         range.Load(stream, DataFormats.Rtf);
                     });
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             if(CanVisible && EnabledUpdate) {
                 var noteContentConverter = new NoteContentConverter(LoggerFactory);
-                DispatcherWapper.Invoke(() => {
+                DispatcherWrapper.Invoke(() => {
                     if(!IsDisposed) {
                         var content = noteContentConverter.ToRtfString(Document);
                         Model?.ChangeRichTextContent(content);

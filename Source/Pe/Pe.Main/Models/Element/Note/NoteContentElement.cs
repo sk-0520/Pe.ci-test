@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
 
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
 
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
 
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 

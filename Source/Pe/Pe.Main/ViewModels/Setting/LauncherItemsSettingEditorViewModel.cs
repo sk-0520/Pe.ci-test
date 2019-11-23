@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
@@ -21,19 +22,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherItemsSettingEditorViewModel(LauncherItemsSettingEditorElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public LauncherItemsSettingEditorViewModel(LauncherItemsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
         {
-            CustomizeEditorCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemCustomizeEditorElement, LauncherItemCustomizeEditorViewModel>(Model.CustomizeEditorItems, LoggerFactory) {
-                ToViewModel = m => new LauncherItemCustomizeEditorViewModel(m, LoggerFactory),
+            CustomizeEditorCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>>(Model.Items, LoggerFactory) {
+                ToViewModel = m => LauncherItemWithIconViewModel.Create(new LauncherItemCustomizeEditorViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, LoggerFactory), LoggerFactory),
             };
             CustomizeEditorItems = CustomizeEditorCollection.GetCollectionView();
         }
 
         #region property
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemCustomizeEditorElement, LauncherItemCustomizeEditorViewModel> CustomizeEditorCollection { get; }
-        ICollectionView CustomizeEditorItems { get; }
+
+        ModelViewModelObservableCollectionManagerBase<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> CustomizeEditorCollection { get; }
+        public ICollectionView CustomizeEditorItems { get; }
 
         public bool IsPopupCreateItemMenu
         {

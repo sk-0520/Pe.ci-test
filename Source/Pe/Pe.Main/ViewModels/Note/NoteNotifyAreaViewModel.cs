@@ -23,21 +23,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
     public class NoteNotifyAreaViewModel : SingleModelViewModelBase<NoteElement>, INotifyArea
     {
-        public NoteNotifyAreaViewModel(NoteElement model, IWindowManager windowManager, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteNotifyAreaViewModel(NoteElement model, IWindowManager windowManager, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             WindowManager = windowManager;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             NoteTheme = noteTheme;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
         }
 
         #region property
 
         IWindowManager WindowManager { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         INoteTheme NoteTheme { get; }
 
         PropertyChangedHooker PropertyChangedHooker { get; }
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public string MenuHeader => Model.Title ?? "<からもじれつ>";
         public bool MenuHeaderHasAccessKey { get; } = false;
         public KeyGesture? MenuKeyGesture { get; }
-        public DependencyObject? MenuIcon => DispatcherWapper.Get(() => NoteTheme.GetIconImage(IconBox.Small, Model.IsCompact, Model.IsLocked, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor)));
+        public DependencyObject? MenuIcon => DispatcherWrapper.Get(() => NoteTheme.GetIconImage(IconBox.Small, Model.IsCompact, Model.IsLocked, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor)));
         public bool MenuHasIcon { get; } = true;
         public bool MenuIsEnabled { get; } = true;
         public bool MenuIsChecked { get; } = false;

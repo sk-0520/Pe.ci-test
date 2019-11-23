@@ -12,13 +12,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="Dispatcher"/>の使用をラップ。
     /// <para><see cref="Dispatcher"/>自体は大公開しているがなんかそれっぽく楽に使いたい。</para>
     /// </summary>
-    public class DispatcherWapper : IDispatcherWapper
+    public class DispatcherWrapper : IDispatcherWrapper
     {
         /// <summary>
         /// <paramref name="dispatcher"/>をラップする。
         /// </summary>
         /// <param name="dispatcher">ラップする対象。</param>
-        public DispatcherWapper(Dispatcher dispatcher)
+        public DispatcherWrapper(Dispatcher dispatcher)
         {
             Dispatcher = dispatcher;
         }
@@ -91,11 +91,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// 生成元の<see cref="Dispatcher"/>を用いて<see cref="DispatcherWapper"/>を生成する。
+    /// 生成元の<see cref="Dispatcher"/>を用いて<see cref="DispatcherWrapper"/>を生成する。
     /// </summary>
-    public sealed class CurrentDispatcherWapper : DispatcherWapper
+    public sealed class CurrentDispatcherWrapper : DispatcherWrapper
     {
-        public CurrentDispatcherWapper()
+        public CurrentDispatcherWrapper()
             : base(Dispatcher.CurrentDispatcher)
         { }
     }

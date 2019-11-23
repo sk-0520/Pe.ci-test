@@ -52,13 +52,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
 
             WindowAreaChangedTimer = new DispatcherTimer() {
                 Interval = TimeSpan.FromSeconds(0.5),
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             WindowAreaChangedTimer.Tick += WindowAreaChangedTimer_Tick!;
 
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            Font = new NoteFontViewModel(Model.FontElement, DispatcherWapper, LoggerFactory);
+            Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 DropAction = DropFile,
             };
 
-            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(Model.IsCompact), nameof(IsCompact));
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         INoteTheme NoteTheme { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         this._content.Dispose();
                     }
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, ClipboardManager, DispatcherWapper, LoggerFactory);
+                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, ClipboardManager, DispatcherWrapper, LoggerFactory);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 }
 
@@ -589,7 +589,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ApplyTheme()
         {
-            DispatcherWapper.Begin(() => {
+            DispatcherWrapper.Begin(() => {
                 ApplyCaption();
                 ApplyBorder();
                 ApplyContent();

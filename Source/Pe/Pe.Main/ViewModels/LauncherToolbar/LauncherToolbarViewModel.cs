@@ -40,20 +40,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWapper dispatcherWapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
             LauncherGroupTheme = launcherGroupTheme;
 
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, LoggerFactory) {
-                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWapper, LauncherGroupTheme, LoggerFactory),
+                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LauncherGroupTheme, LoggerFactory),
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
             LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems, LoggerFactory) {
-                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWapper, LauncherToolbarTheme, LoggerFactory),
+                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWrapper, LauncherToolbarTheme, LoggerFactory),
             };
             LauncherItems = LauncherItemCollection.GetCollectionView();
 
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             };
 
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), nameof(IsVerticalLayout));
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), ChangeToolbarPositionCommand);
@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
@@ -158,8 +158,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public DependencyObject ToolbarPositionRightIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Right);
         public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
 
-        public ControlTemplate LauncherItemNormalButtonControlTemplate => DispatcherWapper.Get(() => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate());
-        public ControlTemplate LauncherItemToggleButtonControlTemplate => DispatcherWapper.Get(() => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate());
+        public ControlTemplate LauncherItemNormalButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate());
+        public ControlTemplate LauncherItemToggleButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate());
 
         #endregion
 
@@ -241,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if(filePaths.Length == 1) {
-                    DispatcherWapper.Begin(() => RegisterDropFile(filePaths[0]));
+                    DispatcherWrapper.Begin(() => RegisterDropFile(filePaths[0]));
                     e.Handled = true;
                 }
             }
@@ -286,10 +286,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
-                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+                DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
             } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
                 var argument = (string)e.Data.GetData(DataFormats.UnicodeText);
-                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+                DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
             }
 
             e.Handled = true;

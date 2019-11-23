@@ -56,12 +56,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #endregion
 
-        public LauncherDetailViewModelBase(LauncherItemElement model, Screen screen, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherDetailViewModelBase(LauncherItemElement model, Screen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             Screen = screen;
             LauncherToolbarTheme = launcherToolbarTheme;
-            Icon = new LauncherIconViewModel(model.Icon, dispatcherWapper, LoggerFactory);
+            Icon = new LauncherIconViewModel(model.Icon, dispatcherWrapper, LoggerFactory);
         }
 
         #region property
@@ -156,11 +156,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
     {
         #region function
 
-        public static LauncherDetailViewModelBase Create(LauncherItemElement model, Screen screen, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public static LauncherDetailViewModelBase Create(LauncherItemElement model, Screen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
         {
             switch(model.Kind) {
                 case LauncherItemKind.File:
-                    return new LauncherFileViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherFileViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.StoreApp:
                     throw new NotImplementedException();
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                     throw new NotImplementedException();
 
                 case LauncherItemKind.Separator:
-                    return new LauncherSeparatorViewModel(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 default:
                     throw new NotImplementedException();

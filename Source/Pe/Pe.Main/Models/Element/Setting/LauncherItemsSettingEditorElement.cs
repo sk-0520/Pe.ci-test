@@ -18,15 +18,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherItemsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherItemsSettingEditorElement(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWapper, loggerFactory)
+        public LauncherItemsSettingEditorElement(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
         }
 
         #region property
 
-        public ObservableCollection<LauncherItemCustomizeEditorElement> CustomizeEditorItems { get; } = new ObservableCollection<LauncherItemCustomizeEditorElement>();
-        public ObservableCollection<LauncherIconElement> IconItems { get; } = new ObservableCollection<LauncherIconElement>();
+        public ObservableCollection<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>> Items { get; } = new ObservableCollection<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>>();
 
         #endregion
 
@@ -48,19 +47,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
             }
 
-            CustomizeEditorItems.Clear();
+            Items.Clear();
             foreach(var launcherItemId in launcherItemIds) {
                 var customizeEditor = new LauncherItemCustomizeEditorElement(launcherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
                 customizeEditor.Initialize();
-                CustomizeEditorItems.Add(customizeEditor);
-            }
 
-            IconItems.Clear();
-            foreach(var launcherItemId in launcherItemIds) {
-                var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWapper, LoggerFactory);
+                var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
                 var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
                 launcherIconElement.Initialize();
-                IconItems.Add(launcherIconElement);
+
+                var item = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
+                Items.Add(item);
             }
         }
 

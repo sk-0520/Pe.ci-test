@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -20,11 +21,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     public abstract class SettingEditorViewModelBase<TSettingEditorElement> : SingleModelViewModelBase<TSettingEditorElement>, ISettingEditorViewModel
         where TSettingEditorElement : SettingEditorElementBase
     {
-        public SettingEditorViewModelBase(TSettingEditorElement model, ILoggerFactory loggerFactory)
+        public SettingEditorViewModelBase(TSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            DispatcherWrapper = dispatcherWrapper;
+        }
 
         #region property
+
+        protected IDispatcherWrapper DispatcherWrapper { get; }
+
         #endregion
 
         #region command

@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// <summary>
     /// 特定の <see cref="System.Windows.Threading.Dispatcher"/> で実行する。
     /// </summary>
-    public interface IDispatcherWapper
+    public interface IDispatcherWrapper
     {
         #region property
 

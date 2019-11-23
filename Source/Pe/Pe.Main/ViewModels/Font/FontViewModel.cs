@@ -16,10 +16,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 {
     public class FontViewModel : SingleModelViewModelBase<FontElement>
     {
-        public FontViewModel(FontElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public FontViewModel(FontElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.FamilyName), nameof(FontFamily));
             PropertyChangedHooker.AddHook(nameof(Model.Size), new[] { nameof(Size), nameof(FontSize) });
             PropertyChangedHooker.AddHook(nameof(Model.IsItalic), new[] { nameof(IsItalic), nameof(FontStyle) });

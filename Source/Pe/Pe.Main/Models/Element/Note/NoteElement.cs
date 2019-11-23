@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen? dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen? dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             NoteTheme = noteTheme;
 
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         INoteTheme NoteTheme { get; }
         public FontElement? FontElement { get; private set; }
 
@@ -441,7 +441,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     switch(toKind) {
                         case NoteContentKind.RichText:
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            return DispatcherWapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
+                            return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 
                         case NoteContentKind.Plain:

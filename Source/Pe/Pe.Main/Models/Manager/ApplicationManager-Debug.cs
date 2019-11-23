@@ -81,7 +81,7 @@ rem ping 127.0.0.1
 test
 echo end
             ", Encoding.GetEncoding("shift_jis"));
-            var launcherExecutor = new LauncherExecutor(OrderManager, new ApplicationDispatcherWapper(), LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, new ApplicationDispatcherWrapper(), LoggerFactory);
             var data = new LauncherFileData() {
                 //Path = batchPath,
                 Path = "cmd",
