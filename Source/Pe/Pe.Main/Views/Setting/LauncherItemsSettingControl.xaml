@@ -20,10 +20,13 @@
 >
   <i:Interaction.Triggers>
     <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollSelectedItemRequest, ElementName=root}">
-      <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand ,ElementName=root}" />
+      <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
     <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollToTopCustomizeRequest, ElementName=root}">
-      <prism:InvokeCommandAction Command="{Binding ScrollToTopCustomizeCommand ,ElementName=root}" />
+      <prism:InvokeCommandAction Command="{Binding ScrollToTopCustomizeCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding ExpandShortcutFileRequest}">
+      <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
   <UserControl.Resources>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -10,6 +11,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -71,6 +73,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Items.Add(newItem);
 
             return newLauncherItemId;
+        }
+
+        /// <summary>
+        /// ファイルを現在のグループに登録する。
+        /// </summary>
+        /// <param name="filePath">対象ファイルパス。</param>
+        /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
+        public void RegisterFile(string filePath, bool expandShortcut)
+        {
+            //TODO: LauncherToolbarElement.RegisterFile と重複
+            var file = new FileInfo(filePath);
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+            var data = launcherFactory.FromFile(file, expandShortcut);
+            var tags = launcherFactory.GetTags(file).ToList();
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherTagsDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                var codes = launcherItemsDao.SelectFuzzyCodes(data.Item.Code).ToList();
+                data.Item.Code = launcherFactory.GetUniqueCode(data.Item.Code, codes);
+
+                launcherItemsDao.InsertLauncherItem(data.Item, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherFilesDao.InsertFile(data.Item.LauncherItemId, data.File, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherTagsDao.InsertTags(data.Item.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());
+
+                commander.Commit();
+            }
         }
 
         #endregion

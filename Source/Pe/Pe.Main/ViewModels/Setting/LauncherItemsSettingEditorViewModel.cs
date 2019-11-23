@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
         public RequestSender ScrollToTopCustomizeRequest { get; } = new RequestSender();
+        public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public IDragAndDrop DragAndDrop { get; }
 
@@ -110,21 +112,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region DragAndDrop
 
-        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e) =>  ResultSuccessValue.Failure<DragParameter>();
-        private bool CanDragStart(UIElement sender, MouseEventArgs e) => false;
+        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            return dd.GetDragParameter(sender, e);
+        }
+
+        private bool CanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            return dd.CanDragStart(sender, e);
+        }
 
         private void DragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.DragOrverOrEnter(sender, e);
         }
 
         private void Drop(UIElement sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
         }
 
         private void DragLeave(UIElement sender, DragEventArgs e)
-        { }
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.DragLeave(sender, e);
+        }
 
 
         #endregion
