@@ -29,6 +29,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using System.Windows.Controls.Primitives;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -220,35 +221,36 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region ViewDragAndDrop
 
-        private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+        private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            return dd.GetDragParameter(sender, e);
+        }
 
-        private bool ViewCanDragStart(UIElement sender, MouseEventArgs e) => false;
+        private bool ViewCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            return dd.CanDragStart(sender, e);
+        }
+
 
         private void ViewDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                // ファイル登録準備
-                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if(filePaths.Length == 1) {
-                    e.Effects = DragDropEffects.Copy;
-                    e.Handled = true;
-                }
-            }
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.DragOrverOrEnter(sender, e);
         }
 
         private void ViewDrop(UIElement sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if(filePaths.Length == 1) {
-                    DispatcherWrapper.Begin(() => RegisterDropFile(filePaths[0]));
-                    e.Handled = true;
-                }
-            }
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
         }
 
         private void ViewDragLeave(UIElement sender, DragEventArgs e)
-        { }
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.DragLeave(sender, e);
+        }
 
         #endregion
 
