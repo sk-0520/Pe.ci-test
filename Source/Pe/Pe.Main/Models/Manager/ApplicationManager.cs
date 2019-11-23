@@ -432,7 +432,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     DisposeElements();
 
                     //TODO: 設定用DBを永続用DBと切り替え
-                    //ApplicationDiContainer.
+                    var stoppings = ApplicationDiContainer.Get<IDatabaseAccessorPack>().Items
+                        .Select(i => i.StopConnection())
+                        .ToList()
+                    ;
+
+                    settingDatabaseFile.CopyTo(environmentParameters.SettingFile.FullName, true);
+                    fileDatabaseFile.CopyTo(environmentParameters.FileFile.FullName, true);
+
+                    foreach(var stopping in stoppings) {
+                        stopping.Dispose();
+                    }
 
                     Logger.LogInformation("設定適用のため各要素生成");
                     RebuildHook();

@@ -70,6 +70,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region function
 
         /// <summary>
+        /// 一時的に切断状態へ遷移。
+        /// <para><see cref="IDisposable.Dispose()"/>が完了するまでの間接続できない状態になる。</para>
+        /// </summary>
+        /// <returns></returns>
+        IDisposable StopConnection();
+
+        /// <summary>
         /// 指定の型で問い合わせ。
         /// </summary>
         /// <typeparam name="T">問い合わせ型</typeparam>
@@ -124,11 +131,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             DatabaseFactory = databaseFactory;
 
-            LazyConnection = new Lazy<IDbConnection>(() => {
-                var con = DatabaseFactory.CreateConnection();
-                con.Open();
-                return con;
-            });
+            LazyConnection = new Lazy<IDbConnection>(OpenConnection);
 
             LazyImplementation = new Lazy<IDatabaseImplementation>(DatabaseFactory.CreateImplementation);
         }
@@ -147,16 +150,34 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region property
 
-        Lazy<IDbConnection> LazyConnection { get; }
+        Lazy<IDbConnection> LazyConnection { get; set; }
 
         Lazy<IDatabaseImplementation> LazyImplementation { get; }
         protected IDatabaseImplementation Implementation => LazyImplementation.Value;
 
         protected ILogger Logger { get; }
 
+        public bool IsOpend {get; private set;}
+        public bool StoppingConnection { get; private set;}
+
         #endregion
 
         #region function
+
+        IDbConnection OpenConnection()
+        {
+            if(StoppingConnection) {
+                throw new InvalidOperationException(nameof(StoppingConnection));
+            }
+            if(IsOpend) {
+                throw new InvalidOperationException(nameof(IsOpend));
+            }
+
+            var con = DatabaseFactory.CreateConnection();
+            con.Open();
+            IsOpend = true;
+            return con;
+        }
 
         protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseCommander, bool> function)
         {
@@ -199,6 +220,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 接続元。
         /// </summary>
         public virtual IDbConnection BaseConnection => LazyConnection.Value;
+
+        public virtual IDisposable StopConnection()
+        {
+            if(!IsOpend) {
+                return new ActionDisposer(() => { });
+            }
+
+            if(!StoppingConnection) {
+                BaseConnection.Close();
+                IsOpend = false;
+                StoppingConnection = true;
+                return new ActionDisposer(() => {
+                    StoppingConnection = false;
+                    LazyConnection = new Lazy<IDbConnection>(OpenConnection);
+                });
+            }
+
+            return new ActionDisposer(() => { });
+        }
 
         public virtual IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
         {
@@ -334,6 +374,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                         BaseConnection.Dispose();
                     }
                 }
+                IsOpend = false;
+                StoppingConnection = false;
             }
 
             base.Dispose(disposing);
