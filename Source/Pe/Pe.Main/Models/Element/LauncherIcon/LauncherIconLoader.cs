@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
@@ -24,131 +25,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
-    public abstract class LauncherIconLoaderBase : IconImageLoaderBase, ILauncherItemId
-    {
-        public LauncherIconLoaderBase(IconBox iconBox, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(iconBox, dispatcherWapper, loggerFactory)
-        { }
-
-        #region property
-        protected int RetryMaxCount { get; } = 5;
-        protected TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(1);
-
-        protected EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
-
-        #endregion
-
-        #region function
-
-        protected BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBynaryItems)
-        {
-            if(imageBynaryItems == null || imageBynaryItems.Count == 0) {
-                return null;
-            }
-
-            using(var stream = new BinaryChunkedStream()) {
-                using(var writer = new BinaryWriter(new KeepStream(stream))) {
-                    foreach(var imageBinary in imageBynaryItems) {
-                        writer.Write(imageBinary);
-                    }
-                }
-                stream.Position = 0;
-                BitmapSource? iconImage = null;
-                DispatcherWapper.Invoke(() => {
-                    var imageLoader = new ImageLoader(LoggerFactory);
-                    iconImage = imageLoader.Load(stream);
-                    FreezableUtility.SafeFreeze(iconImage);
-                });
-                return iconImage;
-
-            }
-        }
-
-        protected Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
-        {
-            var editIconData = new IconData() {
-                Path = Environment.ExpandEnvironmentVariables(iconData.Path),
-                Index = iconData.Index,
-            };
-
-            if(Path.IsPathFullyQualified(editIconData.Path)) {
-                return GetIconImageAsync(editIconData, cancellationToken);
-            }
-
-            var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);
-            var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-            var pathItem = environmentExecuteFile.Get(editIconData.Path, pathItems);
-            if(pathItem == null) {
-                Logger.LogWarning("指定されたコマンドからパス取得失敗: {0}", editIconData.Path);
-                return Task.FromResult(default(BitmapSource));
-            }
-
-            editIconData.Path = pathItem.File.FullName;
-            editIconData.Index = 0;
-            return GetIconImageAsync(editIconData, cancellationToken);
-        }
-
-        /// <summary>
-        /// <see cref="IconBox"/> より大きい場合にががっと縮小する。
-        /// </summary>
-        /// <param name="bitmapSource"></param>
-        /// <returns></returns>
-        protected BitmapSource ResizeImage(BitmapSource bitmapSource)
-        {
-            var iconSize = new IconSize(IconBox);
-
-            if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
-                Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
-                var scaleX = iconSize.Width / (double)bitmapSource.PixelWidth;
-                var scaleY = iconSize.Height / (double)bitmapSource.PixelHeight;
-                Logger.LogTrace("scale: {0}x{1}", scaleX, scaleY);
-                DispatcherWapper.Get(() => {
-                    var transformedBitmap = FreezableUtility.GetSafeFreeze(new TransformedBitmap(bitmapSource, new ScaleTransform(scaleX, scaleY)));
-                    return FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap));
-                });
-            }
-
-            return bitmapSource;
-        }
-
-        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
-        {
-            var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, cancellationToken).ConfigureAwait(false);
-            if(iconImage != null) {
-                if(tuneSize) {
-                    return ResizeImage(iconImage);
-                }
-                return iconImage;
-            }
-
-            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, cancellationToken).ConfigureAwait(false);
-            if(commandImage != null) {
-                if(tuneSize) {
-                    return ResizeImage(commandImage);
-                }
-                return commandImage;
-            }
-
-            // 標準のやつ。。。 xaml でやるべき？
-            return null;
-        }
-
-        protected abstract LauncherIconData GetIconData();
-
-        #endregion
-
-        #region IconImageLoaderBase
-
-        #endregion
-
-        #region ILauncherItemId
-
-        public Guid LauncherItemId { get; }
-
-        #endregion
-
-    }
-
     public class LauncherIconLoader : IconImageLoaderBase, ILauncherItemId
     {
         public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
@@ -174,30 +50,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #region function
 
-        BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBynaryItems)
-        {
-            if(imageBynaryItems == null || imageBynaryItems.Count == 0) {
-                return null;
-            }
-
-            using(var stream = new BinaryChunkedStream()) {
-                using(var writer = new BinaryWriter(new KeepStream(stream))) {
-                    foreach(var imageBinary in imageBynaryItems) {
-                        writer.Write(imageBinary);
-                    }
-                }
-                stream.Position = 0;
-                BitmapSource? iconImage = null;
-                DispatcherWapper.Invoke(() => {
-                    var imageLoader = new ImageLoader(LoggerFactory);
-                    iconImage = imageLoader.Load(stream);
-                    FreezableUtility.SafeFreeze(iconImage);
-                });
-                return iconImage;
-
-            }
-        }
-
         Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync()
         {
             return Task.Run(() => {
@@ -220,15 +72,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             });
         }
 
-        LauncherIconData GetIconData()
+        protected virtual LauncherIconData GetIconData()
         {
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherItemDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectIcon(LauncherItemId);
+                return dao.SelectFileIcon(LauncherItemId);
             }
         }
 
-        Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
+        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
         {
             var editIconData = new IconData() {
                 Path = Environment.ExpandEnvironmentVariables(iconData.Path),
@@ -250,29 +102,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             editIconData.Path = pathItem.File.FullName;
             editIconData.Index = 0;
             return GetIconImageAsync(editIconData, cancellationToken);
-        }
-
-        /// <summary>
-        /// <see cref="IconBox"/> より大きい場合にががっと縮小する。
-        /// </summary>
-        /// <param name="bitmapSource"></param>
-        /// <returns></returns>
-        BitmapSource ResizeImage(BitmapSource bitmapSource)
-        {
-            var iconSize = new IconSize(IconBox);
-
-            if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
-                Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
-                var scaleX = iconSize.Width / (double)bitmapSource.PixelWidth;
-                var scaleY = iconSize.Height / (double)bitmapSource.PixelHeight;
-                Logger.LogTrace("scale: {0}x{1}", scaleX, scaleY);
-                DispatcherWapper.Get(() => {
-                    var transformedBitmap = FreezableUtility.GetSafeFreeze(new TransformedBitmap(bitmapSource, new ScaleTransform(scaleX, scaleY)));
-                    return FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap));
-                });
-            }
-
-            return bitmapSource;
         }
 
         async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
@@ -397,14 +226,75 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
     }
 
+    public sealed class LauncherIconSettingLoader : LauncherIconLoader
+    {
+        public LauncherIconSettingLoader(Guid launcherItemId, IconBox iconBox, bool isCustomizing, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+            : base(launcherItemId, iconBox, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory)
+        {
+            IsCustomizing = isCustomizing;
+        }
+
+        #region property
+
+        public bool IsCustomizing { get; private set; }
+        LauncherItemCustomizeElementBase? CustomizeElement { get; set; }
+        #endregion
+
+        #region function
+
+        public void StartCustomize(LauncherItemCustomizeElementBase customizeElement)
+        {
+            IsCustomizing = true;
+            CustomizeElement = customizeElement;
+        }
+
+        #endregion
+
+        #region LauncherIconLoader
+
+        protected override LauncherIconData GetIconData()
+        {
+            if(IsCustomizing) {
+                Debug.Assert(CustomizeElement != null);
+                var icon = new LauncherIconData() {
+                    Kind = CustomizeElement.Kind,
+                    Icon = CustomizeElement.IconData,
+                };
+            }
+
+            return base.GetIconData();
+        }
+
+        protected override Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken)
+        {
+            if(IsCustomizing) {
+                Debug.Assert(CustomizeElement != null);
+                throw new NotImplementedException();
+            }
+
+            return base.LoadImplAsync(cancellationToken);
+        }
+
+        #endregion
+    }
+
     public static class LauncherIconLoaderPackFactory
     {
         #region funtion
 
-        public static IconImageLoaderPack Create(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public static IconImageLoaderPack CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
         {
             var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
                 .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory))
+            ;
+            var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
+            return iconImageLoaderPack;
+        }
+
+        public static IconImageLoaderPack CreateSettingPack(Guid launcherItemId, bool isCustomizing, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        {
+            var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
+                .Select(i => new LauncherIconSettingLoader(launcherItemId, i, isCustomizing, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory))
             ;
             var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
             return iconImageLoaderPack;

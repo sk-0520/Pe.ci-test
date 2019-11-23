@@ -36,9 +36,6 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using System.Threading;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
-using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
-using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
-using ContentTypeTextNet.Pe.Main.Views.Setting;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -382,17 +379,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 lazyWriterItemMap.Add(lazyWriter, pausing);
             }
 
-            bool isSubmit;
-            using(var container = ApplicationDiContainer.Scope()) {
-                container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
-                var element = container.Build<SettingElement>();
-                element.Initialize();
-                var view = container.Build<SettingWindow>();
-                WindowManager.Register(new WindowItem(WindowKind.Setting, view));
-                view.ShowDialog();
+            bool isSubmit = true;
+            //using(var container = ApplicationDiContainer.Scope()) {
+            //    container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
+            //    var element = container.Build<SettingElement>();
+            //    element.Initialize();
+            //    var view = container.Build<SettingWindow>();
+            //    WindowManager.Register(new WindowItem(WindowKind.Setting, view));
+            //    view.ShowDialog();
 
-                isSubmit = element.IsSubmit;
-            }
+            //    isSubmit = element.IsSubmit;
+            //}
 
             if(isSubmit) {
                 Logger.LogInformation("設定適用のため現在表示要素の破棄");

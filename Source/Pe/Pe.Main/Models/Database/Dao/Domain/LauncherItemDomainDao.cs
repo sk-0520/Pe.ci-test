@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             return data;
         }
 
-        public LauncherIconData SelectIcon(Guid launcherItemId)
+        public LauncherIconData SelectFileIcon(Guid launcherItemId)
         {
             var statement = LoadStatement();
             var param = new {
