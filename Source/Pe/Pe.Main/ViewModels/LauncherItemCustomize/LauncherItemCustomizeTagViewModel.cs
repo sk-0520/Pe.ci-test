@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeTagViewModel(LauncherItemCustomizeElementBase model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeTagViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

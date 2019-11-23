@@ -13,9 +13,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public abstract class LauncherItemCustomizeDetailViewModelBase : SingleModelViewModelBase<LauncherItemCustomizeElementBase>, ILauncherItemId
+    public abstract class LauncherItemCustomizeDetailViewModelBase : SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId
     {
-        public LauncherItemCustomizeDetailViewModelBase(LauncherItemCustomizeElementBase model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeDetailViewModelBase(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

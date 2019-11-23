@@ -267,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             //TODO: 確定時の処理
             NowCustomizing = true;
             NotifyManager.CustomizeLauncherItemExited += NotifyManager_CustomizeLauncherItemExited;
-            var element = OrderManager.CreateCustomizeLauncherItemElement(LauncherItemId, screen, Icon);
+            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen, Icon);
             element.StartView();
         }
 

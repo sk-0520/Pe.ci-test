@@ -436,9 +436,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
         {
-            return OrderManager.CreateCustomizeLauncherItemElement(launcherItemId, screen, iconElement);
+            return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen, iconElement);
         }
 
         public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
@@ -509,7 +509,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-        public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeElement element)
+        public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element)
         {
             var windowItem = OrderManager.CreateCustomizeLauncherItemWindow(element);
 

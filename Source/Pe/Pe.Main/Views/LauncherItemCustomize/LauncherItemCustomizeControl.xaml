@@ -25,7 +25,7 @@
     <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
   </UserControl.Resources>
 
-  <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Item.CustomizeItems, ElementName=root}">
+  <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.CustomizeItems, ElementName=root}">
     <ItemsControl.Resources>
       <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
         <Setter Property="Width" Value="Auto" />

@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeElementBase model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

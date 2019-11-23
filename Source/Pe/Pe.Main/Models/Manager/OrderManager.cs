@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
-        LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement);
+        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement);
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen);
 
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
-        WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeElement element);
+        WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
         WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element);
         WindowItem CreateNoteWindow(NoteElement element);
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
@@ -132,11 +132,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
             }
 
-            public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
+            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
             {
-                var customizeLauncherItemElement = DiContainer.Build<LauncherItemCustomizeElement>(launcherItemId, screen, iconElement);
-                customizeLauncherItemElement.Initialize();
-                return customizeLauncherItemElement;
+                var customizeLauncherEditorElement = DiContainer.Build<LauncherItemCustomizeEditorElement>(launcherItemId);
+                customizeLauncherEditorElement.Initialize();
+                var customizeLauncherItemContainerElement = DiContainer.Build<LauncherItemCustomizeContainerElement>(screen, customizeLauncherEditorElement, iconElement);
+                customizeLauncherItemContainerElement.Initialize();
+                return customizeLauncherItemContainerElement;
             }
 
             public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
@@ -205,11 +207,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return new WindowItem(WindowKind.LauncherToolbar, window);
             }
 
-            public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeElement element)
+            public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element)
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
                     //c.Register<ILoggerFactory, ILoggerFactory>(element);
-                    return c.Build<LauncherItemCustomizeViewModel>(element);
+                    return c.Build<LauncherItemCustomizeContainerViewModel>(element);
                 });
                 var window = DiContainer.BuildView<LauncherItemCustomizeWindow>();
                 window.DataContext = viewModel;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
@@ -83,20 +84,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
+        [Conditional("DEBUG")]
+        private void ThrowIfEmptyLauncherItemId(Guid launcherItemId)
+        {
+            if(launcherItemId == Guid.Empty) {
+                throw new InvalidOperationException();
+            }
+        }
+
+
         void OnLauncherItemChanged(Guid launcherItemId)
         {
+            ThrowIfEmptyLauncherItemId(launcherItemId);
+
             var e = new LauncherItemChangedEventArgs(launcherItemId);
             LauncherItemChanged?.Invoke(this, e);
         }
 
         void OnLauncherItemRegistered(Guid groupId, Guid launcherItemId)
         {
+            ThrowIfEmptyLauncherItemId(launcherItemId);
+
             var e = new LauncherItemRegisteredEventArgs(groupId, launcherItemId);
             LauncherItemRegistered?.Invoke(this, e);
         }
 
         void OnCustomizeLauncherItemExited(Guid launcherItemId)
         {
+            ThrowIfEmptyLauncherItemId(launcherItemId);
+
             var e = new CustomizeLauncherItemExitedEventArgs(launcherItemId);
             CustomizeLauncherItemExited?.Invoke(this, e);
         }

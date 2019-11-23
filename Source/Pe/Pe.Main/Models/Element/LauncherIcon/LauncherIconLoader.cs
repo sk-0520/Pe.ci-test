@@ -226,58 +226,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
     }
 
-    public sealed class LauncherIconSettingLoader : LauncherIconLoader
-    {
-        public LauncherIconSettingLoader(Guid launcherItemId, IconBox iconBox, bool isCustomizing, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(launcherItemId, iconBox, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory)
-        {
-            IsCustomizing = isCustomizing;
-        }
-
-        #region property
-
-        public bool IsCustomizing { get; private set; }
-        LauncherItemCustomizeElementBase? CustomizeElement { get; set; }
-        #endregion
-
-        #region function
-
-        public void StartCustomize(LauncherItemCustomizeElementBase customizeElement)
-        {
-            IsCustomizing = true;
-            CustomizeElement = customizeElement;
-        }
-
-        #endregion
-
-        #region LauncherIconLoader
-
-        protected override LauncherIconData GetIconData()
-        {
-            if(IsCustomizing) {
-                Debug.Assert(CustomizeElement != null);
-                var icon = new LauncherIconData() {
-                    Kind = CustomizeElement.Kind,
-                    Icon = CustomizeElement.IconData,
-                };
-            }
-
-            return base.GetIconData();
-        }
-
-        protected override Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken)
-        {
-            if(IsCustomizing) {
-                Debug.Assert(CustomizeElement != null);
-                throw new NotImplementedException();
-            }
-
-            return base.LoadImplAsync(cancellationToken);
-        }
-
-        #endregion
-    }
-
     public static class LauncherIconLoaderPackFactory
     {
         #region funtion
@@ -286,15 +234,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         {
             var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
                 .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory))
-            ;
-            var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
-            return iconImageLoaderPack;
-        }
-
-        public static IconImageLoaderPack CreateSettingPack(Guid launcherItemId, bool isCustomizing, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-        {
-            var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                .Select(i => new LauncherIconSettingLoader(launcherItemId, i, isCustomizing, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWapper, loggerFactory))
             ;
             var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
             return iconImageLoaderPack;

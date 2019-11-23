@@ -1,26 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.ViewModels;
-using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
-using ContentTypeTextNet.Pe.Main.Models.Launcher;
-using Microsoft.Extensions.Logging;
-using Prism.Commands;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
-using ContentTypeTextNet.Pe.Bridge.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeViewModel : SingleModelViewModelBase<LauncherItemCustomizeElementBase>, IViewLifecycleReceiver, ILauncherItemId
+    public class LauncherItemCustomizeEditorViewModel : SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId
     {
         #region variable
 
@@ -28,17 +18,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeViewModel(LauncherItemCustomizeElementBase model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory) : base(model, loggerFactory)
         {
-            Icon = new LauncherIconViewModel(model.Icon, dispatcherWapper, loggerFactory);
         }
 
         #region property
-
-        public RequestSender CloseRequest { get; } = new RequestSender();
-
-        public LauncherIconViewModel Icon { get; }
 
         public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems
         {
@@ -54,28 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 return this._customizeItems;
             }
         }
-
-        public LauncherItemCustomizeCommonViewModel Common => (LauncherItemCustomizeCommonViewModel)CustomizeItems.Find(i => i is LauncherItemCustomizeCommonViewModel)!;
         #endregion
 
-        #region command
-
-        public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                if(Validate()) {
-                    Save();
-                    CloseRequest.Send();
-                }
-            }
-        ));
-
-        public ICommand CancelCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                CloseRequest.Send();
-            }
-        ));
-
-        #endregion
 
         #region function
 
@@ -97,9 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             yield return new LauncherItemCustomizeCommentViewModel(Model, LoggerFactory);
         }
 
-        private void Save()
+        public void Save()
         {
-
             var common = CustomizeItems.OfType<LauncherItemCustomizeCommonViewModel>().First();
             var tag = CustomizeItems.OfType<LauncherItemCustomizeTagViewModel>().First();
             var comment = CustomizeItems.OfType<LauncherItemCustomizeCommentViewModel>().First();
@@ -148,35 +111,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        #region SingleModelViewModelBase
-
-
-        #endregion
-
-        #region IViewLifecycleReceiver
-
-        public void ReceiveViewInitialized(Window window)
-        { }
-
-        public void ReceiveViewLoaded(Window window)
-        { }
-
-        public void ReceiveViewUserClosing(CancelEventArgs e)
-        {
-            e.Cancel = !Model.ReceiveViewUserClosing();
-        }
-
-
-        public void ReceiveViewClosing(CancelEventArgs e)
-        {
-            e.Cancel = !Model.ReceiveViewClosing();
-        }
-
-        public void ReceiveViewClosed()
-        {
-            Model.ReceiveViewClosed();
-        }
-
-        #endregion
     }
 }
