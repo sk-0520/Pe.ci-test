@@ -244,6 +244,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="objectType"></param>
         IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
         IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
+
+        bool Unregister<TInterface>();
     }
 
     /// <summary>
@@ -501,6 +503,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        bool Unregister(Type interfaceType)
+        {
+            if(Factory.TryGetValue(interfaceType, out var factory)) {
+                Mapping.Remove(interfaceType);
+                Factory.Remove(interfaceType);
+                Constructors.Remove(interfaceType);
+                if(factory .Lifecycle == DiLifecycle.Singleton) {
+                    ObjectPool.Remove(interfaceType);
+                    factory.Dispose();
+                }
+                return true;
+            }
+
+            return false;
         }
 
         Type GetMappingType(Type type)
@@ -902,6 +920,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             DirtyRegister(typeof(TBase), propertyName, typeof(TObject));
 
             return this;
+        }
+
+        public bool Unregister<TInterface>()
+        {
+            return Unregister(typeof(TInterface));
         }
 
 #if ENABLED_PRISM7

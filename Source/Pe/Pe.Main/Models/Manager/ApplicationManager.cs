@@ -431,7 +431,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     CloseViews();
                     DisposeElements();
 
-                    // 設定用DBを永続用DBと切り替え
+                    //TODO: 設定用DBを永続用DBと切り替え
+                    //ApplicationDiContainer.
 
                     Logger.LogInformation("設定適用のため各要素生成");
                     RebuildHook();
