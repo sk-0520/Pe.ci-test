@@ -31,8 +31,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void CreateNewItem(LauncherItemKind kind)
+        public Guid CreateNewItem(LauncherItemKind kind)
         {
+            var newLauncherItemId = IdFactory.CreateLauncherItemId();
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                //TODO: 名前の自動設定
+                var item = new LauncherItemData() {
+                    LauncherItemId = newLauncherItemId,
+                    Kind = kind,
+                };
+
+                switch(kind) {
+                    case LauncherItemKind.File: {
+                            var file = new LauncherFileData();
+                            launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherFilesDao.InsertFile(item.LauncherItemId, file, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                commander.Commit();
+            }
+
+            var customizeEditor = new LauncherItemCustomizeEditorElement(newLauncherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+            customizeEditor.Initialize();
+
+            var iconPack = LauncherIconLoaderPackFactory.CreatePack(newLauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
+            var launcherIconElement = new LauncherIconElement(newLauncherItemId, iconPack, LoggerFactory);
+            launcherIconElement.Initialize();
+
+            var newItem = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
+            Items.Add(newItem);
+
+            return newLauncherItemId;
         }
 
         #endregion

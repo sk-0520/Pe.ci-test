@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -35,6 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
+        public RequestSender ScrollToTopCustomizeRequest { get; } = new RequestSender();
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> ItemCollection { get; }
         public ICollectionView Items { get; }
@@ -54,10 +57,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 if(prev != null) {
                     if(prev.Item.Validate()) {
                         prev.Item.Save();
+                        prev.Icon.Reload();
                     }
                 }
 
                 SetProperty(ref this._selectedItem, value);
+
+                ScrollToTopCustomizeRequest.Send();
             }
         }
 
@@ -81,7 +87,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         void CreateNewItem(LauncherItemKind kind)
         {
-            Model.CreateNewItem(kind);
+            IsPopupCreateItemMenu = false;
+            var newLauncherItemId = Model.CreateNewItem(kind);
+            var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
+            SelectedItem = newItem;
+            ScrollSelectedItemRequest.Send();
         }
 
         #endregion

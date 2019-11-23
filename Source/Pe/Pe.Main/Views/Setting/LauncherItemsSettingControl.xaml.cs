@@ -10,7 +10,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
 {
@@ -50,5 +53,28 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #endregion
 
+        #region property
+
+        CommandStore CommandStore { get; } = new CommandStore();
+
+        #endregion
+
+        #region command
+
+        public ICommand ScrollSelectedItemCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                var items = (ListBox)FindName("items");
+                items.ScrollIntoView(Editor.SelectedItem);
+            }
+        ));
+
+        public ICommand ScrollToTopCustomizeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                var customize = (ScrollViewer)FindName("customize");
+                customize.ScrollToTop();
+            }
+        ));
+
+        #endregion
     }
 }

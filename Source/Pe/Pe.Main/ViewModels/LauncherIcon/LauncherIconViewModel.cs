@@ -37,6 +37,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
         #endregion
 
         #region function
+
+        public void Reload()
+        {
+            //TODO
+        }
+
         #endregion
 
         #region IIconPack
