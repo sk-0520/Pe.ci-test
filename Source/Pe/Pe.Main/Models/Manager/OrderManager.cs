@@ -33,6 +33,9 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 using ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute;
 using ContentTypeTextNet.Pe.Main.Views.ExtendsExecute;
+using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
+using ContentTypeTextNet.Pe.Main.Views.Setting;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -78,6 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element);
         WindowItem CreateNoteWindow(NoteElement element);
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
+        WindowItem CreateSettingWindow(SettingContainerElement element);
 
         #endregion
     }
@@ -253,6 +257,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 return new WindowItem(WindowKind.StandardInputOutput, window);
             }
+
+            public WindowItem CreateSettingWindow(SettingContainerElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    return c.Build<SettingContainerViewModel>(element);
+                });
+                var window = DiContainer.BuildView<SettingWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.Setting, window);
+            }
+
             #endregion
 
         }

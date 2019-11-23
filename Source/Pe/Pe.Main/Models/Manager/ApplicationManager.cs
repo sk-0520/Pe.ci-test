@@ -37,6 +37,7 @@ using System.Threading;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using System.IO;
+using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -79,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
-
+        SettingContainerElement? SettingElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
@@ -368,6 +369,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public void ShowSettingView()
         {
+            if(SettingElement != null) {
+                Logger.LogWarning("せっていちゅう");
+                return;
+            }
+
             StopHook();
             var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
@@ -386,13 +392,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var directoryCleaner = new DirectoryCleaner(settingDirectory, 10, TimeSpan.FromSeconds(500), LoggerFactory);
             directoryCleaner.Clear(false);
 
-            var settingDatabaseFile = new FileInfo( Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
+            var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
             var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
 
             environmentParameters.SettingFile.CopyTo(settingDatabaseFile.FullName);
             environmentParameters.FileFile.CopyTo(fileDatabaseFile.FullName);
 
-            bool isSubmit = true;
             using(var container = ApplicationDiContainer.Scope()) {
                 var factory = new ApplicationDatabaseFactoryPack(
                     new ApplicationDatabaseFactory(settingDatabaseFile),
@@ -405,42 +410,54 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
                 ;
 
-                //    container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
-                //    var element = container.Build<SettingElement>();
-                //    element.Initialize();
-                //    var view = container.Build<SettingWindow>();
-                //    WindowManager.Register(new WindowItem(WindowKind.Setting, view));
-                //    view.ShowDialog();
-
-                //    isSubmit = element.IsSubmit;
+                SettingElement = container.Build<SettingContainerElement>();
+                SettingElement.Closed += Element_Closed;
+                SettingElement.Initialize();
+                SettingElement.StartView();
             }
 
-            if(isSubmit) {
-                Logger.LogInformation("設定適用のため現在表示要素の破棄");
-                CloseViews();
-                DisposeElements();
+            void Element_Closed(object? sender, System.EventArgs e)
+            {
+                Debug.Assert(SettingElement == sender);
+                Debug.Assert(SettingElement != null);
 
-                Logger.LogInformation("設定適用のため各要素生成");
-                RebuildHook();
-                ExecuteElements();
-            } else {
-                Logger.LogInformation("設定は保存されなかったため現在要素継続");
-                StartHook();
-            }
+                SettingElement.Closed -= Element_Closed;
 
-            Logger.LogDebug("遅延書き込み処理再開");
-            foreach(var pair in lazyWriterItemMap) {
-                if(isSubmit) {
-                    // 確定処理の書き込みが天に召されるのでため込んでいた処理(ないはず)を消す
-                    pair.Key.ClearStock();
+                if(SettingElement.IsSubmit) {
+                    Logger.LogInformation("設定は保存されなかったため現在要素継続");
+                    StartHook();
+                } else {
+                    Logger.LogInformation("設定適用のため現在表示要素の破棄");
+                    CloseViews();
+                    DisposeElements();
+
+                    // 設定用DBを永続用DBと切り替え
+
+                    Logger.LogInformation("設定適用のため各要素生成");
+                    RebuildHook();
+                    ExecuteElements();
                 }
-                pair.Value.Dispose();
+
+                Logger.LogDebug("遅延書き込み処理再開");
+                foreach(var pair in lazyWriterItemMap) {
+                    if(SettingElement.IsSubmit) {
+                        // 確定処理の書き込みが天に召されるのでため込んでいた処理(ないはず)を消す
+                        pair.Key.ClearStock();
+                    }
+                    pair.Value.Dispose();
+                }
+
+                if(changing.Success) {
+                    changing.SuccessValue?.Dispose();
+                }
+
+                SettingElement.Dispose();
+                SettingElement = null;
             }
 
-            if(changing.Success) {
-                changing.SuccessValue?.Dispose();
-            }
+
         }
+
 
         #endregion
 
@@ -569,6 +586,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return windowItem;
         }
+
+        public WindowItem CreateSettingWindow(SettingContainerElement element)
+        {
+            var windowItem = OrderManager.CreateSettingWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
+
 
 
         #endregion
