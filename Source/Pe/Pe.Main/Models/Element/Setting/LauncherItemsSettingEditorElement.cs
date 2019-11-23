@@ -33,6 +33,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
+        public void RemoveItem(Guid launcherItemId)
+        {
+
+        }
+
         public Guid CreateNewItem(LauncherItemKind kind)
         {
             var newLauncherItemId = IdFactory.CreateLauncherItemId();

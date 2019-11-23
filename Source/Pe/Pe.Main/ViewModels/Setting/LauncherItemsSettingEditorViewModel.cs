@@ -97,6 +97,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             CreateNewItem(LauncherItemKind.Addon);
         }));
 
+        public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
+            var selectedItem = SelectedItem;
+            if(selectedItem == null) {
+                return;
+            }
+            Model.RemoveItem(selectedItem.LauncherItemId);
+            SelectedItem = null;
+        }));
+
         #endregion
 
         #region function
