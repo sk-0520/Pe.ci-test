@@ -133,7 +133,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void Drop(UIElement sender, DragEventArgs e)
         {
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
-            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
+            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, (path, expand) => {
+                var launcherItemId = Model.RegisterFile(path, expand);
+                var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
+                SelectedItem = newItem;
+                ScrollSelectedItemRequest.Send();
+            }));
         }
 
         private void DragLeave(UIElement sender, DragEventArgs e)

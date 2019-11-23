@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         /// </summary>
         /// <param name="filePath">対象ファイルパス。</param>
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
-        public void RegisterFile(string filePath, bool expandShortcut)
+        public Guid RegisterFile(string filePath, bool expandShortcut)
         {
             //TODO: LauncherToolbarElement.RegisterFile と重複
             var file = new FileInfo(filePath);
@@ -103,6 +103,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                 commander.Commit();
             }
+
+            var customizeEditor = new LauncherItemCustomizeEditorElement(data.Item.LauncherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+            customizeEditor.Initialize();
+
+            var iconPack = LauncherIconLoaderPackFactory.CreatePack(data.Item.LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
+            var launcherIconElement = new LauncherIconElement(data.Item.LauncherItemId, iconPack, LoggerFactory);
+            launcherIconElement.Initialize();
+
+            var newItem = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
+            Items.Add(newItem);
+
+            return data.Item.LauncherItemId;
         }
 
         #endregion

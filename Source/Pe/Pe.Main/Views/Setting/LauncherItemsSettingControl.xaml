@@ -25,7 +25,7 @@
     <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollToTopCustomizeRequest, ElementName=root}">
       <prism:InvokeCommandAction Command="{Binding ScrollToTopCustomizeCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding ExpandShortcutFileRequest}">
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ExpandShortcutFileRequest, ElementName=root}">
       <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
@@ -68,9 +68,9 @@
         <TextBox Grid.Column="2" />
       </Grid>
 
-      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.Items, ElementName=root}">
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.Items, ElementName=root}">
         <i:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
