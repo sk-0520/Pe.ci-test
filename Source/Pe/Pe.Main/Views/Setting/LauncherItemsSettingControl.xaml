@@ -64,7 +64,7 @@
         <TextBox Grid.Column="2" />
       </Grid>
 
-      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=250}" ItemsSource="{Binding Editor.Items, ElementName=root}">
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.Items, ElementName=root}">
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel
