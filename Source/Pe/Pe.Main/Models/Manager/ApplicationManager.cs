@@ -383,25 +383,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
             var settingDirectory = environmentParameters.SettingTemporaryDirectory;
-            settingDirectory.Refresh();
-            if(settingDirectory.Exists) {
-                FileUtility.DeleteDirectory(settingDirectory);
-            }
-            //TODO: 外部から設定できるようにする。というかこの処理自体 共通化しときたい
-            var waitTime = TimeSpan.FromSeconds(500);
-            var counter = new Counter(10);
-            foreach(var count in counter) {
-                settingDirectory.Create();
-                settingDirectory.Refresh();
-                if(settingDirectory.Exists) {
-                    break;
-                } else if(count.IsLast) {
-                    Logger.LogError("設定用一時ディレクトリ作成に失敗: {0}", settingDirectory);
-                    return;
-                }
-                Logger.LogInformation("設定用一時ディレクトリ作成待機中: {0}/{1} {2}", count.CurrentCount, count.MaxCount, waitTime);
-                Thread.Sleep(waitTime);
-            }
+            var directoryCleaner = new DirectoryCleaner(settingDirectory, 10, TimeSpan.FromSeconds(500), LoggerFactory);
+            directoryCleaner.Clear(false);
 
             var settingDatabaseFile = new FileInfo( Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
             var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));

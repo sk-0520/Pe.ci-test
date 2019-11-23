@@ -90,28 +90,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        public static bool DeleteDirectory(DirectoryInfo directoryInfo)
-        {
-            if(!directoryInfo.Exists) {
-                return false;
-            }
-            var files = directoryInfo.GetFiles();
-            foreach(var file in files) {
-                if(file.Attributes.HasFlag(FileAttributes.ReadOnly)) {
-                    file.Attributes = file.Attributes & ~FileAttributes.ReadOnly;
-                }
-                file.Delete();
-            }
-            var dirs = directoryInfo.GetDirectories();
-            foreach(var dir in dirs) {
-                DeleteDirectory(dir);
-            }
-
-            directoryInfo.Delete(true);
-
-            return true;
-        }
-
         /// <summary>
         /// 指定条件で不要ファイルを削除。
         /// </summary>
