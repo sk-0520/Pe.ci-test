@@ -1,0 +1,58 @@
+<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.LauncherItemsSettingControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="2*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="8*" />
+    </Grid.ColumnDefinitions>
+
+    <Grid Grid.Column="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+          <ToggleButton x:Name="switchCreateItem" IsChecked="{Binding IsPopupCreateItemMenu}" Content="+" />
+          <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateItem}">
+            <Border Style="{StaticResource PopupMenuBorder}">
+              <StackPanel>
+                <MenuItem Header="file" Command="{Binding CreateNewFileItemCommand}" />
+                <MenuItem Header="store" Command="{Binding CreateNewStoreAppItemCommand}" />
+                <MenuItem Header="addin" Command="{Binding CreateNewAddonItemCommand}" />
+              </StackPanel>
+            </Border>
+          </Popup>
+        </Grid>
+        <Button Grid.Column="1" Content="-" />
+        <TextBox Grid.Column="2" />
+      </Grid>
+    </Grid>
+
+    <GridSplitter Grid.Column="1" />
+
+    <Grid Grid.Column="2">
+      <app_main_views_launcher_item_customize:LauncherItemCustomizeControl />
+    </Grid>
+
+  </Grid>
+</UserControl>

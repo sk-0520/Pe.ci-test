@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -11,11 +12,37 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public class SettingContainerViewModel : SingleModelViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
     {
+        #region variable
+
+        ISettingEditorViewModel _selectedEditor;
+
+        #endregion
+
         public SettingContainerViewModel(SettingContainerElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, LoggerFactory);
+
+            EditorItems = new List<ISettingEditorViewModel>() {
+                LauncherItemsSettingEditor,
+            };
+            this._selectedEditor = EditorItems.First();
+        }
 
         #region property
+
+        public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
+
+        public ISettingEditorViewModel SelectedEditor {
+            get => this._selectedEditor;
+            set
+            {
+                SetProperty(ref this._selectedEditor, value);
+            }
+        }
+
+        public LauncherItemsSettingEditorViewModel LauncherItemsSettingEditor { get; }
+
         #endregion
 
         #region command
@@ -30,7 +57,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         public void ReceiveViewLoaded(Window window)
-        { }
+        {
+            SelectedEditor.Load();
+        }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
         {

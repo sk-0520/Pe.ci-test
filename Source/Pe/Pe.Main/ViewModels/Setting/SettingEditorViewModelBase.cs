@@ -7,8 +7,18 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public abstract class SettingEditorViewModelBase<TSettingEditorElement> : SingleModelViewModelBase<TSettingEditorElement>
-        where TSettingEditorElement: SettingEditorElementBase
+    public interface ISettingEditorViewModel
+    {
+        #region function
+
+        void Load();
+        void Save();
+
+        #endregion
+    }
+
+    public abstract class SettingEditorViewModelBase<TSettingEditorElement> : SingleModelViewModelBase<TSettingEditorElement>, ISettingEditorViewModel
+        where TSettingEditorElement : SettingEditorElementBase
     {
         public SettingEditorViewModelBase(TSettingEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -22,5 +32,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
         #endregion
+
+        #region ISettingEditorViewModel
+
+        public void Load()
+        {
+            Model.Load();
+        }
+        public void Save()
+        {
+            Model.Save();
+        }
+
+        #endregion
+
     }
 }

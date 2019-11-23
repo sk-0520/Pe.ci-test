@@ -398,6 +398,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             environmentParameters.SettingFile.CopyTo(settingDatabaseFile.FullName);
             environmentParameters.FileFile.CopyTo(fileDatabaseFile.FullName);
 
+            // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
             var factory = new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(settingDatabaseFile),
@@ -407,6 +408,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
 
             container
+                .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
             ;
 
