@@ -7,10 +7,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public sealed class LauncherItemWithIconElement<TLauncherItemElement> : ElementBase, ILauncherItemId
+    public sealed class LauncherElementWithIconElement<TLauncherItemElement> : ElementBase, ILauncherItemId
         where TLauncherItemElement : ElementBase, ILauncherItemId
     {
-        public LauncherItemWithIconElement(TLauncherItemElement element, LauncherIconElement icon, ILoggerFactory loggerFactory)
+        public LauncherElementWithIconElement(TLauncherItemElement element, LauncherIconElement icon, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             if(element.LauncherItemId != icon.LauncherItemId) {
@@ -47,10 +47,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     {
         #region function
 
-        public static LauncherItemWithIconElement<TLauncherItemElement> Create<TLauncherItemElement>(TLauncherItemElement element, LauncherIconElement icon, ILoggerFactory loggerFactory)
+        public static LauncherElementWithIconElement<TLauncherItemElement> Create<TLauncherItemElement>(TLauncherItemElement element, LauncherIconElement icon, ILoggerFactory loggerFactory)
             where TLauncherItemElement : ElementBase, ILauncherItemId
         {
-            return new LauncherItemWithIconElement<TLauncherItemElement>(element, icon, loggerFactory);
+            return new LauncherElementWithIconElement<TLauncherItemElement>(element, icon, loggerFactory);
         }
 
         #endregion

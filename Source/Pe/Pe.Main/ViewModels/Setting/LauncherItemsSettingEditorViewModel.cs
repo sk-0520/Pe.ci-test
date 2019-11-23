@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherItemsSettingEditorViewModel(LauncherItemsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            ItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>>(Model.Items, LoggerFactory) {
+            ItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>>(Model.Items, LoggerFactory) {
                 ToViewModel = m => LauncherItemWithIconViewModel.Create(new LauncherItemCustomizeEditorViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, LoggerFactory), LoggerFactory),
             };
             Items = ItemCollection.GetCollectionView();
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
         public RequestSender ScrollToTopCustomizeRequest { get; } = new RequestSender();
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> ItemCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> ItemCollection { get; }
         public ICollectionView Items { get; }
 
         public bool IsPopupCreateItemMenu

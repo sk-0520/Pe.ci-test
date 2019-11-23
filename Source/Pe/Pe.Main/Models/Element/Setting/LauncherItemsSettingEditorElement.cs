@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        public ObservableCollection<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>> Items { get; } = new ObservableCollection<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>>();
+        public ObservableCollection<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>> Items { get; } = new ObservableCollection<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>>();
 
         #endregion
 
