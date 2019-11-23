@@ -21,7 +21,7 @@
 
     <TabControl Grid.Row="0">
       <TabItem Header="launcher">
-        <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding}" />
+        <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding LauncherItemsSettingEditor}" />
       </TabItem>
     </TabControl>
 

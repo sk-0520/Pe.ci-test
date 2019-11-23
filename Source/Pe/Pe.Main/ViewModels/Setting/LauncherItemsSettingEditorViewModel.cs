@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -19,28 +20,39 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region variable
 
         bool _isPopupCreateItemMenu;
+        LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>? _selectedItem;
 
         #endregion
 
         public LauncherItemsSettingEditorViewModel(LauncherItemsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            CustomizeEditorCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>>(Model.Items, LoggerFactory) {
+            ItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>>(Model.Items, LoggerFactory) {
                 ToViewModel = m => LauncherItemWithIconViewModel.Create(new LauncherItemCustomizeEditorViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, LoggerFactory), LoggerFactory),
             };
-            CustomizeEditorItems = CustomizeEditorCollection.GetCollectionView();
+            Items = ItemCollection.GetCollectionView();
         }
 
         #region property
 
 
-        ModelViewModelObservableCollectionManagerBase<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> CustomizeEditorCollection { get; }
-        public ICollectionView CustomizeEditorItems { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherItemWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> ItemCollection { get; }
+        public ICollectionView Items { get; }
 
         public bool IsPopupCreateItemMenu
         {
             get => this._isPopupCreateItemMenu;
             set => SetProperty(ref this._isPopupCreateItemMenu, value);
+        }
+
+        public LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>? SelectedItem
+        {
+            get => this._selectedItem;
+            set
+            {
+                var prev = this._selectedItem;
+                SetProperty(ref this._selectedItem, value);
+            }
         }
 
         #endregion

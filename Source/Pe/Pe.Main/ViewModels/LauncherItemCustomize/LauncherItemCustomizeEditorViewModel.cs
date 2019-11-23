@@ -19,8 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #endregion
 
         public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory) : base(model, loggerFactory)
-        {
-        }
+        { }
 
         #region property
 
@@ -38,6 +37,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 return this._customizeItems;
             }
         }
+
+        public LauncherItemCustomizeCommonViewModel Common => (LauncherItemCustomizeCommonViewModel)CustomizeItems.First(i => i is LauncherItemCustomizeCommonViewModel);
+
         #endregion
 
 

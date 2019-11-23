@@ -15,7 +15,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public sealed class LauncherItemWithIconViewModel<TLauncherItemViewModel> : ViewModelBase, ILauncherItemId
+    public class LauncherItemWithIconViewModel<TLauncherItemViewModel> : ViewModelBase, ILauncherItemId
         where TLauncherItemViewModel : ViewModelBase, ILauncherItemId
     {
         public LauncherItemWithIconViewModel(TLauncherItemViewModel item, LauncherIconViewModel icon, ILoggerFactory loggerFactory)
