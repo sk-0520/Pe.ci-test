@@ -241,10 +241,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return true;
         }
 
-        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor, ILoggerFactory loggerFactory)
+        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, ILoggerFactory loggerFactory)
         {
             var container = new ApplicationDiContainer();
 
+            //var accessor = ApplicationDatabaseAccessorPack.Create(factory, loggerFactory);
+            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+            /*
             var readerWriterLockerPack = new ApplicationReaderWriterLockerPack(
                 new ApplicationMainReaderWriterLocker(),
                 new ApplicationFileReaderWriterLocker(),
@@ -261,13 +264,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseLazyWriter(barrierPack.File, TimeSpan.FromSeconds(3), loggerFactory),
                 new ApplicationDatabaseLazyWriter(barrierPack.Temporary, TimeSpan.FromSeconds(3), loggerFactory)
             );
+            */
 
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
+                .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
-
+                /*
                 .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessor)
                 .Register<IDatabaseBarrierPack, ApplicationDatabaseBarrierPack>(barrierPack)
@@ -281,7 +286,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Main)
                 .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.File)
                 .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Temporary)
-
+                */
+                .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
                 .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
@@ -385,8 +391,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             if(!IsFirstStartup && !skipAccept) {
             }
 
+            var factory = pack.factory;
+            pack.accessor.Dispose();
+
             LoggerFactory = loggerFactory;
-            DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, loggerFactory);
+            DiContainer = SetupContainer(environmentParameters, factory, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);

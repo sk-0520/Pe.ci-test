@@ -179,7 +179,7 @@ echo end
 
         void DebugSetting()
         {
-            OpenSettingView();
+            ShowSettingView();
         }
         void DebugColorPicker()
         {

@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand OpenSettingCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 // めんどいし直接ビュー開くよ
-                ApplicationManager.OpenSettingView();
+                ApplicationManager.ShowSettingView();
             }
         ));
 

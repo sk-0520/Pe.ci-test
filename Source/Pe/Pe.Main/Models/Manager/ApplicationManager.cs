@@ -36,6 +36,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using System.Threading;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using System.IO;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -365,7 +366,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         /// すべてここで完結する神の所業。
         /// </summary>
-        public void OpenSettingView()
+        public void ShowSettingView()
         {
             StopHook();
             var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
@@ -379,17 +380,57 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 lazyWriterItemMap.Add(lazyWriter, pausing);
             }
 
-            bool isSubmit = true;
-            //using(var container = ApplicationDiContainer.Scope()) {
-            //    container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
-            //    var element = container.Build<SettingElement>();
-            //    element.Initialize();
-            //    var view = container.Build<SettingWindow>();
-            //    WindowManager.Register(new WindowItem(WindowKind.Setting, view));
-            //    view.ShowDialog();
+            // 現在DBを編集用として再構築
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var settingDirectory = environmentParameters.SettingTemporaryDirectory;
+            settingDirectory.Refresh();
+            if(settingDirectory.Exists) {
+                FileUtility.DeleteDirectory(settingDirectory);
+            }
+            //TODO: 外部から設定できるようにする。というかこの処理自体 共通化しときたい
+            var waitTime = TimeSpan.FromSeconds(500);
+            var counter = new Counter(10);
+            foreach(var count in counter) {
+                settingDirectory.Create();
+                settingDirectory.Refresh();
+                if(settingDirectory.Exists) {
+                    break;
+                } else if(count.IsLast) {
+                    Logger.LogError("設定用一時ディレクトリ作成に失敗: {0}", settingDirectory);
+                    return;
+                }
+                Logger.LogInformation("設定用一時ディレクトリ作成待機中: {0}/{1} {2}", count.CurrentCount, count.MaxCount, waitTime);
+                Thread.Sleep(waitTime);
+            }
 
-            //    isSubmit = element.IsSubmit;
-            //}
+            var settingDatabaseFile = new FileInfo( Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
+            var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
+
+            environmentParameters.SettingFile.CopyTo(settingDatabaseFile.FullName);
+            environmentParameters.FileFile.CopyTo(fileDatabaseFile.FullName);
+
+            bool isSubmit = true;
+            using(var container = ApplicationDiContainer.Scope()) {
+                var factory = new ApplicationDatabaseFactoryPack(
+                    new ApplicationDatabaseFactory(settingDatabaseFile),
+                    new ApplicationDatabaseFactory(fileDatabaseFile),
+                    new ApplicationDatabaseFactory()
+                );
+                var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+
+                container
+                    .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
+                ;
+
+                //    container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
+                //    var element = container.Build<SettingElement>();
+                //    element.Initialize();
+                //    var view = container.Build<SettingWindow>();
+                //    WindowManager.Register(new WindowItem(WindowKind.Setting, view));
+                //    view.ShowDialog();
+
+                //    isSubmit = element.IsSubmit;
+            }
 
             if(isSubmit) {
                 Logger.LogInformation("設定適用のため現在表示要素の破棄");

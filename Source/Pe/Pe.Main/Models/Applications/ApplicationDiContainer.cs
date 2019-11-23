@@ -67,6 +67,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             });
         }
 
+
+        public static TContainer RegisterDatabase<TContainer>(this TContainer @this, ApplicationDatabaseFactoryPack factoryPack, LazyWriterWaitTimePack lazyWriterWaitTimePack, ILoggerFactory loggerFactory)
+            where TContainer: IDiRegisterContainer
+        {
+            var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
+
+            var readerWriterLockerPack = new ApplicationReaderWriterLockerPack(
+                new ApplicationMainReaderWriterLocker(),
+                new ApplicationFileReaderWriterLocker(),
+                new ApplicationTemporaryReaderWriterLocker()
+            );
+            var barrierPack = new ApplicationDatabaseBarrierPack(
+                new ApplicationDatabaseBarrier(accessorPack.Main, readerWriterLockerPack.Main),
+                new ApplicationDatabaseBarrier(accessorPack.File, readerWriterLockerPack.File),
+                new ApplicationDatabaseBarrier(accessorPack.Temporary, readerWriterLockerPack.Temporary)
+            );
+
+            var lazyWriterPack = new ApplicationDatabaseLazyWriterPack(
+                new ApplicationDatabaseLazyWriter(barrierPack.Main, lazyWriterWaitTimePack.Main, loggerFactory),
+                new ApplicationDatabaseLazyWriter(barrierPack.File, lazyWriterWaitTimePack.File, loggerFactory),
+                new ApplicationDatabaseLazyWriter(barrierPack.Temporary, lazyWriterWaitTimePack.Temporary, loggerFactory)
+            );
+
+            @this
+                .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factoryPack)
+                .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessorPack)
+                .Register<IDatabaseBarrierPack, ApplicationDatabaseBarrierPack>(barrierPack)
+                .Register<IReaderWriterLockerPack, ApplicationReaderWriterLockerPack>(readerWriterLockerPack)
+                .Register<IDatabaseLazyWriterPack, ApplicationDatabaseLazyWriterPack>(lazyWriterPack)
+
+                .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Main)
+                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.File)
+                .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Temporary)
+
+                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Main)
+                .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.File)
+                .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Temporary)
+            ;
+
+            return @this;
+        }
         #endregion
     }
 }

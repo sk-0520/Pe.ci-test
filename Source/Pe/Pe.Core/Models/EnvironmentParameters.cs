@@ -90,6 +90,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
 #pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
 
         /// <summary>
+        /// 設定ファイル格納用一時ディレクトリ。
+        /// </summary>
+        public DirectoryInfo SettingTemporaryDirectory => CombineDirectory(TemporaryDirectory, "setting");
+
+        /// <summary>
         /// 設定格納DBファイル。
         /// </summary>
         public FileInfo SettingFile => CombineFile(UserSettingDirectory, "setting.sqlite3");

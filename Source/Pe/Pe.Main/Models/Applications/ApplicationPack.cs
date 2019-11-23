@@ -103,6 +103,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         { }
     }
 
+    public class LazyWriterWaitTimePack : TApplicationPackBase<TimeSpan, TimeSpan>
+    {
+        public LazyWriterWaitTimePack(TimeSpan main, TimeSpan file, TimeSpan temporary)
+            : base(main, file, temporary)
+        { }
+    }
+
     public interface IDatabaseLazyWriterPack : IApplicationPack<IDatabaseLazyWriter>
     { }
 
