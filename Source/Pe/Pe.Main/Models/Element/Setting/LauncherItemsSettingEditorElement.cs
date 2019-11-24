@@ -118,13 +118,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         /// <summary>
-        /// ファイルを現在のグループに登録する。
+        /// ファイルを登録する。
+        /// <para>TODO: <see cref="LauncherToolbar.LauncherToolbarElement.RegisterFile"/>と重複</para>
         /// </summary>
         /// <param name="filePath">対象ファイルパス。</param>
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
         public Guid RegisterFile(string filePath, bool expandShortcut)
         {
-            //TODO: LauncherToolbarElement.RegisterFile と重複
             var file = new FileInfo(filePath);
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             var data = launcherFactory.FromFile(file, expandShortcut);
