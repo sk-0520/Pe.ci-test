@@ -7,6 +7,7 @@
 <#
 int parameterCount = 30;
 #>
+// [T4] build <#= DateTime.UtcNow.ToString("u") #>(UTC)
 using System;
 using System.Diagnostics;
 
@@ -14,19 +15,27 @@ using System.Diagnostics;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     partial class DiConstructorCache {
-        <# for(var i = 0; i < parameterCount; i++) { #>
+<#
+    for(var i = 0; i < parameterCount; i++) {
+#>
         private delegate object DiConstructorCacheP<#= i + 1 #>(<#= string.Join(", ", Enumerable.Repeat("object p", i + 1).Select((v,i) => v + (i + 1))) #>);
-        <# } #>
+<#
+    }
+#>
 
         private Func<object[], object> CreateCore(object[] parameters)
         {
             switch(ParameterInfos.Count) {
-                <# for(var i = 0; i < parameterCount; i++) { #>
+<#
+                for(var i = 0; i < parameterCount; i++) {
+#>
                 case <#= i + 1 #>: {
                     var creator = CreateFunction<DiConstructorCacheP<#= i + 1 #>>();
                     return p => creator(<#= string.Join(", ", Enumerable.Repeat("p", i + 1).Select((v, i) => $"{v}[{i}]")) #>);
                 }
-                <# } #>
+<#
+                }
+#>
 
                 default:
                     Debug.WriteLine("パラメータ数ガン上げ: {0} < {1}", <#= parameterCount #>, ParameterInfos.Count);
