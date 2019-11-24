@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
+  xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
 
   Title="SettingWindow"
   Width="800"
@@ -19,10 +20,20 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <TabControl Grid.Row="0">
-      <TabItem Header="launcher">
-        <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding LauncherItemsSettingEditor}" />
-      </TabItem>
+    <TabControl Grid.Row="0" ItemsSource="{Binding EditorItems}" SelectedItem="{Binding SelectedEditor}">
+      <TabControl.Resources>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherItemsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherGroupsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherGroupsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+      </TabControl.Resources>
+      <TabControl.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding Header}" />
+        </DataTemplate>
+      </TabControl.ItemTemplate>
     </TabControl>
 
     <StackPanel Grid.Row="1" Orientation="Horizontal">

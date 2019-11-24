@@ -10,6 +10,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public interface ISettingEditorViewModel
     {
+        #region property
+
+        public string Header { get; }
+
+        #endregion
+
         #region function
 
         void Load();
@@ -40,6 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region ISettingEditorViewModel
+
+        public abstract string Header { get; }
 
         public void Load()
         {

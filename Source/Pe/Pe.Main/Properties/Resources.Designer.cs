@@ -127,5 +127,50 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
                 return ResourceManager.GetString("String_LauncherItem_NewItem_Name", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   general に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_General {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   hooks に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_Hooks {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_Hooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   groups に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_LauncherGroups {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_LauncherGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   items に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_LauncherItems {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_LauncherItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   toolbars に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_LauncherToolbars {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_LauncherToolbars", resourceCulture);
+            }
+        }
     }
 }

@@ -160,5 +160,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #endregion
+
+        #region SettingEditorViewModelBase
+
+        public override string Header => Properties.Resources.String_Setting_Header_LauncherItems;
+
+        #endregion
+
     }
 }

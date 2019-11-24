@@ -25,11 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             DispatcherWrapper = dispatcherWrapper;
 
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, DispatcherWrapper, LoggerFactory);
-
+            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, DispatcherWrapper, LoggerFactory);
             EditorItems = new List<ISettingEditorViewModel>() {
                 LauncherItemsSettingEditor,
+                LauncherGroupsSettingEditor,
             };
-            this._selectedEditor = EditorItems.First();
+            //this._selectedEditor = EditorItems.First();
+            this._selectedEditor = LauncherGroupsSettingEditor;
         }
 
         #region property
@@ -38,16 +40,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
 
-        public ISettingEditorViewModel SelectedEditor {
+        public ISettingEditorViewModel SelectedEditor
+        {
             get => this._selectedEditor;
             set
             {
+                var prev = this._selectedEditor;
+                if(prev != null) {
+                    prev.Save();
+                }
                 SetProperty(ref this._selectedEditor, value);
+                if(this._selectedEditor != null) {
+                    this._selectedEditor.Load();
+                }
             }
         }
 
         public LauncherItemsSettingEditorViewModel LauncherItemsSettingEditor { get; }
-
+        public LauncherGroupsSettingEditorViewModel LauncherGroupsSettingEditor { get; }
         #endregion
 
         #region command

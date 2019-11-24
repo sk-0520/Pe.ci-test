@@ -130,4 +130,19 @@
   <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
     <value>新しいアイテム</value>
   </data>
+  <data name="String_Setting_Header_General" xml:space="preserve">
+    <value>general</value>
+  </data>
+  <data name="String_Setting_Header_Hooks" xml:space="preserve">
+    <value>hooks</value>
+  </data>
+  <data name="String_Setting_Header_LauncherGroups" xml:space="preserve">
+    <value>groups</value>
+  </data>
+  <data name="String_Setting_Header_LauncherItems" xml:space="preserve">
+    <value>items</value>
+  </data>
+  <data name="String_Setting_Header_LauncherToolbars" xml:space="preserve">
+    <value>toolbars</value>
+  </data>
 </root>

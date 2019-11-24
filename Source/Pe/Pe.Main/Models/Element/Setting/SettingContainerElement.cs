@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(diContainer, loggerFactory)
         {
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>();
+            LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
         }
 
         #region property
@@ -44,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool IsSubmit { get; private set; }
 
         public LauncherItemsSettingEditorElement LauncherItemsSettingEditor { get; }
-
+        public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
         #endregion
 
         #region ContextElementBase
