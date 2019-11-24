@@ -54,13 +54,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="IDisposable.Dispose"/>されたか。
         /// </summary>
         [IgnoreDataMember, XmlIgnore]
-        public bool IsDisposed { get; private set; }
+        public bool IsDisposed { get; protected set; }
 
         protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
         {
             if(IsDisposed) {
                 throw new ObjectDisposedException(_callerMemberName);
             }
+        }
+
+        protected void OnDisposing()
+        {
+            Disposing?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -74,9 +79,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return;
             }
 
-            if(Disposing != null) {
-                Disposing(this, EventArgs.Empty);
-            }
+            OnDisposing();
 
             if(disposing) {
                 GC.SuppressFinalize(this);

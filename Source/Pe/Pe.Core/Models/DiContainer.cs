@@ -42,6 +42,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public class InjectionAttribute : Attribute
     { }
 
+    /// <summary>
+    /// DI処理でわっけ分からんことになったら投げられる例外。
+    /// <para><see cref="ArgumentException"/>等の分かっているのはその例外を投げるのでこの例外だけ受ければ良いという話ではない。</para>
+    /// </summary>
     public class DiException : ApplicationException
     {
         public DiException()
@@ -108,6 +112,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IScopeDiContainer Scope();
     }
 
+    /// <summary>
+    /// 取得可能コンテナ。
+    /// </summary>
     public interface IDiContainer : IDiScopeContainerFactory
 #if ENABLED_PRISM7
         , IContainerProvider
@@ -194,6 +201,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         ;
     }
 
+    /// <summary>
+    ///登録可能コンテナ。
+    /// </summary>
     public interface IDiRegisterContainer : IDiContainer
 #if ENABLED_PRISM7
         , IContainerRegistry
@@ -245,6 +255,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
         IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
 
+        /// <summary>
+        /// 登録解除。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <returns></returns>
         bool Unregister<TInterface>();
     }
 
@@ -1023,21 +1038,31 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        // 自動生成にしても日本語がすごい
         #region IDisposable
 
-        // TODO: この Dispose まずいんちゃうか
         protected override void Dispose(bool disposing)
         {
-            if(IsDisposed) {
+            if(!IsDisposed) {
                 if(disposing) {
                     foreach(var type in RegisteredTypeSet) {
-                        Factory[type].Dispose();
+                        if(Factory.TryGetValue(type, out var value)) {
+                            value.Dispose();
+                        }
                     }
                 }
             }
 
-            base.Dispose(disposing);
+            if(IsDisposed) {
+                return;
+            }
+
+            OnDisposing();
+
+            if(disposing) {
+                GC.SuppressFinalize(this);
+            }
+
+            IsDisposed = true;
         }
 
         #endregion
