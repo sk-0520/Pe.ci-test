@@ -1026,6 +1026,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         // 自動生成にしても日本語がすごい
         #region IDisposable
 
+        // TODO: この Dispose まずいんちゃうか
         protected override void Dispose(bool disposing)
         {
             if(IsDisposed) {
