@@ -127,4 +127,7 @@
   <data name="File_Highlighting_Tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\highlighting\tag.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
+    <value>新しいアイテム</value>
+  </data>
 </root>

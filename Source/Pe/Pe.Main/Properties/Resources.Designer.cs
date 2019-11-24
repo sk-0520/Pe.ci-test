@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ContentTypeTextNet.Pe.Main.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string File_Highlighting_EnvironmentVariable_Merge {
+        public static string File_Highlighting_EnvironmentVariable_Merge {
             get {
                 return ResourceManager.GetString("File_Highlighting_EnvironmentVariable_Merge", resourceCulture);
             }
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string File_Highlighting_EnvironmentVariable_Remove {
+        public static string File_Highlighting_EnvironmentVariable_Remove {
             get {
                 return ResourceManager.GetString("File_Highlighting_EnvironmentVariable_Remove", resourceCulture);
             }
@@ -113,9 +113,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string File_Highlighting_Tag {
+        public static string File_Highlighting_Tag {
             get {
                 return ResourceManager.GetString("File_Highlighting_Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいアイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItem_NewItem_Name {
+            get {
+                return ResourceManager.GetString("String_LauncherItem_NewItem_Name", resourceCulture);
             }
         }
     }

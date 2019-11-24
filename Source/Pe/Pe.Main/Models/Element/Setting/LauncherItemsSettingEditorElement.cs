@@ -72,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public Guid CreateNewItem(LauncherItemKind kind)
         {
             var newLauncherItemId = IdFactory.CreateLauncherItemId();
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -82,6 +83,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     LauncherItemId = newLauncherItemId,
                     Kind = kind,
                 };
+
+                item.Name = Properties.Resources.String_LauncherItem_NewItem_Name;
+                var newCode = kind.ToString().ToLower() + "-item-code";
+                var codes = launcherItemsDao.SelectFuzzyCodes(newCode).ToList();
+                item.Code = launcherFactory.GetUniqueCode(newCode, codes);
 
                 switch(kind) {
                     case LauncherItemKind.File: {
