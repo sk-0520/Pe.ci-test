@@ -12,7 +12,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         public CommonLauncherItemViewModel(CommonLauncherItemElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            if(!Model.IsInitialized) {
+                throw new ArgumentException(nameof(Model.IsInitialized));
+            }
+        }
 
         #region property
 

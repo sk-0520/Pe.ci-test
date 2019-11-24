@@ -19,6 +19,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherGroupSettingEditorViewModel(LauncherGroupElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            if(!Model.IsInitialized) {
+                throw new ArgumentException(nameof(Model.IsInitialized));
+            }
+
+
             DispatcherWrapper = dispatcherWrapper;
 
             this._name = Model.Name;

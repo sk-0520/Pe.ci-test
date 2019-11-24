@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            LauncherItemsSettingEditor.Initialize();
+            LauncherGroupsSettingEditor.Initialize();
         }
 
         #endregion
