@@ -91,7 +91,7 @@
       </ListBox>
     </Grid>
 
-    <GridSplitter Grid.Column="1" />
+    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
     <Grid Grid.Column="2">
       <ScrollViewer x:Name="customize">

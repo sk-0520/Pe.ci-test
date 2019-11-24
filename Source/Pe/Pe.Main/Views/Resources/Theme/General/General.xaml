@@ -9,6 +9,7 @@
   <sys:Double x:Key="Icon-Stroke-Small">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Normal">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Big">1</sys:Double>
+  <sys:Double x:Key="GridSplitterLength">4</sys:Double>
 
 
   <ControlTemplate x:Key="SmallIcon" TargetType="ContentControl">
@@ -150,5 +151,18 @@
       </Setter.Value>
     </Setter>
   </Style>
+
+  <Style TargetType="GridSplitter">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Background" Value="{DynamicResource SeperatorBrush}"/>
+  </Style>
+  <Style x:Key="DefaultVericalGridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}" TargetType="GridSplitter">
+    <Setter Property="Width" Value="{StaticResource GridSplitterLength}" />
+  </Style>
+  <Style x:Key="DefaultHorizonGridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}" TargetType="GridSplitter">
+    <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
+  </Style>
+
 
 </ResourceDictionary>

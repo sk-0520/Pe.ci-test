@@ -33,6 +33,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         { }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Element.Dispose();
+                    Icon.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         #region ILauncherItemId

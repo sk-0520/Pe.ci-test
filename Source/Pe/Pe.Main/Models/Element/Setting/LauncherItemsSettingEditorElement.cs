@@ -35,7 +35,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void RemoveItem(Guid launcherItemId)
         {
+            var item = Items.First(i => i.LauncherItemId == launcherItemId);
+            Items.Remove(item);
+            item.Dispose();
 
+            // DBから物理削除
+            using(var commander = FileDatabaseBarrier.WaitWrite()) {
+                var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherItemIconsEntityDao.DeleteAllSizeImageBinary(launcherItemId);
+
+                commander.Commit();
+            }
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(launcherItemId);
+
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherFilesEntityDao.DeleteFileByLauncherItemId(launcherItemId);
+
+                var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherGroupItemsEntityDao.DeleteGroupItemsByLauncherItemId(launcherItemId);
+
+                var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherItemHistoriesEntityDao.DeleteHistoriesByLauncherItemId(launcherItemId);
+
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherTagsEntityDao.DeleteTagByLauncherItemId(launcherItemId);
+
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherItemsEntityDao.DeleteLauncherItem(launcherItemId);
+
+                commander.Commit();
+            }
         }
 
         public Guid CreateNewItem(LauncherItemKind kind)

@@ -133,6 +133,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ExecuteUpdate(builder) == 1;
         }
 
+        public bool DeleteFileByLauncherItemId(Guid launcherItemId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+            return ExecuteDelete(builder) == 1;
+        }
+
         #endregion
     }
 }

@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         protected override void LoggingStatement(string statement, object? parameter)
         {
-            var skip = true;
+            var skip = !true;
             if(skip) {
                 return;
             }

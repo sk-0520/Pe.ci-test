@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string LauncherGroupId { get; } = "LauncherGroupId";
+            public static string LauncherItemId { get; } = "LauncherItemId";
+            public static string Sequence { get; } = "Sequence";
 
             #endregion
         }
@@ -64,6 +67,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 commonStatus.WriteCommon(dto);
                 Commander.Execute(statement, dto);
             }
+        }
+
+        public int DeleteGroupItemsByLauncherItemId(Guid launcherItemId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+            return ExecuteDelete(builder);
         }
 
         #endregion

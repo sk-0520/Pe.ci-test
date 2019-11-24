@@ -148,7 +148,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                     Debug.Assert(stream.Position == debugStream.Position, $"{nameof(stream)}: {stream.Length}, {nameof(debugStream)}: {debugStream.Length}");
                 }
 #endif
-                //TODO: ここで複数のランチャーアイテムの待ちが発生するので何回かリトライ処理入れた方がいいと思う
                 DateTime iconUpdatedTimestamp;
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);

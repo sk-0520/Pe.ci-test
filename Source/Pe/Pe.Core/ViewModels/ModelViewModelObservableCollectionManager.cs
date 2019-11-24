@@ -55,6 +55,11 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             get => this._readOnlyViewModels ?? (this._readOnlyViewModels = new ReadOnlyObservableCollection<TViewModel>(ViewModels));
         }
 
+        /// <summary>
+        /// アイテム削除時に対象 ViewModel の <see cref="TViewModel.Dispose"/> を呼び出すか。
+        /// </summary>
+        public bool RemoveViewModelToDispose { get; set; } = true;
+
         #endregion
 
         #region function
@@ -155,8 +160,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             foreach(var counter in new Counter(oldViewModels.Count)) {
                 ViewModels.RemoveAt(oldStartingIndex);
             }
-            foreach(var oldViewModel in oldViewModels) {
-                oldViewModel.Dispose();
+            if(RemoveViewModelToDispose) {
+                foreach(var oldViewModel in oldViewModels) {
+                    oldViewModel.Dispose();
+                }
             }
 
             RemoveItemsKindImpl(ObservableCollectionKind.After, oldStartingIndex, oldItems, oldViewModels);
