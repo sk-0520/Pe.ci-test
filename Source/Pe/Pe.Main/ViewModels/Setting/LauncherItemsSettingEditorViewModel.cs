@@ -69,9 +69,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => this._selectedItem;
             set
             {
-                //TODO: この処理が地味に重い
                 var prev = this._selectedItem;
-                if(prev != null && !prev.IsDisposed) {
+                if(prev != null && !prev.IsDisposed && prev.Item.IsChanged) {
                     if(prev.Item.Validate()) {
                         prev.Item.Save();
                         prev.Icon.Reload();

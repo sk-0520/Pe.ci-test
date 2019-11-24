@@ -15,11 +15,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region variable
 
         List<LauncherItemCustomizeDetailViewModelBase>? _customizeItems;
-
+        bool _isChanged;
         #endregion
 
         public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory) : base(model, loggerFactory)
-        { }
+        {
+            foreach(var item in CustomizeItems) {
+                item.PropertyChanged += Item_PropertyChanged;
+            }
+        }
 
         #region property
 
@@ -39,6 +43,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         }
 
         public LauncherItemCustomizeCommonViewModel Common => (LauncherItemCustomizeCommonViewModel)CustomizeItems.First(i => i is LauncherItemCustomizeCommonViewModel);
+
+        public bool IsChanged
+        {
+            get => this._isChanged;
+            private set => SetProperty(ref this._isChanged, value);
+        }
 
         #endregion
 
@@ -103,6 +113,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     break;
             }
 
+            IsChanged = false;
+        }
+
+        #endregion
+
+        #region SingleModelViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                foreach(var item in CustomizeItems) {
+                    item.PropertyChanged -= Item_PropertyChanged;
+                    if(disposing) {
+                        item.Dispose();
+                    }
+                }
+                IsChanged = false;
+            }
+            base.Dispose(disposing);
         }
 
         #endregion
@@ -112,6 +141,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public Guid LauncherItemId => Model.LauncherItemId;
 
         #endregion
+
+        private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            IsChanged = true;
+        }
 
     }
 }
