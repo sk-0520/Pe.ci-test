@@ -37,6 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => this._selectedGroup;
             set
             {
+                var prev = this._selectedGroup;
+                if(prev != null && !prev.IsDisposed) {
+                    if(prev.Validate()) {
+                    }
+                }
                 SetProperty(ref this._selectedGroup, value);
             }
         }
