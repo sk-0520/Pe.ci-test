@@ -21,6 +21,7 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
@@ -46,8 +47,75 @@
         </ListBox.ItemTemplate>
       </ListBox>
 
-      <GroupBox Grid.Row="2" Header="edit">
+      <GridSplitter Grid.Row="2" Style="{StaticResource DefaultHorizonGridSplitter}" />
 
+      <GroupBox Grid.Row="3" Header="edit">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+          <StackPanel>
+            <StackPanel.Resources>
+              <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="SharedSizeGroup" Value="GroupEdit" />
+              </Style>
+              <Style x:Key="ContentDefinition" TargetType="ColumnDefinition">
+                <Setter Property="Width" Value="*" />
+              </Style>
+            </StackPanel.Resources>
+
+            <StackPanel Grid.IsSharedSizeScope="True">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                  <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="id" />
+                <TextBox Grid.Column="1" />
+              </Grid>
+
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                  <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="kind" />
+                <TextBox Grid.Column="1" />
+              </Grid>
+
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                  <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="name" />
+                <TextBox Grid.Column="1" />
+              </Grid>
+
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                  <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="group-image" />
+                <TextBox Grid.Column="1" />
+              </Grid>
+
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                  <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="group-color" />
+                <TextBox Grid.Column="1" />
+              </Grid>
+            </StackPanel>
+          </StackPanel>
+
+        </ScrollViewer>
       </GroupBox>
 
     </Grid>
