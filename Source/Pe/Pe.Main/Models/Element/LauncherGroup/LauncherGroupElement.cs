@@ -16,12 +16,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
     public class LauncherGroupElement : ElementBase
     {
-        public LauncherGroupElement(Guid launcherGroupId, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public LauncherGroupElement(Guid launcherGroupId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherGroupId = launcherGroupId;
 
-            OrderManager = orderManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
@@ -29,7 +28,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         }
 
         #region property
-        IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }

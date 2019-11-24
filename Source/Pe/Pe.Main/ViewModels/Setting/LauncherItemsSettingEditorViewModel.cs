@@ -165,6 +165,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public override string Header => Properties.Resources.String_Setting_Header_LauncherItems;
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    ItemCollection.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
         #endregion
 
     }

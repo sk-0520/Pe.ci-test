@@ -36,7 +36,14 @@
         <Button Content="down" />
       </ToolBar>
 
-      <ListBox Grid.Row="1">
+      <ListBox Grid.Row="1" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
       </ListBox>
 
       <GroupBox Grid.Row="2" Header="edit">
@@ -73,7 +80,7 @@
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
-      
+
       <ToolBar Grid.Row="0">
         <TextBox />
       </ToolBar>
