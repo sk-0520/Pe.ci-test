@@ -20,7 +20,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <TabControl Grid.Row="0" ItemsSource="{Binding EditorItems}" SelectedItem="{Binding SelectedEditor}">
+    <TabControl Grid.Row="0" ItemsSource="{Binding EditorItems}" SelectedItem="{Binding SelectedEditor}" TabStripPlacement="Left">
       <TabControl.Resources>
         <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherItemsSettingEditorViewModel}">
           <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding}" />
