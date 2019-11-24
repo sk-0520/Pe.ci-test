@@ -93,6 +93,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         void OnFileContentChanged(FileChangedEventArgs e)
         {
+            ThrowIfDisposed();
+
             FileContentChanged?.Invoke(this, e);
         }
 
@@ -107,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public void Start()
         {
             Debug.Assert(WatchParameter.File != null);
+            ThrowIfDisposed();
 
             if(FileSystemWatcher == null) {
                 FileSystemWatcher = new FileSystemWatcher() {
@@ -124,6 +127,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void Stop()
         {
+            ThrowIfDisposed();
+
             if(FileSystemWatcher != null) {
                 FileSystemWatcher.EnableRaisingEvents = false;
             }

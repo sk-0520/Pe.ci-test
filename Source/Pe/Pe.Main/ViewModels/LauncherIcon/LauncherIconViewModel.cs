@@ -40,6 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
 
         public void Reload()
         {
+            ThrowIfDisposed();
+
             //TODO
         }
 

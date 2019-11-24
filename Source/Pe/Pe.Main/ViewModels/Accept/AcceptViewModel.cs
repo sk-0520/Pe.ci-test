@@ -30,12 +30,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         public ICommand AffirmativeCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                ThrowIfDisposed();
+
                 Model.Accepted = true;
                 CloseRequest.Send();
             }
         ));
         public ICommand NegativeCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                ThrowIfDisposed();
+
                 CloseRequest.Send();
             }
         ));

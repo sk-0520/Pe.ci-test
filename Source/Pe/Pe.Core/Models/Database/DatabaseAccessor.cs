@@ -172,6 +172,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             if(IsOpend) {
                 throw new InvalidOperationException(nameof(IsOpend));
             }
+            ThrowIfDisposed();
 
             var con = DatabaseFactory.CreateConnection();
             con.Open();
@@ -181,6 +182,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseCommander, bool> function)
         {
+            ThrowIfDisposed();
+
             var transaction = transactionCreator();
             try {
                 var commit = function(transaction);
@@ -223,6 +226,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public virtual IDisposable StopConnection()
         {
+            ThrowIfDisposed();
+
             if(!IsOpend) {
                 return new ActionDisposer(() => { });
             }
@@ -242,6 +247,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public virtual IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
         {
+            ThrowIfDisposed();
+
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
             return BaseConnection.Query<T>(formattedStatement, parameter, transaction?.Transaction, buffered);
@@ -249,11 +256,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
+            ThrowIfDisposed();
+
             return Query<T>(statement, parameter, null, buffered);
         }
 
         public virtual IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
         {
+            ThrowIfDisposed();
+
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
             return BaseConnection.Query(formattedStatement, parameter, transaction?.Transaction, buffered);
@@ -261,11 +272,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
         {
+            ThrowIfDisposed();
+
             return Query(statement, parameter, null, buffered);
         }
 
         public virtual T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
         {
+            ThrowIfDisposed();
+
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
             return BaseConnection.QueryFirst<T>(formattedStatement, parameter, transaction?.Transaction);
@@ -273,11 +288,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public virtual T QueryFirst<T>(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return QueryFirst<T>(statement, parameter);
         }
 
         public virtual T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
         {
+            ThrowIfDisposed();
+
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
             return BaseConnection.QueryFirstOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
@@ -285,11 +304,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return QueryFirstOrDefault<T>(statement, parameter, null);
         }
 
         public virtual T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
         {
+            ThrowIfDisposed();
+
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
             return BaseConnection.QuerySingle<T>(formattedStatement, parameter, transaction?.Transaction);
@@ -297,11 +320,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public virtual T QuerySingle<T>(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return QuerySingle<T>(statement, parameter);
         }
 
         public virtual int Execute(string statement, object? parameter, IDatabaseTransaction? transaction)
         {
+            ThrowIfDisposed();
+
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
             var startTime = DateTime.Now;
@@ -312,11 +339,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public int Execute(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return Execute(statement, parameter, null);
         }
 
         public virtual DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction)
         {
+            ThrowIfDisposed();
+
             var formattedStatement = Implementation.PreFormatStatement(statement);
 
             LoggingStatement(formattedStatement, parameter);
@@ -330,6 +361,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public DataTable GetDataTable(string statement, object? parameter = null)
         {
+            ThrowIfDisposed();
+
             return GetDataTable(statement, parameter, null);
         }
 
@@ -339,6 +372,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         public virtual IDatabaseTransaction BeginTransaction()
         {
+            ThrowIfDisposed();
+
             return new DatabaseTransaction(this);
         }
 
@@ -349,16 +384,22 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         public virtual IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel)
         {
+            ThrowIfDisposed();
+
             return new DatabaseTransaction(this, isolationLevel);
         }
 
         public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function)
         {
+            ThrowIfDisposed();
+
             return BatchImpl(() => new DatabaseTransaction(this), function);
         }
 
         public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function, IsolationLevel isolationLevel)
         {
+            ThrowIfDisposed();
+
             return BatchImpl(() => new DatabaseTransaction(this, isolationLevel), function);
         }
 

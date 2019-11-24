@@ -43,6 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBynaryItems)
         {
+            ThrowIfDisposed();
+
             if(imageBynaryItems == null || imageBynaryItems.Count == 0) {
                 return null;
             }
@@ -72,6 +74,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns></returns>
         protected BitmapSource ResizeImage(BitmapSource bitmapSource)
         {
+            ThrowIfDisposed();
+
             var iconSize = new IconSize(IconBox);
 
             if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
@@ -90,6 +94,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected Task<BitmapSource?> GetIconImageAsync(IconData iconData, CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             var path = TextUtility.SafeTrim(iconData.Path);
             if(string.IsNullOrEmpty(path)) {
                 return Task.FromResult(default(BitmapSource));
@@ -129,6 +135,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public async Task<BitmapSource?> LoadAsync(CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             RunningStatusImpl.State = RunningState.Running;
             try {
                 var iconImage = await LoadImplAsync(cancellationToken);

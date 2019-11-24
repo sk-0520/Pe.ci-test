@@ -120,6 +120,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 Logger.LogWarning("抑制待機中: {0}", Model.LauncherItemId);
                 return;
             }
+            ThrowIfDisposed();
+
             DelayWaiting = true;
 
             if(!NowLoading) {

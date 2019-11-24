@@ -75,6 +75,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         void LoadLauncherItem()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
@@ -89,6 +91,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public LauncherFileDetailData LoadFileDetail()
         {
+            ThrowIfDisposed();
+
             LauncherExecutePathData pathData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -106,12 +110,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         IList<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
+            ThrowIfDisposed();
+
             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
         ILauncherExecuteResult ExecuteFile(Screen screen)
         {
+            ThrowIfDisposed();
+
             LauncherFileData fileData;
             IList<LauncherEnvironmentVariableData> envItems;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
@@ -132,6 +140,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public ILauncherExecuteResult Execute(Screen screen)
         {
+            ThrowIfDisposed();
+
             try {
                 ILauncherExecuteResult result;
                 switch(Kind) {
@@ -161,6 +171,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void OpenExtendsExecuteView(Screen screen)
         {
+            ThrowIfDisposed();
+
             DispatcherWrapper.Begin(() => {
                 var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
                 element.StartView();
@@ -169,6 +181,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void OpenExtendsExecuteViewWidthArgument(string argument, Screen screen)
         {
+            ThrowIfDisposed();
+
             var element = OrderManager.CreateLauncherExtendsExecuteElement(LauncherItemId, screen);
             element.SetOption(argument);
             element.StartView();
@@ -177,6 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         ILauncherExecutePathParameter GetExecutePath()
         {
             Debug.Assert(Kind == LauncherItemKind.File);
+            ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -189,6 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             if(!(Kind == LauncherItemKind.File)) {
                 throw new InvalidOperationException($"{Kind}");
             }
+            ThrowIfDisposed();
 
             var pathData = GetExecutePath();
 
@@ -204,6 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             if(!(Kind == LauncherItemKind.File)) {
                 throw new InvalidOperationException($"{Kind}");
             }
+            ThrowIfDisposed();
 
             var pathData = GetExecutePath();
 
@@ -216,6 +233,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void CopyExecutePath()
         {
+            ThrowIfDisposed();
+
             var pathData = GetExecutePath();
             var data = new DataObject();
             var value = pathData.Path;
@@ -225,6 +244,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void CopyParentDirectory()
         {
+            ThrowIfDisposed();
+
             var pathData = GetExecutePath();
             var data = new DataObject();
             var value = Path.GetDirectoryName(pathData.Path);
@@ -234,6 +255,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void CopyOption()
         {
+            ThrowIfDisposed();
+
             var pathData = GetExecutePath();
             var data = new DataObject();
             var value = pathData.Option;
@@ -243,6 +266,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void CopyWorkingDirectory()
         {
+            ThrowIfDisposed();
+
             var pathData = GetExecutePath();
             var data = new DataObject();
             var value = pathData.WorkDirectoryPath;
@@ -252,6 +277,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public void OpenCustomizeView(Screen screen)
         {
+            ThrowIfDisposed();
+
             if(NowCustomizing) {
                 Logger.LogWarning("現在編集中: {0}", LauncherItemId);
                 //OrderManager.FlashCustomizeLauncherItem(LauncherItemId);
@@ -276,6 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             if(!(Kind == LauncherItemKind.File)) {
                 throw new InvalidOperationException($"{Kind}");
             }
+            ThrowIfDisposed();
 
             var pathData = GetExecutePath();
 
@@ -312,6 +340,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         private void NotifyManager_CustomizeLauncherItemExited(object? sender, CustomizeLauncherItemExitedEventArgs e)
         {
+            ThrowIfDisposed();
+
             if(e.LauncherItemId == LauncherItemId) {
                 NotifyManager.CustomizeLauncherItemExited -= NotifyManager_CustomizeLauncherItemExited;
                 NowCustomizing = false;

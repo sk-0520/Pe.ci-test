@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void DelayAction(Action action)
         {
+            ThrowIfDisposed();
+
             lock(this._timerLocker) {
                 if(Timer.Enabled) {
                     Timer.Stop();
@@ -55,6 +57,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         void DoAction(bool disposing)
         {
+            ThrowIfDisposed();
+
             lock(this._timerLocker) {
                 if(disposing) {
                     Timer.Stop();

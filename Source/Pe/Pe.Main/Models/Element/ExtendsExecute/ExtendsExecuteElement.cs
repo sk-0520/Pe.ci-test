@@ -62,6 +62,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
         {
+            ThrowIfDisposed();
+
             try {
                 var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
                 var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, screen);
@@ -160,6 +162,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         /// <param name="option"></param>
         public void SetOption(string option)
         {
+            ThrowIfDisposed();
+
             CustomOption = option ?? throw new ArgumentNullException(nameof(option));
         }
 

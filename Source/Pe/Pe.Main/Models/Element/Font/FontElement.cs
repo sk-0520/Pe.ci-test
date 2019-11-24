@@ -97,6 +97,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         FontData? GetFontData()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new FontsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectFont(FontId);
@@ -105,6 +107,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         void LoadFont()
         {
+            ThrowIfDisposed();
+
             var data = IsDefaultFont
                 ? FontTheme.GetDefaultFont(FontTarget.NoteContent)
                 : GetFontData()
@@ -124,6 +128,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         void CreateAndSaveFontId(IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
+            ThrowIfDisposed();
+
             var fontId = IdFactory.CreateFontId();
             var fontConverter = new FontConverter(LoggerFactory);
 
@@ -145,6 +151,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         void UpdateValue(Action<FontsEntityDao, IDatabaseCommonStatus> updater, object uniqueKey)
         {
+            ThrowIfDisposed();
+
             MainDatabaseLazyWriter.Stock(c => {
                 if(IsDefaultFont) {
                     CreateAndSaveFontId(c, c.Implementation);
@@ -158,24 +166,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         public void ChangeFamilyName(string familyName)
         {
+            ThrowIfDisposed();
+
             FamilyName = familyName;
             UpdateValue((d, s) => d.UpdateFamilyName(FontId, FamilyName, s), UniqueKeyPool.Get());
         }
 
         public void ChangeBold(bool isBold)
         {
+            ThrowIfDisposed();
+
             IsBold = isBold;
             UpdateValue((d, s) => d.UpdateBold(FontId, IsBold, s), UniqueKeyPool.Get());
         }
 
         public void ChangeItalic(bool isItalic)
         {
+            ThrowIfDisposed();
+
             IsItalic = isItalic;
             UpdateValue((d, s) => d.UpdateItalic(FontId, IsItalic, s), UniqueKeyPool.Get());
         }
 
         public void ChangeSize(double size)
         {
+            ThrowIfDisposed();
+
             Size = size;
             UpdateValue((d, s) => d.UpdateHeight(FontId, Size, s), UniqueKeyPool.Get());
         }
@@ -186,6 +202,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         public void Flush()
         {
+            ThrowIfDisposed();
+
             MainDatabaseLazyWriter.SafeFlush();
         }
 

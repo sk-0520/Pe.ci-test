@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         IEnumerable<FileInfo> GetFiles(DirectoryInfo directory)
         {
+            ThrowIfDisposed();
+
             var subDirs = directory.EnumerateDirectories();
             IEnumerable<FileInfo> subFiles = new FileInfo[0];
             foreach(var subDir in subDirs) {
@@ -60,6 +62,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         void LoadPrograms()
         {
+            ThrowIfDisposed();
+
             var dirPaths = new[] {
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu),
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms),
@@ -86,11 +90,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         public Task LoadProgramsAsync()
         {
+            ThrowIfDisposed();
+
             return Task.Run(() => LoadPrograms());
         }
 
         void Import()
         {
+            ThrowIfDisposed();
+
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
 
             // ap ファイルからランチャーデータ作って
@@ -151,6 +159,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         public Task ImportAsync()
         {
+            ThrowIfDisposed();
+
             return Task.Run(() => Import());
             //Import();
             //return Task.CompletedTask;

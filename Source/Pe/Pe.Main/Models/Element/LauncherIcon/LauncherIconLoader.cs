@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync()
         {
+            ThrowIfDisposed();
+
             return Task.Run(() => {
                 IReadOnlyList<byte[]>? imageBinary;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
@@ -74,6 +76,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         protected virtual LauncherIconData GetIconData()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherItemDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectFileIcon(LauncherItemId);
@@ -82,6 +86,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             var editIconData = new IconData() {
                 Path = Environment.ExpandEnvironmentVariables(iconData.Path),
                 Index = iconData.Index,
@@ -106,6 +112,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 if(tuneSize) {
@@ -129,6 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         Task WriteStreamAsync(BitmapSource iconImage, Stream stream)
         {
             Debug.Assert(iconImage.IsFrozen);
+            ThrowIfDisposed();
 
             return Task.Run(() => {
                 var encoder = new PngBitmapEncoder();
@@ -140,6 +149,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         async Task SaveImageAsync(BitmapSource iconImage)
         {
+            ThrowIfDisposed();
+
             using(var stream = new BinaryChunkedStream()) {
                 await WriteStreamAsync(iconImage, stream);
 #if DEBUG
@@ -169,6 +180,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         async Task<BitmapSource?> MakeImageAsync(CancellationToken cancellationToken)
         {
+            ThrowIfDisposed();
+
             // アイコンパス取得
             var launcherIconData = GetIconData();
 

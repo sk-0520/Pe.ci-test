@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         void LoadLauncherItem()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
@@ -59,6 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public LauncherFileData LoadFileData()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectFile(LauncherItemId);
@@ -67,6 +71,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public IReadOnlyCollection<LauncherEnvironmentVariableData> LoadEnvironmentVariableItems()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectEnvVarItems(LauncherItemId).ToList();
@@ -76,6 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public IReadOnlyCollection<string> LoadTags()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectTags(LauncherItemId).ToList();
@@ -84,6 +92,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags)
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);

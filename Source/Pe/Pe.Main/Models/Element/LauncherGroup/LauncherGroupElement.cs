@@ -51,6 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         void LoadGroup()
         {
+            ThrowIfDisposed();
+
             LauncherGroupData data;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -66,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         IEnumerable<Guid> GetLauncherItemsForNormal()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectLauncherItemIds(LauncherGroupId);
@@ -74,6 +78,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         IEnumerable<Guid> GetLauncherItems()
         {
+            ThrowIfDisposed();
+
             switch(Kind) {
                 case LauncherGroupKind.Normal:
                     return GetLauncherItemsForNormal();
@@ -85,6 +91,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         void LoadLauncherItems()
         {
+            ThrowIfDisposed();
+
             var items = GetLauncherItems();
             LauncherItemIds.Clear();
             LauncherItemIds.AddRange(items);

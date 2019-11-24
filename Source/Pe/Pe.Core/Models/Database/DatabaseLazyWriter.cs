@@ -125,6 +125,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
         void StartTimer()
         {
+            ThrowIfDisposed();
+
             LazyTimer.Change(PauseRetryTime, PauseRetryTime);
         }
 
@@ -207,6 +209,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public IDisposer Pause()
         {
+            ThrowIfDisposed();
+
             IsPausing = true;
             return new ActionDisposer(() => {
                 IsPausing = false;

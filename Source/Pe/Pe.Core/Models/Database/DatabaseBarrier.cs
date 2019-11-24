@@ -32,47 +32,65 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public int Execute(string statement, object? param = null)
         {
+            ThrowIfDisposed();
+
             return Transaction.Execute(statement, param);
         }
 
         public DataTable GetDataTable(string statement, object? param = null)
         {
+            ThrowIfDisposed();
+
             return Transaction.GetDataTable(statement, param);
         }
 
         public IEnumerable<T> Query<T>(string statement, object? param = null, bool buffered = true)
         {
+            ThrowIfDisposed();
+
             return Transaction.Query<T>(statement, param, buffered);
         }
 
         public IEnumerable<dynamic> Query(string statement, object? param = null, bool buffered = true)
         {
+            ThrowIfDisposed();
+
             return Transaction.Query(statement, param, buffered);
         }
 
         public T QueryFirst<T>(string statement, object? param = null)
         {
+            ThrowIfDisposed();
+
             return Transaction.QueryFirst<T>(statement, param);
         }
 
         public T QueryFirstOrDefault<T>(string statement, object? param = null)
         {
+            ThrowIfDisposed();
+
             return Transaction.QueryFirstOrDefault<T>(statement, param);
         }
 
         public T QuerySingle<T>(string statement, object? param = null)
         {
+            ThrowIfDisposed();
+
             return Transaction.QuerySingle<T>(statement, param);
         }
 
         public void Commit()
         {
+            ThrowIfDisposed();
+
             Transaction.Commit();
         }
 
         public void Rollback()
         {
             Transaction.Rollback();
+
+            ThrowIfDisposed();
         }
 
         #endregion

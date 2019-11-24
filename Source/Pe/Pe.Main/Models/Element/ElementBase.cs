@@ -41,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
                 throw new InvalidOperationException(nameof(IsInitialized));
             }
 
+            ThrowIfDisposed();
+
             InitializeImpl();
 
             IsInitialized = true;

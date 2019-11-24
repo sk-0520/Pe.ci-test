@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
+            ThrowIfDisposed();
+
             var type = obj.GetType();
             var propertyInfo = type.GetProperty(targetMemberName);
 
@@ -66,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
             where TCommand : ICommand
         {
+            ThrowIfDisposed();
+
             //var sb = new StringBuilder();
             //sb.Append(GetType().FullName);
             //sb.Append(':');
@@ -95,6 +99,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// <param name="propertyName"></param>
         protected void ValidateProperty(object? value, [CallerMemberName] string propertyName = "")
         {
+            ThrowIfDisposed();
+
             var context = new ValidationContext(this) { MemberName = propertyName };
             var validationErrors = new List<ValidationResult>();
             if(!Validator.TryValidateProperty(value, context, validationErrors)) {
@@ -107,6 +113,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         private (IReadOnlyCollection<PropertyInfo> properties, IReadOnlyCollection<ViewModelBase> childViewModels) GetValidationItems()
         {
+            ThrowIfDisposed();
+
             var type = GetType();
             //var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             var properties = type.GetProperties();
@@ -145,6 +153,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// </summary>
         private void ValidateAllProperty()
         {
+            ThrowIfDisposed();
+
             var v = GetValidationItems();
             //var type = GetType();
             //var properties = type.GetProperties();
@@ -186,10 +196,14 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// ビジネスロジックの検証。
         /// </summary>
         protected virtual void ValidateDomain()
-        { }
+        {
+            ThrowIfDisposed();
+        }
 
         private void ValidateAllDomain()
         {
+            ThrowIfDisposed();
+
             var v = GetValidationItems();
             ValidateDomain();
             foreach(var childViewModel in v.childViewModels) {
@@ -199,6 +213,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         bool HasChildrenErros()
         {
+            ThrowIfDisposed();
+
             var v = GetValidationItems();
             var result = v.childViewModels.Any(i => i.HasErrors || i.HasChildrenErros());
             return result;
@@ -206,6 +222,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         private void ClearAllErrors()
         {
+            ThrowIfDisposed();
+
             ErrorsContainer.ClearErrors();
             var v = GetValidationItems();
             foreach(var property in v.properties) {
@@ -218,6 +236,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         public bool Validate()
         {
+            ThrowIfDisposed();
+
             if(HasErrors || HasChildrenErros()) {
                 return false;
             }
@@ -236,19 +256,27 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         protected void ClearError([CallerMemberName] string propertyName = "")
         {
+            ThrowIfDisposed();
+
             ErrorsContainer.ClearErrors(propertyName);
         }
 
         protected void SetError(string errorMessage, [CallerMemberName] string propertyName = "")
         {
+            ThrowIfDisposed();
+
             ErrorsContainer.SetErrors(propertyName, new[] { errorMessage });
         }
         protected void SetErrors(IEnumerable<string> errorMessage, [CallerMemberName] string propertyName = "")
         {
+            ThrowIfDisposed();
+
             ErrorsContainer.SetErrors(propertyName, errorMessage);
         }
         protected void AddError(string message, [CallerMemberName] string propertyName = "")
         {
+            ThrowIfDisposed();
+
             var errors = ErrorsContainer.GetErrors(propertyName).ToList();
             if(!errors.Contains(message)) {
                 errors.Add(message);
@@ -257,6 +285,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         }
         protected void AddErrors(IEnumerable<string> messages, [CallerMemberName] string propertyName = "")
         {
+            ThrowIfDisposed();
+
             var errors = ErrorsContainer.GetErrors(propertyName).ToList();
             foreach(var message in messages) {
                 if(!errors.Contains(message)) {
@@ -369,11 +399,16 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         }
 
         protected virtual void AttachModelEventsImpl()
-        { }
+        {
+            ThrowIfDisposed();
+
+        }
 
         protected void AttachModelEvents()
         {
             if(Model != null) {
+                ThrowIfDisposed();
+
                 AttachModelEventsImpl();
             }
         }

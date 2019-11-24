@@ -162,6 +162,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
         Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenData> rows)
         {
+            ThrowIfDisposed();
+
             var screenChecker = new ScreenChecker();
             var row = rows.FirstOrDefault(r => screenChecker.FindMaybe(DockScreen, r));
             if(row != null) {
@@ -173,6 +175,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         Guid GetLauncherToolbarId()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var screenToolbars = dao.SelectAllScreenToolbars().ToList();
@@ -183,6 +187,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         Guid CreateLauncherToolbar()
         {
+            ThrowIfDisposed();
+
             var toolbarId = IdFactory.CreateLauncherToolbarId();
             Logger.LogDebug("create toolbar: {0}", toolbarId);
 
@@ -201,6 +207,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void ChangeLauncherGroup(LauncherGroupElement launcherGroup)
         {
+            ThrowIfDisposed();
+
             if(IsOpendAppMenu) {
                 IsOpendAppMenu = false;
             }
@@ -210,6 +218,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         void UpdateDesign()
         {
+            ThrowIfDisposed();
+
             ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconBox);
             IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconBox, IsIconOnly, TextWidth);
             DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
@@ -219,6 +229,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         void LoadLauncherToolbar()
         {
             Logger.LogInformation("toolbar id: {0}", LauncherToolbarId);
+            ThrowIfDisposed();
 
             LauncherToolbarsDisplayData displayData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
@@ -259,12 +270,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         void LoadLauncherItems()
         {
+            ThrowIfDisposed();
+
             var items = GetLauncherItems();
             LauncherItems.SetRange(items);
         }
 
         public void ChangeToolbarPosition(AppDesktopToolbarPosition toolbarPosition)
         {
+            ThrowIfDisposed();
+
             ToolbarPosition = toolbarPosition;
             UpdateDesign();
             IsOpendAppMenu = false;
@@ -277,6 +292,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void ChangeTopmost(bool isTopmost)
         {
+            ThrowIfDisposed();
+
             IsTopmost = isTopmost;
             IsOpendAppMenu = false;
 
@@ -288,6 +305,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void ChangeAutoHide(bool isAutoHide)
         {
+            ThrowIfDisposed();
+
             IsAutoHide = isAutoHide;
             IsOpendAppMenu = false;
 
@@ -299,6 +318,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void ChangeVisible(bool isVisible)
         {
+            ThrowIfDisposed();
+
             IsVisible = isVisible;
             IsOpendAppMenu = false;
 
@@ -316,6 +337,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         public void RegisterFile(string filePath, bool expandShortcut)
         {
             Debug.Assert(SelectedLauncherGroup != null);
+            ThrowIfDisposed();
 
             var file = new FileInfo(filePath);
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
@@ -346,6 +368,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void OpenExtendsExecuteView(Guid launcherItemId, string argument, Screen screen)
         {
+            ThrowIfDisposed();
+
             var launcherItem = LauncherItems.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(launcherItem == null) {
                 Logger.LogError("指定のランチャーアイテムは存在しない: {0}", launcherItemId);

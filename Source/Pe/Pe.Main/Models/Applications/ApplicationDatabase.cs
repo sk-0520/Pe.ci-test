@@ -156,6 +156,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 return;
             }
 
+            ThrowIfDisposed();
+
             var indent = "    ";
 
             var lines = TextUtility.ReadLines(statement).ToList();

@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public override void Load()
         {
+            ThrowIfDisposed();
+
             IReadOnlyList<Guid> launcherItemIds;
             IReadOnlyList<Guid> groupIds;
             using(var commander = MainDatabaseBarrier.WaitRead()) {

@@ -35,6 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void RemoveItem(Guid launcherItemId)
         {
+            ThrowIfDisposed();
+
             var item = Items.First(i => i.LauncherItemId == launcherItemId);
             Items.Remove(item);
             item.Dispose();
@@ -71,6 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public Guid CreateNewItem(LauncherItemKind kind)
         {
+            ThrowIfDisposed();
+
             var newLauncherItemId = IdFactory.CreateLauncherItemId();
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
 
@@ -125,6 +129,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         /// <param name="expandShortcut"><paramref name="filePath"/>がショートカットの場合にショートカットの内容を登録するか</param>
         public Guid RegisterFile(string filePath, bool expandShortcut)
         {
+            ThrowIfDisposed();
+
             var file = new FileInfo(filePath);
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             var data = launcherFactory.FromFile(file, expandShortcut);
@@ -165,6 +171,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public override void Load()
         {
+            ThrowIfDisposed();
+
             IReadOnlyList<Guid> launcherItemIds;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
