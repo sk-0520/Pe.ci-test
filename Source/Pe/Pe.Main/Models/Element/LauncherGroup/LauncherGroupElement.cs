@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
-    public class LauncherGroupElement : ElementBase
+    public class LauncherGroupElement : ElementBase, ILauncherGroupId
     {
         public LauncherGroupElement(Guid launcherGroupId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -32,8 +32,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IIdFactory IdFactory { get; }
-
-        public Guid LauncherGroupId { get; }
 
         public string Name { get; private set; } = string.Empty;
         public LauncherGroupKind Kind { get; private set; }
@@ -118,6 +116,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
             base.Dispose(disposing);
         }
+
+        #endregion
+
+        #region ILauncherGroupId
+
+        public Guid LauncherGroupId { get; }
 
         #endregion
 

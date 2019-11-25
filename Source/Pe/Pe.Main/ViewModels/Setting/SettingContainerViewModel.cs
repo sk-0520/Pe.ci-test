@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -19,13 +20,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public SettingContainerViewModel(SettingContainerElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public SettingContainerViewModel(SettingContainerElement model, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;
 
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, DispatcherWrapper, LoggerFactory);
-            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, DispatcherWrapper, LoggerFactory);
+            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
             EditorItems = new List<ISettingEditorViewModel>() {
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,

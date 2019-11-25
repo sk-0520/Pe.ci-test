@@ -158,6 +158,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
+    public interface ILauncherGroupId
+    {
+        #region property
+
+        Guid LauncherGroupId { get; }
+
+        #endregion
+    }
 
     public class LauncherItemData : DataBase
     {
