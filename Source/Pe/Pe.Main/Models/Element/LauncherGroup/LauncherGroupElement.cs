@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                dao.UpdateGroup(launcherGroupData, DatabaseCommonStatus.CreateCurrentAccount());
+                dao.UpdateGroupWithoutSequence(launcherGroupData, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 launcherGroupItemsDao.DeleteGroupItemsByLauncherGroupId(LauncherGroupId);

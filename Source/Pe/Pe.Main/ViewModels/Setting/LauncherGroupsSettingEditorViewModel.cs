@@ -196,6 +196,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.Dispose(disposing);
         }
 
+        public override void Load()
+        {
+            SelectedGroup = null;
+            SelectedLauncherItem = null;
+            base.Load();
+        }
+        public override void Save()
+        {
+            SelectedGroup?.Save();
+            base.Save();
+        }
+
         #endregion
 
         private void SelectedGroup_PropertyChanged(object sender, PropertyChangedEventArgs e)

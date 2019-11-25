@@ -53,11 +53,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public abstract string Header { get; }
 
-        public void Load()
+        public virtual void Load()
         {
             Model.Load();
         }
-        public void Save()
+        public virtual void Save()
         {
             Model.Save();
         }
