@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -47,10 +50,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 .Select(i => new ThemeIconViewModel<LauncherGroupImageName>(i, c => LauncherGroupTheme.GetGroupImage(i, c, IconBox.Small, false), LoggerFactory))
             ;
             GroupIconItems = new ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>>(groupImageItems);
+
+            DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = CanDragStart,
+                DragEnterAction = DragOrverOrEnter,
+                DragOverAction = DragOrverOrEnter,
+                DragLeaveAction = DragLeave,
+                DropAction = Drop,
+                GetDragParameter = GetDragParameter,
+            };
         }
 
         #region property
         ILauncherGroupTheme LauncherGroupTheme { get; }
+        public IDragAndDrop DragAndDrop { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
         public ICollectionView LauncherItems { get; }
@@ -128,6 +141,42 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 }
             }
         }
+
+        #region DragAndDrop
+        private bool CanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            return true;
+        }
+
+        private void DragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.None;
+            e.Handled = true;
+        }
+
+        private void DragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+        private void Drop(UIElement sender, DragEventArgs e)
+        { }
+
+        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            if(e.Source is ListBox listbox) {
+                var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
+                if(scollbar == null && listbox.SelectedItem != null) {
+                    SelectedLauncherItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listbox.SelectedItem;
+                    var data = new DataObject(typeof(LauncherItemDragData), new LauncherItemDragData(SelectedLauncherItem, true));
+                    return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Copy, data));
+                }
+            }
+
+            return ResultSuccessValue.Failure<DragParameter>();
+        }
+
+        #endregion
+
+
         #endregion
 
         #region SettingEditorViewModelBase

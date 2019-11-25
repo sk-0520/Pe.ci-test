@@ -207,9 +207,9 @@
 
 
       <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.LauncherItems, ElementName=root}">
-        <!--<i:Interaction.Behaviors>
+        <i:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
-        </i:Interaction.Behaviors>-->
+        </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel

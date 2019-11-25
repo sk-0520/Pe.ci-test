@@ -75,8 +75,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        /// <summary>
+        /// 共用しているランチャーアイテム一覧。
+        /// <para>親元でアイコンと共通項目構築済みのランチャーアイテム。毎回作るのあれだし。</para>
+        /// </summary>
         ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> AllLauncherItems { get; }
 
+        /// <summary>
+        /// 所属ランチャーアイテム。
+        /// <para>注意: 設定中データ状態はモデル側に送らない。</para>
+        /// </summary>
         public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
 
         ILauncherGroupTheme LauncherGroupTheme { get; }
@@ -156,20 +164,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void DragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
             var canDrag = false;
-            if(e.Data.TryGet<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(out var selfItem)) {
-                if(e.OriginalSource is DependencyObject dependencyObject) {
-                    var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
-                    if(listBoxItem != null) {
-                        var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
-                        if(currentItem != selfItem) {
-                            canDrag = true;
+            if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
+                if(dragData.FromAllItems) {
+                    canDrag = true;
+                } else {
+                    if(e.OriginalSource is DependencyObject dependencyObject) {
+                        var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
+                        if(listBoxItem != null) {
+                            var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
+                            if(currentItem != dragData.Item) {
+                                canDrag = true;
+                            }
                         }
                     }
                 }
             }
 
             if(canDrag) {
-                e.Effects = DragDropEffects.Move;
+                Debug.Assert(dragData != null);
+                if(dragData.FromAllItems) {
+                    e.Effects = DragDropEffects.Copy;
+                } else {
+                    e.Effects = DragDropEffects.Move;
+                }
             } else {
                 e.Effects = DragDropEffects.None;
             }
@@ -181,24 +198,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private void Drop(UIElement sender, DragEventArgs e)
         {
-            if(e.Data.TryGet<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(out var selfItem)) {
+            if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
                     if(listBoxItem != null) {
                         var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
-                        if(currentItem != selfItem) {
-                            var selfIndex = LauncherItems.IndexOf(selfItem);
+                        if(dragData.FromAllItems) {
+                            // アイテム一覧からD&Dされた
+                            var currentIndex = LauncherItems.IndexOf(currentItem);
+                            // 複製しておかないと選択状態が死ぬ
+                            var baseLauncherItem = AllLauncherItems.First(i => i == dragData.Item);
+                            var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
+                            LauncherItems.Insert(currentIndex, newLauncherItem);
+                            SelectedLauncherItem = newLauncherItem;
+                            UIUtility.GetVisualClosest<ListBox>(listBoxItem)!.Focus();
+                        } else {
+                            // 現在アイテム内での並び替え
+                            var selfIndex = LauncherItems.IndexOf(dragData.Item);
                             var currentIndex = LauncherItems.IndexOf(currentItem);
 
                             // 自分自身より上のアイテムであれば自分自身をさらに上に設定
                             if(currentIndex < selfIndex) {
                                 LauncherItems.RemoveAt(selfIndex);
-                                LauncherItems.Insert(currentIndex, selfItem);
+                                LauncherItems.Insert(currentIndex, dragData.Item);
                             } else {
                                 // 自分自身より下のアイテムであれば自分自身をさらに下に設定
                                 Debug.Assert(selfIndex < currentIndex);
                                 LauncherItems.RemoveAt(selfIndex);
-                                LauncherItems.Insert(currentIndex, selfItem); // 自分消えてるからインデックスずれていいかんじになるはず
+                                LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
                             }
                         }
                     }
@@ -212,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
                 if(scollbar == null && listbox.SelectedItem != null) {
                     SelectedLauncherItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listbox.SelectedItem;
-                    var data = new DataObject(SelectedLauncherItem.GetType(), SelectedLauncherItem);
+                    var data = new DataObject(typeof(LauncherItemDragData), new LauncherItemDragData(SelectedLauncherItem, false));
                     return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Move, data));
                 }
             }
