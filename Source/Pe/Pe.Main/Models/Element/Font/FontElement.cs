@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             ParentUpdater(this, commander, implementation);
         }
 
-        void UpdateValue(Action<FontsEntityDao, IDatabaseCommonStatus> updater, object uniqueKey)
+        void UpdateValueDelaySave(Action<FontsEntityDao, IDatabaseCommonStatus> updater, object uniqueKey)
         {
             ThrowIfDisposed();
 
@@ -164,36 +164,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         }
 
-        public void ChangeFamilyName(string familyName)
+        public void ChangeFamilyNameDelaySave(string familyName)
         {
             ThrowIfDisposed();
 
             FamilyName = familyName;
-            UpdateValue((d, s) => d.UpdateFamilyName(FontId, FamilyName, s), UniqueKeyPool.Get());
+            UpdateValueDelaySave((d, s) => d.UpdateFamilyName(FontId, FamilyName, s), UniqueKeyPool.Get());
         }
 
-        public void ChangeBold(bool isBold)
+        public void ChangeBoldDelaySave(bool isBold)
         {
             ThrowIfDisposed();
 
             IsBold = isBold;
-            UpdateValue((d, s) => d.UpdateBold(FontId, IsBold, s), UniqueKeyPool.Get());
+            UpdateValueDelaySave((d, s) => d.UpdateBold(FontId, IsBold, s), UniqueKeyPool.Get());
         }
 
-        public void ChangeItalic(bool isItalic)
+        public void ChangeItalicDelaySave(bool isItalic)
         {
             ThrowIfDisposed();
 
             IsItalic = isItalic;
-            UpdateValue((d, s) => d.UpdateItalic(FontId, IsItalic, s), UniqueKeyPool.Get());
+            UpdateValueDelaySave((d, s) => d.UpdateItalic(FontId, IsItalic, s), UniqueKeyPool.Get());
         }
 
-        public void ChangeSize(double size)
+        public void ChangeSizeDelaySave(double size)
         {
             ThrowIfDisposed();
 
             Size = size;
-            UpdateValue((d, s) => d.UpdateHeight(FontId, Size, s), UniqueKeyPool.Get());
+            UpdateValueDelaySave((d, s) => d.UpdateHeight(FontId, Size, s), UniqueKeyPool.Get());
         }
 
         #endregion

@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
                  var isVisible = Model.IsVisible;
-                 Model.ChangeVisible(!isVisible);
+                 Model.ChangeVisibleDelaySave(!isVisible);
                  if(!isVisible) {
                      Model.StartView();
                  } else {

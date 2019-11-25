@@ -207,12 +207,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public Color ForegroundColor
         {
             get => Model.ForegroundColor;
-            set => Model.ChangeForegroundColor(value);
+            set => Model.ChangeForegroundColorDelaySave(value);
         }
         public Color BackgroundColor
         {
             get => Model.BackgroundColor;
-            set => Model.ChangeBackgroundColor(value);
+            set => Model.ChangeBackgroundColorDelaySave(value);
         }
 
         public string? Title => Model.Title;
@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 if(!IsCompact) {
                     NormalWindowHeight = WindowHeight;
                 }
-                Model.SwitchCompact();
+                Model.SwitchCompactDelaySave();
                 // レイアウト変更(高さ)通知を抑制
                 if(!IsCompact) {
                     this._windowHeight = NormalWindowHeight;
@@ -315,19 +315,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
         public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchTopmost();
+                Model.SwitchTopmostDelaySave();
             }
         ));
 
         public ICommand SwitchLockCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchLock();
+                Model.SwitchLockDelaySave();
             }
         ));
 
         public ICommand SwitchTextWrapCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchTextWrap();
+                Model.SwitchTextWrapDelaySave();
             }
         ));
 
@@ -341,7 +341,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand SaveTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand<TextBox>(
             o => {
                 TitleEditMode = false;
-                Model.ChangeTitle(EditingTitle ?? string.Empty);
+                Model.ChangeTitleDelaySave(EditingTitle ?? string.Empty);
                 o.Select(0, 0);
             },
             o => TitleEditMode
@@ -640,7 +640,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             }
 
-            Model.ChangeViewArea(viewAreaChangeTargets, location, size);
+            Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, location, size);
         }
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);

@@ -215,7 +215,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        void ChangeRawContent(NoteContentKind contentKind, string content, object stockKey)
+        void ChangeRawContentDelaySave(NoteContentKind contentKind, string content, object stockKey)
         {
             ThrowIfDisposed();
 
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 throw new InvalidOperationException();
             }
 
-            ChangeRawContent(ContentKind, content, UniqueKeyPool.Get());
+            ChangeRawContentDelaySave(ContentKind, content, UniqueKeyPool.Get());
         }
 
         public void ChangeRichTextContent(string content)
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 throw new InvalidOperationException();
             }
 
-            ChangeRawContent(ContentKind, content, UniqueKeyPool.Get());
+            ChangeRawContentDelaySave(ContentKind, content, UniqueKeyPool.Get());
         }
 
         void DisposeLinkWatcher()

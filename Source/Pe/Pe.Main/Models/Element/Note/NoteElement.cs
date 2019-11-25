@@ -309,7 +309,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             notesEntityDao.UpdateFontId(NoteId, fontElement.FontId, DatabaseCommonStatus.CreateCurrentAccount());
         }
 
-        public void SwitchCompact()
+        public void SwitchCompactDelaySave()
         {
             ThrowIfDisposed();
 
@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 notesEntityDao.UpdateCompact(NoteId, IsCompact, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
-        public void SwitchTopmost()
+        public void SwitchTopmostDelaySave()
         {
             ThrowIfDisposed();
 
@@ -330,7 +330,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void SwitchLock()
+        public void SwitchLockDelaySave()
         {
             ThrowIfDisposed();
 
@@ -341,7 +341,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void SwitchTextWrap()
+        public void SwitchTextWrapDelaySave()
         {
             ThrowIfDisposed();
 
@@ -352,7 +352,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeTitle(string editingTitle)
+        public void ChangeTitleDelaySave(string editingTitle)
         {
             if(Title == editingTitle) {
                 Logger.LogDebug("同一タイトルのため書き込み抑制");
@@ -372,7 +372,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// <para>各種算出済みの値。</para>
         /// </summary>
         /// <param name="location"></param>
-        public void ChangeViewArea(ViewAreaChangeTarget viewAreaChangeTargets, Point location, Size size)
+        public void ChangeViewAreaDelaySave(ViewAreaChangeTarget viewAreaChangeTargets, Point location, Size size)
         {
             ThrowIfDisposed();
 
@@ -390,7 +390,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
 
         }
-        public void ChangeForegroundColor(Color color)
+        public void ChangeForegroundColorDelaySave(Color color)
         {
             ThrowIfDisposed();
 
@@ -400,7 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 notesEntityDao.UpdateForegroundColor(NoteId, ForegroundColor, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
-        public void ChangeBackgroundColor(Color color)
+        public void ChangeBackgroundColorDelaySave(Color color)
         {
             ThrowIfDisposed();
 
@@ -545,7 +545,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
 
-        public void ChangeVisible(bool isVisible)
+        public void ChangeVisibleDelaySave(bool isVisible)
         {
             ThrowIfDisposed();
 
@@ -651,7 +651,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public bool ReceiveViewUserClosing()
         {
-            ChangeVisible(false);
+            ChangeVisibleDelaySave(false);
             return true;
         }
         public bool ReceiveViewClosing()

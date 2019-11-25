@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
             set
             {
                 var fc = new FontConverter(LoggerFactory);
-                Model.ChangeFamilyName(fc.GetOriginalFontFamilyName(value));
+                Model.ChangeFamilyNameDelaySave(fc.GetOriginalFontFamilyName(value));
             }
         }
 
@@ -66,18 +66,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
         public bool IsBold
         {
             get => Model.IsBold;
-            set => Model.ChangeBold(value);
+            set => Model.ChangeBoldDelaySave(value);
         }
         public bool IsItalic
         {
             get => Model.IsItalic;
-            set => Model.ChangeItalic(value);
+            set => Model.ChangeItalicDelaySave(value);
         }
 
         public double Size
         {
             get => Model.Size;
-            set => Model.ChangeSize(value);
+            set => Model.ChangeSizeDelaySave(value);
         }
 
         public virtual double MinimumSize => 6;

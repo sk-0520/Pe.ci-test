@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public ICommand ChangeToolbarPositionCommand => GetOrCreateCommand(() => new DelegateCommand<AppDesktopToolbarPosition?>(
             o => {
                 if(o.HasValue) {
-                    Model.ChangeToolbarPosition(o.Value);
+                    Model.ChangeToolbarPositionDelaySave(o.Value);
                 } else {
                     Logger.LogTrace("こないはず");
                 }
@@ -179,19 +179,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.ChangeTopmost(!Model.IsTopmost);
+                Model.ChangeTopmostDelaySave(!Model.IsTopmost);
             }
         ));
 
         public ICommand SwitchAutoHideCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.ChangeAutoHide(!Model.IsAutoHide);
+                Model.ChangeAutoHideDelaySave(!Model.IsAutoHide);
             }
         ));
 
         public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 Model.ChangeVisible(false);
+                 Model.ChangeVisibleDelaySave(false);
 
                  //var notification = new Notification();
                  //CloseRequest.Raise(notification);

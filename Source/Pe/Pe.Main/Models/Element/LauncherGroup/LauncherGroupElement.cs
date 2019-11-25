@@ -96,6 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             LauncherItemIds.AddRange(items);
         }
 
+
         #endregion
 
         #region ElementBase

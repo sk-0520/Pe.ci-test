@@ -276,7 +276,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             LauncherItems.SetRange(items);
         }
 
-        public void ChangeToolbarPosition(AppDesktopToolbarPosition toolbarPosition)
+        public void ChangeToolbarPositionDelaySave(AppDesktopToolbarPosition toolbarPosition)
         {
             ThrowIfDisposed();
 
@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeTopmost(bool isTopmost)
+        public void ChangeTopmostDelaySave(bool isTopmost)
         {
             ThrowIfDisposed();
 
@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeAutoHide(bool isAutoHide)
+        public void ChangeAutoHideDelaySave(bool isAutoHide)
         {
             ThrowIfDisposed();
 
@@ -316,7 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeVisible(bool isVisible)
+        public void ChangeVisibleDelaySave(bool isVisible)
         {
             ThrowIfDisposed();
 
@@ -448,7 +448,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public bool ReceiveViewUserClosing()
         {
-            ChangeVisible(false);
+            ChangeVisibleDelaySave(false);
             return true;
         }
         public bool ReceiveViewClosing()

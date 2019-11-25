@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     WindowsUtility.ShowActive(hWnd);
                     //target.Window.Activate();
                 } else {
-                    Model.ChangeVisible(true);
+                    Model.ChangeVisibleDelaySave(true);
                     Model.StartView();
                 }
             },
