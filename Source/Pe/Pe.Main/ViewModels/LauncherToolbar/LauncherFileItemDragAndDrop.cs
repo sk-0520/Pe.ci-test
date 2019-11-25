@@ -8,23 +8,14 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Logic
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
-    public class LauncherFileItemDragAndDrop
+    public class LauncherFileItemDragAndDrop: DragAndDropGuidelineBase
     {
         public LauncherFileItemDragAndDrop(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-        {
-            DispatcherWrapper = dispatcherWrapper;
-            Logger = loggerFactory.CreateLogger(GetType());
-        }
+            :base(dispatcherWrapper, loggerFactory)
+        { }
 
-
-        #region property
-
-        IDispatcherWrapper DispatcherWrapper { get; }
-        ILogger Logger { get; }
-
-        #endregion;
         #region function
 
         public IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
@@ -57,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public void DragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        public void RegisterDropFile(RequestSender requestSender,string path, Action<string, bool> register)
+        public void RegisterDropFile(RequestSender requestSender, string path, Action<string, bool> register)
         {
             if(PathUtility.IsShortcut(path)) {
                 var request = new CommonMessageDialogRequestParameter() {

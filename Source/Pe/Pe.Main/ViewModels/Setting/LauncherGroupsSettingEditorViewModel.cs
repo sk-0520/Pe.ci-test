@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             ;
             GroupIconItems = new ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>>(groupImageItems);
 
-            DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+            var dragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = CanDragStart,
                 DragEnterAction = DragOrverOrEnter,
                 DragOverAction = DragOrverOrEnter,
@@ -59,6 +60,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DropAction = Drop,
                 GetDragParameter = GetDragParameter,
             };
+            dragAndDrop.DragStartSize = new Size(dragAndDrop.DragStartSize.Width, 0);
+            DragAndDrop = dragAndDrop;
         }
 
         #region property
@@ -162,16 +165,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
         {
-            if(e.Source is ListBox listbox) {
-                var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
-                if(scollbar == null && listbox.SelectedItem != null) {
-                    SelectedLauncherItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listbox.SelectedItem;
-                    var data = new DataObject(typeof(LauncherItemDragData), new LauncherItemDragData(SelectedLauncherItem, true));
-                    return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Copy, data));
-                }
-            }
-
-            return ResultSuccessValue.Failure<DragParameter>();
+            var dd = new LauncherItemInLauncherGroupDragAndDrop(DispatcherWrapper, LoggerFactory);
+            var parameter = dd.GetDragParameter(true, sender, e, d => {
+                SelectedLauncherItem = d;
+            });
+            return parameter;
         }
 
         #endregion

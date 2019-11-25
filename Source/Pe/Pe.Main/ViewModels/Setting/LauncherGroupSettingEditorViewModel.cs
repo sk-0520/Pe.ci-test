@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
+using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
@@ -235,16 +236,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
         {
-            if(e.Source is ListBox listbox) {
-                var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
-                if(scollbar == null && listbox.SelectedItem != null) {
-                    SelectedLauncherItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listbox.SelectedItem;
-                    var data = new DataObject(typeof(LauncherItemDragData), new LauncherItemDragData(SelectedLauncherItem, false));
-                    return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Move, data));
-                }
-            }
-
-            return ResultSuccessValue.Failure<DragParameter>();
+            var dd = new LauncherItemInLauncherGroupDragAndDrop(DispatcherWrapper, LoggerFactory);
+            var parameter = dd.GetDragParameter(false, sender, e, d => {
+                SelectedLauncherItem = d;
+            });
+            return parameter;
         }
 
         #endregion
