@@ -4,6 +4,10 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+
+  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 
@@ -167,9 +171,9 @@
       </ToolBar>
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, ElementName=root}">
-        <!--<i:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
-        </i:Interaction.Behaviors>-->
+        <i:Interaction.Behaviors>
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.SelectedGroup.DragAndDrop, ElementName=root}" />
+        </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel

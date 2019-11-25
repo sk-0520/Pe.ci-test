@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
@@ -54,6 +56,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 )
             ;
             LauncherItems = new ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(launcherItems);
+
+            DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = CanDragStart,
+                DragEnterAction = DragOrverOrEnter,
+                DragOverAction = DragOrverOrEnter,
+                DragLeaveAction = DragLeave,
+                DropAction = Drop,
+                GetDragParameter = GetDragParameter,
+            };
         }
 
         #region property
@@ -64,6 +75,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         ILauncherGroupTheme LauncherGroupTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+
+        public IDragAndDrop DragAndDrop { get; }
 
         [Required]
         public string Name
@@ -126,6 +139,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             RaisePropertyChanged(nameof(GroupIcon));
         }
+
+        #region DragAndDrop
+        private bool CanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            Logger.LogDebug("can {0}", sender);
+            return true;
+        }
+
+        private void DragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+        }
+
+        private void DragLeave(UIElement sender, DragEventArgs e)
+        {
+        }
+
+        private void Drop(UIElement sender, DragEventArgs e)
+        {
+        }
+
+        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Move, new DataObject()));
+        }
+
+        #endregion
+
 
         #endregion
 

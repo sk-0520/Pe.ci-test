@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
             }
         }
 
-        public IDragAndDrop DragAndDrop
+        public IDragAndDrop? DragAndDrop
         {
             get { return (IDragAndDrop)GetValue(DragAndDropProperty); }
             set { SetValue(DragAndDropProperty, value); }
@@ -64,32 +64,32 @@ namespace ContentTypeTextNet.Pe.Core.Views.Attached
 
         void AssociatedObject_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            DragAndDrop.MouseDown((UIElement)sender, e);
+            DragAndDrop?.MouseDown((UIElement)sender, e);
         }
 
         void AssociatedObject_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            DragAndDrop.MouseMove((UIElement)sender, e);
+            DragAndDrop?.MouseMove((UIElement)sender, e);
         }
 
         void AssociatedObject_DragEnter(object sender, DragEventArgs e)
         {
-            DragAndDrop.DragEnter((UIElement)sender, e);
+            DragAndDrop?.DragEnter((UIElement)sender, e);
         }
 
         void AssociatedObject_DragOver(object sender, DragEventArgs e)
         {
-            DragAndDrop.DragOver((UIElement)sender, e);
+            DragAndDrop?.DragOver((UIElement)sender, e);
         }
 
         void AssociatedObject_DragLeave(object sender, DragEventArgs e)
         {
-            DragAndDrop.DragLeave((UIElement)sender, e);
+            DragAndDrop?.DragLeave((UIElement)sender, e);
         }
 
         void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
-            DragAndDrop.Drop((UIElement)sender, e);
+            DragAndDrop?.Drop((UIElement)sender, e);
         }
     }
 }
