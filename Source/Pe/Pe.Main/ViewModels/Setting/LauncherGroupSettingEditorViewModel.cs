@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Windows;
@@ -25,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherGroupSettingEditorViewModel(LauncherGroupElement model, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorViewModel(LauncherGroupElement model, ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> launcherItems, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
@@ -34,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             LauncherGroupTheme = launcherGroupTheme;
             DispatcherWrapper = dispatcherWrapper;
+            LauncherItems = launcherItems;
 
             this._name = Model.Name;
             this._imageColor = Model.ImageColor;
@@ -42,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #region property
+
+        public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
 
         ILauncherGroupTheme LauncherGroupTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }

@@ -24,14 +24,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         bool _isPopupCreateGroupMenu;
         LauncherGroupSettingEditorViewModel? _selectedGroup;
+        LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? _selectedLauncherItem;
         #endregion
 
         public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             LauncherGroupTheme = launcherGroupTheme;
+
+            LauncherCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems, LoggerFactory) {
+                ToViewModel = m => LauncherItemWithIconViewModel.Create(new CommonLauncherItemViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, loggerFactory), LoggerFactory),
+            };
+            LauncherItems = LauncherCollection.GetCollectionView();
+
             GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems, LoggerFactory) {
-                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
+                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, LauncherCollection.ViewModels, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
             };
             GroupItems = GroupCollection.GetCollectionView();
 
@@ -40,13 +47,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 .Select(i => new ThemeIconViewModel<LauncherGroupImageName>(i, c => LauncherGroupTheme.GetGroupImage(i, c, IconBox.Small, false), LoggerFactory))
             ;
             GroupIconItems = new ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>>(groupImageItems);
-
         }
 
         #region property
         ILauncherGroupTheme LauncherGroupTheme { get; }
+
+        ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
+        public ICollectionView LauncherItems { get; }
+
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
         public ICollectionView GroupItems { get; }
+
+
+        public ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>> GroupIconItems { get; }
 
         public bool IsPopupCreateGroupMenu
         {
@@ -73,7 +86,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        public ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>> GroupIconItems { get; }
+        public LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? SelectedLauncherItem
+        {
+            get => this._selectedLauncherItem;
+            set
+            {
+                SetProperty(ref this._selectedLauncherItem, value);
+            }
+        }
+
 
         #endregion
 
@@ -117,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    if(SelectedGroup!= null) {
+                    if(SelectedGroup != null) {
                         SelectedGroup.PropertyChanged -= SelectedGroup_PropertyChanged;
                     }
 
