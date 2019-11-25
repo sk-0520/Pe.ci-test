@@ -145,17 +145,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
 
-    public class LauncherGroupData : DataBase
+    public class LauncherGroupData : DataBase, ILauncherGroupId
     {
         #region property
 
-        public Guid LauncherGroupId { get; set; }
         public string Name { get; set; } = string.Empty;
         public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
         public Color ImageColor { get; set; }
         public long Sequence { get; set; }
 
+        #endregion
+
+        #region ILauncherGroupId
+        public Guid LauncherGroupId { get; set; }
         #endregion
     }
     public interface ILauncherGroupId

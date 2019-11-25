@@ -23,7 +23,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class LauncherGroupSettingEditorViewModel : SingleModelViewModelBase<LauncherGroupElement>, ILauncherGroupId
+    public class LauncherGroupSettingEditorViewModel : SingleModelViewModelBase<LauncherGroupElement>, ILauncherGroupId, ISettingEditorViewModel
     {
         #region variable
 
@@ -228,7 +228,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                                 LauncherItems.RemoveAt(selfIndex);
                                 LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
                             }
+                            SelectedLauncherItem = dragData.Item;
                         }
+                    } else if(dragData.FromAllItems) {
+                        // 一覧から持ってきた際にデータが空っぽだとここ
+                        var baseLauncherItem = AllLauncherItems.First(i => i == dragData.Item);
+                        var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
+                        LauncherItems.Add(newLauncherItem);
+                        SelectedLauncherItem = newLauncherItem;
+                        UIUtility.GetVisualClosest<ListBox>(dependencyObject)!.Focus();
                     }
                 }
             }
@@ -253,6 +261,32 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public Guid LauncherGroupId => Model.LauncherGroupId;
 
         #endregion
+
+        #region ISettingEditorViewModel
+
+        public string Header { get; } = nameof(NotSupportedException);//throw new NotSupportedException();
+
+        public void Load()
+        {
+            throw new NotSupportedException();
+        }
+
+        public void Save()
+        {
+            var data = new LauncherGroupData() {
+                LauncherGroupId = LauncherGroupId,
+                Kind = Kind,
+                Name = Name,
+                ImageName = ImageName,
+                ImageColor = ImageColor,
+                Sequence = Sequence
+            };
+            var launcherItemIds = LauncherItems.Select(i => i.LauncherItemId).ToList();
+            Model.Save(data, launcherItemIds);
+        }
+
+        #endregion
+
 
     }
 }

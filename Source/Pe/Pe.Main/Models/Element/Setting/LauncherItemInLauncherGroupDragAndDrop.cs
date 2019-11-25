@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     var item = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listbox.SelectedItem;
                     selectedItemChanger(item);
                     var data = new DataObject(typeof(LauncherItemDragData), new LauncherItemDragData(item, fromAllItems));
-                    return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Copy, data));
+                    return ResultSuccessValue.Success(new DragParameter(sender, fromAllItems ? DragDropEffects.Copy: DragDropEffects.Move, data));
                 }
             }
 

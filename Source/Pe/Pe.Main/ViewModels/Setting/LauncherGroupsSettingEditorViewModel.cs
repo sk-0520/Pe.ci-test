@@ -92,6 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 if(prev != null && !prev.IsDisposed) {
                     prev.PropertyChanged -= SelectedGroup_PropertyChanged;
                     if(prev.Validate()) {
+                        prev.Save();
                     }
                 }
                 SetProperty(ref this._selectedGroup, value);

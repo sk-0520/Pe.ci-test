@@ -101,6 +101,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Commander.Execute(statement, dto);
         }
 
+        public bool UpdateGroup(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, commonStatus);
+            return Commander.Execute(statement, dto) == 1;
+        }
+
         #endregion
     }
 }

@@ -76,6 +76,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ExecuteDelete(builder);
         }
 
+        public int DeleteGroupItemsByLauncherGroupId(Guid launcherGroupId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherGroupId, launcherGroupId);
+            return ExecuteDelete(builder);
+        }
+
         #endregion
     }
 }

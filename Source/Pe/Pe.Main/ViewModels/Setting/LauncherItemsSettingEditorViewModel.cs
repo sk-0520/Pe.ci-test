@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 

@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             Sequence = data.Sequence;
         }
 
-        IEnumerable<Guid> GetLauncherItemsForNormal()
+        IEnumerable<Guid> LoadLauncherItemIdsForNormal()
         {
             ThrowIfDisposed();
 
@@ -74,28 +75,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             }
         }
 
-        IEnumerable<Guid> GetLauncherItems()
+        IEnumerable<Guid> LoadLauncherItemIds()
         {
             ThrowIfDisposed();
 
             switch(Kind) {
                 case LauncherGroupKind.Normal:
-                    return GetLauncherItemsForNormal();
+                    return LoadLauncherItemIdsForNormal();
 
                 default:
                     throw new NotImplementedException();
             }
         }
 
+
         void LoadLauncherItems()
         {
             ThrowIfDisposed();
 
-            var items = GetLauncherItems();
+            var items = LoadLauncherItemIds();
             LauncherItemIds.Clear();
             LauncherItemIds.AddRange(items);
         }
 
+
+        public void Save(LauncherGroupData launcherGroupData, IReadOnlyList<Guid> launcherItemIds)
+        {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                dao.UpdateGroup(launcherGroupData, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherGroupItemsDao.DeleteGroupItemsByLauncherGroupId(LauncherGroupId);
+                var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(LauncherGroupId);
+                launcherGroupItemsDao.InsertNewItems(LauncherGroupId, launcherItemIds, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
+
+                commander.Commit();
+            }
+        }
 
         #endregion
 
