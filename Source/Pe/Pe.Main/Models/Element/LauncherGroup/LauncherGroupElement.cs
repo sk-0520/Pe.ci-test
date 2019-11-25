@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         public Color ImageColor { get; private set; }
         public long Sequence { get; private set; }
 
-        List<Guid> LauncherItemIds { get; } = new List<Guid>();
+        public List<Guid> LauncherItemIds { get; } = new List<Guid>();
 
         #endregion
 

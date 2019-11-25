@@ -166,7 +166,27 @@
         <Button Content="down" />
       </ToolBar>
 
-      <ListBox Grid.Row="1" />
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, ElementName=root}">
+        <!--<i:Interaction.Behaviors>
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
+        </i:Interaction.Behaviors>-->
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <VirtualizingStackPanel
+              VirtualizingStackPanel.IsVirtualizing="True"
+              VirtualizingStackPanel.VirtualizationMode="Recycling"
+            />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
+              <TextBlock Text="{Binding Item.Name}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
     </Grid>
 
     <GridSplitter Grid.Column="3" Style="{StaticResource DefaultVericalGridSplitter}" />
@@ -182,7 +202,7 @@
       </ToolBar>
 
 
-      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.LauncherItems, ElementName=root}">
+      <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.LauncherItems, ElementName=root}">
         <!--<i:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>-->

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
@@ -24,9 +25,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         LauncherGroupImageName _imageName;
         long _sequence;
 
+        LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? _selectedLauncherItem;
+
         #endregion
 
-        public LauncherGroupSettingEditorViewModel(LauncherGroupElement model, ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> launcherItems, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorViewModel(LauncherGroupElement model, ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> allLauncherItems, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
@@ -35,15 +38,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             LauncherGroupTheme = launcherGroupTheme;
             DispatcherWrapper = dispatcherWrapper;
-            LauncherItems = launcherItems;
+            AllLauncherItems = allLauncherItems;
 
             this._name = Model.Name;
             this._imageColor = Model.ImageColor;
             this._imageName = Model.ImageName;
             Kind = Model.Kind;
+
+            var launcherItems = Model.GetLauncherItemIds()
+                .Join(
+                    AllLauncherItems,
+                    i => i,
+                    i => i.LauncherItemId,
+                    (id, item) => item
+                )
+            ;
+            LauncherItems = new ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(launcherItems);
         }
 
         #region property
+
+        ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> AllLauncherItems { get; }
 
         public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
 
@@ -90,6 +105,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherGroupKind Kind { get; }
 
         public object GroupIcon => DispatcherWrapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false));
+
+        public LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? SelectedLauncherItem
+        {
+            get => this._selectedLauncherItem;
+            set
+            {
+                SetProperty(ref this._selectedLauncherItem, value);
+            }
+        }
 
         #endregion
 
