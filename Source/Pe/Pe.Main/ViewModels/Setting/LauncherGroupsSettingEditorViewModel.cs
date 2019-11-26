@@ -52,21 +52,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             ;
             GroupIconItems = new ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>>(groupImageItems);
 
-            var dragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
-                CanDragStart = CanDragStart,
-                DragEnterAction = DragOrverOrEnter,
-                DragOverAction = DragOrverOrEnter,
-                DragLeaveAction = DragLeave,
-                DropAction = Drop,
-                GetDragParameter = GetDragParameter,
+            var groupsDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = GroupsCanDragStart,
+                DragEnterAction = GroupsDragOrverOrEnter,
+                DragOverAction = GroupsDragOrverOrEnter,
+                DragLeaveAction = GroupsDragLeave,
+                DropAction = GroupsDrop,
+                GetDragParameter = GroupsGetDragParameter,
             };
-            dragAndDrop.DragStartSize = new Size(dragAndDrop.DragStartSize.Width, 0);
-            DragAndDrop = dragAndDrop;
+            groupsDragAndDrop.DragStartSize = new Size(groupsDragAndDrop.DragStartSize.Width, 0);
+            GroupsDragAndDrop = groupsDragAndDrop;
+
+            var launcherItemsDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = LauncherItemsCanDragStart,
+                DragEnterAction = LauncherItemsDragOrverOrEnter,
+                DragOverAction = LauncherItemsDragOrverOrEnter,
+                DragLeaveAction = LauncherItemsDragLeave,
+                DropAction = LauncherItemsDrop,
+                GetDragParameter = LauncherItemsGetDragParameter,
+            };
+            launcherItemsDragAndDrop.DragStartSize = new Size(launcherItemsDragAndDrop.DragStartSize.Width, 0);
+            LauncherItemsDragAndDrop = launcherItemsDragAndDrop;
         }
 
         #region property
         ILauncherGroupTheme LauncherGroupTheme { get; }
-        public IDragAndDrop DragAndDrop { get; }
+        public IDragAndDrop GroupsDragAndDrop { get; }
+        public IDragAndDrop LauncherItemsDragAndDrop { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
         public ICollectionView LauncherItems { get; }
@@ -146,25 +158,48 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        #region DragAndDrop
-        private bool CanDragStart(UIElement sender, MouseEventArgs e)
+        #region GroupsDragAndDrop
+        private bool GroupsCanDragStart(UIElement sender, MouseEventArgs e)
         {
             return true;
         }
 
-        private void DragOrverOrEnter(UIElement sender, DragEventArgs e)
+        private void GroupsDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+        }
+
+        private void GroupsDragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+        private void GroupsDrop(UIElement sender, DragEventArgs e)
+        { }
+
+        private IResultSuccessValue<DragParameter> GroupsGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            return ResultSuccessValue.Failure<DragParameter>();
+        }
+
+        #endregion
+
+        #region LauncherItemsDragAndDrop
+        private bool LauncherItemsCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            return true;
+        }
+
+        private void LauncherItemsDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.None;
             e.Handled = true;
         }
 
-        private void DragLeave(UIElement sender, DragEventArgs e)
+        private void LauncherItemsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        private void Drop(UIElement sender, DragEventArgs e)
+        private void LauncherItemsDrop(UIElement sender, DragEventArgs e)
         { }
 
-        private IResultSuccessValue<DragParameter> GetDragParameter(UIElement sender, MouseEventArgs e)
+        private IResultSuccessValue<DragParameter> LauncherItemsGetDragParameter(UIElement sender, MouseEventArgs e)
         {
             var dd = new LauncherItemInLauncherGroupDragAndDrop(DispatcherWrapper, LoggerFactory);
             var parameter = dd.GetDragParameter(true, sender, e, d => {

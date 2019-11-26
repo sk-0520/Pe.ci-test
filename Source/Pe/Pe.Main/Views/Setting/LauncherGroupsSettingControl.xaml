@@ -61,6 +61,9 @@
       </ToolBar>
 
       <ListBox Grid.Row="1" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
+        <i:Interaction.Behaviors>
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, ElementName=root}" />
+        </i:Interaction.Behaviors>
         <ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
@@ -208,7 +211,7 @@
 
       <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.LauncherItems, ElementName=root}">
         <i:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemsDragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
