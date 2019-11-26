@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -52,6 +53,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             ;
             GroupIconItems = new ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>>(groupImageItems);
 
+            var launcherItemDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = LauncherItemCanDragStart,
+                DragEnterAction = LauncherItemDragOrverOrEnter,
+                DragOverAction = LauncherItemDragOrverOrEnter,
+                DragLeaveAction = LauncherItemDragLeave,
+                DropAction = LauncherItemDrop,
+                GetDragParameter = LauncherItemGetDragParameter,
+            };
+            launcherItemDragAndDrop.DragStartSize = new Size(launcherItemDragAndDrop.DragStartSize.Width, 0);
+            LauncherItemDragAndDrop = launcherItemDragAndDrop;
+
             var groupsDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = GroupsCanDragStart,
                 DragEnterAction = GroupsDragOrverOrEnter,
@@ -78,6 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
         ILauncherGroupTheme LauncherGroupTheme { get; }
         public IDragAndDrop GroupsDragAndDrop { get; }
+        public IDragAndDrop LauncherItemDragAndDrop { get; }
         public IDragAndDrop LauncherItemsDragAndDrop { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
@@ -157,6 +170,107 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 }
             }
         }
+
+        #region DragAndDrop
+
+        private bool LauncherItemCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            return true;
+        }
+
+        private void LauncherItemDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            var canDrag = false;
+            if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
+                if(dragData.FromAllItems) {
+                    canDrag = true;
+                } else {
+                    if(e.OriginalSource is DependencyObject dependencyObject) {
+                        var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
+                        if(listBoxItem != null) {
+                            var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
+                            if(currentItem != dragData.Item) {
+                                canDrag = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(canDrag) {
+                Debug.Assert(dragData != null);
+                if(dragData.FromAllItems) {
+                    e.Effects = DragDropEffects.Copy;
+                } else {
+                    e.Effects = DragDropEffects.Move;
+                }
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
+            e.Handled = true;
+        }
+
+        private void LauncherItemDragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+        private void LauncherItemDrop(UIElement sender, DragEventArgs e)
+        {
+            if(SelectedGroup== null) {
+                return;
+            }
+            if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
+                if(e.OriginalSource is DependencyObject dependencyObject) {
+                    var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
+                    if(listBoxItem != null) {
+                        var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
+                        if(dragData.FromAllItems) {
+                            // アイテム一覧からD&Dされた
+                            var currentIndex = SelectedGroup.LauncherItems.IndexOf(currentItem);
+                            // 複製しておかないと選択状態が死ぬ
+                            var baseLauncherItem = LauncherCollection.ViewModels.First(i => i == dragData.Item);
+                            var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
+                            SelectedGroup.LauncherItems.Insert(currentIndex, newLauncherItem);
+                            SelectedLauncherItem = newLauncherItem;
+                            UIUtility.GetVisualClosest<ListBox>(listBoxItem)!.Focus();
+                        } else {
+                            // 現在アイテム内での並び替え
+                            var selfIndex = SelectedGroup.LauncherItems.IndexOf(dragData.Item);
+                            var currentIndex = SelectedGroup.LauncherItems.IndexOf(currentItem);
+
+                            // 自分自身より上のアイテムであれば自分自身をさらに上に設定
+                            if(currentIndex < selfIndex) {
+                                SelectedGroup.LauncherItems.RemoveAt(selfIndex);
+                                SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item);
+                            } else {
+                                // 自分自身より下のアイテムであれば自分自身をさらに下に設定
+                                Debug.Assert(selfIndex < currentIndex);
+                                SelectedGroup.LauncherItems.RemoveAt(selfIndex);
+                                SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
+                            }
+                            SelectedLauncherItem = dragData.Item;
+                        }
+                    } else if(dragData.FromAllItems) {
+                        // 一覧から持ってきた際にデータが空っぽだとここ
+                        var baseLauncherItem = LauncherCollection.ViewModels.First(i => i == dragData.Item);
+                        var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
+                        SelectedGroup.LauncherItems.Add(newLauncherItem);
+                        SelectedLauncherItem = newLauncherItem;
+                        UIUtility.GetVisualClosest<ListBox>(dependencyObject)!.Focus();
+                    }
+                }
+            }
+        }
+
+        private IResultSuccessValue<DragParameter> LauncherItemGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new LauncherItemInLauncherGroupDragAndDrop(DispatcherWrapper, LoggerFactory);
+            var parameter = dd.GetDragParameter(false, sender, e, d => {
+                SelectedLauncherItem = d;
+            });
+            return parameter;
+        }
+
+        #endregion
 
         #region GroupsDragAndDrop
         private bool GroupsCanDragStart(UIElement sender, MouseEventArgs e)
