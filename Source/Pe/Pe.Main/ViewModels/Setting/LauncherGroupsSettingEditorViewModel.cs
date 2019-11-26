@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         bool _isPopupCreateGroupMenu;
         LauncherGroupSettingEditorViewModel? _selectedGroup;
         LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? _selectedLauncherItem;
+
         #endregion
 
         public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -125,8 +126,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     this._selectedGroup.PropertyChanged += SelectedGroup_PropertyChanged;
                 }
                 ChangeGroupIconsColorFromCurrentGroup();
+
+                RaisePropertyChanged(nameof(IsEnabledSelectedGroup));
             }
         }
+
+        public bool IsEnabledSelectedGroup => SelectedGroup != null;
 
         public LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? SelectedLauncherItem
         {

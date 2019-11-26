@@ -79,7 +79,7 @@
       <GridSplitter Grid.Row="2" Style="{StaticResource DefaultHorizonGridSplitter}" />
 
       <GroupBox Grid.Row="3" Header="edit">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" IsEnabled="{Binding IsEnabledSelectedGroup}">
           <StackPanel>
             <StackPanel.Resources>
               <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
@@ -157,7 +157,7 @@
 
     <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
 
-    <Grid Grid.Column="2">
+    <Grid Grid.Column="2" IsEnabled="{Binding IsEnabledSelectedGroup}">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
@@ -198,7 +198,7 @@
 
     <GridSplitter Grid.Column="3" Style="{StaticResource DefaultVericalGridSplitter}" />
 
-    <Grid Grid.Column="4">
+    <Grid Grid.Column="4" IsEnabled="{Binding IsEnabledSelectedGroup}">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
