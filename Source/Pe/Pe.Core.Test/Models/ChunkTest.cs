@@ -61,8 +61,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             foreach(var i in items) {
                 block.Add(i);
             }
-            var test = block.Contains(value);
-            Assert.AreEqual(result, test);
+            var actual = block.Contains(value);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]

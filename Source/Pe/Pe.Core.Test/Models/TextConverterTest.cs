@@ -34,11 +34,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ァィゥェォ", "ぁぃぅぇぉ")]
         [DataRow("ャュョ", "ゃゅょ")]
         [DataRow("ヵヶ", "ゕゖ")]
-        public void ConvertHiraganaToKatakaTest_Normal(string test, string input)
+        public void ConvertHiraganaToKatakaTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertHiraganaToKataka(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertHiraganaToKataka(input);
+            Assert.AreEqual(result, actual);
         }
 
 
@@ -67,11 +67,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ぁぃぅぇぉ", "ァィゥェォ")]
         [DataRow("ゃゅょ", "ャュョ")]
         [DataRow("ゕゖ", "ヵヶ")]
-        public void ConvertKatakaToHiraganaTest_Normal(string test, string input)
+        public void ConvertKatakaToHiraganaTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertKatakaToHiragana(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertKatakaToHiragana(input);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -110,11 +110,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ア゚", "ｱﾟ")]
         [DataRow("ア゙ﾞ", "ｱﾞﾞ")]
         [DataRow("ア゚ﾟ", "ｱﾟﾟ")]
-        public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Normal(string test, string input)
+        public void ConvertHankakuKatakanaToZenkakuKatakanaTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertHankakuKatakanaToZenkakuKatakana(input);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -153,11 +153,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("ｱﾟ", "ア゚")]
         [DataRow("ｱﾞﾞ", "ア゙ﾞ")]
         [DataRow("ｱﾟﾟ", "ア゚ﾟ")]
-        public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Normal(string test, string input)
+        public void ConvertZenkakuKatakanaToHankakuKatakanaTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertZenkakuKatakanaToHankakuKatakana(input);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -175,11 +175,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("１", "１")]
         [DataRow("ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ", "abcdefghijklmnopqrstuvwxyz")]
         [DataRow("ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")]
-        public void ConvertAsciiAlphabetToZenkakuAlphabetTest_Normal(string test, string input)
+        public void ConvertAsciiAlphabetToZenkakuAlphabetTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertAsciiAlphabetToZenkakuAlphabet(input);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -197,11 +197,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("１", "１")]
         [DataRow("abcdefghijklmnopqrstuvwxyz", "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ")]
         [DataRow("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ")]
-        public void ConvertZenkakuAlphabetToAsciiAlphabetTest_Normal(string test, string input)
+        public void ConvertZenkakuAlphabetToAsciiAlphabetTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertZenkakuAlphabetToAsciiAlphabet(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertZenkakuAlphabetToAsciiAlphabet(input);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -218,11 +218,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("１", "1")]
         [DataRow("１", "１")]
         [DataRow("０１２３４５６７８９", "0123456789")]
-        public void ConvertAsciiDigitToZenkakuDigitTest_Normal(string test, string input)
+        public void ConvertAsciiDigitToZenkakuDigitTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertAsciiDigitToZenkakuDigit(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertAsciiDigitToZenkakuDigit(input);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -239,11 +239,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("1", "1")]
         [DataRow("1", "１")]
         [DataRow("0123456789", "０１２３４５６７８９")]
-        public void ConvertZenkakuDigitToAsciiDigitTest_Normal(string test, string input)
+        public void ConvertZenkakuDigitToAsciiDigitTest_Normal(string result, string input)
         {
             var textMatcher = new TextConverter();
-            var result = textMatcher.ConvertZenkakuDigitToAsciiDigit(input);
-            Assert.AreEqual(test, result);
+            var actual = textMatcher.ConvertZenkakuDigitToAsciiDigit(input);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -258,11 +258,11 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("jajujo", "じゃじゅじょ")]
         [DataRow("nyanyunyo", "にゃにゅにょ")]
         [DataRow("shafu", "しゃふ")]
-        public void ConvertHiraganaToAsciiRomeTest(string test, string input)
+        public void ConvertHiraganaToAsciiRomeTest(string result, string input)
         {
             var textConverter = new TextConverter();
-            var result = textConverter.ConvertHiraganaToAsciiRome(input);
-            Assert.AreEqual(test, result);
+            var actual = textConverter.ConvertHiraganaToAsciiRome(input);
+            Assert.AreEqual(result, actual);
         }
     }
 }

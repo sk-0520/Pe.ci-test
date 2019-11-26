@@ -29,21 +29,21 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.Database
         [TestMethod]
         public void ToTest_A()
         {
-            var test = "test-enum";
+            var result = "test-enum";
             var enumTransfer = new EnumTransfer<A>();
-            Assert.AreEqual(test, enumTransfer.ToString(A.TestEnum));
-            Assert.AreEqual(test, enumTransfer.ToString(A.testEnum));
-            Assert.AreEqual(test, enumTransfer.ToString(A.TEStENUm));
+            Assert.AreEqual(result, enumTransfer.ToString(A.TestEnum));
+            Assert.AreEqual(result, enumTransfer.ToString(A.testEnum));
+            Assert.AreEqual(result, enumTransfer.ToString(A.TEStENUm));
         }
 
         [TestMethod]
         public void ToTest_B()
         {
-            var test = "abc";
+            var result = "abc";
             var enumTransfer = new EnumTransfer<B>();
-            Assert.AreEqual(test, enumTransfer.ToString(B.TestEnum));
-            Assert.AreEqual(test, enumTransfer.ToString(B.testEnum));
-            Assert.AreEqual(test, enumTransfer.ToString(B.TEStENUm));
+            Assert.AreEqual(result, enumTransfer.ToString(B.TestEnum));
+            Assert.AreEqual(result, enumTransfer.ToString(B.testEnum));
+            Assert.AreEqual(result, enumTransfer.ToString(B.TEStENUm));
         }
 
         enum C

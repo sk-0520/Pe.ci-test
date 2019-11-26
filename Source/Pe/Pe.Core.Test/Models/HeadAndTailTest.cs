@@ -17,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(false, 11, 5, 10)]
         public void CompareTest(bool result, int value, int head, int tail)
         {
-            var range = HeadAndTail.Create(head, tail);
-            Assert.IsTrue(range.IsIn(value) == result);
+            var actual = HeadAndTail.Create(head, tail);
+            Assert.AreEqual(result, actual.IsIn(value));
         }
     }
 }
