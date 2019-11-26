@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <summary>
-    /// forech でくるくる回るよ！
+    /// foreach でくるくる回るよ！
     /// </summary>
     public class Counter : ICounter, IEnumerable<ICounter>
     {
