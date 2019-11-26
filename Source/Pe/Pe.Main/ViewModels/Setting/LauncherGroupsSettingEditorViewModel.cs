@@ -220,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private void LauncherItemDrop(UIElement sender, DragEventArgs e)
         {
-            if(SelectedGroup== null) {
+            if(SelectedGroup == null) {
                 return;
             }
             if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
@@ -285,16 +285,73 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private void GroupsDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
+            var canDrag = false;
+            if(e.Data.TryGet<LauncherGroupSettingEditorViewModel>(out var drafItem)) {
+                if(e.OriginalSource is DependencyObject dependencyObject) {
+                    var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
+                    if(listBoxItem != null) {
+                        var currentItem = (LauncherGroupSettingEditorViewModel)listBoxItem.DataContext;
+                        if(currentItem != drafItem) {
+                            canDrag = true;
+                        }
+                    }
+                }
+            }
+
+            if(canDrag) {
+                e.Effects = DragDropEffects.Move;
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
+            e.Handled = true;
+
         }
 
         private void GroupsDragLeave(UIElement sender, DragEventArgs e)
         { }
 
         private void GroupsDrop(UIElement sender, DragEventArgs e)
-        { }
+        {
+            if(SelectedGroup == null) {
+                return;
+            }
+            if(e.Data.TryGet<LauncherGroupSettingEditorViewModel>(out var dragData)) {
+                if(e.OriginalSource is DependencyObject dependencyObject) {
+                    var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
+                    if(listBoxItem != null) {
+                        var currentItem = (LauncherGroupSettingEditorViewModel)listBoxItem.DataContext;
+                        // 現在アイテム内での並び替え
+                        var selfIndex = GroupCollection.ViewModels.IndexOf(dragData);
+                        var currentIndex = GroupCollection.ViewModels.IndexOf(currentItem);
+
+                        // 自分自身より上のアイテムであれば自分自身をさらに上に設定
+                        if(currentIndex < selfIndex) {
+                            GroupCollection.ViewModels.RemoveAt(selfIndex);
+                            GroupCollection.ViewModels.Insert(currentIndex, dragData);
+                        } else {
+                            // 自分自身より下のアイテムであれば自分自身をさらに下に設定
+                            Debug.Assert(selfIndex < currentIndex);
+                            GroupCollection.ViewModels.RemoveAt(selfIndex);
+                            GroupCollection.ViewModels.Insert(currentIndex, dragData);
+                        }
+                        SelectedGroup= dragData;
+                    }
+                }
+            }
+        }
 
         private IResultSuccessValue<DragParameter> GroupsGetDragParameter(UIElement sender, MouseEventArgs e)
         {
+            if(e.Source is ListBox listbox) {
+                var scollbar = UIUtility.GetVisualClosest<ScrollBar>((DependencyObject)e.OriginalSource);
+                if(scollbar == null && listbox.SelectedItem != null) {
+                    var item = (LauncherGroupSettingEditorViewModel)listbox.SelectedItem;
+                    SelectedGroup = item;
+                    var data = new DataObject(typeof(LauncherGroupSettingEditorViewModel), item);
+                    return ResultSuccessValue.Success(new DragParameter(sender, DragDropEffects.Move, data));
+                }
+            }
+
             return ResultSuccessValue.Failure<DragParameter>();
         }
 
