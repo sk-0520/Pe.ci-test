@@ -18,6 +18,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public interface IDragAndDrop
     {
+        #region property
+
+        /// <summary>
+        /// ドラッグ開始とみなす距離。
+        /// </summary>
+        [PixelKind(Px.Device)]
+        Size DragStartSize { get; set; }
+
+        #endregion
+
+        #region function
+
+        #endregion
         void MouseDown(UIElement sender, MouseButtonEventArgs e);
         void MouseMove(UIElement sender, MouseEventArgs e);
         void DragEnter(UIElement sender, DragEventArgs e);
