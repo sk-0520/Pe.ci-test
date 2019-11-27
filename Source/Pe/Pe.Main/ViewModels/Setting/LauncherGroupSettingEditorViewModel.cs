@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
@@ -23,20 +24,15 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class LauncherGroupSettingEditorViewModel : SingleModelViewModelBase<LauncherGroupElement>, ILauncherGroupId, ISettingEditorViewModel
+    public class LauncherGroupSettingEditorViewModel : SingleModelViewModelBase<LauncherGroupSettingEditorElement>, ILauncherGroupId
     {
         #region variable
-
-        string _name;
-        Color _imageColor;
-        LauncherGroupImageName _imageName;
-        long _sequence;
 
         LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? _selectedLauncherItem;
 
         #endregion
 
-        public LauncherGroupSettingEditorViewModel(LauncherGroupElement model, ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> allLauncherItems, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorViewModel(LauncherGroupSettingEditorElement model, IReadOnlyList<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> allLauncherItems, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
@@ -47,21 +43,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             DispatcherWrapper = dispatcherWrapper;
             AllLauncherItems = allLauncherItems;
 
-            this._name = Model.Name;
-            this._imageColor = Model.ImageColor;
-            this._imageName = Model.ImageName;
-            Kind = Model.Kind;
-
-            var launcherItems = Model.GetLauncherItemIds()
-                .Join(
-                    AllLauncherItems,
-                    i => i,
-                    i => i.LauncherItemId,
-                    (id, item) => item
-                )
-            ;
-            LauncherItems = new ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(launcherItems);
-
+            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems, LoggerFactory) {
+                RemoveViewModelToDispose = false, // 共有アイテムを使用しているので破棄させない
+                ToViewModel = m => AllLauncherItems.First(i => i.LauncherItemId == m.Data),
+            };
+            LauncherItems = LauncherCollection.ReadOnlyViewModels;
         }
 
         #region property
@@ -70,13 +56,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// 共用しているランチャーアイテム一覧。
         /// <para>親元でアイコンと共通項目構築済みのランチャーアイテム。毎回作るのあれだし。</para>
         /// </summary>
-        ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> AllLauncherItems { get; }
+        IReadOnlyList<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> AllLauncherItems { get; }
 
         /// <summary>
         /// 所属ランチャーアイテム。
         /// <para>注意: 設定中データ状態はモデル側に送らない。</para>
         /// </summary>
-        public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
+        //public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
+        ModelViewModelObservableCollectionManagerBase<WrapModel<Guid>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
+        public ReadOnlyObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
 
         ILauncherGroupTheme LauncherGroupTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -85,41 +73,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         [Required]
         public string Name
         {
-            get => this._name;
+            get => Model.Name;
             set
             {
-                SetProperty(ref this._name, value);
+                SetModelValue(value);
                 ValidateProperty(value);
             }
         }
 
         public Color ImageColor
         {
-            get => this._imageColor;
+            get => Model.ImageColor;
             set
             {
-                SetProperty(ref this._imageColor, value);
+                SetModelValue(value);
                 ReloadIcon();
             }
         }
 
         public LauncherGroupImageName ImageName
         {
-            get => this._imageName;
+            get => Model.ImageName;
             set
             {
-                SetProperty(ref this._imageName, value);
+                SetModelValue(value);
                 ReloadIcon();
             }
         }
 
         public long Sequence
         {
-            get => this._sequence;
-            set => SetProperty(ref this._sequence, value);
+            get => Model.Sequence;
+            set
+            {
+                SetModelValue(value);
+                ReloadIcon();
+            }
         }
 
-        public LauncherGroupKind Kind { get; }
+        public LauncherGroupKind Kind => Model.Kind;
 
         public object GroupIcon => DispatcherWrapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false));
 
@@ -145,6 +137,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
 
+        public void SaveWithoutSequence()
+        {
+            Model.SaveWithoutSequence();
+        }
+
+        public void InsertNewLauncherItem(int index, ILauncherItemId launcherItem)
+        {
+            Model.InsertLauncherItemId(index, launcherItem.LauncherItemId);
+        }
+
+        public void MoveLauncherItem(int startIndex, int insertIndex)
+        {
+            Model.MoveLauncherItemId(startIndex, insertIndex);
+        }
+
 
         #endregion
 
@@ -154,31 +161,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        #region ISettingEditorViewModel
+        #region SingleModelViewModelBase
 
-        public string Header { get; } = nameof(NotSupportedException);//throw new NotSupportedException();
-
-        public void Load()
+        protected override void Dispose(bool disposing)
         {
-            throw new NotSupportedException();
-        }
-
-        public void Save()
-        {
-            var data = new LauncherGroupData() {
-                LauncherGroupId = LauncherGroupId,
-                Kind = Kind,
-                Name = Name,
-                ImageName = ImageName,
-                ImageColor = ImageColor,
-                Sequence = Sequence
-            };
-            var launcherItemIds = LauncherItems.Select(i => i.LauncherItemId).ToList();
-            Model.Save(data, launcherItemIds);
+            if(!IsDisposed) {
+                if(disposing) {
+                    LauncherCollection.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
 
         #endregion
-
 
     }
 }

@@ -453,12 +453,21 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             this._data = data;
         }
 
-        #region property
+        #region function
 
         public TData Data
         {
             get => this._data;
             set => SetProperty(ref this._data, value);
+        }
+
+        #endregion
+
+        #region ViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
         }
 
         #endregion

@@ -93,4 +93,53 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
+    public sealed class WrapModel<TData> : BindModelBase
+    {
+        public WrapModel(TData data, ILoggerFactory loggerFactory)
+            : this(data, true, loggerFactory)
+        { }
+        public WrapModel(TData data, bool useDispose, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
+        {
+            Data = data;
+            UseDispose = useDispose;
+        }
+
+        #region property
+
+        public TData Data { get; private set; }
+        bool UseDispose { get; }
+        #endregion
+
+        #region BindModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(UseDispose && Data is IDisposable diposer) {
+                    diposer.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+            // 参照があれば切っておく
+            Data = default!;
+        }
+
+        #endregion
+    }
+
+    public static class WrapModel
+    {
+        public static WrapModel<TData> Create<TData>(TData data, ILoggerFactory loggerFactory)
+        {
+            return new WrapModel<TData>(data, loggerFactory);
+        }
+
+        public static WrapModel<TData> Create<TData>(TData data, bool useDispose, ILoggerFactory loggerFactory)
+        {
+            return new WrapModel<TData>(data, useDispose, loggerFactory);
+        }
+
+    }
+
 }

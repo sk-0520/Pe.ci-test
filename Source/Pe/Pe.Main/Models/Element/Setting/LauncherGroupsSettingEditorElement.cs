@@ -30,12 +30,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         INotifyManager NotifyManager { get; }
-        public ObservableCollection<LauncherGroupElement> GroupItems { get; } = new ObservableCollection<LauncherGroupElement>();
+        public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; } = new ObservableCollection<LauncherGroupSettingEditorElement>();
         public ObservableCollection<LauncherElementWithIconElement<CommonLauncherItemElement>> LauncherItems { get; } = new ObservableCollection<LauncherElementWithIconElement<CommonLauncherItemElement>>();
 
         #endregion
 
         #region function
+
+        public void AddLauncherItemId(Guid launcherGroupId)
+        {
+        }
+
+        public void MoveGroupItem(int startIndex, int insertIndex)
+        {
+            var item = GroupItems[startIndex];
+            GroupItems.RemoveAt(startIndex);
+            GroupItems.Insert(insertIndex, item);
+        }
+
         #endregion
 
         #region SettingEditorElementBase
@@ -69,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             GroupItems.Clear();
             foreach(var groupId in groupIds) {
-                var element = new LauncherGroupElement(groupId, NotifyManager, MainDatabaseBarrier, StatementLoader, IdFactory, LoggerFactory);
+                var element = new LauncherGroupSettingEditorElement(groupId, MainDatabaseBarrier, StatementLoader, IdFactory, LoggerFactory);
                 element.Initialize();
                 GroupItems.Add(element);
             }

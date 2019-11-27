@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             switch(e.Action) {
                 case NotifyCollectionChangedAction.Add:
-                    if(e.NewStartingIndex == 0) {
+                    if(e.NewStartingIndex == 0 && Collection.Count == 0) {
                         AddItems(ConvertList(e.NewItems));
                     } else {
                         InsertItems(e.NewStartingIndex, ConvertList(e.NewItems));

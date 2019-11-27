@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             };
             LauncherItems = LauncherCollection.GetCollectionView();
 
-            GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems, LoggerFactory) {
+            GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems, LoggerFactory) {
                 ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, LauncherCollection.ViewModels, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
             };
             GroupItems = GroupCollection.GetCollectionView();
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
         public ICollectionView LauncherItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
         public ICollectionView GroupItems { get; }
 
 
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 if(prev != null && !prev.IsDisposed) {
                     prev.PropertyChanged -= SelectedGroup_PropertyChanged;
                     if(prev.Validate()) {
-                        prev.Save();
+                        prev.SaveWithoutSequence();
                     }
                 }
                 SetProperty(ref this._selectedGroup, value);
@@ -232,10 +232,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                             // アイテム一覧からD&Dされた
                             var currentIndex = SelectedGroup.LauncherItems.IndexOf(currentItem);
                             // 複製しておかないと選択状態が死ぬ
-                            var baseLauncherItem = LauncherCollection.ViewModels.First(i => i == dragData.Item);
-                            var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
-                            SelectedGroup.LauncherItems.Insert(currentIndex, newLauncherItem);
-                            SelectedLauncherItem = newLauncherItem;
+                            //var baseLauncherItem = LauncherCollection.ViewModels.First(i => i == dragData.Item);
+                            //var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
+                            //SelectedGroup.LauncherItems.Insert(currentIndex, newLauncherItem);
+                            SelectedGroup.InsertNewLauncherItem(currentIndex, dragData.Item);
+                            SelectedLauncherItem = LauncherCollection.ViewModels[currentIndex];
                             UIUtility.GetVisualClosest<ListBox>(listBoxItem)!.Focus();
                         } else {
                             // 現在アイテム内での並び替え
@@ -243,6 +244,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                             var currentIndex = SelectedGroup.LauncherItems.IndexOf(currentItem);
 
                             // 自分自身より上のアイテムであれば自分自身をさらに上に設定
+                            SelectedGroup.MoveLauncherItem(selfIndex, currentIndex);
+                            /*
                             if(currentIndex < selfIndex) {
                                 SelectedGroup.LauncherItems.RemoveAt(selfIndex);
                                 SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item);
@@ -252,14 +255,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                                 SelectedGroup.LauncherItems.RemoveAt(selfIndex);
                                 SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
                             }
-                            SelectedLauncherItem = dragData.Item;
+                            */
+                            SelectedLauncherItem = LauncherCollection.ViewModels[currentIndex];
                         }
                     } else if(dragData.FromAllItems) {
                         // 一覧から持ってきた際にデータが空っぽだとここ
+                        /*
                         var baseLauncherItem = LauncherCollection.ViewModels.First(i => i == dragData.Item);
                         var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
                         SelectedGroup.LauncherItems.Add(newLauncherItem);
                         SelectedLauncherItem = newLauncherItem;
+                        */
+                        SelectedGroup.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, dragData.Item);
+                        SelectedLauncherItem = LauncherCollection.ViewModels.Last();
                         UIUtility.GetVisualClosest<ListBox>(dependencyObject)!.Focus();
                     }
                 }
@@ -321,20 +329,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     if(listBoxItem != null) {
                         var currentItem = (LauncherGroupSettingEditorViewModel)listBoxItem.DataContext;
                         // 現在アイテム内での並び替え
-                        var selfIndex = GroupCollection.ViewModels.IndexOf(dragData);
-                        var currentIndex = GroupCollection.ViewModels.IndexOf(currentItem);
+                        var selfIndex = GroupCollection.IndexOf(dragData);
+                        var currentIndex = GroupCollection.IndexOf(currentItem);
 
-                        // 自分自身より上のアイテムであれば自分自身をさらに上に設定
-                        if(currentIndex < selfIndex) {
-                            GroupCollection.ViewModels.RemoveAt(selfIndex);
-                            GroupCollection.ViewModels.Insert(currentIndex, dragData);
-                        } else {
-                            // 自分自身より下のアイテムであれば自分自身をさらに下に設定
-                            Debug.Assert(selfIndex < currentIndex);
-                            GroupCollection.ViewModels.RemoveAt(selfIndex);
-                            GroupCollection.ViewModels.Insert(currentIndex, dragData);
-                        }
-                        SelectedGroup= dragData;
+                        Model.MoveGroupItem(selfIndex, currentIndex);
+
+                        //// 自分自身より上のアイテムであれば自分自身をさらに上に設定
+                        //if(currentIndex < selfIndex) {
+                        //    GroupCollection.ViewModels.RemoveAt(selfIndex);
+                        //    GroupCollection.ViewModels.Insert(currentIndex, dragData);
+                        //} else {
+                        //    // 自分自身より下のアイテムであれば自分自身をさらに下に設定
+                        //    Debug.Assert(selfIndex < currentIndex);
+                        //    GroupCollection.ViewModels.RemoveAt(selfIndex);
+                        //    GroupCollection.ViewModels.Insert(currentIndex, dragData);
+                        //}
+                        SelectedGroup = GroupCollection.ReadOnlyViewModels[currentIndex];
                     }
                 }
             }
@@ -415,7 +425,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
         public override void Save()
         {
-            SelectedGroup?.Save();
+            SelectedGroup?.SaveWithoutSequence();
             base.Save();
         }
 

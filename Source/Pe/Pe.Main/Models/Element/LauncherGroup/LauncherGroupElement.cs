@@ -72,47 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             LauncherItemIds.SetRange(launcherItemIds);
         }
 
-        IEnumerable<Guid> LoadLauncherItemIdsForNormal()
-        {
-            ThrowIfDisposed();
-
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectLauncherItemIds(LauncherGroupId);
-            }
-        }
-
-        IEnumerable<Guid> LoadLauncherItemIds()
-        {
-            ThrowIfDisposed();
-
-            switch(Kind) {
-                case LauncherGroupKind.Normal:
-                    return LoadLauncherItemIdsForNormal();
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-
-        public void Save(LauncherGroupData launcherGroupData, IReadOnlyList<Guid> launcherItemIds)
-        {
-            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
-
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                dao.UpdateGroupWithoutSequence(launcherGroupData, DatabaseCommonStatus.CreateCurrentAccount());
-
-                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                launcherGroupItemsDao.DeleteGroupItemsByLauncherGroupId(LauncherGroupId);
-                var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(LauncherGroupId);
-                launcherGroupItemsDao.InsertNewItems(LauncherGroupId, launcherItemIds, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
-
-                commander.Commit();
-            }
-        }
-
         #endregion
 
         #region ElementBase
