@@ -238,15 +238,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public Guid KeyActionId { get; set; }
         public KeyActionKind KeyActionKind { get; set; }
         public string KeyActionContent { get; set; } = string.Empty;
-        public string KeyActionOption { get; set; } = string.Empty;
-
-        public Key Key { get; set; }
-        public ModifierKey Shift { get; set; }
-        public ModifierKey Contrl { get; set; }
-        public ModifierKey Alt { get; set; }
-        public ModifierKey Super { get; set; }
-
+        public string Comment { get; set; } = string.Empty;
         #endregion
+    }
+
+    internal class KeyItem
+    {
+        public KeyItem(KeyActionData action, IReadOnlyDictionary<string, string> options, IReadOnlyList<IReadOnlyKeyMappingData> mappings)
+        {
+            Action = action;
+            Options = options;
+            Mappings = mappings;
+        }
+
+        public KeyActionData Action { get; }
+        public IReadOnlyDictionary<string, string> Options { get; }
+        public IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
     }
 
 }

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Domain;
+using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
@@ -32,6 +35,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #endregion
 
         #region function
+
+        private KeyActionData ConvertFromDto(KeyActionsEntityDto dto)
+        {
+            var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
+
+            var result = new KeyActionData() {
+                KeyActionId = dto.KeyActionId,
+                KeyActionContent = dto.KeyActionContent,
+                KeyActionKind = keyActionKindTransfer.ToEnum(dto.KeyActionKind),
+                Comment = dto.Comment,
+            };
+
+            return result;
+        }
+
+        public IEnumerable<KeyActionData> SelectAllKeyActionsFromKind(KeyActionKind keyActionKind)
+        {
+            var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
+
+            var statement = LoadStatement();
+            var parameter = new { KeyActionKind = keyActionKindTransfer.ToString(keyActionKind) };
+            return Commander.Query<KeyActionsEntityDto>(statement, parameter)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
+        public IEnumerable<KeyActionData> SelectAllKeyActionsIgnoreKinds(IReadOnlyCollection<KeyActionKind> ignoreKinds)
+        {
+            var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
+
+            var statement = LoadStatement();
+            var parameter = new { IgnoreKinds = ignoreKinds.Select(i => keyActionKindTransfer.ToString(i)) };
+            return Commander.Query<KeyActionsEntityDto>(statement, parameter)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
+
         #endregion
     }
 }

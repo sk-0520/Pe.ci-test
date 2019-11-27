@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 {
-    public class KeyActionsEntityDto : CommonDtoBase
+    public class KeyOptionsEntityDto : CreateDtoBase
     {
         #region property
 
         public Guid KeyActionId { get; set; }
-        public string KeyActionKind { get; set; } = string.Empty;
-        public string KeyActionContent { get; set; } = string.Empty;
-        public string Comment { get; set; } = string.Empty;
+        public string KeyOptionName { get; set; } = string.Empty;
+        public string KeyOptionValue { get; set; } = string.Empty;
 
         #endregion
     }
