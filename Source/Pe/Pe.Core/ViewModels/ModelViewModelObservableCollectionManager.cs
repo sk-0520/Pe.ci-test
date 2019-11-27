@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     }
 
     /// <summary>
-    /// Model と ViewModel の一元的管理。
+    /// <typeparamref name="TModel"/> と <typeparamref name="TViewModel"/> の一元的管理。
     /// <para>対になっている部分は内部で対応するがその前後処理までは面倒見ない。</para>
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
@@ -38,21 +38,27 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         {
-            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
+            EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
         public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
             : base(collection, loggerFactory)
         {
-            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
+            EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
         #region property
 
-        public ObservableCollection<TViewModel> ViewModels { get; private set; }
-        public ReadOnlyObservableCollection<TViewModel> ReadOnlyViewModels
+        /// <summary>
+        /// 内部使用する<typeparamref name="TViewModel"/>のコレクション。
+        /// </summary>
+        protected ObservableCollection<TViewModel> EditableViewModels { get; private set; }
+        /// <summary>
+        /// 外部使用する<typeparamref name="TViewModel"/>のコレクション。
+        /// </summary>
+        public ReadOnlyObservableCollection<TViewModel> ViewModels
         {
-            get => this._readOnlyViewModels ?? (this._readOnlyViewModels = new ReadOnlyObservableCollection<TViewModel>(ViewModels));
+            get => this._readOnlyViewModels ??= new ReadOnlyObservableCollection<TViewModel>(EditableViewModels);
         }
 
         /// <summary>
@@ -73,20 +79,25 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected abstract void MoveItemsKindImpl(ObservableCollectionKind kind, int newStartingIndex, int oldStartingIndex);
         protected abstract void ResetItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TViewModel> oldViewModels);
 
-        public ICollectionView GetCollectionView()
+        public ICollectionView GetDefaultView()
         {
-            return CollectionViewSource.GetDefaultView(ViewModels);
+            return CollectionViewSource.GetDefaultView(EditableViewModels);
         }
 
-        public ICollectionView CreateCollectionView()
+        public ICollectionView CreateView()
         {
             return new CollectionViewSource() {
-                Source = ViewModels
+                Source = EditableViewModels
             }.View;
         }
 
-        public int IndexOf(TViewModel viewModel) => ViewModels.IndexOf(viewModel);
+        public int IndexOf(TViewModel viewModel) => EditableViewModels.IndexOf(viewModel);
 
+        /// <summary>
+        /// 対になる<typeparamref name="TModel"/>を取得。
+        /// </summary>
+        /// <param name="viewModel">対になっている<typeparamref name="TViewModel"/>。</param>
+        /// <returns>見つからない場合は <typeparamref name="TModel"/> の初期値。</returns>
         public TModel? GetModel(TViewModel viewModel)
         {
             var index = IndexOf(viewModel);
@@ -98,6 +109,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             return Collection[index];
         }
 
+
+        /// <summary>
+        /// 対になる<typeparamref name="TViewModel"/>を取得。
+        /// </summary>
+        /// <param name="model">対になっている<typeparamref name="TModel"/>。</param>
+        /// <returns>見つからない場合は <typeparamref name="TViewModel"/> の初期値。</returns>
         public TViewModel? GetViewModel(TModel model)
         {
             var index = IndexOf(model);
@@ -106,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return default(TViewModel);
             }
 
-            return ViewModels[index];
+            return EditableViewModels[index];
         }
 
         #endregion
@@ -123,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             AddItemsKindImpl(ObservableCollectionKind.Before, newItems, newViewModels);
 
-            ViewModels.AddRange(newViewModels);
+            EditableViewModels.AddRange(newViewModels);
 
             AddItemsKindImpl(ObservableCollectionKind.After, newItems, newViewModels);
         }
@@ -140,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             InsertItemsKindImpl(ObservableCollectionKind.Before, insertIndex, newItems);
 
             foreach(var item in newViewModels) {
-                ViewModels.Insert(item.Number, item.Value);
+                EditableViewModels.Insert(item.Number, item.Value);
             }
 
             InsertItemsKindImpl(ObservableCollectionKind.After, insertIndex, newItems);
@@ -149,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         protected override void RemoveItemsImpl(int oldStartingIndex, IReadOnlyList<TModel> oldItems)
         {
-            var oldViewModels = ViewModels
+            var oldViewModels = EditableViewModels
                 .Skip(oldStartingIndex)
                 .Take(oldItems.Count)
                 .ToList()
@@ -158,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             RemoveItemsKindImpl(ObservableCollectionKind.Before, oldStartingIndex, oldItems, oldViewModels);
 
             foreach(var counter in new Counter(oldViewModels.Count)) {
-                ViewModels.RemoveAt(oldStartingIndex);
+                EditableViewModels.RemoveAt(oldStartingIndex);
             }
             if(RemoveViewModelToDispose) {
                 foreach(var oldViewModel in oldViewModels) {
@@ -184,18 +201,18 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         {
             MoveItemsKindImpl(ObservableCollectionKind.Before, newStartingIndex, oldStartingIndex);
 
-            ViewModels.Move(oldStartingIndex, newStartingIndex);
+            EditableViewModels.Move(oldStartingIndex, newStartingIndex);
 
             MoveItemsKindImpl(ObservableCollectionKind.After, newStartingIndex, oldStartingIndex);
         }
 
         protected override void ResetItemsImpl()
         {
-            var oldViewModels = ViewModels;
+            var oldViewModels = EditableViewModels;
 
             ResetItemsKindImpl(ObservableCollectionKind.Before, oldViewModels);
 
-            ViewModels.Clear();
+            EditableViewModels.Clear();
             foreach(var viewModel in oldViewModels) {
                 viewModel.Dispose();
             }
@@ -244,23 +261,26 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
-        IList<TModel> StockModels { get; set; } = new List<TModel>();
+        IList<TModel>? StockModels { get; set; } = new List<TModel>();
 
+        /// <summary>
+        /// <typeparamref name="TModel"/>から<typeparamref name="TViewModel"/>への変換処理。
+        /// <para>NOTE: 未設定の場合、内部的にストックされ、設定後一気に処理が走る。コンストラクタ対策。</para>
+        /// </summary>
         public ToViewModelDelegate? ToViewModel
         {
             get => this._toViewModel;
             set
             {
                 this._toViewModel = value;
-                if(this._toViewModel != null && StockModels.Count != 0) {
-                    Debug.Assert(ViewModels.Count == StockModels.Count);
+                if(this._toViewModel != null && StockModels != null && StockModels.Count != 0) {
+                    Debug.Assert(EditableViewModels.Count == StockModels.Count);
                     for(var i = 0; i < StockModels.Count; i++) {
-                        ViewModels[i] = this._toViewModel(StockModels[i]);
+                        EditableViewModels[i] = this._toViewModel(StockModels[i]);
                     }
+
                     StockModels.Clear();
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
                     StockModels = null;
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 }
             }
         }
@@ -281,6 +301,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return ToViewModel(model);
             }
 
+            Debug.Assert(StockModels != null);
             StockModels.Add(model);
             return default(TViewModel);
         }

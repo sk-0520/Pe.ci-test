@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel> ProgramCollection { get; }
-        public ObservableCollection<ProgramViewModel> ProgramItems => ProgramCollection.ViewModels;
+        public ReadOnlyObservableCollection<ProgramViewModel> ProgramItems => ProgramCollection.ViewModels;
 
 
 

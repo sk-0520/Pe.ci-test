@@ -36,11 +36,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             ApplicationManager = applicationManager;
 
             LauncherToolbarCollection = ApplicationManager.GetLauncherNotifyCollection();
-            LauncherToolbarItems = LauncherToolbarCollection.ReadOnlyViewModels;
+            LauncherToolbarItems = LauncherToolbarCollection.ViewModels;
 
             NoteCollection = ApplicationManager.GetNoteCollection();
-            NoteVisibleItems = NoteCollection.CreateCollectionView();
-            NoteHiddenItems = NoteCollection.CreateCollectionView();
+            NoteVisibleItems = NoteCollection.CreateView();
+            NoteHiddenItems = NoteCollection.CreateView();
             NoteVisibleItems.Filter = o => ((NoteNotifyAreaViewModel)o).IsVisible;
             NoteHiddenItems.Filter = o => !((NoteNotifyAreaViewModel)o).IsVisible;
         }

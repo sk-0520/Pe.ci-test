@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems, LoggerFactory) {
                 ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWrapper, LauncherToolbarTheme, LoggerFactory),
             };
-            LauncherItems = LauncherItemCollection.GetCollectionView();
+            LauncherItems = LauncherItemCollection.GetDefaultView();
 
             ViewDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = ViewCanDragStart,
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         }
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
-        public ObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
+        public ReadOnlyObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }

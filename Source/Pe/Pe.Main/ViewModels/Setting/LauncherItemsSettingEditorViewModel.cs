@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             ItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>>(Model.Items, LoggerFactory) {
                 ToViewModel = m => LauncherItemWithIconViewModel.Create(new LauncherItemCustomizeEditorViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, LoggerFactory), LoggerFactory),
             };
-            Items = ItemCollection.GetCollectionView();
+            Items = ItemCollection.GetDefaultView();
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = CanDragStart,

@@ -41,12 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             LauncherCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems, LoggerFactory) {
                 ToViewModel = m => LauncherItemWithIconViewModel.Create(new CommonLauncherItemViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, loggerFactory), LoggerFactory),
             };
-            LauncherItems = LauncherCollection.GetCollectionView();
+            LauncherItems = LauncherCollection.GetDefaultView();
 
             GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems, LoggerFactory) {
                 ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, LauncherCollection.ViewModels, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
             };
-            GroupItems = GroupCollection.GetCollectionView();
+            GroupItems = GroupCollection.GetDefaultView();
 
             var groupImageItems = EnumUtility.GetMembers<LauncherGroupImageName>()
                 .OrderBy(i => (int)i)
@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         //    GroupCollection.ViewModels.RemoveAt(selfIndex);
                         //    GroupCollection.ViewModels.Insert(currentIndex, dragData);
                         //}
-                        SelectedGroup = GroupCollection.ReadOnlyViewModels[currentIndex];
+                        SelectedGroup = GroupCollection.ViewModels[currentIndex];
                     }
                 }
             }
