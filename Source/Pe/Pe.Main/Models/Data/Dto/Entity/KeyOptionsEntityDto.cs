@@ -11,7 +11,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         #region property
 
         public Guid KeyActionId { get; set; }
-        public string KeyOption { get; set; } = string.Empty;
+        public string KeyOptionName { get; set; } = string.Empty;
+        public string KeyOptionValue { get; set; } = string.Empty;
 
         #endregion
     }

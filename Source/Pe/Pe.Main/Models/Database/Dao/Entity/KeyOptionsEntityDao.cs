@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
@@ -21,7 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             #region property
 
             public static string KeyActionId { get; } = "KeyActionId";
-            public static string KeyOption { get; } = "KeyOption";
+            public static string KeyOptionName { get; } = "KeyOptionName";
+            public static string KeyOptionValue { get; } = "KeyOptionValue";
 
             #endregion
         }
@@ -29,6 +31,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #endregion
 
         #region function
-        #endregion
-    }
+
+        public IEnumerable<KeyValuePair<string, string>> SelectOptions(Guid keyActionId)
+        {
+            var builder = CreateSelectBuilder();
+            builder.AddSelect(Column.KeyActionId);
+            builder.AddSelect(Column.KeyOptionName);
+            builder.AddSelect(Column.KeyOptionValue);
+            builder.AddValueParameter(Column.KeyActionId, keyActionId);
+            return Select<KeyOptionsEntityDto>(builder)
+                .Select(i => KeyValuePair.Create(i.KeyOptionName, i.KeyOptionValue))
+            ;
+        }
+
+    #endregion
+}
 }

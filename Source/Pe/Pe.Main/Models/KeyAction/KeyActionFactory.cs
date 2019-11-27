@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
@@ -35,108 +36,128 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
-        IReadOnlyList<KeyActionData> LoadKeyActionData(KeyActionKind keyActionKind)
+        KeyItem CreateKeyItem(KeyActionData keyAction, KeyOptionsEntityDao keyOptionsEntityDao, KeyMappingsEntityDao keyMappingsEntityDao)
         {
-            IReadOnlyList<KeyActionData> result;
+            var options = keyOptionsEntityDao.SelectOptions(keyAction.KeyActionId);
+            var mappings = keyMappingsEntityDao.SelectMappings(keyAction.KeyActionId);
+
+            var result = new KeyItem(
+                keyAction,
+                options.ToDictionary(i => i.Key, i => i.Value),
+                mappings.ToList()
+            );
+
+            return result;
+        }
+
+        IReadOnlyList<KeyItem> LoadKeyItems(KeyActionKind keyActionKind)
+        {
+            var result = new List<KeyItem>();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new KeyActionDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                result = dao.SelectAllKeyActionsFromKind(keyActionKind).ToList();
+                var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                foreach(var keyAction in keyActionsEntityDao.SelectAllKeyActionsFromKind(keyActionKind)) {
+                    var keyItem = CreateKeyItem(keyAction, keyOptionsEntityDao, keyMappingsEntityDao);
+                    result.Add(keyItem);
+                }
             }
 
             return result;
         }
 
-        IReadOnlyList<KeyActionData> LoadKeyActionPressedData()
+        IReadOnlyList<KeyItem> LoadKeyActionPressedData()
         {
-            IReadOnlyList<KeyActionData> result;
+            var result = new List<KeyItem>();
 
             var noPressedKinds = new[] { KeyActionKind.Replace, KeyActionKind.Disable };
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new KeyActionDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                result = dao.SelectAllKeyActionsIgnoreKinds(noPressedKinds).ToList();
+                var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                foreach(var keyAction in keyActionsEntityDao.SelectAllKeyActionsIgnoreKinds(noPressedKinds)) {
+                    var keyItem = CreateKeyItem(keyAction, keyOptionsEntityDao, keyMappingsEntityDao);
+                    result.Add(keyItem);
+                }
             }
 
             return result;
         }
 
-        IEnumerable<TJob> CreateJobs<TJob>(IReadOnlyList<KeyActionData> items, Func<Guid, IReadOnlyList<KeyActionData>, TJob> func)
+        IEnumerable<TJob> CreateJobs<TJob>(IReadOnlyList<KeyItem> items, Func<Guid, KeyItem, TJob> func)
         {
-            var groups = items.GroupBy(i => i.KeyActionId);
-            foreach(var group in groups) {
-                var jobItems = group.ToList();
+            foreach(var item in items) {
                 TJob result;
                 try {
-                    result = func(group.Key, jobItems);
+                    result = func(item.Action.KeyActionId, item);
                 } catch(Exception ex) {
-                    Logger.LogError(ex, ex.Message + " {0}", group.Key);
+                    Logger.LogError(ex, ex.Message + " {0}", item.Action.KeyActionId);
                     continue;
                 }
                 yield return result;
             }
         }
 
-        KeyMappingData ConvertKeyMapping(KeyActionData data)
-        {
-            return new KeyMappingData() {
-                Key = data.Key,
-                Shift = data.Shift,
-                Control = data.Contrl,
-                Alt = data.Alt,
-                Super = data.Super,
-            };
-        }
+        //KeyMappingData ConvertKeyMapping(KeyActionData data)
+        //{
+        //    return new KeyMappingData() {
+        //        Key = data.Key,
+        //        Shift = data.Shift,
+        //        Control = data.Contrl,
+        //        Alt = data.Alt,
+        //        Super = data.Super,
+        //    };
+        //}
 
         public IEnumerable<KeyActionReplaceJob> CreateReplaceJobs()
         {
-            var items = LoadKeyActionData(KeyActionKind.Replace);
-            return CreateJobs(items, (id, items) => {
-                if(1 < items.Count) {
-                    Logger.LogWarning("置き換え処理に不要な設定項目あり: {0}", id);
-                }
+            var items = LoadKeyItems(KeyActionKind.Replace);
+            return CreateJobs(items, (id, item) => {
                 var keyConverter = new KeyConverter();
-                var item = items[0];
-                var data = new KeyActionReplaceData(item.KeyActionId, (Key)keyConverter.ConvertFromInvariantString(item.KeyActionContent));
-                var mapping = ConvertKeyMapping(item);
+                var data = new KeyActionReplaceData(
+                    item.Action.KeyActionId,
+                    (Key)keyConverter.ConvertFromInvariantString(item.Options["REPLACE-KEY"])
+                );
 
-                return new KeyActionReplaceJob(data, mapping);
+                return new KeyActionReplaceJob(data, item.Mappings.First());
             });
         }
 
         public IEnumerable<KeyActionDisableJob> CreateDisableJobs()
         {
-            var items = LoadKeyActionData(KeyActionKind.Disable);
-            return CreateJobs(items, (id, items) => {
-                if(1 < items.Count) {
-                    Logger.LogWarning("入力無効処理に不要な設定項目あり: {0}", id);
-                }
-                var item = items[0];
-                var data = new KeyActionDisableData(item.KeyActionId, Convert.ToBoolean(item.KeyActionOption));
-                var mapping = ConvertKeyMapping(item);
+            var items = LoadKeyItems(KeyActionKind.Disable);
+            return CreateJobs(items, (id, item) => {
+                var data = new KeyActionDisableData(
+                    item.Action.KeyActionId,
+                    Convert.ToBoolean(item.Options["STOP-ENABLE"])
+                );
 
-                return new KeyActionDisableJob(data, mapping);
+                return new KeyActionDisableJob(data, item.Mappings.First());
             });
         }
 
-        KeyActionLauncherItemJob CreateLauncherItemJob(IReadOnlyList<KeyActionData> items)
+        KeyActionLauncherItemJob CreateLauncherItemJob(KeyItem item)
         {
             var keyActionContentLauncherItemTransfer = new EnumTransfer<KeyActionContentLauncherItem>();
 
-            var item = items[0];
-            var data = new KeyActionLauncherItemData(item.KeyActionId, keyActionContentLauncherItemTransfer.ToEnum(item.KeyActionContent), Guid.Parse(item.KeyActionOption));
-            var mapping = items.Select(i => ConvertKeyMapping(i));
-            return new KeyActionLauncherItemJob(data, mapping);
+            var data = new KeyActionLauncherItemData(
+                item.Action.KeyActionId,
+                keyActionContentLauncherItemTransfer.ToEnum(item.Action.KeyActionContent),
+                Guid.Parse(item.Options["LAUNCHER-ITEM-ID"])
+            );
+            return new KeyActionLauncherItemJob(data, item.Mappings);
         }
 
         public IEnumerable<KeyActionPressedJobBase> CreatePressedJobs()
         {
             var items = LoadKeyActionPressedData();
-            return CreateJobs(items, (id, items) => {
-                var baseItem = items[0];
-                KeyActionPressedJobBase job = baseItem.KeyActionKind switch
+            return CreateJobs(items, (id, item) => {
+                KeyActionPressedJobBase job = item.Action.KeyActionKind switch
                 {
-                    KeyActionKind.LauncherItem => CreateLauncherItemJob(items),
+                    KeyActionKind.LauncherItem => CreateLauncherItemJob(item),
                     _ => throw new NotImplementedException(),
                 };
                 return job;

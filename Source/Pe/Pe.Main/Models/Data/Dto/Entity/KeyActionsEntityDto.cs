@@ -13,7 +13,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
         public Guid KeyActionId { get; set; }
         public string KeyActionKind { get; set; } = string.Empty;
         public string KeyActionContent { get; set; } = string.Empty;
-        public string KeyActionOption { get; set; } = string.Empty;
         public string Comment { get; set; } = string.Empty;
 
         #endregion

@@ -530,11 +530,12 @@ ___
 | PK | NN | FK                     | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
 |:--:|:--:|:-----------------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
 | o  | o  | KeyActions.KeyActionId | キーアクションID         | KeyActionId           | text         | System.Guid     |              |                      |
-| o  | o  |                        | オプション内容           | KeyOption             | text         | System.String   |              | アクション種別で変動 |
+| o  | o  |                        | オプション名             | KeyOptionName         | text         | System.String   |              | アクション種別で変動 |
 |    | o  |                        | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
 |    | o  |                        | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
 |    | o  |                        | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
 |    | o  |                        | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |                        | オプション内容           | KeyOptionValue        | text         | System.String   |              | オプション名で変動   |
 
 ### index
 
