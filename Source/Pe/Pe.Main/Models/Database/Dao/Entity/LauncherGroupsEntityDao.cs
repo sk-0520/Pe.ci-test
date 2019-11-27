@@ -23,6 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string LauncherGroupId { get; } = "LauncherGroupId";
+            public static string Name { get; } = "Name";
+            public static string Kind { get; } = "Kind";
+            public static string ImageName { get; } = "ImageName";
+            public static string ImageColor { get; } = "ImageColor";
+            public static string Sequence { get; } = "Sequence";
 
             #endregion
         }
@@ -106,6 +112,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
             return Commander.Execute(statement, dto) == 1;
+        }
+
+        public bool UpdateGroupSequence(Guid launcherGroupId, int sequence, IDatabaseCommonStatus commonStatus)
+        {
+            var builder = CreateUpdateBuilder(commonStatus);
+            builder.AddKey(Column.LauncherGroupId, launcherGroupId);
+            builder.AddValueParameter(Column.Sequence, sequence);
+            return ExecuteUpdate(builder) == 1;
         }
 
         #endregion

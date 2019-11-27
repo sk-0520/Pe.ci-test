@@ -4,12 +4,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -74,6 +77,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public override void Save()
         {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                foreach(var item in GroupItems.Counting()) {
+                    var seq = item.Number * launcherFactory.GroupItemsStep;
+                    launcherGroupsEntityDao.UpdateGroupSequence(item.Value.LauncherGroupId, seq, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+                commander.Commit();
+            }
+
         }
 
         #endregion

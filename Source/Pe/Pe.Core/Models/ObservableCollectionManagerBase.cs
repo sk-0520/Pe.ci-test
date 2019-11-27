@@ -134,6 +134,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return -1;
         }
 
+
         #endregion
 
         #region ModelBase

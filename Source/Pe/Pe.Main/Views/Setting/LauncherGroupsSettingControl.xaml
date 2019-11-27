@@ -60,7 +60,7 @@
         <Button Content="down" />
       </ToolBar>
 
-      <ListBox Grid.Row="1" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
+      <ListBox Grid.Row="1" AllowDrop="True" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
         <i:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>
