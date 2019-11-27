@@ -1,4 +1,4 @@
-﻿--// table: AppSystems
+--// table: AppSystems
 create table [AppSystems] (
 	[Key] text not null /* キー  */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
@@ -394,11 +394,26 @@ create table [KeyActions] (
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[KeyActionKind] text not null /* アクション種別 ランチャー, コマンド */,
 	[KeyActionContent] text not null /* アクション内容 アクション種別で変動 */,
-	[KeyActionOption] text not null /* オプション内容 アクション種別で変動 */,
 	[Comment] text not null /* コメント  */,
 	primary key(
 		[KeyActionId]
 	)
+)
+;
+
+--// table: KeyOptions
+create table [KeyOptions] (
+	[KeyActionId] text not null /* キーアクションID  */,
+	[KeyActionOption] text not null /* オプション内容 アクション種別で変動 */,
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	primary key(
+		[KeyActionId],
+		[KeyActionOption]
+	),
+	foreign key([KeyActionId]) references [KeyActions]([KeyActionId])
 )
 ;
 
@@ -429,6 +444,7 @@ create unique index [idx_LauncherItems_1] on [LauncherItems](
 	[Code]
 )
 ;
+
 
 
 
