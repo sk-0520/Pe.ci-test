@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -53,9 +54,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             ThrowIfDisposed();
 
             LauncherGroupData data;
+            IEnumerable<Guid> launcherItemIds;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 data = dao.SelectLauncherGroup(LauncherGroupId);
+
+                var launcherItemsLoader = new LauncherItemsLoader(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherItemIds = launcherItemsLoader.LoadLauncherItemIds(LauncherGroupId, data.Kind);
             }
 
             Name = data.Name;
@@ -63,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             ImageName = data.ImageName;
             ImageColor = data.ImageColor;
             Sequence = data.Sequence;
+
+            LauncherItemIds.SetRange(launcherItemIds);
         }
 
         IEnumerable<Guid> LoadLauncherItemIdsForNormal()
@@ -86,16 +93,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
                 default:
                     throw new NotImplementedException();
             }
-        }
-
-
-        void LoadLauncherItems()
-        {
-            ThrowIfDisposed();
-
-            var items = LoadLauncherItemIds();
-            LauncherItemIds.Clear();
-            LauncherItemIds.AddRange(items);
         }
 
 
@@ -125,7 +122,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
 
             LoadGroup();
-            LoadLauncherItems();
         }
 
         protected override void Dispose(bool disposing)
