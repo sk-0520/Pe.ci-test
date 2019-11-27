@@ -404,14 +404,14 @@ create table [KeyActions] (
 --// table: KeyOptions
 create table [KeyOptions] (
 	[KeyActionId] text not null /* キーアクションID  */,
-	[KeyActionOption] text not null /* オプション内容 アクション種別で変動 */,
+	[KeyOption] text not null /* オプション内容 アクション種別で変動 */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
 	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
 	primary key(
 		[KeyActionId],
-		[KeyActionOption]
+		[KeyOption]
 	),
 	foreign key([KeyActionId]) references [KeyActions]([KeyActionId])
 )
