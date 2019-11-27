@@ -45,6 +45,7 @@
     <Folder Include="doc\license\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Models\Database\Dao\Entity\KeyMappingsEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Models\Database\Dao\Entity\KeyActionsEntityDao\" />
+    <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Models\Database\Dao\Entity\KeyOptionsEntityDao\" />
   </ItemGroup>
 
   <ItemGroup>
