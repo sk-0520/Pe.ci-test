@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>();
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
+            KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
         }
 
         #region property
@@ -46,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public LauncherItemsSettingEditorElement LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
+        public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
         #endregion
 
         #region function
@@ -64,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             LauncherItemsSettingEditor.Initialize();
             LauncherGroupsSettingEditor.Initialize();
+            KeyboardSettingEditor.Initialize();
         }
 
         #endregion

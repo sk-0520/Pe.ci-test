@@ -132,7 +132,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class KeyActionCommonData : DataBase
+    public interface IKeyActionId
+    {
+        #region property
+
+        Guid KeyActionId { get; }
+
+        #endregion
+    }
+
+    public class KeyActionCommonData : DataBase, IKeyActionId
     {
         public KeyActionCommonData(Guid keyActionId, KeyActionKind keyActionKind)
         {
@@ -142,9 +151,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
-        public Guid KeyActionId { get; }
         public KeyActionKind KeyActionKind { get; }
 
+        #endregion
+
+        #region IKeyActionId
+        public Guid KeyActionId { get; }
         #endregion
     }
 

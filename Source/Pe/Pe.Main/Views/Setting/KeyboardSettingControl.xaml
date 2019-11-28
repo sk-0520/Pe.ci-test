@@ -25,7 +25,7 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
-        <Label  Content="ignore" />
+        <Label  Content="replace" />
         <Button Content="add" />
       </ToolBar>
 
@@ -54,7 +54,7 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
-        <Label  Content="replace" />
+        <Label  Content="ignore" />
         <Button Content="add" />
       </ToolBar>
 
@@ -85,11 +85,11 @@
       <ToolBar Grid.Row="0">
         <Label  Content="key pressed" />
         <Grid>
-          <ToggleButton x:Name="switchCreateGroup" IsChecked="{Binding Editor.IsPopupCreateGroupMenu, ElementName=root}" Content="add" />
-          <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateGroup}">
+          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="add" />
+          <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateJob}">
             <Border Style="{StaticResource PopupMenuBorder}">
               <StackPanel>
-                <MenuItem Header="file" Command="{Binding Editor.CreateNewNormalGroupCommand, ElementName=root}" />
+                <MenuItem Header="launcher item" Command="{Binding Editor.CreateNewLauncherItemJobCommand, ElementName=root}" />
               </StackPanel>
             </Border>
           </Popup>

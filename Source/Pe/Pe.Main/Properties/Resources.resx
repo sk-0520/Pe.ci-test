@@ -133,8 +133,8 @@
   <data name="String_Setting_Header_General" xml:space="preserve">
     <value>general</value>
   </data>
-  <data name="String_Setting_Header_Hooks" xml:space="preserve">
-    <value>hooks</value>
+  <data name="String_Setting_Header_Keyboard" xml:space="preserve">
+    <value>keyboard</value>
   </data>
   <data name="String_Setting_Header_LauncherGroups" xml:space="preserve">
     <value>groups</value>

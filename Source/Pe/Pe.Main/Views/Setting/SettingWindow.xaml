@@ -38,6 +38,9 @@
         <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherGroupsSettingEditorViewModel}">
           <app_main_views_setting:LauncherGroupsSettingControl Editor="{Binding}" />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardSettingEditorViewModel}">
+          <app_main_views_setting:KeyboardSettingControl Editor="{Binding}" />
+        </DataTemplate>
       </TabControl.Resources>
       <TabControl.ItemTemplate>
         <DataTemplate>

@@ -138,11 +138,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   hooks に類似しているローカライズされた文字列を検索します。
+        ///   keyboard に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Header_Hooks {
+        public static string String_Setting_Header_Keyboard {
             get {
-                return ResourceManager.GetString("String_Setting_Header_Hooks", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Header_Keyboard", resourceCulture);
             }
         }
         
