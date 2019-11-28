@@ -50,6 +50,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        private KeyActionsEntityDto ConvertFromData(KeyActionData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
+
+            var dto = new KeyActionsEntityDto() {
+                KeyActionId = data.KeyActionId,
+                KeyActionKind = keyActionKindTransfer.ToString(data.KeyActionKind),
+                KeyActionContent = data.KeyActionContent,
+                Comment = data.Comment,
+            };
+            databaseCommonStatus.WriteCommon(dto);
+
+            return dto;
+        }
+
         public IEnumerable<KeyActionData> SelectAllKeyActionsFromKind(KeyActionKind keyActionKind)
         {
             var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
@@ -72,6 +87,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
+        public bool InsertKeyAction(KeyActionData keyActionData, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(keyActionData, databaseCommonStatus);
+            return Commander.Execute(statement, dto) == 1;
+        }
 
         #endregion
     }

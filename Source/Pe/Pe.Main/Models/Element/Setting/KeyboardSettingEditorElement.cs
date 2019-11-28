@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -30,6 +31,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
+        void SaveNewActionData(KeyActionData data)
+        {
+            using(var commander = MainDatabaseBarrier.WaitWrite()){
+                var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                keyActionsEntityDao.InsertKeyAction(data, DatabaseCommonStatus.CreateCurrentAccount());
+
+                //TODO: insert empty mapping
+
+                commander.Commit();
+            }
+        }
+
+        public void AddReplaceJob()
+        {
+            var keyActionData = new KeyActionData() {
+                KeyActionId = IdFactory.CreateKeyActionId(),
+                KeyActionKind = KeyActionKind.Replace,
+            };
+            SaveNewActionData(keyActionData);
+
+            var editor = new KeyboardReplaceJobSettingEditorElement(keyActionData, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            editor.Initialize();
+            ReplaceJobEditors.Add(editor);
+        }
+
         #endregion
 
         #region SettingEditorElementBase
@@ -47,13 +73,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             var replaceJobEditor = replaceKeyActions.Select(i => new KeyboardReplaceJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
-            ReplaceJobEditors.AddRange(replaceJobEditor);
+            ReplaceJobEditors.SetRange(replaceJobEditor);
 
             var disableJobEditor = disableKeyActions.Select(i => new KeyboardDisableJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
-            DisableJobEditors.AddRange(disableJobEditor);
+            DisableJobEditors.SetRange(disableJobEditor);
 
             var pressedJobEditor = pressedKeyActions.Select(i => new KeyboardPressedJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
-            PressedJobEditors.AddRange(pressedJobEditor);
+            PressedJobEditors.SetRange(pressedJobEditor);
 
             var editors = ReplaceJobEditors
                 .Cast<KeyboardJobSettingEditorElementBase>()

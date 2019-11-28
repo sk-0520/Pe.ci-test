@@ -43,6 +43,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
+        public ICommand AddReplaceJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.AddReplaceJob();
+             }
+         ));
+
         public ICommand CreateNewLauncherItemJobCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
             }
