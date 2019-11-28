@@ -175,6 +175,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
             base.Dispose(disposing);
         }
+        public override void Save()
+        {
+            SelectedItem?.Item.Save();
+            base.Save();
+        }
 
         #endregion
 

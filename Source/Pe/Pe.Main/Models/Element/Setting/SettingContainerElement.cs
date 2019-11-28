@@ -48,6 +48,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
         #endregion
 
+        #region function
+
+        public void SetSubmit(bool value)
+        {
+            IsSubmit = value;
+        }
+
+
+        #endregion
+
         #region ContextElementBase
 
         protected override void InitializeImpl()

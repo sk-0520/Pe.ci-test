@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -39,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         IDispatcherWrapper DispatcherWrapper { get; }
 
+        public RequestSender CloseRequest { get; } = new RequestSender();
+
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
 
         public ISettingEditorViewModel SelectedEditor
@@ -62,6 +66,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region command
+
+        public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                if(Validate()) {
+                    foreach(var editor in EditorItems) {
+                        editor.Save();
+                    }
+                    Model.SetSubmit(true);
+                    CloseRequest.Send();
+                }
+            }
+        ));
+
         #endregion
 
         #region function
