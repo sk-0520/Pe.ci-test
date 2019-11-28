@@ -108,7 +108,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 }
             }
 
-            var result = new List<KeyActionJobBase>();
             var now = DateTime.UtcNow;
 
             // 無効化
@@ -116,19 +115,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 if(job.ActionData.Forever) {
                     if(job.Check(isDown, key, modifierKeyStatus)) {
                         // 完全無視
-                        result.Add(job);
-                        break;
+                        return new[] { job };
                     }
                 }
 
                 if(KeyDisableToEnableTime < now - job.LastCheckTimestamp) {
                     if(job.Check(isDown, key, modifierKeyStatus)) {
                         // 一つでも無効化になれば後は不要(効果が一緒のため)
-                        result.Add(job);
-                        break;
+                        return new[] { job };
                     }
                 }
             }
+
+            var result = new List<KeyActionPressedJobBase>();
 
             // キー入力処理
             foreach(var job in PressedJobs) {

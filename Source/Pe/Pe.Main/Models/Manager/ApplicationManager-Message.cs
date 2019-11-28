@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -167,13 +168,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             });
         }
 
+        /// <summary>
+        /// システムへ通知する必要があるか。
+        /// </summary>
+        /// <param name="jobs"></param>
+        /// <returns></returns>
+        bool IsConveySystem(IReadOnlyCollection<KeyActionJobBase> jobs)
+        {
+            Debug.Assert(0 < jobs.Count);
+
+            if(jobs.Any(i => i.CommonData.KeyActionKind == KeyActionKind.Disable)) {
+                return false;
+            }
+
+            return jobs.OfType<KeyActionPressedJobBase>().Any(i => i.ConveySystem);
+        }
+
         #endregion
 
         private void KeyboradHooker_KeyDown(object? sender, KeyboardHookEventArgs e)
         {
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, e.modifierKeyStatus, e.kbdll);
             if(0 < jobs.Count) {
-                e.Handled = true;
+                e.Handled = !IsConveySystem(jobs);
                 ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
             }
         }
