@@ -70,7 +70,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public class LauncherItemOptionConverter : KeyOptionConverterBase
+    public abstract class PressedOptionConverter: KeyOptionConverterBase
+    {
+        #region function
+
+        public bool ToConveySystem(IReadOnlyDictionary<string, string> map)
+        {
+            var attribute = GetAttribute(KeyActionPresseOption.ConveySystem);
+            return Convert(attribute, map, (a, s) => {
+                return System.Convert.ToBoolean(s);
+            });
+        }
+
+        #endregion
+    }
+
+    public class LauncherItemOptionConverter : PressedOptionConverter
     {
         #region function
 

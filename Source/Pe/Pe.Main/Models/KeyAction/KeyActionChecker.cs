@@ -20,12 +20,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     ///     <item>
     ///         <description>
     ///             入力入れ替え
-    ///             <para>置き換えに該当した場合は後続の該当チェックは行わない</para>
+    ///             <para>後続の該当チェックは行わない</para>
     ///         </description>
     ///     </item>
     ///     <item>
     ///         <description>
     ///             入力無効化
+    ///             <para>後続の該当チェックは行わない</para>
     ///         </description>
     ///     </item>
     ///     <item>
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     ///         </description>
     ///     </item>
     /// </list>
-    /// 入力無効化は独立して存在してるが、何がどうあれ該当があった場合は無効化される。
+    /// 入力無効化は独立して存在してるが、コマンド実行がシステム通知しないかぎり該当があった場合は無効化される。
     /// </remarks>
     public class KeyActionChecker
     {

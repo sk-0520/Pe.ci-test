@@ -205,6 +205,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 var errors = string.Join(", ", keyIsNoneOrMods.Select(i => $"{nameof(mappings)}[{i.Number}]"));
                 throw new ArgumentException("不正なキー設定(キー設定なし、修飾キーのみ): " + errors);
             }
+
+            ConveySystem = actionData.ConveySystem;
         }
 
         #region property

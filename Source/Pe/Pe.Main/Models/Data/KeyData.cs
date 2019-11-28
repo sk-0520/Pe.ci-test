@@ -197,11 +197,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public enum KeyActionPresseOption
+    {
+        [KeyActionOption(typeof(bool), nameof(ConveySystem))]
+        ConveySystem
+    }
+
     public abstract class KeyActionPressedDataBase : KeyActionCommonData
     {
         public KeyActionPressedDataBase(Guid keyActionId, KeyActionKind keyActionKind)
             : base(keyActionId, keyActionKind)
         { }
+
+        #region property
+
+        public bool ConveySystem { get; set; }
+
+        #endregion
     }
 
     public enum KeyActionLauncherItemOption

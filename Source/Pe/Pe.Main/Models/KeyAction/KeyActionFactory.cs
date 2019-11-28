@@ -151,6 +151,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 keyActionContentLauncherItemTransfer.ToEnum(item.Action.KeyActionContent),
                 launcherItemOptionConverter.ToLauncherItemId(item.Options)
             );
+
+            data.ConveySystem = launcherItemOptionConverter.ToConveySystem(item.Options);
+
             return new KeyActionLauncherItemJob(data, item.Mappings);
         }
 
