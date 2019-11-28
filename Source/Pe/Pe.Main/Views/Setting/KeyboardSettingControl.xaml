@@ -30,7 +30,7 @@
       </ToolBar>
 
       <ScrollViewer Grid.Row="1">
-        <ItemsControl>
+        <ItemsControl ItemsSource="{Binding Editor.ReplaceJobEditors, ElementName=root}">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
               <VirtualizingStackPanel />
@@ -38,7 +38,17 @@
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <!--TODO-->
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="0" />
+                <TextBlock Grid.Column="1" Text="-&gt;" />
+                <ComboBox Grid.Column="2" />
+              </Grid>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>

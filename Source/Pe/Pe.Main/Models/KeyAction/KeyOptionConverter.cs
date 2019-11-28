@@ -42,15 +42,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     {
         #region function
 
-        public Key ToKey(IReadOnlyDictionary<string, string> map)
-        {
-            var attribute = GetAttribute(KeyActionReplaceOption.ReplaceKey);
-            return Convert(attribute, map, (a, s) => {
-                var keyConverter = new KeyConverter();
-                var key = (Key)keyConverter.ConvertFromInvariantString(s);
-                return key;
-            });
-        }
+        //public Key ToKey(IReadOnlyDictionary<string, string> map)
+        //{
+        //    var attribute = GetAttribute(KeyActionReplaceOption.ReplaceKey);
+        //    return Convert(attribute, map, (a, s) => {
+        //        var keyConverter = new KeyConverter();
+        //        var key = (Key)keyConverter.ConvertFromInvariantString(s);
+        //        return key;
+        //    });
+        //}
 
         #endregion
     }

@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -19,7 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        public ObservableCollection<KeyboardReplaceJobSettingEditorElement> ReplaceJobEditor { get; } = new ObservableCollection<KeyboardReplaceJobSettingEditorElement>();
+        public ObservableCollection<KeyboardReplaceJobSettingEditorElement> ReplaceJobEditors { get; } = new ObservableCollection<KeyboardReplaceJobSettingEditorElement>();
+        public ObservableCollection<KeyboardDisableJobSettingEditorElement> DisableJobEditors { get; } = new ObservableCollection<KeyboardDisableJobSettingEditorElement>();
+        public ObservableCollection<KeyboardPressedJobSettingEditorElement> PressedJobEditors { get; } = new ObservableCollection<KeyboardPressedJobSettingEditorElement>();
 
         #endregion
 
@@ -31,7 +36,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public override void Load()
         {
-            //throw new NotImplementedException();
+            IReadOnlyList<KeyActionData> replaceKeyActions;
+            IReadOnlyList<KeyActionData> disableKeyActions;
+            IReadOnlyList<KeyActionData> pressedKeyActions;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                replaceKeyActions = keyActionsEntityDao.SelectAllKeyActionsFromKind(KeyActionKind.Replace).ToList();
+                disableKeyActions = keyActionsEntityDao.SelectAllKeyActionsFromKind(KeyActionKind.Disable).ToList();
+                pressedKeyActions = keyActionsEntityDao.SelectAllKeyActionsIgnoreKinds(new[] { KeyActionKind.Replace, KeyActionKind.Disable }).ToList();
+            }
+
+            var replaceJobEditor = replaceKeyActions.Select(i => new KeyboardReplaceJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
+            ReplaceJobEditors.AddRange(replaceJobEditor);
+
+            var disableJobEditor = disableKeyActions.Select(i => new KeyboardDisableJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
+            DisableJobEditors.AddRange(disableJobEditor);
+
+            var pressedJobEditor = pressedKeyActions.Select(i => new KeyboardPressedJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
+            PressedJobEditors.AddRange(pressedJobEditor);
+
+            var editors = ReplaceJobEditors
+                .Cast<KeyboardJobSettingEditorElementBase>()
+                .Concat(DisableJobEditors)
+                .Concat(PressedJobEditors)
+            ;
+            foreach(var editor in editors) {
+                editor.Initialize();
+            }
         }
 
         public override void Save()
