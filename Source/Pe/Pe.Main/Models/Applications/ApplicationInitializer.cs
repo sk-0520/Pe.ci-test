@@ -298,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IFontTheme, FontTheme>(DiLifecycle.Transient)
             ;
 
-            ApplicationDiContainer.Initialize(() => container);
+            //ApplicationDiContainer.Initialize(() => container);
 
             return container;
         }

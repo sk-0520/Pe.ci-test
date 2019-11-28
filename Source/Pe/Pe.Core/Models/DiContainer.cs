@@ -442,13 +442,35 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class DiContainer : DisposerBase, IDiRegisterContainer
     {
+        /// <summary>
+        /// プールしているオブジェクトはコンテナに任せる。
+        /// </summary>
+        public DiContainer()
+            : this(true)
+        { }
+
+        /// <summary>
+        /// プールしているオブジェクトをコンテナに任せるか選択。
+        /// </summary>
+        /// <param name="isDisposeObjectPool">解放処理をコンテナに任せるか</param>
+        public DiContainer(bool isDisposeObjectPool)
+        {
+            IsDisposeObjectPool = isDisposeObjectPool;
+        }
+
         #region property
 
         /// <summary>
         /// シングルトンなDIコンテナ。
         /// <para><see cref="Initialize"/>にて初期化が必要。</para>
         /// </summary>
+        [Obsolete]
         public static IDiContainer? Instance { get; private set; }
+
+        /// <summary>
+        /// 解放処理をコンテナに任せるか。
+        /// </summary>
+        protected bool IsDisposeObjectPool { get; }
 
         /// <summary>
         /// IF → 実体 のマッピング。
@@ -473,6 +495,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="Instance"/> を使用するための準備処理。
         /// </summary>
         /// <param name="creator"></param>
+        [Obsolete]
         public static void Initialize(Func<IDiContainer> creator)
         {
             if(Instance != null) {
@@ -855,7 +878,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public virtual IScopeDiContainer Scope()
         {
-            var cloneContainer = new ScopeDiContainer();
+            var cloneContainer = new ScopeDiContainer(IsDisposeObjectPool);
             foreach(var pair in Mapping) {
                 cloneContainer.Mapping.Add(pair.Key, pair.Value);
             }
@@ -976,6 +999,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     foreach(var factory in Factory.Values) {
                         factory.Dispose();
                     }
+                    if(IsDisposeObjectPool) {
+                        foreach(var pair in ObjectPool) {
+                            // 自分自身が処理中なので無視
+                            if(pair.Value == this) {
+                                continue;
+                            }
+                            if(pair.Value is IDisposable disposer) {
+                                disposer.Dispose();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -987,6 +1021,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     internal class ScopeDiContainer : DiContainer, IScopeDiContainer
     {
+        public ScopeDiContainer(bool isDisposeObjectPool)
+            :base(isDisposeObjectPool)
+        {}
+
         #region property
 
         HashSet<Type> RegisteredTypeSet { get; } = new HashSet<Type>();
@@ -1048,7 +1086,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         if(Factory.TryGetValue(type, out var value)) {
                             value.Dispose();
                         }
+
+                        if(IsDisposeObjectPool) {
+                            if(ObjectPool.TryGetValue(type, out var poolObject)) {
+                                if(poolObject != this && poolObject is IDisposable disposer) {
+                                    disposer.Dispose();
+                                }
+                            }
+                        }
+
                     }
+
                 }
             }
 
