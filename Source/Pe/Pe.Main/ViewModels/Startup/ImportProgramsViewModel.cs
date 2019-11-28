@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public ImportProgramsViewModel(ImportProgramsElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            ProgramCollection = new ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel>(Model.ProgramItems, LoggerFactory) {
+            ProgramCollection = new ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel>(Model.ProgramItems) {
                 ToViewModel = m => new ProgramViewModel(m, LoggerFactory),
             };
         }

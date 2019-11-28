@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             DispatcherWrapper = dispatcherWrapper;
             AllLauncherItems = allLauncherItems;
 
-            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems, LoggerFactory) {
+            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems) {
                 RemoveViewModelToDispose = false, // 共有アイテムを使用しているので破棄させない
                 ToViewModel = m => AllLauncherItems.First(i => i.LauncherItemId == m.Data),
             };

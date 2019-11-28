@@ -13,10 +13,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="ObservableCollection"/> の変更通知を受け取ってなんかする人。
     /// <para>管理者が誰かもうワケわからんことになるのです。</para>
     /// </summary>
-    public abstract class ObservableCollectionManagerBase<TValue> : BindModelBase
+    public abstract class ObservableCollectionManagerBase<TValue> : NotifyPropertyBase
     {
-        private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged, ILoggerFactory loggerFactory)
-            : base(loggerFactory)
+        private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged)
         {
             if(collection == null) {
                 throw new ArgumentNullException(nameof(collection));
@@ -27,12 +26,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
         }
 
-        public ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection, ILoggerFactory loggerFactory)
-            : this(collection, collection, loggerFactory)
+        public ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection)
+            : this(collection, collection)
         { }
 
-        public ObservableCollectionManagerBase(ObservableCollection<TValue> collection, ILoggerFactory loggerFactory)
-            : this(collection, collection, loggerFactory)
+        public ObservableCollectionManagerBase(ObservableCollection<TValue> collection)
+            : this(collection, collection)
         { }
 
 

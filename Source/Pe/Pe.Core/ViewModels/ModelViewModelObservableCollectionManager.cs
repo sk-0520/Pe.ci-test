@@ -35,14 +35,14 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection)
+            : base(collection)
         {
             EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
-        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection)
+            : base(collection)
         {
             EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
@@ -251,12 +251,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection)
+            : base(collection)
         { }
 
-        public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection)
+            : base(collection)
         { }
 
         #region property
