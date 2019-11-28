@@ -116,10 +116,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var items = LoadKeyItems(KeyActionKind.Replace);
             return CreateJobs(items, (id, item) => {
+                var replaceOptionConverter = new ReplaceOptionConverter();
                 var keyConverter = new KeyConverter();
                 var data = new KeyActionReplaceData(
                     item.Action.KeyActionId,
-                    (Key)keyConverter.ConvertFromInvariantString(item.Options["REPLACE-KEY"])
+                    replaceOptionConverter.ToKey(item.Options)
                 );
 
                 return new KeyActionReplaceJob(data, item.Mappings.First());

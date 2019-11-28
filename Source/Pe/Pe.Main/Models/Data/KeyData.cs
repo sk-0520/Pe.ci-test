@@ -116,6 +116,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         All,
     }
 
+    [AttributeUsage(AttributeTargets.Field)]
+    public class KeyActionOptionAttribute : Attribute
+    {
+        public KeyActionOptionAttribute(Type toType, string optionName)
+        {
+            ToType = toType;
+            OptionName = optionName;
+        }
+
+        #region property
+
+        public Type ToType { get; }
+        public string OptionName { get; }
+        #endregion
+    }
+
     public class KeyActionCommonData : DataBase
     {
         public KeyActionCommonData(Guid keyActionId, KeyActionKind keyActionKind)
@@ -149,6 +165,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public Key ReplaceKey { get; }
 
         #endregion
+    }
+
+    public enum KeyActionReplaceOption
+    {
+        [KeyActionOption(typeof(Key), nameof(ReplaceKey))]
+        ReplaceKey,
     }
 
     public class KeyActionDisableData : KeyActionCommonData
