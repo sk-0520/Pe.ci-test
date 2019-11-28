@@ -11,25 +11,17 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-
-    public abstract class BindModelBase : BindableBase, IDisposable, IDisposer
+    public abstract class NotifyPropertyBase : BindableBase, IDisposable, IDisposer
     {
-        public BindModelBase(ILoggerFactory loggerFactory)
-        {
-            Logger = loggerFactory.CreateLogger(GetType());
-            LoggerFactory = loggerFactory;
-        }
+        public NotifyPropertyBase()
+        { }
 
-        ~BindModelBase()
+        ~NotifyPropertyBase()
         {
             Dispose(false);
         }
 
         #region property
-
-        protected ILogger Logger { get; private set; }
-        protected ILoggerFactory LoggerFactory { get; private set; }
-
         #endregion
 
         #region IDisposable
@@ -71,10 +63,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             if(disposing) {
-                if(Logger is IDisposable disposer) {
-                    disposer.Dispose();
-                }
-
                 GC.SuppressFinalize(this);
             }
 
@@ -90,6 +78,44 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         #endregion
+    }
+
+    public abstract class BindModelBase : NotifyPropertyBase
+    {
+        public BindModelBase(ILoggerFactory loggerFactory)
+        {
+            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+        }
+
+        ~BindModelBase()
+        {
+            Dispose(false);
+        }
+
+        #region property
+
+        protected ILogger Logger { get; private set; }
+        protected ILoggerFactory LoggerFactory { get; private set; }
+
+        #endregion
+
+        //#region NotifyPropertyBase
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if(!IsDisposed) {
+        //        if(disposing) {
+        //            if(Logger is IDisposable disposer) {
+        //                disposer.Dispose();
+        //            }
+        //        }
+        //    }
+
+        //    base.Dispose(disposing);
+        //}
+
+        //#endregion
 
     }
 
