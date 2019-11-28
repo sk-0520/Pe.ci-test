@@ -18,6 +18,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #region property
+
+        public string Comment
+        {
+            get => Model.Comment;
+            set => SetModelValue(value);
+        }
+
         #endregion
 
         #region command

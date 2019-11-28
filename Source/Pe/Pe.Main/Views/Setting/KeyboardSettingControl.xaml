@@ -39,15 +39,24 @@
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="Auto" />
-                  <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <Expander>
+                  <Expander.Header>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="0" />
-                <TextBlock Grid.Column="1" Text="-&gt;" />
-                <ComboBox Grid.Column="2" />
+                      <ComboBox Grid.Row="0" Grid.Column="0" />
+                      <TextBlock Grid.Row="0" Grid.Column="1" Text="-&gt;" />
+                      <ComboBox Grid.Row="0" Grid.Column="2" />
+                    </Grid>
+                  </Expander.Header>
+                  <Expander.Content>
+                    <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Comment}" />
+                  </Expander.Content>
+                </Expander>
               </Grid>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
