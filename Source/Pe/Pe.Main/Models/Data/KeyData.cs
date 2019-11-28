@@ -148,6 +148,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public enum KeyActionReplaceOption
+    {
+        [KeyActionOption(typeof(Key), nameof(ReplaceKey))]
+        ReplaceKey,
+    }
+
     public class KeyActionReplaceData : KeyActionCommonData
     {
         public KeyActionReplaceData(Guid keyActionId, Key replaceKey)
@@ -167,18 +173,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public enum KeyActionReplaceOption
+    public enum KeyActionDisableOption
     {
-        [KeyActionOption(typeof(Key), nameof(ReplaceKey))]
-        ReplaceKey,
+        [KeyActionOption(typeof(bool), nameof(Forever))]
+        Forever
     }
 
     public class KeyActionDisableData : KeyActionCommonData
     {
-        public KeyActionDisableData(Guid keyActionId, bool stopEnable)
+        public KeyActionDisableData(Guid keyActionId, bool forever)
             : base(keyActionId, KeyActionKind.Disable)
         {
-            StopEnable = stopEnable;
+            Forever = forever;
         }
 
         #region property
@@ -186,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 完全に無視するか。
         /// </summary>
-        public bool StopEnable { get; set; }
+        public bool Forever { get; set; }
 
         #endregion
     }
@@ -197,6 +203,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             : base(keyActionId, keyActionKind)
         { }
     }
+
+    public enum KeyActionLauncherItemOption
+    {
+        [KeyActionOption(typeof(Guid), nameof(LauncherItemId))]
+        LauncherItemId
+    }
+
 
     public class KeyActionLauncherItemData : KeyActionPressedDataBase
     {

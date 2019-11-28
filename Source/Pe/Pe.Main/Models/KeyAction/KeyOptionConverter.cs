@@ -54,4 +54,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #endregion
     }
+
+    public class DisableOptionConverter : KeyOptionConverterBase
+    {
+        #region function
+
+        public bool ToForever(IReadOnlyDictionary<string, string> map)
+        {
+            var attribute = GetAttribute(KeyActionDisableOption.Forever);
+            return Convert(attribute, map, (a, s) => {
+                return System.Convert.ToBoolean(s);
+            });
+        }
+
+        #endregion
+    }
+
+    public class LauncherItemOptionConverter : KeyOptionConverterBase
+    {
+        #region function
+
+        public Guid ToLauncherItemId(IReadOnlyDictionary<string, string> map)
+        {
+            var attribute = GetAttribute(KeyActionLauncherItemOption.LauncherItemId);
+            return Convert(attribute, map, (a, s) => {
+                return Guid.Parse(s);
+            });
+        }
+
+        #endregion
+    }
+
 }

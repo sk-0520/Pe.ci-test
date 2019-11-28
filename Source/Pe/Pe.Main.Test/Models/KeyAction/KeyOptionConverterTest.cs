@@ -73,4 +73,23 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         }
 
     }
+
+    [TestClass]
+    public class DisableOptionConverterTest
+    {
+        [TestMethod]
+        [DataRow(true, "true")]
+        [DataRow(true, "TRUE")]
+        [DataRow(false, "false")]
+        [DataRow(false, "FALSE")]
+        public void ToForeverTest(bool result, string input)
+        {
+            var doc = new DisableOptionConverter();
+            var map = new Dictionary<string, string>() {
+                [nameof(KeyActionDisableOption.Forever)] = input,
+            };
+            var actual = doc.ToForever(map);
+            Assert.AreEqual(result, actual);
+        }
+    }
 }

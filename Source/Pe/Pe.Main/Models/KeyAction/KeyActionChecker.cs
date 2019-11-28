@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
             // 無効化
             foreach(var job in DisableJobs) {
-                if(job.ActionData.StopEnable) {
+                if(job.ActionData.Forever) {
                     if(job.Check(isDown, key, modifierKeyStatus)) {
                         // 完全無視
                         result.Add(job);

@@ -131,9 +131,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         {
             var items = LoadKeyItems(KeyActionKind.Disable);
             return CreateJobs(items, (id, item) => {
+                var disableOptionConverter = new DisableOptionConverter();
                 var data = new KeyActionDisableData(
                     item.Action.KeyActionId,
-                    Convert.ToBoolean(item.Options["STOP-ENABLE"])
+                    disableOptionConverter.ToForever(item.Options)
                 );
 
                 return new KeyActionDisableJob(data, item.Mappings.First());
@@ -143,11 +144,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         KeyActionLauncherItemJob CreateLauncherItemJob(KeyItem item)
         {
             var keyActionContentLauncherItemTransfer = new EnumTransfer<KeyActionContentLauncherItem>();
+            var launcherItemOptionConverter = new LauncherItemOptionConverter();
 
             var data = new KeyActionLauncherItemData(
                 item.Action.KeyActionId,
                 keyActionContentLauncherItemTransfer.ToEnum(item.Action.KeyActionContent),
-                Guid.Parse(item.Options["LAUNCHER-ITEM-ID"])
+                launcherItemOptionConverter.ToLauncherItemId(item.Options)
             );
             return new KeyActionLauncherItemJob(data, item.Mappings);
         }
