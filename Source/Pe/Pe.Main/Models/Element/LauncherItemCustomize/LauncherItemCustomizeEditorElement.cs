@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -11,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeEditorElement: ElementBase, ILauncherItemId
+    public class LauncherItemCustomizeEditorElement : ElementBase, ILauncherItemId
     {
         public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -37,6 +39,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         public IconData IconData { get; protected set; } = new IconData();
         public string Comment { get; protected set; } = string.Empty;
 
+        public ObservableCollection<string> TagItems { get; } = new ObservableCollection<string>();
+
+        #region file
+
+        public LauncherFileData? File { get; private set; }
+        public ObservableCollection<LauncherEnvironmentVariableData> EnvironmentVariableItems { get; } = new ObservableCollection<LauncherEnvironmentVariableData>();
+
+        #endregion
+
         #endregion
 
 
@@ -56,6 +67,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 IconData = launcherItemData.Icon;
                 IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
                 Comment = launcherItemData.Comment;
+
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var tagItems = launcherTagsEntityDao.SelectTags(LauncherItemId);
+                TagItems.SetRange(tagItems);
+
+                switch(Kind) {
+                    case LauncherItemKind.File: {
+                            var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            File = launcherFilesEntityDao.SelectFile(LauncherItemId);
+
+                            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
+                            EnvironmentVariableItems.SetRange(environmentVariableItems);
+                        }
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
             }
         }
 

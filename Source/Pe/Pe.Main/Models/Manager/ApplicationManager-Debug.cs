@@ -39,12 +39,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogDebug("デバッグ用後処理");
 
-            //DebugCustomize();
+            DebugCustomize();
             //DebugExtendsExecute();
             //DebugStdIoExecute();
             //DebugHook();
             //DebugKeyAction();
-            DebugSetting();
+            //DebugSetting();
         }
 
         void DebugCustomize()
