@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
@@ -15,11 +16,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
     public abstract class LauncherItemCustomizeDetailViewModelBase : SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId
     {
-        public LauncherItemCustomizeDetailViewModelBase(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeDetailViewModelBase(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            if(!Model.IsInitialized) {
+                throw new ArgumentException(nameof(model) + "." + nameof(Model.IsInitialized));
+            }
+            DispatcherWrapper = dispatcherWrapper;
+
+            Kind = Model.Kind;
+        }
 
         #region property
+
+        protected IDispatcherWrapper DispatcherWrapper { get; }
+
+        public LauncherItemKind Kind { get; }
         #endregion
 
         #region command

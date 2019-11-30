@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -11,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeEditorElement: ElementBase, ILauncherItemId
+    public class LauncherItemCustomizeEditorElement : ElementBase, ILauncherItemId
     {
         public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -29,13 +32,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IDatabaseStatementLoader StatementLoader { get; }
         IClipboardManager ClipboardManager { get; }
 
-        public string Name { get; protected set; } = string.Empty;
-        public string Code { get; protected set; } = string.Empty;
-        public LauncherItemKind Kind { get; protected set; }
-        public bool IsEnabledCommandLauncher { get; protected set; }
+        public string Name { get; set; } = string.Empty;
+        public string Code { get; private set; } = string.Empty;
+        public LauncherItemKind Kind { get; private set; }
+        public bool IsEnabledCommandLauncher { get; set; }
 
-        public IconData IconData { get; protected set; } = new IconData();
-        public string Comment { get; protected set; } = string.Empty;
+        public IconData IconData { get; set; } = new IconData();
+        public string Comment { get; set; } = string.Empty;
+
+        public ObservableCollection<string> TagItems { get; } = new ObservableCollection<string>();
+
+        #region file
+
+        public LauncherFileData? File { get; private set; }
+        public ObservableCollection<LauncherEnvironmentVariableData>? EnvironmentVariableItems { get; private set; }
+
+        #endregion
 
         #endregion
 
@@ -56,6 +68,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 IconData = launcherItemData.Icon;
                 IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
                 Comment = launcherItemData.Comment;
+
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var tagItems = launcherTagsEntityDao.SelectTags(LauncherItemId);
+                TagItems.SetRange(tagItems);
+
+                switch(Kind) {
+                    case LauncherItemKind.File: {
+                            var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            File = launcherFilesEntityDao.SelectFile(LauncherItemId);
+
+                            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
+                            EnvironmentVariableItems = new ObservableCollection<LauncherEnvironmentVariableData>(environmentVariableItems);
+                        }
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
             }
         }
 
@@ -90,6 +121,73 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
+        public void SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            ThrowIfDisposed();
+
+            var itemData = new LauncherItemData() {
+                LauncherItemId = LauncherItemId,
+                Kind = Kind,
+                Code = Code,
+                Name = Name,
+                IsEnabledCommandLauncher = IsEnabledCommandLauncher,
+                Comment = Comment,
+                Icon = new IconData() {
+                    Path = IconData.Path,
+                    Index = IconData.Index,
+                },
+            };
+
+            var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, databaseCommonStatus);
+            switch(Kind) {
+                case LauncherItemKind.File: {
+                        Debug.Assert(File != null);
+                        Debug.Assert(EnvironmentVariableItems != null);
+
+                        launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, databaseCommonStatus);
+
+                        launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(itemData.LauncherItemId);
+                        launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, databaseCommonStatus);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            launcherTagsEntityDao.DeleteTagByLauncherItemId(itemData.LauncherItemId);
+            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, databaseCommonStatus);
+        }
+
+        public void ClearIcon(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            ThrowIfDisposed();
+
+            var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            launcherItemIconsEntityDao.DeleteAllSizeImageBinary(LauncherItemId);
+        }
+
+        public void Save()
+        {
+            ThrowIfDisposed();
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+                commander.Commit();
+            }
+            using(var commander = FileDatabaseBarrier.WaitWrite()) {
+                ClearIcon(commander, commander.Implementation);
+                commander.Commit();
+            }
+        }
+
+
+        [Obsolete]
         public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags)
         {
             ThrowIfDisposed();

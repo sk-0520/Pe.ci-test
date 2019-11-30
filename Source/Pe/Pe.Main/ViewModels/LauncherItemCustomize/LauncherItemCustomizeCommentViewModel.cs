@@ -3,31 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeCommentViewModel : LauncherItemCustomizeDetailViewModelBase
+    public class LauncherItemCustomizeCommentViewModel : LauncherItemCustomizeDetailViewModelBase, IFlushable
     {
         #region variable
 
-        TextDocument? _commentDocument;
+        //TextDocument? _commentDocument;
 
         #endregion
 
-        public LauncherItemCustomizeCommentViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
-        { }
+        public LauncherItemCustomizeCommentViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
+        {
+            CommentLazyChanger = new LazyAction("コメント編集: " + Model.LauncherItemId, TimeSpan.FromSeconds(3), LoggerFactory);
+
+            CommentDocument = new TextDocument(Model.Comment);
+            CommentDocument.TextChanged += CommentDocument_TextChanged;
+        }
 
         #region property
 
-        public TextDocument? CommentDocument
-        {
-            get => this._commentDocument;
-            set => SetProperty(ref this._commentDocument, value);
-        }
+        LazyAction CommentLazyChanger { get; }
+        public TextDocument CommentDocument { get; }
 
 
         #endregion
@@ -37,15 +41,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
+        void ChangedComment()
+        {
+            Model.Comment = DispatcherWrapper.Get(() => CommentDocument.Text);
+        }
         #endregion
 
         #region CustomizeLauncherDetailViewModelBase
 
         protected override void InitializeImpl()
         {
-            CommentDocument = new TextDocument(Model.Comment);
+            //CommentDocument = new TextDocument(Model.Comment);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    CommentLazyChanger.Dispose();
+                }
+
+                CommentDocument.TextChanged -= CommentDocument_TextChanged;
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
+
+        #region IFlushable
+        public void Flush()
+        {
+            CommentLazyChanger.SafeFlush();
+        }
+        #endregion
+
+        private void CommentDocument_TextChanged(object? sender, EventArgs e)
+        {
+            CommentLazyChanger.DelayAction(ChangedComment);
+        }
+
     }
 }

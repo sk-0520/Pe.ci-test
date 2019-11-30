@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -23,20 +24,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
     {
         #region variable
 
-        string _name = string.Empty;
-        string _code = string.Empty;
-
-        IconData? _iconData;
-        bool _isEnabledCommandLauncher;
         #endregion
 
-        public LauncherItemCustomizeCommonViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public LauncherItemCustomizeCommonViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
 
-        public LauncherItemKind Kind => Model.Kind;
 
         public RequestSender IconSelectRequest { get; } = new RequestSender();
         public RequestSender ImageSelectRequest { get; } = new RequestSender();
@@ -45,10 +40,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         [Required]
         public string Name
         {
-            get => this._name;
+            get => Model.Name;
             set
             {
-                SetProperty(ref this._name, value);
+                SetModelValue(value);
                 ValidateProperty(value);
             }
         }
@@ -57,10 +52,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         [CustomValidation(typeof(LauncherItemCustomizeCommonViewModel), nameof(LauncherItemCustomizeCommonViewModel.ValidateCode))]
         public string Code
         {
-            get => this._code;
+            get => Model.Code;
             set
             {
-                SetProperty(ref this._code, value);
+                SetModelValue(value);
                 ValidateProperty(value);
             }
         }
@@ -68,20 +63,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             get => IconData!.ToString();
         }
+
         public IconData? IconData
         {
-            get => this._iconData;
+            get => Model.IconData;
             private set
             {
-                SetProperty(ref this._iconData, value);
+                SetModelValue(value);
                 RaisePropertyChanged(nameof(IconPath));
             }
         }
 
         public bool IsEnabledCommandLauncher
         {
-            get => this._isEnabledCommandLauncher;
-            set => SetProperty(ref this._isEnabledCommandLauncher, value);
+            get => Model.IsEnabledCommandLauncher;
+            set => SetModelValue(value);
         }
 
         #endregion
