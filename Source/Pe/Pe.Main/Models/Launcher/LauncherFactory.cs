@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 Kind = LauncherItemKind.File,
                 //TODO: 名称取得
                 Name = FileUtility.GetName(expandedPath),
+                IsEnabledCommandLauncher = true,
             };
             var fileResult = new LauncherFileData();
 
