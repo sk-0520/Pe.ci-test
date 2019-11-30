@@ -44,8 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                Editor.Flush();
                 if(Validate()) {
-                    Editor.Save();
                     Model.Save();
                     CloseRequest.Send();
                 }

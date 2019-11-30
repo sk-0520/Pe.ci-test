@@ -90,36 +90,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        public LauncherFileData LoadFileData()
-        {
-            ThrowIfDisposed();
+        //public LauncherFileData LoadFileData()
+        //{
+        //    ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectFile(LauncherItemId);
-            }
-        }
+        //    using(var commander = MainDatabaseBarrier.WaitRead()) {
+        //        var dao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+        //        return dao.SelectFile(LauncherItemId);
+        //    }
+        //}
 
-        public IReadOnlyCollection<LauncherEnvironmentVariableData> LoadEnvironmentVariableItems()
-        {
-            ThrowIfDisposed();
+        //public IReadOnlyCollection<LauncherEnvironmentVariableData> LoadEnvironmentVariableItems()
+        //{
+        //    ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectEnvVarItems(LauncherItemId).ToList();
-            }
-        }
+        //    using(var commander = MainDatabaseBarrier.WaitRead()) {
+        //        var dao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+        //        return dao.SelectEnvVarItems(LauncherItemId).ToList();
+        //    }
+        //}
 
 
-        public IReadOnlyCollection<string> LoadTags()
-        {
-            ThrowIfDisposed();
+        //public IReadOnlyCollection<string> LoadTags()
+        //{
+        //    ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                return dao.SelectTags(LauncherItemId).ToList();
-            }
-        }
+        //    using(var commander = MainDatabaseBarrier.WaitRead()) {
+        //        var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+        //        return dao.SelectTags(LauncherItemId).ToList();
+        //    }
+        //}
 
         public void SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {

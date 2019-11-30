@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 var prev = this._selectedItem;
                 if(prev != null && !prev.IsDisposed && prev.Item.IsChanged) {
                     if(prev.Item.Validate()) {
-                        prev.Item.Save();
+                        //prev.Item.Save();
                         prev.Icon.Reload();
                     }
                 }
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
         public override void Save()
         {
-            SelectedItem?.Item.Save();
+            //SelectedItem?.Item.Save();
             base.Save();
         }
 

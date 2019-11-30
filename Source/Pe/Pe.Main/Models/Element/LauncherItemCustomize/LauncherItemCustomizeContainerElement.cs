@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public void Save()
         {
-            // 本処理実行時には各種保存処理が完了しているので通知のみ実施。
+            Editor.Save();
             NotifyManager.SendLauncherItemChanged(LauncherItemId);
         }
 

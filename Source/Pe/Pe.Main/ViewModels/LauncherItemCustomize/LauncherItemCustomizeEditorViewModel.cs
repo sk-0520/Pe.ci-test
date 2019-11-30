@@ -61,20 +61,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems { get; }
-        //public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems
-        //{
-        //    get
-        //    {
-        //        if(this._customizeItems == null) {
-        //            this._customizeItems = CreateCustomizeItems().ToList();
-        //            foreach(var item in this._customizeItems) {
-        //                item.Initialize();
-        //            }
-        //        }
-
-        //        return this._customizeItems;
-        //    }
-        //}
 
         public LauncherItemCustomizeCommonViewModel Common { get; }
         public LauncherItemCustomizeTagViewModel Tag { get; }
@@ -83,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public bool IsChanged
         {
             get => this._isChanged;
-            private set => SetProperty(ref this._isChanged, value);
+            set => SetProperty(ref this._isChanged, value);
         }
 
         #endregion
@@ -91,69 +77,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
-        //IEnumerable<LauncherItemCustomizeDetailViewModelBase> CreateCustomizeItems()
-        //{
-        //    yield return new LauncherItemCustomizeCommonViewModel(Model, LoggerFactory);
-
-        //    switch(Model.Kind) {
-        //        case LauncherItemKind.File:
-        //            yield return new LauncherItemCustomizeFileViewModel(Model, LoggerFactory);
-        //            yield return new LauncherItemCustomizeEnvironmentVariableViewModel(Model, LoggerFactory);
-        //            break;
-
-        //        default:
-        //            throw new NotImplementedException();
-        //    }
-
-        //    yield return new LauncherItemCustomizeTagViewModel(Model, LoggerFactory);
-        //    yield return new LauncherItemCustomizeCommentViewModel(Model, LoggerFactory);
-        //}
-
-        public void Save()
-        {
-            Flush();
-            Model.Save();
-            /*
-            var common = CustomizeItems.OfType<LauncherItemCustomizeCommonViewModel>().First();
-            var tag = CustomizeItems.OfType<LauncherItemCustomizeTagViewModel>().First();
-            var comment = CustomizeItems.OfType<LauncherItemCustomizeCommentViewModel>().First();
-
-            switch(Model.Kind) {
-                case LauncherItemKind.File:
-                    var file = CustomizeItems.OfType<LauncherItemCustomizeFileViewModel>().First();
-                    var env = CustomizeItems.OfType<LauncherItemCustomizeEnvironmentVariableViewModel>().First();
-
-                    var itemData = new LauncherItemData() {
-                        LauncherItemId = Model.LauncherItemId,
-                        Kind = Model.Kind,
-                        Code = common.Code,
-                        Name = common.Name,
-                        IsEnabledCommandLauncher = true,
-                        Comment = comment.CommentDocument!.Text,
-                        Icon = new IconData() {
-                            Path = common.IconData!.Path,
-                            Index = common.IconData!.Index,
-                        },
-                    };
-                    var fileData = new LauncherFileData() {
-                        Path = file.Path ?? string.Empty,
-                        Option = file.Option ?? string.Empty,
-                        WorkDirectoryPath = file.WorkingDirectoryPath ?? string.Empty,
-                        IsEnabledCustomEnvironmentVariable = file.IsEnabledCustomEnvironmentVariable,
-                        IsEnabledStandardInputOutput = file.IsEnabledStandardInputOutput,
-                        StandardInputOutputEncoding = file.StandardInputOutputEncoding ?? EncodingConverter.DefaultStandardInputOutputEncoding,
-                        RunAdministrator = file.RunAdministrator,
-                    };
-
-                    var envVarItems = env.GetEnvironmentVariableItems();
-
-                    var tagItems = tag.GetTagItems();
-                    Model.SaveFile(itemData, fileData, envVarItems, tagItems);
-                    break;
-            }
-            */
-            IsChanged = false;
-        }
 
         #endregion
 
