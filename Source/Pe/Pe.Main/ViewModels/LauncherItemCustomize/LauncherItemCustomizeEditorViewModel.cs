@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             foreach(var flushable in CustomizeItems.OfType<IFlushable>()) {
                 flushable.Flush();
             }
-            Model.Save();
+            Model.SaveItem();
             /*
             var common = CustomizeItems.OfType<LauncherItemCustomizeCommonViewModel>().First();
             var tag = CustomizeItems.OfType<LauncherItemCustomizeTagViewModel>().First();

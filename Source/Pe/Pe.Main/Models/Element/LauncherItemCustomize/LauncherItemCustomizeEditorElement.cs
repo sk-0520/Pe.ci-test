@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -44,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         #region file
 
         public LauncherFileData? File { get; private set; }
-        public ObservableCollection<LauncherEnvironmentVariableData> EnvironmentVariableItems { get; } = new ObservableCollection<LauncherEnvironmentVariableData>();
+        public ObservableCollection<LauncherEnvironmentVariableData>? EnvironmentVariableItems { get; private set; }
 
         #endregion
 
@@ -79,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
                             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                             var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
-                            EnvironmentVariableItems.SetRange(environmentVariableItems);
+                            EnvironmentVariableItems = new ObservableCollection<LauncherEnvironmentVariableData>(environmentVariableItems);
                         }
                         break;
 
@@ -120,11 +121,59 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        public void Save()
+        public void SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
+            var itemData = new LauncherItemData() {
+                LauncherItemId = LauncherItemId,
+                Kind = Kind,
+                Code = Code,
+                Name = Name,
+                IsEnabledCommandLauncher = IsEnabledCommandLauncher,
+                Comment = Comment,
+                Icon = new IconData() {
+                    Path = IconData.Path,
+                    Index = IconData.Index,
+                },
+            };
 
+            var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, databaseCommonStatus);
+            switch(Kind) {
+                case LauncherItemKind.File: {
+                        Debug.Assert(File != null);
+                        Debug.Assert(EnvironmentVariableItems != null);
+
+                        launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, databaseCommonStatus);
+
+                        launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(itemData.LauncherItemId);
+                        launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, databaseCommonStatus);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            launcherTagsEntityDao.DeleteTagByLauncherItemId(itemData.LauncherItemId);
+            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, databaseCommonStatus);
         }
 
+        public void ClearIcon(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            launcherItemIconsEntityDao.DeleteAllSizeImageBinary(LauncherItemId);
+        }
+
+        public void SaveItem()
+        {
+        }
+
+
+        [Obsolete]
         public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags)
         {
             ThrowIfDisposed();
