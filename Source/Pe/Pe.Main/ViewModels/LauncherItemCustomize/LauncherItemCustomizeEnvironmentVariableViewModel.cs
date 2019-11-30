@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             EnvironmentVariableLazyChanger = new LazyAction("環境変数編集:" + Model.LauncherItemId, TimeSpan.FromSeconds(5), LoggerFactory);
 
-            var envItems = Model.EnvironmentVariableItems;
+            var envItems = Model.EnvironmentVariableItems!;
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
             MergeTextDocument = envConf.CreateMergeDocument(envItems);
             RemoveTextDocument = envConf.CreateRemoveDocument(envItems);
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             var envRemoveItems = DispatcherWrapper.Get(() => envConf.GetRemoveItems(RemoveTextDocument));
             var envVarItems = envConf.Join(envMergeItems, envRemoveItems);
 
-            Model.EnvironmentVariableItems.SetRange(envVarItems);
+            Model.EnvironmentVariableItems!.SetRange(envVarItems);
         }
 
         #endregion

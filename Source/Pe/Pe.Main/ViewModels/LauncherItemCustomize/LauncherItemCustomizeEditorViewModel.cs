@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeEditorViewModel : SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId
+    public class LauncherItemCustomizeEditorViewModel : SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId, IFlushable
     {
         #region variable
 
@@ -111,10 +111,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public void Save()
         {
-            foreach(var flushable in CustomizeItems.OfType<IFlushable>()) {
-                flushable.Flush();
-            }
-            Model.SaveItem();
+            Flush();
+            Model.Save();
             /*
             var common = CustomizeItems.OfType<LauncherItemCustomizeCommonViewModel>().First();
             var tag = CustomizeItems.OfType<LauncherItemCustomizeTagViewModel>().First();
@@ -180,6 +178,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region ILauncherItemId
 
         public Guid LauncherItemId => Model.LauncherItemId;
+
+        #endregion
+
+        #region IFlushable
+
+        public void Flush()
+        {
+            foreach(var flushable in CustomizeItems.OfType<IFlushable>()) {
+                flushable.Flush();
+            }
+        }
 
         #endregion
 

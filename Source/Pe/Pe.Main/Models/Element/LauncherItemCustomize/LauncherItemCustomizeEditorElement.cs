@@ -123,6 +123,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public void SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
+            ThrowIfDisposed();
+
             var itemData = new LauncherItemData() {
                 LauncherItemId = LauncherItemId,
                 Kind = Kind,
@@ -164,12 +166,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public void ClearIcon(IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
+            ThrowIfDisposed();
+
             var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             launcherItemIconsEntityDao.DeleteAllSizeImageBinary(LauncherItemId);
         }
 
-        public void SaveItem()
+        public void Save()
         {
+            ThrowIfDisposed();
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+                commander.Commit();
+            }
+            using(var commander = FileDatabaseBarrier.WaitWrite()) {
+                ClearIcon(commander, commander.Implementation);
+                commander.Commit();
+            }
         }
 
 
