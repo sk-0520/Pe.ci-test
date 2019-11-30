@@ -47,32 +47,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.KeyAction
         #endregion
     }
 
-    [TestClass]
-    public class ReplaceOptionConverterTest
-    {
-        [TestMethod]
-        public void ToKeyTest_Exception()
-        {
-            var roc = new ReplaceOptionConverter();
-            Assert.ThrowsException<ArgumentException>(() => roc.ToKey(new Dictionary<string, string>()));
-            Assert.ThrowsException<ArgumentException>(() => roc.ToKey(new Dictionary<string, string>() { [nameof(KeyActionReplaceOption.ReplaceKey)] = "💩" }));
-        }
-
-        [TestMethod]
-        [DataRow(Key.None, "")]
-        [DataRow(Key.None, "none")]
-        [DataRow(Key.A, "A")]
-        public void ToKeyTest_Convert(Key result, string input)
-        {
-            var roc = new ReplaceOptionConverter();
-            var map = new Dictionary<string, string>() {
-                [nameof(KeyActionReplaceOption.ReplaceKey)] = input,
-            };
-            var actual = roc.ToKey(map);
-            Assert.AreEqual(result, actual);
-        }
-
-    }
 
     [TestClass]
     public class DisableOptionConverterTest

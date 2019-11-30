@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
@@ -14,12 +16,41 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
     {
         #region variable
 
-        List<LauncherItemCustomizeDetailViewModelBase>? _customizeItems;
+        //List<LauncherItemCustomizeDetailViewModelBase>? _customizeItems;
         bool _isChanged;
         #endregion
 
-        public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory) : base(model, loggerFactory)
+        public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(model, loggerFactory)
         {
+            DispatcherWrapper = dispatcherWrapper;
+
+            Common = new LauncherItemCustomizeCommonViewModel(Model, DispatcherWrapper, LoggerFactory);
+
+            var items = new List<LauncherItemCustomizeDetailViewModelBase>();
+            items.Add(Common);
+
+            switch(Model.Kind) {
+                case LauncherItemKind.File: {
+                        var file = new LauncherItemCustomizeFileViewModel(Model, DispatcherWrapper, LoggerFactory);
+                        var env = new LauncherItemCustomizeEnvironmentVariableViewModel(Model, DispatcherWrapper, LoggerFactory);
+
+                        items.Add(file);
+                        items.Add(env);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            Tag = new LauncherItemCustomizeTagViewModel(Model, DispatcherWrapper, LoggerFactory);
+            Comment = new LauncherItemCustomizeCommentViewModel(Model, DispatcherWrapper, LoggerFactory);
+
+            items.Add(Tag);
+            items.Add(Comment);
+
+            CustomizeItems = items;
+
             foreach(var item in CustomizeItems) {
                 item.PropertyChanged += Item_PropertyChanged;
             }
@@ -27,22 +58,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems
-        {
-            get
-            {
-                if(this._customizeItems == null) {
-                    this._customizeItems = CreateCustomizeItems().ToList();
-                    foreach(var item in this._customizeItems) {
-                        item.Initialize();
-                    }
-                }
+        IDispatcherWrapper DispatcherWrapper { get; }
 
-                return this._customizeItems;
-            }
-        }
+        public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems { get; }
+        //public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems
+        //{
+        //    get
+        //    {
+        //        if(this._customizeItems == null) {
+        //            this._customizeItems = CreateCustomizeItems().ToList();
+        //            foreach(var item in this._customizeItems) {
+        //                item.Initialize();
+        //            }
+        //        }
 
-        public LauncherItemCustomizeCommonViewModel Common => (LauncherItemCustomizeCommonViewModel)CustomizeItems.First(i => i is LauncherItemCustomizeCommonViewModel);
+        //        return this._customizeItems;
+        //    }
+        //}
+
+        public LauncherItemCustomizeCommonViewModel Common { get; }
+        public LauncherItemCustomizeTagViewModel Tag { get; }
+        public LauncherItemCustomizeCommentViewModel Comment { get; }
 
         public bool IsChanged
         {
@@ -55,26 +91,31 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
-        IEnumerable<LauncherItemCustomizeDetailViewModelBase> CreateCustomizeItems()
-        {
-            yield return new LauncherItemCustomizeCommonViewModel(Model, LoggerFactory);
+        //IEnumerable<LauncherItemCustomizeDetailViewModelBase> CreateCustomizeItems()
+        //{
+        //    yield return new LauncherItemCustomizeCommonViewModel(Model, LoggerFactory);
 
-            switch(Model.Kind) {
-                case LauncherItemKind.File:
-                    yield return new LauncherItemCustomizeFileViewModel(Model, LoggerFactory);
-                    yield return new LauncherItemCustomizeEnvironmentVariableViewModel(Model, LoggerFactory);
-                    break;
+        //    switch(Model.Kind) {
+        //        case LauncherItemKind.File:
+        //            yield return new LauncherItemCustomizeFileViewModel(Model, LoggerFactory);
+        //            yield return new LauncherItemCustomizeEnvironmentVariableViewModel(Model, LoggerFactory);
+        //            break;
 
-                default:
-                    throw new NotImplementedException();
-            }
+        //        default:
+        //            throw new NotImplementedException();
+        //    }
 
-            yield return new LauncherItemCustomizeTagViewModel(Model, LoggerFactory);
-            yield return new LauncherItemCustomizeCommentViewModel(Model, LoggerFactory);
-        }
+        //    yield return new LauncherItemCustomizeTagViewModel(Model, LoggerFactory);
+        //    yield return new LauncherItemCustomizeCommentViewModel(Model, LoggerFactory);
+        //}
 
         public void Save()
         {
+            foreach(var flushable in CustomizeItems.OfType<IFlushable>()) {
+                flushable.Flush();
+            }
+            Model.Save();
+            /*
             var common = CustomizeItems.OfType<LauncherItemCustomizeCommonViewModel>().First();
             var tag = CustomizeItems.OfType<LauncherItemCustomizeTagViewModel>().First();
             var comment = CustomizeItems.OfType<LauncherItemCustomizeCommentViewModel>().First();
@@ -112,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     Model.SaveFile(itemData, fileData, envVarItems, tagItems);
                     break;
             }
-
+            */
             IsChanged = false;
         }
 

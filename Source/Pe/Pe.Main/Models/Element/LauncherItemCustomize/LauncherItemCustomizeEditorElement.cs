@@ -31,13 +31,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IDatabaseStatementLoader StatementLoader { get; }
         IClipboardManager ClipboardManager { get; }
 
-        public string Name { get; protected set; } = string.Empty;
-        public string Code { get; protected set; } = string.Empty;
-        public LauncherItemKind Kind { get; protected set; }
-        public bool IsEnabledCommandLauncher { get; protected set; }
+        public string Name { get; set; } = string.Empty;
+        public string Code { get; private set; } = string.Empty;
+        public LauncherItemKind Kind { get; private set; }
+        public bool IsEnabledCommandLauncher { get; set; }
 
-        public IconData IconData { get; protected set; } = new IconData();
-        public string Comment { get; protected set; } = string.Empty;
+        public IconData IconData { get; set; } = new IconData();
+        public string Comment { get; set; } = string.Empty;
 
         public ObservableCollection<string> TagItems { get; } = new ObservableCollection<string>();
 
@@ -118,6 +118,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 var dao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectTags(LauncherItemId).ToList();
             }
+        }
+
+        public void Save()
+        {
+
         }
 
         public void SaveFile(LauncherItemData launcherItemData, LauncherFileData launcherFileData, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IEnumerable<string> tags)

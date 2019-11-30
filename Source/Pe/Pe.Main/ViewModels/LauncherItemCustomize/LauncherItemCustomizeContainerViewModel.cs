@@ -25,12 +25,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeContainerViewModel(LauncherItemCustomizeContainerElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            Editor = new LauncherItemCustomizeEditorViewModel(Model.Editor, loggerFactory);
-            Icon = new LauncherIconViewModel(model.Icon, dispatcherWrapper, loggerFactory);
+            DispatcherWrapper = dispatcherWrapper;
+
+            Editor = new LauncherItemCustomizeEditorViewModel(Model.Editor, DispatcherWrapper, loggerFactory);
+            Icon = new LauncherIconViewModel(model.Icon, DispatcherWrapper, loggerFactory);
         }
 
         #region property
-
+        IDispatcherWrapper DispatcherWrapper { get; }
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         public LauncherItemCustomizeEditorViewModel Editor { get; }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -35,8 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeEditorElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
