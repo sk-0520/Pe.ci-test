@@ -227,6 +227,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             if(SelectedGroup == null) {
                 return;
             }
+            //TODO:D&D死んでるよ！
             if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
