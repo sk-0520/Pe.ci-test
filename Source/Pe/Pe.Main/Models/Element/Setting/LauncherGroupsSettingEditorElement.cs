@@ -30,8 +30,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         INotifyManager NotifyManager { get; }
+
         public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; } = new ObservableCollection<LauncherGroupSettingEditorElement>();
-        public ObservableCollection<LauncherElementWithIconElement<CommonLauncherItemElement>> LauncherItems { get; } = new ObservableCollection<LauncherElementWithIconElement<CommonLauncherItemElement>>();
+        public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
 
         #endregion
 
@@ -43,16 +44,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void MoveGroupItem(int startIndex, int insertIndex)
         {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+
             var item = GroupItems[startIndex];
             GroupItems.RemoveAt(startIndex);
             GroupItems.Insert(insertIndex, item);
+
+            foreach(var group in GroupItems.Counting()) {
+                group.Value.Sequence = group.Number * launcherFactory.GroupItemStep;
+            }
         }
 
         #endregion
 
         #region SettingEditorElementBase
 
-        public override void Load()
+        protected override void LoadImpl()
         {
             ThrowIfDisposed();
 
@@ -66,18 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 groupIds = launcherGroupsEntityDao.SelectAllLauncherGroupIds().ToList();
             }
 
-            LauncherItems.Clear();
-            foreach(var launcherItemId in launcherItemIds) {
-                var launcherItem = new CommonLauncherItemElement(launcherItemId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
-                launcherItem.Initialize();
-
-                var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
-                var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
-                launcherIconElement.Initialize();
-
-                var item = LauncherItemWithIconElement.Create(launcherItem, launcherIconElement, LoggerFactory);
-                LauncherItems.Add(item);
-            }
+            LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
 
             GroupItems.Clear();
             foreach(var groupId in groupIds) {
@@ -87,19 +83,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        public override void Save()
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
-            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
-
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                foreach(var item in GroupItems.Counting()) {
-                    var seq = item.Number * launcherFactory.GroupItemsStep;
-                    launcherGroupsEntityDao.UpdateGroupSequence(item.Value.LauncherGroupId, seq, DatabaseCommonStatus.CreateCurrentAccount());
-                }
-                commander.Commit();
+            foreach(var group in GroupItems) {
+                group.Save(commandPack);
             }
-
         }
 
         #endregion

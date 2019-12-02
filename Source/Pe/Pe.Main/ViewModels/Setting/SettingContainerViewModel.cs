@@ -9,6 +9,8 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -27,9 +29,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             DispatcherWrapper = dispatcherWrapper;
 
-            LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, DispatcherWrapper, LoggerFactory);
-            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
-            KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, DispatcherWrapper, LoggerFactory);
+            AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
+                ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
+            };
+
+            LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
+            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
+            KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new List<ISettingEditorViewModel>() {
                 LauncherItemsSettingEditor,
@@ -37,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
             };
             //this._selectedEditor = EditorItems.First();
-            this._selectedEditor = KeyboardSettingEditor;
+            this._selectedEditor = LauncherItemsSettingEditor;//KeyboardSettingEditor;
         }
 
         #region property
@@ -46,17 +52,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public RequestSender CloseRequest { get; } = new RequestSender();
 
+        [IgnoreValidation]
+        public ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
 
+        [IgnoreValidation]
         public ISettingEditorViewModel SelectedEditor
         {
             get => this._selectedEditor;
             set
             {
                 var prev = this._selectedEditor;
-                if(prev != null) {
-                    prev.Save();
-                }
                 SetProperty(ref this._selectedEditor, value);
                 if(this._selectedEditor != null) {
                     this._selectedEditor.Load();
@@ -75,9 +82,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             () => {
                 if(Validate()) {
                     foreach(var editor in EditorItems) {
-                        editor.Save();
+                        editor.Flush();
                     }
-                    Model.SetSubmit(true);
+                    Model.Save();
                     CloseRequest.Send();
                 }
             }

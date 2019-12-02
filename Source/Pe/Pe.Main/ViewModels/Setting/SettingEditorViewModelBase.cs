@@ -2,24 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public interface ISettingEditorViewModel
+    public interface ISettingEditorViewModel: IFlushable
     {
         #region property
 
-        public string Header { get; }
+        string Header { get; }
 
         #endregion
 
         #region function
 
         void Load();
-        void Save();
 
         #endregion
     }
@@ -55,12 +55,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public virtual void Load()
         {
+            if(Model.IsLoaded) {
+                return;
+            }
             Model.Load();
         }
-        public virtual void Save()
-        {
-            Model.Save();
-        }
+
+        public abstract void Flush();
 
         #endregion
 

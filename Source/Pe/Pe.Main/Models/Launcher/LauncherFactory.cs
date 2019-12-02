@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         public static IReadOnlyCollection<char> CodeSymbols { get; } = new[] { '-', '.', '^', '_', '[', ']', };
 
         public int GroupItemsStep { get; } = 10;
+        public int GroupItemStep { get; } = 10;
 
         #endregion
 

@@ -4,12 +4,43 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
+    public class DatabaseCommander
+    {
+        public DatabaseCommander(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            Commander = commander;
+            Implementation = implementation;
+        }
+
+        #region property
+
+        public IDatabaseCommander Commander { get; }
+        public IDatabaseImplementation Implementation { get; }
+
+        #endregion
+    }
+
+    public sealed class DatabaseCommandPack : TApplicationPackBase<DatabaseCommander, DatabaseCommander>
+    {
+        public DatabaseCommandPack(DatabaseCommander main, DatabaseCommander file, DatabaseCommander temporary, IDatabaseCommonStatus commonStatus)
+            : base(main, file, temporary)
+        {
+            CommonStatus=commonStatus;
+        }
+
+        #region property
+
+        public IDatabaseCommonStatus CommonStatus { get; }
+        #endregion
+    }
+
     /// <summary>
     /// 各設定項目の親。
     /// </summary>
@@ -36,12 +67,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected IIdFactory IdFactory { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
+
+        public bool IsLoaded { get; private set; }
         #endregion
 
         #region function
 
-        public abstract void Load();
-        public abstract void Save();
+        protected abstract void LoadImpl();
+
+        public void Load()
+        {
+            if(IsLoaded) {
+                throw new InvalidOperationException(nameof(IsLoaded));
+            }
+
+            LoadImpl();
+
+            IsLoaded = true;
+        }
+
+        protected abstract void SaveImpl(DatabaseCommandPack commandPack);
+
+        public void Save(DatabaseCommandPack commandPack)
+        {
+            if(!IsLoaded) {
+                throw new InvalidOperationException(nameof(IsLoaded));
+            }
+
+            SaveImpl(commandPack);
+        }
 
         #endregion
 

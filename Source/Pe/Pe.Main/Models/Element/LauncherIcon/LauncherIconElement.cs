@@ -32,8 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         #region ElementBase
 
         protected override void InitializeImpl()
-        {
-        }
+        { }
 
         #endregion
 

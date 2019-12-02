@@ -29,22 +29,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         bool _isPopupCreateGroupMenu;
         LauncherGroupSettingEditorViewModel? _selectedGroup;
-        LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? _selectedLauncherItem;
+        LauncherItemSettingEditorViewModel? _selectedLauncherItem;
 
         #endregion
 
-        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             LauncherGroupTheme = launcherGroupTheme;
 
-            LauncherCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems) {
-                ToViewModel = m => LauncherItemWithIconViewModel.Create(new CommonLauncherItemViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, loggerFactory), LoggerFactory),
-            };
-            LauncherItems = LauncherCollection.GetDefaultView();
+            //LauncherCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems) {
+            //    ToViewModel = m => LauncherItemWithIconViewModel.Create(new CommonLauncherItemViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, loggerFactory), LoggerFactory),
+            //};
+            //LauncherItems = LauncherCollection.GetDefaultView();
+            AllLauncherItemCollection = allLauncherItemCollection;
+            AllLauncherItems = AllLauncherItemCollection.CreateView();
 
             GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems) {
-                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, LauncherCollection.ViewModels, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
+                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
             };
             GroupItems = GroupCollection.GetDefaultView();
 
@@ -94,13 +96,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public IDragAndDrop LauncherItemDragAndDrop { get; }
         public IDragAndDrop LauncherItemsDragAndDrop { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
-        public ICollectionView LauncherItems { get; }
+        //ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
+        //public ICollectionView LauncherItems { get; }
+        [IgnoreValidation]
+        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        [IgnoreValidation]
+        public ICollectionView AllLauncherItems { get; }
 
+        [IgnoreValidation]
         ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
+        [IgnoreValidation]
         public ICollectionView GroupItems { get; }
 
 
+        [IgnoreValidation]
         public ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>> GroupIconItems { get; }
 
         public bool IsPopupCreateGroupMenu
@@ -117,15 +126,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 var prev = this._selectedGroup;
                 if(prev != null && !prev.IsDisposed) {
                     prev.PropertyChanged -= SelectedGroup_PropertyChanged;
-                    if(prev.Validate()) {
-                        prev.SaveWithoutSequence();
-                    }
+                    //if(prev.Validate()) {
+                    //    prev.SaveWithoutSequence();
+                    //}
+                    prev.Validate();
                 }
                 SetProperty(ref this._selectedGroup, value);
                 if(this._selectedGroup != null) {
                     this._selectedGroup.PropertyChanged += SelectedGroup_PropertyChanged;
                 }
-                ChangeGroupIconsColorFromCurrentGroup();
+                ChangeGroupIconColorFromCurrentGroup();
 
                 RaisePropertyChanged(nameof(IsEnabledSelectedGroup));
             }
@@ -133,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public bool IsEnabledSelectedGroup => SelectedGroup != null;
 
-        public LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? SelectedLauncherItem
+        public LauncherItemSettingEditorViewModel? SelectedLauncherItem
         {
             get => this._selectedLauncherItem;
             set
@@ -167,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             */
         }
 
-        void ChangeGroupIconsColorFromCurrentGroup()
+        void ChangeGroupIconColorFromCurrentGroup()
         {
             if(SelectedGroup != null) {
                 foreach(var groupIcon in GroupIconItems) {
@@ -193,7 +203,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     if(e.OriginalSource is DependencyObject dependencyObject) {
                         var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
                         if(listBoxItem != null) {
-                            var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
+                            var currentItem = (LauncherItemSettingEditorViewModel)listBoxItem.DataContext;
                             if(currentItem != dragData.Item) {
                                 canDrag = true;
                             }
@@ -223,11 +233,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             if(SelectedGroup == null) {
                 return;
             }
+            //TODO:D&D死んでるよ！
             if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
                     if(listBoxItem != null) {
-                        var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
+                        var currentItem = (LauncherItemSettingEditorViewModel)listBoxItem.DataContext;
                         if(dragData.FromAllItems) {
                             // アイテム一覧からD&Dされた
                             var currentIndex = SelectedGroup.LauncherItems.IndexOf(currentItem);
@@ -236,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                             //var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
                             //SelectedGroup.LauncherItems.Insert(currentIndex, newLauncherItem);
                             SelectedGroup.InsertNewLauncherItem(currentIndex, dragData.Item);
-                            SelectedLauncherItem = LauncherCollection.ViewModels[currentIndex];
+                            SelectedLauncherItem = AllLauncherItemCollection.ViewModels[currentIndex];
                             UIUtility.GetVisualClosest<ListBox>(listBoxItem)!.Focus();
                         } else {
                             // 現在アイテム内での並び替え
@@ -256,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                                 SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
                             }
                             */
-                            SelectedLauncherItem = LauncherCollection.ViewModels[currentIndex];
+                            SelectedLauncherItem = AllLauncherItemCollection.ViewModels[currentIndex];
                         }
                     } else if(dragData.FromAllItems) {
                         // 一覧から持ってきた際にデータが空っぽだとここ
@@ -267,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         SelectedLauncherItem = newLauncherItem;
                         */
                         SelectedGroup.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, dragData.Item);
-                        SelectedLauncherItem = LauncherCollection.ViewModels.Last();
+                        SelectedLauncherItem = AllLauncherItemCollection.ViewModels.Last();
                         UIUtility.GetVisualClosest<ListBox>(dependencyObject)!.Focus();
                     }
                 }
@@ -403,6 +414,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public override string Header => Properties.Resources.String_Setting_Header_LauncherGroups;
 
+        public override void Flush()
+        {
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
@@ -423,18 +439,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         //    SelectedLauncherItem = null;
         //    base.Load();
         //}
-        public override void Save()
-        {
-            SelectedGroup?.SaveWithoutSequence();
-            base.Save();
-        }
+        //public override void Save()
+        //{
+        //    SelectedGroup?.SaveWithoutSequence();
+        //    base.Save();
+        //}
 
         #endregion
 
         private void SelectedGroup_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(SelectedGroup.ImageColor)) {
-                ChangeGroupIconsColorFromCurrentGroup();
+                ChangeGroupIconColorFromCurrentGroup();
             }
         }
 

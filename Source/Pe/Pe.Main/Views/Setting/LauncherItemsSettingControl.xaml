@@ -68,7 +68,7 @@
         <TextBox Grid.Column="2" />
       </Grid>
 
-      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.Items, ElementName=root}">
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, ElementName=root}">
         <i:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>
@@ -84,7 +84,7 @@
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
-              <TextBlock Text="{Binding Item.Common.Name}" />
+              <TextBlock Text="{Binding Common.Name}" />
             </StackPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>
@@ -95,7 +95,7 @@
 
     <Grid Grid.Column="2">
       <ScrollViewer x:Name="customize">
-        <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor.SelectedItem.Item, ElementName=root}" />
+        <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor.SelectedItem, ElementName=root}" />
       </ScrollViewer>
     </Grid>
 

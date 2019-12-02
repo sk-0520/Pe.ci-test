@@ -16,6 +16,14 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
+    [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+    public sealed class IgnoreValidationAttribute : Attribute
+    {
+        // This is a positional argument
+        public IgnoreValidationAttribute()
+        { }
+    }
+
     public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable, IDisposer
     {
         public ViewModelBase(ILoggerFactory loggerFactory)
@@ -117,7 +125,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             var type = GetType();
             //var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            var properties = type.GetProperties();
+            var properties = type.GetProperties()
+                .Select(i => new { Property = i, Attribute = i.GetCustomAttribute<IgnoreValidationAttribute>() })
+                .Where(i => i.Attribute == null)
+                .Select(i => i.Property)
+                .ToList()
+            ;
             var targetProperties = properties
                 .Select(i => new { Property = i, Attributes = i.GetCustomAttributes<ValidationAttribute>() })
                 .Where(i => i.Attributes.Any())

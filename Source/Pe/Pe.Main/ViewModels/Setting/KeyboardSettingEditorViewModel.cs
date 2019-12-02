@@ -19,20 +19,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public KeyboardSettingEditorViewModel(KeyboardSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public KeyboardSettingEditorViewModel(KeyboardSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             ReplaceJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardReplaceJobSettingEditorElement, KeyboardReplaceJobSettingEditorViewMode>(model.ReplaceJobEditors) {
                 ToViewModel = m => new KeyboardReplaceJobSettingEditorViewMode(m, LoggerFactory),
             };
             ReplaceJobEditors = ReplaceJobEditorCollection.GetDefaultView();
+
+            AllLauncherItemCollection = allLauncherItemCollection;
+            AllLauncherItems = AllLauncherItemCollection.CreateView();
         }
 
         #region property
 
         ModelViewModelObservableCollectionManagerBase<KeyboardReplaceJobSettingEditorElement, KeyboardReplaceJobSettingEditorViewMode> ReplaceJobEditorCollection { get; }
         public ICollectionView ReplaceJobEditors { get; }
-
+        [IgnoreValidation]
+        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        [IgnoreValidation]
+        public ICollectionView AllLauncherItems { get; }
         public bool IsPopupCreateJobMenu
         {
             get => this._isPopupCreateJobMenu;
@@ -62,6 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region SettingEditorViewModelBase
 
         public override string Header => Properties.Resources.String_Setting_Header_Keyboard;
+
+        public override void Flush()
+        {
+        }
 
         #endregion
     }

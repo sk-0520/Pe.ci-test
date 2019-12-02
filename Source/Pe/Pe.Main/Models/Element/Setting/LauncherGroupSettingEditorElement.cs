@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherItems.Insert(insertIndex, item);
         }
 
-        public void SaveWithoutSequence()
+        public void Save(DatabaseCommandPack pack)
         {
             ThrowIfDisposed();
 
@@ -78,17 +78,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
 
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                dao.UpdateGroupWithoutSequence(launcherGroupData, DatabaseCommonStatus.CreateCurrentAccount());
+            var launcherGroupsEntityDao = new LauncherGroupsEntityDao(pack.Main.Commander, StatementLoader, pack.Main.Implementation, LoggerFactory);
+            launcherGroupsEntityDao.UpdateGroup(launcherGroupData, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                launcherGroupItemsDao.DeleteGroupItemsByLauncherGroupId(LauncherGroupId);
-                var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(LauncherGroupId);
-                launcherGroupItemsDao.InsertNewItems(LauncherGroupId, launcherItemIds, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
-
-                commander.Commit();
-            }
+            var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(pack.Main.Commander, StatementLoader, pack.Main.Implementation, LoggerFactory);
+            launcherGroupItemsDao.DeleteGroupItemsByLauncherGroupId(LauncherGroupId);
+            var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(LauncherGroupId);
+            launcherGroupItemsDao.InsertNewItems(LauncherGroupId, launcherItemIds, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
         }
 
         #endregion

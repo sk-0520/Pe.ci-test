@@ -28,11 +28,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? _selectedLauncherItem;
+        LauncherItemSettingEditorViewModel? _selectedLauncherItem;
 
         #endregion
 
-        public LauncherGroupSettingEditorViewModel(LauncherGroupSettingEditorElement model, IReadOnlyList<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> allLauncherItems, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorViewModel(LauncherGroupSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
@@ -41,11 +41,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             LauncherGroupTheme = launcherGroupTheme;
             DispatcherWrapper = dispatcherWrapper;
-            AllLauncherItems = allLauncherItems;
+            AllLauncherItemCollection = allLauncherItemCollection;
 
-            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems) {
+            LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemSettingEditorViewModel>(Model.LauncherItems) {
                 RemoveViewModelToDispose = false, // 共有アイテムを使用しているので破棄させない
-                ToViewModel = m => AllLauncherItems.First(i => i.LauncherItemId == m.Data),
+                ToViewModel = (m) => {
+                    var itemVm = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m.Data);
+                    return itemVm.Clone();
+                },
             };
             LauncherItems = LauncherCollection.ViewModels;
         }
@@ -56,15 +59,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// 共用しているランチャーアイテム一覧。
         /// <para>親元でアイコンと共通項目構築済みのランチャーアイテム。毎回作るのあれだし。</para>
         /// </summary>
-        IReadOnlyList<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> AllLauncherItems { get; }
+        [IgnoreValidation]
+        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
         /// <summary>
         /// 所属ランチャーアイテム。
         /// <para>注意: 設定中データ状態はモデル側に送らない。</para>
         /// </summary>
         //public ObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
-        ModelViewModelObservableCollectionManagerBase<WrapModel<Guid>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
-        public ReadOnlyObservableCollection<LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherItems { get; }
+        [IgnoreValidation]
+        ModelViewModelObservableCollectionManagerBase<WrapModel<Guid>, LauncherItemSettingEditorViewModel> LauncherCollection { get; }
+        [IgnoreValidation]
+        public ReadOnlyObservableCollection<LauncherItemSettingEditorViewModel> LauncherItems { get; }
 
         ILauncherGroupTheme LauncherGroupTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -87,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set
             {
                 SetModelValue(value);
-                ReloadIcon();
+                ReloadGroupIcon();
             }
         }
 
@@ -97,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set
             {
                 SetModelValue(value);
-                ReloadIcon();
+                ReloadGroupIcon();
             }
         }
 
@@ -107,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set
             {
                 SetModelValue(value);
-                ReloadIcon();
+                ReloadGroupIcon();
             }
         }
 
@@ -115,7 +121,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public object GroupIcon => DispatcherWrapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false));
 
-        public LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? SelectedLauncherItem
+        [IgnoreValidation]
+        public LauncherItemSettingEditorViewModel? SelectedLauncherItem
         {
             get => this._selectedLauncherItem;
             set
@@ -131,16 +138,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void ReloadIcon()
+        void ReloadGroupIcon()
         {
             RaisePropertyChanged(nameof(GroupIcon));
         }
 
-
+        /*
         public void SaveWithoutSequence()
         {
             Model.SaveWithoutSequence();
         }
+        */
 
         public void InsertNewLauncherItem(int index, ILauncherItemId launcherItem)
         {
