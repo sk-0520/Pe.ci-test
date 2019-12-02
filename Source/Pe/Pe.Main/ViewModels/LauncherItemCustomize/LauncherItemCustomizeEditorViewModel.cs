@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region property
 
-        IDispatcherWrapper DispatcherWrapper { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
 
         public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems { get; }
 

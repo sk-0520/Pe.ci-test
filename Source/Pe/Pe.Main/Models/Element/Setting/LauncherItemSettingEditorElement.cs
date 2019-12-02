@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public interface ILauncherItemSettingEditor : ILauncherItemId
+    public interface ILauncherItemSettingEditor : ILauncherItemId, INotifyPropertyChanged
     {
         #region property
         string Name { get; }

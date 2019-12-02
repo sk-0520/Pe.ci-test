@@ -98,13 +98,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         //ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
         //public ICollectionView LauncherItems { get; }
+        [IgnoreValidation]
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        [IgnoreValidation]
         public ICollectionView AllLauncherItems { get; }
 
+        [IgnoreValidation]
         ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
+        [IgnoreValidation]
         public ICollectionView GroupItems { get; }
 
 
+        [IgnoreValidation]
         public ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>> GroupIconItems { get; }
 
         public bool IsPopupCreateGroupMenu
@@ -121,15 +126,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 var prev = this._selectedGroup;
                 if(prev != null && !prev.IsDisposed) {
                     prev.PropertyChanged -= SelectedGroup_PropertyChanged;
-                    if(prev.Validate()) {
-                        prev.SaveWithoutSequence();
-                    }
+                    //if(prev.Validate()) {
+                    //    prev.SaveWithoutSequence();
+                    //}
+                    prev.Validate();
                 }
                 SetProperty(ref this._selectedGroup, value);
                 if(this._selectedGroup != null) {
                     this._selectedGroup.PropertyChanged += SelectedGroup_PropertyChanged;
                 }
-                ChangeGroupIconsColorFromCurrentGroup();
+                ChangeGroupIconColorFromCurrentGroup();
 
                 RaisePropertyChanged(nameof(IsEnabledSelectedGroup));
             }
@@ -171,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             */
         }
 
-        void ChangeGroupIconsColorFromCurrentGroup()
+        void ChangeGroupIconColorFromCurrentGroup()
         {
             if(SelectedGroup != null) {
                 foreach(var groupIcon in GroupIconItems) {
@@ -428,18 +434,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         //    SelectedLauncherItem = null;
         //    base.Load();
         //}
-        public override void Save()
-        {
-            SelectedGroup?.SaveWithoutSequence();
-            base.Save();
-        }
+        //public override void Save()
+        //{
+        //    SelectedGroup?.SaveWithoutSequence();
+        //    base.Save();
+        //}
 
         #endregion
 
         private void SelectedGroup_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(SelectedGroup.ImageColor)) {
-                ChangeGroupIconsColorFromCurrentGroup();
+                ChangeGroupIconColorFromCurrentGroup();
             }
         }
 

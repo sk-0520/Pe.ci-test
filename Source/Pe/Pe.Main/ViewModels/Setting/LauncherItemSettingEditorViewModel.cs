@@ -10,8 +10,15 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class LauncherItemSettingEditorViewModel : LauncherItemCustomizeEditorViewModel
+    public sealed class LauncherItemSettingEditorViewModel : LauncherItemCustomizeEditorViewModel
     {
+        private LauncherItemSettingEditorViewModel(LauncherItemSettingEditorElement model, LauncherIconViewModel icon, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
+        {
+            Editor = model;
+            Icon = icon;
+        }
+
         public LauncherItemSettingEditorViewModel(LauncherItemSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
@@ -23,6 +30,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         LauncherItemSettingEditorElement Editor { get; }
         public LauncherIconViewModel Icon { get; }
+        #endregion
+
+        #region function
+
+        public LauncherItemSettingEditorViewModel Clone()
+        {
+            return new LauncherItemSettingEditorViewModel(Editor, Icon, DispatcherWrapper, LoggerFactory);
+        }
+
         #endregion
     }
 }

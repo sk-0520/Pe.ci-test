@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
-            KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, DispatcherWrapper, LoggerFactory);
+            KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new List<ISettingEditorViewModel>() {
                 LauncherItemsSettingEditor,
@@ -52,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public RequestSender CloseRequest { get; } = new RequestSender();
 
+        [IgnoreValidation]
         public ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
