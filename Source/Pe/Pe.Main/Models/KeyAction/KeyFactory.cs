@@ -172,4 +172,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #endregion
     }
+
+    public class KeyMappingFactory
+    {
+        #region property
+
+        public int MappingStep { get; } = 10;
+
+        #endregion
+    }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
@@ -55,6 +56,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        KeyMappingsEntityDto ConvertFromData(Guid keyActionId, KeyMappingData data, int sequence, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var modifierKeyTransfer = new EnumTransfer<ModifierKey>();
+            var keyConverter = new KeyConverter();
+
+            var dto = new KeyMappingsEntityDto() {
+                KeyActionId = keyActionId,
+                Key = keyConverter.ConvertToInvariantString(data.Key),
+                Sequence = sequence,
+                Shift = modifierKeyTransfer.ToString(data.Shift),
+                Control = modifierKeyTransfer.ToString(data.Control),
+                Alt = modifierKeyTransfer.ToString(data.Alt),
+                Super = modifierKeyTransfer.ToString(data.Super),
+            };
+            databaseCommonStatus.WriteCreate(dto);
+
+            return dto;
+        }
+
         public IEnumerable<KeyMappingData> SelectMappings(Guid keyActionId)
         {
             var statement = LoadStatement();
@@ -62,6 +82,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Query<KeyMappingsEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
+        }
+
+        public bool InsertMapping(Guid keyActionId, KeyMappingData mapping, int sequence, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(keyActionId, mapping, sequence, commonStatus);
+            return Commander.Execute(statement, dto) == 1;
+        }
+
+        public int DeleteByKeyActionId(Guid keyActionId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.KeyActionId, keyActionId);
+            return ExecuteDelete(builder);
         }
 
         #endregion

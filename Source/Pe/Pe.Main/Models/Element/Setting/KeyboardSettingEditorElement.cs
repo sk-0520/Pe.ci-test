@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         void SaveNewActionData(KeyActionData data)
         {
-            using(var commander = MainDatabaseBarrier.WaitWrite()){
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 keyActionsEntityDao.InsertKeyAction(data, DatabaseCommonStatus.CreateCurrentAccount());
 
@@ -49,9 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 KeyActionId = IdFactory.CreateKeyActionId(),
                 KeyActionKind = KeyActionKind.Replace,
             };
-            SaveNewActionData(keyActionData);
 
-            var editor = new KeyboardReplaceJobSettingEditorElement(keyActionData, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            var editor = new KeyboardReplaceJobSettingEditorElement(keyActionData, true, MainDatabaseBarrier, StatementLoader, LoggerFactory);
             editor.Initialize();
             ReplaceJobEditors.Add(editor);
         }
@@ -72,13 +71,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 pressedKeyActions = keyActionsEntityDao.SelectAllKeyActionsIgnoreKinds(new[] { KeyActionKind.Replace, KeyActionKind.Disable }).ToList();
             }
 
-            var replaceJobEditor = replaceKeyActions.Select(i => new KeyboardReplaceJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
+            var replaceJobEditor = replaceKeyActions.Select(i => new KeyboardReplaceJobSettingEditorElement(i, false, MainDatabaseBarrier, StatementLoader, LoggerFactory));
             ReplaceJobEditors.SetRange(replaceJobEditor);
 
-            var disableJobEditor = disableKeyActions.Select(i => new KeyboardDisableJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
+            var disableJobEditor = disableKeyActions.Select(i => new KeyboardDisableJobSettingEditorElement(i, false, MainDatabaseBarrier, StatementLoader, LoggerFactory));
             DisableJobEditors.SetRange(disableJobEditor);
 
-            var pressedJobEditor = pressedKeyActions.Select(i => new KeyboardPressedJobSettingEditorElement(i, MainDatabaseBarrier, StatementLoader, LoggerFactory));
+            var pressedJobEditor = pressedKeyActions.Select(i => new KeyboardPressedJobSettingEditorElement(i, false, MainDatabaseBarrier, StatementLoader, LoggerFactory));
             PressedJobEditors.SetRange(pressedJobEditor);
 
             var editors = ReplaceJobEditors
@@ -94,6 +93,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            var jobs = ReplaceJobEditors
+                .Cast<KeyboardJobSettingEditorElementBase>()
+                .Concat(DisableJobEditors)
+                .Concat(PressedJobEditors)
+            ;
+            foreach(var job in jobs) {
+                job.Save(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
+            }
         }
 
 

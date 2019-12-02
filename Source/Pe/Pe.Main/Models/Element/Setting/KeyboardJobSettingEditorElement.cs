@@ -8,19 +8,19 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public abstract class KeyboardJobSettingEditorElementBase : ElementBase, IKeyActionId
     {
-        public KeyboardJobSettingEditorElementBase(KeyActionData keyActionData, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public KeyboardJobSettingEditorElementBase(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            KeyActionId = keyActionData.KeyActionId;
-            Kind = keyActionData.KeyActionKind;
-            Content = keyActionData.KeyActionContent;
-            Comment = keyActionData.Comment;
+            ActionData = keyActionData;
+
+            IsNewJob = isNewJob;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
@@ -28,19 +28,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
+        protected KeyActionData ActionData { get; }
+
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected IDatabaseStatementLoader StatementLoader { get; }
 
-        public KeyActionKind Kind { get; }
-        public string Comment { get; set; }
-        public string Content { get; set; }
+        protected bool IsNewJob { get; }
+
+        public KeyActionKind Kind => ActionData.KeyActionKind;
+        public string Comment
+        {
+            get => ActionData.Comment;
+            set => ActionData.Comment = value;
+        }
+        public string Content
+        {
+            get => ActionData.KeyActionContent;
+            set => ActionData.KeyActionContent = value;
+        }
 
         public IDictionary<string, string> Options { get; } = new Dictionary<string, string>();
         public ObservableCollection<WrapModel<KeyMappingData>> Mappings { get; } = new ObservableCollection<WrapModel<KeyMappingData>>();
         #endregion
 
         #region IKeyActionId
-        public Guid KeyActionId { get; }
+        public Guid KeyActionId => ActionData.KeyActionId;
         #endregion
 
         #region ElementBase
@@ -60,10 +72,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                 Mappings.AddRange(mappings.Select(i => WrapModel.Create(i, LoggerFactory)));
                 if(Mappings.Count == 0) {
-                    Logger.LogWarning("マッピングデータが存在しないため補正: {0}", KeyActionId);
+                    if(!IsNewJob) {
+                        Logger.LogWarning("マッピングデータが存在しないため補正: {0}", KeyActionId);
+                    }
                     Mappings.Add(new WrapModel<KeyMappingData>(new KeyMappingData(), LoggerFactory));
                 }
             }
+        }
+
+
+        public void Save(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus commonStatus)
+        {
+            var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            if(IsNewJob) {
+                keyActionsEntityDao.InsertKeyAction(ActionData, commonStatus);
+            } else {
+                keyActionsEntityDao.UpdateKeyAction(ActionData, commonStatus);
+                keyOptionsEntityDao.DeleteByKeyActionId(ActionData.KeyActionId);
+                keyMappingsEntityDao.DeleteByKeyActionId(ActionData.KeyActionId);
+            }
+
+            foreach(var pair in Options) {
+                keyOptionsEntityDao.InsertOption(ActionData.KeyActionId, pair.Key, pair.Value, commonStatus);
+            }
+
+            var keyMappingFactory = new KeyMappingFactory();
+            foreach(var mapping in Mappings.Counting()) {
+                var seq = keyMappingFactory.MappingStep * mapping.Number;
+                keyMappingsEntityDao.InsertMapping(ActionData.KeyActionId, mapping.Value.Data, seq, commonStatus);
+            }
+
         }
 
         #endregion
@@ -72,19 +113,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public sealed class KeyboardReplaceJobSettingEditorElement : KeyboardJobSettingEditorElementBase
     {
-        public KeyboardReplaceJobSettingEditorElement(KeyActionData keyActionData, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(keyActionData, mainDatabaseBarrier, statementLoader, loggerFactory)
+        public KeyboardReplaceJobSettingEditorElement(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(keyActionData, isNewJob, mainDatabaseBarrier, statementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind != KeyActionKind.Replace) {
                 throw new ArgumentException(nameof(keyActionData));
             }
         }
+
     }
 
     public sealed class KeyboardDisableJobSettingEditorElement : KeyboardJobSettingEditorElementBase
     {
-        public KeyboardDisableJobSettingEditorElement(KeyActionData keyActionData, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(keyActionData, mainDatabaseBarrier, statementLoader, loggerFactory)
+        public KeyboardDisableJobSettingEditorElement(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(keyActionData, isNewJob, mainDatabaseBarrier, statementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind != KeyActionKind.Disable) {
                 throw new ArgumentException(nameof(keyActionData));
@@ -94,8 +136,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public sealed class KeyboardPressedJobSettingEditorElement : KeyboardJobSettingEditorElementBase
     {
-        public KeyboardPressedJobSettingEditorElement(KeyActionData keyActionData, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(keyActionData, mainDatabaseBarrier, statementLoader, loggerFactory)
+        public KeyboardPressedJobSettingEditorElement(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(keyActionData, isNewJob, mainDatabaseBarrier, statementLoader, loggerFactory)
         {
             if(keyActionData.KeyActionKind == KeyActionKind.Replace || keyActionData.KeyActionKind == KeyActionKind.Disable) {
                 throw new ArgumentException(nameof(keyActionData));

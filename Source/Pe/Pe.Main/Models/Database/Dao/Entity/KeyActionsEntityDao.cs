@@ -94,6 +94,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, dto) == 1;
         }
 
+        public bool UpdateKeyAction(KeyActionData keyActionData, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(keyActionData, databaseCommonStatus);
+            return Commander.Execute(statement, dto) == 1;
+        }
+
         #endregion
     }
 }
