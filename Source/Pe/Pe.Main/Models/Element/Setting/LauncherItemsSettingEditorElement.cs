@@ -20,14 +20,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherItemsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherItemsSettingEditorElement(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
+            AllLauncherItems = allLauncherItems;
         }
 
         #region property
 
-        public ObservableCollection<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>> Items { get; } = new ObservableCollection<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>>();
+        public ObservableCollection<LauncherItemSettingEditorElement> AllLauncherItems { get; }
 
         #endregion
 
@@ -37,8 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             ThrowIfDisposed();
 
-            var item = Items.First(i => i.LauncherItemId == launcherItemId);
-            Items.Remove(item);
+            var item = AllLauncherItems.First(i => i.LauncherItemId == launcherItemId);
+            AllLauncherItems.Remove(item);
             item.Dispose();
 
             // DBから物理削除
@@ -108,15 +109,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemCustomizeEditorElement(newLauncherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
-            customizeEditor.Initialize();
-
             var iconPack = LauncherIconLoaderPackFactory.CreatePack(newLauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
             var launcherIconElement = new LauncherIconElement(newLauncherItemId, iconPack, LoggerFactory);
             launcherIconElement.Initialize();
 
-            var newItem = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
-            Items.Add(newItem);
+            var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, launcherIconElement, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+            customizeEditor.Initialize();
+
+            AllLauncherItems.Add(customizeEditor);
 
             return newLauncherItemId;
         }
@@ -152,15 +152,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemCustomizeEditorElement(data.Item.LauncherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
-            customizeEditor.Initialize();
-
             var iconPack = LauncherIconLoaderPackFactory.CreatePack(data.Item.LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
             var launcherIconElement = new LauncherIconElement(data.Item.LauncherItemId, iconPack, LoggerFactory);
             launcherIconElement.Initialize();
 
-            var newItem = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
-            Items.Add(newItem);
+            var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, launcherIconElement, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+            customizeEditor.Initialize();
+
 
             return data.Item.LauncherItemId;
         }
@@ -179,18 +177,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
             }
 
-            Items.Clear();
-            foreach(var launcherItemId in launcherItemIds) {
-                var customizeEditor = new LauncherItemCustomizeEditorElement(launcherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
-                customizeEditor.Initialize();
+            //Items.Clear();
+            //foreach(var launcherItemId in launcherItemIds) {
+            //    var customizeEditor = new LauncherItemCustomizeEditorElement(launcherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+            //    customizeEditor.Initialize();
 
-                var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
-                var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
-                launcherIconElement.Initialize();
+            //    var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, DispatcherWrapper, LoggerFactory);
+            //    var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
+            //    launcherIconElement.Initialize();
 
-                var item = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
-                Items.Add(item);
-            }
+            //    var item = LauncherItemWithIconElement.Create(customizeEditor, launcherIconElement, LoggerFactory);
+            //    Items.Add(item);
+            //}
         }
 
         public override void Save()

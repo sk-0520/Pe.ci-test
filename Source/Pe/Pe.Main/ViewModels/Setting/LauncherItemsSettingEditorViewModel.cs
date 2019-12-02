@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -25,17 +26,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region variable
 
         bool _isPopupCreateItemMenu;
-        LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>? _selectedItem;
+        LauncherItemSettingEditorViewModel? _selectedItem;
 
         #endregion
 
-        public LauncherItemsSettingEditorViewModel(LauncherItemsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemsSettingEditorViewModel(LauncherItemsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItems, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            ItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>>(Model.Items) {
-                ToViewModel = m => LauncherItemWithIconViewModel.Create(new LauncherItemCustomizeEditorViewModel(m.Element, DispatcherWrapper, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, LoggerFactory), LoggerFactory),
-            };
-            Items = ItemCollection.GetDefaultView();
+
+            AllLauncherItemCollection = allLauncherItems;
+            AllLauncherItemItems = AllLauncherItemCollection.CreateView();
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = CanDragStart,
@@ -56,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public IDragAndDrop DragAndDrop { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<LauncherItemCustomizeEditorElement>, LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>> ItemCollection { get; }
-        public ICollectionView Items { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        public ICollectionView AllLauncherItemItems { get; }
 
         public bool IsPopupCreateItemMenu
         {
@@ -65,14 +65,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetProperty(ref this._isPopupCreateItemMenu, value);
         }
 
-        public LauncherItemWithIconViewModel<LauncherItemCustomizeEditorViewModel>? SelectedItem
+        public LauncherItemSettingEditorViewModel? SelectedItem
         {
             get => this._selectedItem;
             set
             {
                 var prev = this._selectedItem;
-                if(prev != null && !prev.IsDisposed && prev.Item.IsChanged) {
-                    if(prev.Item.Validate()) {
+                if(prev != null && !prev.IsDisposed && prev.IsChanged) {
+                    if(prev.Validate()) {
                         //prev.Item.Save();
                         prev.Icon.Reload();
                     }
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             IsPopupCreateItemMenu = false;
             var newLauncherItemId = Model.CreateNewItem(kind);
-            var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
+            var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();
         }
@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
             dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, (path, expand) => {
                 var launcherItemId = Model.RegisterFile(path, expand);
-                var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
+                var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == launcherItemId);
                 SelectedItem = newItem;
                 ScrollSelectedItemRequest.Send();
             }));
@@ -170,7 +170,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    ItemCollection.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -180,6 +179,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             //SelectedItem?.Item.Save();
             base.Save();
         }
+
+        #endregion
+
+        #region ILauncherItemId
 
         #endregion
 

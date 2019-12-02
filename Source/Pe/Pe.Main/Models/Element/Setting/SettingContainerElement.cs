@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public SettingContainerElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
-            LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>();
+            LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>(AllLauncherItems);
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
         }
@@ -85,8 +85,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             foreach(var launcherItemId in launcherItemIds) {
                 var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, ServiceLocator.Get<IMainDatabaseBarrier>(), ServiceLocator.Get<IFileDatabaseBarrier>(), ServiceLocator.Get<IDatabaseStatementLoader>(), ServiceLocator.Get<IDispatcherWrapper>(), LoggerFactory);
                 var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
+                launcherIconElement.Initialize();
                 var element = ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement);
                 elements.Add(element);
+            }
+            foreach(var element in elements) {
+                element.Initialize();
             }
             AllLauncherItems.SetRange(elements);
 

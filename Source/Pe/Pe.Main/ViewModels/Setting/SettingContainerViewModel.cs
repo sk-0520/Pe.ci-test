@@ -9,6 +9,8 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -27,7 +29,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             DispatcherWrapper = dispatcherWrapper;
 
-            LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, DispatcherWrapper, LoggerFactory);
+            AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
+                ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
+            };
+
+            LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, DispatcherWrapper, LoggerFactory);
 
@@ -37,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
             };
             //this._selectedEditor = EditorItems.First();
-            this._selectedEditor = KeyboardSettingEditor;
+            this._selectedEditor = LauncherItemsSettingEditor;//KeyboardSettingEditor;
         }
 
         #region property
@@ -45,6 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();
+
+        public ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
 

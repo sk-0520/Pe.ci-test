@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IClipboardManager ClipboardManager { get; }
 
         public string Name { get; set; } = string.Empty;
-        public string Code { get; private set; } = string.Empty;
+        public string Code { get; protected set; } = string.Empty;
         public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; set; }
 
