@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        public override void Load()
+        protected override void LoadImpl()
         {
             ThrowIfDisposed();
 
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        public override void Save(DatabaseCommandPack commandPack)
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
             foreach(var item in AllLauncherItems) {
                 var needsClearIcon = item.SaveItem(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);

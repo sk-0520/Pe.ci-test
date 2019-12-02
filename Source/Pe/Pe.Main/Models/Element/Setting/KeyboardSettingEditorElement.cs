@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region SettingEditorElementBase
 
-        public override void Load()
+        protected override void LoadImpl()
         {
             IReadOnlyList<KeyActionData> replaceKeyActions;
             IReadOnlyList<KeyActionData> disableKeyActions;
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
 
-        public override void Save(DatabaseCommandPack commandPack)
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
         }
 

@@ -94,7 +94,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             using(fileDatabaseCommander)
             using(tempDatabaseCommander) {
                 foreach(var editor in Editors) {
-                    editor.Save(pack);
+                    if(editor.IsLoaded) {
+                        editor.Save(pack);
+                    }
                 }
 
                 tempDatabaseCommander.Commit();

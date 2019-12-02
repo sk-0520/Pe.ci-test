@@ -64,9 +64,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set
             {
                 var prev = this._selectedEditor;
-                if(prev != null) {
-                    //prev.Save();
-                }
                 SetProperty(ref this._selectedEditor, value);
                 if(this._selectedEditor != null) {
                     this._selectedEditor.Load();

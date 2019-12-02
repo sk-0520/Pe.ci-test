@@ -67,12 +67,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected IIdFactory IdFactory { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
+
+        public bool IsLoaded { get; private set; }
         #endregion
 
         #region function
 
-        public abstract void Load();
-        public abstract void Save(DatabaseCommandPack commandPack);
+        protected abstract void LoadImpl();
+
+        public void Load()
+        {
+            if(IsLoaded) {
+                throw new InvalidOperationException(nameof(IsLoaded));
+            }
+
+            LoadImpl();
+
+            IsLoaded = true;
+        }
+
+        protected abstract void SaveImpl(DatabaseCommandPack commandPack);
+
+        public void Save(DatabaseCommandPack commandPack)
+        {
+            if(!IsLoaded) {
+                throw new InvalidOperationException(nameof(IsLoaded));
+            }
+
+            SaveImpl(commandPack);
+        }
 
         #endregion
 

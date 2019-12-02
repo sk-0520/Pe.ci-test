@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region property
 
-        public string Header { get; }
+        string Header { get; }
 
         #endregion
 
@@ -55,6 +55,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public virtual void Load()
         {
+            if(Model.IsLoaded) {
+                return;
+            }
             Model.Load();
         }
 
