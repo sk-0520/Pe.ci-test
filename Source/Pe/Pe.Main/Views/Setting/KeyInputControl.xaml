@@ -1,4 +1,5 @@
 <UserControl
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.KeyInputControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,15 +10,35 @@
   mc:Ignorable="d"
   d:DesignWidth="800"
   d:DesignHeight="450"
-  >
-  <Grid>
-    <ToggleButton />
-    <StackPanel>
-      <app_main_views_setting:ModifierKeyControl />
-      <app_main_views_setting:ModifierKeyControl />
-      <app_main_views_setting:ModifierKeyControl />
-      <app_main_views_setting:ModifierKeyControl />
-    </StackPanel>
+>
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+  </UserControl.Resources>
+  <StackPanel>
+    <ToggleButton Content="{Binding Key, ElementName=root}" />
+    <Grid Visibility="{Binding IsEnabledModifierKey, ElementName=root, Converter={StaticResource BooleanToVisibilityConverter}}" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
 
-  </Grid>
+      <Label Grid.Row="0" Grid.Column="0" Content="shift" />
+      <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Shift, ElementName=root}" />
+
+      <Label Grid.Row="1" Grid.Column="0" Content="ctrl" />
+      <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Control, ElementName=root}" />
+
+      <Label Grid.Row="2" Grid.Column="0" Content="alt" />
+      <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Alt, ElementName=root}" />
+
+      <Label Grid.Row="3" Grid.Column="0" Content="super" />
+      <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Super, ElementName=root}" />
+    </Grid>
+  </StackPanel>
 </UserControl>

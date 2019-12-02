@@ -4,6 +4,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
+
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignWidth="800"
@@ -48,13 +50,15 @@
                         <ColumnDefinition Width="*" />
                       </Grid.ColumnDefinitions>
 
-                      <ComboBox Grid.Row="0" Grid.Column="0" />
+                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" IsEnabledModifierKey="False" />
                       <TextBlock Grid.Row="0" Grid.Column="1" Text="-&gt;" />
-                      <ComboBox Grid.Row="0" Grid.Column="2" />
+                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="2" IsEnabledModifierKey="False" />
                     </Grid>
                   </Expander.Header>
                   <Expander.Content>
-                    <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Comment}" />
+                    <StackPanel>
+                      <TextBox Text="{Binding Comment}" />
+                    </StackPanel>
                   </Expander.Content>
                 </Expander>
               </Grid>
