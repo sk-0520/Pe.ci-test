@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
 
+        [IgnoreValidation]
         public ISettingEditorViewModel SelectedEditor
         {
             get => this._selectedEditor;
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             {
                 var prev = this._selectedEditor;
                 if(prev != null) {
-                    prev.Save();
+                    //prev.Save();
                 }
                 SetProperty(ref this._selectedEditor, value);
                 if(this._selectedEditor != null) {
@@ -84,9 +85,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             () => {
                 if(Validate()) {
                     foreach(var editor in EditorItems) {
-                        editor.Save();
+                        editor.Flush();
                     }
-                    Model.SetSubmit(true);
+                    Model.Save();
                     CloseRequest.Send();
                 }
             }

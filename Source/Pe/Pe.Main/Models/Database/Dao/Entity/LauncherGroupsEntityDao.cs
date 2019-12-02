@@ -107,19 +107,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Commander.Execute(statement, dto);
         }
 
-        public bool UpdateGroupWithoutSequence(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
+        public bool UpdateGroup(LauncherGroupData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
             return Commander.Execute(statement, dto) == 1;
-        }
-
-        public bool UpdateGroupSequence(Guid launcherGroupId, int sequence, IDatabaseCommonStatus commonStatus)
-        {
-            var builder = CreateUpdateBuilder(commonStatus);
-            builder.AddKey(Column.LauncherGroupId, launcherGroupId);
-            builder.AddValueParameter(Column.Sequence, sequence);
-            return ExecuteUpdate(builder) == 1;
         }
 
         #endregion

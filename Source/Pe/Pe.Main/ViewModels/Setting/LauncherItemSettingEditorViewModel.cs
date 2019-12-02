@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
@@ -28,7 +29,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        [IgnoreValidation]
         LauncherItemSettingEditorElement Editor { get; }
+        [IgnoreValidation]
         public LauncherIconViewModel Icon { get; }
         #endregion
 

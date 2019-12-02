@@ -35,7 +35,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         ModelViewModelObservableCollectionManagerBase<KeyboardReplaceJobSettingEditorElement, KeyboardReplaceJobSettingEditorViewMode> ReplaceJobEditorCollection { get; }
         public ICollectionView ReplaceJobEditors { get; }
+        [IgnoreValidation]
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        [IgnoreValidation]
         public ICollectionView AllLauncherItems { get; }
         public bool IsPopupCreateJobMenu
         {
@@ -66,6 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region SettingEditorViewModelBase
 
         public override string Header => Properties.Resources.String_Setting_Header_Keyboard;
+
+        public override void Flush()
+        {
+        }
 
         #endregion
     }

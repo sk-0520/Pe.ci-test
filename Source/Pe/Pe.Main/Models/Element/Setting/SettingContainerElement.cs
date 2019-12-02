@@ -37,6 +37,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>(AllLauncherItems);
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
+
+            Editors = new SettingEditorElementBase[] {
+                LauncherItemsSettingEditor,
+                LauncherGroupsSettingEditor,
+                KeyboardSettingEditor
+            };
         }
 
         #region property
@@ -60,15 +66,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public LauncherItemsSettingEditorElement LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
         public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
+        public IReadOnlyList<SettingEditorElementBase> Editors { get; }
         #endregion
 
         #region function
 
-        public void SetSubmit(bool value)
+        public void Save()
         {
-            IsSubmit = value;
-        }
+            var mainDatabaseBarrier = ServiceLocator.Get<IMainDatabaseBarrier>();
+            var mainDatabaseCommander = mainDatabaseBarrier.WaitWrite();
 
+            var fileDatabaseBarrier = ServiceLocator.Get<IFileDatabaseBarrier>();
+            var fileDatabaseCommander = fileDatabaseBarrier.WaitWrite();
+
+            var tempDatabaseBarrier = ServiceLocator.Get<ITemporaryDatabaseBarrier>();
+            var tempDatabaseCommander = tempDatabaseBarrier.WaitWrite();
+
+            var pack = new DatabaseCommandPack(
+                new DatabaseCommander(mainDatabaseCommander, mainDatabaseCommander.Implementation),
+                new DatabaseCommander(fileDatabaseCommander, fileDatabaseCommander.Implementation),
+                new DatabaseCommander(tempDatabaseCommander, tempDatabaseCommander.Implementation)
+            );
+
+            using(mainDatabaseCommander)
+            using(fileDatabaseCommander)
+            using(tempDatabaseCommander) {
+                foreach(var editor in Editors) {
+                    editor.Save(pack);
+                }
+
+                tempDatabaseCommander.Commit();
+                fileDatabaseCommander.Commit();
+                mainDatabaseCommander.Commit();
+            }
+
+            IsSubmit = true;
+        }
 
         #endregion
 

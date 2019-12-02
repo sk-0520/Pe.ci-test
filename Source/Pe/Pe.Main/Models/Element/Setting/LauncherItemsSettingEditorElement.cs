@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        public override void Save()
+        public override void Save(DatabaseCommandPack commandPack)
         {
         }
 

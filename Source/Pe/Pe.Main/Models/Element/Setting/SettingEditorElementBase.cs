@@ -10,6 +10,29 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
+    public class DatabaseCommander
+    {
+        public DatabaseCommander(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            Commander = commander;
+            Implementation = implementation;
+        }
+
+        #region property
+
+        public IDatabaseCommander Commander { get; }
+        public IDatabaseImplementation Implementation { get; }
+
+        #endregion
+    }
+
+    public sealed class DatabaseCommandPack : TApplicationPackBase<DatabaseCommander, DatabaseCommander>
+    {
+        public DatabaseCommandPack(DatabaseCommander main, DatabaseCommander file, DatabaseCommander temporary)
+            : base(main, file, temporary)
+        { }
+    }
+
     /// <summary>
     /// 各設定項目の親。
     /// </summary>
@@ -41,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region function
 
         public abstract void Load();
-        public abstract void Save();
+        public abstract void Save(DatabaseCommandPack commandPack);
 
         #endregion
 

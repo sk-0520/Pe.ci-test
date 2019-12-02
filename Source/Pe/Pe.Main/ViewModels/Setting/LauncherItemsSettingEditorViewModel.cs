@@ -166,6 +166,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public override string Header => Properties.Resources.String_Setting_Header_LauncherItems;
 
+        public override void Flush()
+        {
+            foreach(var vm in AllLauncherItemCollection.ViewModels) {
+                vm.SafeFlush();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
@@ -173,11 +180,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 }
             }
             base.Dispose(disposing);
-        }
-        public override void Save()
-        {
-            //SelectedItem?.Item.Save();
-            base.Save();
         }
 
         #endregion

@@ -44,9 +44,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void MoveGroupItem(int startIndex, int insertIndex)
         {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+
             var item = GroupItems[startIndex];
             GroupItems.RemoveAt(startIndex);
             GroupItems.Insert(insertIndex, item);
+
+            foreach(var group in GroupItems.Counting()) {
+                group.Value.Sequence = group.Number * launcherFactory.GroupItemStep;
+            }
         }
 
         #endregion
@@ -77,19 +83,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        public override void Save()
+        public override void Save(DatabaseCommandPack commandPack)
         {
-            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
-
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                foreach(var item in GroupItems.Counting()) {
-                    var seq = item.Number * launcherFactory.GroupItemsStep;
-                    launcherGroupsEntityDao.UpdateGroupSequence(item.Value.LauncherGroupId, seq, DatabaseCommonStatus.CreateCurrentAccount());
-                }
-                commander.Commit();
+            foreach(var group in GroupItems) {
+                group.Save(commandPack);
             }
-
         }
 
         #endregion
