@@ -181,11 +181,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.Dispose(disposing);
         }
 
-        protected override void ValidateDomain()
-        {
-            base.ValidateDomain();
-        }
-
         #endregion
 
     }
