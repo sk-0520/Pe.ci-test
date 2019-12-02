@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -29,6 +32,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             AllLauncherItemCollection = allLauncherItemCollection;
             AllLauncherItems = AllLauncherItemCollection.CreateView();
+
+            var replaceKeyItems = EnumUtility.GetMembers<Key>()
+                .OrderBy(i => i)
+            ;
+            ReplaceKeyItems = new ObservableCollection<Key>(replaceKeyItems);
+
+            var ignoreKeyItems = EnumUtility.GetMembers<Key>()
+                .OrderBy(i => i)
+            ;
+            IgnoreKeyItems = new ObservableCollection<Key>(ignoreKeyItems);
+
+            var pressedIgnoreKeys = new[] {
+                Key.LeftShift,
+                Key.RightShift,
+                Key.LeftCtrl,
+                Key.RightCtrl,
+                Key.LeftAlt,
+                Key.RightAlt,
+                Key.RightAlt,
+                Key.LWin,
+                Key.RWin,
+            };
+            var pressedKeyItems = EnumUtility.GetMembers<Key>()
+                .Where(i => !pressedIgnoreKeys.Any(ii => ii == i))
+                .OrderBy(i => i)
+            ;
+            PressedKeyItems = new ObservableCollection<Key>(pressedKeyItems);
+
         }
 
         #region property
@@ -44,6 +75,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => this._isPopupCreateJobMenu;
             set => SetProperty(ref this._isPopupCreateJobMenu, value);
         }
+
+        [IgnoreValidation]
+        public ObservableCollection<Key> ReplaceKeyItems { get; }
+        public ObservableCollection<Key> IgnoreKeyItems { get; }
+        public ObservableCollection<Key> PressedKeyItems { get; }
 
         #endregion
 
