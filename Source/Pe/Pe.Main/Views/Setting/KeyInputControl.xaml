@@ -32,7 +32,7 @@
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
-    <Grid Visibility="{Binding IsEnabledModifierKey, ElementName=root, Converter={StaticResource BooleanToVisibilityConverter}}" >
+    <Grid Visibility="{Binding IsVisibleModifierKey, ElementName=root, Converter={StaticResource BooleanToVisibilityConverter}}" >
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />

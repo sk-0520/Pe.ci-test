@@ -1,8 +1,8 @@
 update
 	KeyActions
 set
-	KeyActionContent      = KeyActionContent,
-	Comment               = Comment,
+	KeyActionContent      = @KeyActionContent,
+	Comment               = @Comment,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

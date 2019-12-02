@@ -50,9 +50,9 @@
                         <ColumnDefinition Width="*" />
                       </Grid.ColumnDefinitions>
 
-                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" IsEnabledModifierKey="False" />
+                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding SourceKey}" IsVisibleModifierKey="False" />
                       <TextBlock Grid.Row="0" Grid.Column="1" Text="-&gt;" />
-                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="2" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" IsEnabledModifierKey="False" />
+                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="2" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding ReplaceKey}" IsVisibleModifierKey="False" />
                     </Grid>
                   </Expander.Header>
                   <Expander.Content>

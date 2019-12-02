@@ -58,30 +58,30 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #endregion
 
-        #region IsEnabledModifierKeyProperty
+        #region IsVisibleModifierKeyProperty
 
-        public static readonly DependencyProperty IsEnabledModifierKeyProperty = DependencyProperty.Register(
-            nameof(IsEnabledModifierKey),
+        public static readonly DependencyProperty IsVisibleModifierKeyProperty = DependencyProperty.Register(
+            nameof(IsVisibleModifierKey),
             typeof(bool),
             typeof(KeyInputControl),
             new FrameworkPropertyMetadata(
                 true,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                new PropertyChangedCallback(OnIsEnabledModifierKeyChanged)
+                new PropertyChangedCallback(OnIsVisibleModifierKeyChanged)
             )
         );
 
-        public bool IsEnabledModifierKey
+        public bool IsVisibleModifierKey
         {
-            get { return (bool)GetValue(IsEnabledModifierKeyProperty); }
-            set { SetValue(IsEnabledModifierKeyProperty, value); }
+            get { return (bool)GetValue(IsVisibleModifierKeyProperty); }
+            set { SetValue(IsVisibleModifierKeyProperty, value); }
         }
 
-        static void OnIsEnabledModifierKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnIsVisibleModifierKeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var ctrl = d as KeyInputControl;
             if(ctrl != null) {
-                ctrl.IsEnabledModifierKey = (bool)e.NewValue;
+                ctrl.IsVisibleModifierKey = (bool)e.NewValue;
             }
         }
 

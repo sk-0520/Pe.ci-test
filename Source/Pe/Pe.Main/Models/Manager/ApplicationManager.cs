@@ -448,8 +448,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ExecuteElements();
                 } else {
                     Logger.LogInformation("設定は保存されなかったため現在要素継続");
-                    StartHook();
                 }
+                StartHook();
 
                 Logger.LogDebug("遅延書き込み処理再開");
                 foreach(var pair in lazyWriterItemMap) {
