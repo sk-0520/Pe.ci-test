@@ -121,7 +121,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         //    }
         //}
 
-        public void SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
+        /// <summary>
+        /// アイテム保存。
+        /// </summary>
+        /// <param name="commander"></param>
+        /// <param name="implementation"></param>
+        /// <param name="databaseCommonStatus"></param>
+        /// <returns>アイコンの削除が必要か。</returns>
+        public bool SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
             ThrowIfDisposed();
 
@@ -162,6 +169,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
             launcherTagsEntityDao.DeleteTagByLauncherItemId(itemData.LauncherItemId);
             launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, databaseCommonStatus);
+
+            return true;//TODO
         }
 
         public void ClearIcon(IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -176,13 +185,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         {
             ThrowIfDisposed();
 
+            bool needsIconClear;
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+                needsIconClear = SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
                 commander.Commit();
             }
-            using(var commander = FileDatabaseBarrier.WaitWrite()) {
-                ClearIcon(commander, commander.Implementation);
-                commander.Commit();
+            if(needsIconClear) {
+                using(var commander = FileDatabaseBarrier.WaitWrite()) {
+                    ClearIcon(commander, commander.Implementation);
+                    commander.Commit();
+                }
             }
         }
 

@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
@@ -85,7 +86,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var pack = new DatabaseCommandPack(
                 new DatabaseCommander(mainDatabaseCommander, mainDatabaseCommander.Implementation),
                 new DatabaseCommander(fileDatabaseCommander, fileDatabaseCommander.Implementation),
-                new DatabaseCommander(tempDatabaseCommander, tempDatabaseCommander.Implementation)
+                new DatabaseCommander(tempDatabaseCommander, tempDatabaseCommander.Implementation),
+                DatabaseCommonStatus.CreateCurrentAccount()
             );
 
             using(mainDatabaseCommander)

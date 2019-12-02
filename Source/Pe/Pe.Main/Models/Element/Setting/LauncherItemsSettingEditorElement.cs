@@ -193,6 +193,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public override void Save(DatabaseCommandPack commandPack)
         {
+            foreach(var item in AllLauncherItems) {
+                var needsClearIcon = item.SaveItem(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
+                if(needsClearIcon) {
+                    item.ClearIcon(commandPack.File.Commander, commandPack.File.Implementation);
+                }
+            }
         }
 
         #endregion

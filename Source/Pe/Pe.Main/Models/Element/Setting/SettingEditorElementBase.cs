@@ -4,6 +4,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -28,9 +29,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public sealed class DatabaseCommandPack : TApplicationPackBase<DatabaseCommander, DatabaseCommander>
     {
-        public DatabaseCommandPack(DatabaseCommander main, DatabaseCommander file, DatabaseCommander temporary)
+        public DatabaseCommandPack(DatabaseCommander main, DatabaseCommander file, DatabaseCommander temporary, IDatabaseCommonStatus commonStatus)
             : base(main, file, temporary)
-        { }
+        {
+            CommonStatus=commonStatus;
+        }
+
+        #region property
+
+        public IDatabaseCommonStatus CommonStatus { get; }
+        #endregion
     }
 
     /// <summary>
