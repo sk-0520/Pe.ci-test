@@ -29,22 +29,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         bool _isPopupCreateGroupMenu;
         LauncherGroupSettingEditorViewModel? _selectedGroup;
-        LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? _selectedLauncherItem;
+        LauncherItemSettingEditorViewModel? _selectedLauncherItem;
 
         #endregion
 
-        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             LauncherGroupTheme = launcherGroupTheme;
 
-            LauncherCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems) {
-                ToViewModel = m => LauncherItemWithIconViewModel.Create(new CommonLauncherItemViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, loggerFactory), LoggerFactory),
-            };
-            LauncherItems = LauncherCollection.GetDefaultView();
+            //LauncherCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems) {
+            //    ToViewModel = m => LauncherItemWithIconViewModel.Create(new CommonLauncherItemViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, loggerFactory), LoggerFactory),
+            //};
+            //LauncherItems = LauncherCollection.GetDefaultView();
+            AllLauncherItemCollection = allLauncherItemCollection;
+            AllLauncherItems = AllLauncherItemCollection.CreateView();
 
             GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems) {
-                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, LauncherCollection.ViewModels, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
+                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
             };
             GroupItems = GroupCollection.GetDefaultView();
 
@@ -94,8 +96,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public IDragAndDrop LauncherItemDragAndDrop { get; }
         public IDragAndDrop LauncherItemsDragAndDrop { get; }
 
-        ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
-        public ICollectionView LauncherItems { get; }
+        //ModelViewModelObservableCollectionManagerBase<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>> LauncherCollection { get; }
+        //public ICollectionView LauncherItems { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        public ICollectionView AllLauncherItems { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> GroupCollection { get; }
         public ICollectionView GroupItems { get; }
@@ -133,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public bool IsEnabledSelectedGroup => SelectedGroup != null;
 
-        public LauncherItemWithIconViewModel<CommonLauncherItemViewModel>? SelectedLauncherItem
+        public LauncherItemSettingEditorViewModel? SelectedLauncherItem
         {
             get => this._selectedLauncherItem;
             set
@@ -193,7 +197,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     if(e.OriginalSource is DependencyObject dependencyObject) {
                         var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
                         if(listBoxItem != null) {
-                            var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
+                            var currentItem = (LauncherItemSettingEditorViewModel)listBoxItem.DataContext;
                             if(currentItem != dragData.Item) {
                                 canDrag = true;
                             }
@@ -227,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
                     if(listBoxItem != null) {
-                        var currentItem = (LauncherItemWithIconViewModel<CommonLauncherItemViewModel>)listBoxItem.DataContext;
+                        var currentItem = (LauncherItemSettingEditorViewModel)listBoxItem.DataContext;
                         if(dragData.FromAllItems) {
                             // アイテム一覧からD&Dされた
                             var currentIndex = SelectedGroup.LauncherItems.IndexOf(currentItem);
@@ -236,7 +240,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                             //var newLauncherItem = new LauncherItemWithIconViewModel<CommonLauncherItemViewModel>(baseLauncherItem.Item, baseLauncherItem.Icon, LoggerFactory);
                             //SelectedGroup.LauncherItems.Insert(currentIndex, newLauncherItem);
                             SelectedGroup.InsertNewLauncherItem(currentIndex, dragData.Item);
-                            SelectedLauncherItem = LauncherCollection.ViewModels[currentIndex];
+                            SelectedLauncherItem = AllLauncherItemCollection.ViewModels[currentIndex];
                             UIUtility.GetVisualClosest<ListBox>(listBoxItem)!.Focus();
                         } else {
                             // 現在アイテム内での並び替え
@@ -256,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                                 SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
                             }
                             */
-                            SelectedLauncherItem = LauncherCollection.ViewModels[currentIndex];
+                            SelectedLauncherItem = AllLauncherItemCollection.ViewModels[currentIndex];
                         }
                     } else if(dragData.FromAllItems) {
                         // 一覧から持ってきた際にデータが空っぽだとここ
@@ -267,7 +271,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         SelectedLauncherItem = newLauncherItem;
                         */
                         SelectedGroup.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, dragData.Item);
-                        SelectedLauncherItem = LauncherCollection.ViewModels.Last();
+                        SelectedLauncherItem = AllLauncherItemCollection.ViewModels.Last();
                         UIUtility.GetVisualClosest<ListBox>(dependencyObject)!.Focus();
                     }
                 }

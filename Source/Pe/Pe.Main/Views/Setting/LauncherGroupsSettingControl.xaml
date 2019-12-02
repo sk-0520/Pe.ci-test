@@ -189,7 +189,7 @@
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
-              <TextBlock Text="{Binding Item.Name}" />
+              <TextBlock Text="{Binding Common.Name}" />
             </StackPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>
@@ -209,7 +209,7 @@
       </ToolBar>
 
 
-      <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.LauncherItems, ElementName=root}">
+      <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.AllLauncherItems, ElementName=root}">
         <i:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemsDragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>
@@ -225,7 +225,7 @@
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
-              <TextBlock Text="{Binding Item.Name}" />
+              <TextBlock Text="{Binding Common.Name}" />
             </StackPanel>
           </DataTemplate>
         </ListBox.ItemTemplate>

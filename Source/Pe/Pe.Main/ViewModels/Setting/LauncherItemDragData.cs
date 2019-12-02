@@ -6,7 +6,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public class LauncherItemDragData
     {
-        public LauncherItemDragData(LauncherItemWithIconViewModel<CommonLauncherItemViewModel> item, bool fromAllItems)
+        public LauncherItemDragData(LauncherItemSettingEditorViewModel item, bool fromAllItems)
         {
             Item = item;
             FromAllItems = fromAllItems;
@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         /// <summary>
         /// 運んでるデータ。
         /// </summary>
-        public LauncherItemWithIconViewModel<CommonLauncherItemViewModel> Item { get; }
+        public LauncherItemSettingEditorViewModel Item { get; }
         /// <summary>
         /// ランチャーアイテム一覧から運んでいるか。
         /// </summary>
