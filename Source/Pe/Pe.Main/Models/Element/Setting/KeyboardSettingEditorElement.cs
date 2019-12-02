@@ -68,6 +68,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             DisableJobEditors.Add(editor);
         }
 
+        public void AddPressedJob(KeyActionKind kind)
+        {
+            if(kind == KeyActionKind.Replace || kind == KeyActionKind.Disable) {
+                throw new ArgumentException(nameof(kind));
+            }
+
+            var keyActionData = new KeyActionData() {
+                KeyActionId = IdFactory.CreateKeyActionId(),
+                KeyActionKind = kind,
+            };
+
+            var editor = new KeyboardPressedJobSettingEditorElement(keyActionData, true, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            editor.Initialize();
+
+            PressedJobEditors.Add(editor);
+        }
+
         #endregion
 
         #region SettingEditorElementBase

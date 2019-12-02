@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
+  xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -124,7 +125,8 @@
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateJob}">
             <Border Style="{StaticResource PopupMenuBorder}">
               <StackPanel>
-                <MenuItem Header="launcher item" Command="{Binding Editor.CreateNewLauncherItemJobCommand, ElementName=root}" />
+                <MenuItem Header="command" Command="{Binding Editor.AddCommandJobCommand, ElementName=root}" />
+                <MenuItem Header="launcher item" Command="{Binding Editor.AddLauncherItemJobCommand, ElementName=root}" />
               </StackPanel>
             </Border>
           </Popup>
@@ -132,17 +134,52 @@
       </ToolBar>
 
       <ScrollViewer Grid.Row="1">
-        <ItemsControl>
+        <ItemsControl ItemsSource="{Binding Editor.PressedJobEditors, ElementName=root}">
+          <ItemsControl.Resources>
+            <DataTemplate x:Key="Mappings">
+              <StackPanel>
+                <ItemsControl>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Content="x" />
+                        <app_main_views_setting:KeyInputControl Grid.Column="1" />
+                        <Button Grid.Column="2" Content="up" />
+                        <Button Grid.Column="3" Content="down" />
+                      </Grid>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="Common">
+              <StackPanel>
+                <TextBox />
+                <CheckBox Content="system" />
+              </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardCommandJobSettingEditorViewModel}">
+              <Expander Header="command">
+                <StackPanel>
+                  <ContentControl ContentTemplate="{StaticResource Mappings}" />
+                  <ContentControl ContentTemplate="{StaticResource Common}" />
+                </StackPanel>
+              </Expander>
+            </DataTemplate>
+          </ItemsControl.Resources>
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
               <VirtualizingStackPanel />
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <!--TODO-->
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
         </ItemsControl>
       </ScrollViewer>
     </Grid>

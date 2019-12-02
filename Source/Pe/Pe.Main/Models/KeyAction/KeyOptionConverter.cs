@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public abstract class PressedOptionConverter : KeyOptionConverterBase
+    public class PressedOptionConverter : KeyOptionConverterBase
     {
         #region function
 
@@ -110,6 +110,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return Convert(attribute, map, (a, s) => {
                 return System.Convert.ToBoolean(s);
             });
+        }
+
+        public bool TryGetConveySystem(IReadOnlyDictionary<string, string> map, out bool result)
+        {
+            var attribute = GetAttribute(KeyActionPresseOption.ConveySystem);
+            return TryConvert(attribute, map, (a, s) => {
+                return System.Convert.ToBoolean(s);
+            }, out result);
+        }
+
+        public void SetConveySystem(IDictionary<string, string> map, bool conveySystem)
+        {
+            var attribute = GetAttribute(KeyActionPresseOption.ConveySystem);
+            map[attribute.OptionName] = conveySystem.ToString();
         }
 
         #endregion

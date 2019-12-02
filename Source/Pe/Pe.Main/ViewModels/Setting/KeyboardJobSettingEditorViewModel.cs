@@ -133,4 +133,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region function
         #endregion
     }
+
+    public abstract class KeyboardPressedJobSettingEditorViewModelBase : KeyboardJobSettingEditorViewModelBase<KeyboardPressedJobSettingEditorElement>
+    {
+        public KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
+        { }
+
+        #region property
+
+        #endregion
+    }
+
+    public class KeyboardCommandJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    {
+        public KeyboardCommandJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
+        { }
+    }
 }

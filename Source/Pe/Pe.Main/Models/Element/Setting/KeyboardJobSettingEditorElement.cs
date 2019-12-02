@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             base.InitializeImpl();
 
             var doc = new DisableOptionConverter();
-            if(!doc.TryGetForever(Options, out var _)) {
+            if(!doc.TryGetForever(Options, out _)) {
                 doc.SetForever(Options, false);
             }
         }
@@ -157,6 +157,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 throw new ArgumentException(nameof(keyActionData));
             }
         }
+
+        #region KeyboardJobSettingEditorElementBase
+
+        protected override void InitializeImpl()
+        {
+            base.InitializeImpl();
+
+            var poc = new PressedOptionConverter();
+            if(!poc.TryGetConveySystem(Options, out _)) {
+                poc.SetConveySystem(Options, false);
+            }
+        }
+        #endregion
     }
 
 }

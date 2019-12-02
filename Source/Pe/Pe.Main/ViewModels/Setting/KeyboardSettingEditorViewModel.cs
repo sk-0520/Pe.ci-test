@@ -8,6 +8,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -35,6 +36,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             };
             DisableJobEditors = DisableJobEditorCollection.GetDefaultView();
 
+            PressedJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardPressedJobSettingEditorElement, KeyboardPressedJobSettingEditorViewModelBase>(Model.PressedJobEditors) {
+                ToViewModel = m => m.Kind switch {
+                    KeyActionKind.Command => new KeyboardCommandJobSettingEditorViewModel(m, loggerFactory),
+                    _ => throw new NotImplementedException(),
+                },
+            };
+            PressedJobEditors = PressedJobEditorCollection.GetDefaultView();
+
             AllLauncherItemCollection = allLauncherItemCollection;
             AllLauncherItems = AllLauncherItemCollection.CreateView();
 
@@ -55,7 +64,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 Key.RightCtrl,
                 Key.LeftAlt,
                 Key.RightAlt,
-                Key.RightAlt,
                 Key.LWin,
                 Key.RWin,
             };
@@ -74,6 +82,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         ModelViewModelObservableCollectionManagerBase<KeyboardDisableJobSettingEditorElement, KeyboardDisableJobSettingEditorViewModel> DisableJobEditorCollection { get; }
         public ICollectionView DisableJobEditors { get; }
+
+        ModelViewModelObservableCollectionManagerBase<KeyboardPressedJobSettingEditorElement, KeyboardPressedJobSettingEditorViewModelBase> PressedJobEditorCollection { get; }
+        public ICollectionView PressedJobEditors { get; }
 
 
         [IgnoreValidation]
@@ -107,14 +118,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
              }
          ));
 
-        public ICommand CreateNewLauncherItemJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+
+        public ICommand AddCommandJobCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                AddPressedJob(KeyActionKind.Command);
+            }
+        ));
+
+        public ICommand AddLauncherItemJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                AddPressedJob(KeyActionKind.LauncherItem);
             }
         ));
 
         #endregion
 
         #region function
+
+        void AddPressedJob(KeyActionKind kind)
+        {
+            Model.AddPressedJob(kind);
+            IsPopupCreateJobMenu = false;
+        }
+
         #endregion
 
         #region SettingEditorViewModelBase
