@@ -55,6 +55,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ReplaceJobEditors.Add(editor);
         }
 
+        public void AddDisableJob()
+        {
+            var keyActionData = new KeyActionData() {
+                KeyActionId = IdFactory.CreateKeyActionId(),
+                KeyActionKind = KeyActionKind.Disable,
+            };
+
+            var editor = new KeyboardDisableJobSettingEditorElement(keyActionData, true, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            editor.Initialize();
+
+            DisableJobEditors.Add(editor);
+        }
+
         #endregion
 
         #region SettingEditorElementBase

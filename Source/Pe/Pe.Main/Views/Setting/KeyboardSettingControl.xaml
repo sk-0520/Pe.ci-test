@@ -78,11 +78,11 @@
 
       <ToolBar Grid.Row="0">
         <Label  Content="ignore" />
-        <Button Content="add" />
+        <Button Content="add" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
       </ToolBar>
 
       <ScrollViewer Grid.Row="1">
-        <ItemsControl>
+        <ItemsControl ItemsSource="{Binding Editor.DisableJobEditors, ElementName=root}">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
               <VirtualizingStackPanel />
@@ -90,7 +90,19 @@
           </ItemsControl.ItemsPanel>
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <!--TODO-->
+              <Grid>
+                <Expander>
+                  <Expander.Header>
+                    <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.DisableKeyItems, ElementName=root}" Key="{Binding Key}" IsVisibleModifierKey="False" />
+                  </Expander.Header>
+                  <Expander.Content>
+                    <StackPanel>
+                      <CheckBox Grid.Column="1" Content="forever" IsChecked="{Binding Forever}" />
+                      <TextBox Text="{Binding Comment}" />
+                    </StackPanel>
+                  </Expander.Content>
+                </Expander>
+              </Grid>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
         </ItemsControl>

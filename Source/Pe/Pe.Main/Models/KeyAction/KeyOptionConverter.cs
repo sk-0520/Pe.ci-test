@@ -4,6 +4,7 @@ using System.Text;
 using System.Reflection;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
@@ -33,6 +34,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             }
 
             throw new ArgumentException(nameof(map) + "[" + attribute.OptionName + "]");
+        }
+
+        protected bool TryConvert<TValue>(KeyActionOptionAttribute attribute, IReadOnlyDictionary<string, string> map, Func<KeyActionOptionAttribute, string, TValue> func, out TValue result)
+        {
+            if(map.TryGetValue(attribute.OptionName, out var optionValue)) {
+                try {
+                    result = func(attribute, optionValue);
+                    return true;
+                } catch(Exception ex) {
+                    Debug.WriteLine(ex);
+                }
+            }
+
+            result = default!;
+            return false;
         }
 
         #endregion
@@ -67,10 +83,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             });
         }
 
+        public bool TryGetForever(IReadOnlyDictionary<string, string> map, out bool result)
+        {
+            var attribute = GetAttribute(KeyActionDisableOption.Forever);
+            return TryConvert(attribute, map, (a, s) => {
+                return System.Convert.ToBoolean(s);
+            }, out result);
+        }
+
+        public void SetForever(IDictionary<string, string> map, bool forever)
+        {
+            var attribute = GetAttribute(KeyActionDisableOption.Forever);
+            map[attribute.OptionName] = forever.ToString();
+        }
+
         #endregion
     }
 
-    public abstract class PressedOptionConverter: KeyOptionConverterBase
+    public abstract class PressedOptionConverter : KeyOptionConverterBase
     {
         #region function
 

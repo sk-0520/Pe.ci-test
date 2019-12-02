@@ -84,4 +84,53 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
     }
+
+    public sealed class KeyboardDisableJobSettingEditorViewModel : KeyboardJobSettingEditorViewModelBase<KeyboardDisableJobSettingEditorElement>
+    {
+        public KeyboardDisableJobSettingEditorViewModel(KeyboardDisableJobSettingEditorElement model, ILoggerFactory loggerFactory) : base(model, loggerFactory)
+        {
+        }
+
+        #region property
+
+        public Key Key
+        {
+            get
+            {
+                return Model.Mappings[0].Data.Key;
+            }
+            set
+            {
+                Model.Mappings[0].Data.Key = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool Forever
+        {
+            get
+            {
+                var doc = new DisableOptionConverter();
+                if(doc.TryGetForever(Model.Options, out var result)) {
+                    return result;
+                }
+                return false;
+            }
+            set
+            {
+                var doc = new DisableOptionConverter();
+                doc.SetForever(Model.Options, value);
+                RaisePropertyChanged();
+            }
+        }
+
+
+        #endregion
+
+        #region command
+        #endregion
+
+        #region function
+        #endregion
+    }
 }

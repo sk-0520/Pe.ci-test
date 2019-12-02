@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected IDatabaseStatementLoader StatementLoader { get; }
 
-        protected bool IsNewJob { get; }
+        public bool IsNewJob { get; }
 
         public KeyActionKind Kind => ActionData.KeyActionKind;
         public string Comment
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             set => ActionData.KeyActionContent = value;
         }
 
-        public IDictionary<string, string> Options { get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Options { get; } = new Dictionary<string, string>();
         public ObservableCollection<WrapModel<KeyMappingData>> Mappings { get; } = new ObservableCollection<WrapModel<KeyMappingData>>();
         #endregion
 
@@ -120,7 +120,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 throw new ArgumentException(nameof(keyActionData));
             }
         }
-
     }
 
     public sealed class KeyboardDisableJobSettingEditorElement : KeyboardJobSettingEditorElementBase
@@ -132,6 +131,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 throw new ArgumentException(nameof(keyActionData));
             }
         }
+
+        #region KeyboardJobSettingEditorElementBase
+
+        protected override void InitializeImpl()
+        {
+            base.InitializeImpl();
+
+            var doc = new DisableOptionConverter();
+            if(!doc.TryGetForever(Options, out var _)) {
+                doc.SetForever(Options, false);
+            }
+        }
+
+        #endregion
+
     }
 
     public sealed class KeyboardPressedJobSettingEditorElement : KeyboardJobSettingEditorElementBase

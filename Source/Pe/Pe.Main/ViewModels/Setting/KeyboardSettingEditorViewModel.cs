@@ -30,6 +30,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             };
             ReplaceJobEditors = ReplaceJobEditorCollection.GetDefaultView();
 
+            DisableJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardDisableJobSettingEditorElement, KeyboardDisableJobSettingEditorViewModel>(Model.DisableJobEditors) {
+                ToViewModel = m => new KeyboardDisableJobSettingEditorViewModel(m, LoggerFactory),
+            };
+            DisableJobEditors = DisableJobEditorCollection.GetDefaultView();
+
             AllLauncherItemCollection = allLauncherItemCollection;
             AllLauncherItems = AllLauncherItemCollection.CreateView();
 
@@ -38,10 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             ;
             ReplaceKeyItems = new ObservableCollection<Key>(replaceKeyItems);
 
-            var ignoreKeyItems = EnumUtility.GetMembers<Key>()
+            var disableKeyItems = EnumUtility.GetMembers<Key>()
                 .OrderBy(i => i)
             ;
-            IgnoreKeyItems = new ObservableCollection<Key>(ignoreKeyItems);
+            DisableKeyItems = new ObservableCollection<Key>(disableKeyItems);
 
             var pressedIgnoreKeys = new[] {
                 Key.LeftShift,
@@ -66,6 +71,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         ModelViewModelObservableCollectionManagerBase<KeyboardReplaceJobSettingEditorElement, KeyboardReplaceJobSettingEditorViewMode> ReplaceJobEditorCollection { get; }
         public ICollectionView ReplaceJobEditors { get; }
+
+        ModelViewModelObservableCollectionManagerBase<KeyboardDisableJobSettingEditorElement, KeyboardDisableJobSettingEditorViewModel> DisableJobEditorCollection { get; }
+        public ICollectionView DisableJobEditors { get; }
+
+
         [IgnoreValidation]
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         [IgnoreValidation]
@@ -78,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         [IgnoreValidation]
         public ObservableCollection<Key> ReplaceKeyItems { get; }
-        public ObservableCollection<Key> IgnoreKeyItems { get; }
+        public ObservableCollection<Key> DisableKeyItems { get; }
         public ObservableCollection<Key> PressedKeyItems { get; }
 
         #endregion
@@ -88,6 +98,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public ICommand AddReplaceJobCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
                  Model.AddReplaceJob();
+             }
+         ));
+
+        public ICommand AddDisableJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.AddDisableJob();
              }
          ));
 
