@@ -1,10 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
 using Microsoft.Extensions.Logging;
@@ -35,6 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
+        /// <summary>
+        ///編集中のランチャーアイテム一覧。
+        ///<para>みんなで共有する。</para>
+        /// </summary>
+        public ObservableCollection<LauncherItemSettingEditorElement> AllLauncherItems { get; } = new ObservableCollection<LauncherItemSettingEditorElement>();
+
         bool ViewCreated { get; set; }
 
         public bool IsVisible
@@ -64,6 +76,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            IReadOnlyList<Guid> launcherItemIds;
+            using(var commander = ServiceLocator.Get<IMainDatabaseBarrier>().WaitRead()) {
+                var launcherItemsEntityDao = ServiceLocator.Build<LauncherItemsEntityDao>(commander, commander.Implementation);
+                launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
+            }
+            var elements = new List<LauncherItemSettingEditorElement>(launcherItemIds.Count);
+            foreach(var launcherItemId in launcherItemIds) {
+                var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, ServiceLocator.Get<IMainDatabaseBarrier>(), ServiceLocator.Get<IFileDatabaseBarrier>(), ServiceLocator.Get<IDatabaseStatementLoader>(), ServiceLocator.Get<IDispatcherWrapper>(), LoggerFactory);
+                var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
+                var element = ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement);
+                elements.Add(element);
+            }
+            AllLauncherItems.SetRange(elements);
+
             LauncherItemsSettingEditor.Initialize();
             LauncherGroupsSettingEditor.Initialize();
             KeyboardSettingEditor.Initialize();

@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         INotifyManager NotifyManager { get; }
+
         public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; } = new ObservableCollection<LauncherGroupSettingEditorElement>();
         public ObservableCollection<LauncherElementWithIconElement<CommonLauncherItemElement>> LauncherItems { get; } = new ObservableCollection<LauncherElementWithIconElement<CommonLauncherItemElement>>();
 
