@@ -45,7 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemSettingEditorViewModel>(Model.LauncherItems) {
                 RemoveViewModelToDispose = false, // 共有アイテムを使用しているので破棄させない
-                ToViewModel = m => AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m.Data),
+                ToViewModel = (m) => {
+                    var itemVm = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m.Data);
+                    var itemModel = AllLauncherItemCollection.GetModel(itemVm)!;
+                    var newItemVm = new LauncherItemSettingEditorViewModel(itemModel, DispatcherWrapper, LoggerFactory);
+                    return newItemVm;
+                },
             };
             LauncherItems = LauncherCollection.ViewModels;
         }
