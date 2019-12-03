@@ -55,6 +55,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ReplaceJobEditors.Add(editor);
         }
 
+        public void RemoveReplaceJob(Guid keyActionId)
+        {
+            var editor = ReplaceJobEditors.First(i => i.KeyActionId == keyActionId);
+            ReplaceJobEditors.Remove(editor);
+        }
+
         public void AddDisableJob()
         {
             var keyActionData = new KeyActionData() {
@@ -66,6 +72,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             editor.Initialize();
 
             DisableJobEditors.Add(editor);
+        }
+
+        public void RemoveDisableJob(Guid keyActionId)
+        {
+            var editor = DisableJobEditors.First(i => i.KeyActionId == keyActionId);
+            DisableJobEditors.Remove(editor);
         }
 
         public void AddPressedJob(KeyActionKind kind)
@@ -84,6 +96,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             PressedJobEditors.Add(editor);
         }
+
+        public void RemovePressedJob(Guid keyActionId)
+        {
+            var editor = PressedJobEditors.First(i => i.KeyActionId == keyActionId);
+            PressedJobEditors.Remove(editor);
+        }
+
 
         #endregion
 

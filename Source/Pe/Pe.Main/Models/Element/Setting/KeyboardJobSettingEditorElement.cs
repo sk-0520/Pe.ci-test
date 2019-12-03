@@ -158,6 +158,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        #region function
+
+        public void AddMapping()
+        {
+            var mapping = new KeyMappingData();
+            Mappings.Add(WrapModel.Create(mapping, LoggerFactory));
+        }
+
+        #endregion
+
         #region KeyboardJobSettingEditorElementBase
 
         protected override void InitializeImpl()

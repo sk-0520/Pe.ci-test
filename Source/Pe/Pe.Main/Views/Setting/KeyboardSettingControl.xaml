@@ -59,6 +59,7 @@
                   <Expander.Content>
                     <StackPanel>
                       <TextBox Text="{Binding Comment}" />
+                      <Button Content="x" Command="{Binding Editor.RemoveReplaceJobCommand, ElementName=root}" CommandParameter="{Binding}" />
                     </StackPanel>
                   </Expander.Content>
                 </Expander>
@@ -100,6 +101,7 @@
                     <StackPanel>
                       <CheckBox Grid.Column="1" Content="forever" IsChecked="{Binding Forever}" />
                       <TextBox Text="{Binding Comment}" />
+                      <Button Content="x" Command="{Binding Editor.RemoveDisableJobCommand, ElementName=root}" CommandParameter="{Binding}" />
                     </StackPanel>
                   </Expander.Content>
                 </Expander>
@@ -136,44 +138,43 @@
       <ScrollViewer Grid.Row="1">
         <ItemsControl ItemsSource="{Binding Editor.PressedJobEditors, ElementName=root}">
           <ItemsControl.Resources>
-            <DataTemplate x:Key="Mappings">
-              <StackPanel>
-                <ItemsControl>
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                      <Grid>
-                        <Grid.ColumnDefinitions>
-                          <ColumnDefinition Width="Auto" />
-                          <ColumnDefinition Width="*" />
-                          <ColumnDefinition Width="Auto" />
-                          <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+            <StackPanel x:Key="Mappings" x:Shared="False">
+              <ItemsControl ItemsSource="{Binding MappingItems}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                      </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Content="x" />
-                        <app_main_views_setting:KeyInputControl Grid.Column="1" />
-                        <Button Grid.Column="2" Content="up" />
-                        <Button Grid.Column="3" Content="down" />
-                      </Grid>
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </StackPanel>
-            </DataTemplate>
-            <DataTemplate x:Key="Common">
-              <StackPanel>
-                <TextBox />
-                <CheckBox Content="system" />
-              </StackPanel>
-            </DataTemplate>
+                      <Button Grid.Column="0" Content="x" />
+                      <app_main_views_setting:KeyInputControl Grid.Column="1" KeyItemsSource="{Binding Editor.PressedKeyItems, ElementName=root}" Key="{Binding Key}" Shift="{Binding Shift}" Control="{Binding Control}" Alt="{Binding Alt}" Super="{Binding Super}" />
+                      <Button Grid.Column="2" Content="up" />
+                      <Button Grid.Column="3" Content="down" />
+                    </Grid>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <Button Content="add mapping" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
+            </StackPanel>
+            <StackPanel x:Key="Common" x:Shared="False">
+              <CheckBox Content="system" IsChecked="{Binding ConveySystem}" />
+              <TextBox Text="{Binding Comment}" />
+              <Button Content="x" Command="{Binding Editor.RemovePressedJobCommand, ElementName=root}" CommandParameter="{Binding}" />
+            </StackPanel>
 
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardCommandJobSettingEditorViewModel}">
-              <Expander Header="command">
+              <Expander x:Name="item" Header="command">
                 <StackPanel>
-                  <ContentControl ContentTemplate="{StaticResource Mappings}" />
-                  <ContentControl ContentTemplate="{StaticResource Common}" />
+                  <ContentControl Content="{StaticResource Mappings}" />
+                  <ContentControl Content="{StaticResource Common}" />
                 </StackPanel>
               </Expander>
             </DataTemplate>
+
           </ItemsControl.Resources>
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>

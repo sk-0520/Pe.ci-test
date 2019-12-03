@@ -111,13 +111,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                  Model.AddReplaceJob();
              }
          ));
+        public ICommand RemoveReplaceJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardReplaceJobSettingEditorViewMode>(
+             o => {
+                 Model.RemoveReplaceJob(o.KeyActionId);
+             }
+         ));
 
         public ICommand AddDisableJobCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
                  Model.AddDisableJob();
              }
          ));
+        public ICommand RemoveDisableJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardDisableJobSettingEditorViewModel>(
+             o => {
+                 Model.RemoveDisableJob(o.KeyActionId);
+             }
+         ));
 
+        public ICommand RemovePressedJobCommand => GetOrCreateCommand(() => new DelegateCommand<KeyboardPressedJobSettingEditorViewModelBase>(
+            o => {
+                Model.RemovePressedJob(o.KeyActionId);
+            }
+        ));
 
         public ICommand AddCommandJobCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

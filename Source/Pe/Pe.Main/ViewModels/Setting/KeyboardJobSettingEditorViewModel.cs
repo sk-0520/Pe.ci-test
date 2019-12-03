@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public abstract class KeyboardJobSettingEditorViewModelBase<TJobEditor> : SingleModelViewModelBase<TJobEditor>
+    public abstract class KeyboardJobSettingEditorViewModelBase<TJobEditor> : SingleModelViewModelBase<TJobEditor>, IKeyActionId
         where TJobEditor : KeyboardJobSettingEditorElementBase
     {
         public KeyboardJobSettingEditorViewModelBase(TJobEditor model, ILoggerFactory loggerFactory)
@@ -31,6 +35,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region function
+        #endregion
+
+        #region IKeyActionId
+
+        public Guid KeyActionId => Model.KeyActionId;
+
         #endregion
     }
 
@@ -134,13 +144,98 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
+    public sealed class KeyMappingEditorViewModel : ViewModelBase
+    {
+        public KeyMappingEditorViewModel(KeyMappingData mapping, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
+        {
+            Mapping = mapping;
+        }
+
+        #region property
+
+        KeyMappingData Mapping { get; }
+
+        public Key Key
+        {
+            get => Mapping.Key;
+            set => SetPropertyValue(Mapping, value);
+        }
+
+        public ModifierKey Shift
+        {
+            get => Mapping.Shift;
+            set => SetPropertyValue(Mapping, value);
+        }
+
+        public ModifierKey Control
+        {
+            get => Mapping.Control;
+            set => SetPropertyValue(Mapping, value);
+        }
+
+        public ModifierKey Alt
+        {
+            get => Mapping.Alt;
+            set => SetPropertyValue(Mapping, value);
+        }
+
+        public ModifierKey Super
+        {
+            get => Mapping.Super;
+            set => SetPropertyValue(Mapping, value);
+        }
+
+
+
+        #endregion
+    }
+
     public abstract class KeyboardPressedJobSettingEditorViewModelBase : KeyboardJobSettingEditorViewModelBase<KeyboardPressedJobSettingEditorElement>
     {
         public KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            MappingCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>(Model.Mappings) {
+                ToViewModel = m => new KeyMappingEditorViewModel(m.Data, LoggerFactory),
+            };
+            MappingItems = MappingCollection.GetDefaultView();
+        }
+
 
         #region property
+
+        public bool ConveySystem
+        {
+            get
+            {
+                var poc = new PressedOptionConverter();
+                if(poc.TryGetConveySystem(Model.Options, out var result)) {
+                    return result;
+                }
+
+                return false;
+            }
+            set
+            {
+                var poc = new PressedOptionConverter();
+                poc.SetConveySystem(Model.Options, value);
+                RaisePropertyChanged();
+            }
+        }
+
+        ModelViewModelObservableCollectionManagerBase<WrapModel<KeyMappingData>, KeyMappingEditorViewModel> MappingCollection { get; }
+        public ICollectionView MappingItems { get; }
+
+        #endregion
+
+        #region command
+
+        public ICommand AddMappingCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.AddMapping();
+            }
+        ));
 
         #endregion
     }
