@@ -36,18 +36,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        void SaveNewActionData(KeyActionData data)
-        {
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                keyActionsEntityDao.InsertKeyAction(data, DatabaseCommonStatus.CreateCurrentAccount());
-
-                //TODO: insert empty mapping
-
-                commander.Commit();
-            }
-        }
-
         private void StockRemoveItemIfSavedJob(KeyboardJobSettingEditorElementBase editor)
         {
             if(!editor.IsNewJob) {
