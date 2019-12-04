@@ -228,6 +228,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public sealed class KeyActionCommandData : KeyActionPressedDataBase
+    {
+        public KeyActionCommandData(Guid keyActionId, KeyActionKind keyActionKind)
+            : base(keyActionId, keyActionKind)
+        { }
+    }
+
     public enum KeyActionLauncherItemOption
     {
         [KeyActionOption(typeof(Guid), nameof(LauncherItemId))]

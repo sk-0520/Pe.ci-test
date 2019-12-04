@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
@@ -28,4 +30,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #endregion
     }
+
+    public class KeyLauncherItemContentConverter : KeyContentConverterBase
+    {
+        #region function
+
+        public KeyActionContentLauncherItem ToKeyActionContentLauncherItem(string content)
+        {
+            return EnumUtility.Parse<KeyActionContentLauncherItem>(content);
+        }
+
+        public string ToContent(KeyActionContentLauncherItem keyActionContentLauncherItem)
+        {
+            return keyActionContentLauncherItem.ToString();
+        }
+
+        #endregion
+    }
+
 }

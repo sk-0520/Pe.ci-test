@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -240,10 +241,71 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public class KeyboardCommandJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    public sealed class KeyboardCommandJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
     {
         public KeyboardCommandJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
+    }
+
+    public sealed class KeyboardLauncherItemJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    {
+        public KeyboardLauncherItemJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
+        {
+            AllLauncherItemCollection = allLauncherItemCollection;
+            AllLauncherItems = AllLauncherItemCollection.CreateView();
+        }
+
+        #region property
+
+        [IgnoreValidation]
+        ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        [IgnoreValidation]
+        public ICollectionView AllLauncherItems { get; }
+
+        public KeyActionContentLauncherItem Content
+        {
+            get
+            {
+                var keyLauncherItemContentConverter = new KeyLauncherItemContentConverter();
+                try {
+                    return keyLauncherItemContentConverter.ToKeyActionContentLauncherItem(Model.Content);
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, ex.Message);
+                }
+                return KeyActionContentLauncherItem.Execute;
+            }
+            set
+            {
+                var keyLauncherItemContentConverter = new KeyLauncherItemContentConverter();
+                var content = keyLauncherItemContentConverter.ToContent(value);
+                SetModelValue(content);
+            }
+        }
+
+        public LauncherItemSettingEditorViewModel? LauncherItem
+        {
+            get
+            {
+                var lioc = new LauncherItemOptionConverter();
+                if(lioc.TryGetLauncherItemId(Model.Options, out var launcherItemId)) {
+                    return AllLauncherItemCollection.ViewModels.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+                }
+                return null;
+            }
+            set
+            {
+                var lioc = new LauncherItemOptionConverter();
+                if(value != null) {
+                    lioc.WriteLauncherItemId( Model.Options, value.LauncherItemId);
+                } else {
+                    lioc.WriteLauncherItemId(Model.Options, Guid.Empty);
+                }
+            }
+        }
+
+        #endregion
+
     }
 }

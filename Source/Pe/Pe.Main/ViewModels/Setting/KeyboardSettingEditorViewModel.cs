@@ -39,13 +39,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             PressedJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardPressedJobSettingEditorElement, KeyboardPressedJobSettingEditorViewModelBase>(Model.PressedJobEditors) {
                 ToViewModel = m => m.Kind switch {
                     KeyActionKind.Command => new KeyboardCommandJobSettingEditorViewModel(m, loggerFactory),
+                    KeyActionKind.LauncherItem => new KeyboardLauncherItemJobSettingEditorViewModel(m, AllLauncherItemCollection, loggerFactory),
                     _ => throw new NotImplementedException(),
                 },
             };
             PressedJobEditors = PressedJobEditorCollection.GetDefaultView();
 
             AllLauncherItemCollection = allLauncherItemCollection;
-            AllLauncherItems = AllLauncherItemCollection.CreateView();
 
             var replaceKeyItems = EnumUtility.GetMembers<Key>()
                 .OrderBy(i => i)
@@ -89,8 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         [IgnoreValidation]
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
-        [IgnoreValidation]
-        public ICollectionView AllLauncherItems { get; }
+
         public bool IsPopupCreateJobMenu
         {
             get => this._isPopupCreateJobMenu;

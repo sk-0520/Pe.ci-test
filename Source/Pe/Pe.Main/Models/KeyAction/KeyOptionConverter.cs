@@ -141,6 +141,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             });
         }
 
+        public bool TryGetLauncherItemId(IReadOnlyDictionary<string, string> map, out Guid result)
+        {
+            var attribute = GetAttribute(KeyActionLauncherItemOption.LauncherItemId);
+            return TryConvert(attribute, map, (a, s) => {
+                return Guid.Parse(s);
+            }, out result);
+        }
+
+        public void WriteLauncherItemId(IDictionary<string, string> map, Guid launcherItemId)
+        {
+            var attribute = GetAttribute(KeyActionLauncherItemOption.LauncherItemId);
+            map[attribute.OptionName] = launcherItemId.ToString("D");
+        }
+
         #endregion
     }
 

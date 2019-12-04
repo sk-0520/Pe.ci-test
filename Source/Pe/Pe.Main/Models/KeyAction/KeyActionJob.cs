@@ -316,6 +316,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         { }
     }
 
+    public sealed class KeyActionCommandJob : KeyActionPressedJobBase<KeyActionLauncherItemData>
+    {
+        public KeyActionCommandJob(KeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+            : base(actionData, mappings)
+        {
+        }
+
+        #region property
+        #endregion
+    }
+
+
     public sealed class KeyActionLauncherItemJob : KeyActionPressedJobBase<KeyActionLauncherItemData>
     {
         public KeyActionLauncherItemJob(KeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
