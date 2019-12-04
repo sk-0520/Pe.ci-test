@@ -159,6 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, launcherIconElement, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
             customizeEditor.Initialize();
 
+            AllLauncherItems.Add(customizeEditor);
 
             return data.Item.LauncherItemId;
         }
