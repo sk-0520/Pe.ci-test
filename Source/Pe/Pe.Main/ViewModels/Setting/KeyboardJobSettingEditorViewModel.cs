@@ -242,6 +242,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
+    public abstract class KeyboardPressedJobSettingEditorViewModelBase<TContent> : KeyboardPressedJobSettingEditorViewModelBase
+    {
+        public KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
+        { }
+
+        #region property
+
+        public abstract TContent Content { get; set; }
+
+        #endregion
+    }
+
     public sealed class KeyboardCommandJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
     {
         public KeyboardCommandJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
@@ -249,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
     }
 
-    public sealed class KeyboardLauncherItemJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    public sealed class KeyboardLauncherItemJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherItem>
     {
         public KeyboardLauncherItemJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -265,7 +278,32 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         [IgnoreValidation]
         public ICollectionView AllLauncherItems { get; }
 
-        public KeyActionContentLauncherItem Content
+        public LauncherItemSettingEditorViewModel? LauncherItem
+        {
+            get
+            {
+                var lioc = new LauncherItemOptionConverter();
+                if(lioc.TryGetLauncherItemId(Model.Options, out var launcherItemId)) {
+                    return AllLauncherItemCollection.ViewModels.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+                }
+                return null;
+            }
+            set
+            {
+                var lioc = new LauncherItemOptionConverter();
+                if(value != null) {
+                    lioc.WriteLauncherItemId(Model.Options, value.LauncherItemId);
+                } else {
+                    lioc.WriteLauncherItemId(Model.Options, Guid.Empty);
+                }
+            }
+        }
+
+        #endregion
+
+        #region KeyboardPressedJobSettingEditorViewModelBase
+
+        public override KeyActionContentLauncherItem Content
         {
             get
             {
@@ -285,40 +323,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        public LauncherItemSettingEditorViewModel? LauncherItem
-        {
-            get
-            {
-                var lioc = new LauncherItemOptionConverter();
-                if(lioc.TryGetLauncherItemId(Model.Options, out var launcherItemId)) {
-                    return AllLauncherItemCollection.ViewModels.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
-                }
-                return null;
-            }
-            set
-            {
-                var lioc = new LauncherItemOptionConverter();
-                if(value != null) {
-                    lioc.WriteLauncherItemId( Model.Options, value.LauncherItemId);
-                } else {
-                    lioc.WriteLauncherItemId(Model.Options, Guid.Empty);
-                }
-            }
-        }
-
         #endregion
 
     }
 
-    public sealed class KeyboardLauncherToolbarJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    public sealed class KeyboardLauncherToolbarJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentLauncherToolbar>
     {
         public KeyboardLauncherToolbarJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 
-        #region property
+        #region KeyboardPressedJobSettingEditorViewModelBase
 
-        public KeyActionContentLauncherToolbar Content
+        public override KeyActionContentLauncherToolbar Content
         {
             get
             {
@@ -342,7 +359,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     }
 
-    public sealed class KeyboardNoteJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    public sealed class KeyboardNoteJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase<KeyActionContentNote>
     {
         public KeyboardNoteJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -355,11 +372,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public IReadOnlyList<KeyActionContentNote> ContentItems { get; }
 
-        public KeyActionContentNote Content
+        #endregion
+
+        #region MyRegion
+
+        public override KeyActionContentNote Content
         {
             get
             {
-                var noteContentConverter  = new NoteContentConverter();
+                var noteContentConverter = new NoteContentConverter();
                 try {
                     return noteContentConverter.ToKeyActionContentNote(Model.Content);
                 } catch(Exception ex) {
