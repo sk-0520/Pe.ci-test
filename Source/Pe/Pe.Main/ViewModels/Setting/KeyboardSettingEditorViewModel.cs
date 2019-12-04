@@ -40,6 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 ToViewModel = m => m.Kind switch {
                     KeyActionKind.Command => new KeyboardCommandJobSettingEditorViewModel(m, loggerFactory),
                     KeyActionKind.LauncherItem => new KeyboardLauncherItemJobSettingEditorViewModel(m, AllLauncherItemCollection, loggerFactory),
+                    KeyActionKind.LauncherToolbar => new KeyboardLauncherToolbarJobSettingEditorViewModel(m, LoggerFactory),
+                    KeyActionKind.Note=> new KeyboardNoteJobSettingEditorViewModel(m, LoggerFactory),
                     _ => throw new NotImplementedException(),
                 },
             };
@@ -142,6 +144,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public ICommand AddLauncherItemJobCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 AddPressedJob(KeyActionKind.LauncherItem);
+            }
+        ));
+
+        public ICommand AddLauncherToolbarJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                AddPressedJob(KeyActionKind.LauncherToolbar);
+            }
+        ));
+
+        public ICommand AddNoteJobCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                AddPressedJob(KeyActionKind.Note);
             }
         ));
 

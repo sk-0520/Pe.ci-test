@@ -135,6 +135,9 @@
               <StackPanel>
                 <MenuItem Header="command" Command="{Binding Editor.AddCommandJobCommand, ElementName=root}" />
                 <MenuItem Header="launcher item" Command="{Binding Editor.AddLauncherItemJobCommand, ElementName=root}" />
+                <MenuItem Header="hide toolbar" Command="{Binding Editor.AddLauncherToolbarJobCommand, ElementName=root}" />
+                <MenuItem Header="note" Command="{Binding Editor.AddNoteJobCommand, ElementName=root}" />
+
               </StackPanel>
             </Border>
           </Popup>
@@ -224,6 +227,49 @@
                       <RadioButton Content="extends" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}}" />
                     </WrapPanel>
                   </Grid>
+                  <ContentControl Content="{StaticResource Mappings}" />
+                  <ContentControl Content="{StaticResource Common}" />
+                </StackPanel>
+              </Expander>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardLauncherToolbarJobSettingEditorViewModel}">
+              <Expander x:Name="item" Header="hide toolbar">
+                <StackPanel>
+                  <ContentControl Content="{StaticResource Mappings}" />
+                  <ContentControl Content="{StaticResource Common}" />
+                </StackPanel>
+              </Expander>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardNoteJobSettingEditorViewModel}">
+              <Expander x:Name="item">
+                <Expander.Header>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="note" />
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding ContentItems}" SelectedItem="{Binding Content}">
+                      <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <VirtualizingStackPanel
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          />
+                        </ItemsPanelTemplate>
+                      </ComboBox.ItemsPanel>
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                  </Grid>
+                </Expander.Header>
+                <StackPanel>
                   <ContentControl Content="{StaticResource Mappings}" />
                   <ContentControl Content="{StaticResource Common}" />
                 </StackPanel>

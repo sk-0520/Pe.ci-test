@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -58,8 +59,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get
             {
                 try {
-                    var keyReplaceContentConverter = new KeyReplaceContentConverter();
-                    return keyReplaceContentConverter.ToReplaceKey(Model.Content);
+                    var replaceContentConverter = new ReplaceContentConverter();
+                    return replaceContentConverter.ToReplaceKey(Model.Content);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                     return Key.None;
@@ -67,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
             set
             {
-                var keyReplaceContentConverter = new KeyReplaceContentConverter();
+                var keyReplaceContentConverter = new ReplaceContentConverter();
                 var content = keyReplaceContentConverter.ToContent(value);
                 SetModelValue(content, nameof(Model.Content));
             }
@@ -268,9 +269,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             get
             {
-                var keyLauncherItemContentConverter = new KeyLauncherItemContentConverter();
+                var launcherItemContentConverter = new LauncherItemContentConverter();
                 try {
-                    return keyLauncherItemContentConverter.ToKeyActionContentLauncherItem(Model.Content);
+                    return launcherItemContentConverter.ToKeyActionContentLauncherItem(Model.Content);
                 } catch(Exception ex) {
                     Logger.LogWarning(ex, ex.Message);
                 }
@@ -278,8 +279,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
             set
             {
-                var keyLauncherItemContentConverter = new KeyLauncherItemContentConverter();
-                var content = keyLauncherItemContentConverter.ToContent(value);
+                var launcherItemContentConverter = new LauncherItemContentConverter();
+                var content = launcherItemContentConverter.ToContent(value);
                 SetModelValue(content);
             }
         }
@@ -308,4 +309,74 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
     }
+
+    public sealed class KeyboardLauncherToolbarJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    {
+        public KeyboardLauncherToolbarJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
+        { }
+
+        #region property
+
+        public KeyActionContentLauncherToolbar Content
+        {
+            get
+            {
+                var launcherToolbarContentConverter = new LauncherToolbarContentConverter();
+                try {
+                    return launcherToolbarContentConverter.ToKeyActionContentLauncherToolbar(Model.Content);
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, ex.Message);
+                }
+                return KeyActionContentLauncherToolbar.AutoHiddenToHide;
+            }
+            set
+            {
+                var launcherToolbarContentConverter = new LauncherToolbarContentConverter();
+                var content = launcherToolbarContentConverter.ToContent(value);
+                SetModelValue(content);
+            }
+        }
+
+        #endregion
+
+    }
+
+    public sealed class KeyboardNoteJobSettingEditorViewModel : KeyboardPressedJobSettingEditorViewModelBase
+    {
+        public KeyboardNoteJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
+        {
+            var items = EnumUtility.GetMembers<KeyActionContentNote>();
+            ContentItems = new List<KeyActionContentNote>(items);
+        }
+
+        #region property
+
+        public IReadOnlyList<KeyActionContentNote> ContentItems { get; }
+
+        public KeyActionContentNote Content
+        {
+            get
+            {
+                var noteContentConverter  = new NoteContentConverter();
+                try {
+                    return noteContentConverter.ToKeyActionContentNote(Model.Content);
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, ex.Message);
+                }
+                return KeyActionContentNote.Create;
+            }
+            set
+            {
+                var noteContentConverter = new NoteContentConverter();
+                var content = noteContentConverter.ToContent(value);
+                SetModelValue(content);
+            }
+        }
+
+        #endregion
+
+    }
+
 }

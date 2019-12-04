@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public class ReplaceOptionConverter : KeyOptionConverterBase
+    public sealed class ReplaceOptionConverter : KeyOptionConverterBase
     {
         #region function
 
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public class DisableOptionConverter : KeyOptionConverterBase
+    public sealed class DisableOptionConverter : KeyOptionConverterBase
     {
         #region function
 
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public class LauncherItemOptionConverter : PressedOptionConverter
+    public sealed class LauncherItemOptionConverter : PressedOptionConverter
     {
         #region function
 

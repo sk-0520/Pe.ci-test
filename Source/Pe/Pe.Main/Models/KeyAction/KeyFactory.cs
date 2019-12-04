@@ -143,12 +143,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         KeyActionLauncherItemJob CreateLauncherItemJob(KeyItem item)
         {
-            var keyLauncherItemContentConverter = new KeyLauncherItemContentConverter();
+            var launcherItemContentConverter = new LauncherItemContentConverter();
             var launcherItemOptionConverter = new LauncherItemOptionConverter();
 
             var data = new KeyActionLauncherItemData(
                 item.Action.KeyActionId,
-                keyLauncherItemContentConverter.ToKeyActionContentLauncherItem(item.Action.KeyActionContent),
+                launcherItemContentConverter.ToKeyActionContentLauncherItem(item.Action.KeyActionContent),
                 launcherItemOptionConverter.ToLauncherItemId(item.Options)
             );
 
