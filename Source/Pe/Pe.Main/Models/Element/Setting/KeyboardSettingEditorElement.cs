@@ -26,6 +26,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public ObservableCollection<KeyboardReplaceJobSettingEditorElement> ReplaceJobEditors { get; } = new ObservableCollection<KeyboardReplaceJobSettingEditorElement>();
         public ObservableCollection<KeyboardDisableJobSettingEditorElement> DisableJobEditors { get; } = new ObservableCollection<KeyboardDisableJobSettingEditorElement>();
         public ObservableCollection<KeyboardPressedJobSettingEditorElement> PressedJobEditors { get; } = new ObservableCollection<KeyboardPressedJobSettingEditorElement>();
+        /// <summary>
+        /// 削除したアイテム。
+        /// <para>最後にdelete流してあげる用。</para>
+        /// </summary>
+        IList<KeyboardJobSettingEditorElementBase> RemovedJobEditors { get; } = new List<KeyboardJobSettingEditorElementBase>();
 
         #endregion
 
@@ -43,6 +48,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        private void StockRemoveItemIfSavedJob(KeyboardJobSettingEditorElementBase editor)
+        {
+            if(!editor.IsNewJob) {
+                RemovedJobEditors.Add(editor);
+            }
+        }
+
+
         public void AddReplaceJob()
         {
             var keyActionData = new KeyActionData() {
@@ -59,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             var editor = ReplaceJobEditors.First(i => i.KeyActionId == keyActionId);
             ReplaceJobEditors.Remove(editor);
+            StockRemoveItemIfSavedJob(editor);
         }
 
         public void AddDisableJob()
@@ -78,6 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             var editor = DisableJobEditors.First(i => i.KeyActionId == keyActionId);
             DisableJobEditors.Remove(editor);
+            StockRemoveItemIfSavedJob(editor);
         }
 
         public void AddPressedJob(KeyActionKind kind)
@@ -101,6 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             var editor = PressedJobEditors.First(i => i.KeyActionId == keyActionId);
             PressedJobEditors.Remove(editor);
+            StockRemoveItemIfSavedJob(editor);
         }
 
 
@@ -149,6 +165,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ;
             foreach(var job in jobs) {
                 job.Save(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
+            }
+            foreach(var job in RemovedJobEditors) {
+                job.Remove(commandPack.Main.Commander, commandPack.Main.Implementation);
             }
         }
 

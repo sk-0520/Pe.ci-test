@@ -107,6 +107,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        public void Remove(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            keyMappingsEntityDao.DeleteByKeyActionId(KeyActionId);
+            keyOptionsEntityDao.DeleteByKeyActionId(KeyActionId);
+            keyActionsEntityDao.DeleteKeyAciton(KeyActionId);
+        }
+
         #endregion
 
     }
