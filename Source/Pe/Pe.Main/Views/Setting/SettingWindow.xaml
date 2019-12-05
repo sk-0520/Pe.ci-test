@@ -32,6 +32,9 @@
 
     <TabControl Grid.Row="0" ItemsSource="{Binding EditorItems}" SelectedItem="{Binding SelectedEditor}" TabStripPlacement="Left">
       <TabControl.Resources>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:GeneralSettingEditorViewModel}">
+          <app_main_views_setting:GeneralSettingControl Editor="{Binding}" />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherItemsSettingEditorViewModel}">
           <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding}" />
         </DataTemplate>

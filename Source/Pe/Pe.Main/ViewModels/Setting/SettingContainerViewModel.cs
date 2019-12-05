@@ -33,17 +33,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
             };
 
+            GeneralSettingEditor = new GeneralSettingEditorViewModel(Model.GeneralSettingEditor, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new List<ISettingEditorViewModel>() {
+                GeneralSettingEditor,
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,
                 KeyboardSettingEditor,
             };
             //this._selectedEditor = EditorItems.First();
-            this._selectedEditor = LauncherItemsSettingEditor;// KeyboardSettingEditor;
+            this._selectedEditor = GeneralSettingEditor;// KeyboardSettingEditor;
         }
 
         #region property
@@ -71,6 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        public GeneralSettingEditorViewModel GeneralSettingEditor { get; }
         public LauncherItemsSettingEditorViewModel LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorViewModel LauncherGroupsSettingEditor { get; }
         public KeyboardSettingEditorViewModel KeyboardSettingEditor { get; }

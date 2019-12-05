@@ -35,11 +35,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public SettingContainerElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
+            GeneralSettingEditor = ServiceLocator.Build<GeneralSettingEditorElement>();
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>(AllLauncherItems);
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
 
             Editors = new SettingEditorElementBase[] {
+                GeneralSettingEditor,
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,
                 KeyboardSettingEditor
@@ -64,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public bool IsSubmit { get; private set; }
 
+        public GeneralSettingEditorElement GeneralSettingEditor { get; }
         public LauncherItemsSettingEditorElement LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
         public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
@@ -131,9 +134,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             AllLauncherItems.SetRange(elements);
 
-            LauncherItemsSettingEditor.Initialize();
-            LauncherGroupsSettingEditor.Initialize();
-            KeyboardSettingEditor.Initialize();
+            foreach(var editor in Editors) {
+                editor.Initialize();
+            }
         }
 
         #endregion
