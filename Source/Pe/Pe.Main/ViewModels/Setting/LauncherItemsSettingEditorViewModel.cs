@@ -35,7 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
 
             AllLauncherItemCollection = allLauncherItems;
-            AllLauncherItemItems = AllLauncherItemCollection.CreateView();
+            //AllLauncherItemItems = AllLauncherItemCollection.CreateView();
+            AllLauncherItemItems = AllLauncherItemCollection.GetDefaultView();
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = CanDragStart,
