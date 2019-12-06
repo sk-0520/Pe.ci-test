@@ -18,6 +18,136 @@ create table [AppSystems] (
 )
 ;
 
+--// table: AppGeneralSetting
+create table [AppGeneralSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[Language] text not null /* 使用言語  */
+)
+;
+
+--// table: AppExecuteSetting
+create table [AppExecuteSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[Accepted] boolean not null /* 使用許諾  */,
+	[FirstVersion] text not null /* 初回実行バージョン  */,
+	[FirstTimestamp] datetime not null /* 初回実行日時 UTC */,
+	[LastVersion] text not null /* 最終実行バージョン  */,
+	[LastTimestamp] datetime not null /* 最終実行日時 UTC */,
+	[ExecuteCount] integer not null /* 実行回数 0始まり */,
+	[UserId] text not null /* ユーザー識別子  */,
+	[SendUsageStatistics] boolean not null /* 使用統計情報送信  */
+)
+;
+
+--// table: AppUpdateSetting
+create table [AppUpdateSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[CheckReleaseVersion]  not null /* リリース版をチェック  */,
+	[CheckRcVersion]  not null /* RC版をチェック  */,
+	[IgnoreVersion] text not null /* 無視するバージョン このバージョン以下を無視する */
+)
+;
+
+--// table: AppWindowSetting
+create table [AppWindowSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[IsEnabled]  not null /* 有効  */,
+	[Count] integer not null /* 保持数  */,
+	[interval] text not null /* 保存間隔  */
+)
+;
+
+--// table: AppCommandSetting
+create table [AppCommandSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[IconBox] text not null /* アイコンサイズ  */,
+	[HideWaitTime] text not null /* 非表示待機時間  */,
+	[FindTag]  not null /* タグ検索  */,
+	[FindFile]  not null /* ファイル検索  */
+)
+;
+
+--// table: AppNoteSetting
+create table [AppNoteSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[TitleKind] text not null /* タイトル設定  */,
+	[PositionKind] text not null /* 位置種別  */,
+	[Foreground] text not null /* 前景色 #AARRGGBB */,
+	[Background] text not null /* 背景色 #AARRGGBB */,
+	[IsTopmost]  not null /* 最前面  */
+)
+;
+
+--// table: AppStandardInputOutputSetting
+create table [AppStandardInputOutputSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[OutputForeground] text not null /* 標準出力前景色 #AARRGGBB */,
+	[OutputBackground] text not null /* 標準出力背景色 #AARRGGBB */,
+	[ErrorForeground] text not null /* エラー前景色 #AARRGGBB */,
+	[ErrorBackground] text not null /* エラー背景色 #AARRGGBB */,
+	[IsTopmost]  not null /* 最前面  */
+)
+;
+
 --// table: LauncherItems
 create table [LauncherItems] (
 	[LauncherItemId] text not null /* ランチャーアイテムID  */,
@@ -438,6 +568,13 @@ create table [KeyMappings] (
 	foreign key([KeyActionId]) references [KeyActions]([KeyActionId])
 )
 ;
+
+
+
+
+
+
+
 
 
 --// index: idx_LauncherItems_1
