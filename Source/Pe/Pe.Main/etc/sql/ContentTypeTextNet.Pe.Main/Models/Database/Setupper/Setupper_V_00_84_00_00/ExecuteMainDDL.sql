@@ -1,38 +1,3 @@
---// table: AppSystems
-create table [AppSystems] (
-	[Key] text not null /* キー  */,
-	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
-	[CreatedAccount] text not null /* 作成ユーザー名  */,
-	[CreatedProgramName] text not null /* 作成プログラム名  */,
-	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
-	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
-	[UpdatedAccount] text not null /* 更新ユーザー名  */,
-	[UpdatedProgramName] text not null /* 更新プログラム名  */,
-	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
-	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[Value] text not null /* 値  */,
-	[Comment] text not null /* コメント Peからは使用しないメモ */,
-	primary key(
-		[Key]
-	)
-)
-;
-
---// table: AppGeneralSetting
-create table [AppGeneralSetting] (
-	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
-	[CreatedAccount] text not null /* 作成ユーザー名  */,
-	[CreatedProgramName] text not null /* 作成プログラム名  */,
-	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
-	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
-	[UpdatedAccount] text not null /* 更新ユーザー名  */,
-	[UpdatedProgramName] text not null /* 更新プログラム名  */,
-	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
-	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[Language] text not null /* 使用言語  */
-)
-;
-
 --// table: AppExecuteSetting
 create table [AppExecuteSetting] (
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
@@ -52,6 +17,21 @@ create table [AppExecuteSetting] (
 	[ExecuteCount] integer not null /* 実行回数 0始まり */,
 	[UserId] text not null /* ユーザー識別子  */,
 	[SendUsageStatistics] boolean not null /* 使用統計情報送信  */
+)
+;
+
+--// table: AppGeneralSetting
+create table [AppGeneralSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[Language] text not null /* 使用言語  */
 )
 ;
 
@@ -568,7 +548,6 @@ create table [KeyMappings] (
 	foreign key([KeyActionId]) references [KeyActions]([KeyActionId])
 )
 ;
-
 
 
 

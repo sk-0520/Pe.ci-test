@@ -1,56 +1,3 @@
-
-___
-
-## AppSystems
-
-### layout
-
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント               |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-----------------------|
-| o  | o  |    | キー                     | Key                   | text         | System.String   |              |                        |
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                    |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                        |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                        |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                        |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                    |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                        |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                        |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                        |
-|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                |
-|    | o  |    | 値                       | Value                 | text         | System.String   |              |                        |
-|    | o  |    | コメント                 | Comment               | text         | System.String   |              | Peからは使用しないメモ |
-
-### index
-
-*NONE*
-
-
-
-___
-
-## AppGeneralSetting
-
-### layout
-
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    | 使用言語                 | Language              | text         | System.String   |              |          |
-
-### index
-
-*NONE*
-
-
-
 ___
 
 ## AppExecuteSetting
@@ -76,6 +23,32 @@ ___
 |    | o  |    | 実行回数                 | ExecuteCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  |    | ユーザー識別子           | UserId                | text         | System.String   |              |          |
 |    | o  |    | 使用統計情報送信         | SendUsageStatistics   | boolean      | System.Boolean  |              |          |
+
+### index
+
+*NONE*
+
+
+
+
+___
+
+## AppGeneralSetting
+
+### layout
+
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
+|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
+|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |    | 使用言語                 | Language              | text         | System.String   |              |          |
 
 ### index
 

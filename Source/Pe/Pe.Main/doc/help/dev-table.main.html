@@ -1,57 +1,4 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>テーブル図: メイン - Pe Help</title><link rel="stylesheet" type="text/css" href="style.e0c02e61.css"><template id="template-block"><div name="block-root"><div name="block-table"></div><div name="block-layout"></div><div name="block-index"></div></div></template><template id="template-filter"><dt>テーブル</dt><dd><input name="table-filter" type="text"></dd></template><template id="template-command"><ul><li><button name="command-import">import</button><button name="command-export">export</button><button name="command-copy-define">copy define</button><button name="command-copy-sql">copy sql</button></li></ul></template><template id="template-table"><h3><label>テーブル名:<input type="text" name="table-name"></label></h3></template><template id="template-layout"><h4>Layout</h4><table><thead><tr><th>PK</th><th>NN</th><th>FK</th><th>論理名</th><th>物理名</th><th>論理型</th><th>物理型</th><th>CLR</th><th>チェック制約</th><th>コメント</th><th>削除</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="10"><button name="add">add column</button></td></tr></tfoot></table></template><template id="template-layout-row"><tr name="layout-row-root"><td><input type="checkbox" name="pk"></td><td><input type="checkbox" name="nn"></td><td name="fk-root"><input type="hidden" name="fk"><select name="fk-table"></select><select name="fk-column" disabled></select></td><td><input type="text" name="name-logical"></td><td><input type="text" name="name-physical"></td><td><select name="data-logical"><optgroup label="SQLite3"><option value="integer">integer</option><option value="real">real</option><option value="text">text</option><option value="blob">blob</option></optgroup><optgroup label="affinity"><option value="datetime">datetime</option><option value="boolean">boolean</option></optgroup></select></td><td><input type="text" name="data-physical" readonly></td><td><select name="data-clr"><option value="System.String">string</option><option value="System.Int64">long</option><option value="System.Decimal">decimal</option><option value="System.Byte[]">byte[]</option><option value="System.Boolean">bool</option><option value="System.Single">float</option><option value="System.Double">double</option><option value="System.Guid">Guid</option><option value="System.DateTime">DateTime</option><option value="System.Version">Version</option><option value="System.TimeSpan">TimeSpan</option></select></td><td><input type="text" name="check"></td><td><input type="text" name="comment"></td><td><button name="delete">行削除</button></td></tr></template><template id="template-index"><h4>Index</h4><table><thead><tr><th>UK</th><th>カラム</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="2"><button name="add">add index</button></td></tr></tfoot></table></template><template id="template-index-row"><tr name="index-row-root"><td><input type="checkbox" name="uk"></td><td><ol name="columns"></ol><button name="add-col">add</button><button name="delete">delete</button></td></tr></template><template id="template-index-row-column"><li name="index-row-column-root"><input type="hidden" name="c"><select name="column"></select><button name="delete-col">delete</button></li></template><link rel="stylesheet" type="text/css" href="dev-table.6180faa5.css"></head><body><div id="root"><h1>テーブル図: メイン</h1><div id="content"><div class="filter" id="filter-main"></div><div class="view" id="view-main"></div><div class="command" id="command-main"></div><textarea class="define" id="define-main">
-___
-
-## AppSystems
-
-### layout
-
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント               |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-----------------------|
-| o  | o  |    | キー                     | Key                   | text         | System.String   |              |                        |
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                    |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                        |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                        |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                        |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                    |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                        |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                        |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                        |
-|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                |
-|    | o  |    | 値                       | Value                 | text         | System.String   |              |                        |
-|    | o  |    | コメント                 | Comment               | text         | System.String   |              | Peからは使用しないメモ |
-
-### index
-
-*NONE*
-
-
-
-___
-
-## AppGeneralSetting
-
-### layout
-
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    | 使用言語                 | Language              | text         | System.String   |              |          |
-
-### index
-
-*NONE*
-
-
-
-___
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>テーブル図: メイン - Pe Help</title><link rel="stylesheet" type="text/css" href="style.e0c02e61.css"><template id="template-block"><div name="block-root"><div name="block-table"></div><div name="block-layout"></div><div name="block-index"></div></div></template><template id="template-filter"><dt>テーブル</dt><dd><input name="table-filter" type="text"></dd></template><template id="template-command"><ul><li><button name="command-import">import</button><button name="command-export">export</button><button name="command-copy-define">copy define</button><button name="command-copy-sql">copy sql</button></li></ul></template><template id="template-table"><h3><label>テーブル名:<input type="text" name="table-name"></label></h3></template><template id="template-layout"><h4>Layout</h4><table><thead><tr><th>PK</th><th>NN</th><th>FK</th><th>論理名</th><th>物理名</th><th>論理型</th><th>物理型</th><th>CLR</th><th>チェック制約</th><th>コメント</th><th>削除</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="10"><button name="add">add column</button></td></tr></tfoot></table></template><template id="template-layout-row"><tr name="layout-row-root"><td><input type="checkbox" name="pk"></td><td><input type="checkbox" name="nn"></td><td name="fk-root"><input type="hidden" name="fk"><select name="fk-table"></select><select name="fk-column" disabled></select></td><td><input type="text" name="name-logical"></td><td><input type="text" name="name-physical"></td><td><select name="data-logical"><optgroup label="SQLite3"><option value="integer">integer</option><option value="real">real</option><option value="text">text</option><option value="blob">blob</option></optgroup><optgroup label="affinity"><option value="datetime">datetime</option><option value="boolean">boolean</option></optgroup></select></td><td><input type="text" name="data-physical" readonly></td><td><select name="data-clr"><option value="System.String">string</option><option value="System.Int64">long</option><option value="System.Decimal">decimal</option><option value="System.Byte[]">byte[]</option><option value="System.Boolean">bool</option><option value="System.Single">float</option><option value="System.Double">double</option><option value="System.Guid">Guid</option><option value="System.DateTime">DateTime</option><option value="System.Version">Version</option><option value="System.TimeSpan">TimeSpan</option></select></td><td><input type="text" name="check"></td><td><input type="text" name="comment"></td><td><button name="delete">行削除</button></td></tr></template><template id="template-index"><h4>Index</h4><table><thead><tr><th>UK</th><th>カラム</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="2"><button name="add">add index</button></td></tr></tfoot></table></template><template id="template-index-row"><tr name="index-row-root"><td><input type="checkbox" name="uk"></td><td><ol name="columns"></ol><button name="add-col">add</button><button name="delete">delete</button></td></tr></template><template id="template-index-row-column"><li name="index-row-column-root"><input type="hidden" name="c"><select name="column"></select><button name="delete-col">delete</button></li></template><link rel="stylesheet" type="text/css" href="dev-table.6180faa5.css"></head><body><div id="root"><h1>テーブル図: メイン</h1><div id="content"><div class="filter" id="filter-main"></div><div class="view" id="view-main"></div><div class="command" id="command-main"></div><textarea class="define" id="define-main">___
 
 ## AppExecuteSetting
 
@@ -76,6 +23,32 @@ ___
 |    | o  |    | 実行回数                 | ExecuteCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  |    | ユーザー識別子           | UserId                | text         | System.String   |              |          |
 |    | o  |    | 使用統計情報送信         | SendUsageStatistics   | boolean      | System.Boolean  |              |          |
+
+### index
+
+*NONE*
+
+
+
+
+___
+
+## AppGeneralSetting
+
+### layout
+
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
+|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
+|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |    | 使用言語                 | Language              | text         | System.String   |              |          |
 
 ### index
 
