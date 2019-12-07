@@ -1,6 +1,4 @@
-﻿select
-	AppSystems.Value
+select
+	AppExecuteSetting.LastVersion
 from
-	AppSystems
-where
-	AppSystems.Key = 'info.last.version'
+	AppExecuteSetting

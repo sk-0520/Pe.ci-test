@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             }
         }
 
-        bool ExistsVersionTable(IDatabaseAccessor mainAccessor)
+        bool ExistsExecuteTable(IDatabaseAccessor mainAccessor)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return mainAccessor.Query<bool>(statement, null, false).FirstOrDefault();
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         public Version? GetLastVersion(IDatabaseAccessor mainAccessor)
         {
-            if(!ExistsVersionTable(mainAccessor)) {
+            if(!ExistsExecuteTable(mainAccessor)) {
                 Logger.LogWarning("not found: version table");
                 return null;
             }
