@@ -15,11 +15,11 @@ using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
 {
     /// <summary>
-    /// GeneralSettingControl.xaml の相互作用ロジック
+    /// GeneralsSettingControl.xaml の相互作用ロジック
     /// </summary>
-    public partial class GeneralSettingControl : UserControl
+    public partial class GeneralsSettingControl : UserControl
     {
-        public GeneralSettingControl()
+        public GeneralsSettingControl()
         {
             InitializeComponent();
         }
@@ -28,23 +28,23 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         public static readonly DependencyProperty EditorProperty = DependencyProperty.Register(
             nameof(Editor),
-            typeof(GeneralSettingEditorViewModel),
-            typeof(GeneralSettingControl),
+            typeof(GeneralsSettingEditorViewModel),
+            typeof(GeneralsSettingControl),
             new FrameworkPropertyMetadata(
-                default(GeneralSettingEditorViewModel),
+                default(GeneralsSettingEditorViewModel),
                 new PropertyChangedCallback(OnEditorChanged)
             )
         );
 
-        public GeneralSettingEditorViewModel Editor
+        public GeneralsSettingEditorViewModel Editor
         {
-            get { return (GeneralSettingEditorViewModel)GetValue(EditorProperty); }
+            get { return (GeneralsSettingEditorViewModel)GetValue(EditorProperty); }
             set { SetValue(EditorProperty, value); }
         }
 
         private static void OnEditorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is GeneralSettingControl control) {
+            if(d is GeneralsSettingControl control) {
             }
         }
 

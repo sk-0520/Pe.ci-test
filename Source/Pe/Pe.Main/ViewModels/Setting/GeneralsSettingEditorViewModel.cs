@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class GeneralSettingEditorViewModel : SettingEditorViewModelBase<GeneralSettingEditorElement>
+    public class GeneralsSettingEditorViewModel : SettingEditorViewModelBase<GeneralsSettingEditorElement>
     {
-        public GeneralSettingEditorViewModel(GeneralSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public GeneralsSettingEditorViewModel(GeneralsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         { }
 

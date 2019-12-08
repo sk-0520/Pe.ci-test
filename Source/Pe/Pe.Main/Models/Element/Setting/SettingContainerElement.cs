@@ -35,13 +35,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public SettingContainerElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
-            GeneralSettingEditor = ServiceLocator.Build<GeneralSettingEditorElement>();
+            GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>();
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>(AllLauncherItems);
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
 
             Editors = new SettingEditorElementBase[] {
-                GeneralSettingEditor,
+                GeneralsSettingEditor,
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,
                 KeyboardSettingEditor
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public bool IsSubmit { get; private set; }
 
-        public GeneralSettingEditorElement GeneralSettingEditor { get; }
+        public GeneralsSettingEditorElement GeneralsSettingEditor { get; }
         public LauncherItemsSettingEditorElement LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
         public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
