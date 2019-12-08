@@ -65,7 +65,7 @@ create table [AppWindowSetting] (
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[IsEnabled]  not null /* 有効  */,
 	[Count] integer not null /* 保持数  */,
-	[interval] text not null /* 保存間隔  */
+	[Interval] text not null /* 保存間隔  */
 )
 ;
 
@@ -101,7 +101,7 @@ create table [AppNoteSetting] (
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[FontId] text not null /* フォント  */,
 	[TitleKind] text not null /* タイトル設定  */,
-	[PositionKind] text not null /* 位置種別  */,
+	[LayoutKind] text not null /* 位置種別  */,
 	[Foreground] text not null /* 前景色 #AARRGGBB */,
 	[Background] text not null /* 背景色 #AARRGGBB */,
 	[IsTopmost]  not null /* 最前面  */

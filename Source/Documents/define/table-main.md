@@ -102,7 +102,7 @@ ___
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  |    | 有効                     | IsEnabled             |              | System.Boolean  |              |          |
 |    | o  |    | 保持数                   | Count                 | integer      | System.Int64    |              |          |
-|    | o  |    | 保存間隔                 | interval              | text         | System.TimeSpan |              |          |
+|    | o  |    | 保存間隔                 | Interval              | text         | System.TimeSpan |              |          |
 
 ### index
 
@@ -158,7 +158,7 @@ ___
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり   |
 |    | o  |    | フォント                 | FontId                | text         | System.Guid     |              |           |
 |    | o  |    | タイトル設定             | TitleKind             | text         | System.String   |              |           |
-|    | o  |    | 位置種別                 | PositionKind          | text         | System.String   |              |           |
+|    | o  |    | 位置種別                 | LayoutKind            | text         | System.String   |              |           |
 |    | o  |    | 前景色                   | Foreground            | text         | System.String   |              | #AARRGGBB |
 |    | o  |    | 背景色                   | Background            | text         | System.String   |              | #AARRGGBB |
 |    | o  |    | 最前面                   | IsTopmost             |              | System.Boolean  |              |           |

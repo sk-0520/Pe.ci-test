@@ -10,6 +10,12 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    public enum NoteCreateTitleKind
+    {
+        Timestamp,
+        Count,
+    }
+
     public enum NotePosition
     {
         Setting,
