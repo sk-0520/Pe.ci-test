@@ -31,7 +31,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-
+        public SettingAppExecuteSettingData SelectSettingExecuteSetting()
+        {
+            var statement = LoadStatement();
+            var dto = Commander.QueryFirst<AppExecuteSettingEntityDto>(statement);
+            var result = new SettingAppExecuteSettingData() {
+                UserId = dto.UserId,
+                SendUsageStatistics = dto.SendUsageStatistics,
+            };
+            return result;
+        }
 
 
         #endregion

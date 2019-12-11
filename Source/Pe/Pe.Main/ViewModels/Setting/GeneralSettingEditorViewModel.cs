@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -81,9 +83,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         #region property
+
+        public string UserId
+        {
+            get => Model.UserId;
+            set => SetModelValue(value);
+        }
+        public bool SendUsageStatistics
+        {
+            get => Model.SendUsageStatistics;
+            set => SetModelValue(value);
+        }
+
         #endregion
 
         #region command
+
+        public ICommand CreateUserIdFromRandomCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => { }
+        ));
+
+        public ICommand CreateUserIdFromEnvironmentCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => { }
+        ));
+
         #endregion
 
         #region function

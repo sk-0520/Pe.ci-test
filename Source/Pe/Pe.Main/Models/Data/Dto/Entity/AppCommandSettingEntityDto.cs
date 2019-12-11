@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 {
-    public class AppWindowSettingEntityDao : CommonDtoBase
+    public class AppCommandSettingEntityDto : CommonDtoBase
     {
         #region property
 

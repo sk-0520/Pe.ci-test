@@ -18,6 +18,13 @@
 
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
+              <StackPanel>
+                <CheckBox IsChecked="{Binding SendUsageStatistics}" Content="send info" />
+                <Label>userid</Label>
+                <TextBox IsReadOnly="True" Text="{Binding UserId, Mode=OneWay}" />
+                <Button Content="rand" Command="{Binding CreateUserIdFromRandomCommand}" />
+                <Button Content="env" Command="{Binding CreateUserIdFromEnvironmentCommand}" />
+              </StackPanel>
             </GroupBox>
           </DataTemplate>
 

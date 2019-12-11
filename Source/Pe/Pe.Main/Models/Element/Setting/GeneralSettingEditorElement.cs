@@ -1,31 +1,35 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public abstract class GeneralSettingEditorElementBase : ElementBase
     {
-        public GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
+        public GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
+            StatementLoader = statementLoader;
         }
 
         #region property
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        protected IDatabaseStatementLoader StatementLoader { get; }
         #endregion
     }
 
     public class AppExecuteSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppExecuteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, loggerFactory)
+        public AppExecuteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
         { }
 
         #region property
@@ -46,11 +50,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppGeneralSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, loggerFactory)
+        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
         { }
 
         #region property
+
+        public string UserId { get; set; } = string.Empty;
+        public bool SendUsageStatistics { get; set; }
+
         #endregion
 
         #region function
@@ -60,7 +68,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
-
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+                UserId = setting.UserId;
+                SendUsageStatistics = setting.SendUsageStatistics;
+            }
         }
 
         #endregion
@@ -69,8 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppUpdateSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppUpdateSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, loggerFactory)
+        public AppUpdateSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
         { }
 
         #region property
@@ -93,8 +106,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppCommandSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, loggerFactory)
+        public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
         { }
 
         #region property
@@ -117,8 +130,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppNoteSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppNoteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, loggerFactory)
+        public AppNoteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
         { }
 
         #region property
@@ -141,8 +154,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppStandardInputOutputSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, loggerFactory)
+        public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
         { }
 
         #region property
@@ -164,8 +177,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppWindowSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppWindowSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, loggerFactory)
+        public AppWindowSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
         { }
 
         #region property
