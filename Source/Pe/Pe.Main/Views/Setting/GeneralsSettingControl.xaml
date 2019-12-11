@@ -30,6 +30,23 @@
 
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
+              <ComboBox ItemsSource="{Binding CultureInfoItems}" SelectedItem="{Binding SelectedCultureInfo}">
+                <ComboBox.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <VirtualizingStackPanel ScrollUnit="Item" />
+                  </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock>
+                      <Run Text="{Binding DisplayName, Mode=OneTime}" />
+                      <Run Text=" (" />
+                      <Run Text="{Binding Name, Mode=OneTime}" />
+                      <Run Text=")" />
+                    </TextBlock>
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
             </GroupBox>
           </DataTemplate>
 

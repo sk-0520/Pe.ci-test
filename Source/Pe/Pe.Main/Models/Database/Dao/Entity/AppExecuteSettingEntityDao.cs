@@ -42,12 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        public bool UpdateSettingExecuteSetting(bool sendUsageStatistics, string userId, IDatabaseCommonStatus commonStatus)
+        public bool UpdateSettingExecuteSetting(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new AppExecuteSettingEntityDto() {
-                SendUsageStatistics = sendUsageStatistics,
-                UserId = userId,
+                SendUsageStatistics = data.SendUsageStatistics,
+                UserId = data.UserId,
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;

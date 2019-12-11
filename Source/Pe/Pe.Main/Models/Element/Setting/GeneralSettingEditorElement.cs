@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
@@ -74,7 +76,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
             var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
-            appExecuteSettingEntityDao.UpdateSettingExecuteSetting(SendUsageStatistics, UserId, commandPack.CommonStatus);
+            var data = new SettingAppExecuteSettingData() {
+                SendUsageStatistics = SendUsageStatistics,
+                UserId = UserId,
+            };
+            appExecuteSettingEntityDao.UpdateSettingExecuteSetting(data, commandPack.CommonStatus);
         }
 
         #endregion
@@ -89,6 +95,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
+        public CultureInfo CultureInfo { get; set; } = CultureInfo.CurrentCulture;
+
         #endregion
 
         #region function
@@ -98,10 +106,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            SettingAppGeneralSettingData setting;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appGeneralSettingEntityDao.SelectSettingGeneralSetting();
+            }
+
+            CultureInfo = CultureInfo.GetCultureInfo(setting.Language);
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppGeneralSettingData() {
+                Language = CultureInfo.Name,
+            };
+            appGeneralSettingEntityDao.UpdateSettingGeneralSetting(data, commandPack.CommonStatus);
         }
 
         #endregion

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -163,10 +165,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            //TODO: リソース制限が必要
+            var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            CultureInfoItems = new ObservableCollection<CultureInfo>(cultures);
+        }
 
         #region property
 
+        public ObservableCollection<CultureInfo> CultureInfoItems { get; }
+        public CultureInfo SelectedCultureInfo
+        {
+            get => Model.CultureInfo;
+            set => SetModelValue(value, nameof(Model.CultureInfo));
+        }
 
         #endregion
 

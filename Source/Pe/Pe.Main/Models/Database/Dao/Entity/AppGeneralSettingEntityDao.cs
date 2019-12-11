@@ -31,8 +31,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        public SettingAppGeneralSettingData SelectSettingGeneralSetting()
+        {
+            var statement = LoadStatement();
+            var dto = Commander.QueryFirst<AppGeneralSettingEntityDto>(statement);
+            var result = new SettingAppGeneralSettingData() {
+                Language = dto.Language
+            };
+            return result;
+        }
 
-
+        public bool UpdateSettingGeneralSetting(SettingAppGeneralSettingData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = new AppGeneralSettingEntityDto() {
+                Language = data.Language,
+            };
+            commonStatus.WriteCommon(dto);
+            return Commander.Execute(statement, dto) == 1;
+        }
 
         #endregion
     }
