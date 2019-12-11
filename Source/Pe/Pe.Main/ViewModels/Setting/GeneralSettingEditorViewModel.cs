@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -32,18 +34,64 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             : base(model, loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+            PropertyChangedHooker.AddHook(nameof(Model.IsInitialized), OnInitialized);
         }
 
         #region property
 
         protected IDispatcherWrapper DispatcherWrapper { get; }
-
+        protected PropertyChangedHooker PropertyChangedHooker { get; }
         #endregion
 
         #region command
         #endregion
 
         #region function
+
+        private void OnInitialized()
+        {
+            if(!Model.IsInitialized) {
+                return;
+            }
+
+            var properties = GetType().GetProperties()
+                .Where(i => i.CanRead)
+            ;
+            foreach(var property in properties) {
+                RaisePropertyChanged(property.Name);
+            }
+        }
+
+        #endregion
+
+        #region SingleModelViewModelBase
+
+        protected override void AttachModelEventsImpl()
+        {
+            base.AttachModelEventsImpl();
+
+            Model.PropertyChanged += Model_PropertyChanged;
+        }
+
+        protected override void DetachModelEventsImpl()
+        {
+            Model.PropertyChanged -= Model_PropertyChanged;
+
+            base.DetachModelEventsImpl();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    PropertyChangedHooker.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         #region IGeneralSettingEditor
@@ -51,34 +99,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public abstract string Header { get; }
 
         #endregion
+
+        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+        }
+
+
     }
 
     public sealed class AppExecuteSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppExecuteSettingEditorElement>
     {
         public AppExecuteSettingEditorViewModel(AppExecuteSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, dispatcherWrapper, loggerFactory)
-        { }
-
-        #region property
-        #endregion
-
-        #region command
-        #endregion
-
-        #region function
-        #endregion
-
-        #region GeneralSettingEditorViewModelBase
-
-        public override string Header => ToString()!;
-
-        #endregion
-    }
-
-
-    public sealed class AppGeneralSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppGeneralSettingEditorElement>
-    {
-        public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         { }
 
@@ -106,6 +138,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public ICommand CreateUserIdFromEnvironmentCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => { }
         ));
+
+        #endregion
+
+        #region function
+        #endregion
+
+        #region GeneralSettingEditorViewModelBase
+
+        public override string Header => ToString()!;
+
+        #endregion
+    }
+
+
+    public sealed class AppGeneralSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppGeneralSettingEditorElement>
+    {
+        public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
+        { }
+
+        #region property
+
+
+        #endregion
+
+        #region command
+
 
         #endregion
 

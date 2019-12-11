@@ -4,6 +4,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -33,28 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         { }
 
         #region property
-        #endregion
-
-        #region function
-        #endregion
-
-        #region GeneralSettingEditorBase
-
-        protected override void InitializeImpl()
-        {
-        }
-
-        #endregion
-    }
-
-
-    public class AppGeneralSettingEditorElement : GeneralSettingEditorElementBase
-    {
-        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
-        { }
-
-        #region property
 
         public string UserId { get; set; } = string.Empty;
         public bool SendUsageStatistics { get; set; }
@@ -74,6 +53,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 UserId = setting.UserId;
                 SendUsageStatistics = setting.SendUsageStatistics;
             }
+
+            var userIdManager = new UserIdManager(LoggerFactory);
+            if(!userIdManager.IsValidUserId(UserId)) {
+                UserId = userIdManager.CreateFromEnvironment();
+            }
+        }
+
+        #endregion
+    }
+
+
+    public class AppGeneralSettingEditorElement : GeneralSettingEditorElementBase
+    {
+        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
+        { }
+
+        #region property
+
+        #endregion
+
+        #region function
+        #endregion
+
+        #region GeneralSettingEditorBase
+
+        protected override void InitializeImpl()
+        {
         }
 
         #endregion

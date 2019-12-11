@@ -16,7 +16,7 @@
       <ItemsControl ItemsSource="{Binding Editor.EditorItems, ElementName=root}">
         <ItemsControl.Resources>
 
-          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppExecuteSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
               <StackPanel>
                 <CheckBox IsChecked="{Binding SendUsageStatistics}" Content="send info" />
@@ -28,7 +28,7 @@
             </GroupBox>
           </DataTemplate>
 
-          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppExecuteSettingEditorViewModel}">
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
             </GroupBox>
           </DataTemplate>
