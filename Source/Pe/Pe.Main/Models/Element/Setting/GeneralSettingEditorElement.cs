@@ -25,6 +25,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
         protected IDatabaseStatementLoader StatementLoader { get; }
         #endregion
+
+        #region function
+
+        public void Save(DatabaseCommandPack commandPack)
+        {
+            SaveImpl(commandPack);
+        }
+
+        protected abstract void SaveImpl(DatabaseCommandPack commandPack);
+
+        #endregion
     }
 
     public class AppExecuteSettingEditorElement : GeneralSettingEditorElementBase
@@ -60,6 +71,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
+            var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            appExecuteSettingEntityDao.UpdateSettingExecuteSetting(SendUsageStatistics, UserId, commandPack.CommonStatus);
+        }
+
         #endregion
     }
 
@@ -80,6 +97,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region GeneralSettingEditorBase
 
         protected override void InitializeImpl()
+        {
+        }
+
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
         }
 
@@ -106,6 +127,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
+        }
+
         #endregion
     }
 
@@ -128,6 +153,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
 
+        }
+
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
         }
 
         #endregion
@@ -154,6 +183,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
+        }
+
         #endregion
     }
 
@@ -178,6 +211,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
+        }
+
         #endregion
     }
 
@@ -199,6 +236,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
 
+        }
+
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
         }
 
         #endregion

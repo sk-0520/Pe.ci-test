@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -119,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public string UserId
         {
             get => Model.UserId;
-            set => SetModelValue(value);
+            private set => SetModelValue(value);
         }
         public bool SendUsageStatistics
         {
@@ -132,11 +133,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region command
 
         public ICommand CreateUserIdFromRandomCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => { }
+            () => {
+                var userIdManager = new UserIdManager(LoggerFactory);
+                UserId = userIdManager.CreateFromRandom();
+            }
         ));
 
         public ICommand CreateUserIdFromEnvironmentCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => { }
+            () => {
+                var userIdManager = new UserIdManager(LoggerFactory);
+                UserId = userIdManager.CreateFromEnvironment();
+            }
         ));
 
         #endregion
@@ -146,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => ToString()!;
+        public override string Header => Properties.Resources.String_Setting_General_Header_Execute;
 
         #endregion
     }
@@ -173,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => ToString()!;
+        public override string Header => Properties.Resources.String_Setting_General_Header_General;
 
         #endregion
     }

@@ -63,6 +63,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            foreach(var editor in Editors) {
+                editor.Save(commandPack);
+            }
         }
 
         #endregion

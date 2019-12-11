@@ -130,6 +130,12 @@
   <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
     <value>新しいアイテム</value>
   </data>
+  <data name="String_Setting_General_Header_Execute" xml:space="preserve">
+    <value>execute</value>
+  </data>
+  <data name="String_Setting_General_Header_General" xml:space="preserve">
+    <value>general</value>
+  </data>
   <data name="String_Setting_Header_General" xml:space="preserve">
     <value>general</value>
   </data>

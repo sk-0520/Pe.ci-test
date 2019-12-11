@@ -36,10 +36,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var dto = Commander.QueryFirst<AppExecuteSettingEntityDto>(statement);
             var result = new SettingAppExecuteSettingData() {
-                UserId = dto.UserId,
                 SendUsageStatistics = dto.SendUsageStatistics,
+                UserId = dto.UserId,
             };
             return result;
+        }
+
+        public bool UpdateSettingExecuteSetting(bool sendUsageStatistics, string userId, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = new AppExecuteSettingEntityDto() {
+                SendUsageStatistics = sendUsageStatistics,
+                UserId = userId,
+            };
+            commonStatus.WriteCommon(dto);
+            return Commander.Execute(statement, dto) == 1;
         }
 
 

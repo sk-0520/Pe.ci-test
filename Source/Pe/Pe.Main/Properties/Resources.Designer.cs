@@ -129,6 +129,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   execute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Execute {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Execute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   general に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_General {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   general に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Header_General {
