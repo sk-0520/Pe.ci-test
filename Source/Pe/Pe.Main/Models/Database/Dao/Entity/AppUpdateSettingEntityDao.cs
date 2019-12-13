@@ -31,7 +31,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        public SettingAppUpdateSettingData SelectSettingUpdateSetting()
+        {
+            var statement = LoadStatement();
+            var dto = Commander.QueryFirst<AppUpdateSettingEntityDto>(statement);
+            var result = new SettingAppUpdateSettingData() {
+                IsCheckReleaseVersion = dto.CheckReleaseVersion,
+                IsCheckRcVersion = dto.CheckRcVersion,
+            };
+            return result;
+        }
 
+
+        public bool UpdateSettingUpdateSetting(SettingAppUpdateSettingData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = new AppUpdateSettingEntityDto() {
+                CheckReleaseVersion = data.IsCheckReleaseVersion,
+                CheckRcVersion = data.IsCheckRcVersion,
+            };
+            commonStatus.WriteCommon(dto);
+            return Commander.Execute(statement, dto) == 1;
+        }
 
 
         #endregion

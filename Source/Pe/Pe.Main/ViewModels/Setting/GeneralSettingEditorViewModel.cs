@@ -204,6 +204,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         #region property
+
+        public bool IsCheckReleaseVersion
+        {
+            get => Model.IsCheckReleaseVersion;
+            set => SetModelValue(value);
+        }
+        public bool IsCheckRcVersion
+        {
+            get => Model.IsCheckRcVersion;
+            set => SetModelValue(value);
+        }
+
+
         #endregion
 
         #region command

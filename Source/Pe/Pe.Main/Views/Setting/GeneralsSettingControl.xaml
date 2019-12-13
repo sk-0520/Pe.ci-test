@@ -52,6 +52,10 @@
 
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppUpdateSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
+              <StackPanel>
+                <CheckBox IsChecked="{Binding IsCheckReleaseVersion}" Content="release" />
+                <CheckBox IsChecked="{Binding IsCheckRcVersion}" Content="rc" />
+              </StackPanel>
             </GroupBox>
           </DataTemplate>
 

@@ -135,6 +135,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         { }
 
         #region property
+
+        public bool IsCheckReleaseVersion { get; set; }
+        public bool IsCheckRcVersion { get; set; }
+
         #endregion
 
         #region function
@@ -144,11 +148,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            SettingAppUpdateSettingData setting;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appGeneralSettingEntityDao = new AppUpdateSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appGeneralSettingEntityDao.SelectSettingUpdateSetting();
+            }
 
+            IsCheckReleaseVersion = setting.IsCheckReleaseVersion;
+            IsCheckRcVersion = setting.IsCheckRcVersion;
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            var appGeneralSettingEntityDao = new AppUpdateSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppUpdateSettingData() {
+                IsCheckReleaseVersion = IsCheckReleaseVersion,
+                IsCheckRcVersion = IsCheckRcVersion,
+            };
+            appGeneralSettingEntityDao.UpdateSettingUpdateSetting(data, commandPack.CommonStatus);
         }
 
         #endregion
