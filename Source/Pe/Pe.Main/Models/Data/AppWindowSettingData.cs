@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models.Data;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
+namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
-    public class AppWindowSettingEntityDto : CommonDtoBase
+    public class SettingAppWindowSettingData : DataBase
     {
         #region property
 
         public bool IsEnabled { get; set; }
-        public long Count { get; set; }
+        public int Count { get; set; }
         public TimeSpan Interval { get; set; }
 
         #endregion

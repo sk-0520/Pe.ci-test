@@ -60,12 +60,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            SettingAppExecuteSettingData setting;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
-                UserId = setting.UserId;
-                SendUsageStatistics = setting.SendUsageStatistics;
+                setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
             }
+
+            UserId = setting.UserId;
+            SendUsageStatistics = setting.SendUsageStatistics;
 
             var userIdManager = new UserIdManager(LoggerFactory);
             if(!userIdManager.IsValidUserId(UserId)) {
@@ -150,8 +152,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             SettingAppUpdateSettingData setting;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appGeneralSettingEntityDao = new AppUpdateSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                setting = appGeneralSettingEntityDao.SelectSettingUpdateSetting();
+                var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appUpdateSettingEntityDao.SelectSettingUpdateSetting();
             }
 
             IsCheckReleaseVersion = setting.IsCheckReleaseVersion;
@@ -160,12 +162,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
-            var appGeneralSettingEntityDao = new AppUpdateSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppUpdateSettingData() {
                 IsCheckReleaseVersion = IsCheckReleaseVersion,
                 IsCheckRcVersion = IsCheckRcVersion,
             };
-            appGeneralSettingEntityDao.UpdateSettingUpdateSetting(data, commandPack.CommonStatus);
+            appUpdateSettingEntityDao.UpdateSettingUpdateSetting(data, commandPack.CommonStatus);
         }
 
         #endregion
@@ -180,6 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         { }
 
         #region property
+
         #endregion
 
         #region function
@@ -189,7 +192,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
-
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
@@ -263,6 +265,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         { }
 
         #region property
+
+        public bool IsEnabled { get; set; }
+        public int Count { get; set; }
+        public TimeSpan Interval { get; set; }
+
         #endregion
 
         #region function
@@ -272,11 +279,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            SettingAppWindowSettingData setting;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appWindowSettingEntityDao = new AppWindowSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appWindowSettingEntityDao.SelectSettingWindowSetting();
+            }
 
+            IsEnabled = setting.IsEnabled;
+            Count = setting.Count;
+            Interval = setting.Interval;
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            var appWindowSettingEntityDao = new AppWindowSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppWindowSettingData() {
+                IsEnabled = IsEnabled,
+                Count = Count,
+                Interval = Interval,
+            };
+            appWindowSettingEntityDao.UpdateSettinWindowSetting(data, commandPack.CommonStatus);
         }
 
         #endregion

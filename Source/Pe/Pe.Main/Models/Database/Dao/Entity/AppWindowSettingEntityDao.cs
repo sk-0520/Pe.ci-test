@@ -31,6 +31,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        public SettingAppWindowSettingData SelectSettingWindowSetting()
+        {
+            var statement = LoadStatement();
+            var dto = Commander.QueryFirst<AppWindowSettingEntityDto>(statement);
+            var result = new SettingAppWindowSettingData() {
+                IsEnabled = dto.IsEnabled,
+                Count = ToInt(dto.Count),
+                Interval = dto.Interval,
+            };
+            return result;
+        }
+
+
+        public bool UpdateSettinWindowSetting(SettingAppWindowSettingData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = new AppWindowSettingEntityDto() {
+                IsEnabled = data.IsEnabled,
+                Count = data.Count,
+                Interval = data.Interval,
+            };
+            commonStatus.WriteCommon(dto);
+            return Commander.Execute(statement, dto) == 1;
+        }
 
 
 

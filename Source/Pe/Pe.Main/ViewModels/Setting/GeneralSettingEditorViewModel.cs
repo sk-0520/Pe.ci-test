@@ -308,6 +308,37 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         #region property
+        public bool IsEnabled
+        {
+            get => Model.IsEnabled;
+            set => SetModelValue(value);
+        }
+        public int Count
+        {
+            get => Model.Count;
+            set => SetModelValue(value);
+        }
+        public TimeSpan Interval
+        {
+            get => Model.Interval;
+            set => SetModelValue(value);
+        }
+
+        public int CountMaximum => 100;
+        public int CountMinimum => 3;
+
+        public double IntervalMinutes
+        {
+            get => Interval.TotalMinutes;
+            set
+            {
+                Interval = TimeSpan.FromMinutes(value);
+                RaisePropertyChanged();
+            }
+        }
+        public double IntervalMaximum => TimeSpan.FromMinutes(30).TotalMinutes;
+        public double IntervalMinimum => TimeSpan.FromMinutes(1).TotalMinutes;
+
         #endregion
 
         #region command

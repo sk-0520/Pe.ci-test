@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -76,6 +77,13 @@
 
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppWindowSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
+              <StackPanel>
+                <CheckBox IsChecked="{Binding IsEnabled}" Content="enable" />
+                <Label>count</Label>
+                <app_core_views:NumericUpDown Value="{Binding Count, Mode=TwoWay}" Minimum="{Binding CountMinimum}" Maximum="{Binding CountMaximum}" />
+                <Label>interval</Label>
+                <app_core_views:NumericUpDown Value="{Binding IntervalMinutes, Mode=TwoWay}" Minimum="{Binding IntervalMinimum}" Maximum="{Binding IntervalMaximum}" />
+              </StackPanel>
             </GroupBox>
           </DataTemplate>
 
