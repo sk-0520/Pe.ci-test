@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
@@ -227,7 +228,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => ToString()!;
+        public override string Header => Properties.Resources.String_Setting_General_Header_Update;
 
         #endregion
     }
@@ -240,6 +241,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         #region property
+
+        public Guid FontId
+        {
+            get => Model.FontId;
+            set => SetModelValue(value);
+        }
+        public IconBox IconBox
+        {
+            get => Model.IconBox;
+            set => SetModelValue(value);
+        }
+        public TimeSpan HideWaitTime
+        {
+            get => Model.HideWaitTime;
+            set => SetModelValue(value);
+        }
+        public bool FindTag
+        {
+            get => Model.FindTag;
+            set => SetModelValue(value);
+        }
+        public bool FindFile
+        {
+            get => Model.FindFile;
+            set => SetModelValue(value);
+        }
+
         #endregion
 
         #region command
@@ -250,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => ToString()!;
+        public override string Header => Properties.Resources.String_Setting_General_Header_Command;
 
         #endregion
     }
@@ -349,7 +377,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => ToString()!;
+        public override string Header => Properties.Resources.String_Setting_General_Header_Window;
 
         #endregion
     }

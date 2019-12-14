@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -183,6 +184,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
+        public Guid FontId { get; set; }
+        public IconBox IconBox { get; set; }
+        public TimeSpan HideWaitTime { get; set; }
+        public bool FindTag { get; set; }
+        public bool FindFile { get; set; }
+
         #endregion
 
         #region function
@@ -192,10 +199,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            SettingAppCommandSettingData setting;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
+            }
+
+            FontId = setting.FontId;
+            IconBox = setting.IconBox;
+            HideWaitTime = setting.HideWaitTime;
+            FindTag = setting.FindTag;
+            FindFile = setting.FindFile;
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppCommandSettingData() {
+                FontId = FontId,
+                IconBox = IconBox,
+                HideWaitTime = HideWaitTime,
+                FindTag = FindTag,
+                FindFile = FindFile,
+            };
+            appCommandSettingEntityDao.UpdateSettinCommandSetting(data, commandPack.CommonStatus);
         }
 
         #endregion

@@ -32,6 +32,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region function
 
 
+        public SettingAppCommandSettingData SelectSettingCommandSetting()
+        {
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+
+            var statement = LoadStatement();
+            var dto = Commander.QueryFirst<AppCommandSettingEntityDto>(statement);
+            var result = new SettingAppCommandSettingData() {
+                FontId = dto.FontId,
+                IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
+                HideWaitTime = dto.HideWaitTime,
+                FindTag = dto.FindTag,
+                FindFile = dto.FindFile,
+            };
+            return result;
+        }
+
+
+        public bool UpdateSettinCommandSetting(SettingAppCommandSettingData data, IDatabaseCommonStatus commonStatus)
+        {
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+
+            var statement = LoadStatement();
+            var dto = new AppCommandSettingEntityDto() {
+                FontId = data.FontId,
+                IconBox = iconBoxTransfer.ToString(data.IconBox),
+                HideWaitTime = data.HideWaitTime,
+                FindTag = data.FindTag,
+                FindFile = data.FindFile,
+            };
+            commonStatus.WriteCommon(dto);
+            return Commander.Execute(statement, dto) == 1;
+        }
 
 
         #endregion

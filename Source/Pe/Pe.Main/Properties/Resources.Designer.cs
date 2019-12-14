@@ -129,6 +129,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   command に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Command {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   execute に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_General_Header_Execute {
@@ -143,6 +152,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_General_Header_General {
             get {
                 return ResourceManager.GetString("String_Setting_General_Header_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   note に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Note {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   stdio に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_StandardInputOutput {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_StandardInputOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   update に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Update {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   window に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Window {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Window", resourceCulture);
             }
         }
         

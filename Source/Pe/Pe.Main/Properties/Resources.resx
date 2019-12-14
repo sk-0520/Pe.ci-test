@@ -130,11 +130,26 @@
   <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
     <value>新しいアイテム</value>
   </data>
+  <data name="String_Setting_General_Header_Command" xml:space="preserve">
+    <value>command</value>
+  </data>
   <data name="String_Setting_General_Header_Execute" xml:space="preserve">
     <value>execute</value>
   </data>
   <data name="String_Setting_General_Header_General" xml:space="preserve">
     <value>general</value>
+  </data>
+  <data name="String_Setting_General_Header_Note" xml:space="preserve">
+    <value>note</value>
+  </data>
+  <data name="String_Setting_General_Header_StandardInputOutput" xml:space="preserve">
+    <value>stdio</value>
+  </data>
+  <data name="String_Setting_General_Header_Update" xml:space="preserve">
+    <value>update</value>
+  </data>
+  <data name="String_Setting_General_Header_Window" xml:space="preserve">
+    <value>window</value>
   </data>
   <data name="String_Setting_Header_General" xml:space="preserve">
     <value>general</value>
