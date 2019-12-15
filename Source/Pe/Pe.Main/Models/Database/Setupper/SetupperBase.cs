@@ -8,20 +8,23 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data.Dto;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
     public abstract class SetupperBase
     {
-        public SetupperBase(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public SetupperBase(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
+            IdFactory = idFactory;
             StatementLoader = statementLoader;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
+        protected IIdFactory IdFactory { get; }
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected ILogger Logger { get; }
 
@@ -83,14 +86,43 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
             }
         }
 
-        protected void ExecuteStatement(IDatabaseCommander commander, string statement, IReadOnlySetupDto dto)
+        void ExecuteStatementCore(IDatabaseCommander commander, string statement, IReadOnlyDictionary<string, object> parameters)
         {
             var pairs = SplitMultiStatement(statement);
             foreach(var pair in pairs) {
                 Logger.LogInformation(pair.Key);
-                var result = commander.Execute(pair.Value, dto);
+                var result = commander.Execute(pair.Value, parameters);
                 Logger.LogInformation("result: {0}", result);
             }
+        }
+
+        protected void ExecuteStatement(IDatabaseCommander commander, string statement, IReadOnlySetupDto dto)
+        {
+            var properties = dto.GetType().GetProperties();
+            var parameters = new Dictionary<string, object>(properties.Length);
+
+            foreach(var property in properties) {
+                var rawValue = property.GetValue(dto);
+                parameters.Add(property.Name, rawValue!);
+            }
+
+            ExecuteStatementCore(commander, statement, parameters);
+        }
+
+        protected void ExecuteStatement(IDatabaseCommander commander, string statement, IReadOnlySetupDto dto, IReadOnlyDictionary<string, object> mergeParameters)
+        {
+            var properties = dto.GetType().GetProperties();
+            var parameters = new Dictionary<string, object>(properties.Length + mergeParameters.Count);
+
+            foreach(var property in properties) {
+                var rawValue = property.GetValue(dto);
+                parameters.Add(property.Name, rawValue!);
+            }
+            foreach(var pair in mergeParameters) {
+                parameters[pair.Key] = pair.Value;
+            }
+
+            ExecuteStatementCore(commander, statement, parameters);
         }
 
 

@@ -201,10 +201,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
+            var idFactory = new IdFactory(loggerFactory);
             using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
             using(var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
-                var databaseSetupper = new DatabaseSetupper(statementLoader, loggerFactory);
+                var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
                 databaseSetupper.Initialize(accessorPack);
             }
         }
@@ -216,8 +217,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
             var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
 
+            var idFactory = new IdFactory(loggerFactory);
+
             var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
-            var databaseSetupper = new DatabaseSetupper(statementLoader, loggerFactory);
+            var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
 
             //前回実行バージョンの取得と取得失敗時に再セットアップ処理
             var lastVersion = databaseSetupper.GetLastVersion(accessorPack.Main);

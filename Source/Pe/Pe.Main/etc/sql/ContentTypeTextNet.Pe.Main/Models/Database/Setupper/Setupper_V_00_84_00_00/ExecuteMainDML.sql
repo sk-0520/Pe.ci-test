@@ -1,3 +1,48 @@
+--// Fonts: Note
+insert into
+	Fonts
+	(
+		FontId,
+		FamilyName,
+		Height,
+		IsBold,
+		IsItalic,
+		IsUnderline,
+		IsStrikeThrough,
+
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
+	)
+	values
+	(
+/* FontId                */ @NoteDefaultFontId,
+/* FamilyName            */ @NoteDefaultFamilyName,
+/* Height                */ @NoteDefaultHeight,
+/* IsBold                */ @NoteDefaultIsBold,
+/* IsItalic              */ @NoteDefaultIsItalic,
+/* IsUnderline           */ @NoteDefaultIsUnderline,
+/* IsStrikeThrough       */ @NoteDefaultIsStrikeThrough,
+
+/* CreatedTimestamp      */ @CreatedTimestamp,
+/* CreatedAccount        */ @CreatedAccount,
+/* CreatedProgramName    */ @CreatedProgramName,
+/* CreatedProgramVersion */ @CreatedProgramVersion,
+/* UpdatedTimestamp      */ @UpdatedTimestamp,
+/* UpdatedAccount        */ @UpdatedAccount,
+/* UpdatedProgramName    */ @UpdatedProgramName,
+/* UpdatedProgramVersion */ @UpdatedProgramVersion,
+/* UpdatedCount          */ 0
+	)
+;
+
+
 --// AppExecuteSetting
 insert into
 	AppExecuteSetting
@@ -215,7 +260,7 @@ insert into
 	)
 	values
 	(
-/*  FontId               */ '00000000-0000-0000-0000-000000000000',
+/*  FontId               */ @NoteDefaultFontId,
 /*  TitleKind            */ 'timestamp',
 /*  LayoutKind           */ 'relative',
 /*  Foreground           */ '#ff000000',
@@ -275,5 +320,4 @@ insert into
 /* UpdatedCount          */ 0
 	)
 ;
-
 

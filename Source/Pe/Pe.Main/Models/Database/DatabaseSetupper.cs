@@ -9,21 +9,23 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data.Dto;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Models.Database.Setupper;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
     public class DatabaseSetupper
     {
-        public DatabaseSetupper(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public DatabaseSetupper(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
+            IdFactory = idFactory;
             StatementLoader = statementLoader;
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
-
+        IIdFactory IdFactory { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
@@ -86,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             Logger.LogInformation("init");
 
             var dto = CreateSetupDto(new Version(0, 0, 0, 0));
-            var setup = new Setupper_V_00_84_00_00(StatementLoader, LoggerFactory);
+            var setup = new Setupper_V_00_84_00_00(IdFactory, StatementLoader, LoggerFactory);
 
             Execute(accessorPack, dto, setup);
         }
@@ -99,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             var setuppers = new SetupperBase[] {
                 // これ最後
-                new Setupper_V_99_99_99_99(StatementLoader, LoggerFactory),
+                new Setupper_V_99_99_99_99(IdFactory, StatementLoader, LoggerFactory),
             };
 
             foreach(var setupper in setuppers) {
