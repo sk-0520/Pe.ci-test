@@ -36,6 +36,7 @@ using ContentTypeTextNet.Pe.Main.Views.ExtendsExecute;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition);
         bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
-        FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater);
+        FontElement CreateFontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater);
 
         StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen);
 
@@ -180,9 +181,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater)
+            public FontElement CreateFontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater)
             {
-                var element = DiContainer.Build<FontElement>(fontId, parentUpdater);
+                var element = DiContainer.Build<FontElement>(fontTarget, fontId, parentUpdater);
                 element.Initialize();
                 return element;
             }

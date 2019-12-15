@@ -31,9 +31,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #endregion
 
-        public FontElement(Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public FontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            FontTarget = fontTarget;
             FontId = fontId;
             ParentUpdater = parentUpdater;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             IsStrikeThrough = false,
         };
 
-
+        public FontTarget FontTarget { get; }
 
         #endregion
 
@@ -110,12 +111,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             ThrowIfDisposed();
 
             var data = IsDefaultFont
-                ? FontTheme.GetDefaultFont(FontTarget.NoteContent)
+                ? FontTheme.GetDefaultFont(FontTarget)
                 : GetFontData()
             ;
             if(data == null) {
                 Logger.LogInformation("フォントの読み込みに失敗: {0}", FontId);
-                data = FontTheme.GetDefaultFont(FontTarget.NoteContent);
+                data = FontTheme.GetDefaultFont(FontTarget);
             }
             Debug.Assert(data != null);
 

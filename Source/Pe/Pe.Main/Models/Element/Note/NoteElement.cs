@@ -295,7 +295,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ForegroundColor = noteData.ForegroundColor;
             BackgroundColor = noteData.BackgroundColor;
 
-            FontElement = OrderManager.CreateFontElement(noteData.FontId, UpdateFontId);
+            FontElement = OrderManager.CreateFontElement(FontTarget.NoteContent, noteData.FontId, UpdateFontId);
             var oldContentElement = ContentElement;
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
             oldContentElement?.Dispose();

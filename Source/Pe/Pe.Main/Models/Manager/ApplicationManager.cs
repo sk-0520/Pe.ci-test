@@ -38,6 +38,7 @@ using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -544,9 +545,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateNoteContentElement(noteId, contentKind);
         }
 
-        public FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater)
+        public FontElement CreateFontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater)
         {
-            return OrderManager.CreateFontElement(fontId, parentUpdater);
+            return OrderManager.CreateFontElement(fontTarget, fontId, parentUpdater);
         }
 
         public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)

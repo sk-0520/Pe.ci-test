@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 {
-    public class FontViewModel : SingleModelViewModelBase<FontElement>
+    public class FontViewModel : SingleModelViewModelBase<FontElement>, IFlushable
     {
         public FontViewModel(FontElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -96,6 +96,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
         {
             base.DetachModelEventsImpl();
             Model.PropertyChanged -= Model_PropertyChanged;
+        }
+
+        #endregion
+
+        #region IFlushable
+
+        public void Flush()
+        {
+            Model.SafeFlush();
         }
 
         #endregion
