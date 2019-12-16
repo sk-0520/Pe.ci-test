@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
     {
         public override void SetValue(IDbDataParameter parameter, Version value)
         {
-            parameter.Value = value.ToString(4);
+            parameter.Value = value.ToString(3);
         }
 
         public override Version Parse(object value)
