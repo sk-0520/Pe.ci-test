@@ -19,6 +19,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
         public FontViewModel(FontElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            if(!Model.IsInitialized) {
+                throw new ArgumentException(nameof(Model) + "." + nameof(Model.Initialize));
+            }
+
             PropertyChangedHooker = new PropertyChangedHooker(dispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.FamilyName), nameof(FontFamily));
             PropertyChangedHooker.AddHook(nameof(Model.Size), new[] { nameof(Size), nameof(FontSize) });
@@ -82,6 +86,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 
         public virtual double MinimumSize => 6;
         public virtual double MaximumSize => 72;
+        #endregion
+
+        #region function
+
+        public void Refresh()
+        {
+            var propertyNames = new[] {
+                nameof(FontFamily),
+                nameof(FontSize),
+                nameof(Size),
+                nameof(IsItalic),
+                nameof(FontStyle),
+                nameof(IsBold),
+                nameof(FontWeight),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
         #endregion
 
         #region SingleModelViewModelBase

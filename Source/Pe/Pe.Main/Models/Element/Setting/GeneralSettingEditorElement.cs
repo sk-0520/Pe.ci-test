@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -7,6 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
@@ -184,7 +186,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        public Guid FontId { get; set; }
+        //public Guid FontId { get; set; }
+        public FontElement? Font { get; private set; }
         public IconBox IconBox { get; set; }
         public TimeSpan HideWaitTime { get; set; }
         public bool FindTag { get; set; }
@@ -205,7 +208,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
             }
 
-            FontId = setting.FontId;
+            Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font.Initialize();
+
             IconBox = setting.IconBox;
             HideWaitTime = setting.HideWaitTime;
             FindTag = setting.FindTag;
@@ -214,15 +219,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            Debug.Assert(Font != null);
+
             var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppCommandSettingData() {
-                FontId = FontId,
+                FontId = Font.FontId,
                 IconBox = IconBox,
                 HideWaitTime = HideWaitTime,
                 FindTag = FindTag,
                 FindFile = FindFile,
             };
             appCommandSettingEntityDao.UpdateSettinCommandSetting(data, commandPack.CommonStatus);
+
+            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
+
         }
 
         #endregion

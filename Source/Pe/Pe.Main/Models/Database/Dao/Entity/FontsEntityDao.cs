@@ -117,6 +117,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ExecuteUpdate(builder) == 1;
         }
 
+        public bool UpdateFont(Guid fontId, FontData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = ConvertFromData(data, commonStatus);
+            parameter.FontId = fontId;
+            return Commander.Execute(statement, parameter) == 1;
+        }
 
         #endregion
     }
