@@ -31,6 +31,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        public Guid SelectCommandSettingFontId()
+        {
+            var statement = LoadStatement();
+            return Commander.QueryFirst<Guid>(statement);
+        }
+
 
         public SettingAppCommandSettingData SelectSettingCommandSetting()
         {

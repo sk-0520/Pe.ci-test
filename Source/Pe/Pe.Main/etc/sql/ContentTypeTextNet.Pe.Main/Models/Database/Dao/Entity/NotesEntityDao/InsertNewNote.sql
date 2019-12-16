@@ -1,20 +1,21 @@
-﻿
+
 insert into
 	Notes
 	(
 		NoteId,
-		Title,
 		ScreenName,
-		LayoutKind,
 		IsVisible,
-		FontId,
-		ForegroundColor,
-		BackgroundColor,
-		IsTopmost,
 		IsLocked,
 		IsCompact,
 		TextWrap,
 		ContentKind,
+
+		Title,
+		LayoutKind,
+		FontId,
+		ForegroundColor,
+		BackgroundColor,
+		IsTopmost,
 
 		[CreatedTimestamp],
 		[CreatedAccount],
@@ -27,21 +28,27 @@ insert into
 		[UpdatedCount]
 
 	)
-	values
-	(
+	select
 /* NoteId                */ @NoteId,
-/* Title                 */ @Title,
 /* ScreenName            */ @ScreenName,
-/* LayoutKind            */ @LayoutKind,
 /* IsVisible             */ @IsVisible,
-/* FontId                */ @FontId,
-/* ForegroundColor       */ @ForegroundColor,
-/* BackgroundColor       */ @BackgroundColor,
-/* IsTopmost             */ @IsTopmost,
 /* IsLocked              */ @IsLocked,
 /* IsCompact             */ @IsCompact,
 /* TextWrap              */ @TextWrap,
 /* ContentKind           */ @ContentKind,
+
+/* Title                 */
+		case AppNoteSetting.TitleKind
+			when 'timestamp' then
+				strftime('%Y/%m/%d %H:%M:%S', CURRENT_TIMESTAMP, 'localtime')
+			else
+				(select count(NoteId) + 1 from Notes)
+		end,
+/* LayoutKind            */ AppNoteSetting.LayoutKind,
+/* FontId                */ AppNoteSetting.FontId,
+/* ForegroundColor       */ AppNoteSetting.Foreground,
+/* BackgroundColor       */ AppNoteSetting.Background,
+/* IsTopmost             */ AppNoteSetting.IsTopmost,
 /*                       */
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,
@@ -52,4 +59,5 @@ insert into
 /* UpdatedProgramName    */ @UpdatedProgramName,
 /* UpdatedProgramVersion */ @UpdatedProgramVersion,
 /* UpdatedCount          */ 0
-	)
+	from
+		AppNoteSetting

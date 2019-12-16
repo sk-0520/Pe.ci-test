@@ -18,68 +18,53 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 {
-    public delegate void ParentUpdater(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation);
 
     public class FontElement : ElementBase, IFlushable
     {
         #region variable
 
-        string _familyName =  string.Empty;
+        string _familyName = string.Empty;
         bool _isItalic;
         bool _isBold;
         double _size;
 
         #endregion
 
-        public FontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public FontElement(Guid fontId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            FontTarget = fontTarget;
             FontId = fontId;
-            ParentUpdater = parentUpdater;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
-            FontTheme = fontTheme;
-            IdFactory = idFactory;
-
-            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
         }
 
         #region property
 
-        public Guid FontId { get; private set; }
-        ParentUpdater ParentUpdater { get; }
-        IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
-        IFontTheme FontTheme { get; }
-        IIdFactory IdFactory { get; }
+        public Guid FontId { get; protected set; }
+        protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        protected IDatabaseStatementLoader StatementLoader { get; }
 
-        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
-        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
-
-        public string FamilyName
+        public virtual string FamilyName
         {
             get => this._familyName;
-            private set => SetProperty(ref this._familyName, value);
+            set => SetProperty(ref this._familyName, value);
         }
 
-        public bool IsItalic
+        public virtual bool IsItalic
         {
             get => this._isItalic;
-            private set => SetProperty(ref this._isItalic, value);
+            set => SetProperty(ref this._isItalic, value);
         }
-        public bool IsBold
+        public virtual bool IsBold
         {
             get => this._isBold;
-            private set => SetProperty(ref this._isBold, value);
+            set => SetProperty(ref this._isBold, value);
         }
-        public double Size
+        public virtual double Size
         {
             get => this._size;
-            private set => SetProperty(ref this._size, value);
+            set => SetProperty(ref this._size, value);
         }
-
-        public bool IsDefaultFont => FontId == Guid.Empty;
 
         public FontData FontData => new FontData() {
             FamilyName = FamilyName,
@@ -90,13 +75,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             IsStrikeThrough = false,
         };
 
-        public FontTarget FontTarget { get; }
 
         #endregion
 
         #region function
 
-        FontData? GetFontData()
+        protected virtual FontData GetFontData()
         {
             ThrowIfDisposed();
 
@@ -110,15 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         {
             ThrowIfDisposed();
 
-            var data = IsDefaultFont
-                ? FontTheme.GetDefaultFont(FontTarget)
-                : GetFontData()
-            ;
-            if(data == null) {
-                Logger.LogInformation("フォントの読み込みに失敗: {0}", FontId);
-                data = FontTheme.GetDefaultFont(FontTarget);
-            }
-            Debug.Assert(data != null);
+            var data = GetFontData();
 
             var fc = new FontConverter(LoggerFactory);
             FamilyName = data.FamilyName;
@@ -127,9 +103,76 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             IsItalic = data.IsItalic;
         }
 
+        #endregion
+
+
+        #region ElementBase
+
+        protected override void InitializeImpl()
+        {
+            LoadFont();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region IFlushable
+
+        public virtual void Flush()
+        { }
+
+        #endregion
+    }
+
+    public delegate void ParentUpdater(SavingFontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation);
+
+    public class SavingFontElement : FontElement
+    {
+        public SavingFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
+            : base(fontId, mainDatabaseBarrier, statementLoader, loggerFactory)
+        {
+            DefaultFontKind = defaultFontKind;
+            ParentUpdater = parentUpdater;
+            FontTheme = fontTheme;
+            IdFactory = idFactory;
+
+            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
+        }
+
+        #region property
+        public DefaultFontKind DefaultFontKind { get; }
+
+        ParentUpdater ParentUpdater { get; }
+        IFontTheme FontTheme { get; }
+        IIdFactory IdFactory { get; }
+
+        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
+        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+
+        public bool IsDefaultFont { get; private set; } = true;
+
+
+        //public FontTarget FontTarget { get; }
+
+        #endregion
+
+        #region function
+
         void CreateAndSaveFontId(IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
+            if(!IsDefaultFont) {
+                throw new InvalidOperationException(nameof(IsDefaultFont));
+            }
 
             var fontId = IdFactory.CreateFontId();
             var fontConverter = new FontConverter(LoggerFactory);
@@ -145,6 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             dao.InsertFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
 
             FontId = fontId;
+            IsDefaultFont = false;
             RaisePropertyChanged(nameof(FontId));
 
             ParentUpdater(this, commander, implementation);
@@ -165,57 +209,88 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         }
 
-        public void ChangeFamilyNameDelaySave(string familyName)
-        {
-            ThrowIfDisposed();
-
-            FamilyName = familyName;
-            UpdateValueDelaySave((d, s) => d.UpdateFamilyName(FontId, FamilyName, s), UniqueKeyPool.Get());
-        }
-
-        public void ChangeBoldDelaySave(bool isBold)
-        {
-            ThrowIfDisposed();
-
-            IsBold = isBold;
-            UpdateValueDelaySave((d, s) => d.UpdateBold(FontId, IsBold, s), UniqueKeyPool.Get());
-        }
-
-        public void ChangeItalicDelaySave(bool isItalic)
-        {
-            ThrowIfDisposed();
-
-            IsItalic = isItalic;
-            UpdateValueDelaySave((d, s) => d.UpdateItalic(FontId, IsItalic, s), UniqueKeyPool.Get());
-        }
-
-        public void ChangeSizeDelaySave(double size)
-        {
-            ThrowIfDisposed();
-
-            Size = size;
-            UpdateValueDelaySave((d, s) => d.UpdateHeight(FontId, Size, s), UniqueKeyPool.Get());
-        }
-
         #endregion
 
-        #region IFlushable
 
-        public void Flush()
+        #region FontElementBase
+
+        public override string FamilyName
+        {
+            get => base.FamilyName;
+            set
+            {
+                base.FamilyName = value;
+                UpdateValueDelaySave((d, s) => d.UpdateFamilyName(FontId, FamilyName, s), UniqueKeyPool.Get());
+            }
+        }
+        public override bool IsItalic
+        {
+            get => base.IsItalic;
+            set
+            {
+                base.IsItalic = value;
+                UpdateValueDelaySave((d, s) => d.UpdateItalic(FontId, IsItalic, s), UniqueKeyPool.Get());
+            }
+        }
+        public override bool IsBold
+        {
+            get => base.IsBold;
+            set
+            {
+                base.IsBold = value;
+                UpdateValueDelaySave((d, s) => d.UpdateBold(FontId, IsBold, s), UniqueKeyPool.Get());
+            }
+        }
+        public override double Size
+        {
+            get => base.Size;
+            set
+            {
+                base.Size = value;
+                UpdateValueDelaySave((d, s) => d.UpdateHeight(FontId, Size, s), UniqueKeyPool.Get());
+            }
+        }
+
+        public override void Flush()
         {
             ThrowIfDisposed();
 
             MainDatabaseLazyWriter.SafeFlush();
         }
 
-        #endregion
-
-        #region ElementBase
-
-        protected override void InitializeImpl()
+        protected override FontData GetFontData()
         {
-            LoadFont();
+            Guid defaultFontId;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                switch(DefaultFontKind) {
+                    case DefaultFontKind.Note: {
+                            var dao = new AppNoteSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            defaultFontId = dao.SelectAppNoteSettingFontId();
+                        }
+                        break;
+
+                    case DefaultFontKind.Command: {
+                            var dao = new AppCommandSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            defaultFontId = dao.SelectCommandSettingFontId();
+                        }
+                        break;
+
+                    case DefaultFontKind.LauncherToolbar: {
+                            var dao = new AppLauncherToolbarSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            defaultFontId = dao.SelectAppLauncherToolbarSettingFontId();
+                        }
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
+            IsDefaultFont = FontId == defaultFontId;
+
+            return base.GetFontData();
         }
+
 
         protected override void Dispose(bool disposing)
         {
@@ -230,4 +305,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #endregion
     }
+
+
 }

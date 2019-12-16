@@ -545,9 +545,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateNoteContentElement(noteId, contentKind);
         }
 
-        public FontElement CreateFontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater)
+        public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater)
         {
-            return OrderManager.CreateFontElement(fontTarget, fontId, parentUpdater);
+            return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
         }
 
         public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)

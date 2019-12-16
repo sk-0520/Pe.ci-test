@@ -5,6 +5,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
+    [Obsolete]
     public enum FontTarget
     {
         LauncherToolbar,
@@ -16,6 +17,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     {
         #region function
 
+        [Obsolete]
         FontData GetDefaultFont(FontTarget fontTarget);
 
         #endregion

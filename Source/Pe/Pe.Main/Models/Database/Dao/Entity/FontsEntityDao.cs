@@ -67,18 +67,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return dto;
         }
 
-        public FontData? SelectFont(Guid fontId)
+        public FontData SelectFont(Guid fontId)
         {
             var statement = LoadStatement();
             var param = new {
                 FontId = fontId,
             };
-            var dto = Commander.QueryFirstOrDefault<FontsRowDto>(statement, param);
-            if(dto != null) {
-                return ConvertFromDto(dto);
-            }
-
-            return null;
+            var dto = Commander.QueryFirst<FontsRowDto>(statement, param);
+            return ConvertFromDto(dto);
         }
 
         public bool InsertFont(Guid fontId, FontData fontData, IDatabaseCommonStatus databaseCommonStatus)

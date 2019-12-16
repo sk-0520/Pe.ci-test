@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         IDatabaseStatementLoader StatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         INoteTheme NoteTheme { get; }
-        public FontElement? FontElement { get; private set; }
+        public SavingFontElement? FontElement { get; private set; }
 
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
@@ -189,16 +189,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             var noteData = new NoteData() {
                 NoteId = NoteId,
-                FontId = Guid.Empty,
-                Title = DateTime.Now.ToString(), //TODO: タイトル
-                BackgroundColor = Colors.Yellow,
-                ForegroundColor = Colors.Black,
+                //FontId = Guid.Empty,
+                //Title = DateTime.Now.ToString(), //TODO: タイトル
+                //BackgroundColor = Colors.Yellow,
+                //ForegroundColor = Colors.Black,
                 ScreenName = this._dockScreen.DeviceName,
                 IsCompact = false,
                 IsLocked = false,
-                IsTopmost = false,
+                //IsTopmost = false,
                 IsVisible = true,
-                LayoutKind = NoteLayoutKind.Absolute,
+                //LayoutKind = NoteLayoutKind.Absolute,
                 TextWrap = true,
                 ContentKind = NoteContentKind.Plain,
             };
@@ -240,6 +240,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
                 var screenOperator = new ScreenOperator(LoggerFactory);
                 screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+
+                noteData = notesEntityDao.SelectNote(NoteId)!;
 
                 commander.Commit();
             }
@@ -295,13 +297,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ForegroundColor = noteData.ForegroundColor;
             BackgroundColor = noteData.BackgroundColor;
 
-            FontElement = OrderManager.CreateFontElement(FontTarget.NoteContent, noteData.FontId, UpdateFontId);
+            FontElement = OrderManager.CreateFontElement(DefaultFontKind.Note, noteData.FontId, UpdateFontId);
             var oldContentElement = ContentElement;
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
             oldContentElement?.Dispose();
         }
 
-        void UpdateFontId(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        void UpdateFontId(SavingFontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
 

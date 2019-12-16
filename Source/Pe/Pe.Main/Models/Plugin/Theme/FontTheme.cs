@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         #region IFontTheme
 
+        [Obsolete]
         public FontData GetDefaultFont(FontTarget fontTarget)
         {
             var fc = new FontConverter(Logger);

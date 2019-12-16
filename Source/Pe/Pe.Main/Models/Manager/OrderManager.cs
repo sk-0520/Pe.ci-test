@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition);
         bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
-        FontElement CreateFontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater);
+        SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater);
 
         StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen);
 
@@ -181,9 +181,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public FontElement CreateFontElement(FontTarget fontTarget, Guid fontId, ParentUpdater parentUpdater)
+            public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater)
             {
-                var element = DiContainer.Build<FontElement>(fontTarget, fontId, parentUpdater);
+                var element = DiContainer.Build<SavingFontElement>(defaultFontKind, fontId, parentUpdater);
                 element.Initialize();
                 return element;
             }
