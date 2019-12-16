@@ -41,6 +41,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
                 ["NoteDefaultIsItalic"] = fc.IsItalic(SystemFonts.MessageFontStyle),
                 ["NoteDefaultIsUnderline"] = false,
                 ["NoteDefaultIsStrikeThrough"] = false,
+                // command
+                ["CommandFontId"] = IdFactory.CreateFontId(),
+                ["CommandFamilyName"] = fc.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily),
+                ["CommandHeight"] = SystemFonts.MessageFontSize,
+                ["CommandIsBold"] = fc.IsBold(SystemFonts.MessageFontWeight),
+                ["CommandIsItalic"] = fc.IsItalic(SystemFonts.MessageFontStyle),
+                ["CommandIsUnderline"] = false,
+                ["CommandIsStrikeThrough"] = false,
+                // stdio
+                ["StdioFontId"] = IdFactory.CreateFontId(),
+                ["StdioFamilyName"] = fc.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily),
+                ["StdioHeight"] = SystemFonts.MessageFontSize,
+                ["StdioIsBold"] = fc.IsBold(SystemFonts.MessageFontWeight),
+                ["StdioIsItalic"] = fc.IsItalic(SystemFonts.MessageFontStyle),
+                ["StdioIsUnderline"] = false,
+                ["StdioIsStrikeThrough"] = false,
+                // launcher toolbar
+                ["LauncherToolbarFontId"] = IdFactory.CreateFontId(),
+                ["LauncherToolbarFamilyName"] = fc.GetOriginalFontFamilyName(SystemFonts.MessageFontFamily),
+                ["LauncherToolbarHeight"] = SystemFonts.MessageFontSize,
+                ["LauncherToolbarIsBold"] = fc.IsBold(SystemFonts.MessageFontWeight),
+                ["LauncherToolbarIsItalic"] = fc.IsItalic(SystemFonts.MessageFontStyle),
+                ["LauncherToolbarIsUnderline"] = false,
+                ["LauncherToolbarIsStrikeThrough"] = false,
             };
 
             ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(GetType()), dto, parameters);

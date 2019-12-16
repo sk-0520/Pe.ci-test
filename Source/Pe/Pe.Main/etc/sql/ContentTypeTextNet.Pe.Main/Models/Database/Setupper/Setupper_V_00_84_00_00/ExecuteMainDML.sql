@@ -42,6 +42,138 @@ insert into
 	)
 ;
 
+--// Fonts: Command
+insert into
+	Fonts
+	(
+		FontId,
+		FamilyName,
+		Height,
+		IsBold,
+		IsItalic,
+		IsUnderline,
+		IsStrikeThrough,
+
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
+	)
+	values
+	(
+/* FontId                */ @CommandFontId,
+/* FamilyName            */ @CommandFamilyName,
+/* Height                */ @CommandHeight,
+/* IsBold                */ @CommandIsBold,
+/* IsItalic              */ @CommandIsItalic,
+/* IsUnderline           */ @CommandIsUnderline,
+/* IsStrikeThrough       */ @CommandIsStrikeThrough,
+
+/* CreatedTimestamp      */ @CreatedTimestamp,
+/* CreatedAccount        */ @CreatedAccount,
+/* CreatedProgramName    */ @CreatedProgramName,
+/* CreatedProgramVersion */ @CreatedProgramVersion,
+/* UpdatedTimestamp      */ @UpdatedTimestamp,
+/* UpdatedAccount        */ @UpdatedAccount,
+/* UpdatedProgramName    */ @UpdatedProgramName,
+/* UpdatedProgramVersion */ @UpdatedProgramVersion,
+/* UpdatedCount          */ 0
+	)
+;
+
+--// Fonts: Stdio
+insert into
+	Fonts
+	(
+		FontId,
+		FamilyName,
+		Height,
+		IsBold,
+		IsItalic,
+		IsUnderline,
+		IsStrikeThrough,
+
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
+	)
+	values
+	(
+/* FontId                */ @StdioFontId,
+/* FamilyName            */ @StdioFamilyName,
+/* Height                */ @StdioHeight,
+/* IsBold                */ @StdioIsBold,
+/* IsItalic              */ @StdioIsItalic,
+/* IsUnderline           */ @StdioIsUnderline,
+/* IsStrikeThrough       */ @StdioIsStrikeThrough,
+
+/* CreatedTimestamp      */ @CreatedTimestamp,
+/* CreatedAccount        */ @CreatedAccount,
+/* CreatedProgramName    */ @CreatedProgramName,
+/* CreatedProgramVersion */ @CreatedProgramVersion,
+/* UpdatedTimestamp      */ @UpdatedTimestamp,
+/* UpdatedAccount        */ @UpdatedAccount,
+/* UpdatedProgramName    */ @UpdatedProgramName,
+/* UpdatedProgramVersion */ @UpdatedProgramVersion,
+/* UpdatedCount          */ 0
+	)
+;
+
+
+--// Fonts: LauncherToolbar
+insert into
+	Fonts
+	(
+		FontId,
+		FamilyName,
+		Height,
+		IsBold,
+		IsItalic,
+		IsUnderline,
+		IsStrikeThrough,
+
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
+	)
+	values
+	(
+/* FontId                */ @LauncherToolbarFontId,
+/* FamilyName            */ @LauncherToolbarFamilyName,
+/* Height                */ @LauncherToolbarHeight,
+/* IsBold                */ @LauncherToolbarIsBold,
+/* IsItalic              */ @LauncherToolbarIsItalic,
+/* IsUnderline           */ @LauncherToolbarIsUnderline,
+/* IsStrikeThrough       */ @LauncherToolbarIsStrikeThrough,
+
+/* CreatedTimestamp      */ @CreatedTimestamp,
+/* CreatedAccount        */ @CreatedAccount,
+/* CreatedProgramName    */ @CreatedProgramName,
+/* CreatedProgramVersion */ @CreatedProgramVersion,
+/* UpdatedTimestamp      */ @UpdatedTimestamp,
+/* UpdatedAccount        */ @UpdatedAccount,
+/* UpdatedProgramName    */ @UpdatedProgramName,
+/* UpdatedProgramVersion */ @UpdatedProgramVersion,
+/* UpdatedCount          */ 0
+	)
+;
 
 --// AppExecuteSetting
 insert into
@@ -145,7 +277,7 @@ insert into
 	(
 /* CheckReleaseVersion   */ false,
 /* CheckRcVersion        */ false,
-/* IgnoreVersion         */ '0.0.0.0',
+/* IgnoreVersion         */ '0.0.0',
 
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,
@@ -218,7 +350,7 @@ insert into
 	)
 	values
 	(
-/* FontId                */ '00000000-0000-0000-0000-000000000000',
+/* FontId                */ @CommandFontId,
 /* IconBox               */ 'small',
 /* HideWaitTime          */ '0.00:00.05.0',
 /* FindTag               */ true,
@@ -302,7 +434,7 @@ insert into
 	)
 	values
 	(
-/*  FontId               */ '00000000-0000-0000-0000-000000000000',
+/*  FontId               */ @StdioFontId,
 /*  OutputForeground     */ '#ffffffff',
 /*  OutputBackground     */ '#ff000000',
 /*  ErrorForeground      */ '#ffff0000',
@@ -320,4 +452,53 @@ insert into
 /* UpdatedCount          */ 0
 	)
 ;
+
+--// AppLauncherToolbarSetting
+insert into
+	AppLauncherToolbarSetting
+	(
+		[PositionKind],
+		[Direction],
+		[IconBox],
+		[FontId],
+		[AutoHideTimeout],
+		[TextWidth],
+		[IsVisible],
+		[IsTopmost],
+		[IsAutoHide],
+		[IsIconOnly],
+
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
+	)
+	values
+	(
+/* PositionKind             */ 'right',
+/* Direction                */ 'left-top',
+/* IconBox                  */ 'normal',
+/* FontId                   */ @LauncherToolbarFontId,
+/* AutoHideTimeout          */ '0.00:00:03.0',
+/* TextWidth                */ 80,
+/* IsVisible                */ true,
+/* IsTopmost                */ true,
+/* IsAutoHide               */ false,
+/* IsIconOnly               */ true,
+
+/* CreatedTimestamp      */ @CreatedTimestamp,
+/* CreatedAccount        */ @CreatedAccount,
+/* CreatedProgramName    */ @CreatedProgramName,
+/* CreatedProgramVersion */ @CreatedProgramVersion,
+/* UpdatedTimestamp      */ @UpdatedTimestamp,
+/* UpdatedAccount        */ @UpdatedAccount,
+/* UpdatedProgramName    */ @UpdatedProgramName,
+/* UpdatedProgramVersion */ @UpdatedProgramVersion,
+/* UpdatedCount          */ 0
+	)
 

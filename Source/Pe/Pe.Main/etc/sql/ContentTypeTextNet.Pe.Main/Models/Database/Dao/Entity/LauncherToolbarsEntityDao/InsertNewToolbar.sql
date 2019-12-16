@@ -1,4 +1,4 @@
-﻿insert into
+insert into
 	LauncherToolbars
 	(
 		[LauncherToolbarId],
