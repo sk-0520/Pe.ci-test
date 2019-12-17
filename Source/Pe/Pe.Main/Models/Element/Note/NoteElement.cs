@@ -51,12 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen? dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
             this._dockScreen = dockScreen; // プロパティは静かに暮らしたい
-            Position = notePosition;
+            StartupPosition = startupPosition;
             OrderManager = orderManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             get => this._dockScreen ?? Screen.PrimaryScreen; //TODO: [NOTE]決定的に間違ってる気がする
             private set => SetProperty(ref this._dockScreen, value);
         }
-        public NotePosition Position { get; }
+        public NoteStartupPosition StartupPosition { get; }
         IOrderManager OrderManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             this._dockScreen = this._dockScreen ?? Screen.PrimaryScreen;
-            if(Position != NotePosition.Setting) {
+            if(StartupPosition != NoteStartupPosition.Setting) {
                 this._dockScreen = Screen.FromDevicePoint(cursorLocation);
             }
 

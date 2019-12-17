@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -248,6 +249,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         { }
 
         #region property
+
+        public FontElement? Font { get; private set; }
+        public NoteCreateTitleKind TitleKind { get; set; }
+        public NoteLayoutKind LayoutKind { get; set; }
+        public Color ForegroundColor { get; set; }
+        public Color BackgroundColor { get; set; }
+        public bool IsTopmost { get; set; }
+
         #endregion
 
         #region function
@@ -257,11 +266,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            SettingAppNoteSettingData setting;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appNoteSettingEntityDao = new AppNoteSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appNoteSettingEntityDao.SelectSettingNoteSetting();
+            }
 
+            Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font.Initialize();
+
+            TitleKind = setting.TitleKind;
+            LayoutKind = setting.LayoutKind;
+            ForegroundColor = setting.ForegroundColor;
+            BackgroundColor = setting.BackgroundColor;
+            IsTopmost = setting.IsTopmost;
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            Debug.Assert(Font != null);
+
+            var appNoteSettingEntityDao = new AppNoteSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppNoteSettingData() {
+                FontId = Font.FontId,
+                TitleKind = TitleKind,
+                LayoutKind = LayoutKind,
+                ForegroundColor = ForegroundColor,
+                BackgroundColor = BackgroundColor,
+                IsTopmost = IsTopmost,
+            };
+            appNoteSettingEntityDao.UpdateSettingNoteSetting(data, commandPack.CommonStatus);
+
+            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
+
         }
 
         #endregion

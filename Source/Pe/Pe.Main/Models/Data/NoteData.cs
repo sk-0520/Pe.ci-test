@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Count,
     }
 
-    public enum NotePosition
+    public enum NoteStartupPosition
     {
         Setting,
         CursorPosition,

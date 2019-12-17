@@ -83,7 +83,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(SelectedColor),
             typeof(Color),
             typeof(ColorCanvas),
-            new PropertyMetadata(Colors.Red, OnSelectedColorPropertyChanged)
+            new FrameworkPropertyMetadata(
+                Colors.Red,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnSelectedColorPropertyChanged
+            )
         );
 
         public Color SelectedColor
@@ -158,7 +162,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Red),
             typeof(byte),
             typeof(ColorCanvas),
-            new PropertyMetadata((byte)255, OnRedPropertyChanged)
+            new FrameworkPropertyMetadata(
+                (byte)255,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnRedPropertyChanged
+            )
         );
 
         public byte Red
@@ -183,7 +191,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Blue),
             typeof(byte),
             typeof(ColorCanvas),
-            new PropertyMetadata((byte)0, OnBluePropertyChanged)
+            new FrameworkPropertyMetadata(
+                (byte)0,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnBluePropertyChanged
+            )
         );
 
         public byte Blue
@@ -208,7 +220,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Green),
             typeof(byte),
             typeof(ColorCanvas),
-            new PropertyMetadata((byte)0, OnGreenPropertyChanged)
+            new FrameworkPropertyMetadata(
+                (byte)0,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnGreenPropertyChanged
+            )
         );
 
         public byte Green
@@ -233,7 +249,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Alpha),
             typeof(byte),
             typeof(ColorCanvas),
-            new PropertyMetadata((byte)255, OnAlphaPropertyChanged)
+            new FrameworkPropertyMetadata(
+                (byte)255,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnAlphaPropertyChanged
+            )
         );
 
         public byte Alpha

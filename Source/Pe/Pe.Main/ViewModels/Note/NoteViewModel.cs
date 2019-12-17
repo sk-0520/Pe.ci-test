@@ -458,15 +458,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
 
-        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position)
+        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NoteStartupPosition startupPosition)
         {
-            if(position == NotePosition.Setting) {
+            if(startupPosition == NoteStartupPosition.Setting) {
                 var settingLayout = Model.GetLayout();
                 if(settingLayout != null) {
                     return (false, settingLayout);
                 } else {
                     Logger.LogInformation("レイアウト未取得のため対象ディスプレイ中央表示: {0}, {1}", Model.DockScreen.DeviceName, ObjectDumper.GetDumpString(Model.DockScreen));
-                    position = NotePosition.CenterScreen;
+                    startupPosition = NoteStartupPosition.CenterScreen;
                 }
             }
 
@@ -479,7 +479,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 LayoutKind = Model.LayoutKind,
             };
 
-            if(position == NotePosition.CenterScreen) {
+            if(startupPosition == NoteStartupPosition.CenterScreen) {
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = 200;
                     layout.Height = 200;
@@ -493,7 +493,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     layout.Y = 0;
                 }
             } else {
-                Debug.Assert(position == NotePosition.CursorPosition);
+                Debug.Assert(startupPosition == NoteStartupPosition.CursorPosition);
 
                 var deviceScreenBounds = Model.DockScreen.DeviceBounds;
 
@@ -716,7 +716,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             DpiScaleOutputor = (IDpiScaleOutputor)window;
 
-            var layoutValue = GetOrCreateLayout(Model.Position);
+            var layoutValue = GetOrCreateLayout(Model.StartupPosition);
             if(layoutValue.isCreated) {
                 Model.SaveLayout(layoutValue.layout);
             }

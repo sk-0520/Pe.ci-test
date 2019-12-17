@@ -37,6 +37,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.QueryFirst<Guid>(statement);
         }
 
+        public SettingAppNoteSettingData SelectSettingNoteSetting()
+        {
+            var noteCreateTitleKindTransfer = new EnumTransfer<NoteCreateTitleKind>();
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+
+            var statement = LoadStatement();
+            var dto = Commander.QueryFirst<AppNoteSettingEntityDto>(statement);
+            var data = new SettingAppNoteSettingData() {
+                FontId = dto.FontId,
+                TitleKind = noteCreateTitleKindTransfer.ToEnum(dto.TitleKind),
+                LayoutKind = noteLayoutKindTransfer.ToEnum(dto.LayoutKind),
+                ForegroundColor = ToColor(dto.BackgroundColor),
+                BackgroundColor = ToColor(dto.ForegroundColor),
+                IsTopmost = dto.IsTopmost,
+            };
+            return data;
+        }
+
+        public bool UpdateSettingNoteSetting(SettingAppNoteSettingData data, IDatabaseCommonStatus commonStatus)
+        {
+            var noteCreateTitleKindTransfer = new EnumTransfer<NoteCreateTitleKind>();
+            var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+
+            var statement = LoadStatement();
+            var dto = new AppNoteSettingEntityDto() {
+                FontId = data.FontId,
+                TitleKind = noteCreateTitleKindTransfer.ToString(data.TitleKind),
+                LayoutKind = noteLayoutKindTransfer.ToString(data.LayoutKind),
+                ForegroundColor = FromColor(data.BackgroundColor),
+                BackgroundColor = FromColor(data.ForegroundColor),
+                IsTopmost = data.IsTopmost,
+            };
+            commonStatus.WriteCommon(dto);
+            return Commander.Execute(statement, dto) == 1;
+        }
 
         #endregion
     }

@@ -10,6 +10,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
     {
         #region property
 
+        public Guid FontId { get; set; }
+        public string TitleKind { get; set; } = string.Empty;
+        public string LayoutKind { get; set; } = string.Empty;
+        public string ForegroundColor { get; set; } = string.Empty;
+        public string BackgroundColor { get; set; } = string.Empty;
+        public bool IsTopmost { get; set; }
+
+
         #endregion
     }
 }

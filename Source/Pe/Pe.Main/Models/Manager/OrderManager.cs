@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen);
 
-        NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition);
+        NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition);
         bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater);
@@ -159,11 +159,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition)
+            public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition)
             {
                 var element = screen == null
-                    ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>(), notePosition)
-                    : DiContainer.Build<NoteElement>(noteId, screen, notePosition)
+                    ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>(), startupPosition)
+                    : DiContainer.Build<NoteElement>(noteId, screen, startupPosition)
                 ;
                 element.Initialize();
                 return element;

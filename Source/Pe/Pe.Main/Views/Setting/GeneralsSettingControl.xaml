@@ -7,6 +7,7 @@
   xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main_viewmodels_font="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Font"
   xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
@@ -120,6 +121,48 @@
 
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppNoteSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
+              <StackPanel>
+                <ContentControl>
+                  <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInitialized}" Value="True">
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <app_main_views:FontSelectControl
+                                SelectedFontFamily="{Binding  Font.FontFamily}"
+                                IsBold="{Binding Font.IsBold}"
+                                IsItalic="{Binding Font.IsItalic}"
+                                Size="{Binding Font.Size}"
+                                SizeMinimum="{Binding Font.MinimumSize}"
+                                SizeMaximum="{Binding Font.MaximumSize}"
+                              />
+                            </Setter.Value>
+                          </Setter>
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </ContentControl.Style>
+                </ContentControl>
+
+                <Label>title</Label>
+                <WrapPanel Orientation="Horizontal">
+                  <RadioButton Content="timestamp" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}}" />
+                  <RadioButton Content="count" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Count}}" />
+                </WrapPanel>
+
+                <Label>layout</Label>
+                <WrapPanel Orientation="Horizontal">
+                  <RadioButton Content="absolute" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
+                  <RadioButton Content="relative" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}" />
+                </WrapPanel>
+
+                <Label>fore</Label>
+                <app_core_views:ColorCanvas SelectedColor="{Binding ForegroundColor}" />
+                <Label>back</Label>
+                <app_core_views:ColorCanvas SelectedColor="{Binding BackgroundColor}" />
+
+              </StackPanel>
             </GroupBox>
           </DataTemplate>
 

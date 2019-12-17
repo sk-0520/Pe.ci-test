@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId, default(Screen), NotePosition.Setting);
+                var element = CreateNoteElement(noteId, default(Screen), NoteStartupPosition.Setting);
                 result.Add(element);
             }
 
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.LogInformation("new note id: {0}, {1}", noteId, ObjectDumper.GetDumpString(dockScreen));
-            var noteElement = CreateNoteElement(noteId, dockScreen, NotePosition.CenterScreen);
+            var noteElement = CreateNoteElement(noteId, dockScreen, NoteStartupPosition.CenterScreen);
 
             NoteElements.Add(noteElement);
 
@@ -509,9 +509,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
-        public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition)
+        public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition)
         {
-            return OrderManager.CreateNoteElement(noteId, screen, notePosition);
+            return OrderManager.CreateNoteElement(noteId, screen, startupPosition);
         }
         public bool RemoveNoteElement(Guid noteId)
         {

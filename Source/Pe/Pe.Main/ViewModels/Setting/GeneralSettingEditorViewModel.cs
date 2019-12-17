@@ -5,10 +5,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
@@ -330,6 +332,38 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         #region property
+
+        public FontViewModel? Font { get; private set; }
+        public NoteCreateTitleKind TitleKind
+        {
+            get => Model.TitleKind;
+            set => SetModelValue(value);
+        }
+        public NoteLayoutKind LayoutKind
+        {
+            get => Model.LayoutKind;
+            set => SetModelValue(value);
+        }
+
+        public Color ForegroundColor
+        {
+            get => Model.ForegroundColor;
+            set => SetModelValue(value);
+        }
+
+        public Color BackgroundColor
+        {
+            get => Model.BackgroundColor;
+            set => SetModelValue(value);
+        }
+
+        public bool IsTopmost
+        {
+            get => Model.IsTopmost;
+            set => SetModelValue(value);
+        }
+
+
         #endregion
 
         #region command
@@ -340,7 +374,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => ToString()!;
+        public override string Header => Properties.Resources.String_Setting_General_Header_Note;
+
+        protected override void BuildChildren()
+        {
+            base.BuildChildren();
+
+            Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
+        }
 
         #endregion
     }
