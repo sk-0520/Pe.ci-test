@@ -58,9 +58,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                     return true;
                 });
                 if(!result.Success) {
-#pragma warning disable CS8597 // スローされた値が null である可能性があります。
-                    throw result.FailureValue;
-#pragma warning restore CS8597 // スローされた値が null である可能性があります。
+                    // この時点で FailureValue は例外が入っている
+                    throw result.FailureValue!;
                 }
             } else {
                 Logger.LogInformation("DDL");
