@@ -10,6 +10,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherGroupItemsRowDto : RowDtoBase
+    {
+        #region property
+
+        public Guid LauncherGroupId { get; set; }
+        public Guid LauncherItemId { get; set; }
+        public long Sequence { get; set; }
+
+        #endregion
+    }
+
     public class LauncherGroupItemsEntityDao : EntityDaoBase
     {
         public LauncherGroupItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

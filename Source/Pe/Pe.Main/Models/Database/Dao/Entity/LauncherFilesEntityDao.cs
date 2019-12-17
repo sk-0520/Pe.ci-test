@@ -11,6 +11,37 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherFilesEntityPathDto : DtoBase
+    {
+        #region property
+
+        Guid LauncherItemId { get; set; }
+        public string File { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        public string WorkDirectory { get; set; } = string.Empty;
+
+
+        #endregion
+    }
+
+    internal class LauncherFilesEntityDto : CommonDtoBase
+    {
+        #region property
+
+        Guid LauncherItemId { get; set; }
+
+        public string File { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        public string WorkDirectory { get; set; } = string.Empty;
+
+        public bool IsEnabledCustomEnvVar { get; set; }
+        public bool IsEnabledStandardIo { get; set; }
+        public string StandardIoEncoding { get; set; } = string.Empty;
+        public bool RunAdministrator { get; set; }
+
+        #endregion
+    }
+
     public class LauncherFilesEntityDao : EntityDaoBase
     {
         public LauncherFilesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

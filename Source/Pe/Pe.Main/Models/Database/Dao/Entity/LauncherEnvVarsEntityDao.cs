@@ -10,6 +10,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherEnvVarsEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid LauncherItemId { get; set; }
+        public string EnvName { get; set; } = string.Empty;
+        public string EnvValue { get; set; } = string.Empty;
+
+        #endregion
+    }
+
     public class LauncherEnvVarsEntityDao : EntityDaoBase
     {
         public LauncherEnvVarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

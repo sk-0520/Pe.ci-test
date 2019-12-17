@@ -10,6 +10,32 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
+    internal interface IReadOnlyLauncherItemsIconRowDto : IReadOnlyRowDtoBase
+    {
+        #region property
+
+        string? Kind { get; }
+        string? FilePath { get; }
+        long FileIndex { get; }
+        string? IconPath { get; }
+        long IconIndex { get; }
+
+        #endregion
+    }
+
+    internal class LauncherItemIconRowDto : RowDtoBase, IReadOnlyLauncherItemsIconRowDto
+    {
+        #region IReadOnlyLauncherItemsIconRowDto
+
+        public string? Kind { get; set; }
+        public string? FilePath { get; set; }
+        public long FileIndex { get; set; }
+        public string? IconPath { get; set; }
+        public long IconIndex { get; set; }
+
+        #endregion
+    }
+
     public class LauncherItemDomainDao : DomainDaoBase
     {
         public LauncherItemDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

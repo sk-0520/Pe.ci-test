@@ -13,6 +13,24 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class NoteContentsEntityDto : RowDtoBase
+    {
+        #region property
+
+        public Guid NoteId { get; set; }
+        public string ContentKind { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public bool IsLink { get; set; }
+        public string Address { get; set; } = string.Empty;
+        public string Encoding { get; set; } = string.Empty;
+        public TimeSpan DelayTime { get; set; }
+        public long BufferSize { get; set; }
+        public TimeSpan RefreshTime { get; set; }
+        public bool IsEnabledRefresh { get; set; }
+
+        #endregion
+    }
+
     public class NoteContentsEntityDao : EntityDaoBase
     {
         public NoteContentsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

@@ -11,6 +11,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class AppGeneralSettingEntityDto : CommonDtoBase
+    {
+        #region property
+        public string Language { get; set; } = string.Empty;
+        #endregion
+    }
+
     public class AppGeneralSettingEntityDao : EntityDaoBase
     {
         public AppGeneralSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

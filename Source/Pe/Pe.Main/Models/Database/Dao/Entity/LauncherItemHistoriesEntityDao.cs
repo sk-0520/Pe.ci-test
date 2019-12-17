@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
@@ -10,6 +11,20 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherItemHistoriesEntityDto : CreateDtoBase
+    {
+        #region property
+
+        public Guid LauncherItemId { get; set; }
+        public string Kind { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+
+        [Timestamp(DateTimeKind.Utc)]
+        public DateTime LastExecuteTimestamp { get; set; }
+
+        #endregion
+    }
+
     public class LauncherItemHistoriesEntityDao : EntityDaoBase
     {
         public LauncherItemHistoriesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

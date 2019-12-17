@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+
     public class AppLauncherToolbarSettingEntityDao : EntityDaoBase
     {
         public AppLauncherToolbarSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

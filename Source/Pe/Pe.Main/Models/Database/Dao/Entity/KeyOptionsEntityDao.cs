@@ -10,6 +10,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class KeyOptionsEntityDto : CreateDtoBase
+    {
+        #region property
+
+        public Guid KeyActionId { get; set; }
+        public string KeyOptionName { get; set; } = string.Empty;
+        public string KeyOptionValue { get; set; } = string.Empty;
+
+        #endregion
+    }
+
     public class KeyOptionsEntityDao : EntityDaoBase
     {
         public KeyOptionsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

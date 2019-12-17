@@ -11,6 +11,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class AppUpdateSettingEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public bool CheckReleaseVersion { get; set; }
+        public bool CheckRcVersion { get; set; }
+        public Version IgnoreVersion { get; set; } = new Version(0, 0, 0, 0);
+
+        #endregion
+    }
+
     public class AppUpdateSettingEntityDao : EntityDaoBase
     {
         public AppUpdateSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

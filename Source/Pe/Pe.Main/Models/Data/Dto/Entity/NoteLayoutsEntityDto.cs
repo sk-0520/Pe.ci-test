@@ -7,22 +7,4 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 {
-    public class NoteLayoutsEntityDto: CommonDtoBase
-    {
-        #region property
-
-        public Guid NoteId { get; set; }
-        public string LayoutKind { get; set; } = string.Empty;
-
-        [PixelKind(Px.Logical)]
-        public double X { get; set; }
-        [PixelKind(Px.Logical)]
-        public double Y { get; set; }
-        [PixelKind(Px.Logical)]
-        public double Width { get; set; }
-        [PixelKind(Px.Logical)]
-        public double Height { get; set; }
-
-        #endregion
-    }
 }

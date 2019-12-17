@@ -7,20 +7,4 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 {
-    public class ScreensRowDto : CommonDtoBase
-    {
-        #region property
-
-        public string ScreenName { get; set; } = string.Empty;
-        [PixelKind(Px.Device)]
-        public long ScreenX { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenY { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenWidth { get; set; }
-        [PixelKind(Px.Device)]
-        public long ScreenHeight { get; set; }
-
-        #endregion
-    }
 }

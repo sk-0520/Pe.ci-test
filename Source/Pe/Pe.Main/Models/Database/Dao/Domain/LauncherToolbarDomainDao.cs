@@ -7,9 +7,29 @@ using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
+    internal class LauncherToolbarScreenRowDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid LauncherToolbarId { get; set; }
+
+        public string ScreenName { get; set; } = string.Empty;
+        [PixelKind(Px.Device)]
+        public long ScreenX { get; set; }
+        [PixelKind(Px.Device)]
+        public long ScreenY { get; set; }
+        [PixelKind(Px.Device)]
+        public long ScreenWidth { get; set; }
+        [PixelKind(Px.Device)]
+        public long ScreenHeight { get; set; }
+
+        #endregion
+    }
+
     public class LauncherToolbarDomainDao : DomainDaoBase
     {
         public LauncherToolbarDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

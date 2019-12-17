@@ -6,14 +6,4 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity
 {
-    public class LauncherGroupItemsRowDto : RowDtoBase
-    {
-        #region property
-
-        public Guid LauncherGroupId { get; set; }
-        public Guid LauncherItemId { get; set; }
-        public long Sequence { get; set; }
-
-        #endregion
-    }
 }
