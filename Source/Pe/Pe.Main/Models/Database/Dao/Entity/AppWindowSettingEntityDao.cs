@@ -6,11 +6,21 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class AppWindowSettingEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public bool IsEnabled { get; set; }
+        public long Count { get; set; }
+        public TimeSpan Interval { get; set; }
+
+        #endregion
+    }
+
     public class AppWindowSettingEntityDao : EntityDaoBase
     {
         public AppWindowSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

@@ -7,11 +7,25 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class KeyMappingsEntityDto : CreateDtoBase
+    {
+        #region property
+
+        public Guid KeyActionId { get; set; }
+        public long Sequence { get; set; }
+
+        public string Key { get; set; } = string.Empty;
+        public string Shift { get; set; } = string.Empty;
+        public string Control { get; set; } = string.Empty;
+        public string Alt { get; set; } = string.Empty;
+        public string Super { get; set; } = string.Empty;
+        #endregion
+    }
+
     public class KeyMappingsEntityDao : EntityDaoBase
     {
         public KeyMappingsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

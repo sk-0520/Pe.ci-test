@@ -6,11 +6,24 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    public class AppStandardInputOutputSettingEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid FontId { get; set; }
+        public string OutputForegroundColor { get; set; } = string.Empty;
+        public string OutputBackgroundColor { get; set; } = string.Empty;
+        public string ErrorForegroundColor { get; set; } = string.Empty;
+        public string ErrorBackgroundColor { get; set; } = string.Empty;
+        public bool IsTopmost { get; set; }
+
+        #endregion
+    }
+
     public class AppStandardInputOutputSettingEntityDao : EntityDaoBase
     {
         public AppStandardInputOutputSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

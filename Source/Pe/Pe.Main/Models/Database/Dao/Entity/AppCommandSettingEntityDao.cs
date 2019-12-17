@@ -6,11 +6,23 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class AppCommandSettingEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid FontId { get; set; }
+        public string IconBox { get; set; } = string.Empty;
+        public TimeSpan HideWaitTime { get; set; }
+        public bool FindTag { get; set; }
+        public bool FindFile { get; set; }
+
+        #endregion
+    }
+
     public class AppCommandSettingEntityDao : EntityDaoBase
     {
         public AppCommandSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

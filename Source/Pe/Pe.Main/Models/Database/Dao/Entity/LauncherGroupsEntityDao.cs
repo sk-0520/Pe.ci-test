@@ -6,11 +6,24 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherGroupsRowDto : RowDtoBase
+    {
+        #region property
+
+        public Guid LauncherGroupId { get; set; }
+        public string Kind { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string ImageName { get; set; } = string.Empty;
+        public string ImageColor { get; set; } = string.Empty;
+        public long Sequence { get; set; }
+
+        #endregion
+    }
+
     public class LauncherGroupsEntityDao : EntityDaoBase
     {
         public LauncherGroupsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

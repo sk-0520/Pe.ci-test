@@ -6,11 +6,25 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class AppNoteSettingEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid FontId { get; set; }
+        public string TitleKind { get; set; } = string.Empty;
+        public string LayoutKind { get; set; } = string.Empty;
+        public string ForegroundColor { get; set; } = string.Empty;
+        public string BackgroundColor { get; set; } = string.Empty;
+        public bool IsTopmost { get; set; }
+
+
+        #endregion
+    }
+
     public class AppNoteSettingEntityDao : EntityDaoBase
     {
         public AppNoteSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

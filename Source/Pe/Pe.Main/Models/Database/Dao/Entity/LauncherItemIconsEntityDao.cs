@@ -7,11 +7,23 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherItemIconsDto : CreateDtoBase
+    {
+        #region property
+
+        public Guid LauncherItemId { get; set; }
+        public string IconBox { get; set; } = string.Empty;
+        public long Sequence { get; set; }
+        public byte[]? Image { get; set; }
+
+        #endregion
+
+    }
+
     public class LauncherItemIconsEntityDao : EntityDaoBase
     {
         public LauncherItemIconsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
