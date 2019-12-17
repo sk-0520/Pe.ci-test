@@ -225,9 +225,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     #endregion
 
-    public class LauncherToolbarsScreenData : DataBase, IScreenData
+    public interface ILauncherToolbarId
     {
         #region property
+
+        Guid LauncherToolbarId { get; }
+
+        #endregion
+    }
+
+    public class LauncherToolbarsScreenData : DataBase, ILauncherToolbarId, IScreenData
+    {
+        #region ILauncherToolbarId
 
         public Guid LauncherToolbarId { get; set; }
 
@@ -248,11 +257,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsDisplayData : DataBase
+    public class LauncherToolbarsDisplayData : DataBase, ILauncherToolbarId
     {
         #region property
 
-        public Guid LauncherToolbarId { get; set; }
         public Guid LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
@@ -266,6 +274,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public bool IsIconOnly { get; set; }
 
         #endregion
+
+        #region ILauncherToolbarId
+
+        public Guid LauncherToolbarId { get; set; }
+
+        #endregion
+
     }
 
     internal class LauncherFileItemData
