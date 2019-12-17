@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public bool UpdateSettinCommandSetting(SettingAppCommandSettingData data, IDatabaseCommonStatus commonStatus)
+        public bool UpdateSettingCommandSetting(SettingAppCommandSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 

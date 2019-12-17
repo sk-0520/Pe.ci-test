@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 FindTag = FindTag,
                 FindFile = FindFile,
             };
-            appCommandSettingEntityDao.UpdateSettinCommandSetting(data, commandPack.CommonStatus);
+            appCommandSettingEntityDao.UpdateSettingCommandSetting(data, commandPack.CommonStatus);
 
             var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
@@ -413,7 +413,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 Count = Count,
                 Interval = Interval,
             };
-            appWindowSettingEntityDao.UpdateSettinWindowSetting(data, commandPack.CommonStatus);
+            appWindowSettingEntityDao.UpdateSettingWindowSetting(data, commandPack.CommonStatus);
         }
 
         #endregion

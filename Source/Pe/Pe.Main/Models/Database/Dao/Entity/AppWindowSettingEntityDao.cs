@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         }
 
 
-        public bool UpdateSettinWindowSetting(SettingAppWindowSettingData data, IDatabaseCommonStatus commonStatus)
+        public bool UpdateSettingWindowSetting(SettingAppWindowSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new AppWindowSettingEntityDto() {
