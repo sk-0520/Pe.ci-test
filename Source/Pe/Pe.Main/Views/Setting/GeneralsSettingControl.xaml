@@ -13,7 +13,21 @@
   mc:Ignorable="d"
   d:DesignWidth="800"
   d:DesignHeight="450"
-  >
+>
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <DataTemplate x:Key="Font" DataType="{x:Type app_main_viewmodels_font:FontViewModel}">
+      <app_main_views:FontSelectControl
+        SelectedFontFamily="{Binding FontFamily}"
+        IsBold="{Binding IsBold}"
+        IsItalic="{Binding IsItalic}"
+        Size="{Binding Size, Mode=TwoWay}"
+        SizeMinimum="{Binding MinimumSize}"
+        SizeMaximum="{Binding MaximumSize}"
+      />
+    </DataTemplate>
+  </UserControl.Resources>
   <Grid>
     <ScrollViewer>
       <ItemsControl ItemsSource="{Binding Editor.EditorItems, ElementName=root}">
@@ -65,19 +79,28 @@
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppCommandSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
               <StackPanel>
-                <ContentControl Content="{Binding Font}">
-                  <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type app_main_viewmodels_font:FontViewModel}">
-                      <app_main_views:FontSelectControl
-                        SelectedFontFamily="{Binding FontFamily}"
-                        IsBold="{Binding IsBold}"
-                        IsItalic="{Binding IsItalic}"
-                        Size="{Binding Size}"
-                        SizeMinimum="{Binding MinimumSize}"
-                        SizeMaximum="{Binding MaximumSize}"
-                      />
-                    </DataTemplate>
-                  </ContentControl.Resources>
+                <!-- バインドできない問題 -->
+                <ContentControl>
+                  <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInitialized}" Value="True">
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <app_main_views:FontSelectControl
+                                SelectedFontFamily="{Binding  Font.FontFamily}"
+                                IsBold="{Binding Font.IsBold}"
+                                IsItalic="{Binding Font.IsItalic}"
+                                Size="{Binding Font.Size}"
+                                SizeMinimum="{Binding Font.MinimumSize}"
+                                SizeMaximum="{Binding Font.MaximumSize}"
+                              />
+                            </Setter.Value>
+                          </Setter>
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </ContentControl.Style>
                 </ContentControl>
               </StackPanel>
             </GroupBox>

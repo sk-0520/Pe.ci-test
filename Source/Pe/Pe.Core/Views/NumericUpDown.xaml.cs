@@ -38,7 +38,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Value),
             typeof(decimal),
             typeof(NumericUpDown),
-            new PropertyMetadata(0m, OnValuePropertyChanged)
+            new FrameworkPropertyMetadata(
+                0m,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnValuePropertyChanged
+            )
         );
 
         public decimal Value

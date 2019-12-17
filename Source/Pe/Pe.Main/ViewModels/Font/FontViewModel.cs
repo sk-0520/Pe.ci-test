@@ -90,21 +90,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 
         #region function
 
-        public void Refresh()
-        {
-            var propertyNames = new[] {
-                nameof(FontFamily),
-                nameof(FontSize),
-                nameof(Size),
-                nameof(IsItalic),
-                nameof(FontStyle),
-                nameof(IsBold),
-                nameof(FontWeight),
-            };
-            foreach(var propertyName in propertyNames) {
-                RaisePropertyChanged(propertyName);
-            }
-        }
 
         #endregion
 

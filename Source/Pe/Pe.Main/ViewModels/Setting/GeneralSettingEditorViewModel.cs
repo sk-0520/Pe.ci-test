@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         string Header { get; }
+        bool IsInitialized { get; }
 
         #endregion
 
@@ -35,6 +36,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     public abstract class GeneralSettingEditorViewModelBase<TModel> : SingleModelViewModelBase<TModel>, IGeneralSettingEditor
         where TModel : GeneralSettingEditorElementBase
     {
+        #region variable
+
+        bool _isInitialized;
+
+        #endregion
+
         public GeneralSettingEditorViewModelBase(TModel model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
@@ -75,6 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
 
             RaiseChildren();
+
+            IsInitialized = true;
         }
 
         #endregion
@@ -111,6 +120,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region IGeneralSettingEditor
 
         public abstract string Header { get; }
+
+        public bool IsInitialized {
+            get => this._isInitialized;
+            private set => SetProperty(ref this._isInitialized, value);
+        }
 
         #endregion
 
@@ -293,12 +307,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
         }
 
-        protected override void RaiseChildren()
-        {
-            base.RaiseChildren();
-
-            Font!.Refresh();
-        }
 
         #endregion
     }
