@@ -394,6 +394,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         #region property
+
+        public FontViewModel? Font { get; private set; }
+        public Color OutputForegroundColor
+        {
+            get => Model.OutputForegroundColor;
+            set => SetModelValue(value);
+        }
+        public Color OutputBackgroundColor
+        {
+            get => Model.OutputBackgroundColor;
+            set => SetModelValue(value);
+        }
+        public Color ErrorForegroundColor
+        {
+            get => Model.ErrorForegroundColor;
+            set => SetModelValue(value);
+        }
+        public Color ErrorBackgroundColor
+        {
+            get => Model.ErrorBackgroundColor;
+            set => SetModelValue(value);
+        }
+        public bool IsTopmost
+        {
+            get => Model.IsTopmost;
+            set => SetModelValue(value);
+        }
+
         #endregion
 
         #region command
@@ -404,7 +432,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => ToString()!;
+        public override string Header => Properties.Resources.String_Setting_General_Header_StandardInputOutput;
+
+        protected override void BuildChildren()
+        {
+            base.BuildChildren();
+
+            Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
+        }
 
         #endregion
     }

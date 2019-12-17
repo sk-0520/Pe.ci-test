@@ -162,12 +162,51 @@
                 <Label>back</Label>
                 <app_core_views:ColorCanvas SelectedColor="{Binding BackgroundColor}" />
 
+                <CheckBox Content="topmost" IsChecked="{Binding IsTopmost}" />
+
               </StackPanel>
             </GroupBox>
           </DataTemplate>
 
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppStandardInputOutputSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
+              <StackPanel>
+                <ContentControl>
+                  <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInitialized}" Value="True">
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <app_main_views:FontSelectControl
+                                SelectedFontFamily="{Binding  Font.FontFamily}"
+                                IsBold="{Binding Font.IsBold}"
+                                IsItalic="{Binding Font.IsItalic}"
+                                Size="{Binding Font.Size}"
+                                SizeMinimum="{Binding Font.MinimumSize}"
+                                SizeMaximum="{Binding Font.MaximumSize}"
+                              />
+                            </Setter.Value>
+                          </Setter>
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </ContentControl.Style>
+                </ContentControl>
+                
+                <Label>output fore</Label>
+                <app_core_views:ColorCanvas SelectedColor="{Binding OutputForegroundColor}" />
+                <Label>output back</Label>
+                <app_core_views:ColorCanvas SelectedColor="{Binding OutputBackgroundColor}" />
+
+                <Label>error fore</Label>
+                <app_core_views:ColorCanvas SelectedColor="{Binding ErrorForegroundColor}" />
+                <Label>error back</Label>
+                <app_core_views:ColorCanvas SelectedColor="{Binding ErrorBackgroundColor}" />
+                
+                <CheckBox Content="topmost" IsChecked="{Binding IsTopmost}" />
+
+              </StackPanel>
             </GroupBox>
           </DataTemplate>
 

@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -314,6 +315,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         { }
 
         #region property
+
+        public FontElement? Font { get; private set; }
+        public Color OutputForegroundColor { get; set; }
+        public Color OutputBackgroundColor { get; set; }
+        public Color ErrorForegroundColor { get; set; }
+        public Color ErrorBackgroundColor { get; set; }
+        public bool IsTopmost { get; set; }
+
         #endregion
 
         #region function
@@ -323,12 +332,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void InitializeImpl()
         {
+            SettingAppStandardInputOutputSettingData setting;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appStandardInputOutputSettingEntityDao.SelectSettingStandardInputOutputSetting();
+            }
 
+            Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font.Initialize();
+
+            OutputForegroundColor = setting.OutputForegroundColor;
+            OutputBackgroundColor = setting.OutputBackgroundColor;
+            ErrorForegroundColor = setting.ErrorForegroundColor;
+            ErrorBackgroundColor = setting.ErrorBackgroundColor;
+            IsTopmost = setting.IsTopmost;
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            Debug.Assert(Font != null);
+
+            var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppStandardInputOutputSettingData() {
+                FontId = Font.FontId,
+                OutputForegroundColor = OutputForegroundColor,
+                OutputBackgroundColor = OutputBackgroundColor,
+                ErrorForegroundColor = ErrorForegroundColor,
+                ErrorBackgroundColor = ErrorBackgroundColor,
+                IsTopmost = IsTopmost,
+            };
+            appStandardInputOutputSettingEntityDao.UpdateSettingStandardInputOutputSetting(data, commandPack.CommonStatus);
+
+            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
+
         }
+
 
         #endregion
     }
