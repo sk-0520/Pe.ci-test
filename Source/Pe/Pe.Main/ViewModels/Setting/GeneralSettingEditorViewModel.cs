@@ -121,7 +121,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public abstract string Header { get; }
 
-        public bool IsInitialized {
+        public bool IsInitialized
+        {
             get => this._isInitialized;
             private set => SetProperty(ref this._isInitialized, value);
         }
@@ -272,11 +273,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => Model.IconBox;
             set => SetModelValue(value);
         }
-        public TimeSpan HideWaitTime
+
+        //public TimeSpan HideWaitTime
+        //{
+        //    get => Model.HideWaitTime;
+        //    set => SetModelValue(value);
+        //}
+
+        public double MinimumHideWaitSeconds => TimeSpan.FromMilliseconds(250).TotalSeconds;
+        public double MaximumHideWaitSeconds => TimeSpan.FromSeconds(5).TotalSeconds;
+        public double HideWaitMilliseconds
         {
-            get => Model.HideWaitTime;
-            set => SetModelValue(value);
+            get => Model.HideWaitTime.TotalSeconds;
+            set => SetModelValue(TimeSpan.FromSeconds(value), nameof(Model.HideWaitTime));
         }
+
         public bool FindTag
         {
             get => Model.FindTag;

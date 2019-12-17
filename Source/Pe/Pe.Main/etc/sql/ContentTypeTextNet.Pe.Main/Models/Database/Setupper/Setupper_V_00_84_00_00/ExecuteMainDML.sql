@@ -352,7 +352,7 @@ insert into
 	(
 /* FontId                */ @CommandFontId,
 /* IconBox               */ 'small',
-/* HideWaitTime          */ '0.00:00.05.0',
+/* HideWaitTime          */ '0.00:00:03.0',
 /* FindTag               */ true,
 /* FindFile              */ true,
 
