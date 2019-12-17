@@ -4,7 +4,6 @@ using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
