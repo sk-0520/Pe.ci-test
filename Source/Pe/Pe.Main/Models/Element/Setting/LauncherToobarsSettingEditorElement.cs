@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        public IList<LauncherToobarSettingEditorElement> Toolbars { get; } = new List<LauncherToobarSettingEditorElement>();
+        public ObservableCollection<LauncherToobarSettingEditorElement> Toolbars { get; } = new ObservableCollection<LauncherToobarSettingEditorElement>();
 
         #endregion
 

@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public double AutoHideTimeSeconds
         {
             get => Model.AutoHideTimeout.TotalSeconds;
-            set => SetModelValue(TimeSpan.FromSeconds(value));
+            set => SetModelValue(TimeSpan.FromSeconds(value), nameof(Model.AutoHideTimeout));
         }
         public double MaximumAutoHideTimeSeconds => 10;
         public double MinimumAutoHideTimeSeconds => 0.5;

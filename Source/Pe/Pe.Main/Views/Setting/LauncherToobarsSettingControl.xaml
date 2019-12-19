@@ -1,14 +1,101 @@
 <UserControl
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.LauncherToobarsSettingControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
+  xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignWidth="800"
   d:DesignHeight="450"
 >
-  <Grid>
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+    <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0">
+        <ComboBox ItemsSource="{Binding Editor.ToolbarItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedToolbar, ElementName=root}" />
+      </Grid>
+      <ScrollViewer Grid.Row="1">
+        <ContentControl Content="{Binding Editor.SelectedToolbar, ElementName=root}">
+          <ContentControl.ContentTemplate>
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherToobarSettingEditorViewModel}">
+              <StackPanel>
+
+                <CheckBox Content="visible" IsChecked="{Binding IsVisible}" />
+
+                <WrapPanel Orientation="Horizontal">
+                  <RadioButton Content="left" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Left}}" />
+                  <RadioButton Content="top" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Top}}" />
+                  <RadioButton Content="right" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Right}}" />
+                  <RadioButton Content="bottom" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Bottom}}" />
+                </WrapPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                  <RadioButton Content="left top" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.LeftTop}}" />
+                  <RadioButton Content="center" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.Center}}" />
+                  <RadioButton Content="right bottom" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.RightBottom}}" />
+                </WrapPanel>
+
+                <Label>icon</Label>
+                <WrapPanel Orientation="Horizontal">
+                  <RadioButton Content="small" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
+                  <RadioButton Content="normal" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
+                  <RadioButton Content="big" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
+                </WrapPanel>
+                <CheckBox Content="icon only" IsChecked="{Binding IsIconOnly}" />
+
+                <Label Content="text" />
+                <ContentControl>
+                  <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInitialized}" Value="True">
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <app_main_views:FontSelectControl
+                                SelectedFontFamily="{Binding  Font.FontFamily}"
+                                IsBold="{Binding Font.IsBold}"
+                                IsItalic="{Binding Font.IsItalic}"
+                                Size="{Binding Font.Size}"
+                                SizeMinimum="{Binding Font.MinimumSize}"
+                                SizeMaximum="{Binding Font.MaximumSize}"
+                              />
+                            </Setter.Value>
+                          </Setter>
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </ContentControl.Style>
+                </ContentControl>
+                <app_core_views:NumericUpDown Minimum="{Binding MinimumTextWidth}" Maximum="{Binding MaximumTextWidth}" Value="{Binding TextWidth}" />
+
+                <CheckBox Content="auto hide" IsChecked="{Binding IsAutoHide}" />
+                <app_core_views:NumericUpDown Minimum="{Binding MinimumAutoHideTimeSeconds}" Maximum="{Binding MaximumAutoHideTimeSeconds}" Value="{Binding AutoHideTimeSeconds}" />
+
+
+              </StackPanel>
+            </DataTemplate>
+          </ContentControl.ContentTemplate>
+        </ContentControl>
+      </ScrollViewer>
+
+    </Grid>
   </Grid>
 </UserControl>
