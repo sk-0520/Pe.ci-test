@@ -38,12 +38,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>();
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>(AllLauncherItems);
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
+            LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>();
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
 
             Editors = new SettingEditorElementBase[] {
                 GeneralsSettingEditor,
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,
+                LauncherToobarsSettingEditor,
                 KeyboardSettingEditor
             };
         }
@@ -69,6 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public GeneralsSettingEditorElement GeneralsSettingEditor { get; }
         public LauncherItemsSettingEditorElement LauncherItemsSettingEditor { get; }
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
+        public LauncherToobarsSettingEditorElement LauncherToobarsSettingEditor { get; }
         public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
         public IReadOnlyList<SettingEditorElementBase> Editors { get; }
         #endregion

@@ -105,6 +105,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        public IEnumerable<Guid> SelectAllLauncherToolbarIds()
+        {
+            var statement = LoadStatement();
+            return Commander.Query<Guid>(statement);
+        }
+
         public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbarId)
         {
             var statement = LoadStatement();

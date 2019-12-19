@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -45,9 +46,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void Save(DatabaseCommandPack commadPack)
         {
+            Debug.Assert(Font != null);
+
+            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
+
             var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
             var data = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = LauncherToolbarId,
+                FontId = Font.FontId,
                 LauncherGroupId = LauncherGroupId,
                 ToolbarPosition = ToolbarPosition,
                 IconDirection = IconDirection,

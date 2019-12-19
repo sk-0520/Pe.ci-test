@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -10,10 +11,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class LauncherToobarSettingEditorViewModel : SingleModelViewModelBase<LauncherToobarSettingEditorElement>
+    public class LauncherToobarSettingEditorViewModel : SettingItemViewModelBase<LauncherToobarSettingEditorElement>
     {
-        public LauncherToobarSettingEditorViewModel(LauncherToobarSettingEditorElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public LauncherToobarSettingEditorViewModel(LauncherToobarSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
