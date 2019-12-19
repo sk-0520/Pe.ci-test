@@ -27,21 +27,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             : base(model, dispatcherWrapper, loggerFactory)
         {
             ReplaceJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardReplaceJobSettingEditorElement, KeyboardReplaceJobSettingEditorViewMode>(model.ReplaceJobEditors) {
-                ToViewModel = m => new KeyboardReplaceJobSettingEditorViewMode(m, LoggerFactory),
+                ToViewModel = m => new KeyboardReplaceJobSettingEditorViewMode(m, DispatcherWrapper, LoggerFactory),
             };
             ReplaceJobEditors = ReplaceJobEditorCollection.GetDefaultView();
 
             DisableJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardDisableJobSettingEditorElement, KeyboardDisableJobSettingEditorViewModel>(Model.DisableJobEditors) {
-                ToViewModel = m => new KeyboardDisableJobSettingEditorViewModel(m, LoggerFactory),
+                ToViewModel = m => new KeyboardDisableJobSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
             };
             DisableJobEditors = DisableJobEditorCollection.GetDefaultView();
 
             PressedJobEditorCollection = new ActionModelViewModelObservableCollectionManager<KeyboardPressedJobSettingEditorElement, KeyboardPressedJobSettingEditorViewModelBase>(Model.PressedJobEditors) {
                 ToViewModel = m => m.Kind switch {
-                    KeyActionKind.Command => new KeyboardCommandJobSettingEditorViewModel(m, loggerFactory),
-                    KeyActionKind.LauncherItem => new KeyboardLauncherItemJobSettingEditorViewModel(m, AllLauncherItemCollection, loggerFactory),
-                    KeyActionKind.LauncherToolbar => new KeyboardLauncherToolbarJobSettingEditorViewModel(m, LoggerFactory),
-                    KeyActionKind.Note=> new KeyboardNoteJobSettingEditorViewModel(m, LoggerFactory),
+                    KeyActionKind.Command => new KeyboardCommandJobSettingEditorViewModel(m, DispatcherWrapper, loggerFactory),
+                    KeyActionKind.LauncherItem => new KeyboardLauncherItemJobSettingEditorViewModel(m, AllLauncherItemCollection, DispatcherWrapper, loggerFactory),
+                    KeyActionKind.LauncherToolbar => new KeyboardLauncherToolbarJobSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
+                    KeyActionKind.Note=> new KeyboardNoteJobSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
                     _ => throw new NotImplementedException(),
                 },
             };

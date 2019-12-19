@@ -15,11 +15,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
 
         #region function
 
+        [Obsolete]
         protected string FromTimespan(TimeSpan timespan)
         {
             return timespan.ToString();
         }
 
+        [Obsolete]
         protected TimeSpan ToTimespan(string raw)
         {
             return TimeSpan.Parse(raw);

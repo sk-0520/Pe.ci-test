@@ -267,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public IconBox IconBox { get; set; }
         public Guid FontId { get; set; }
         public TimeSpan AutoHideTimeout { get; set; }
-        public long TextWidth { get; set; }
+        public int TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }
         public bool IsAutoHide { get; set; }

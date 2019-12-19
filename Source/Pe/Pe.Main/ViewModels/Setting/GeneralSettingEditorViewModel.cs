@@ -35,27 +35,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public abstract class GeneralSettingEditorViewModelBase<TModel> : SingleModelViewModelBase<TModel>, IGeneralSettingEditor
+    public abstract class GeneralSettingEditorViewModelBase<TModel> : SettingItemViewModelBase<TModel>, IGeneralSettingEditor
         where TModel : GeneralSettingEditorElementBase
     {
-        #region variable
-
-        bool _isInitialized;
-
-        #endregion
-
         public GeneralSettingEditorViewModelBase(TModel model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
-        {
-            DispatcherWrapper = dispatcherWrapper;
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(Model.IsInitialized), OnInitialized);
-        }
+            : base(model, dispatcherWrapper, loggerFactory)
+        { }
 
         #region property
-
-        protected IDispatcherWrapper DispatcherWrapper { get; }
-        protected PropertyChangedHooker PropertyChangedHooker { get; }
         #endregion
 
         #region command
@@ -63,79 +50,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        protected virtual void BuildChildren()
-        { }
-        protected virtual void RaiseChildren()
-        { }
-
-        private void OnInitialized()
-        {
-            if(!Model.IsInitialized) {
-                return;
-            }
-
-            BuildChildren();
-
-            var properties = GetType().GetProperties()
-                .Where(i => i.CanRead)
-            ;
-            foreach(var property in properties) {
-                RaisePropertyChanged(property.Name);
-            }
-
-            RaiseChildren();
-
-            IsInitialized = true;
-        }
-
         #endregion
 
         #region SingleModelViewModelBase
-
-        protected override void AttachModelEventsImpl()
-        {
-            base.AttachModelEventsImpl();
-
-            Model.PropertyChanged += Model_PropertyChanged;
-        }
-
-        protected override void DetachModelEventsImpl()
-        {
-            Model.PropertyChanged -= Model_PropertyChanged;
-
-            base.DetachModelEventsImpl();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if(!IsDisposed) {
-                if(disposing) {
-                    PropertyChangedHooker.Dispose();
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
         #endregion
 
         #region IGeneralSettingEditor
 
         public abstract string Header { get; }
 
-        public bool IsInitialized
-        {
-            get => this._isInitialized;
-            private set => SetProperty(ref this._isInitialized, value);
-        }
-
         #endregion
-
-        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
-        }
-
 
     }
 

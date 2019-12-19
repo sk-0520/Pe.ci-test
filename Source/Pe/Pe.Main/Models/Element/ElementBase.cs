@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
 
         #endregion
 
-            #region function
+        #region function
 
         protected abstract void InitializeImpl();
 

@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public string Direction { get; set; } = string.Empty;
         public string IconBox { get; set; } = string.Empty;
         public Guid FontId { get; set; }
-        public string AutoHideTimeout { get; set; } = string.Empty;
+        public TimeSpan AutoHideTimeout { get; set; }
         public long TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }
@@ -70,16 +70,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
                 FontId = dto.FontId,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                TextWidth = dto.TextWidth,
+                AutoHideTimeout = dto.AutoHideTimeout,
+                TextWidth = ToInt(dto.TextWidth),
                 IsVisible = dto.IsVisible,
                 IsTopmost = dto.IsTopmost,
                 IsAutoHide = dto.IsAutoHide,
                 IsIconOnly = dto.IsIconOnly,
             };
 
+            return result;
+        }
+
+        LauncherToolbarsDisplayRowDto ConvertFromData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
+        {
+            var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+            var iconDirectionTransfer = new EnumTransfer<LauncherToolbarIconDirection>();
+
+            var result = new LauncherToolbarsDisplayRowDto() {
+                LauncherToolbarId = data.LauncherToolbarId,
+                LauncherGroupId = data.LauncherGroupId,
+                PositionKind = toolbarPositionTransfer.ToString(data.ToolbarPosition),
+                Direction = iconDirectionTransfer.ToString(data.IconDirection),
+                IconBox = iconBoxTransfer.ToString(data.IconBox),
+                FontId = data.FontId,
+                AutoHideTimeout = data.AutoHideTimeout,
+                TextWidth = data.TextWidth,
+                IsVisible = data.IsVisible,
+                IsTopmost = data.IsTopmost,
+                IsAutoHide = data.IsAutoHide,
+                IsIconOnly = data.IsIconOnly,
+            };
+            commonStatus.WriteCommon(result);
             return result;
         }
 
@@ -151,7 +173,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
-
+        public bool UpdateDisplayData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, commonStatus);
+            return Commander.Execute(statement, dto) == 1;
+        }
         #endregion
     }
 }
