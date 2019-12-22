@@ -192,9 +192,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             var toolbarId = IdFactory.CreateLauncherToolbarId();
             Logger.LogDebug("create toolbar: {0}", toolbarId);
 
+            var newFontId = IdFactory.CreateFontId();
+
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var srcFontId = appLauncherToolbarSettingEntityDao.SelectAppLauncherToolbarSettingFontId();
+
+                var fontsEntityDao = new FontsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                fontsEntityDao.InsertCopyFont(srcFontId, newFontId, DatabaseCommonStatus.CreateCurrentAccount());
+
                 var toolbarsDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                toolbarsDao.InsertNewToolbar(toolbarId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
+                toolbarsDao.InsertNewToolbar(toolbarId, newFontId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var screenOperator = new ScreenOperator(LoggerFactory);
                 screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());

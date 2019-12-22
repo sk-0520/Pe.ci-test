@@ -99,6 +99,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        public bool InsertCopyFont(Guid sourceFontId, Guid destinationFontId, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter["SrcFontId"] = sourceFontId;
+            parameter["DstFontId"] = destinationFontId;
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
+
         public bool UpdateFamilyName(Guid fontId, string familyName, IDatabaseCommonStatus databaseCommonStatus)
         {
             var builder = CreateUpdateBuilder(databaseCommonStatus);

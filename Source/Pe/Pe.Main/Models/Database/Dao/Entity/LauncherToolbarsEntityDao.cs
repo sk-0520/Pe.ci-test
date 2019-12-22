@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string LauncherToolbarId { get; } = "LauncherToolbarId";
             public static string ScreenName { get; } = "ScreenName";
             public static string PositionKind { get; } = "PositionKind";
+            public static string FontId { get; } = "FontId";
             public static string IsTopmost { get; } = "IsTopmost";
             public static string IsAutoHide { get; } = "IsAutoHide";
             public static string IsVisible { get; } = "IsVisible";
@@ -122,12 +123,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool InsertNewToolbar(Guid toolbarId, string? screenName, IDatabaseCommonStatus commonStatus)
+        public bool InsertNewToolbar(Guid toolbarId, Guid fontId, string? screenName, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = toolbarId;
+            param[Column.FontId] = fontId;
             param[Column.ScreenName] = screenName ?? string.Empty;
 
             return Commander.Execute(statement, param) == 1;
