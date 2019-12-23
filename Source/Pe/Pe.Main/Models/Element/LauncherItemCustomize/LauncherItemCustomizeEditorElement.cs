@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         #region file
 
         public LauncherFileData? File { get; private set; }
+        public LauncherStoreAppData? StoreApp { get; private set; }
         public ObservableCollection<LauncherEnvironmentVariableData>? EnvironmentVariableItems { get; private set; }
 
         #endregion
@@ -81,6 +82,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                             var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
                             EnvironmentVariableItems = new ObservableCollection<LauncherEnvironmentVariableData>(environmentVariableItems);
+                        }
+                        break;
+
+                    case LauncherItemKind.StoreApp: {
+                            var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            StoreApp = launcherStoreAppsEntityDao.SelectStoreApp(LauncherItemId);
                         }
                         break;
 
@@ -146,8 +153,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             };
 
             var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
-            var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
-            var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
 
             launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, databaseCommonStatus);
@@ -156,10 +161,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                         Debug.Assert(File != null);
                         Debug.Assert(EnvironmentVariableItems != null);
 
+                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+                        var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
                         launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, databaseCommonStatus);
 
                         launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(itemData.LauncherItemId);
                         launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, databaseCommonStatus);
+                    }
+                    break;
+
+                case LauncherItemKind.StoreApp: {
+                        Debug.Assert(StoreApp != null);
+
+                        var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+                        launcherStoreAppsEntityDao.UpdateStoreApp(itemData.LauncherItemId, StoreApp, databaseCommonStatus);
                     }
                     break;
 

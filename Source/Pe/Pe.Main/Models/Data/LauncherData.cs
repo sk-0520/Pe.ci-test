@@ -105,6 +105,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class LauncherStoreAppData {
+        #region property
+
+        public string ProtocolAlias { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        #endregion
+    }
+
     public class LauncherEnvironmentVariableData: DataBase
     {
         #region property

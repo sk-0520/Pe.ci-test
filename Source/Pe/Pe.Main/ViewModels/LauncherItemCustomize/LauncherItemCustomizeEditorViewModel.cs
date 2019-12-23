@@ -39,6 +39,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                     break;
 
+                case LauncherItemKind.StoreApp: {
+                        var storeApp = new LauncherItemCustomizeStoreAppViewModel(Model, DispatcherWrapper, LoggerFactory);
+                        items.Add(storeApp);
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }

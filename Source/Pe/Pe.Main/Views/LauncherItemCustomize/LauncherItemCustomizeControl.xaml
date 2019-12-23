@@ -253,13 +253,35 @@
       </DataTemplate>
       <!--#endregion-->
 
-      <!--#region コマンド -->
-      <!--#endregion -->
+      <!--#region ストアアプリ -->
+      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeStoreAppViewModel}">
+        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="store app">
+          <StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
 
-      <!--#region スクリプト -->
-      <!--#endregion -->
+              <Label Grid.Column="0" Content="protocol/alias" />
+              <TextBox Grid.Column="1" Text="{Binding ProtocolAlias}" />
 
-      <!--#region ディレクトリ -->
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="0" Content="option" />
+              <TextBox Grid.Column="1" Text="{Binding Option}" />
+            </Grid>
+
+
+          </StackPanel>
+        </GroupBox>
+      </DataTemplate>
       <!--#endregion -->
 
       <!--#region 組み込み -->

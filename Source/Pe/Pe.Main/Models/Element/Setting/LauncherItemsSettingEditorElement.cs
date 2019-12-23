@@ -81,7 +81,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 //TODO: 名前の自動設定
                 var item = new LauncherItemData() {
@@ -97,9 +96,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                 switch(kind) {
                     case LauncherItemKind.File: {
+                            var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
                             var file = new LauncherFileData();
                             launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
                             launcherFilesDao.InsertFile(item.LauncherItemId, file, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
+                        break;
+
+                    case LauncherItemKind.StoreApp: {
+                            var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                            var store = new LauncherStoreAppData();
+                            launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherStoreAppsEntityDao.InsertStoreApp(item.LauncherItemId, store, DatabaseCommonStatus.CreateCurrentAccount());
                         }
                         break;
 
