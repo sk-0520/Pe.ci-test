@@ -93,6 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var newCode = kind.ToString().ToLower() + "-item-code";
                 var codes = launcherItemsDao.SelectFuzzyCodes(newCode).ToList();
                 item.Code = launcherFactory.GetUniqueCode(newCode, codes);
+                item.IsEnabledCommandLauncher = true;
 
                 switch(kind) {
                     case LauncherItemKind.File: {
