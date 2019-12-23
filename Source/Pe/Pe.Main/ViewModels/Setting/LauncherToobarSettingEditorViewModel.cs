@@ -112,6 +112,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region SingleModelViewModelBase
+
+        protected override void BuildChildren()
+        {
+            base.BuildChildren();
+
+            Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
+        }
+
         #endregion
     }
 }

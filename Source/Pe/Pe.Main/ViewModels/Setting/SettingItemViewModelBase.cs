@@ -25,6 +25,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             DispatcherWrapper = dispatcherWrapper;
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.IsInitialized), OnInitialized);
+            if(Model.IsInitialized) {
+                OnInitialized();
+            }
         }
 
         #region property
