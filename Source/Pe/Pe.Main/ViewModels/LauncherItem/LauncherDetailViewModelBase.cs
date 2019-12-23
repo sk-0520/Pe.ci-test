@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                     return new LauncherFileViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.StoreApp:
-                    throw new NotImplementedException();
+                    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Addon:
                     throw new NotImplementedException();
