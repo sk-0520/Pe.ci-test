@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -28,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public RequestSender ShowAllScreensRequest { get; } = new RequestSender();
+
         ModelViewModelObservableCollectionManagerBase<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel> ToolbarCollection { get; }
         public ICollectionView ToolbarItems { get; }
 
@@ -44,6 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region command
+
+        public ICommand ShowAllScreensCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ShowAllScreensRequest.Send();
+            }
+        ));
+
 
         #endregion
 

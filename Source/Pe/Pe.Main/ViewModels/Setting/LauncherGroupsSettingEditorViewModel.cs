@@ -91,6 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #region property
+
         ILauncherGroupTheme LauncherGroupTheme { get; }
         public IDragAndDrop GroupsDragAndDrop { get; }
         public IDragAndDrop LauncherItemDragAndDrop { get; }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +11,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
 {
@@ -23,6 +29,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         {
             InitializeComponent();
         }
+
+        #region property
+
+        CommandStore CommandStore { get; } = new CommandStore();
+
+        IList<ScreenWindow> ScreenWindows { get; set; } = new List<ScreenWindow>();
+        #endregion
 
         #region Editor
 
@@ -50,5 +63,52 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #endregion
 
+        #region function
+
+        void CloseWindows()
+        {
+            foreach(var window in ScreenWindows) {
+                window.MouseUp -= CloseScreenWindow;
+                window.KeyUp -= CloseScreenWindow;
+                window.Close();
+                window.DataContext = null;
+            }
+            ScreenWindows.Clear();
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand DisplayAllScreensCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+            () => {
+                if(ScreenWindows.Any()) {
+                    CloseWindows();
+                }
+
+                var screenWindows = Screen.AllScreens
+                    .OrderByDescending(i =>i.Primary)
+                    .Select(i => new ScreenViewModel(i, NullLoggerFactory.Instance))
+                    .Select(i => new ScreenWindow() { DataContext = i })
+                ;
+                foreach(var window in screenWindows) {
+                    ScreenWindows.Add(window);
+                    window.MouseUp += CloseScreenWindow;
+                    window.KeyUp += CloseScreenWindow;
+                }
+                foreach(var window in ScreenWindows) {
+                    window.Show();
+                    window.UpdateLayout();
+                }
+                ScreenWindows.First().Activate();
+            }
+        ));
+
+        #endregion
+
+        void CloseScreenWindow(object sender, EventArgs e)
+        {
+            CloseWindows();
+        }
     }
 }
