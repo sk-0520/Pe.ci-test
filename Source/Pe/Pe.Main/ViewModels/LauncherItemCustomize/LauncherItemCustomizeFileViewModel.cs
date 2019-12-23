@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         //bool _isEnabledStandardInputOutput;
         //Encoding? _standardInputOutputEncoding;
         //bool _runAdministrator;
-
+        bool _isDropDownPathItems;
         EncodingViewModel? _selectedStandardInputOutputEncoding;
 
         #endregion
@@ -52,6 +52,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region property
 
         LauncherFileData File {get;}
+
+        public bool IsDropDownPathItems
+        {
+            get => this._isDropDownPathItems;
+            set => SetProperty(ref this._isDropDownPathItems, value);
+        }
 
         private static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
@@ -150,6 +156,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 );
             }
         ));
+
+        public ICommand SetPathToFullPathCommand => GetOrCreateCommand(() => new DelegateCommand<EnvironmentPathExecuteItemViewModel>(
+            o => {
+                Path = o.FullPath;
+                IsDropDownPathItems = false;
+            }
+        ));
+
+
 
         public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
