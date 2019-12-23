@@ -122,9 +122,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 return iconImage;
             }
 
-            if(launcherIconData.Kind == LauncherItemKind.StoreApp) {
+            //if(launcherIconData.Kind == LauncherItemKind.StoreApp) {
 
-            }
+            //}
 
             var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
