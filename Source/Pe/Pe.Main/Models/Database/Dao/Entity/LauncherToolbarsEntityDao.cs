@@ -118,9 +118,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 LauncherToolbarId = launcherToolbarId,
             };
-            var dto = Commander.QuerySingle<LauncherToolbarsDisplayRowDto>(statement, param);
+            var dto = Commander.QueryFirst<LauncherToolbarsDisplayRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
+        }
+
+        public string SelectScreenName(Guid launcherToolbarId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherToolbarId = launcherToolbarId,
+            };
+            return Commander.QueryFirst<string>(statement, parameter);
         }
 
         public bool InsertNewToolbar(Guid toolbarId, Guid fontId, string? screenName, IDatabaseCommonStatus commonStatus)

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -40,14 +41,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 launcherToolbarIds = ids.ToList();
             }
 
-            Toolbars.Clear();
+            var toolbars = new List<LauncherToobarSettingEditorElement>();
             foreach(var launcherToolbarId in launcherToolbarIds) {
                 var element = new LauncherToobarSettingEditorElement(launcherToolbarId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
-                Toolbars.Add(element);
+                toolbars.Add(element);
             }
-            foreach(var toolbar in Toolbars) {
+
+            foreach(var toolbar in toolbars) {
                 toolbar.Initialize();
             }
+            // 1.プライマリを最上位
+            var topToolbar = toolbars.First(i => i.Screen?.Primary ?? true);
+            // 2.スクリーン名
+            toolbars.Remove(topToolbar);
+            var activeToolbars = toolbars
+                .Where(i => i.Screen != null)
+                .OrderBy(i => i.Screen!.DeviceName)
+                .ToList();
+            ;
+            // 3.なんか適当に並べ替える
+            var nonActiveToolbars = toolbars
+                .Except(activeToolbars)
+                .OrderBy(i => i.ScreenName)
+                .ThenBy(i => i.LauncherToolbarId)
+            ;
+
+            Toolbars.Clear();
+            Toolbars.Add(topToolbar);
+            Toolbars.AddRange(activeToolbars);
+            Toolbars.AddRange(nonActiveToolbars);
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)

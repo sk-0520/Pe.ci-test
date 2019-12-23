@@ -6,6 +6,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using Microsoft.Extensions.Logging;
 
@@ -18,7 +19,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         { }
 
         #region property
-
 
         public FontViewModel? Font { get; private set; }
         public Guid LauncherGroupId { get; private set; }
@@ -84,6 +84,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => Model.IsIconOnly;
             set => SetModelValue(value);
         }
+
+        public bool EnabledScreen => Model.Screen != null;
+        public string ScreenName => Model.ScreenName;
+        public string ScreenDisplayName
+        {
+            get
+            {
+                if(Model.Screen == null) {
+                    return string.Empty;
+                }
+
+                var screenOperator = new ScreenOperator(LoggerFactory);
+                return screenOperator.GetName(Model.Screen);
+            }
+        }
+        public string ScreenDeviceName => Model.Screen?.DeviceName ?? string.Empty;
 
         #endregion
 

@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -40,6 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool IsTopmost { get; set; }
         public bool IsAutoHide { get; set; }
         public bool IsIconOnly { get; set; }
+
+        public Screen? Screen { get; set; }
+        public string ScreenName { get; set; } = string.Empty;
+
         #endregion
 
         #region function
@@ -76,10 +84,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             LauncherToolbarsDisplayData data;
+            LauncherToolbarsScreenData screenToolbar;
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 data = launcherToolbarsEntityDao.SelectDisplayData(LauncherToolbarId);
+
+                var launcherToolbarDomainDao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                screenToolbar = launcherToolbarDomainDao.SelectScreenToolbar(LauncherToolbarId);
             }
+
+            ScreenName = screenToolbar.ScreenName;
 
             Font = new FontElement(data.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
             Font.Initialize();
@@ -95,6 +110,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsTopmost = data.IsTopmost;
             IsAutoHide = data.IsAutoHide;
             IsIconOnly = data.IsIconOnly;
+
+            var screens = Screen.AllScreens;
+            var screenChecker = new ScreenChecker();
+            foreach(var screen in screens) {
+                if(screenChecker.FindMaybe(screen, screenToolbar)) {
+                    Screen = screen;
+                    break;
+                }
+            }
         }
 
         #endregion

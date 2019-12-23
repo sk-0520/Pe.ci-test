@@ -51,6 +51,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             return data;
         }
 
+        public LauncherToolbarsScreenData SelectScreenToolbar(Guid launcherToolbarId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherToolbarId = launcherToolbarId,
+            };
+            var dto = Commander.QueryFirst<LauncherToolbarScreenRowDto>(statement, parameter);
+            return ConvertFromDto(dto);
+        }
+
         public IEnumerable<LauncherToolbarsScreenData> SelectAllScreenToolbars()
         {
             var statement = LoadStatement();
