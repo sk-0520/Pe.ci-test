@@ -42,6 +42,7 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
+        <!--
         <Grid>
           <ToggleButton x:Name="switchCreateGroup" IsChecked="{Binding Editor.IsPopupCreateGroupMenu, ElementName=root}" Content="+" />
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateGroup}">
@@ -52,7 +53,9 @@
             </Border>
           </Popup>
         </Grid>
-        <Button Content="-" />
+        -->
+        <Button Content="add" Command="{Binding Editor.CreateNewNormalGroupCommand, ElementName=root}" />
+        <Button Content="del" />
 
         <Separator />
 
