@@ -160,14 +160,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public ICommand CreateNewNormalGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                CreateNewCommand(LauncherGroupKind.Normal);
+                AddNewGroup(LauncherGroupKind.Normal);
             }
         ));
+
+        public ICommand RemoveSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 RemoveGroup(SelectedGroup!.LauncherGroupId);
+             },
+             () => SelectedGroup != null
+         ).ObservesProperty(() => SelectedGroup));
 
         #endregion
 
         #region function
-        private void CreateNewCommand(LauncherGroupKind kind)
+        private void AddNewGroup(LauncherGroupKind kind)
         {
             IsPopupCreateGroupMenu = false;
             /*
@@ -177,6 +184,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             ScrollSelectedItemRequest.Send();
             */
         }
+
+        private void RemoveGroup(Guid launcherGroupId)
+        { }
 
         void ChangeGroupIconColorFromCurrentGroup()
         {
