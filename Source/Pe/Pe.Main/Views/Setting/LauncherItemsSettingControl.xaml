@@ -52,6 +52,7 @@
           <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <!--
         <Grid Grid.Column="0">
           <ToggleButton x:Name="switchCreateItem" IsChecked="{Binding Editor.IsPopupCreateItemMenu, ElementName=root}" Content="+" />
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateItem}">
@@ -64,7 +65,9 @@
             </Border>
           </Popup>
         </Grid>
-        <Button Grid.Column="1" Content="-" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" />
+        -->
+        <Button Grid.Column="0" Content="add" Command="{Binding Editor.CreateNewFileItemCommand, ElementName=root}" />
+        <Button Grid.Column="1" Content="del" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" />
         <TextBox Grid.Column="2" />
       </Grid>
 
