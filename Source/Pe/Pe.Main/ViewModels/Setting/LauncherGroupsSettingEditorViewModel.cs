@@ -166,7 +166,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public ICommand RemoveSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 RemoveGroup(SelectedGroup!.LauncherGroupId);
+                 Model.RemoveGroup(SelectedGroup!.LauncherGroupId);
+                 SelectedGroup = null;
              },
              () => SelectedGroup != null
          ).ObservesProperty(() => SelectedGroup));
@@ -177,16 +178,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         private void AddNewGroup(LauncherGroupKind kind)
         {
             IsPopupCreateGroupMenu = false;
+
+            var launcherGroupId = Model.AddNewGroup(kind);
             /*
             var newLauncherGroupId = Model.CreateNewGroup(kind);
             var newItem = ItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();
             */
-        }
+            SelectedGroup = GroupCollection.ViewModels.First(i => i.LauncherGroupId == launcherGroupId);
+            //ScrollSelectedItemRequest.Send();
 
-        private void RemoveGroup(Guid launcherGroupId)
-        { }
+        }
 
         void ChangeGroupIconColorFromCurrentGroup()
         {

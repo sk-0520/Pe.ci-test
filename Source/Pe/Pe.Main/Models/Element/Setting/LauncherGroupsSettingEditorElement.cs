@@ -55,6 +55,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        public void RemoveGroup(Guid launcherGroupId)
+        {
+
+        }
+
+        public Guid AddNewGroup(LauncherGroupKind kind)
+        {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+            var groupData = launcherFactory.CreateGroupData("@GROUP");
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherGroupsDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var groupStep = 10;
+                var sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
+                launcherGroupsDao.InsertNewGroup(groupData, DatabaseCommonStatus.CreateCurrentAccount());
+
+                commander.Commit();
+            }
+
+            var group = new LauncherGroupSettingEditorElement(groupData.LauncherGroupId, MainDatabaseBarrier, StatementLoader, IdFactory, LoggerFactory);
+            group.Initialize();
+            GroupItems.Add(group);
+
+            return group.LauncherGroupId;
+        }
+
         #endregion
 
         #region SettingEditorElementBase
