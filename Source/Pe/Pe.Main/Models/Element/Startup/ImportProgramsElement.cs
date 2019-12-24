@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
                 // db グループ作る
                 var launcherGroupsDao = new LauncherGroupsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
-                var groupStep = 10;
+                var groupStep = launcherFactory.GroupItemStep;
                 group.Sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
                 launcherGroupsDao.InsertNewGroup(group, DatabaseCommonStatus.CreateCurrentAccount());
 
