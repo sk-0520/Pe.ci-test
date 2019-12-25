@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -31,6 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         LauncherGroupSettingEditorViewModel? _selectedGroup;
         LauncherItemSettingEditorViewModel? _selectedLauncherItem;
 
+        string _nameFilterQuery = string.Empty;
+
         #endregion
 
         public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -44,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             //LauncherItems = LauncherCollection.GetDefaultView();
             AllLauncherItemCollection = allLauncherItemCollection;
             AllLauncherItems = AllLauncherItemCollection.CreateView();
+            AllLauncherItems.Filter = FilterAllLauncherItems;
 
             GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems) {
                 ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
@@ -88,9 +92,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             };
             launcherItemsDragAndDrop.DragStartSize = new Size(launcherItemsDragAndDrop.DragStartSize.Width, 0);
             LauncherItemsDragAndDrop = launcherItemsDragAndDrop;
+
+            SimpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
+            NameFilterQueryRegex = SimpleRegexFactory.AllMatchRegex;
+
         }
 
         #region property
+
+        SimpleRegexFactory SimpleRegexFactory { get; }
 
         ILauncherGroupTheme LauncherGroupTheme { get; }
         public IDragAndDrop GroupsDragAndDrop { get; }
@@ -153,6 +163,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        Regex NameFilterQueryRegex { get; set; }
+        public string NameFilterQuery
+        {
+            get => this._nameFilterQuery;
+            set
+            {
+                SetProperty(ref this._nameFilterQuery, value);
+                NameFilterQueryRegex = SimpleRegexFactory.CreateFilterRegex(this._nameFilterQuery);
+                AllLauncherItems.Refresh();
+            }
+        }
 
         #endregion
 
@@ -490,6 +511,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
+        #region AllLauncherItemItems
+
+        private bool FilterAllLauncherItems(object obj)
+        {
+            if(string.IsNullOrWhiteSpace(NameFilterQuery)) {
+                return true;
+            }
+
+            var item = (LauncherItemSettingEditorViewModel)obj;
+            if(item == SelectedLauncherItem) {
+                return true;
+            }
+            return NameFilterQueryRegex.IsMatch(item.Common.Name);
+        }
+
+        #endregion
 
         #endregion
 

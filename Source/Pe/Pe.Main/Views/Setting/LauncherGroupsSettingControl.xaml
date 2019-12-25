@@ -215,7 +215,7 @@
 
         <DockPanel HorizontalAlignment="Stretch">
           <Button DockPanel.Dock="Left" Content="add" Command="{Binding Editor.AddSelectedLauncheritemCommand, ElementName=root}" />
-          <TextBox />
+          <TextBox Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
         </DockPanel>
       </ToolBar>
 
