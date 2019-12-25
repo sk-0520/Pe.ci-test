@@ -155,14 +155,21 @@
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                       </Grid.ColumnDefinitions>
 
-                      <Button Grid.Column="0" Content="x" />
+                      <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="*" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0" Content="up" Command="{Binding DataContext.UpMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
+                        <Button Grid.Row="1" Content="x" Command="{Binding DataContext.RemoveMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
+                        <Button Grid.Row="2" Content="down" Command="{Binding DataContext.DownMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
+                      </Grid>
+
                       <app_main_views_setting:KeyInputControl Grid.Column="1" KeyItemsSource="{Binding Editor.PressedKeyItems, ElementName=root}" Key="{Binding Key}" Shift="{Binding Shift}" Control="{Binding Control}" Alt="{Binding Alt}" Super="{Binding Super}" />
-                      <Button Grid.Column="2" Content="up" />
-                      <Button Grid.Column="3" Content="down" />
                     </Grid>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>

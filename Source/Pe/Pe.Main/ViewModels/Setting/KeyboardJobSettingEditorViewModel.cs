@@ -241,6 +241,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         ));
 
+        public ICommand RemoveMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+            o => {
+                var index = MappingCollection.ViewModels.IndexOf(o);
+                Model.RemoveMappingAt(index);
+            },
+            o => 1 < MappingCollection.ViewModels.Count
+        ).ObservesProperty(() => MappingCollection.ViewModels.Count));
+
+        public ICommand UpMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+             o => {
+                 var index = MappingCollection.ViewModels.IndexOf(o);
+                 if(index == 0) {
+                     return;
+                 }
+                 var next = index - 1;
+                 Model.MoveMapping(index, next);
+             }
+        ));
+        public ICommand DownMappingCommand => GetOrCreateCommand(() => new DelegateCommand<KeyMappingEditorViewModel>(
+             o => {
+                 var index = MappingCollection.ViewModels.IndexOf(o);
+                 if(index == MappingCollection.ViewModels.Count - 1) {
+                     return;
+                 }
+                 var next = index + 1;
+                 Model.MoveMapping(index, next);
+             }
+        ));
+
         #endregion
     }
 

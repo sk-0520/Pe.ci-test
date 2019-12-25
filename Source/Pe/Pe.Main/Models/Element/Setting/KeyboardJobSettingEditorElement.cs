@@ -177,6 +177,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Mappings.Add(WrapModel.Create(mapping, LoggerFactory));
         }
 
+        public void RemoveMappingAt(int index)
+        {
+            Mappings.RemoveAt(index);
+        }
+
+        public void MoveMapping(int oldIndex, int newIndex)
+        {
+            Mappings.Move(oldIndex, newIndex);
+        }
+
         #endregion
 
         #region KeyboardJobSettingEditorElementBase
