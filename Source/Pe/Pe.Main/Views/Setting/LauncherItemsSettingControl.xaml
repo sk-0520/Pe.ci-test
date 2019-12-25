@@ -60,19 +60,19 @@
 
           <!--
           <Grid Grid.Column="0">
-            <ToggleButton x:Name="switchCreateItem" IsChecked="{Binding Editor.IsPopupCreateItemMenu, ElementName=root}" Content="+" />
-            <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateItem}">
+            <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, ElementName=root}" Content="+" />
+            <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
               <Border Style="{StaticResource PopupMenuBorder}">
                 <StackPanel>
-                  <MenuItem Header="file" Command="{Binding Editor.CreateNewFileItemCommand, ElementName=root}" />
-                  <MenuItem Header="store" Command="{Binding Editor.CreateNewStoreAppItemCommand, ElementName=root}" />
-                  <MenuItem Header="addin" Command="{Binding Editor.CreateNewAddonItemCommand, ElementName=root}" />
+                  <MenuItem Header="file" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" />
+                  <MenuItem Header="store" Command="{Binding Editor.AddNewStoreAppItemCommand, ElementName=root}" />
+                  <MenuItem Header="addin" Command="{Binding Editor.AddNewAddonItemCommand, ElementName=root}" />
                 </StackPanel>
               </Border>
             </Popup>
           </Grid>
           -->
-          <Button Grid.Column="0" Content="add" Command="{Binding Editor.CreateNewFileItemCommand, ElementName=root}" />
+          <Button Grid.Column="0" Content="add" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" />
           <Button Grid.Column="1" Content="del" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" />
           <TextBox Grid.Column="2" Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
         </Grid>

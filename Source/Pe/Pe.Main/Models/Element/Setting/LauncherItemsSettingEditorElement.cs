@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        public Guid CreateNewItem(LauncherItemKind kind)
+        public Guid AddNewItem(LauncherItemKind kind)
         {
             ThrowIfDisposed();
 
@@ -86,9 +87,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var item = new LauncherItemData() {
                     LauncherItemId = newLauncherItemId,
                     Kind = kind,
+                    Name = TextUtility.ToUnique(Properties.Resources.String_LauncherItem_NewItem_Name, AllLauncherItems.Select(i => i.Name).ToList(), StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}({n})"),
                 };
 
-                item.Name = Properties.Resources.String_LauncherItem_NewItem_Name;
                 var newCode = kind.ToString().ToLower() + "-item-code";
                 var codes = launcherItemsDao.SelectFuzzyCodes(newCode).ToList();
                 item.Code = launcherFactory.GetUniqueCode(newCode, codes);

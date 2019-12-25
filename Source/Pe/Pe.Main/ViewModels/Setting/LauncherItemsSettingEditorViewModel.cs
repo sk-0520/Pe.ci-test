@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        bool _isPopupCreateItemMenu;
+        bool _isPopupAddItemMenu;
         LauncherItemSettingEditorViewModel? _selectedItem;
 
         string _nameFilterQuery = string.Empty;
@@ -68,10 +68,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         public ICollectionView AllLauncherItemItems { get; }
 
-        public bool IsPopupCreateItemMenu
+        public bool IsPopupAddItemMenu
         {
-            get => this._isPopupCreateItemMenu;
-            set => SetProperty(ref this._isPopupCreateItemMenu, value);
+            get => this._isPopupAddItemMenu;
+            set => SetProperty(ref this._isPopupAddItemMenu, value);
         }
 
         public LauncherItemSettingEditorViewModel? SelectedItem
@@ -108,14 +108,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand CreateNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            CreateNewItem(LauncherItemKind.File);
+        public ICommand AddNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
+            AddNewItem(LauncherItemKind.File);
         }));
-        public ICommand CreateNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            CreateNewItem(LauncherItemKind.StoreApp);
+        public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
+            AddNewItem(LauncherItemKind.StoreApp);
         }));
-        public ICommand CreateNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            CreateNewItem(LauncherItemKind.Addon);
+        public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
+            AddNewItem(LauncherItemKind.Addon);
         }));
 
         public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -130,10 +130,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void CreateNewItem(LauncherItemKind kind)
+        void AddNewItem(LauncherItemKind kind)
         {
-            IsPopupCreateItemMenu = false;
-            var newLauncherItemId = Model.CreateNewItem(kind);
+            IsPopupAddItemMenu = false;
+            var newLauncherItemId = Model.AddNewItem(kind);
             var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();
