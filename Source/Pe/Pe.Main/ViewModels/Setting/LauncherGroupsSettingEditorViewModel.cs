@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
-        public ICommand CreateNewNormalGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand AddNewNormalGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 AddNewGroup(LauncherGroupKind.Normal);
             }

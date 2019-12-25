@@ -97,12 +97,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        public LauncherGroupData CreateGroupData(string name)
+        public LauncherGroupData CreateGroupData(string name, LauncherGroupKind kind)
         {
             return new LauncherGroupData() {
                 LauncherGroupId = IdFactory.CreateLauncherGroupId(),
                 Name = name,
-                Kind = LauncherGroupKind.Normal,
+                Kind = kind,
                 ImageName = LauncherGroupImageName.DirectoryNormal,
                 ImageColor = Colors.Yellow,
             };

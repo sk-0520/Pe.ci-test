@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 .ToList()
             ;
 
-            var group = launcherFactory.CreateGroupData("@GROUP");
+            var group = launcherFactory.CreateGroupData(Properties.Resources.String_LauncherGroup_ImportItem_Name, LauncherGroupKind.Normal);
 
             using(var transaction = DatabaseBarrier.WaitWrite()) {
                 var launcherItemsDao = new LauncherItemsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);

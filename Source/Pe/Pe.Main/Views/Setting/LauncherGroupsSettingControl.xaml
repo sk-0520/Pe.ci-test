@@ -54,7 +54,7 @@
           </Popup>
         </Grid>
         -->
-        <Button Content="add" Command="{Binding Editor.CreateNewNormalGroupCommand, ElementName=root}" />
+        <Button Content="add" Command="{Binding Editor.AddNewNormalGroupCommand, ElementName=root}" />
         <Button Content="del" Command="{Binding Editor.RemoveSelectedGroupCommand, ElementName=root}" />
 
         <Separator />

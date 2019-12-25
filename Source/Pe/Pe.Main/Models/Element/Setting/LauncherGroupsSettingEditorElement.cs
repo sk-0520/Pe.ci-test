@@ -62,8 +62,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public Guid AddNewGroup(LauncherGroupKind kind)
         {
+            var newGroupName = TextUtility.ToUnique(Properties.Resources.String_LauncherGroup_NewItem_Name, GroupItems.Select(i => i.Name).ToList(), StringComparison.OrdinalIgnoreCase, (s, n) => $"{s}({n})");
+
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
-            var groupData = launcherFactory.CreateGroupData("@GROUP");
+            var groupData = launcherFactory.CreateGroupData(newGroupName, kind);
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherGroupsDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);

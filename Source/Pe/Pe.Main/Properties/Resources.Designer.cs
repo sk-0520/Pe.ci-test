@@ -120,6 +120,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   自動設定グループ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherGroup_ImportItem_Name {
+            get {
+                return ResourceManager.GetString("String_LauncherGroup_ImportItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいグループ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherGroup_NewItem_Name {
+            get {
+                return ResourceManager.GetString("String_LauncherGroup_NewItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   新しいアイテム に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItem_NewItem_Name {
