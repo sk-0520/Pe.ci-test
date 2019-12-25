@@ -45,31 +45,39 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <Grid Grid.Row="0">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition />
-          <ColumnDefinition />
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+      <ToolBar Grid.Row="0">
+        <ToolBar.Resources>
+          <Style TargetType="{x:Type ToolBarPanel}">
+            <Setter Property="Orientation" Value="Vertical"/>
+          </Style>
+        </ToolBar.Resources>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
 
-        <!--
-        <Grid Grid.Column="0">
-          <ToggleButton x:Name="switchCreateItem" IsChecked="{Binding Editor.IsPopupCreateItemMenu, ElementName=root}" Content="+" />
-          <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateItem}">
-            <Border Style="{StaticResource PopupMenuBorder}">
-              <StackPanel>
-                <MenuItem Header="file" Command="{Binding Editor.CreateNewFileItemCommand, ElementName=root}" />
-                <MenuItem Header="store" Command="{Binding Editor.CreateNewStoreAppItemCommand, ElementName=root}" />
-                <MenuItem Header="addin" Command="{Binding Editor.CreateNewAddonItemCommand, ElementName=root}" />
-              </StackPanel>
-            </Border>
-          </Popup>
+          <!--
+          <Grid Grid.Column="0">
+            <ToggleButton x:Name="switchCreateItem" IsChecked="{Binding Editor.IsPopupCreateItemMenu, ElementName=root}" Content="+" />
+            <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateItem}">
+              <Border Style="{StaticResource PopupMenuBorder}">
+                <StackPanel>
+                  <MenuItem Header="file" Command="{Binding Editor.CreateNewFileItemCommand, ElementName=root}" />
+                  <MenuItem Header="store" Command="{Binding Editor.CreateNewStoreAppItemCommand, ElementName=root}" />
+                  <MenuItem Header="addin" Command="{Binding Editor.CreateNewAddonItemCommand, ElementName=root}" />
+                </StackPanel>
+              </Border>
+            </Popup>
+          </Grid>
+          -->
+          <Button Grid.Column="0" Content="add" Command="{Binding Editor.CreateNewFileItemCommand, ElementName=root}" />
+          <Button Grid.Column="1" Content="del" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" />
+          <TextBox Grid.Column="2" Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
         </Grid>
-        -->
-        <Button Grid.Column="0" Content="add" Command="{Binding Editor.CreateNewFileItemCommand, ElementName=root}" />
-        <Button Grid.Column="1" Content="del" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" />
-        <TextBox Grid.Column="2" />
-      </Grid>
+
+      </ToolBar>
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, ElementName=root}">
         <i:Interaction.Behaviors>

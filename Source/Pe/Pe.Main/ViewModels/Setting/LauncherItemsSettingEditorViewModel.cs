@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -28,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         bool _isPopupCreateItemMenu;
         LauncherItemSettingEditorViewModel? _selectedItem;
 
+        string _nameFilterQuery = string.Empty;
+
         #endregion
 
         public LauncherItemsSettingEditorViewModel(LauncherItemsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItems, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -37,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AllLauncherItemCollection = allLauncherItems;
             //AllLauncherItemItems = AllLauncherItemCollection.CreateView();
             AllLauncherItemItems = AllLauncherItemCollection.GetDefaultView();
+            AllLauncherItemItems.Filter = FilterAllLauncherItemItems;
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = CanDragStart,
@@ -46,10 +50,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 DropAction = Drop,
                 GetDragParameter = GetDragParameter,
             };
+
+            SimpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
+            NameFilterQueryRegex = SimpleRegexFactory.AllMatchRegex;
         }
 
-
         #region property
+
+        SimpleRegexFactory SimpleRegexFactory { get; }
 
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
         public RequestSender ScrollToTopCustomizeRequest { get; } = new RequestSender();
@@ -85,6 +93,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        Regex NameFilterQueryRegex { get; set; }
+        public string NameFilterQuery
+        {
+            get => this._nameFilterQuery;
+            set
+            {
+                SetProperty(ref this._nameFilterQuery, value);
+                NameFilterQueryRegex = SimpleRegexFactory.CreateFilterRegex(this._nameFilterQuery);
+                AllLauncherItemItems.Refresh();
+            }
+        }
         #endregion
 
         #region command
@@ -99,14 +118,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             CreateNewItem(LauncherItemKind.Addon);
         }));
 
-        public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            var selectedItem = SelectedItem;
-            if(selectedItem == null) {
-                return;
-            }
-            Model.RemoveItem(selectedItem.LauncherItemId);
-            SelectedItem = null;
-        }));
+        public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.RemoveItem(SelectedItem!.LauncherItemId);
+                SelectedItem = null;
+            },
+            () => SelectedItem != null
+        ).ObservesProperty(() => SelectedItem));
 
         #endregion
 
@@ -158,6 +176,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             dd.DragLeave(sender, e);
         }
 
+
+        #endregion
+
+        #region AllLauncherItemItems
+
+        private bool FilterAllLauncherItemItems(object obj)
+        {
+            if(string.IsNullOrWhiteSpace(NameFilterQuery)) {
+                return true;
+            }
+
+            var item = (LauncherItemSettingEditorViewModel)obj;
+            if(item == SelectedItem) {
+                return true;
+            }
+            return NameFilterQueryRegex.IsMatch(item.Common.Name);
+        }
 
         #endregion
 
