@@ -193,6 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             () => SelectedGroup != null && GroupCollection.IndexOf(SelectedGroup) != GroupCollection.ViewModels.Count - 1
         ).ObservesProperty(() => SelectedGroup));
 
+
         public ICommand RemoveSelectedLauncherItemCommand => GetOrCreateCommand(
             () => new DelegateCommand(
                 () => {
@@ -204,6 +205,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
         );
 
+        public ICommand UpSelectedLauncherItemCommand => GetOrCreateCommand(
+            () => new DelegateCommand(
+                () => {
+                    var currentIndex = SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem!);
+                    var nextIndex = currentIndex - 1;
+                    SelectedGroup.MoveLauncherItem(currentIndex, nextIndex);
+                    SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[nextIndex];
+                },
+                () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null && 0 < SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem)
+            )
+            .ObservesProperty(() => SelectedGroup)
+            .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
+        );
+
+        public ICommand DownSelectedLauncherItemCommand => GetOrCreateCommand(
+            () => new DelegateCommand(
+                () => {
+                    var currentIndex = SelectedGroup!.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem!);
+                    var nextIndex = currentIndex + 1;
+                    SelectedGroup.MoveLauncherItem(currentIndex, nextIndex);
+                    SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[nextIndex];
+                },
+                () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null && SelectedGroup.LauncherItems.IndexOf(SelectedGroup.SelectedLauncherItem) != SelectedGroup.LauncherItems.Count - 1
+            )
+            .ObservesProperty(() => SelectedGroup)
+            .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
+        );
 
         #endregion
 
@@ -314,7 +342,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                                 SelectedGroup.LauncherItems.Insert(currentIndex, dragData.Item); // 自分消えてるからインデックスずれていいかんじになるはず
                             }
                             */
-                            SelectedLauncherItem = AllLauncherItemCollection.ViewModels[currentIndex];
+                            SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems[currentIndex];
                         }
                     } else if(dragData.FromAllItems) {
                         // 一覧から持ってきた際にデータが空っぽだとここ
@@ -325,7 +353,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         SelectedLauncherItem = newLauncherItem;
                         */
                         SelectedGroup.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, dragData.Item);
-                        SelectedLauncherItem = AllLauncherItemCollection.ViewModels.Last();
+                        SelectedGroup.SelectedLauncherItem = SelectedGroup!.LauncherItems.Last();
                         UIUtility.GetVisualClosest<ListBox>(dependencyObject)!.Focus();
                     }
                 }

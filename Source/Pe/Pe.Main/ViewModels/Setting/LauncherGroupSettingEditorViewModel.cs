@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -134,6 +135,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region command
+
+
         #endregion
 
         #region function

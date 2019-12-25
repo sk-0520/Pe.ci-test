@@ -171,8 +171,8 @@
 
         <Separator />
 
-        <Button Content="up" />
-        <Button Content="down" />
+        <Button Content="up" Command="{Binding Editor.UpSelectedLauncherItemCommand, ElementName=root}" />
+        <Button Content="down" Command="{Binding Editor.DownSelectedLauncherItemCommand, ElementName=root}" />
       </ToolBar>
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, ElementName=root}">
