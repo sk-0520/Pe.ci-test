@@ -38,10 +38,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void AddLauncherItemId(Guid launcherGroupId)
-        {
-        }
-
         public void MoveGroupItem(int startIndex, int insertIndex)
         {
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
@@ -57,7 +53,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void RemoveGroup(Guid launcherGroupId)
         {
+            var targetItem = GroupItems.First(i => i.LauncherGroupId == launcherGroupId);
+            GroupItems.Remove(targetItem);
 
+            // DB から物理削除
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                launcherGroupItemsEntityDao.DeleteGroupItemsByLauncherGroupId(targetItem.LauncherGroupId);
+                launcherGroupsEntityDao.DeleteGroup(targetItem.LauncherGroupId);
+
+                commander.Commit();
+            }
+
+            targetItem.Dispose();
         }
 
         public Guid AddNewGroup(LauncherGroupKind kind)

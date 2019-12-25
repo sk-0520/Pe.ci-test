@@ -166,10 +166,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public ICommand RemoveSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 Model.RemoveGroup(SelectedGroup!.LauncherGroupId);
+                 var launcherGroupId = SelectedGroup!.LauncherGroupId;
                  SelectedGroup = null;
+                 Model.RemoveGroup(launcherGroupId);
              },
-             () => SelectedGroup != null
+             () => SelectedGroup != null && 1 < GroupCollection.ViewModels.Count
          ).ObservesProperty(() => SelectedGroup));
 
         #endregion

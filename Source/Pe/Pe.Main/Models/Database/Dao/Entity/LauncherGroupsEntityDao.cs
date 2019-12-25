@@ -127,6 +127,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, dto) == 1;
         }
 
+        public int DeleteGroup(Guid launcherGroupId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherGroupId = launcherGroupId,
+            };
+            return Commander.Execute(statement, parameter);
+        }
+
         #endregion
     }
 }
