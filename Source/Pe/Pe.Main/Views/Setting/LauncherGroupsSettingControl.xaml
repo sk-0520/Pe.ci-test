@@ -59,8 +59,8 @@
 
         <Separator />
 
-        <Button Content="up" />
-        <Button Content="down" />
+        <RepeatButton Content="up" Command="{Binding Editor.UpSelectedGroupCommand, ElementName=root}" />
+        <RepeatButton Content="down" Command="{Binding Editor.DownSelectedGroupCommand, ElementName=root}" />
       </ToolBar>
 
       <ListBox Grid.Row="1" AllowDrop="True" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">

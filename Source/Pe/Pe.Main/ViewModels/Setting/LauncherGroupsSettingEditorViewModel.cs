@@ -173,6 +173,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
              () => SelectedGroup != null && 1 < GroupCollection.ViewModels.Count
          ).ObservesProperty(() => SelectedGroup));
 
+        public ICommand UpSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var currentIndex = GroupCollection.IndexOf(SelectedGroup!);
+                var nextIndex = currentIndex - 1;
+                Model.MoveGroupItem(currentIndex, nextIndex);
+                SelectedGroup = GroupCollection.ViewModels[nextIndex];
+            },
+            () => SelectedGroup != null && 0 < GroupCollection.IndexOf(SelectedGroup)
+        ).ObservesProperty(() => SelectedGroup));
+
+        public ICommand DownSelectedGroupCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var currentIndex = GroupCollection.IndexOf(SelectedGroup!);
+                var nextIndex = currentIndex + 1;
+                Model.MoveGroupItem(currentIndex, nextIndex);
+                SelectedGroup = GroupCollection.ViewModels[nextIndex];
+            },
+            () => SelectedGroup != null && GroupCollection.IndexOf(SelectedGroup) != GroupCollection.ViewModels.Count - 1
+        ).ObservesProperty(() => SelectedGroup));
+
         #endregion
 
         #region function
