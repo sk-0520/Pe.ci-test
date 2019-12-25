@@ -193,6 +193,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             () => SelectedGroup != null && GroupCollection.IndexOf(SelectedGroup) != GroupCollection.ViewModels.Count - 1
         ).ObservesProperty(() => SelectedGroup));
 
+        public ICommand RemoveSelectedLauncherItemCommand => GetOrCreateCommand(
+            () => new DelegateCommand(
+                () => {
+                    SelectedGroup!.RemoveLauncherItem(SelectedGroup.SelectedLauncherItem!);
+                },
+                () => SelectedGroup != null && SelectedGroup.SelectedLauncherItem != null
+            )
+            .ObservesProperty(() => SelectedGroup)
+            .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
+        );
+
+
         #endregion
 
         #region function

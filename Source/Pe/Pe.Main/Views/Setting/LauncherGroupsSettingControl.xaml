@@ -167,8 +167,7 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
-        <Button Content="+" />
-        <Button Content="-" />
+        <Button Content="del" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, ElementName=root}" />
 
         <Separator />
 

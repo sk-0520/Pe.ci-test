@@ -160,6 +160,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Model.MoveLauncherItemId(startIndex, insertIndex);
         }
 
+        public void RemoveLauncherItem(LauncherItemSettingEditorViewModel launcherItem)
+        {
+            var index = LauncherItems.IndexOf(launcherItem);
+            Model.RemoveLauncherItemAt(index);
+        }
 
         #endregion
 
