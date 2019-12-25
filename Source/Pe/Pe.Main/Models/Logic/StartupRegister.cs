@@ -1,3 +1,7 @@
+#if DEBUG || BETA
+    #define SKIP_REGISTER
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 shortcut.WorkingDirectory = Path.GetDirectoryName(assemblyPath);
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
                 shortcut.IconPath = assemblyPath;
-#if DEBUG || BETA
+#if SKIP_REGISTER
                 Logger.LogInformation("skip!");
 #else
                 shortcut.Save(startupShortcutPath);
