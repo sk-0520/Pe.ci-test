@@ -26,11 +26,11 @@
 
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="4*" />
+      <ColumnDefinition Width="40*" />
       <ColumnDefinition Width="Auto" />
-      <ColumnDefinition Width="4*" />
+      <ColumnDefinition Width="30*" />
       <ColumnDefinition Width="Auto" />
-      <ColumnDefinition Width="2*" />
+      <ColumnDefinition Width="30*" />
     </Grid.ColumnDefinitions>
 
     <Grid Grid.Column="0">
@@ -207,7 +207,16 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
-        <TextBox />
+        <ToolBar.Resources>
+          <Style TargetType="{x:Type ToolBarPanel}">
+            <Setter Property="Orientation" Value="Vertical"/>
+          </Style>
+        </ToolBar.Resources>
+
+        <DockPanel HorizontalAlignment="Stretch">
+          <Button DockPanel.Dock="Left" Content="add" Command="{Binding Editor.AddSelectedLauncheritemCommand, ElementName=root}" />
+          <TextBox />
+        </DockPanel>
       </ToolBar>
 
 

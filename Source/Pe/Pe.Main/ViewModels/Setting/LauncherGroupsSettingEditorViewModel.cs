@@ -233,6 +233,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
         );
 
+        public ICommand AddSelectedLauncheritemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                SelectedGroup!.InsertNewLauncherItem(SelectedGroup.LauncherItems.Count, SelectedLauncherItem!);
+                SelectedGroup.SelectedLauncherItem = SelectedGroup.LauncherItems[SelectedGroup.LauncherItems.Count - 1];
+            },
+            () => SelectedLauncherItem != null
+        ).ObservesProperty(() => SelectedLauncherItem));
+
         #endregion
 
         #region function
@@ -308,7 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             if(SelectedGroup == null) {
                 return;
             }
-            //TODO:D&D死んでるよ！
+
             if(e.Data.TryGet<LauncherItemDragData>(out var dragData)) {
                 if(e.OriginalSource is DependencyObject dependencyObject) {
                     var listBoxItem = UIUtility.GetVisualClosest<ListBoxItem>(dependencyObject);
