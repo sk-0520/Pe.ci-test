@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
             };
             //this._selectedEditor = EditorItems.First();
-            this._selectedEditor = KeyboardSettingEditor;
+            this._selectedEditor = GeneralSettingEditor;
         }
 
         #region property
@@ -59,6 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         [IgnoreValidation]
         public ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
 
+        [IgnoreValidation]
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }
 
         [IgnoreValidation]

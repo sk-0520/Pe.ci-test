@@ -41,23 +41,32 @@
 
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
-              <ComboBox ItemsSource="{Binding CultureInfoItems}" SelectedItem="{Binding SelectedCultureInfo}">
-                <ComboBox.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <VirtualizingStackPanel ScrollUnit="Item" />
-                  </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-                <ComboBox.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock>
-                      <Run Text="{Binding DisplayName, Mode=OneTime}" />
-                      <Run Text=" (" />
-                      <Run Text="{Binding Name, Mode=OneTime}" />
-                      <Run Text=")" />
-                    </TextBlock>
-                  </DataTemplate>
-                </ComboBox.ItemTemplate>
-              </ComboBox>
+              <StackPanel>
+                <ComboBox ItemsSource="{Binding CultureInfoItems}" SelectedItem="{Binding SelectedCultureInfo}">
+                  <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <VirtualizingStackPanel ScrollUnit="Item" />
+                    </ItemsPanelTemplate>
+                  </ComboBox.ItemsPanel>
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock>
+                        <Run Text="{Binding DisplayName, Mode=OneTime}" />
+                        <Run Text=" (" />
+                        <Run Text="{Binding Name, Mode=OneTime}" />
+                        <Run Text=")" />
+                      </TextBlock>
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <CheckBox Content="register startup" IsChecked="{Binding IsRegisterStartup}" />
+                <CheckBox Content="wait" IsChecked="{Binding DelayStartup}" />
+                <app_core_views:NumericUpDown
+                  Minimum="{Binding MinimumStartupWaitTimeSeconds}"
+                  Maximum="{Binding MaximumStartupWaitTimeSeconds}"
+                  Value="{Binding StartupWaitTimeSeconds}"
+                />
+              </StackPanel>
             </GroupBox>
           </DataTemplate>
 
@@ -193,7 +202,7 @@
                     </Style>
                   </ContentControl.Style>
                 </ContentControl>
-                
+
                 <Label>output fore</Label>
                 <app_core_views:ColorCanvas SelectedColor="{Binding OutputForegroundColor}" />
                 <Label>output back</Label>
@@ -203,7 +212,7 @@
                 <app_core_views:ColorCanvas SelectedColor="{Binding ErrorForegroundColor}" />
                 <Label>error back</Label>
                 <app_core_views:ColorCanvas SelectedColor="{Binding ErrorBackgroundColor}" />
-                
+
                 <CheckBox Content="topmost" IsChecked="{Binding IsTopmost}" />
 
               </StackPanel>

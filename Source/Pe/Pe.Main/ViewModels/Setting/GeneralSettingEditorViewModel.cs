@@ -132,6 +132,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value, nameof(Model.CultureInfo));
         }
 
+        public bool IsRegisterStartup
+        {
+            get => Model.IsRegisterStartup;
+            set => SetModelValue(value);
+        }
+
+        public bool DelayStartup
+        {
+            get => Model.DelayStartup;
+            set => SetModelValue(value);
+        }
+
+        public double MinimumStartupWaitTimeSeconds => TimeSpan.FromSeconds(1).TotalSeconds;
+        public double MaximumStartupWaitTimeSeconds => TimeSpan.FromMinutes(1).TotalSeconds;
+        public double StartupWaitTimeSeconds
+        {
+            get => Model.StartupWaitTime.TotalSeconds;
+            set => SetModelValue(TimeSpan.FromSeconds(value), nameof(Model.StartupWaitTime));
+        }
+
         #endregion
 
         #region command

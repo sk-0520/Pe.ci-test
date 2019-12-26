@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -103,6 +104,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public CultureInfo CultureInfo { get; set; } = CultureInfo.CurrentCulture;
 
+        public bool IsRegisterStartup { get; set; }
+        public bool DelayStartup { get; set; }
+        public TimeSpan StartupWaitTime { get; set; }
+
+
         #endregion
 
         #region function
@@ -119,6 +125,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             CultureInfo = CultureInfo.GetCultureInfo(setting.Language);
+
+            // スタートアップ取得（なんやこれ・・・）
+            var startupRegister = new StartupRegister(LoggerFactory);
+            var startupParameterResult = startupRegister.GetStartupParameter();
+            if(startupParameterResult.Success) {
+                var startupParameter = startupParameterResult.SuccessValue!;
+                IsRegisterStartup = true;
+                DelayStartup = startupParameter.DelayStartup;
+                StartupWaitTime = startupParameter.StartupWaitTime;
+            } else {
+                IsRegisterStartup = false;
+                DelayStartup = false;
+                StartupWaitTime = TimeSpan.FromSeconds(3);
+            }
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
@@ -128,6 +148,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 Language = CultureInfo.Name,
             };
             appGeneralSettingEntityDao.UpdateSettingGeneralSetting(data, commandPack.CommonStatus);
+
+            var startupRegister = new StartupRegister(LoggerFactory);
+            if(IsRegisterStartup) {
+                var startupParameter = new StartupParameter() {
+                    DelayStartup = DelayStartup,
+                    StartupWaitTime = StartupWaitTime,
+                };
+                startupRegister.Register(startupParameter);
+            } else {
+                startupRegister.Unregister();
+            }
         }
 
         #endregion

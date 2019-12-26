@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ThrowIfDisposed();
 
             var startupRegister = new StartupRegister(LoggerFactory);
-            return startupRegister.Register();
+            return startupRegister.Register(new StartupParameter());
         }
 
         public void ShowImportProgramsView()
