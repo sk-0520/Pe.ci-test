@@ -78,6 +78,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public void PreparateReceiver()
         {
+            ThrowIfDisposed();
+
             if(Process.HasExited) {
                 Logger.LogWarning("既に終了したプロセス: id = {0}, name = {1}, exit coe = {2}, exit time = {3}", Process.Id, Process.ProcessName, Process.ExitCode, Process.ExitTime);
                 return;
@@ -93,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         public void RunReceiver()
         {
             Debug.Assert(PreparatedReceive);
+            ThrowIfDisposed();
 
             OutputStreamReceiver!.StartReceive();
             ErrorStreamReceiver!.StartReceive();
@@ -101,6 +104,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public void Kill()
         {
+            ThrowIfDisposed();
+
             if(Process.HasExited) {
                 Logger.LogWarning("既に終了したプロセス: id = {0}, name = {1}, exit coe = {2}, exit time = {3}", Process.Id, Process.ProcessName, Process.ExitCode, Process.ExitTime);
                 return;
@@ -111,6 +116,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public void SendInputValue(string value)
         {
+            ThrowIfDisposed();
+
             if(Process.HasExited) {
                 Logger.LogWarning("既に終了したプロセス: id = {0}, name = {1}, exit coe = {2}, exit time = {3}", Process.Id, Process.ProcessName, Process.ExitCode, Process.ExitTime);
                 return;

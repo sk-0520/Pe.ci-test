@@ -22,12 +22,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         #endregion
 
-        public IconViewerViewModel(IconImageLoaderBase model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public IconViewerViewModel(IconImageLoaderBase model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             RunningStatus = new RunningStatusViewModel(Model.RunningStatus, LoggerFactory);
 
-            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(RunningStatus), nameof(RunningStatus), nameof(ImageSource));
         }
 

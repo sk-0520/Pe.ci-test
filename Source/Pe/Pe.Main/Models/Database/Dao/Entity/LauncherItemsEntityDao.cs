@@ -6,11 +6,46 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal interface IReadOnlyLauncherItemsRowDto : IReadOnlyRowDtoBase
+    {
+        #region property
+
+        Guid LauncherItemId { get; }
+
+        string Code { get; }
+        string Name { get; }
+        string Kind { get; }
+        string IconPath { get; }
+        long IconIndex { get; }
+        bool IsEnabledCommandLauncher { get; }
+        long ExecuteCount { get; }
+        string Comment { get; }
+
+        #endregion
+    }
+
+    internal class LauncherItemsRowDto : RowDtoBase, IReadOnlyLauncherItemsRowDto
+    {
+        #region IReadOnlyLauncherItemRowDto
+
+        public Guid LauncherItemId { get; set; }
+
+        public string Code { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Kind { get; set; } = string.Empty;
+        public string IconPath { get; set; } = string.Empty;
+        public long IconIndex { get; set; }
+        public bool IsEnabledCommandLauncher { get; set; }
+        public long ExecuteCount { get; set; }
+        public string Comment { get; set; } = string.Empty;
+
+        #endregion
+    }
+
     public class LauncherItemsEntityDao : EntityDaoBase
     {
         public LauncherItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
@@ -74,10 +109,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
+        /// <summary>
+        /// 同じようなコード一覧を取得。
+        /// </summary>
+        /// <param name="baseCode"></param>
+        /// <returns></returns>
         public IEnumerable<string> SelectFuzzyCodes(string baseCode)
         {
             var statement = LoadStatement();
             return Commander.Query<string>(statement, new { BaseCode = baseCode });
+        }
+
+        public IEnumerable<Guid> SelectAllLauncherItemIds()
+        {
+            var statement = LoadStatement();
+            return Commander.Query<Guid>(statement);
         }
 
         public LauncherItemData SelectLauncherItem(Guid launcherItemId)
@@ -123,6 +169,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
             return Commander.Execute(statement, dto) == 1;
+        }
+
+        public bool DeleteLauncherItem(Guid launcherItemId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+            return ExecuteDelete(builder) == 1;
         }
 
         #endregion

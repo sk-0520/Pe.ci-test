@@ -1,4 +1,4 @@
-﻿insert into
+insert into
 	LauncherToolbars
 	(
 		[LauncherToolbarId],
@@ -25,30 +25,29 @@
 		[UpdatedProgramVersion],
 		[UpdatedCount]
 	)
-	values
-	(
+	select
 /* ToolbarId                */ @LauncherToolbarId,
 /* ScreenName               */ @ScreenName,
 /* LauncherGroupId          */ '00000000-0000-0000-0000-000000000000',
-/* PositionKind             */ 'right',
-/* Direction                */ 'left-top',
-/* IconBox                  */ 'normal',
-/* FontId                   */ '00000000-0000-0000-0000-000000000000',
-/* AutoHideTimeout          */ '00:00:03',
-/* TextWidth                */ 80,
-/* IsVisible                */ true,
-/* IsTopmost                */ true,
-/* IsAutoHide               */ false,
-/* IsIconOnly               */ true,
+/* PositionKind             */ AppLauncherToolbarSetting.PositionKind,
+/* Direction                */ AppLauncherToolbarSetting.Direction,
+/* IconBox                  */ AppLauncherToolbarSetting.IconBox,
+/* FontId                   */ AppLauncherToolbarSetting.FontId,
+/* AutoHideTimeout          */ AppLauncherToolbarSetting.AutoHideTimeout,
+/* TextWidth                */ AppLauncherToolbarSetting.TextWidth,
+/* IsVisible                */ AppLauncherToolbarSetting.IsVisible,
+/* IsTopmost                */ AppLauncherToolbarSetting.IsTopmost,
+/* IsAutoHide               */ AppLauncherToolbarSetting.IsAutoHide,
+/* IsIconOnly               */ AppLauncherToolbarSetting.IsIconOnly,
 
-/*                          */
-/* CreatedTimestamp         */ CURRENT_TIMESTAMP,
+/* CreatedTimestamp         */ @CreatedTimestamp,
 /* CreatedAccount           */ @CreatedAccount,
 /* CreatedProgramName       */ @CreatedProgramName,
 /* CreatedProgramVersion    */ @CreatedProgramVersion,
-/* UpdatedTimestamp         */ CURRENT_TIMESTAMP,
+/* UpdatedTimestamp         */ @UpdatedTimestamp,
 /* UpdatedAccount           */ @UpdatedAccount,
 /* UpdatedProgramName       */ @UpdatedProgramName,
 /* UpdatedProgramVersion    */ @UpdatedProgramVersion,
 /* UpdatedCount             */ 0
-	)
+	from
+		AppLauncherToolbarSetting

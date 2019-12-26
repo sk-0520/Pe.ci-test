@@ -1,6 +1,5 @@
-﻿--// table: AppSystems
-create table [AppSystems] (
-	[Key] text not null /* キー  */,
+--// table: AppExecuteSetting
+create table [AppExecuteSetting] (
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -10,11 +9,150 @@ create table [AppSystems] (
 	[UpdatedProgramName] text not null /* 更新プログラム名  */,
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[Value] text not null /* 値  */,
-	[Comment] text not null /* コメント Peからは使用しないメモ */,
-	primary key(
-		[Key]
-	)
+	[Accepted] boolean not null /* 使用許諾  */,
+	[FirstVersion] text not null /* 初回実行バージョン  */,
+	[FirstTimestamp] datetime not null /* 初回実行日時 UTC */,
+	[LastVersion] text not null /* 最終実行バージョン  */,
+	[LastTimestamp] datetime not null /* 最終実行日時 UTC */,
+	[ExecuteCount] integer not null /* 実行回数 0始まり */,
+	[UserId] text not null /* ユーザー識別子  */,
+	[SendUsageStatistics] boolean not null /* 使用統計情報送信  */
+)
+;
+
+--// table: AppGeneralSetting
+create table [AppGeneralSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[Language] text not null /* 使用言語  */
+)
+;
+
+--// table: AppUpdateSetting
+create table [AppUpdateSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[CheckReleaseVersion]  not null /* リリース版をチェック  */,
+	[CheckRcVersion]  not null /* RC版をチェック  */,
+	[IgnoreVersion] text not null /* 無視するバージョン このバージョン以下を無視する */
+)
+;
+
+--// table: AppWindowSetting
+create table [AppWindowSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[IsEnabled]  not null /* 有効  */,
+	[Count] integer not null /* 保持数  */,
+	[Interval] text not null /* 保存間隔  */
+)
+;
+
+--// table: AppCommandSetting
+create table [AppCommandSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[IconBox] text not null /* アイコンサイズ  */,
+	[HideWaitTime] text not null /* 非表示待機時間  */,
+	[FindTag]  not null /* タグ検索  */,
+	[FindFile]  not null /* ファイル検索  */,
+	foreign key([FontId]) references [Fonts]([FontId])
+)
+;
+
+--// table: AppNoteSetting
+create table [AppNoteSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[TitleKind] text not null /* タイトル設定  */,
+	[LayoutKind] text not null /* 位置種別  */,
+	[Foreground] text not null /* 前景色 #AARRGGBB */,
+	[Background] text not null /* 背景色 #AARRGGBB */,
+	[IsTopmost]  not null /* 最前面  */,
+	foreign key([FontId]) references [Fonts]([FontId])
+)
+;
+
+--// table: AppStandardInputOutputSetting
+create table [AppStandardInputOutputSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[OutputForeground] text not null /* 標準出力前景色 #AARRGGBB */,
+	[OutputBackground] text not null /* 標準出力背景色 #AARRGGBB */,
+	[ErrorForeground] text not null /* エラー前景色 #AARRGGBB */,
+	[ErrorBackground] text not null /* エラー背景色 #AARRGGBB */,
+	[IsTopmost]  not null /* 最前面  */,
+	foreign key([FontId]) references [Fonts]([FontId])
+)
+;
+
+--// table: AppLauncherToolbarSetting
+create table [AppLauncherToolbarSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[PositionKind] text not null /* 表示位置 上下左右 */,
+	[Direction] text not null /* 方向 アイコンの並びの基点 */,
+	[IconBox] text not null /* アイコンサイズ  */,
+	[FontId] text not null /* フォント  */,
+	[AutoHideTimeout] text not null /* 自動的に隠す時間  */,
+	[TextWidth] integer not null /* 文字幅  */,
+	[IsVisible] boolean not null /* 表示  */,
+	[IsTopmost] boolean not null /* 最前面  */,
+	[IsAutoHide] boolean not null /* 自動的に隠す  */,
+	[IsIconOnly] boolean not null /* アイコンのみ  */,
+	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;
 
@@ -269,7 +407,8 @@ create table [LauncherToolbars] (
 	[IsIconOnly] boolean not null /* アイコンのみ  */,
 	primary key(
 		[LauncherToolbarId]
-	)
+	),
+	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;
 
@@ -299,7 +438,8 @@ create table [Notes] (
 	[ContentKind] text not null /* ノート内容種別 プレーン文字列 RTF */,
 	primary key(
 		[NoteId]
-	)
+	),
+	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;
 
@@ -394,11 +534,27 @@ create table [KeyActions] (
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[KeyActionKind] text not null /* アクション種別 ランチャー, コマンド */,
 	[KeyActionContent] text not null /* アクション内容 アクション種別で変動 */,
-	[KeyActionOption] text not null /* オプション内容 アクション種別で変動 */,
 	[Comment] text not null /* コメント  */,
 	primary key(
 		[KeyActionId]
 	)
+)
+;
+
+--// table: KeyOptions
+create table [KeyOptions] (
+	[KeyActionId] text not null /* キーアクションID  */,
+	[KeyOptionName] text not null /* オプション名 アクション種別で変動 */,
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[KeyOptionValue] text not null /* オプション内容 オプション名で変動 */,
+	primary key(
+		[KeyActionId],
+		[KeyOptionName]
+	),
+	foreign key([KeyActionId]) references [KeyActions]([KeyActionId])
 )
 ;
 
@@ -424,11 +580,19 @@ create table [KeyMappings] (
 ;
 
 
+
+
+
+
+
+
+
 --// index: idx_LauncherItems_1
 create unique index [idx_LauncherItems_1] on [LauncherItems](
 	[Code]
 )
 ;
+
 
 
 

@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -22,59 +24,75 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
     {
         #region variable
 
-        string? _path;
-        string? _workingDirectoryPath;
-        string? _option;
+        //string? _path;
+        //string? _workingDirectoryPath;
+        //string? _option;
 
-        bool _isEnabledCustomEnvironmentVariable;
-        bool _isEnabledStandardInputOutput;
-        Encoding? _standardInputOutputEncoding;
-        bool _runAdministrator;
-
+        //bool _isEnabledCustomEnvironmentVariable;
+        //bool _isEnabledStandardInputOutput;
+        //Encoding? _standardInputOutputEncoding;
+        //bool _runAdministrator;
+        bool _isDropDownPathItems;
         EncodingViewModel? _selectedStandardInputOutputEncoding;
 
         #endregion
 
-        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
-        { }
+        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
+        {
+            if(Model.Kind != Models.Data.LauncherItemKind.File) {
+                throw new ArgumentException(nameof(model) + "." + nameof(Model.Kind));
+            }
+            if(Model.File == null) {
+                throw new ArgumentNullException(nameof(model) + "." + nameof(Model.File));
+            }
+            File = Model.File;
+        }
 
         #region property
+
+        LauncherFileData File {get;}
+
+        public bool IsDropDownPathItems
+        {
+            get => this._isDropDownPathItems;
+            set => SetProperty(ref this._isDropDownPathItems, value);
+        }
 
         private static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
-        public string? Path
+        public string Path
         {
-            get => this._path;
-            set => SetProperty(ref this._path, value);
+            get => File.Path;
+            set => SetPropertyValue(File, value);
         }
-        public string? WorkingDirectoryPath
+        public string WorkingDirectoryPath
         {
-            get => this._workingDirectoryPath;
-            set => SetProperty(ref this._workingDirectoryPath, value);
+            get => File.WorkDirectoryPath;
+            set => SetPropertyValue(File, value, nameof(File.WorkDirectoryPath));
         }
         public string? Option
         {
-            get => this._option;
-            set => SetProperty(ref this._option, value);
+            get => File.Option;
+            set => SetPropertyValue(File, value);
         }
 
         public bool IsEnabledCustomEnvironmentVariable
         {
-            get => this._isEnabledCustomEnvironmentVariable;
-            set => SetProperty(ref this._isEnabledCustomEnvironmentVariable, value);
+            get => File.IsEnabledCustomEnvironmentVariable;
+            set => SetPropertyValue(File, value);
         }
         public bool IsEnabledStandardInputOutput
         {
-            get => this._isEnabledStandardInputOutput;
-            set => SetProperty(ref this._isEnabledStandardInputOutput, value);
+            get => File.IsEnabledStandardInputOutput;
+            set => SetPropertyValue(File, value);
         }
-        public Encoding? StandardInputOutputEncoding
+        public Encoding StandardInputOutputEncoding
         {
-            get => this._standardInputOutputEncoding;
-            set => SetProperty(ref this._standardInputOutputEncoding, value);
+            get => File.StandardInputOutputEncoding;
+            set => SetPropertyValue(File, value);
         }
 
         #region View側未実装エンコーディング
@@ -95,8 +113,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public bool RunAdministrator
         {
-            get => this._runAdministrator;
-            set => SetProperty(ref this._runAdministrator, value);
+            get => File.RunAdministrator;
+            set => SetPropertyValue(File, value);
         }
 
         public ObservableCollection<EnvironmentPathExecuteItemViewModel> PathItems { get; } = new ObservableCollection<EnvironmentPathExecuteItemViewModel>();
@@ -138,6 +156,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 );
             }
         ));
+
+        public ICommand SetPathToFullPathCommand => GetOrCreateCommand(() => new DelegateCommand<EnvironmentPathExecuteItemViewModel>(
+            o => {
+                Path = o.FullPath;
+                IsDropDownPathItems = false;
+            }
+        ));
+
+
 
         public ICommand OptionFileSelectCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -203,14 +230,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
-            var data = Model.LoadFileData();
-            Path = data.Path;
-            WorkingDirectoryPath = data.WorkDirectoryPath;
-            Option = data.Option;
-            IsEnabledCustomEnvironmentVariable = data.IsEnabledCustomEnvironmentVariable;
-            IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
-            StandardInputOutputEncoding = data.StandardInputOutputEncoding;
-            RunAdministrator = data.RunAdministrator;
+            //var data = Model.LoadFileData();
+            //Path = data.Path;
+            //WorkingDirectoryPath = data.WorkDirectoryPath;
+            //Option = data.Option;
+            //IsEnabledCustomEnvironmentVariable = data.IsEnabledCustomEnvironmentVariable;
+            //IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
+            //StandardInputOutputEncoding = data.StandardInputOutputEncoding;
+            //RunAdministrator = data.RunAdministrator;
 
             var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);
             PathItems.SetRange(pathItems.Select(i => new EnvironmentPathExecuteItemViewModel(i, LoggerFactory)));

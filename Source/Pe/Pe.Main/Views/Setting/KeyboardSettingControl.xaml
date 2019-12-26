@@ -1,0 +1,297 @@
+<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.KeyboardSettingControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
+  xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+  xmlns:app_main_modes_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+>
+  <UserControl.Resources>
+    <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+  </UserControl.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Grid Grid.Column="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <ToolBar Grid.Row="0">
+        <Label  Content="replace" />
+        <Button Content="add" Command="{Binding Editor.AddReplaceJobCommand, ElementName=root}" />
+      </ToolBar>
+
+      <ScrollViewer Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding Editor.ReplaceJobEditors, ElementName=root}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Grid>
+                <Expander>
+                  <Expander.Header>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+
+                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding SourceKey}" IsVisibleModifierKey="False" />
+                      <TextBlock Grid.Row="0" Grid.Column="1" Text="-&gt;" />
+                      <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="2" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding ReplaceKey}" IsVisibleModifierKey="False" />
+                    </Grid>
+                  </Expander.Header>
+                  <Expander.Content>
+                    <StackPanel>
+                      <TextBox Text="{Binding Comment}" />
+                      <Button Content="x" Command="{Binding Editor.RemoveReplaceJobCommand, ElementName=root}" CommandParameter="{Binding}" />
+                    </StackPanel>
+                  </Expander.Content>
+                </Expander>
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+
+    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+
+    <Grid Grid.Column="2">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <ToolBar Grid.Row="0">
+        <Label  Content="ignore" />
+        <Button Content="add" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
+      </ToolBar>
+
+      <ScrollViewer Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding Editor.DisableJobEditors, ElementName=root}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Grid>
+                <Expander>
+                  <Expander.Header>
+                    <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.DisableKeyItems, ElementName=root}" Key="{Binding Key}" IsVisibleModifierKey="False" />
+                  </Expander.Header>
+                  <Expander.Content>
+                    <StackPanel>
+                      <CheckBox Grid.Column="1" Content="forever" IsChecked="{Binding Forever}" />
+                      <TextBox Text="{Binding Comment}" />
+                      <Button Content="x" Command="{Binding Editor.RemoveDisableJobCommand, ElementName=root}" CommandParameter="{Binding}" />
+                    </StackPanel>
+                  </Expander.Content>
+                </Expander>
+              </Grid>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+
+    <GridSplitter Grid.Column="3" Style="{StaticResource DefaultVericalGridSplitter}" />
+
+    <Grid Grid.Column="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <ToolBar Grid.Row="0">
+        <Label  Content="key pressed" />
+        <Grid>
+          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="add" />
+          <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateJob}">
+            <Border Style="{StaticResource PopupMenuBorder}">
+              <StackPanel>
+                <MenuItem Header="command" Command="{Binding Editor.AddCommandJobCommand, ElementName=root}" />
+                <MenuItem Header="launcher item" Command="{Binding Editor.AddLauncherItemJobCommand, ElementName=root}" />
+                <MenuItem Header="hide toolbar" Command="{Binding Editor.AddLauncherToolbarJobCommand, ElementName=root}" />
+                <MenuItem Header="note" Command="{Binding Editor.AddNoteJobCommand, ElementName=root}" />
+
+              </StackPanel>
+            </Border>
+          </Popup>
+        </Grid>
+      </ToolBar>
+
+      <ScrollViewer Grid.Row="1">
+        <ItemsControl ItemsSource="{Binding Editor.PressedJobEditors, ElementName=root}">
+          <ItemsControl.Resources>
+            <StackPanel x:Key="Mappings" x:Shared="False">
+              <ItemsControl ItemsSource="{Binding MappingItems}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+
+                      <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="*" />
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Button Grid.Row="0" Content="up" Command="{Binding DataContext.UpMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
+                        <Button Grid.Row="1" Content="x" Command="{Binding DataContext.RemoveMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
+                        <Button Grid.Row="2" Content="down" Command="{Binding DataContext.DownMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
+                      </Grid>
+
+                      <app_main_views_setting:KeyInputControl Grid.Column="1" KeyItemsSource="{Binding Editor.PressedKeyItems, ElementName=root}" Key="{Binding Key}" Shift="{Binding Shift}" Control="{Binding Control}" Alt="{Binding Alt}" Super="{Binding Super}" />
+                    </Grid>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+              <Button Content="add mapping" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
+            </StackPanel>
+            <StackPanel x:Key="Common" x:Shared="False">
+              <CheckBox Content="system" IsChecked="{Binding ConveySystem}" />
+              <TextBox Text="{Binding Comment}" />
+              <Button Content="x" Command="{Binding Editor.RemovePressedJobCommand, ElementName=root}" CommandParameter="{Binding}" />
+            </StackPanel>
+
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardCommandJobSettingEditorViewModel}">
+              <Expander x:Name="item" Header="command">
+                <StackPanel>
+                  <ContentControl Content="{StaticResource Mappings}" />
+                  <ContentControl Content="{StaticResource Common}" />
+                </StackPanel>
+              </Expander>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardLauncherItemJobSettingEditorViewModel}">
+              <Expander x:Name="item">
+                <Expander.Header>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="launcher item" />
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding AllLauncherItems}" SelectedItem="{Binding LauncherItem}">
+                      <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <VirtualizingStackPanel
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          />
+                        </ItemsPanelTemplate>
+                      </ComboBox.ItemsPanel>
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                          <StackPanel Orientation="Horizontal">
+                            <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
+                            <TextBlock Text="{Binding Common.Name}" />
+                          </StackPanel>
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                  </Grid>
+                </Expander.Header>
+                <StackPanel>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Content="exec" />
+                    <WrapPanel Grid.Column="1">
+                      <RadioButton Content="execute" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.Execute}}" />
+                      <RadioButton Content="extends" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}}" />
+                    </WrapPanel>
+                  </Grid>
+                  <ContentControl Content="{StaticResource Mappings}" />
+                  <ContentControl Content="{StaticResource Common}" />
+                </StackPanel>
+              </Expander>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardLauncherToolbarJobSettingEditorViewModel}">
+              <Expander x:Name="item" Header="hide toolbar">
+                <StackPanel>
+                  <ContentControl Content="{StaticResource Mappings}" />
+                  <ContentControl Content="{StaticResource Common}" />
+                </StackPanel>
+              </Expander>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardNoteJobSettingEditorViewModel}">
+              <Expander x:Name="item">
+                <Expander.Header>
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="note" />
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding ContentItems}" SelectedItem="{Binding Content}">
+                      <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <VirtualizingStackPanel
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          />
+                        </ItemsPanelTemplate>
+                      </ComboBox.ItemsPanel>
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                  </Grid>
+                </Expander.Header>
+                <StackPanel>
+                  <ContentControl Content="{StaticResource Mappings}" />
+                  <ContentControl Content="{StaticResource Common}" />
+                </StackPanel>
+              </Expander>
+            </DataTemplate>
+
+          </ItemsControl.Resources>
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+
+  </Grid>
+</UserControl>

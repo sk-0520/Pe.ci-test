@@ -10,7 +10,13 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
-    public enum NotePosition
+    public enum NoteCreateTitleKind
+    {
+        Timestamp,
+        Count,
+    }
+
+    public enum NoteStartupPosition
     {
         Setting,
         CursorPosition,

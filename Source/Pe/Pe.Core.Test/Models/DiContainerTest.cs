@@ -571,6 +571,18 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.IsNull(d.I1_4);
         }
 #endif
+        [TestMethod]
+        public void UnregisterTest()
+        {
+            var dic = new DiContainer();
+            dic.Register<I1, C1>(DiLifecycle.Transient);
+            var i1 = dic.New<I1>();
+            Assert.IsNotNull(i1);
+
+            Assert.IsFalse(dic.Unregister<C1>());
+            Assert.IsTrue(dic.Unregister<I1>());
+            Assert.ThrowsException<DiException>(() => dic.New<I1>());
+        }
 
         interface ID2
         {

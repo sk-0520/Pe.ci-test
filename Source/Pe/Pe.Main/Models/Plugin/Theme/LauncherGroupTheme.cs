@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
     {
-        public LauncherGroupTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWapper, loggerFactory)
+        public LauncherGroupTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         { }
 
         #region property

@@ -20,12 +20,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     ///     <item>
     ///         <description>
     ///             入力入れ替え
-    ///             <para>置き換えに該当した場合は後続の該当チェックは行わない</para>
+    ///             <para>後続の該当チェックは行わない</para>
     ///         </description>
     ///     </item>
     ///     <item>
     ///         <description>
     ///             入力無効化
+    ///             <para>後続の該当チェックは行わない</para>
     ///         </description>
     ///     </item>
     ///     <item>
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     ///         </description>
     ///     </item>
     /// </list>
-    /// 入力無効化は独立して存在してるが、何がどうあれ該当があった場合は無効化される。
+    /// 入力無効化は独立して存在してるが、コマンド実行がシステム通知しないかぎり該当があった場合は無効化される。
     /// </remarks>
     public class KeyActionChecker
     {
@@ -108,27 +109,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 }
             }
 
-            var result = new List<KeyActionJobBase>();
             var now = DateTime.UtcNow;
 
             // 無効化
             foreach(var job in DisableJobs) {
-                if(job.ActionData.StopEnable) {
+                if(job.ActionData.Forever) {
                     if(job.Check(isDown, key, modifierKeyStatus)) {
                         // 完全無視
-                        result.Add(job);
-                        break;
+                        return new[] { job };
                     }
                 }
 
                 if(KeyDisableToEnableTime < now - job.LastCheckTimestamp) {
                     if(job.Check(isDown, key, modifierKeyStatus)) {
                         // 一つでも無効化になれば後は不要(効果が一緒のため)
-                        result.Add(job);
-                        break;
+                        return new[] { job };
                     }
                 }
             }
+
+            var result = new List<KeyActionPressedJobBase>();
 
             // キー入力処理
             foreach(var job in PressedJobs) {

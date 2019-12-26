@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
     public class LauncherSeparatorViewModel : LauncherDetailViewModelBase
     {
-        public LauncherSeparatorViewModel(LauncherItemElement model, Screen screen, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
-            : base(model, screen, dispatcherWapper, launcherToolbarTheme, loggerFactory)
+        public LauncherSeparatorViewModel(LauncherItemElement model, Screen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+            : base(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory)
         { }
 
         #region property

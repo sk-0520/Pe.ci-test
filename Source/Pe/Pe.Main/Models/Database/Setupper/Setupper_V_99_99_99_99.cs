@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto;
-using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
     /// </summary>
     public class Setupper_V_99_99_99_99 : SetupperBase
     {
-        public Setupper_V_99_99_99_99(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(statementLoader, loggerFactory)
+        public Setupper_V_99_99_99_99(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(idFactory, statementLoader, loggerFactory)
         { }
 
         #region SetupBase

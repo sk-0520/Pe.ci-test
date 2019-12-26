@@ -17,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class NoteTheme : ThemeBase, INoteTheme
     {
-        public NoteTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWapper, loggerFactory)
+        public NoteTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         { }
 
         #region property
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor)
         {
-            return DispatcherWapper.Get(() => GetCaptionImageCore(noteCaption, isEnabled, baseColor));
+            return DispatcherWrapper.Get(() => GetCaptionImageCore(noteCaption, isEnabled, baseColor));
         }
 
         public DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor)

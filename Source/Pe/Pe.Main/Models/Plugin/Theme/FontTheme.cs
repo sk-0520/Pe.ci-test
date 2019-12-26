@@ -17,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class FontTheme : ThemeBase, IFontTheme
     {
-        public FontTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWapper, loggerFactory)
+        public FontTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         { }
 
         #region function
@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         #region IFontTheme
 
+        [Obsolete]
         public FontData GetDefaultFont(FontTarget fontTarget)
         {
             var fc = new FontConverter(Logger);

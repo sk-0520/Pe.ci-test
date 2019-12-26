@@ -105,6 +105,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class LauncherStoreAppData {
+        #region property
+
+        public string ProtocolAlias { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        #endregion
+    }
+
     public class LauncherEnvironmentVariableData: DataBase
     {
         #region property
@@ -145,16 +153,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
 
-    public class LauncherGroupData : DataBase
+    public class LauncherGroupData : DataBase, ILauncherGroupId
     {
         #region property
 
-        public Guid LauncherGroupId { get; set; }
         public string Name { get; set; } = string.Empty;
         public LauncherGroupKind Kind { get; set; }
         public LauncherGroupImageName ImageName { get; set; }
         public Color ImageColor { get; set; }
         public long Sequence { get; set; }
+
+        #endregion
+
+        #region ILauncherGroupId
+        public Guid LauncherGroupId { get; set; }
+        #endregion
+    }
+    public interface ILauncherGroupId
+    {
+        #region property
+
+        Guid LauncherGroupId { get; }
 
         #endregion
     }
@@ -214,9 +233,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     #endregion
 
-    public class LauncherToolbarsScreenData : DataBase, IScreenData
+    public interface ILauncherToolbarId
     {
         #region property
+
+        Guid LauncherToolbarId { get; }
+
+        #endregion
+    }
+
+    public class LauncherToolbarsScreenData : DataBase, ILauncherToolbarId, IScreenData
+    {
+        #region ILauncherToolbarId
 
         public Guid LauncherToolbarId { get; set; }
 
@@ -237,24 +265,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsDisplayData : DataBase
+    public class LauncherToolbarsDisplayData : DataBase, ILauncherToolbarId
     {
         #region property
 
-        public Guid LauncherToolbarId { get; set; }
         public Guid LauncherGroupId { get; set; }
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }
         public Guid FontId { get; set; }
         public TimeSpan AutoHideTimeout { get; set; }
-        public long TextWidth { get; set; }
+        public int TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }
         public bool IsAutoHide { get; set; }
         public bool IsIconOnly { get; set; }
 
         #endregion
+
+        #region ILauncherToolbarId
+
+        public Guid LauncherToolbarId { get; set; }
+
+        #endregion
+
     }
 
     internal class LauncherFileItemData

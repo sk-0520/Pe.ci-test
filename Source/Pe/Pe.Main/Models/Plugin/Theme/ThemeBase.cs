@@ -16,15 +16,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
     internal abstract class ThemeBase
     {
 
-        public ThemeBase(IDispatcherWapper dispatcherWapper, ILogger logger)
+        public ThemeBase(IDispatcherWrapper dispatcherWrapper, ILogger logger)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             Logger = logger;
         }
 
-        public ThemeBase(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public ThemeBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
         /// <see cref="DependencyObject"/>作成用のディスパッチャー。
         /// <para>だけどまず呼び出し側で UI スレッドであることを保証するので内部的にどうこうする場合にしゃあなし使うのであって原則使用しない。</para>
         /// </summary>
-        protected IDispatcherWapper DispatcherWapper { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
 

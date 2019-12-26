@@ -186,6 +186,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         private void Execute()
         {
+            ThrowIfDisposed();
+
             var launcherFileData = new LauncherFileData() {
                 Path = ExecuteValue,
                 Option = Option,
@@ -216,6 +218,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         protected override void ValidateDomain()
         {
+            ThrowIfDisposed();
 
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
 

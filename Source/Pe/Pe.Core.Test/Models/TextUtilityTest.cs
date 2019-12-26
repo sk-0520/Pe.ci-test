@@ -15,40 +15,41 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a", "a", "<", ">")]
         [DataRow("<a", "<a", "<", ">")]
         [DataRow("a>", "a>", "<", ">")]
-        [DataRow("<a>", "[a]", "<", ">")]
-        [DataRow("<a><b>", "[a][b]", "<", ">")]
-        public void ReplacePlaceholderTest(string src, string result, string head, string tail)
+        [DataRow("[a]", "<a>", "<", ">")]
+        [DataRow("[a][b]", "<a><b>", "<", ">")]
+        public void ReplacePlaceholderTest(string result, string src, string head, string tail)
         {
-            var conv = TextUtility.ReplacePlaceholder(src, head, tail, s => "[" + s + "]");
-            Assert.AreEqual(conv, result);
+            var actual = TextUtility.ReplacePlaceholder(src, head, tail, s => "[" + s + "]");
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
-        [DataRow("a", "<", ">", "a")]
-        [DataRow("<a>", "<", ">", "A")]
-        [DataRow("<aa>", "<", ">", "<aa>")]
-        [DataRow("<a><b>", "<", ">", "AB")]
-        [DataRow("<a<a>><b>", "<", ">", "<a<a>>B")]
-        [DataRow("a", "@[", "]", "a")]
-        [DataRow("@[a]", "@[", "]", "A")]
-        [DataRow("@[aa]", "@[", "]", "@[aa]")]
-        [DataRow("@[a]@[b]", "@[", "]", "AB")]
-        [DataRow("@[a@[a]]@[b]", "@[", "]", "@[a@[a]]B")]
-        public void ReplaceRangeFromDictionaryTest(string src, string head, string tail, string result)
+        [DataRow("a", "a", "<", ">")]
+        [DataRow("A", "<a>", "<", ">")]
+        [DataRow("<aa>", "<aa>", "<", ">")]
+        [DataRow("AB", "<a><b>", "<", ">")]
+        [DataRow("<a<a>>B", "<a<a>><b>", "<", ">")]
+        [DataRow("a", "a", "@[", "]")]
+        [DataRow("A", "@[a]", "@[", "]")]
+        [DataRow("@[aa]", "@[aa]", "@[", "]")]
+        [DataRow("AB", "@[a]@[b]", "@[", "]")]
+        [DataRow("@[a@[a]]B", "@[a@[a]]@[b]", "@[", "]")]
+        public void ReplaceRangeFromDictionaryTest(string result, string src, string head, string tail)
         {
             var map = new Dictionary<string, string>() {
-                    { "A", "a" },
-                    { "B", "b" },
-                    { "C", "c" },
-                    { "D", "d" },
-                    { "E", "e" },
-                    { "a", "A" },
-                    { "b", "B" },
-                    { "c", "C" },
-                    { "d", "D" },
-                    { "e", "E" },
-                };
-            Assert.AreEqual(result, TextUtility.ReplacePlaceholderFromDictionary(src, head, tail, map));
+                ["A"] = "a",
+                ["B"] = "b",
+                ["C"] = "c",
+                ["D"] = "d",
+                ["E"] = "e",
+                ["a"] = "A",
+                ["b"] = "B",
+                ["c"] = "C",
+                ["d"] = "D",
+                ["e"] = "E",
+            };
+            var actual = TextUtility.ReplacePlaceholderFromDictionary(src, head, tail, map);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -57,18 +58,19 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void ReplaceFromDictionaryTest(string result, string src)
         {
             var map = new Dictionary<string, string>() {
-                    { "A", "a" },
-                    { "B", "b" },
-                    { "C", "c" },
-                    { "D", "d" },
-                    { "E", "e" },
-                    { "a", "A" },
-                    { "b", "B" },
-                    { "c", "C" },
-                    { "d", "D" },
-                    { "e", "E" },
-                };
-            Assert.AreEqual(result, TextUtility.ReplaceFromDictionary(src, map));
+                ["A"] = "a",
+                ["B"] = "b",
+                ["C"] = "c",
+                ["D"] = "d",
+                ["E"] = "e",
+                ["a"] = "A",
+                ["b"] = "B",
+                ["c"] = "C",
+                ["d"] = "D",
+                ["e"] = "E",
+            };
+            var actual = TextUtility.ReplaceFromDictionary(src, map);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -83,7 +85,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(2, " a \r\n b ")]
         public void ReadLinesTest(int result, string s)
         {
-            Assert.AreEqual(result, TextUtility.ReadLines(s).Count(), TextUtility.ReadLines(s).Count().ToString());
+            var actual = TextUtility.ReadLines(s).Count();
+            Assert.AreEqual(result, actual, TextUtility.ReadLines(s).Count().ToString());
         }
 
 #if false
@@ -101,8 +104,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a(3)", "a", new[] { "a(5)", "a(2)", "a(4)", "a" })]
         public void ToUniqueDefaultTest(string result, string src, string[] list)
         {
-            var test = TextUtility.ToUniqueDefault(src, list, StringComparison.Ordinal);
-            Assert.AreEqual(result, test);
+            var actual = TextUtility.ToUniqueDefault(src, list, StringComparison.Ordinal);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -113,7 +116,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(1, "あ")]
         public void TextWidthTest(int result, string text)
         {
-            Assert.AreEqual(result, TextUtility.TextWidth(text));
+            var actual = TextUtility.TextWidth(text);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -129,10 +133,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(1, "⛄")]
         [DataRow(1, "🐎")]
         [DataRow(2, "🐎🐎")]
-        public void GetCharactersText(int count, string text)
+        public void GetCharactersText(int result, string text)
         {
-            var chars = TextUtility.GetCharacters(text);
-            Assert.AreEqual(count, chars.Count());
+            var actual = TextUtility.GetCharacters(text);
+            Assert.AreEqual(result, actual.Count());
         }
 
         [TestMethod]
@@ -144,7 +148,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("", "   ")]
         public void SafeTrimTest(string result, string text)
         {
-            Assert.AreEqual(result, TextUtility.SafeTrim(text), $"`{result}` - `{text}`");
+            var actual = TextUtility.SafeTrim(text);
+            Assert.AreEqual(result, actual, $"`{result}` - `{text}`");
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
     public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService
     {
-        public AcceptViewModel(AcceptElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public AcceptViewModel(AcceptElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 
@@ -30,12 +30,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         public ICommand AffirmativeCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                ThrowIfDisposed();
+
                 Model.Accepted = true;
                 CloseRequest.Send();
             }
         ));
         public ICommand NegativeCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                ThrowIfDisposed();
+
                 CloseRequest.Send();
             }
         ));

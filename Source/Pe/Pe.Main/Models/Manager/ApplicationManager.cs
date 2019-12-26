@@ -36,9 +36,9 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using System.Threading;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
-using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
-using ContentTypeTextNet.Pe.Main.Views.Setting;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         public ApplicationManager(ApplicationInitializer initializer)
         {
-            LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) +"."+nameof(initializer.LoggerFactory));
+            LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.LoggerFactory));
             Logger = LoggerFactory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
-
+        SettingContainerElement? SettingElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId, default(Screen), NotePosition.Setting);
+                var element = CreateNoteElement(noteId, default(Screen), NoteStartupPosition.Setting);
                 result.Add(element);
             }
 
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection()
         {
-            var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbarElements, LoggerFactory) {
+            var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbarElements) {
                 ToViewModel = m => ApplicationDiContainer.Make<LauncherToolbarNotifyAreaViewModel>(new[] { m })
             };
             return collection;
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> GetNoteCollection()
         {
-            var collection = new ActionModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel>(NoteElements, LoggerFactory) {
+            var collection = new ActionModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel>(NoteElements) {
                 ToViewModel = m => ApplicationDiContainer.Make<NoteNotifyAreaViewModel>(new[] { m })
             };
             return collection;
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.LogInformation("new note id: {0}, {1}", noteId, ObjectDumper.GetDumpString(dockScreen));
-            var noteElement = CreateNoteElement(noteId, dockScreen, NotePosition.CenterScreen);
+            var noteElement = CreateNoteElement(noteId, dockScreen, NoteStartupPosition.CenterScreen);
 
             NoteElements.Add(noteElement);
 
@@ -262,15 +262,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public void Execute()
+        void ExecuteElements()
         {
-            Logger.LogInformation("がんばる！");
-#if DEBUG
-            DebugExecuteBefore();
-#endif
-            InitializeHook();
-            StartHook();
-
             // グループ構築
             var launcherGroups = CreateLauncherGroupElements();
             LauncherGroupElements.AddRange(launcherGroups);
@@ -292,6 +285,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             foreach(var viewShowStater in viewShowStaters) {
                 viewShowStater.StartView();
             }
+        }
+
+        public void Execute()
+        {
+            Logger.LogInformation("がんばる！");
+#if DEBUG
+            DebugExecuteBefore();
+#endif
+            InitializeHook();
+
+            StartHook();
+
+            ExecuteElements();
 #if DEBUG
             DebugExecuteAfter();
 #endif
@@ -351,25 +357,123 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeHook();
 
             CloseViews();
+            DisposeElements();
 
             Dispose();
 
+            Logger.LogInformation("ばいばい");
             Application.Current.Shutdown();
         }
 
         /// <summary>
         /// すべてここで完結する神の所業。
         /// </summary>
-        public void OpenSettingView()
+        public void ShowSettingView()
         {
-            using(var container = ApplicationDiContainer.Scope()) {
-                container.RegisterMvvm<SettingElement, SettingViewModel, SettingWindow>();
-                var element = container.Build<SettingElement>();
-                var view = container.Build<SettingWindow>();
-                WindowManager.Register(new WindowItem(WindowKind.Setting, view));
-                view.ShowDialog();
+            if(SettingElement != null) {
+                Logger.LogWarning("せっていちゅう");
+                return;
             }
+
+            StopHook();
+            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+
+            Logger.LogDebug("遅延書き込み処理停止");
+            var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
+            var lazyWriterItemMap = new Dictionary<IDatabaseLazyWriter, IDisposable>();
+            foreach(var lazyWriter in lazyWriterPack.Items) {
+                lazyWriter.Flush();
+                var pausing = lazyWriter.Pause();
+                lazyWriterItemMap.Add(lazyWriter, pausing);
+            }
+
+            // 現在DBを編集用として再構築
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var settingDirectory = environmentParameters.SettingTemporaryDirectory;
+            var directoryCleaner = new DirectoryCleaner(settingDirectory, 10, TimeSpan.FromSeconds(500), LoggerFactory);
+            directoryCleaner.Clear(false);
+
+            var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
+            var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
+
+            environmentParameters.SettingFile.CopyTo(settingDatabaseFile.FullName);
+            environmentParameters.FileFile.CopyTo(fileDatabaseFile.FullName);
+
+            // DIを設定処理用に付け替え
+            var container = ApplicationDiContainer.Scope();
+            var factory = new ApplicationDatabaseFactoryPack(
+                new ApplicationDatabaseFactory(settingDatabaseFile),
+                new ApplicationDatabaseFactory(fileDatabaseFile),
+                new ApplicationDatabaseFactory()
+            );
+            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+
+            container
+                .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
+                .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
+            ;
+
+            SettingElement = container.Build<SettingContainerElement>();
+            SettingElement.Closed += Element_Closed;
+            SettingElement.Initialize();
+            SettingElement.StartView();
+
+            void Element_Closed(object? sender, System.EventArgs e)
+            {
+                Debug.Assert(SettingElement == sender);
+                Debug.Assert(SettingElement != null);
+
+                SettingElement.Closed -= Element_Closed;
+
+                if(SettingElement.IsSubmit) {
+                    Logger.LogInformation("設定適用のため現在表示要素の破棄");
+                    CloseViews();
+                    DisposeElements();
+
+                    //TODO: 設定用DBを永続用DBと切り替え
+                    var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
+                    var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
+                        .Select(i => i.StopConnection())
+                        .ToList()
+                    ;
+
+                    settingDatabaseFile.CopyTo(environmentParameters.SettingFile.FullName, true);
+                    fileDatabaseFile.CopyTo(environmentParameters.FileFile.FullName, true);
+
+                    foreach(var stopping in stoppings) {
+                        stopping.Dispose();
+                    }
+
+                    Logger.LogInformation("設定適用のため各要素生成");
+                    RebuildHook();
+                    ExecuteElements();
+                } else {
+                    Logger.LogInformation("設定は保存されなかったため現在要素継続");
+                }
+                StartHook();
+
+                Logger.LogDebug("遅延書き込み処理再開");
+                foreach(var pair in lazyWriterItemMap) {
+                    if(SettingElement.IsSubmit) {
+                        // 確定処理の書き込みが天に召されるのでため込んでいた処理(ないはず)を消す
+                        pair.Key.ClearStock();
+                    }
+                    pair.Value.Dispose();
+                }
+
+                if(changing.Success) {
+                    changing.SuccessValue?.Dispose();
+                }
+
+                SettingElement.Dispose();
+                SettingElement = null;
+                container.UnregisterDatabase();
+                container.Dispose();
+            }
+
+
         }
+
 
         #endregion
 
@@ -389,9 +493,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public LauncherItemCustomizeElement CreateCustomizeLauncherItemElement(Guid launcherItemId, LauncherIconElement iconElement, Screen screen)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
         {
-            return OrderManager.CreateCustomizeLauncherItemElement(launcherItemId, iconElement, screen);
+            return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen, iconElement);
         }
 
         public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
@@ -405,9 +509,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
-        public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NotePosition notePosition)
+        public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition)
         {
-            return OrderManager.CreateNoteElement(noteId, screen, notePosition);
+            return OrderManager.CreateNoteElement(noteId, screen, startupPosition);
         }
         public bool RemoveNoteElement(Guid noteId)
         {
@@ -441,9 +545,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateNoteContentElement(noteId, contentKind);
         }
 
-        public FontElement CreateFontElement(Guid fontId, ParentUpdater parentUpdater)
+        public SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater)
         {
-            return OrderManager.CreateFontElement(fontId, parentUpdater);
+            return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
         }
 
         public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)
@@ -462,7 +566,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-        public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeElement element)
+        public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element)
         {
             var windowItem = OrderManager.CreateCustomizeLauncherItemWindow(element);
 
@@ -498,6 +602,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return windowItem;
         }
+
+        public WindowItem CreateSettingWindow(SettingContainerElement element)
+        {
+            var windowItem = OrderManager.CreateSettingWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
+
 
 
         #endregion

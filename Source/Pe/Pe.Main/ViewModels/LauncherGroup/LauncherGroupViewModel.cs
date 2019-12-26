@@ -16,24 +16,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
 {
     public class LauncherGroupViewModel : SingleModelViewModelBase<LauncherGroupElement>
     {
-        public LauncherGroupViewModel(LauncherGroupElement model, IDispatcherWapper dispatcherWapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherGroupViewModel(LauncherGroupElement model, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             LauncherGroupTheme = launcherGroupTheme;
         }
 
         #region property
 
         public int RowIndex { get; set; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
         public string? Name => Model.Name;
         public LauncherGroupImageName ImageName => Model.ImageName;
         public Color ImageColor => Model.ImageColor;
 
-        public DependencyObject NormalGroupIcon => DispatcherWapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false));
-        public DependencyObject StrongGroupIcon => DispatcherWapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, true));
+        public DependencyObject NormalGroupIcon => DispatcherWrapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false));
+        public DependencyObject StrongGroupIcon => DispatcherWrapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, true));
 
         #endregion
 

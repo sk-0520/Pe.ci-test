@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 diContainer
                     .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
-                    .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
+                    .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, loggerFactory)) {
@@ -169,9 +169,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        DatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
+        ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
         {
-            return new DatabaseFactoryPack(
+            return new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(environmentParameters.SettingFile),
                 new ApplicationDatabaseFactory(environmentParameters.FileFile),
                 new ApplicationDatabaseFactory()
@@ -201,23 +201,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
+            var idFactory = new IdFactory(loggerFactory);
             using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
-            using(var accessorPack = DatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
+            using(var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
-                var databaseSetupper = new DatabaseSetupper(statementLoader, loggerFactory);
+                var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
                 databaseSetupper.Initialize(accessorPack);
             }
         }
 
-        bool NormalSetup(out (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
+        bool NormalSetup(out (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
         {
             logger.LogInformation("DBセットアップ");
 
             var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
-            var accessorPack = DatabaseAccessorPack.Create(factoryPack, loggerFactory);
+            var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
+
+            var idFactory = new IdFactory(loggerFactory);
 
             var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
-            var databaseSetupper = new DatabaseSetupper(statementLoader, loggerFactory);
+            var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
 
             //前回実行バージョンの取得と取得失敗時に再セットアップ処理
             var lastVersion = databaseSetupper.GetLastVersion(accessorPack.Main);
@@ -227,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 accessorPack.Dispose();
                 factoryPack.Dispose();
-                pack = default((DatabaseFactoryPack factory, DatabaseAccessorPack accessor));
+                pack = default((ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor));
                 return false;
             }
 
@@ -241,42 +244,64 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return true;
         }
 
-        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, DatabaseFactoryPack factory, DatabaseAccessorPack accessor, ILoggerFactory loggerFactory)
+        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, ILoggerFactory loggerFactory)
         {
             var container = new ApplicationDiContainer();
 
-            var rwlp = new {
-                Main = new ApplicationMainReaderWriterLocker(),
-                File = new ApplicationFileReaderWriterLocker(),
-                Temporary = new ApplicationTemporaryReaderWriterLocker(),
-            };
-            var barrier = new {
-                Main = new ApplicationDatabaseBarrier(accessor.Main, rwlp.Main),
-                File = new ApplicationDatabaseBarrier(accessor.File, rwlp.File),
-                Temporary = new ApplicationDatabaseBarrier(accessor.Temporary, rwlp.Temporary),
-            };
+            //var accessor = ApplicationDatabaseAccessorPack.Create(factory, loggerFactory);
+            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+            /*
+            var readerWriterLockerPack = new ApplicationReaderWriterLockerPack(
+                new ApplicationMainReaderWriterLocker(),
+                new ApplicationFileReaderWriterLocker(),
+                new ApplicationTemporaryReaderWriterLocker()
+            );
+            var barrierPack = new ApplicationDatabaseBarrierPack(
+                new ApplicationDatabaseBarrier(accessor.Main, readerWriterLockerPack.Main),
+                new ApplicationDatabaseBarrier(accessor.File, readerWriterLockerPack.File),
+                new ApplicationDatabaseBarrier(accessor.Temporary, readerWriterLockerPack.Temporary)
+            );
+
+            var lazyWriterPack = new ApplicationDatabaseLazyWriterPack(
+                new ApplicationDatabaseLazyWriter(barrierPack.Main, TimeSpan.FromSeconds(3), loggerFactory),
+                new ApplicationDatabaseLazyWriter(barrierPack.File, TimeSpan.FromSeconds(3), loggerFactory),
+                new ApplicationDatabaseLazyWriter(barrierPack.Temporary, TimeSpan.FromSeconds(3), loggerFactory)
+            );
+            */
 
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
+                .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
+
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
-                .Register<IDatabaseFactoryPack, DatabaseFactoryPack>(factory)
-                .Register<IDatabaseAccessorPack, DatabaseAccessorPack>(accessor)
-                .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Main)
-                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.File)
-                .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrier.Temporary)
-                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Main, TimeSpan.FromSeconds(3), loggerFactory))
-                .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.File, TimeSpan.FromSeconds(3), loggerFactory))
-                .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(new ApplicationDatabaseLazyWriter(barrier.Temporary, TimeSpan.FromSeconds(3), loggerFactory))
-                .Register<IDispatcherWapper, ApplicationDispatcherWapper>(DiLifecycle.Transient)
+                /*
+                .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factory)
+                .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessor)
+                .Register<IDatabaseBarrierPack, ApplicationDatabaseBarrierPack>(barrierPack)
+                .Register<IReaderWriterLockerPack, ApplicationReaderWriterLockerPack>(readerWriterLockerPack)
+                .Register<IDatabaseLazyWriterPack, ApplicationDatabaseLazyWriterPack>(lazyWriterPack)
+
+                .Register<IMainDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Main)
+                .Register<IFileDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.File)
+                .Register<ITemporaryDatabaseBarrier, ApplicationDatabaseBarrier>(barrierPack.Temporary)
+
+                .Register<IMainDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Main)
+                .Register<IFileDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.File)
+                .Register<ITemporaryDatabaseLazyWriter, ApplicationDatabaseLazyWriter>(lazyWriterPack.Temporary)
+                */
+                .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
+                .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
+
                 .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
                 .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
                 .Register<INoteTheme, NoteTheme>(DiLifecycle.Transient)
                 .Register<IFontTheme, FontTheme>(DiLifecycle.Transient)
             ;
 
-            ApplicationDiContainer.Initialize(() => container);
+            //ApplicationDiContainer.Initialize(() => container);
 
             return container;
         }
@@ -355,7 +380,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
-            (DatabaseFactoryPack factory, DatabaseAccessorPack accessor) pack;
+            (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
                 // データぶっ壊れてる系
                 FirstSetup(environmentParameters, loggerFactory, logger);
@@ -369,8 +394,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             if(!IsFirstStartup && !skipAccept) {
             }
 
+            var factory = pack.factory;
+            pack.accessor.Dispose();
+
             LoggerFactory = loggerFactory;
-            DiContainer = SetupContainer(environmentParameters, pack.factory, pack.accessor, loggerFactory);
+            DiContainer = SetupContainer(environmentParameters, factory, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);

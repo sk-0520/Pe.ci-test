@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugStdIoExecute();
             //DebugHook();
             //DebugKeyAction();
+            DebugSetting();
         }
 
         void DebugCustomize()
@@ -80,7 +81,7 @@ rem ping 127.0.0.1
 test
 echo end
             ", Encoding.GetEncoding("shift_jis"));
-            var launcherExecutor = new LauncherExecutor(OrderManager, new ApplicationDispatcherWapper(), LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, new ApplicationDispatcherWrapper(), LoggerFactory);
             var data = new LauncherFileData() {
                 //Path = batchPath,
                 Path = "cmd",
@@ -176,6 +177,10 @@ echo end
             dbgKeyboradHooker.Register();
         }
 
+        void DebugSetting()
+        {
+            ShowSettingView();
+        }
         void DebugColorPicker()
         {
             using(var di = ApplicationDiContainer.CreateChildContainer()) {

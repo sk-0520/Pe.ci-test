@@ -51,17 +51,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen? dockScreen, NotePosition notePosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, Screen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
             this._dockScreen = dockScreen; // プロパティは静かに暮らしたい
-            Position = notePosition;
+            StartupPosition = startupPosition;
             OrderManager = orderManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             NoteTheme = noteTheme;
 
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
@@ -79,14 +79,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             get => this._dockScreen ?? Screen.PrimaryScreen; //TODO: [NOTE]決定的に間違ってる気がする
             private set => SetProperty(ref this._dockScreen, value);
         }
-        public NotePosition Position { get; }
+        public NoteStartupPosition StartupPosition { get; }
         IOrderManager OrderManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         INoteTheme NoteTheme { get; }
-        public FontElement? FontElement { get; private set; }
+        public SavingFontElement? FontElement { get; private set; }
 
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
@@ -169,6 +169,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         NoteData? GetNoteData()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectNote(NoteId);
@@ -178,23 +180,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         NoteData CreateNoteData([PixelKind(Px.Device)] Point cursorLocation)
         {
+            ThrowIfDisposed();
+
             this._dockScreen = this._dockScreen ?? Screen.PrimaryScreen;
-            if(Position != NotePosition.Setting) {
+            if(StartupPosition != NoteStartupPosition.Setting) {
                 this._dockScreen = Screen.FromDevicePoint(cursorLocation);
             }
 
             var noteData = new NoteData() {
                 NoteId = NoteId,
-                FontId = Guid.Empty,
-                Title = DateTime.Now.ToString(), //TODO: タイトル
-                BackgroundColor = Colors.Yellow,
-                ForegroundColor = Colors.Black,
+                //FontId = Guid.Empty,
+                //Title = DateTime.Now.ToString(), //TODO: タイトル
+                //BackgroundColor = Colors.Yellow,
+                //ForegroundColor = Colors.Black,
                 ScreenName = this._dockScreen.DeviceName,
                 IsCompact = false,
                 IsLocked = false,
-                IsTopmost = false,
+                //IsTopmost = false,
                 IsVisible = true,
-                LayoutKind = NoteLayoutKind.Absolute,
+                //LayoutKind = NoteLayoutKind.Absolute,
                 TextWrap = true,
                 ContentKind = NoteContentKind.Plain,
             };
@@ -237,6 +241,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 var screenOperator = new ScreenOperator(LoggerFactory);
                 screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
 
+                noteData = notesEntityDao.SelectNote(NoteId)!;
+
                 commander.Commit();
             }
 
@@ -245,6 +251,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         Screen GetDockScreen(string screenDeviceName)
         {
+            ThrowIfDisposed();
+
             IList<NoteScreenData> noteScreens;
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
@@ -266,6 +274,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         void LoadNote()
         {
+            ThrowIfDisposed();
+
             //あればそれを読み込んでなければ作る
             var noteData = GetNoteData();
             if(noteData == null) {
@@ -287,28 +297,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ForegroundColor = noteData.ForegroundColor;
             BackgroundColor = noteData.BackgroundColor;
 
-            FontElement = OrderManager.CreateFontElement(noteData.FontId, UpdateFontId);
+            FontElement = OrderManager.CreateFontElement(DefaultFontKind.Note, noteData.FontId, UpdateFontId);
             var oldContentElement = ContentElement;
             ContentElement = OrderManager.CreateNoteContentElement(NoteId, ContentKind);
             oldContentElement?.Dispose();
         }
 
-        void UpdateFontId(FontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        void UpdateFontId(SavingFontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
+            ThrowIfDisposed();
+
             var notesEntityDao = new NotesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             notesEntityDao.UpdateFontId(NoteId, fontElement.FontId, DatabaseCommonStatus.CreateCurrentAccount());
         }
 
-        public void SwitchCompact()
+        public void SwitchCompactDelaySave()
         {
+            ThrowIfDisposed();
+
             IsCompact = !IsCompact;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateCompact(NoteId, IsCompact, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
-        public void SwitchTopmost()
+        public void SwitchTopmostDelaySave()
         {
+            ThrowIfDisposed();
+
             IsTopmost = !IsTopmost;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
@@ -316,8 +332,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void SwitchLock()
+        public void SwitchLockDelaySave()
         {
+            ThrowIfDisposed();
+
             IsLocked = !IsLocked;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
@@ -325,8 +343,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void SwitchTextWrap()
+        public void SwitchTextWrapDelaySave()
         {
+            ThrowIfDisposed();
+
             TextWrap = !TextWrap;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
@@ -334,12 +354,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeTitle(string editingTitle)
+        public void ChangeTitleDelaySave(string editingTitle)
         {
             if(Title == editingTitle) {
                 Logger.LogDebug("同一タイトルのため書き込み抑制");
                 return;
             }
+            ThrowIfDisposed();
 
             Title = editingTitle;
             MainDatabaseLazyWriter.Stock(c => {
@@ -353,8 +374,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// <para>各種算出済みの値。</para>
         /// </summary>
         /// <param name="location"></param>
-        public void ChangeViewArea(ViewAreaChangeTarget viewAreaChangeTargets, Point location, Size size)
+        public void ChangeViewAreaDelaySave(ViewAreaChangeTarget viewAreaChangeTargets, Point location, Size size)
         {
+            ThrowIfDisposed();
+
             MainDatabaseLazyWriter.Stock(c => {
                 var noteLayoutsEntityDao = new NoteLayoutsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 var layout = new NoteLayoutData() {
@@ -369,16 +392,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
 
         }
-        public void ChangeForegroundColor(Color color)
+        public void ChangeForegroundColorDelaySave(Color color)
         {
+            ThrowIfDisposed();
+
             ForegroundColor = color;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateForegroundColor(NoteId, ForegroundColor, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
-        public void ChangeBackgroundColor(Color color)
+        public void ChangeBackgroundColorDelaySave(Color color)
         {
+            ThrowIfDisposed();
+
             BackgroundColor = color;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
@@ -394,6 +421,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// <returns></returns>
         public bool CanChangeContentKind(NoteContentKind targetContentKind)
         {
+            ThrowIfDisposed();
+
             // どうでもいいやつ
             if(targetContentKind == ContentKind) {
                 return true;
@@ -417,6 +446,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public bool ExistsContentKind(NoteContentKind contentKind)
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectExistsContent(NoteId);
@@ -425,23 +456,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void OpenLinkContent(string filePath, Encoding encoding, bool isOpen)
         {
+            ThrowIfDisposed();
+
             ContentElement!.ChangeLink(filePath, encoding, isOpen);
         }
 
         public void Unlink(bool isRemove)
         {
+            ThrowIfDisposed();
+
             ContentElement!.Unlink(isRemove);
         }
 
         string ConvertContent(NoteContentKind fromKind, string fromRawContent, NoteContentKind toKind)
         {
+            ThrowIfDisposed();
+
             var noteContentConverter = new NoteContentConverter(LoggerFactory);
             switch(fromKind) {
                 case NoteContentKind.Plain:
                     switch(toKind) {
                         case NoteContentKind.RichText:
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            return DispatcherWapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
+                            return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 
                         case NoteContentKind.Plain:
@@ -472,6 +509,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             if(IsLink) {
                 throw new InvalidOperationException(nameof(IsLink));
             }
+            ThrowIfDisposed();
 
             var prevContentKind = ContentKind;
             var oldContentElement = ContentElement;
@@ -509,8 +547,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
 
-        public void ChangeVisible(bool isVisible)
+        public void ChangeVisibleDelaySave(bool isVisible)
         {
+            ThrowIfDisposed();
+
             IsVisible = isVisible;
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
@@ -520,6 +560,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public NoteLayoutData GetLayout()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var layoutData = noteLayoutsEntityDao.SelectLayout(NoteId, LayoutKind);
@@ -535,6 +577,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             if(layout.NoteId != NoteId) {
                 throw new ArgumentException($"{nameof(layout)}.{nameof(layout.NoteId)}");
             }
+            ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -562,7 +605,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             if(!IsDisposed) {
                 Flush();
                 if(disposing) {
-                    MainDatabaseLazyWriter.Dispose();
                     FontElement?.Dispose();
                     ContentElement?.Dispose();
                 }
@@ -611,7 +653,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public bool ReceiveViewUserClosing()
         {
-            ChangeVisible(false);
+            ChangeVisibleDelaySave(false);
             return true;
         }
         public bool ReceiveViewClosing()

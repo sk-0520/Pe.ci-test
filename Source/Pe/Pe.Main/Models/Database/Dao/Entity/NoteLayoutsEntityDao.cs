@@ -4,13 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class NoteLayoutsEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid NoteId { get; set; }
+        public string LayoutKind { get; set; } = string.Empty;
+
+        [PixelKind(Px.Logical)]
+        public double X { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Y { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Width { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Height { get; set; }
+
+        #endregion
+    }
+
     public class NoteLayoutsEntityDao : EntityDaoBase
     {
         public NoteLayoutsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

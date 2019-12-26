@@ -14,9 +14,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a.txt.txt", "a.txt", "txt")]
         [DataRow("a..txt", "a.", "txt")]
         [DataRow("a..txt", "a", ".txt")]
-        public void AppendExtensionTest(string test, string path, string ext)
+        public void AppendExtensionTest(string result, string path, string ext)
         {
-            Assert.AreEqual(test, PathUtility.AppendExtension(path, ext));
+            var actual = PathUtility.AppendExtension(path, ext);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -27,9 +28,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a?", "a?", "?")]
         [DataRow("a@b@c@d", "a?b\\c*d", "@")]
         [DataRow("a<>b<>c<>d", "a?b\\c*d", "<>")]
-        public void ToSafeNameTest(string test, string value, string c)
+        public void ToSafeNameTest(string result, string value, string c)
         {
-            Assert.AreEqual(test, PathUtility.ToSafeName(value, v => c));
+            var actual = PathUtility.ToSafeName(value, v => c);
+            Assert.AreEqual(result, actual);
         }
 
         [TestMethod]
@@ -39,9 +41,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow("a_", "a?")]
         [DataRow("a_", "a?")]
         [DataRow("a_b_c_d", "a?b\\c*d")]
-        public void ToSafeNameDefaultTest(string test, string value)
+        public void ToSafeNameDefaultTest(string result, string value)
         {
-            Assert.AreEqual(test, PathUtility.ToSafeNameDefault(value));
+            var actual = PathUtility.ToSafeNameDefault(value);
+            Assert.AreEqual(actual, result);
         }
 
         [TestMethod]
@@ -53,9 +56,10 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(true, "a.exe")]
         [DataRow(true, "a.dll")]
         [DataRow(false, "a.ico")]
-        public void HasIconTest(bool test, string value)
+        public void HasIconTest(bool result, string value)
         {
-            Assert.AreEqual(test, PathUtility.HasIconPath(value));
+            var actual = PathUtility.HasIconPath(value);
+            Assert.AreEqual(result, actual);
         }
     }
 }

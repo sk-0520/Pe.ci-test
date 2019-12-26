@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         public void AddHook_1_Test()
         {
-            var pch = new PropertyChangedHooker(new CurrentDispatcherWapper(), NullLogger.Instance);
+            var pch = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
             Assert.ThrowsException<ArgumentNullException>(() => pch.AddHook(default(HookItem)!));
             Assert.ThrowsException<ArgumentException>(() => pch.AddHook(new HookItem(null!, null, null, null)));
             Assert.ThrowsException<ArgumentException>(() => pch.AddHook(new HookItem("", null, null, null)));
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         public void AddHook_2_Test()
         {
-            var pch = new PropertyChangedHooker(new CurrentDispatcherWapper(), NullLogger.Instance);
+            var pch = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
             Assert.ThrowsException<ArgumentException>(() => pch.AddHook(default(string)!));
             Assert.ThrowsException<ArgumentException>(() => pch.AddHook(""));
             var result = pch.AddHook("A");
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [TestMethod]
         public void AddHook_3_Test()
         {
-            var pch = new PropertyChangedHooker(new CurrentDispatcherWapper(), NullLogger.Instance);
+            var pch = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
             Assert.ThrowsException<ArgumentException>(() => pch.AddHook(default(string)!, default(string)!));
             Assert.ThrowsException<ArgumentException>(() => pch.AddHook("A", default(string)!));
             Assert.ThrowsException<ArgumentException>(() => pch.AddHook(default(string)!, "B"));

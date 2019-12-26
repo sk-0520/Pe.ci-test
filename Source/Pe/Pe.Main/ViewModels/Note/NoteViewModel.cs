@@ -52,13 +52,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
 
             WindowAreaChangedTimer = new DispatcherTimer() {
                 Interval = TimeSpan.FromSeconds(0.5),
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             WindowAreaChangedTimer.Tick += WindowAreaChangedTimer_Tick!;
 
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
-            Font = new NoteFontViewModel(Model.FontElement, DispatcherWapper, LoggerFactory);
+            Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 DropAction = DropFile,
             };
 
-            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
             PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(Model.IsCompact), nameof(IsCompact));
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         INoteTheme NoteTheme { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         this._content.Dispose();
                     }
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, ClipboardManager, DispatcherWapper, LoggerFactory);
+                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, ClipboardManager, DispatcherWrapper, LoggerFactory);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 }
 
@@ -207,12 +207,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public Color ForegroundColor
         {
             get => Model.ForegroundColor;
-            set => Model.ChangeForegroundColor(value);
+            set => Model.ChangeForegroundColorDelaySave(value);
         }
         public Color BackgroundColor
         {
             get => Model.BackgroundColor;
-            set => Model.ChangeBackgroundColor(value);
+            set => Model.ChangeBackgroundColorDelaySave(value);
         }
 
         public string? Title => Model.Title;
@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 if(!IsCompact) {
                     NormalWindowHeight = WindowHeight;
                 }
-                Model.SwitchCompact();
+                Model.SwitchCompactDelaySave();
                 // レイアウト変更(高さ)通知を抑制
                 if(!IsCompact) {
                     this._windowHeight = NormalWindowHeight;
@@ -315,19 +315,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         ));
         public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchTopmost();
+                Model.SwitchTopmostDelaySave();
             }
         ));
 
         public ICommand SwitchLockCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchLock();
+                Model.SwitchLockDelaySave();
             }
         ));
 
         public ICommand SwitchTextWrapCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchTextWrap();
+                Model.SwitchTextWrapDelaySave();
             }
         ));
 
@@ -341,7 +341,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand SaveTitleEditCommand => GetOrCreateCommand(() => new DelegateCommand<TextBox>(
             o => {
                 TitleEditMode = false;
-                Model.ChangeTitle(EditingTitle ?? string.Empty);
+                Model.ChangeTitleDelaySave(EditingTitle ?? string.Empty);
                 o.Select(0, 0);
             },
             o => TitleEditMode
@@ -458,15 +458,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
 
-        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NotePosition position)
+        (bool isCreated, NoteLayoutData layout) GetOrCreateLayout(NoteStartupPosition startupPosition)
         {
-            if(position == NotePosition.Setting) {
+            if(startupPosition == NoteStartupPosition.Setting) {
                 var settingLayout = Model.GetLayout();
                 if(settingLayout != null) {
                     return (false, settingLayout);
                 } else {
                     Logger.LogInformation("レイアウト未取得のため対象ディスプレイ中央表示: {0}, {1}", Model.DockScreen.DeviceName, ObjectDumper.GetDumpString(Model.DockScreen));
-                    position = NotePosition.CenterScreen;
+                    startupPosition = NoteStartupPosition.CenterScreen;
                 }
             }
 
@@ -479,7 +479,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 LayoutKind = Model.LayoutKind,
             };
 
-            if(position == NotePosition.CenterScreen) {
+            if(startupPosition == NoteStartupPosition.CenterScreen) {
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = 200;
                     layout.Height = 200;
@@ -493,7 +493,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     layout.Y = 0;
                 }
             } else {
-                Debug.Assert(position == NotePosition.CursorPosition);
+                Debug.Assert(startupPosition == NoteStartupPosition.CursorPosition);
 
                 var deviceScreenBounds = Model.DockScreen.DeviceBounds;
 
@@ -589,7 +589,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ApplyTheme()
         {
-            DispatcherWapper.Begin(() => {
+            DispatcherWrapper.Begin(() => {
                 ApplyCaption();
                 ApplyBorder();
                 ApplyContent();
@@ -640,7 +640,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
             }
 
-            Model.ChangeViewArea(viewAreaChangeTargets, location, size);
+            Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, location, size);
         }
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
@@ -716,7 +716,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             DpiScaleOutputor = (IDpiScaleOutputor)window;
 
-            var layoutValue = GetOrCreateLayout(Model.Position);
+            var layoutValue = GetOrCreateLayout(Model.StartupPosition);
             if(layoutValue.isCreated) {
                 Model.SaveLayout(layoutValue.layout);
             }

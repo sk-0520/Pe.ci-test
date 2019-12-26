@@ -1,0 +1,114 @@
+<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.LauncherItemsSettingControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+>
+  <i:Interaction.Triggers>
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollSelectedItemRequest, ElementName=root}">
+      <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollToTopCustomizeRequest, ElementName=root}">
+      <prism:InvokeCommandAction Command="{Binding ScrollToTopCustomizeCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ExpandShortcutFileRequest, ElementName=root}">
+      <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
+  </i:Interaction.Triggers>
+  <UserControl.Resources>
+    <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+  </UserControl.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="2*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="8*" />
+    </Grid.ColumnDefinitions>
+
+    <Grid Grid.Column="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <ToolBar Grid.Row="0">
+        <ToolBar.Resources>
+          <Style TargetType="{x:Type ToolBarPanel}">
+            <Setter Property="Orientation" Value="Vertical"/>
+          </Style>
+        </ToolBar.Resources>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <!--
+          <Grid Grid.Column="0">
+            <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, ElementName=root}" Content="+" />
+            <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
+              <Border Style="{StaticResource PopupMenuBorder}">
+                <StackPanel>
+                  <MenuItem Header="file" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" />
+                  <MenuItem Header="store" Command="{Binding Editor.AddNewStoreAppItemCommand, ElementName=root}" />
+                  <MenuItem Header="addin" Command="{Binding Editor.AddNewAddonItemCommand, ElementName=root}" />
+                </StackPanel>
+              </Border>
+            </Popup>
+          </Grid>
+          -->
+          <Button Grid.Column="0" Content="add" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" />
+          <Button Grid.Column="1" Content="del" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" />
+          <TextBox Grid.Column="2" Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
+        </Grid>
+
+      </ToolBar>
+
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, ElementName=root}">
+        <i:Interaction.Behaviors>
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
+        </i:Interaction.Behaviors>
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <VirtualizingStackPanel
+              VirtualizingStackPanel.IsVirtualizing="True"
+              VirtualizingStackPanel.VirtualizationMode="Recycling"
+            />
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
+              <TextBlock Text="{Binding Common.Name}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Grid>
+
+    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+
+    <Grid Grid.Column="2">
+      <ScrollViewer x:Name="customize">
+        <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor.SelectedItem, ElementName=root}" />
+      </ScrollViewer>
+    </Grid>
+
+  </Grid>
+</UserControl>

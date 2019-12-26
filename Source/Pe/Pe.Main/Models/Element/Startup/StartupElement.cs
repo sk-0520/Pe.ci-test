@@ -32,18 +32,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         public bool ExistsStartup()
         {
+            ThrowIfDisposed();
+
             var startupRegister = new StartupRegister(LoggerFactory);
             return startupRegister.Exists();
         }
 
         public bool RegisterStartup()
         {
+            ThrowIfDisposed();
+
             var startupRegister = new StartupRegister(LoggerFactory);
-            return startupRegister.Register();
+            return startupRegister.Register(new StartupParameter());
         }
 
         public void ShowImportProgramsView()
         {
+            ThrowIfDisposed();
+
             using(var diContainer = UsingChildServiceLocator()) {
                 diContainer
                     .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()

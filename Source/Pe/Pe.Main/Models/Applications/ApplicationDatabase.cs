@@ -147,9 +147,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         protected override void LoggingStatement(string statement, object? parameter)
         {
+            var skip = !true;
+            if(skip) {
+                return;
+            }
+
             if(!Logger.IsEnabled(LogLevel.Trace)) {
                 return;
             }
+
+            ThrowIfDisposed();
 
             var indent = "    ";
 

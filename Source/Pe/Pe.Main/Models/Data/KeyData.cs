@@ -116,7 +116,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         All,
     }
 
-    public class KeyActionCommonData : DataBase
+    [AttributeUsage(AttributeTargets.Field)]
+    public class KeyActionOptionAttribute : Attribute
+    {
+        public KeyActionOptionAttribute(Type toType, string optionName)
+        {
+            ToType = toType;
+            OptionName = optionName;
+        }
+
+        #region property
+
+        public Type ToType { get; }
+        public string OptionName { get; }
+        #endregion
+    }
+
+    public interface IKeyActionId
+    {
+        #region property
+
+        Guid KeyActionId { get; }
+
+        #endregion
+    }
+
+    public class KeyActionCommonData : DataBase, IKeyActionId
     {
         public KeyActionCommonData(Guid keyActionId, KeyActionKind keyActionKind)
         {
@@ -126,10 +151,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
-        public Guid KeyActionId { get; }
         public KeyActionKind KeyActionKind { get; }
 
         #endregion
+
+        #region IKeyActionId
+        public Guid KeyActionId { get; }
+        #endregion
+    }
+
+    public enum KeyActionReplaceOption
+    {
+        [KeyActionOption(typeof(Key), nameof(ReplaceKey))]
+        ReplaceKey,
     }
 
     public class KeyActionReplaceData : KeyActionCommonData
@@ -151,12 +185,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public enum KeyActionDisableOption
+    {
+        [KeyActionOption(typeof(bool), nameof(Forever))]
+        Forever
+    }
+
     public class KeyActionDisableData : KeyActionCommonData
     {
-        public KeyActionDisableData(Guid keyActionId, bool stopEnable)
+        public KeyActionDisableData(Guid keyActionId, bool forever)
             : base(keyActionId, KeyActionKind.Disable)
         {
-            StopEnable = stopEnable;
+            Forever = forever;
         }
 
         #region property
@@ -164,9 +204,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 完全に無視するか。
         /// </summary>
-        public bool StopEnable { get; set; }
+        public bool Forever { get; set; }
 
         #endregion
+    }
+
+    public enum KeyActionPresseOption
+    {
+        [KeyActionOption(typeof(bool), nameof(ConveySystem))]
+        ConveySystem
     }
 
     public abstract class KeyActionPressedDataBase : KeyActionCommonData
@@ -174,7 +220,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public KeyActionPressedDataBase(Guid keyActionId, KeyActionKind keyActionKind)
             : base(keyActionId, keyActionKind)
         { }
+
+        #region property
+
+        public bool ConveySystem { get; set; }
+
+        #endregion
     }
+
+    public sealed class KeyActionCommandData : KeyActionPressedDataBase
+    {
+        public KeyActionCommandData(Guid keyActionId, KeyActionKind keyActionKind)
+            : base(keyActionId, keyActionKind)
+        { }
+    }
+
+    public enum KeyActionLauncherItemOption
+    {
+        [KeyActionOption(typeof(Guid), nameof(LauncherItemId))]
+        LauncherItemId
+    }
+
 
     public class KeyActionLauncherItemData : KeyActionPressedDataBase
     {
@@ -238,15 +304,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public Guid KeyActionId { get; set; }
         public KeyActionKind KeyActionKind { get; set; }
         public string KeyActionContent { get; set; } = string.Empty;
-        public string KeyActionOption { get; set; } = string.Empty;
-
-        public Key Key { get; set; }
-        public ModifierKey Shift { get; set; }
-        public ModifierKey Contrl { get; set; }
-        public ModifierKey Alt { get; set; }
-        public ModifierKey Super { get; set; }
-
+        public string Comment { get; set; } = string.Empty;
         #endregion
+    }
+
+    internal class KeyItem
+    {
+        public KeyItem(KeyActionData action, IReadOnlyDictionary<string, string> options, IReadOnlyList<IReadOnlyKeyMappingData> mappings)
+        {
+            Action = action;
+            Options = options;
+            Mappings = mappings;
+        }
+
+        public KeyActionData Action { get; }
+        public IReadOnlyDictionary<string, string> Options { get; }
+        public IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
     }
 
 }

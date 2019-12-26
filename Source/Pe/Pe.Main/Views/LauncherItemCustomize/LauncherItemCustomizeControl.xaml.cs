@@ -35,23 +35,23 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         #region Item
 
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            nameof(Item),
-            typeof(LauncherItemCustomizeViewModel),
+        public static readonly DependencyProperty EditorProperty = DependencyProperty.Register(
+            nameof(Editor),
+            typeof(LauncherItemCustomizeEditorViewModel),
             typeof(LauncherItemCustomizeControl),
             new FrameworkPropertyMetadata(
-                default(LauncherItemCustomizeViewModel),
-                new PropertyChangedCallback(OnItemChanged)
+                default(LauncherItemCustomizeEditorViewModel),
+                new PropertyChangedCallback(OnEditorChanged)
             )
         );
 
-        public LauncherItemCustomizeViewModel Item
+        public LauncherItemCustomizeEditorViewModel Editor
         {
-            get { return (LauncherItemCustomizeViewModel)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
+            get { return (LauncherItemCustomizeEditorViewModel)GetValue(EditorProperty); }
+            set { SetValue(EditorProperty, value); }
         }
 
-        private static void OnItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnEditorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if(d is LauncherItemCustomizeControl control) {
             }

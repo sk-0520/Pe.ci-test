@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <summary>
     /// データベースへの遅延書き込み。
     /// </summary>
-    public interface IDatabaseLazyWriter: IFlushable, IDisposer
+    public interface IDatabaseLazyWriter: IFlushable, IDisposedChackable
     {
         #region property
 
@@ -63,6 +63,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="action">DB処理本体。</param>
         /// <param name="uniqueKey">一意オブジェクト。</param>
         void Stock(Action<IDatabaseTransaction> action, object uniqueKey);
+
+        /// <summary>
+        /// ため込んでいるDB処理をなかったことにする。
+        /// <para>特定の状況でしか使い道がないので使用には注意すること。</para>
+        /// </summary>
+        void ClearStock();
 
         #endregion
     }
@@ -119,6 +125,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
         void StartTimer()
         {
+            ThrowIfDisposed();
+
             LazyTimer.Change(PauseRetryTime, PauseRetryTime);
         }
 
@@ -168,6 +176,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             StockCore(action, null);
         }
 
+        public void ClearStock()
+        {
+            ThrowIfDisposed();
+
+            lock(this._timerLocker) {
+                StopTimer();
+
+                StockItems.Clear();
+
+                StartTimer();
+            }
+        }
+
         void LazyCallback(object state)
         {
             if(IsPausing) {
@@ -188,6 +209,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public IDisposer Pause()
         {
+            ThrowIfDisposed();
+
             IsPausing = true;
             return new ActionDisposer(() => {
                 IsPausing = false;

@@ -131,12 +131,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         protected CacheItem<TValue> CreateCacheItem(TValue value, bool isManaged, TimeSpan lifeTime)
         {
+            ThrowIfDisposed();
+
             var item = new CacheItem<TValue>(value, isManaged, lifeTime);
             return item;
         }
 
         void UpdateItemState(IWraitableCacheItem item)
         {
+            ThrowIfDisposed();
+
             lock(item) {
                 item.AccessTimestamp = DateTime.Now;
                 item.AccessCount += 1;
@@ -145,6 +149,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         void DisposeItem(ICacheItem<TValue> item)
         {
+            ThrowIfDisposed();
+
             if(item.IsManaged) {
                 if(item is IDisposable diposer) {
                     diposer.Dispose();

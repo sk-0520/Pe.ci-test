@@ -5,12 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherFilesEntityPathDto : DtoBase
+    {
+        #region property
+
+        Guid LauncherItemId { get; set; }
+        public string File { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        public string WorkDirectory { get; set; } = string.Empty;
+
+
+        #endregion
+    }
+
+    internal class LauncherFilesEntityDto : CommonDtoBase
+    {
+        #region property
+
+        Guid LauncherItemId { get; set; }
+
+        public string File { get; set; } = string.Empty;
+        public string Option { get; set; } = string.Empty;
+        public string WorkDirectory { get; set; } = string.Empty;
+
+        public bool IsEnabledCustomEnvVar { get; set; }
+        public bool IsEnabledStandardIo { get; set; }
+        public string StandardIoEncoding { get; set; } = string.Empty;
+        public bool RunAdministrator { get; set; }
+
+        #endregion
+    }
+
     public class LauncherFilesEntityDao : EntityDaoBase
     {
         public LauncherFilesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
@@ -131,6 +161,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             builder.AddKey(Column.LauncherItemId, launcherItemId);
 
             return ExecuteUpdate(builder) == 1;
+        }
+
+        public bool DeleteFileByLauncherItemId(Guid launcherItemId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+            return ExecuteDelete(builder) == 1;
         }
 
         #endregion

@@ -6,11 +6,30 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherToolbarsDisplayRowDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid LauncherToolbarId { get; set; }
+        public Guid LauncherGroupId { get; set; }
+        public string PositionKind { get; set; } = string.Empty;
+        public string Direction { get; set; } = string.Empty;
+        public string IconBox { get; set; } = string.Empty;
+        public Guid FontId { get; set; }
+        public TimeSpan AutoHideTimeout { get; set; }
+        public long TextWidth { get; set; }
+        public bool IsVisible { get; set; }
+        public bool IsTopmost { get; set; }
+        public bool IsAutoHide { get; set; }
+        public bool IsIconOnly { get; set; }
+
+        #endregion
+    }
+
     public class LauncherToolbarsEntityDao : EntityDaoBase
     {
         public LauncherToolbarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
@@ -26,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string LauncherToolbarId { get; } = "LauncherToolbarId";
             public static string ScreenName { get; } = "ScreenName";
             public static string PositionKind { get; } = "PositionKind";
+            public static string FontId { get; } = "FontId";
             public static string IsTopmost { get; } = "IsTopmost";
             public static string IsAutoHide { get; } = "IsAutoHide";
             public static string IsVisible { get; } = "IsVisible";
@@ -51,10 +71,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
                 FontId = dto.FontId,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                AutoHideTimeout = ToTimespan(dto.AutoHideTimeout),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                TextWidth = dto.TextWidth,
+                AutoHideTimeout = dto.AutoHideTimeout,
+                TextWidth = ToInt(dto.TextWidth),
                 IsVisible = dto.IsVisible,
                 IsTopmost = dto.IsTopmost,
                 IsAutoHide = dto.IsAutoHide,
@@ -64,23 +82,63 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        LauncherToolbarsDisplayRowDto ConvertFromData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
+        {
+            var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+            var iconDirectionTransfer = new EnumTransfer<LauncherToolbarIconDirection>();
+
+            var result = new LauncherToolbarsDisplayRowDto() {
+                LauncherToolbarId = data.LauncherToolbarId,
+                LauncherGroupId = data.LauncherGroupId,
+                PositionKind = toolbarPositionTransfer.ToString(data.ToolbarPosition),
+                Direction = iconDirectionTransfer.ToString(data.IconDirection),
+                IconBox = iconBoxTransfer.ToString(data.IconBox),
+                FontId = data.FontId,
+                AutoHideTimeout = data.AutoHideTimeout,
+                TextWidth = data.TextWidth,
+                IsVisible = data.IsVisible,
+                IsTopmost = data.IsTopmost,
+                IsAutoHide = data.IsAutoHide,
+                IsIconOnly = data.IsIconOnly,
+            };
+            commonStatus.WriteCommon(result);
+            return result;
+        }
+
+        public IEnumerable<Guid> SelectAllLauncherToolbarIds()
+        {
+            var statement = LoadStatement();
+            return Commander.Query<Guid>(statement);
+        }
+
         public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbarId)
         {
             var statement = LoadStatement();
             var param = new {
                 LauncherToolbarId = launcherToolbarId,
             };
-            var dto = Commander.QuerySingle<LauncherToolbarsDisplayRowDto>(statement, param);
+            var dto = Commander.QueryFirst<LauncherToolbarsDisplayRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
         }
 
-        public bool InsertNewToolbar(Guid toolbarId, string? screenName, IDatabaseCommonStatus commonStatus)
+        public string SelectScreenName(Guid launcherToolbarId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherToolbarId = launcherToolbarId,
+            };
+            return Commander.QueryFirst<string>(statement, parameter);
+        }
+
+        public bool InsertNewToolbar(Guid toolbarId, Guid fontId, string? screenName, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
             var param = commonStatus.CreateCommonDtoMapping();
             param[Column.LauncherToolbarId] = toolbarId;
+            param[Column.FontId] = fontId;
             param[Column.ScreenName] = screenName ?? string.Empty;
 
             return Commander.Execute(statement, param) == 1;
@@ -132,7 +190,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
-
+        public bool UpdateDisplayData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, commonStatus);
+            return Commander.Execute(statement, dto) == 1;
+        }
         #endregion
     }
 }

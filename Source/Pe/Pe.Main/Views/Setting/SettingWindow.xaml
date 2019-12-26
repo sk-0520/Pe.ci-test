@@ -1,7 +1,15 @@
 <Window
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.SettingWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
+  xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
 
   Title="SettingWindow"
   Width="800"
@@ -10,7 +18,46 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
-  <Grid>
+  <i:Interaction.Triggers>
+    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+      <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
+  </i:Interaction.Triggers>
 
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <TabControl Grid.Row="0" ItemsSource="{Binding EditorItems}" SelectedItem="{Binding SelectedEditor}" TabStripPlacement="Left">
+      <TabControl.Resources>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:GeneralsSettingEditorViewModel}">
+          <app_main_views_setting:GeneralsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherItemsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherGroupsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherGroupsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherToobarsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherToobarsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardSettingEditorViewModel}">
+          <app_main_views_setting:KeyboardSettingControl Editor="{Binding}" />
+        </DataTemplate>
+      </TabControl.Resources>
+      <TabControl.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding Header}" />
+        </DataTemplate>
+      </TabControl.ItemTemplate>
+    </TabControl>
+
+    <StackPanel Grid.Row="1" Orientation="Horizontal">
+      <Button Content="ok" Command="{Binding SubmitCommand}" />
+      <Button Content="cancel" Command="{Binding CloseCommand, ElementName=root}" />
+    </StackPanel>
   </Grid>
 </Window>

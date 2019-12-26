@@ -29,6 +29,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using System.Windows.Controls.Primitives;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -40,22 +41,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWapper dispatcherWapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
             LauncherGroupTheme = launcherGroupTheme;
 
-            LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups, LoggerFactory) {
-                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWapper, LauncherGroupTheme, LoggerFactory),
+            LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups) {
+                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LauncherGroupTheme, LoggerFactory),
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
-            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems, LoggerFactory) {
-                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWapper, LauncherToolbarTheme, LoggerFactory),
+            LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems) {
+                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWrapper, LauncherToolbarTheme, LoggerFactory),
             };
-            LauncherItems = LauncherItemCollection.GetCollectionView();
+            LauncherItems = LauncherItemCollection.GetDefaultView();
 
             ViewDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = ViewCanDragStart,
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             };
 
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), nameof(IsVerticalLayout));
             PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), ChangeToolbarPositionCommand);
@@ -91,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
@@ -134,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         }
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
-        public ObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
+        public ReadOnlyObservableCollection<LauncherGroupViewModel> LauncherGroupItems { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemElement, LauncherDetailViewModelBase> LauncherItemCollection { get; }
         public ICollectionView LauncherItems { get; }
@@ -158,8 +159,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public DependencyObject ToolbarPositionRightIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Right);
         public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
 
-        public ControlTemplate LauncherItemNormalButtonControlTemplate => DispatcherWapper.Get(() => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate());
-        public ControlTemplate LauncherItemToggleButtonControlTemplate => DispatcherWapper.Get(() => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate());
+        public ControlTemplate LauncherItemNormalButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate());
+        public ControlTemplate LauncherItemToggleButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate());
 
         #endregion
 
@@ -168,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public ICommand ChangeToolbarPositionCommand => GetOrCreateCommand(() => new DelegateCommand<AppDesktopToolbarPosition?>(
             o => {
                 if(o.HasValue) {
-                    Model.ChangeToolbarPosition(o.Value);
+                    Model.ChangeToolbarPositionDelaySave(o.Value);
                 } else {
                     Logger.LogTrace("こないはず");
                 }
@@ -178,19 +179,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.ChangeTopmost(!Model.IsTopmost);
+                Model.ChangeTopmostDelaySave(!Model.IsTopmost);
             }
         ));
 
         public ICommand SwitchAutoHideCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.ChangeAutoHide(!Model.IsAutoHide);
+                Model.ChangeAutoHideDelaySave(!Model.IsAutoHide);
             }
         ));
 
         public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 Model.ChangeVisible(false);
+                 Model.ChangeVisibleDelaySave(false);
 
                  //var notification = new Notification();
                  //CloseRequest.Raise(notification);
@@ -220,35 +221,36 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #region ViewDragAndDrop
 
-        private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e) => ResultSuccessValue.Failure<DragParameter>();
+        private IResultSuccessValue<DragParameter> ViewGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            return dd.GetDragParameter(sender, e);
+        }
 
-        private bool ViewCanDragStart(UIElement sender, MouseEventArgs e) => false;
+        private bool ViewCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            return dd.CanDragStart(sender, e);
+        }
+
 
         private void ViewDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                // ファイル登録準備
-                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if(filePaths.Length == 1) {
-                    e.Effects = DragDropEffects.Copy;
-                    e.Handled = true;
-                }
-            }
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.DragOrverOrEnter(sender, e);
         }
 
         private void ViewDrop(UIElement sender, DragEventArgs e)
         {
-            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if(filePaths.Length == 1) {
-                    DispatcherWapper.Begin(() => RegisterDropFile(filePaths[0]));
-                    e.Handled = true;
-                }
-            }
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.Drop(sender, e, s => dd.RegisterDropFile(ExpandShortcutFileRequest, s, Model.RegisterFile));
         }
 
         private void ViewDragLeave(UIElement sender, DragEventArgs e)
-        { }
+        {
+            var dd = new LauncherFileItemDragAndDrop(DispatcherWrapper, LoggerFactory);
+            dd.DragLeave(sender, e);
+        }
 
         #endregion
 
@@ -286,10 +288,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
-                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+                DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
             } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
                 var argument = (string)e.Data.GetData(DataFormats.UnicodeText);
-                DispatcherWapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
+                DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
             }
 
             e.Handled = true;

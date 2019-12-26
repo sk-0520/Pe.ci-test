@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class EnvironmentPathExecuteItemViewModel: ViewModelBase
+    public class EnvironmentPathExecuteItemViewModel : ViewModelBase
     {
         public EnvironmentPathExecuteItemViewModel(EnvironmentPathExecuteItem item, ILoggerFactory loggerFactory)
-            :base(loggerFactory)
+            : base(loggerFactory)
         {
             Item = item;
         }
@@ -21,8 +21,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         EnvironmentPathExecuteItem Item { get; }
 
         public string Name => Path.GetFileNameWithoutExtension(Item.File.Name);
-        public string DirectoryPath => Item.Directory.FullName;
+        public string DirectoryPath
+        {
+            get
+            {
+                if(Item.Directory.FullName.EndsWith(Path.DirectorySeparatorChar) || Item.Directory.FullName.EndsWith(Path.AltDirectorySeparatorChar)) {
+                    return Item.Directory.FullName;
+                }
+                return Item.Directory.FullName + Path.DirectorySeparatorChar;
+            }
+        }
         public string FileName => Item.File.Name;
+        public string FullPath => Item.File.FullName;
 
         #endregion
 

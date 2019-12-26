@@ -42,6 +42,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public class InjectionAttribute : Attribute
     { }
 
+    /// <summary>
+    /// DI処理でわっけ分からんことになったら投げられる例外。
+    /// <para><see cref="ArgumentException"/>等の分かっているのはその例外を投げるのでこの例外だけ受ければ良いという話ではない。</para>
+    /// </summary>
     public class DiException : ApplicationException
     {
         public DiException()
@@ -108,6 +112,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IScopeDiContainer Scope();
     }
 
+    /// <summary>
+    /// 取得可能コンテナ。
+    /// </summary>
     public interface IDiContainer : IDiScopeContainerFactory
 #if ENABLED_PRISM7
         , IContainerProvider
@@ -194,6 +201,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         ;
     }
 
+    /// <summary>
+    ///登録可能コンテナ。
+    /// </summary>
     public interface IDiRegisterContainer : IDiContainer
 #if ENABLED_PRISM7
         , IContainerRegistry
@@ -244,6 +254,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="objectType"></param>
         IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
         IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
+
+        /// <summary>
+        /// 登録解除。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <returns></returns>
+        bool Unregister<TInterface>();
     }
 
     /// <summary>
@@ -425,13 +442,35 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class DiContainer : DisposerBase, IDiRegisterContainer
     {
+        /// <summary>
+        /// プールしているオブジェクトはコンテナに任せる。
+        /// </summary>
+        public DiContainer()
+            : this(true)
+        { }
+
+        /// <summary>
+        /// プールしているオブジェクトをコンテナに任せるか選択。
+        /// </summary>
+        /// <param name="isDisposeObjectPool">解放処理をコンテナに任せるか</param>
+        public DiContainer(bool isDisposeObjectPool)
+        {
+            IsDisposeObjectPool = isDisposeObjectPool;
+        }
+
         #region property
 
         /// <summary>
         /// シングルトンなDIコンテナ。
         /// <para><see cref="Initialize"/>にて初期化が必要。</para>
         /// </summary>
+        [Obsolete]
         public static IDiContainer? Instance { get; private set; }
+
+        /// <summary>
+        /// 解放処理をコンテナに任せるか。
+        /// </summary>
+        protected bool IsDisposeObjectPool { get; }
 
         /// <summary>
         /// IF → 実体 のマッピング。
@@ -456,6 +495,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="Instance"/> を使用するための準備処理。
         /// </summary>
         /// <param name="creator"></param>
+        [Obsolete]
         public static void Initialize(Func<IDiContainer> creator)
         {
             if(Instance != null) {
@@ -501,6 +541,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        bool Unregister(Type interfaceType)
+        {
+            if(Factory.TryGetValue(interfaceType, out var factory)) {
+                Mapping.Remove(interfaceType);
+                Factory.Remove(interfaceType);
+                Constructors.Remove(interfaceType);
+                if(factory .Lifecycle == DiLifecycle.Singleton) {
+                    ObjectPool.Remove(interfaceType);
+                    factory.Dispose();
+                }
+                return true;
+            }
+
+            return false;
         }
 
         Type GetMappingType(Type type)
@@ -822,7 +878,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public virtual IScopeDiContainer Scope()
         {
-            var cloneContainer = new ScopeDiContainer();
+            var cloneContainer = new ScopeDiContainer(IsDisposeObjectPool);
             foreach(var pair in Mapping) {
                 cloneContainer.Mapping.Add(pair.Key, pair.Value);
             }
@@ -904,6 +960,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return this;
         }
 
+        public bool Unregister<TInterface>()
+        {
+            return Unregister(typeof(TInterface));
+        }
+
 #if ENABLED_PRISM7
         public bool IsRegistered(Type type) => Mapping.ContainsKey(type);
         public bool IsRegistered(Type type, string name) => throw new NotSupportedException();
@@ -938,6 +999,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     foreach(var factory in Factory.Values) {
                         factory.Dispose();
                     }
+                    if(IsDisposeObjectPool) {
+                        foreach(var pair in ObjectPool) {
+                            // 自分自身が処理中なので無視
+                            if(pair.Value == this) {
+                                continue;
+                            }
+                            if(pair.Value is IDisposable disposer) {
+                                disposer.Dispose();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -949,6 +1021,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     internal class ScopeDiContainer : DiContainer, IScopeDiContainer
     {
+        public ScopeDiContainer(bool isDisposeObjectPool)
+            :base(isDisposeObjectPool)
+        {}
+
         #region property
 
         HashSet<Type> RegisteredTypeSet { get; } = new HashSet<Type>();
@@ -1000,20 +1076,41 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        // 自動生成にしても日本語がすごい
         #region IDisposable
 
         protected override void Dispose(bool disposing)
         {
-            if(IsDisposed) {
+            if(!IsDisposed) {
                 if(disposing) {
                     foreach(var type in RegisteredTypeSet) {
-                        Factory[type].Dispose();
+                        if(Factory.TryGetValue(type, out var value)) {
+                            value.Dispose();
+                        }
+
+                        if(IsDisposeObjectPool) {
+                            if(ObjectPool.TryGetValue(type, out var poolObject)) {
+                                if(poolObject != this && poolObject is IDisposable disposer) {
+                                    disposer.Dispose();
+                                }
+                            }
+                        }
+
                     }
+
                 }
             }
 
-            base.Dispose(disposing);
+            if(IsDisposed) {
+                return;
+            }
+
+            OnDisposing();
+
+            if(disposing) {
+                GC.SuppressFinalize(this);
+            }
+
+            IsDisposed = true;
         }
 
         #endregion

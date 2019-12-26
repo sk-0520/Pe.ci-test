@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NotePlainContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(model, clipboardManager, dispatcherWapper, loggerFactory)
+        public NotePlainContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, clipboardManager, dispatcherWrapper, loggerFactory)
         { }
 
         #region property

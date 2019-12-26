@@ -38,7 +38,11 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Value),
             typeof(decimal),
             typeof(NumericUpDown),
-            new PropertyMetadata(0m, OnValuePropertyChanged)
+            new FrameworkPropertyMetadata(
+                0m,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                OnValuePropertyChanged
+            )
         );
 
         public decimal Value
@@ -244,11 +248,13 @@ namespace ContentTypeTextNet.Pe.Core.Views
         private void PART_UP_BUTTON_Click(object sender, RoutedEventArgs e)
         {
             UpValue();
+            this.PART_NUMERIC.SelectAll();
         }
 
         private void PART_DOWN_BUTTON_Click(object sender, RoutedEventArgs e)
         {
             DownValue();
+            this.PART_NUMERIC.SelectAll();
         }
 
         private void PART_NUMERIC_MouseWheel(object sender, MouseWheelEventArgs e)

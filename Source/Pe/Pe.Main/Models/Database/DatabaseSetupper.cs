@@ -6,24 +6,25 @@ using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao;
 using ContentTypeTextNet.Pe.Main.Models.Database.Setupper;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
     public class DatabaseSetupper
     {
-        public DatabaseSetupper(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public DatabaseSetupper(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
+            IdFactory = idFactory;
             StatementLoader = statementLoader;
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
-
+        IIdFactory IdFactory { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
@@ -57,9 +58,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                     return true;
                 });
                 if(!result.Success) {
-#pragma warning disable CS8597 // スローされた値が null である可能性があります。
-                    throw result.FailureValue;
-#pragma warning restore CS8597 // スローされた値が null である可能性があります。
+                    // この時点で FailureValue は例外が入っている
+                    throw result.FailureValue!;
                 }
             } else {
                 Logger.LogInformation("DDL");
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             Logger.LogInformation("init");
 
             var dto = CreateSetupDto(new Version(0, 0, 0, 0));
-            var setup = new Setupper_V_00_84_00_00(StatementLoader, LoggerFactory);
+            var setup = new Setupper_V_00_84_00_00(IdFactory, StatementLoader, LoggerFactory);
 
             Execute(accessorPack, dto, setup);
         }
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             var setuppers = new SetupperBase[] {
                 // これ最後
-                new Setupper_V_99_99_99_99(StatementLoader, LoggerFactory),
+                new Setupper_V_99_99_99_99(IdFactory, StatementLoader, LoggerFactory),
             };
 
             foreach(var setupper in setuppers) {
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             }
         }
 
-        bool ExistsVersionTable(IDatabaseAccessor mainAccessor)
+        bool ExistsExecuteTable(IDatabaseAccessor mainAccessor)
         {
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             return mainAccessor.Query<bool>(statement, null, false).FirstOrDefault();
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         public Version? GetLastVersion(IDatabaseAccessor mainAccessor)
         {
-            if(!ExistsVersionTable(mainAccessor)) {
+            if(!ExistsExecuteTable(mainAccessor)) {
                 Logger.LogWarning("not found: version table");
                 return null;
             }

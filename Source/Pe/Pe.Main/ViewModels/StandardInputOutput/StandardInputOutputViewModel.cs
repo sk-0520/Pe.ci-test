@@ -42,12 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #endregion
 
-        public StandardInputOutputViewModel(StandardInputOutputElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public StandardInputOutputViewModel(StandardInputOutputElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparatedReceive), AttachReceiver);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #region property
 
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
         public TextDocument TextDocument { get; } = new TextDocument();
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 try {
-                    DispatcherWapper.Invoke(() => {
+                    DispatcherWrapper.Invoke(() => {
                         Terminal!.Clear();
                     });
                 } catch(Exception ex) {
@@ -223,8 +223,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 return;
             }
 
-            DispatcherWapper.Invoke(() => {
-                var prevLine = TextDocument.Lines.Last();
+            DispatcherWrapper.Invoke(() => {
+                var prevLine = TextDocument.Lines.Last<DocumentLine>();
                 var prevEndOffset = prevLine.EndOffset;
 
                 var index = TextDocument.TextLength;
@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
                 TextDocument.Insert(TextDocument.TextLength, value);
                 if(isError) {
-                    var lastLine = TextDocument.Lines.Last();
+                    var lastLine = TextDocument.Lines.Last<DocumentLine>();
                     var lastEndOffset = lastLine.EndOffset;
                     if(StandardOutputColorizingTransformer == null) {
                         StandardOutputColorizingTransformer = new StandardOutputColorizingTransformer(StandardErrorForegound);
@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 return;
             }
 
-            DispatcherWapper.Invoke(() => {
+            DispatcherWrapper.Invoke(() => {
                 var selectionIndex = Terminal.SelectionStart;
                 var selectionLength = Terminal.SelectionLength;
 

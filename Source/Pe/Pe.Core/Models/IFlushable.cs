@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         public static bool SafeFlush<T>(this T? @this)
-            where T : class, IDisposer, IFlushable
+            where T : class, IDisposedChackable, IFlushable
         {
             if(@this == null) {
                 return false;

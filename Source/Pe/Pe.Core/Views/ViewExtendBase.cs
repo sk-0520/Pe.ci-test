@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             ExtendData.Disposing += ExtendData_Disposing!;
             ExtendData.PropertyChanged += ExtendData_PropertyChanged;
 
-            PropertyChangedHooker = new PropertyChangedHooker(new DispatcherWapper(View.Dispatcher), loggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(new DispatcherWrapper(View.Dispatcher), loggerFactory);
             PropertyChangedHooker.AddProperties<TExtendData>();
         }
 

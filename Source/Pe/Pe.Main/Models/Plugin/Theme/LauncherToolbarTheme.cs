@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
-        public LauncherToolbarTheme(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWapper, loggerFactory)
+        public LauncherToolbarTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         { }
 
         #region property

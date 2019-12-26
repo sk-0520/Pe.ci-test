@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ContentTypeTextNet.Pe.Main.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string File_Highlighting_EnvironmentVariable_Merge {
+        public static string File_Highlighting_EnvironmentVariable_Merge {
             get {
                 return ResourceManager.GetString("File_Highlighting_EnvironmentVariable_Merge", resourceCulture);
             }
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string File_Highlighting_EnvironmentVariable_Remove {
+        public static string File_Highlighting_EnvironmentVariable_Remove {
             get {
                 return ResourceManager.GetString("File_Highlighting_EnvironmentVariable_Remove", resourceCulture);
             }
@@ -113,9 +113,144 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string File_Highlighting_Tag {
+        public static string File_Highlighting_Tag {
             get {
                 return ResourceManager.GetString("File_Highlighting_Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動設定グループ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherGroup_ImportItem_Name {
+            get {
+                return ResourceManager.GetString("String_LauncherGroup_ImportItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいグループ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherGroup_NewItem_Name {
+            get {
+                return ResourceManager.GetString("String_LauncherGroup_NewItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新しいアイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItem_NewItem_Name {
+            get {
+                return ResourceManager.GetString("String_LauncherItem_NewItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   command に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Command {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   execute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Execute {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Execute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   general に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_General {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   note に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Note {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   stdio に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_StandardInputOutput {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_StandardInputOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   update に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Update {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   window に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_General_Header_Window {
+            get {
+                return ResourceManager.GetString("String_Setting_General_Header_Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   general に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_General {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   keyboard に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_Keyboard {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_Keyboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   groups に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_LauncherGroups {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_LauncherGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   items に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_LauncherItems {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_LauncherItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   toolbars に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Header_LauncherToolbars {
+            get {
+                return ResourceManager.GetString("String_Setting_Header_LauncherToolbars", resourceCulture);
             }
         }
     }

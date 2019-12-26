@@ -27,6 +27,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         TValue Large { get; }
 
         #endregion
+
+        #region function
+
+        IReadOnlyDictionary<IconBox, TValue> IconItems { get; }
+
+        #endregion
     }
 
 

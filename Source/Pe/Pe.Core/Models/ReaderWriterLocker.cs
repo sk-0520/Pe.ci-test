@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             Debug.Assert(beginAction != null);
             Debug.Assert(exitAction != null);
+            ThrowIfDisposed();
 
             beginAction();
             return new ActionDisposer(disposing => {
@@ -76,6 +77,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable BeginRead()
         {
+            ThrowIfDisposed();
+
             return BeginCore(Locker.EnterReadLock, Locker.ExitReadLock);
         }
 
@@ -85,6 +88,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable BeginUpdate()
         {
+            ThrowIfDisposed();
+
             // write系と何が違うのか分からん
             return BeginCore(Locker.EnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
         }
@@ -95,6 +100,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable BeginWrite()
         {
+            ThrowIfDisposed();
+
             return BeginCore(Locker.EnterWriteLock, Locker.ExitWriteLock);
         }
 
@@ -111,6 +118,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Debug.Assert(lockedAction != null);
             Debug.Assert(tryAction != null);
             Debug.Assert(exitAction != null);
+            ThrowIfDisposed();
 
             if(tryAction(timeout)) {
                 try {
@@ -135,6 +143,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(lockedAction == null) {
                 throw new ArgumentNullException(nameof(lockedAction));
             }
+            ThrowIfDisposed();
 
             return TryCore(timeout, lockedAction, Locker.TryEnterReadLock, Locker.ExitReadLock);
         }
@@ -146,6 +155,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック成功状態。</returns>
         public bool TryReadByDefaultTimeout(Action lockedAction)
         {
+            ThrowIfDisposed();
+
             return TryUpdate(DefaultReadTimeout, lockedAction);
         }
 
@@ -160,6 +171,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(lockedAction == null) {
                 throw new ArgumentNullException(nameof(lockedAction));
             }
+            ThrowIfDisposed();
 
             return TryCore(timeout, lockedAction, Locker.TryEnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
         }
@@ -171,6 +183,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック成功状態。</returns>
         public bool TryUpdateByDefaultTimeout(Action lockedAction)
         {
+            ThrowIfDisposed();
+
             return TryUpdate(DefaultUpdateTimeout, lockedAction);
         }
 
@@ -185,6 +199,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(lockedAction == null) {
                 throw new ArgumentNullException(nameof(lockedAction));
             }
+            ThrowIfDisposed();
 
             return TryCore(timeout, lockedAction, Locker.TryEnterWriteLock, Locker.ExitWriteLock);
         }
@@ -196,6 +211,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック成功状態。</returns>
         public bool TryWriteByDefaultTimeout(Action lockedAction)
         {
+            ThrowIfDisposed();
+
             return TryWrite(DefaultWriteTimeout, lockedAction);
         }
 
@@ -210,6 +227,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             Debug.Assert(tryAction != null);
             Debug.Assert(exitAction != null);
+            ThrowIfDisposed();
 
             if(tryAction(timeout)) {
                 return new ActionDisposer(disposing => {
@@ -229,6 +247,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable WaitRead(TimeSpan timeout)
         {
+            ThrowIfDisposed();
+
             return WaitCore(timeout, Locker.TryEnterReadLock, Locker.ExitReadLock);
         }
 
@@ -239,6 +259,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable WaitReadByDefaultTimeout()
         {
+            ThrowIfDisposed();
+
             return WaitRead(DefaultReadTimeout);
         }
 
@@ -249,6 +271,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable WaitUpdate(TimeSpan timeout)
         {
+            ThrowIfDisposed();
+
             return WaitCore(timeout, Locker.TryEnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
         }
 
@@ -259,6 +283,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable WaitUpdateByDefaultTimeout()
         {
+            ThrowIfDisposed();
+
             return WaitUpdate(DefaultUpdateTimeout);
         }
 
@@ -269,6 +295,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable WaitWrite(TimeSpan timeout)
         {
+            ThrowIfDisposed();
+
             return WaitCore(timeout, Locker.TryEnterWriteLock, Locker.ExitWriteLock);
         }
 
@@ -279,6 +307,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>ロック解除用オブジェクト。</returns>
         public IDisposable WaitWriteByDefaultTimeout()
         {
+            ThrowIfDisposed();
+
             return WaitWrite(DefaultWriteTimeout);
         }
 

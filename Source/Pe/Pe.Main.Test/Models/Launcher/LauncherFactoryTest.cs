@@ -35,12 +35,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Launcher
         [DataRow("a[c-7f]a", "a\u007fa")]
         [DataRow("a", "ア")] // 全角から平仮名になる
         [DataRow("a", "ｱ")] // 半角から全角になって平仮名になる
-        public void ToCodeTest(string test, string s)
+        public void ToCodeTest(string result, string s)
         {
             var lf = new LauncherFactory(new IdFactory(Test.LoggerFactory), Test.LoggerFactory);
-            var result = lf.ToCode(s);
+            var actual = lf.ToCode(s);
 
-            Assert.AreEqual(test, result, result);
+            Assert.AreEqual(result, actual, actual);
         }
 
         #endregion

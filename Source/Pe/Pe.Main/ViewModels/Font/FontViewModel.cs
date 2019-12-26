@@ -14,12 +14,16 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 {
-    public class FontViewModel : SingleModelViewModelBase<FontElement>
+    public class FontViewModel : SingleModelViewModelBase<FontElement>, IFlushable
     {
-        public FontViewModel(FontElement model, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public FontViewModel(FontElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, LoggerFactory);
+            if(!Model.IsInitialized) {
+                throw new ArgumentException(nameof(Model) + "." + nameof(Model.Initialize));
+            }
+
+            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(Model.FamilyName), nameof(FontFamily));
             PropertyChangedHooker.AddHook(nameof(Model.Size), new[] { nameof(Size), nameof(FontSize) });
             PropertyChangedHooker.AddHook(nameof(Model.IsItalic), new[] { nameof(IsItalic), nameof(FontStyle) });
@@ -41,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
             set
             {
                 var fc = new FontConverter(LoggerFactory);
-                Model.ChangeFamilyName(fc.GetOriginalFontFamilyName(value));
+                Model.FamilyName = fc.GetOriginalFontFamilyName(value);
             }
         }
 
@@ -66,22 +70,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
         public bool IsBold
         {
             get => Model.IsBold;
-            set => Model.ChangeBold(value);
+            set => Model.IsBold = value;
         }
         public bool IsItalic
         {
             get => Model.IsItalic;
-            set => Model.ChangeItalic(value);
+            set => Model.IsItalic = value;
         }
 
         public double Size
         {
             get => Model.Size;
-            set => Model.ChangeSize(value);
+            set => Model.Size = value;
         }
 
         public virtual double MinimumSize => 6;
         public virtual double MaximumSize => 72;
+        #endregion
+
+        #region function
+
+
         #endregion
 
         #region SingleModelViewModelBase
@@ -96,6 +105,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
         {
             base.DetachModelEventsImpl();
             Model.PropertyChanged -= Model_PropertyChanged;
+        }
+
+        #endregion
+
+        #region IFlushable
+
+        public void Flush()
+        {
+            Model.SafeFlush();
         }
 
         #endregion

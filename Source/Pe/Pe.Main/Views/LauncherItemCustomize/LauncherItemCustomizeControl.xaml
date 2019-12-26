@@ -25,7 +25,7 @@
     <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
   </UserControl.Resources>
 
-  <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Item.CustomizeItems, ElementName=root}">
+  <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.CustomizeItems, ElementName=root}">
     <ItemsControl.Resources>
       <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
         <Setter Property="Width" Value="Auto" />
@@ -133,7 +133,7 @@
 
       <!--#region ファイル -->
       <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeFileViewModel}">
-        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="file">
+        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="file">
           <i:Interaction.Triggers>
             <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
               <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
@@ -155,7 +155,7 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="0" ScrollViewer.CanContentScroll="True" IsEditable="True" Text="{Binding Path}" ItemsSource="{Binding PathItems}" >
+                <ComboBox Grid.Column="0" ScrollViewer.CanContentScroll="True" IsEditable="True" Text="{Binding Path}" ItemsSource="{Binding PathItems}" IsDropDownOpen="{Binding IsDropDownPathItems}" >
                   <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                       <VirtualizingStackPanel
@@ -174,11 +174,12 @@
 
                       <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
                         <DataTemplate>
-                          <StackPanel Orientation="Horizontal">
-                            <TextBlock TextDecorations="Underline"  Text="{Binding DirectoryPath, Mode=OneTime}" />
-                            <TextBlock Text=" " />
-                            <TextBlock Text="{Binding FileName, Mode=OneTime}"/>
-                          </StackPanel>
+                          <TextBlock>
+                            <Hyperlink Command="{Binding DataContext.SetPathToFullPathCommand, ElementName=item, Mode=OneTime}" CommandParameter="{Binding}">
+                              <Run Text="{Binding DirectoryPath, Mode=OneTime}"  />
+                            </Hyperlink>
+                            <Run Text="{Binding FileName, Mode=OneTime}"/>
+                          </TextBlock>
                         </DataTemplate>
                       </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
                     </app_core_views_selector:ComboBoxItemTemplateSelector>
@@ -252,13 +253,35 @@
       </DataTemplate>
       <!--#endregion-->
 
-      <!--#region コマンド -->
-      <!--#endregion -->
+      <!--#region ストアアプリ -->
+      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeStoreAppViewModel}">
+        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="store app">
+          <StackPanel>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
 
-      <!--#region スクリプト -->
-      <!--#endregion -->
+              <Label Grid.Column="0" Content="protocol/alias" />
+              <TextBox Grid.Column="1" Text="{Binding ProtocolAlias}" />
 
-      <!--#region ディレクトリ -->
+            </Grid>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+              </Grid.ColumnDefinitions>
+
+              <Label Grid.Column="0" Content="option" />
+              <TextBox Grid.Column="1" Text="{Binding Option}" />
+            </Grid>
+
+
+          </StackPanel>
+        </GroupBox>
+      </DataTemplate>
       <!--#endregion -->
 
       <!--#region 組み込み -->

@@ -36,7 +36,7 @@
     </Grid.RowDefinitions>
 
     <ScrollViewer Grid.Row="0">
-      <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Item="{Binding}" />
+      <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor}" />
     </ScrollViewer>
 
     <StackPanel Grid.Row="1" Orientation="Horizontal">

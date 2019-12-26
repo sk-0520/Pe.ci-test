@@ -106,20 +106,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class PropertyChangedHooker : DisposerBase
     {
-        public PropertyChangedHooker(IDispatcherWapper dispatcherWapper, ILogger logger)
+        public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILogger logger)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             Logger = logger;
         }
-        public PropertyChangedHooker(IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
-        protected IDispatcherWapper DispatcherWapper { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILogger Logger { get; }
 
         protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
@@ -131,6 +131,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         IReadOnlyHookItem AddHookCore(HookItem hookItem)
         {
+            ThrowIfDisposed();
+
             if(string.IsNullOrWhiteSpace(hookItem.NotifyPropertyName)) {
                 throw new ArgumentException($"{nameof(hookItem.NotifyPropertyName)}");
             }
@@ -174,6 +176,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(hookItem == null) {
                 throw new ArgumentNullException(nameof(hookItem));
             }
+            ThrowIfDisposed();
 
             return AddHookCore(hookItem);
         }
@@ -182,6 +185,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(string.IsNullOrWhiteSpace(notifyAndRaisePropertyName)) {
                 throw new ArgumentException(nameof(notifyAndRaisePropertyName));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyAndRaisePropertyName,
@@ -199,6 +203,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(string.IsNullOrWhiteSpace(raisePropertyName)) {
                 throw new ArgumentException(nameof(raisePropertyName));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyPropertyName,
@@ -216,6 +221,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(raisePropertyNames == null || raisePropertyNames.Length == 0) {
                 throw new ArgumentException(nameof(raisePropertyNames));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyPropertyName,
@@ -233,6 +239,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(raiseCommand == null) {
                 throw new ArgumentNullException(nameof(raiseCommand));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyPropertyName,
@@ -250,6 +257,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(raiseCommands == null || raiseCommands.Length == 0) {
                 throw new ArgumentException(nameof(raiseCommands));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyPropertyName,
@@ -267,6 +275,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(callback == null) {
                 throw new ArgumentException(nameof(callback));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyPropertyName,
@@ -287,6 +296,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(raiseCommands == null) {
                 throw new ArgumentException(nameof(raiseCommands));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyPropertyName,
@@ -310,6 +320,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(callback == null) {
                 throw new ArgumentException(nameof(callback));
             }
+            ThrowIfDisposed();
 
             var hookItem = new HookItem(
                 notifyPropertyName,
@@ -322,6 +333,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         HookItemCache MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
         {
+            ThrowIfDisposed();
+
             var commands = hookItems
                 .Where(i => i.RaiseCommands != null)
                 .SelectMany(i => i.RaiseCommands)
@@ -340,11 +353,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         bool ExecutePropertyies(IReadOnlyList<string> raisePropertyNames, Action<string> raiser)
         {
+            ThrowIfDisposed();
+
             if(raisePropertyNames.Count == 0) {
                 return false;
             }
 
-            DispatcherWapper.Invoke(() => {
+            DispatcherWrapper.Invoke(() => {
                 foreach(var raisePropertyName in raisePropertyNames) {
                     raiser(raisePropertyName);
                 }
@@ -354,11 +369,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         bool ExecuteCommands(IReadOnlyList<ICommand> raiseCommands, IReadOnlyList<DelegateCommandBase> raiseDelegateCommands)
         {
+            ThrowIfDisposed();
+
             if(raiseCommands.Count == 0 && raiseDelegateCommands.Count == 0) {
                 return false;
             }
 
-            DispatcherWapper.Invoke(() => {
+            DispatcherWrapper.Invoke(() => {
                 foreach(var raiseCommand in raiseDelegateCommands) {
                     raiseCommand.RaiseCanExecuteChanged();
                 }
@@ -366,7 +383,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             if(raiseCommands.Count != 0) {
                 // 個別にやる方法はわからん
-                DispatcherWapper.Invoke(() => {
+                DispatcherWrapper.Invoke(() => {
                     CommandManager.InvalidateRequerySuggested();
                 });
             }
@@ -375,11 +392,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         bool ExecuteCallback(IReadOnlyList<Action> callbacks)
         {
+            ThrowIfDisposed();
+
             if(callbacks.Count == 0) {
                 return false;
             }
 
-            DispatcherWapper.Begin(() => {
+            DispatcherWrapper.Begin(() => {
                 foreach(var callback in callbacks) {
                     callback();
                 }
@@ -390,6 +409,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         bool ExecuteCache(HookItemCache hookItemCache, Action<string> raiser)
         {
+            ThrowIfDisposed();
+
             var property = ExecutePropertyies(hookItemCache.RaisePropertyNames, raiser);
             var command = ExecuteCommands(hookItemCache.RaiseCommands, hookItemCache.RaiseDelegateCommands);
             var callback = ExecuteCallback(hookItemCache.Callbacks);
@@ -399,6 +420,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public bool Execute(string noifyPropertyName, Action<string> raiser)
         {
+            ThrowIfDisposed();
 
             if(!Hookers.TryGetValue(noifyPropertyName, out var hookItems)) {
                 return false;

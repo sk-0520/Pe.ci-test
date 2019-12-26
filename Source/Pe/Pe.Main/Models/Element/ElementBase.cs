@@ -12,9 +12,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
     /// </summary>
     public abstract class ElementBase : BindModelBase
     {
+        #region variable
+
+        bool _isInitialized;
+
+        #endregion
         public ElementBase(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
+
+        #region property
+
+        public bool IsInitialized
+        {
+            get => this._isInitialized;
+            private set => SetProperty(ref this._isInitialized, value);
+        }
+
+        #endregion
 
         #region function
 
@@ -22,7 +37,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
 
         public void Initialize()
         {
+            if(IsInitialized) {
+                throw new InvalidOperationException(nameof(IsInitialized));
+            }
+
+            ThrowIfDisposed();
+
             InitializeImpl();
+
+            IsInitialized = true;
         }
 
         #endregion

@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWapper dispatcherWapper, ILoggerFactory loggerFactory)
+        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
 
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
 
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
 
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
@@ -75,6 +75,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public bool Exists()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectExistsContent(NoteId);
@@ -84,6 +86,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         void CreateNewContent(string content)
         {
             Logger.LogInformation("ノート空コンテンツ生成: {0}, {1}", NoteId, ContentKind);
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
@@ -106,6 +110,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public string LoadRawContent()
         {
+            ThrowIfDisposed();
+
             if(IsLink) {
                 return LoadLinkContent();
             }
@@ -121,6 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             if(ContentKind != NoteContentKind.Plain) {
                 throw new InvalidOperationException();
             }
+            ThrowIfDisposed();
 
             if(!Exists()) {
                 // 存在しなければこのタイミングで生成
@@ -139,6 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             if(ContentKind != NoteContentKind.RichText) {
                 throw new InvalidOperationException();
             }
+            ThrowIfDisposed();
 
             if(!Exists()) {
                 var factory = new NoteContentFactory();
@@ -154,6 +162,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         string LoadLinkContent()
         {
+            ThrowIfDisposed();
+
             var parameter = GetLinkParameter();
             if(parameter == null) {
                 Logger.LogWarning("リンクがおかしい: {0}", NoteId);
@@ -169,6 +179,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void StartLinkWatch(NoteLinkWatchParameter noteLinkWatchParameter)
         {
+            ThrowIfDisposed();
+
             if(LinkWatcher == null) {
                 LinkWatcher = new NoteLinkWatcher(noteLinkWatchParameter, LoggerFactory);
                 LinkWatcher.FileContentChanged += LinkWatcher2_FileContentChanged;
@@ -178,11 +190,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void StopLinkWatch()
         {
+            ThrowIfDisposed();
+
             LinkWatcher?.Stop();
         }
 
         void SaveLinkContent(string? content)
         {
+            ThrowIfDisposed();
+
             var parameter = (NoteLinkWatchParameter?)LinkWatcher?.WatchParameter;
             if(parameter == null) {
                 Logger.LogWarning("リンクがおかしい: {0}", NoteId);
@@ -199,8 +215,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        void ChangeRawContent(NoteContentKind contentKind, string content, object stockKey)
+        void ChangeRawContentDelaySave(NoteContentKind contentKind, string content, object stockKey)
         {
+            ThrowIfDisposed();
+
             if(IsLink) {
                 SaveLinkContent(content);
                 return;
@@ -219,20 +237,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void ChangePlainContent(string content)
         {
+            ThrowIfDisposed();
+
             if(ContentKind != NoteContentKind.Plain) {
                 throw new InvalidOperationException();
             }
 
-            ChangeRawContent(ContentKind, content, UniqueKeyPool.Get());
+            ChangeRawContentDelaySave(ContentKind, content, UniqueKeyPool.Get());
         }
 
         public void ChangeRichTextContent(string content)
         {
+            ThrowIfDisposed();
+
             if(ContentKind != NoteContentKind.RichText) {
                 throw new InvalidOperationException();
             }
 
-            ChangeRawContent(ContentKind, content, UniqueKeyPool.Get());
+            ChangeRawContentDelaySave(ContentKind, content, UniqueKeyPool.Get());
         }
 
         void DisposeLinkWatcher()
@@ -246,11 +268,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         private void OnLinkContentChanged()
         {
+            ThrowIfDisposed();
+
             LinkContentChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void ChangeLink(string filePath, Encoding encoding, bool isOpen)
         {
+            ThrowIfDisposed();
+
             Flush();
             DisposeLinkWatcher();
 
@@ -288,6 +314,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void Unlink(bool isRemove)
         {
+            ThrowIfDisposed();
+
             Flush();
             var parameter = GetLinkParameter();
             var content = LoadLinkContent();
@@ -330,6 +358,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         (bool success, bool isLink, NoteLinkWatchParameter parameter) LoadLinkWatchParameter()
         {
+            ThrowIfDisposed();
+
             NoteContentData linkData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -359,6 +389,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public string GetLinkFilePath()
         {
+            ThrowIfDisposed();
+
             var parameter = GetLinkParameter();
             return parameter?.File?.FullName ?? string.Empty;
         }

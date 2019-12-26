@@ -112,7 +112,7 @@
     </DataTemplate>
 
     <!--#region ファイル -->
-    <ContextMenu x:Key="ItemContextMenu" IsOpen="{Binding DataContext.IsOpendItemMenu, Source={x:Reference root}}">
+    <ContextMenu x:Key="FileContextMenu" IsOpen="{Binding DataContext.IsOpendItemMenu, Mode=OneWay, Source={x:Reference root}}">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
         <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
@@ -137,7 +137,10 @@
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" Command="{Binding CopyWorkingDirectoryCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="others" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="customize" Command="{Binding CustomizeCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="setting">
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="customize" Command="{Binding CustomizeCommand}" />
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove" />
+          </MenuItem>
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="property" Command="{Binding ShowPropertyCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="group" />
@@ -146,7 +149,7 @@
       </ContextMenu.ItemsSource>
     </ContextMenu>
     <DataTemplate DataType="{x:Type app_main_viewmode_item:LauncherFileViewModel}">
-      <Button Command="{Binding ExecuteMainCommand}" ContextMenu="{StaticResource ItemContextMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemNormalButtonControlTemplate, ElementName=root}" >
+      <Button Command="{Binding ExecuteMainCommand}" ContextMenu="{StaticResource FileContextMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemNormalButtonControlTemplate, ElementName=root}" >
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
@@ -156,6 +159,57 @@
       </Button>
     </DataTemplate>
     <!--#endregion -->
+
+    <!--#region ストアアプリ -->
+    <ContextMenu x:Key="StoreAppContextMenu" IsOpen="{Binding DataContext.IsOpendItemMenu, Mode=OneWay, Source={x:Reference root}}">
+      <ContextMenu.Resources>
+        <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
+        <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
+        <Style x:Key="LauncherMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}" />
+        <!-- CollectionContainer で使用するグループメニューアイテム -->
+        <Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenuItem}" />
+      </ContextMenu.Resources>
+      <ContextMenu.ItemsSource>
+        <CompositeCollection>
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="execute" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="exec" Command="{Binding ExecuteSimpleCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="ex exec" Command="{Binding ExecuteExtendsCommand}" />
+
+          <!--<MenuItem Style="{StaticResource MenuHeaderItem}" Header="open" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open dir" Command="{Binding OpenParentDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="open work" Command="{Binding OpenWorkingDirectoryCommand}" />
+
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="copy" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy option" Command="{Binding CopyOptionCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy path" Command="{Binding CopyExecutePathCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy dir" Command="{Binding CopyParentDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" Command="{Binding CopyWorkingDirectoryCommand}" />-->
+
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="others" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="setting">
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="customize" Command="{Binding CustomizeCommand}" />
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove" />
+          </MenuItem>
+          <!--<MenuItem Style="{StaticResource LauncherMenuItem}" Header="property" Command="{Binding ShowPropertyCommand}" />-->
+
+          <MenuItem Style="{StaticResource MenuHeaderItem}" Header="group" />
+          <CollectionContainer Collection="{Binding Source={StaticResource LauncherGroupItems}}" />
+        </CompositeCollection>
+      </ContextMenu.ItemsSource>
+    </ContextMenu>
+    <DataTemplate DataType="{x:Type app_main_viewmode_item:LauncherStoreAppViewModel}">
+      <Button Command="{Binding ExecuteMainCommand}" ContextMenu="{StaticResource StoreAppContextMenu}" ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemNormalButtonControlTemplate, ElementName=root}" >
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
+      </Button>
+    </DataTemplate>
+
+    <!--#endregion-->
+
 
     <!--#endregion-->
 

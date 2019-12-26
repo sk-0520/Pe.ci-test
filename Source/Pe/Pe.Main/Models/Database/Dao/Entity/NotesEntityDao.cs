@@ -6,12 +6,32 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class NotesEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public Guid NoteId { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string ScreenName { get; set; } = string.Empty;
+        public string LayoutKind { get; set; } = string.Empty;
+        public bool IsVisible { get; set; }
+        public Guid FontId { get; set; }
+        public string ForegroundColor { get; set; } = string.Empty;
+        public string BackgroundColor { get; set; } = string.Empty;
+        public bool IsLocked { get; set; }
+        public bool IsTopmost { get; set; }
+        public bool IsCompact { get; set; }
+        public bool TextWrap { get; set; }
+        public string ContentKind { get; set; } = string.Empty;
+
+        #endregion
+    }
+
     public class NotesEntityDao : EntityDaoBase
     {
         public NotesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

@@ -7,6 +7,7 @@
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
   xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -37,8 +38,9 @@
       <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, ElementName=root}" IsEnabled="{Binding IsEnabledItalic, ElementName=root}">
         I
       </ToggleButton>
-      <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, ElementName=root}" IsEnabled="{Binding IsEnabledItalic, ElementName=root}" />
+      <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, ElementName=root}" />
       <!--<xctk:DoubleUpDown Minimum="{Binding SizeMinimum, ElementName=root}" Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, ElementName=root}" />-->
+      <app_core_views:NumericUpDown Minimum="{Binding SizeMinimum, ElementName=root}"  Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, Mode=TwoWay, ElementName=root}" />
     </DockPanel>
   </StackPanel>
 </UserControl>

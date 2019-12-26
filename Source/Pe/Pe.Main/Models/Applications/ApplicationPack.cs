@@ -83,12 +83,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
+    public interface IReaderWriterLockerPack : IApplicationPack<ReaderWriterLocker>
+    { }
+
+    public sealed class ApplicationReaderWriterLockerPack : TApplicationPackBase<ReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
+    {
+        public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
+            : base(main, file, temporary)
+        { }
+    }
+
     public interface IDatabaseFactoryPack : IApplicationPack<IDatabaseFactory>
     { }
 
-    public sealed class DatabaseFactoryPack : TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
+    public sealed class ApplicationDatabaseFactoryPack : TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
     {
-        public DatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory file, ApplicationDatabaseFactory temporary)
+        public ApplicationDatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory file, ApplicationDatabaseFactory temporary)
+            : base(main, file, temporary)
+        { }
+    }
+
+    public class LazyWriterWaitTimePack : TApplicationPackBase<TimeSpan, TimeSpan>
+    {
+        public LazyWriterWaitTimePack(TimeSpan main, TimeSpan file, TimeSpan temporary)
             : base(main, file, temporary)
         { }
     }
@@ -106,17 +123,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public interface IDatabaseAccessorPack : IApplicationPack<IDatabaseAccessor>
     { }
 
-    public sealed class DatabaseAccessorPack : TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
+    public sealed class ApplicationDatabaseAccessorPack : TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
     {
-        public DatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor file, ApplicationDatabaseAccessor temporary)
+        public ApplicationDatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor file, ApplicationDatabaseAccessor temporary)
             : base(main, file, temporary)
         { }
 
         #region function
 
-        public static DatabaseAccessorPack Create(DatabaseFactoryPack factoryPack, ILoggerFactory loggerFactory)
+        public static ApplicationDatabaseAccessorPack Create(ApplicationDatabaseFactoryPack factoryPack, ILoggerFactory loggerFactory)
         {
-            return new DatabaseAccessorPack(
+            return new ApplicationDatabaseAccessorPack(
                 new ApplicationDatabaseAccessor(factoryPack.Main, loggerFactory),
                 new ApplicationDatabaseAccessor(factoryPack.File, loggerFactory),
                 new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
@@ -126,6 +143,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IReadWriteLockPack : IApplicationPack<ReaderWriterLocker>
+    public interface IDatabaseBarrierPack : IApplicationPack<IDatabaseBarrier>
     { }
+
+    public sealed class ApplicationDatabaseBarrierPack : TApplicationPackBase<IDatabaseBarrier, ApplicationDatabaseBarrier>, IDatabaseBarrierPack
+    {
+        public ApplicationDatabaseBarrierPack(ApplicationDatabaseBarrier main, ApplicationDatabaseBarrier file, ApplicationDatabaseBarrier temporary)
+            : base(main, file, temporary)
+        { }
+
+        #region function
+
+        public static ApplicationDatabaseAccessorPack Create(ApplicationDatabaseFactoryPack factoryPack, ILoggerFactory loggerFactory)
+        {
+            return new ApplicationDatabaseAccessorPack(
+                new ApplicationDatabaseAccessor(factoryPack.Main, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.File, loggerFactory),
+                new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
+            );
+        }
+
+        #endregion
+    }
+
+
 }

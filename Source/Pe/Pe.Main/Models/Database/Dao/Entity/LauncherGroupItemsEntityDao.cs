@@ -5,11 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Data.Dto.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
+    internal class LauncherGroupItemsRowDto : RowDtoBase
+    {
+        #region property
+
+        public Guid LauncherGroupId { get; set; }
+        public Guid LauncherItemId { get; set; }
+        public long Sequence { get; set; }
+
+        #endregion
+    }
+
     public class LauncherGroupItemsEntityDao : EntityDaoBase
     {
         public LauncherGroupItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
@@ -22,6 +32,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string LauncherGroupId { get; } = "LauncherGroupId";
+            public static string LauncherItemId { get; } = "LauncherItemId";
+            public static string Sequence { get; } = "Sequence";
 
             #endregion
         }
@@ -64,6 +77,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 commonStatus.WriteCommon(dto);
                 Commander.Execute(statement, dto);
             }
+        }
+
+        public int DeleteGroupItemsByLauncherItemId(Guid launcherItemId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherItemId, launcherItemId);
+            return ExecuteDelete(builder);
+        }
+
+        public int DeleteGroupItemsByLauncherGroupId(Guid launcherGroupId)
+        {
+            var builder = CreateDeleteBuilder();
+            builder.AddKey(Column.LauncherGroupId, launcherGroupId);
+            return ExecuteDelete(builder);
         }
 
         #endregion

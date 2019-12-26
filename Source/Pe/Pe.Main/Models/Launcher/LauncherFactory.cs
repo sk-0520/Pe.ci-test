@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         public static IReadOnlyCollection<char> CodeSymbols { get; } = new[] { '-', '.', '^', '_', '[', ']', };
 
         public int GroupItemsStep { get; } = 10;
+        public int GroupItemStep { get; } = 10;
 
         #endregion
 
@@ -55,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 Kind = LauncherItemKind.File,
                 //TODO: 名称取得
                 Name = FileUtility.GetName(expandedPath),
+                IsEnabledCommandLauncher = true,
             };
             var fileResult = new LauncherFileData();
 
@@ -95,12 +97,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        public LauncherGroupData CreateGroupData(string name)
+        public LauncherGroupData CreateGroupData(string name, LauncherGroupKind kind)
         {
             return new LauncherGroupData() {
                 LauncherGroupId = IdFactory.CreateLauncherGroupId(),
                 Name = name,
-                Kind = LauncherGroupKind.Normal,
+                Kind = kind,
                 ImageName = LauncherGroupImageName.DirectoryNormal,
                 ImageColor = Colors.Yellow,
             };

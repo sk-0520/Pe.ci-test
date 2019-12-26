@@ -21,14 +21,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
     public class LauncherToolbarNotifyAreaViewModel : SingleModelViewModelBase<LauncherToolbarElement>
     {
-        public LauncherToolbarNotifyAreaViewModel(LauncherToolbarElement model, IDispatcherWapper dispatcherWapper, ILauncherToolbarTheme launcherToolbarTheme, IWindowManager windowManager, ILoggerFactory loggerFactory)
+        public LauncherToolbarNotifyAreaViewModel(LauncherToolbarElement model, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, IWindowManager windowManager, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             LauncherToolbarTheme = launcherToolbarTheme;
-            DispatcherWapper = dispatcherWapper;
+            DispatcherWrapper = dispatcherWrapper;
             WindowManager = windowManager;
 
-            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWapper, LoggerFactory);
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsVisible), new[] { nameof(MenuIsChecked), nameof(MenuIcon) });
         }
 
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         IWindowManager WindowManager { get; }
-        IDispatcherWapper DispatcherWapper { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
 
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         }
         public bool MenuHeaderHasAccessKey { get; } = false;
         public KeyGesture? MenuKeyGesture { get; }
-        public DependencyObject MenuIcon => DispatcherWapper.Get(() => LauncherToolbarTheme.GetToolbarImage(Model.DockScreen, Screen.AllScreens, IconBox.Small, MenuIsChecked));
+        public DependencyObject MenuIcon => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetToolbarImage(Model.DockScreen, Screen.AllScreens, IconBox.Small, MenuIsChecked));
         public bool MenuHasIcon { get; } = true;
         public bool MenuIsEnabled { get; } = true;
         public bool MenuIsChecked => Model.IsVisible;
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
                  var isVisible = Model.IsVisible;
-                 Model.ChangeVisible(!isVisible);
+                 Model.ChangeVisibleDelaySave(!isVisible);
                  if(!isVisible) {
                      Model.StartView();
                  } else {

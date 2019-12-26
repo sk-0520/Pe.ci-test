@@ -162,6 +162,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <returns>見つかったツールバー。見つからない場合は<see cref="Guid.Empty"/>を返す。</returns>
         Guid FindMaybeToolbarId(IEnumerable<LauncherToolbarsScreenData> rows)
         {
+            ThrowIfDisposed();
+
             var screenChecker = new ScreenChecker();
             var row = rows.FirstOrDefault(r => screenChecker.FindMaybe(DockScreen, r));
             if(row != null) {
@@ -173,6 +175,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         Guid GetLauncherToolbarId()
         {
+            ThrowIfDisposed();
+
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var screenToolbars = dao.SelectAllScreenToolbars().ToList();
@@ -183,12 +187,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         Guid CreateLauncherToolbar()
         {
+            ThrowIfDisposed();
+
             var toolbarId = IdFactory.CreateLauncherToolbarId();
             Logger.LogDebug("create toolbar: {0}", toolbarId);
 
+            var newFontId = IdFactory.CreateFontId();
+
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var srcFontId = appLauncherToolbarSettingEntityDao.SelectAppLauncherToolbarSettingFontId();
+
+                var fontsEntityDao = new FontsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                fontsEntityDao.InsertCopyFont(srcFontId, newFontId, DatabaseCommonStatus.CreateCurrentAccount());
+
                 var toolbarsDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                toolbarsDao.InsertNewToolbar(toolbarId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
+                toolbarsDao.InsertNewToolbar(toolbarId, newFontId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
 
                 var screenOperator = new ScreenOperator(LoggerFactory);
                 screenOperator.RegisterDatabase(DockScreen, commander, StatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
@@ -201,6 +215,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void ChangeLauncherGroup(LauncherGroupElement launcherGroup)
         {
+            ThrowIfDisposed();
+
             if(IsOpendAppMenu) {
                 IsOpendAppMenu = false;
             }
@@ -210,6 +226,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         void UpdateDesign()
         {
+            ThrowIfDisposed();
+
             ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconBox);
             IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconBox, IsIconOnly, TextWidth);
             DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
@@ -219,6 +237,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         void LoadLauncherToolbar()
         {
             Logger.LogInformation("toolbar id: {0}", LauncherToolbarId);
+            ThrowIfDisposed();
 
             LauncherToolbarsDisplayData displayData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
@@ -259,12 +278,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         void LoadLauncherItems()
         {
+            ThrowIfDisposed();
+
             var items = GetLauncherItems();
             LauncherItems.SetRange(items);
         }
 
-        public void ChangeToolbarPosition(AppDesktopToolbarPosition toolbarPosition)
+        public void ChangeToolbarPositionDelaySave(AppDesktopToolbarPosition toolbarPosition)
         {
+            ThrowIfDisposed();
+
             ToolbarPosition = toolbarPosition;
             UpdateDesign();
             IsOpendAppMenu = false;
@@ -275,8 +298,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeTopmost(bool isTopmost)
+        public void ChangeTopmostDelaySave(bool isTopmost)
         {
+            ThrowIfDisposed();
+
             IsTopmost = isTopmost;
             IsOpendAppMenu = false;
 
@@ -286,8 +311,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeAutoHide(bool isAutoHide)
+        public void ChangeAutoHideDelaySave(bool isAutoHide)
         {
+            ThrowIfDisposed();
+
             IsAutoHide = isAutoHide;
             IsOpendAppMenu = false;
 
@@ -297,8 +324,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeVisible(bool isVisible)
+        public void ChangeVisibleDelaySave(bool isVisible)
         {
+            ThrowIfDisposed();
+
             IsVisible = isVisible;
             IsOpendAppMenu = false;
 
@@ -316,6 +345,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         public void RegisterFile(string filePath, bool expandShortcut)
         {
             Debug.Assert(SelectedLauncherGroup != null);
+            ThrowIfDisposed();
 
             var file = new FileInfo(filePath);
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
@@ -346,6 +376,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void OpenExtendsExecuteView(Guid launcherItemId, string argument, Screen screen)
         {
+            ThrowIfDisposed();
+
             var launcherItem = LauncherItems.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(launcherItem == null) {
                 Logger.LogError("指定のランチャーアイテムは存在しない: {0}", launcherItemId);
@@ -424,7 +456,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public bool ReceiveViewUserClosing()
         {
-            ChangeVisible(false);
+            ChangeVisibleDelaySave(false);
             return true;
         }
         public bool ReceiveViewClosing()
