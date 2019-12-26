@@ -79,12 +79,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region IEnvironmentParameters
 
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
         /// <summary>
         /// アプリケーションの最上位ディレクトリ。
         /// </summary>
-        public DirectoryInfo RootDirectory { get; private set; }
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DirectoryInfo RootDirectory { get; }
 
         /// <summary>
         /// アプリケーションのディレクトリ。
@@ -115,12 +113,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo DocumentDirectory => CombineDirectory(RootDirectory, "doc");
 
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
         /// <summary>
         /// ユーザーデータ配置ディレクトリ。
         /// </summary>
-        public DirectoryInfo UserRoamingDirectory { get; private set; }
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DirectoryInfo UserRoamingDirectory { get; }
         /// <summary>
         /// バックアップディレクトリ。
         /// </summary>
@@ -130,12 +126,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo UserSettingDirectory => CombineDirectory(UserRoamingDirectory, "settings");
 
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
         /// <summary>
         /// ユーザー端末配置ディレクトリ。
         /// </summary>
-        public DirectoryInfo MachineDirectory { get; private set; }
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DirectoryInfo MachineDirectory { get; set; }
         /// <summary>
         /// アーカイブディレクトリ。
         /// </summary>
@@ -145,12 +139,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo MachineUpdateDirectory => CombineDirectory(MachineArchiveDirectory, "application");
 
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
         /// <summary>
         /// 一時ディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporaryDirectory { get; private set; }
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DirectoryInfo TemporaryDirectory { get; set; }
 
         /// <summary>
         /// 設定ファイル格納用一時ディレクトリ。

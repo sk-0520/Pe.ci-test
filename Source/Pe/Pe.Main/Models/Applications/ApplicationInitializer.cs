@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public bool IsFirstStartup { get; private set; }
 
+        public EnvironmentParameters? EnvironmentParameters { get; private set; }
+
         public ApplicationDiContainer? DiContainer { get; private set; }
         public ILoggerFactory? LoggerFactory { get; private set; }
         public WindowManager? WindowManager { get; private set; }
@@ -272,7 +274,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
-                .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
+                .Register<IEnvironmentParameters, EnvironmentParameters>(environmentParameters)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
                 /*
@@ -398,6 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             pack.accessor.Dispose();
 
             LoggerFactory = loggerFactory;
+            EnvironmentParameters = environmentParameters;
             DiContainer = SetupContainer(environmentParameters, factory, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
