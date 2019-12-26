@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
@@ -23,6 +24,17 @@ namespace ContentTypeTextNet.Pe.Main.Models
             MachineDirectory = GetDirectory(commandLine, CommandLineKeyMachineDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), projectName));
             TemporaryDirectory = GetDirectory(commandLine, CommandLineKeyTemporaryDirectory, Path.Combine(Path.GetTempPath(), projectName));
 
+            var configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.json").FullName, false);
+#if DEBUG
+            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.debug.json").FullName, true);
+#endif
+#if BETA
+            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.beta.json").FullName, true);
+#endif
+            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.user.json").FullName, true);
+            Configuration = configurationBuilder.Build();
+
         }
 
         #region property
@@ -33,6 +45,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public static EnvironmentParameters? Instance { get; private set; }
 
         CommandLine CommandLine { get; }
+
+        IConfigurationRoot Configuration { get; }
+
         #endregion
 
         #region function
@@ -63,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return path;
         }
 
-        private  DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
+        private DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
         {
             var path = CombinePath(directory.FullName, directoryNames);
             return new DirectoryInfo(path);
