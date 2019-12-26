@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string ForegroundColor { get; } = "ForegroundColor";
             public static string BackgroundColor { get; } = "BackgroundColor";
             public static string ContentKind { get; } = "ContentKind";
+            public static string LayoutKind { get; } = "LayoutKind";
 
 
             #endregion
@@ -223,6 +224,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             builder.AddValueParameter(Column.ContentKind, noteContentKindTansfer.ToString(contentKind));
             return ExecuteUpdate(builder) == 1;
         }
+
+        public bool UpdateLayoutKind(Guid noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var noteLayoutKindTansfer = new EnumTransfer<NoteLayoutKind>();
+
+            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            builder.AddKey(Column.NoteId, noteId);
+            builder.AddValueParameter(Column.LayoutKind, noteLayoutKindTansfer.ToString(layoutKind));
+            return ExecuteUpdate(builder) == 1;
+        }
+
 
         public bool UpdateVisible(Guid noteId, bool isVisible, IDatabaseCommonStatus databaseCommonStatus)
         {

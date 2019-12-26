@@ -87,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
+            PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
         }
@@ -241,7 +242,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        public NoteLayoutKind LayoutKind => Model.LayoutKind;
+        public NoteLayoutKind LayoutKind
+        {
+            get => Model.LayoutKind;
+            set
+            {
+                Flush();
+                var rect = value switch
+                {
+                    NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),
+                    NoteLayoutKind.Relative => CurrentWindowToRelativeLayout(),
+                    _ => throw new NotImplementedException()
+                };
+                var layout = new NoteLayoutData() {
+                    NoteId = NoteId,
+                    LayoutKind = value,
+                    X = rect.X,
+                    Y = rect.Y,
+                    Width = rect.Width,
+                    Height = rect.Height,
+                };
+                Model.ChangeLayoutKind(layout);
+            }
+        }
 
         public IDragAndDrop DragAndDrop { get; }
 
