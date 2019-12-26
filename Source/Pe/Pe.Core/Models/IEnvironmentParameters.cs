@@ -27,4 +27,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
+    public interface IConfiguration
+    {
+        #region property
+        #endregion
+    }
+
+
 }
