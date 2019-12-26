@@ -87,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
+            PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
         }
@@ -241,7 +242,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        public NoteLayoutKind LayoutKind => Model.LayoutKind;
+        public NoteLayoutKind LayoutKind
+        {
+            get => Model.LayoutKind;
+            set
+            {
+                Flush();
+                var rect = value switch
+                {
+                    NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),
+                    NoteLayoutKind.Relative => CurrentWindowToRelativeLayout(),
+                    _ => throw new NotImplementedException()
+                };
+                var layout = new NoteLayoutData() {
+                    NoteId = NoteId,
+                    LayoutKind = value,
+                    X = rect.X,
+                    Y = rect.Y,
+                    Width = rect.Width,
+                    Height = rect.Height,
+                };
+                Model.ChangeLayoutKind(layout);
+            }
+        }
 
         public IDragAndDrop DragAndDrop { get; }
 
@@ -471,9 +494,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             //TODO: 未検証ゾーン
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, DpiScaleOutputor);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             var layout = new NoteLayoutData() {
                 NoteId = NoteId,
                 LayoutKind = Model.LayoutKind,
@@ -504,9 +525,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     deviceCursorLocation.X - deviceScreenBounds.X,
                     deviceCursorLocation.Y - deviceScreenBounds.Y
                 );
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutputor);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = 200;
@@ -526,17 +545,85 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return (true, layout);
         }
 
+        Rect AbsoluteLayoutToWindow(NoteLayoutData layout)
+        {
+            return new Rect(
+                layout.X,
+                layout.Y,
+                layout.Width,
+                layout.Height
+            );
+        }
+        Rect RelativeLayoutToWindow(NoteLayoutData layout)
+        {
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+            var area = new Size(
+                logicalBounds.Width / 100,
+                logicalBounds.Height / 100
+            );
+            var center = new Point(
+                logicalBounds.Width / 2,
+                logicalBounds.Height / 2
+            );
+
+            var width = area.Width * layout.Width;
+            var height = area.Height * layout.Height;
+            return new Rect(
+                center.X + (area.Width / 2 * layout.X) - (width / 2),
+                center.Y - (area.Height / 2 * layout.Y) - (height / 2),
+                width,
+                height
+            );
+        }
+        Rect CurrentWindowToAbsoluteLayout()
+        {
+            var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
+            return new Rect(
+                WindowLeft - logicalScreenLocation.X,
+                WindowTop - logicalScreenLocation.Y,
+                WindowWidth,
+                NormalWindowHeight
+            );
+        }
+        Rect CurrentWindowToRelativeLayout()
+        {
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+            var area = new Size(
+                logicalBounds.Width / 100,
+                logicalBounds.Height / 100
+            );
+            var center = new Point(
+                logicalBounds.Width / 2,
+                logicalBounds.Height / 2
+            );
+
+            return new Rect(
+                (WindowLeft + ((WindowWidth - logicalBounds.X) / 2) - center.X) / (area.Width / 2),
+                -(WindowTop + ((NormalWindowHeight - logicalBounds.Y) / 2) - center.Y) / (area.Height / 2),
+                WindowWidth / area.Width,
+                NormalWindowHeight / area.Height
+            );
+        }
+
         void SetLayout(NoteLayoutData layout)
         {
-            WindowLeft = layout.X;
-            WindowTop = layout.Y;
-            WindowWidth = layout.Width;
-            NormalWindowHeight = layout.Height;
+            var rect = layout.LayoutKind switch
+            {
+                NoteLayoutKind.Absolute => AbsoluteLayoutToWindow(layout),
+                NoteLayoutKind.Relative => RelativeLayoutToWindow(layout),
+                _ => throw new NotImplementedException()
+            };
+            WindowLeft = rect.X;
+            WindowTop = rect.Y;
+            WindowWidth = rect.Width;
+            NormalWindowHeight = rect.Height;
+
             if(IsCompact) {
                 WindowHeight = 0;
             } else {
                 WindowHeight = NormalWindowHeight;
             }
+
         }
 
         void ApplyCaption()
@@ -614,33 +701,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             Logger.LogDebug("モデルへの位置・サイズ通知抑制: {0}, {1}", Model.NoteId, WindowAreaChangedTimer.Interval);
 
-            var viewAreaChangeTargets = ViewAreaChangeTarget.None;
-            var location = new Point();
-            var size = new Size();
-
-            if(Model.LayoutKind == NoteLayoutKind.Absolute) {
-                viewAreaChangeTargets |= ViewAreaChangeTarget.Location;
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-                location.X = WindowLeft - logicalScreenLocation.X;
-                location.Y = WindowTop - logicalScreenLocation.Y;
-            } else {
-                Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
-            }
-
+            var viewAreaChangeTargets = ViewAreaChangeTarget.Location;
+            var rect = Model.LayoutKind switch
+            {
+                NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),
+                NoteLayoutKind.Relative => CurrentWindowToRelativeLayout(),
+                _ => throw new NotImplementedException()
+            };
             // 最小化中はウィンドウサイズに対して何もしない
             if(!IsCompact) {
-                if(Model.LayoutKind == NoteLayoutKind.Absolute) {
-                    viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
-                    size.Width = WindowWidth;
-                    size.Height = WindowHeight;
-                } else {
-                    Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
-                }
+                viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
             }
 
-            Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, location, size);
+            Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, rect.Location, rect.Size);
         }
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);

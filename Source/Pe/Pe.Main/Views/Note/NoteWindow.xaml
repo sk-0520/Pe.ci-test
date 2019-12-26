@@ -387,6 +387,19 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
+                  <Label Grid.Column="0">layout</Label>
+                  <StackPanel Grid.Column="1" Orientation="Horizontal" IsEnabled="{Binding IsLink, Converter={StaticResource LogicalNotConverter}}">
+                    <RadioButton Content="abs" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteLayoutKind.Absolute}}" />
+                    <RadioButton Content="rel" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteLayoutKind.Relative}}"  />
+                  </StackPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="FromatLabel" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
                   <Label Grid.Column="0">link</Label>
                   <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button Command="{Binding LinkChangeCommand}">state</Button>

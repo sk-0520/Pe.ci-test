@@ -546,6 +546,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         }
 
+        public void ChangeLayoutKind(NoteLayoutData layoutData)
+        {
+            Flush();
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var notesEntityDao = new NotesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                notesEntityDao.UpdateLayoutKind(NoteId, layoutData.LayoutKind, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                if(noteLayoutsEntityDao.SelectExistsLayout(NoteId, layoutData.LayoutKind)) {
+                    noteLayoutsEntityDao.UpdateLayout(layoutData, DatabaseCommonStatus.CreateCurrentAccount());
+                } else {
+                    noteLayoutsEntityDao.InsertLayout(layoutData, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+
+                commander.Commit();
+            }
+            LayoutKind = layoutData.LayoutKind;
+        }
 
         public void ChangeVisibleDelaySave(bool isVisible)
         {
