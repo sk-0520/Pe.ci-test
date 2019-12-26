@@ -471,9 +471,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             //TODO: 未検証ゾーン
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             var logicalScreenSize = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Size, DpiScaleOutputor);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
             var layout = new NoteLayoutData() {
                 NoteId = NoteId,
                 LayoutKind = Model.LayoutKind,
@@ -504,9 +502,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     deviceCursorLocation.X - deviceScreenBounds.X,
                     deviceCursorLocation.Y - deviceScreenBounds.Y
                 );
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutputor);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
                     layout.Width = 200;
