@@ -522,37 +522,78 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             return (true, layout);
         }
 
+        Rect AbsoluteLayoutToWindow(NoteLayoutData layout)
+        {
+            return new Rect(
+                layout.X,
+                layout.Y,
+                layout.Width,
+                layout.Height
+            );
+        }
+        Rect RelativeLayoutToWindow(NoteLayoutData layout)
+        {
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+            var area = new Size(
+                logicalBounds.Width / 100,
+                logicalBounds.Height / 100
+            );
+            var center = new Point(
+                logicalBounds.Width / 2,
+                logicalBounds.Height / 2
+            );
+
+            var width = area.Width * layout.Width;
+            var height = area.Height * layout.Height;
+            return new Rect(
+                center.X + (area.Width / 2 * layout.X) - (width / 2),
+                center.Y - (area.Height / 2 * layout.Y) - (height / 2),
+                width,
+                height
+            );
+        }
+        Rect CurrentWindowToAbsoluteLayout()
+        {
+            var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
+            return new Rect(
+                WindowLeft - logicalScreenLocation.X,
+                WindowTop - logicalScreenLocation.Y,
+                WindowWidth,
+                NormalWindowHeight
+            );
+        }
+        Rect CurrentWindowToRelativeLayout()
+        {
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+            var area = new Size(
+                logicalBounds.Width / 100,
+                logicalBounds.Height / 100
+            );
+            var center = new Point(
+                logicalBounds.Width / 2,
+                logicalBounds.Height / 2
+            );
+
+            return new Rect(
+                (WindowLeft + ((WindowWidth - logicalBounds.X) / 2) - center.X) / (area.Width / 2),
+                -(WindowTop + ((NormalWindowHeight - logicalBounds.Y) / 2) - center.Y) / (area.Height / 2),
+                WindowWidth / area.Width,
+                NormalWindowHeight / area.Height
+            );
+        }
+
         void SetLayout(NoteLayoutData layout)
         {
-            switch(layout.LayoutKind) {
-                case NoteLayoutKind.Absolute:
-                    WindowLeft = layout.X;
-                    WindowTop = layout.Y;
-                    WindowWidth = layout.Width;
-                    NormalWindowHeight = layout.Height;
-                    break;
-
-                case NoteLayoutKind.Relative: {
-                        var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
-                        var area = new Size(
-                            logicalBounds.Width / 100,
-                            logicalBounds.Height / 100
-                        );
-                        var center = new Point(
-                            logicalBounds.Width / 2,
-                            logicalBounds.Height / 2
-                        );
-                        WindowWidth = area.Width * layout.Width;
-                        NormalWindowHeight = area.Height * layout.Height;
-
-                        WindowLeft = center.X + (area.Width / 2 * layout.X) - (WindowWidth / 2);
-                        WindowTop = center.Y - (area.Height / 2 * layout.Y) - (NormalWindowHeight / 2);
-                    }
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
+            var rect = layout.LayoutKind switch
+            {
+                NoteLayoutKind.Absolute => AbsoluteLayoutToWindow(layout),
+                NoteLayoutKind.Relative => RelativeLayoutToWindow(layout),
+                _ => throw new NotImplementedException()
+            };
+            WindowLeft = rect.X;
+            WindowTop = rect.Y;
+            WindowWidth = rect.Width;
+            NormalWindowHeight = rect.Height;
 
             if(IsCompact) {
                 WindowHeight = 0;
@@ -637,48 +678,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             Logger.LogDebug("モデルへの位置・サイズ通知抑制: {0}, {1}", Model.NoteId, WindowAreaChangedTimer.Interval);
 
-            var viewAreaChangeTargets = ViewAreaChangeTarget.None;
-            var location = new Point();
-            var size = new Size();
-
-            if(Model.LayoutKind == NoteLayoutKind.Absolute) {
-                viewAreaChangeTargets |= ViewAreaChangeTarget.Location;
-                var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
-                location.X = WindowLeft - logicalScreenLocation.X;
-                location.Y = WindowTop - logicalScreenLocation.Y;
-                // 最小化中はウィンドウサイズに対して何もしない
-                if(!IsCompact) {
-                    viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
-                    size.Width = WindowWidth;
-                    size.Height = WindowHeight;
-                }
-            } else {
-                Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
-                viewAreaChangeTargets |= ViewAreaChangeTarget.Location;
-                var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
-                var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
-                var area = new Size(
-                    logicalBounds.Width / 100,
-                    logicalBounds.Height / 100
-                );
-                var center = new Point(
-                    logicalBounds.Width / 2,
-                    logicalBounds.Height / 2
-                );
-
-                size.Width = WindowWidth / area.Width;
-                size.Height = NormalWindowHeight / area.Height;
-                location.X = (WindowLeft + (WindowWidth / 2) - center.X) / (area.Width / 2);
-                location.Y = -(WindowTop + (NormalWindowHeight / 2) - center.Y) / (area.Height / 2);
-
-                // 最小化中はウィンドウサイズに対して何もしない
-                if(!IsCompact) {
-                    viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
-                }
-
+            var viewAreaChangeTargets = ViewAreaChangeTarget.Location;
+            var rect = Model.LayoutKind switch
+            {
+                NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),
+                NoteLayoutKind.Relative => CurrentWindowToRelativeLayout(),
+                _ => throw new NotImplementedException()
+            };
+            // 最小化中はウィンドウサイズに対して何もしない
+            if(!IsCompact) {
+                viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
             }
 
-            Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, location, size);
+            Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, rect.Location, rect.Size);
         }
 
         IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
