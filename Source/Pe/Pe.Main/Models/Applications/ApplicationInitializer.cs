@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory);
 
-            return EnvironmentParameters.Initialize(new DirectoryInfo(rootDirectoryPath), commandLine);
+            return new EnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
         }
 
         ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, bool createDirectory, [CallerFilePath] string callerFilePath = "")
