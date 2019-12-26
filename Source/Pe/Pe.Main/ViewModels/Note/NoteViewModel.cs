@@ -524,15 +524,42 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void SetLayout(NoteLayoutData layout)
         {
-            WindowLeft = layout.X;
-            WindowTop = layout.Y;
-            WindowWidth = layout.Width;
-            NormalWindowHeight = layout.Height;
+            switch(layout.LayoutKind) {
+                case NoteLayoutKind.Absolute:
+                    WindowLeft = layout.X;
+                    WindowTop = layout.Y;
+                    WindowWidth = layout.Width;
+                    NormalWindowHeight = layout.Height;
+                    break;
+
+                case NoteLayoutKind.Relative: {
+                        var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+                        var area = new Size(
+                            logicalBounds.Width / 100,
+                            logicalBounds.Height / 100
+                        );
+                        var center = new Point(
+                            logicalBounds.Width / 2,
+                            logicalBounds.Height / 2
+                        );
+                        WindowWidth = area.Width * layout.Width;
+                        NormalWindowHeight = area.Height * layout.Height;
+
+                        WindowLeft = center.X + (area.Width / 2 * layout.X) - (WindowWidth / 2);
+                        WindowTop = center.Y - (area.Height / 2 * layout.Y) - (NormalWindowHeight / 2);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
             if(IsCompact) {
                 WindowHeight = 0;
             } else {
                 WindowHeight = NormalWindowHeight;
             }
+
         }
 
         void ApplyCaption()
@@ -616,24 +643,39 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             if(Model.LayoutKind == NoteLayoutKind.Absolute) {
                 viewAreaChangeTargets |= ViewAreaChangeTarget.Location;
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 location.X = WindowLeft - logicalScreenLocation.X;
                 location.Y = WindowTop - logicalScreenLocation.Y;
-            } else {
-                Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
-            }
-
-            // 最小化中はウィンドウサイズに対して何もしない
-            if(!IsCompact) {
-                if(Model.LayoutKind == NoteLayoutKind.Absolute) {
+                // 最小化中はウィンドウサイズに対して何もしない
+                if(!IsCompact) {
                     viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
                     size.Width = WindowWidth;
                     size.Height = WindowHeight;
-                } else {
-                    Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
                 }
+            } else {
+                Debug.Assert(Model.LayoutKind == NoteLayoutKind.Relative);
+                viewAreaChangeTargets |= ViewAreaChangeTarget.Location;
+                var logicalScreenLocation = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds.Location, DpiScaleOutputor);
+                var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
+                var area = new Size(
+                    logicalBounds.Width / 100,
+                    logicalBounds.Height / 100
+                );
+                var center = new Point(
+                    logicalBounds.Width / 2,
+                    logicalBounds.Height / 2
+                );
+
+                size.Width = WindowWidth / area.Width;
+                size.Height = NormalWindowHeight / area.Height;
+                location.X = (WindowLeft + (WindowWidth / 2) - center.X) / (area.Width / 2);
+                location.Y = -(WindowTop + (NormalWindowHeight / 2) - center.Y) / (area.Height / 2);
+
+                // 最小化中はウィンドウサイズに対して何もしない
+                if(!IsCompact) {
+                    viewAreaChangeTargets |= ViewAreaChangeTarget.Suze;
+                }
+
             }
 
             Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, location, size);
