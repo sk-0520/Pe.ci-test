@@ -31,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         DirectoryInfo UserRoamingDirectory { get; }
         DirectoryInfo UserSettingDirectory { get; }
 
+        IConfiguration Configuration { get; }
+
         #endregion
     }
 
@@ -59,8 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
             configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.beta.json").FullName, true);
 #endif
             configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.user.json").FullName, true);
-            Configuration = configurationBuilder.Build();
-
+            var configurationRoot = configurationBuilder.Build();
+            Configuration = new Configuration(configurationRoot);
         }
 
         #region property
@@ -71,8 +73,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public static EnvironmentParameters? Instance { get; private set; }
 
         CommandLine CommandLine { get; }
-
-        IConfigurationRoot Configuration { get; }
 
         #endregion
 
@@ -199,8 +199,66 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public FileInfo FileFile => CombineFile(UserSettingDirectory, "file.sqlite3");
 
+        internal Configuration Configuration { get; }
+        IConfiguration IEnvironmentParameters.Configuration => Configuration;
+
         #endregion
 
+    }
+
+    public interface IGeneralConfiguration
+    {
+        #region property
+
+        string MutexName { get; }
+
+        #endregion
+    }
+
+    internal abstract class ConfigurationBase
+    {
+        public ConfigurationBase(IConfigurationSection section)
+        {
+
+        }
+    }
+
+    internal class GeneralConfiguration : ConfigurationBase, IGeneralConfiguration
+    {
+        public GeneralConfiguration(IConfigurationSection section) : base(section)
+        {
+            MutexName = section.GetValue<string>("mutex-name");
+        }
+
+        #region IGeneralConfiguration
+
+        public string MutexName { get; }
+
+        #endregion
+    }
+
+    public interface IConfiguration
+    {
+        #region property
+
+        IGeneralConfiguration General { get; }
+
+        #endregion
+    }
+
+    internal class Configuration : IConfiguration
+    {
+        public Configuration(IConfigurationRoot configurationRoot)
+        {
+            General = new GeneralConfiguration(configurationRoot.GetSection("general"));
+        }
+
+        #region IConfiguration
+
+        public GeneralConfiguration General { get; }
+        IGeneralConfiguration IConfiguration.General => General;
+
+        #endregion
     }
 
 }
