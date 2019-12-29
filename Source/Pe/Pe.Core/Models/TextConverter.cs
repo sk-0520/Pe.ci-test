@@ -93,16 +93,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 3040..309F; Hiragana
         /// </summary>
-        HeadAndTail<char> HiraganaRange { get; } = HeadAndTail.Create('\u3040', '\u309F');
+        MinMax<char> HiraganaRange { get; } = MinMax.Create('\u3040', '\u309F');
         /// <summary>
         /// 30A0..30FF; Katakana
         /// </summary>
-        HeadAndTail<char> KatakanaRange { get; } = HeadAndTail.Create('\u30A0', '\u30FF');
+        MinMax<char> KatakanaRange { get; } = MinMax.Create('\u30A0', '\u30FF');
         /// <summary>
         /// 半角カナ
         /// </summary>
-        HeadAndTail<char> HalfwidthKatakanaRange { get; } = HeadAndTail.Create('\uFF60', '\uFF9D');
-        HeadAndTail<char> HalfwidthKatakanaDakutenRange { get; } = HeadAndTail.Create('ﾞ', 'ﾟ');
+        MinMax<char> HalfwidthKatakanaRange { get; } = MinMax.Create('\uFF60', '\uFF9D');
+        MinMax<char> HalfwidthKatakanaDakutenRange { get; } = MinMax.Create('ﾞ', 'ﾟ');
 
         protected virtual IDictionary<char, char> HalfwidthKatakanaDakutenMap
         {

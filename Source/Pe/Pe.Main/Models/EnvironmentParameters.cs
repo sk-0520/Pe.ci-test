@@ -203,13 +203,4 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     }
 
-    public interface IConfiguration
-    {
-        #region property
-
-
-
-        #endregion
-    }
-
 }
