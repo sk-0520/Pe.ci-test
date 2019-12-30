@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 設定格納DBファイル。
         /// </summary>
-        public FileInfo SettingFile => CombineFile(UserSettingDirectory, "setting.sqlite3");
+        public FileInfo MainFile => CombineFile(UserSettingDirectory, "setting.sqlite3");
         /// <summary>
         /// ファイル格納DBファイル。
         /// </summary>

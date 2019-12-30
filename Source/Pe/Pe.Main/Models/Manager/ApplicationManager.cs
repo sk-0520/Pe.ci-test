@@ -393,17 +393,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var directoryCleaner = new DirectoryCleaner(settingDirectory, 10, TimeSpan.FromSeconds(500), LoggerFactory);
             directoryCleaner.Clear(false);
 
-            var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
-            var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
+            var settings = new {
+                Main = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.MainFile.Name)),
+                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name)),
+            };
+            //var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
+            //var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
 
-            environmentParameters.SettingFile.CopyTo(settingDatabaseFile.FullName);
-            environmentParameters.FileFile.CopyTo(fileDatabaseFile.FullName);
+            environmentParameters.MainFile.CopyTo(settings.Main.FullName);
+            environmentParameters.FileFile.CopyTo(settings.File.FullName);
 
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
             var factory = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(settingDatabaseFile),
-                new ApplicationDatabaseFactory(fileDatabaseFile),
+                new ApplicationDatabaseFactory(settings.Main),
+                new ApplicationDatabaseFactory(settings.File),
                 new ApplicationDatabaseFactory()
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
@@ -430,15 +434,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     CloseViews();
                     DisposeElements();
 
-                    //TODO: 設定用DBを永続用DBと切り替え
+                    // 設定用DBを永続用DBと切り替え
                     var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
                     var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
                         .Select(i => i.StopConnection())
                         .ToList()
                     ;
 
-                    settingDatabaseFile.CopyTo(environmentParameters.SettingFile.FullName, true);
-                    fileDatabaseFile.CopyTo(environmentParameters.FileFile.FullName, true);
+                    settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
+                    settings.File.CopyTo(environmentParameters.FileFile.FullName, true);
 
                     foreach(var stopping in stoppings) {
                         stopping.Dispose();

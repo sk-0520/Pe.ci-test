@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         bool CheckFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
         {
-            var file = environmentParameters.SettingFile;
+            var file = environmentParameters.MainFile;
             file.Refresh();
             return !file.Exists;
         }
@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
         {
             return new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(environmentParameters.SettingFile),
+                new ApplicationDatabaseFactory(environmentParameters.MainFile),
                 new ApplicationDatabaseFactory(environmentParameters.FileFile),
                 new ApplicationDatabaseFactory()
             );
@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             // 初回セットアップに来ている場合既に存在するデータファイルは狂っている可能性があるので破棄する
             var deleteTartgetFiles = new[] {
-                environmentParameters.SettingFile,
+                environmentParameters.MainFile,
                 environmentParameters.FileFile,
             };
             foreach(var file in deleteTartgetFiles) {
