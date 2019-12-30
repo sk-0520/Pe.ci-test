@@ -8,35 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
-    public interface IEnvironmentParameters
-    {
-        #region property
-
-        DirectoryInfo ApplicationDirectory { get; }
-        DirectoryInfo AssemblyDirectory { get; }
-        DirectoryInfo DocumentDirectory { get; }
-        DirectoryInfo EtcDirectory { get; }
-        FileInfo FileFile { get; }
-        DirectoryInfo MachineArchiveDirectory { get; }
-        DirectoryInfo MachineDirectory { get; }
-        DirectoryInfo MachineUpdateDirectory { get; }
-        DirectoryInfo MainSqlDirectory { get; }
-        DirectoryInfo RootDirectory { get; }
-        FileInfo SettingFile { get; }
-        DirectoryInfo SettingTemporaryDirectory { get; }
-        DirectoryInfo SqlDirectory { get; }
-        DirectoryInfo SystemApplicationDirectory { get; }
-        DirectoryInfo TemporaryDirectory { get; }
-        DirectoryInfo UserBackupDirectory { get; }
-        DirectoryInfo UserRoamingDirectory { get; }
-        DirectoryInfo UserSettingDirectory { get; }
-
-        IConfiguration Configuration { get; }
-
-        #endregion
-    }
-
-    public class EnvironmentParameters : IEnvironmentParameters
+    public class EnvironmentParameters
     {
         public EnvironmentParameters(DirectoryInfo rootDirectory, CommandLine commandLine)
         {
@@ -73,52 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public static EnvironmentParameters? Instance { get; private set; }
 
         CommandLine CommandLine { get; }
-
-        #endregion
-
-        #region function
-
-        private static DirectoryInfo GetDirectory(CommandLine commandLine, string key, string defaultValue)
-        {
-            var commandLineKey = commandLine.GetKey(key);
-            if(commandLineKey != null) {
-                if(commandLine.Values.TryGetValue(commandLineKey, out var commandLineValue)) {
-                    var rawPath = commandLineValue.First;
-                    if(!string.IsNullOrWhiteSpace(rawPath)) {
-                        var path = Environment.ExpandEnvironmentVariables(rawPath.Trim());
-                        return new DirectoryInfo(path);
-                    }
-                }
-            }
-
-            return new DirectoryInfo(defaultValue);
-        }
-
-        private string CombinePath(string fullPath, string[] addPaths)
-        {
-            var paths = new List<string>(addPaths.Length + 1);
-            paths.Add(fullPath);
-            paths.AddRange(addPaths);
-
-            var path = Path.Combine(paths.ToArray());
-            return path;
-        }
-
-        private DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
-        {
-            var path = CombinePath(directory.FullName, directoryNames);
-            return new DirectoryInfo(path);
-        }
-
-        private FileInfo CombineFile(DirectoryInfo directory, params string[] directoryAndFileNames)
-        {
-            var path = CombinePath(directory.FullName, directoryAndFileNames);
-            return new FileInfo(path);
-        }
-
-        #endregion
-
-        #region IEnvironmentParameters
 
         /// <summary>
         /// アプリケーションの最上位ディレクトリ。
@@ -199,23 +125,56 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public FileInfo FileFile => CombineFile(UserSettingDirectory, "file.sqlite3");
 
-        internal Configuration Configuration { get; }
-        IConfiguration IEnvironmentParameters.Configuration => Configuration;
+        public Configuration Configuration { get; }
 
         #endregion
 
-    }
+        #region function
 
-    public interface IGeneralConfiguration
-    {
-        #region property
+        private static DirectoryInfo GetDirectory(CommandLine commandLine, string key, string defaultValue)
+        {
+            var commandLineKey = commandLine.GetKey(key);
+            if(commandLineKey != null) {
+                if(commandLine.Values.TryGetValue(commandLineKey, out var commandLineValue)) {
+                    var rawPath = commandLineValue.First;
+                    if(!string.IsNullOrWhiteSpace(rawPath)) {
+                        var path = Environment.ExpandEnvironmentVariables(rawPath.Trim());
+                        return new DirectoryInfo(path);
+                    }
+                }
+            }
 
-        string MutexName { get; }
+            return new DirectoryInfo(defaultValue);
+        }
+
+        private string CombinePath(string fullPath, string[] addPaths)
+        {
+            var paths = new List<string>(addPaths.Length + 1);
+            paths.Add(fullPath);
+            paths.AddRange(addPaths);
+
+            var path = Path.Combine(paths.ToArray());
+            return path;
+        }
+
+        private DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
+        {
+            var path = CombinePath(directory.FullName, directoryNames);
+            return new DirectoryInfo(path);
+        }
+
+        private FileInfo CombineFile(DirectoryInfo directory, params string[] directoryAndFileNames)
+        {
+            var path = CombinePath(directory.FullName, directoryAndFileNames);
+            return new FileInfo(path);
+        }
 
         #endregion
+
+
     }
 
-    internal abstract class ConfigurationBase
+    public abstract class ConfigurationBase
     {
         public ConfigurationBase(IConfigurationSection section)
         { }
@@ -228,11 +187,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    internal class GeneralConfiguration : ConfigurationBase, IGeneralConfiguration
+    public class GeneralConfiguration : ConfigurationBase
     {
         public GeneralConfiguration(IConfigurationSection section) : base(section)
         {
-            MutexName = GetString(section, "mutex-name");
+            MutexName = section.GetValue<string>("mutex-name");
         }
 
         #region IGeneralConfiguration
@@ -242,26 +201,17 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public interface IConfiguration
-    {
-        #region property
 
-        IGeneralConfiguration General { get; }
-
-        #endregion
-    }
-
-    internal class Configuration : IConfiguration
+    public class Configuration
     {
         public Configuration(IConfigurationRoot configurationRoot)
         {
             General = new GeneralConfiguration(configurationRoot.GetSection("general"));
         }
 
-        #region IConfiguration
+        #region property
 
         public GeneralConfiguration General { get; }
-        IGeneralConfiguration IConfiguration.General => General;
 
         #endregion
     }

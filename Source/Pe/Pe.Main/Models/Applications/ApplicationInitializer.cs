@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
-                .Register<IEnvironmentParameters, EnvironmentParameters>(environmentParameters)
+                .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
                 /*
