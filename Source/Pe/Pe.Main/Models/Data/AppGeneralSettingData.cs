@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public string Language { get; set; } = string.Empty;
 
-        public DirectoryInfo? UserBackupDirectory { get; set; }
+        public string UserBackupDirectoryPath { get; set; } = string.Empty;
 
         #endregion
     }

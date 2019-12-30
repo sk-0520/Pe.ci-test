@@ -1,7 +1,8 @@
 update
 	AppGeneralSetting
 set
-	Language              = @Language,
+	Language                = @Language,
+	UserBackupDirectoryPath = @UserBackupDirectoryPath,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

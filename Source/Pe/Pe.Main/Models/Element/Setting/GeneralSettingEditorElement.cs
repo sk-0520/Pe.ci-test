@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -103,6 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         public CultureInfo CultureInfo { get; set; } = CultureInfo.CurrentCulture;
+        public string UserBackupDirectoryPath { get; set; } = string.Empty;
+
 
         public bool IsRegisterStartup { get; set; }
         public bool DelayStartup { get; set; }
@@ -126,7 +130,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             CultureInfo = CultureInfo.GetCultureInfo(setting.Language);
 
-            // スタートアップ取得（なんやこれ・・・）
+            UserBackupDirectoryPath = setting.UserBackupDirectoryPath;
+
+            // スタートアップ取得
             var startupRegister = new StartupRegister(LoggerFactory);
             var startupParameterResult = startupRegister.GetStartupParameter();
             if(startupParameterResult.Success) {
@@ -146,6 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppGeneralSettingData() {
                 Language = CultureInfo.Name,
+                UserBackupDirectoryPath = UserBackupDirectoryPath,
             };
             appGeneralSettingEntityDao.UpdateSettingGeneralSetting(data, commandPack.CommonStatus);
 

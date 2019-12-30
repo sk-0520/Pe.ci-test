@@ -1,4 +1,5 @@
 select
-	AppGeneralSetting.Language
+	AppGeneralSetting.Language,
+	AppGeneralSetting.UserBackupDirectoryPath
 from
 	AppGeneralSetting
