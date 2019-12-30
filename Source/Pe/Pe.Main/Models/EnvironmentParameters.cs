@@ -218,16 +218,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
     internal abstract class ConfigurationBase
     {
         public ConfigurationBase(IConfigurationSection section)
-        {
+        { }
 
-        }
+        #region property
+
+        protected static string GetString(IConfigurationSection section, string key) => section.GetValue<string>(key);
+        protected static int GetInteger(IConfigurationSection section, string key) => section.GetValue<int>(key);
+
+        #endregion
     }
 
     internal class GeneralConfiguration : ConfigurationBase, IGeneralConfiguration
     {
         public GeneralConfiguration(IConfigurationSection section) : base(section)
         {
-            MutexName = section.GetValue<string>("mutex-name");
+            MutexName = GetString(section, "mutex-name");
         }
 
         #region IGeneralConfiguration
