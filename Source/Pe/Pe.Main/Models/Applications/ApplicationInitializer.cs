@@ -351,7 +351,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var commandLine = CreateCommandLine(e.Args);
             var environmentParameters = InitializeEnvironment(commandLine);
 
-            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, Constants.LoggingConfigFileName);
+            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
             var loggerFactory = CreateLoggerFactory(logginConfigFilePath, commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
             var logger = loggerFactory.CreateLogger(GetType());
 

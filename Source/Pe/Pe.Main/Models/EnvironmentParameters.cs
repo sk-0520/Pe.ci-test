@@ -15,26 +15,29 @@ namespace ContentTypeTextNet.Pe.Main.Models
             if(!commandLine.IsParsed) {
                 throw new ArgumentException(nameof(commandLine));
             }
-            CommandLine = commandLine;
+            //CommandLine = commandLine;
 
             RootDirectory = rootDirectory;
 
-            var projectName = "Pe2";
+            var configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder
+                .SetBasePath(EtcDirectory.FullName)
+                .AddJsonFile("appsettings.json", false)
+#if DEBUG
+                .AddJsonFile("appsettings.debug.json", true)
+#endif
+#if BETA
+                .AddJsonFile("appsettings.beta.json", true)
+#endif
+                .AddJsonFile("appsettings.user.json", true)
+            ;
+            var configurationRoot = configurationBuilder.Build();
+            Configuration = new Configuration(configurationRoot);
+
+            var projectName = Configuration.General.ProjectName;
             UserRoamingDirectory = GetDirectory(commandLine, CommandLineKeyUserDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), projectName));
             MachineDirectory = GetDirectory(commandLine, CommandLineKeyMachineDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), projectName));
             TemporaryDirectory = GetDirectory(commandLine, CommandLineKeyTemporaryDirectory, Path.Combine(Path.GetTempPath(), projectName));
-
-            var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.json").FullName, false);
-#if DEBUG
-            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.debug.json").FullName, true);
-#endif
-#if BETA
-            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.beta.json").FullName, true);
-#endif
-            configurationBuilder.AddJsonFile(CombineFile(EtcDirectory, "appsettings.user.json").FullName, true);
-            var configurationRoot = configurationBuilder.Build();
-            Configuration = new Configuration(configurationRoot);
         }
 
         #region property
@@ -42,9 +45,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public static string CommandLineKeyUserDirectory { get; } = "user-dir";
         public static string CommandLineKeyMachineDirectory { get; } = "machine-dir";
         public static string CommandLineKeyTemporaryDirectory { get; } = "temp-dir";
-        public static EnvironmentParameters? Instance { get; private set; }
 
-        CommandLine CommandLine { get; }
+        //CommandLine CommandLine { get; }
 
         /// <summary>
         /// アプリケーションの最上位ディレクトリ。
@@ -174,46 +176,5 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     }
 
-    public abstract class ConfigurationBase
-    {
-        public ConfigurationBase(IConfigurationSection section)
-        { }
-
-        #region property
-
-        protected static string GetString(IConfigurationSection section, string key) => section.GetValue<string>(key);
-        protected static int GetInteger(IConfigurationSection section, string key) => section.GetValue<int>(key);
-
-        #endregion
-    }
-
-    public class GeneralConfiguration : ConfigurationBase
-    {
-        public GeneralConfiguration(IConfigurationSection section) : base(section)
-        {
-            MutexName = section.GetValue<string>("mutex-name");
-        }
-
-        #region IGeneralConfiguration
-
-        public string MutexName { get; }
-
-        #endregion
-    }
-
-
-    public class Configuration
-    {
-        public Configuration(IConfigurationRoot configurationRoot)
-        {
-            General = new GeneralConfiguration(configurationRoot.GetSection("general"));
-        }
-
-        #region property
-
-        public GeneralConfiguration General { get; }
-
-        #endregion
-    }
 
 }
