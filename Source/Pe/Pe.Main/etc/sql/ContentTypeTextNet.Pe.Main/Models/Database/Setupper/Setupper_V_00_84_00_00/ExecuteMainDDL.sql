@@ -32,9 +32,7 @@ create table [AppGeneralSetting] (
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[Language] text not null /* 使用言語  */,
-	[IsEnabledUserBackup] boolean not null /* 明示的バックアップ実施  */,
-	[UserBackupDirectoryPath] text not null /* 明示的バックアップディレクトリ  */,
-	[UserBackupKind] text /* 明示的バックアップ方法  */
+	[UserBackupDirectoryPath] text not null /* 明示的バックアップディレクトリ  */
 )
 ;
 

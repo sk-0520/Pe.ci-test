@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -13,6 +14,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public string Language { get; set; } = string.Empty;
+
+        public DirectoryInfo? UserBackupDirectory { get; set; }
 
         #endregion
     }

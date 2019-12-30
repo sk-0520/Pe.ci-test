@@ -227,6 +227,7 @@ insert into
 	AppGeneralSetting
 	(
 		Language,
+		UserBackupDirectoryPath,
 
 		CreatedTimestamp,
 		CreatedAccount,
@@ -240,7 +241,8 @@ insert into
 	)
 	values
 	(
-/* Language              */ '',
+/* Language                */ '',
+/* UserBackupDirectoryPath */ '',
 
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,

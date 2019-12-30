@@ -49,9 +49,7 @@ ___
 |    | o  |    | 更新プログラムバージョン       | UpdatedProgramVersion   | text         | System.Version  |              |          |
 |    | o  |    | 更新回数                       | UpdatedCount            | integer      | System.Int64    |              | 0始まり  |
 |    | o  |    | 使用言語                       | Language                | text         | System.String   |              |          |
-|    | o  |    | 明示的バックアップ実施         | IsEnabledUserBackup     | boolean      | System.Boolean  |              |          |
 |    | o  |    | 明示的バックアップディレクトリ | UserBackupDirectoryPath | text         | System.String   |              |          |
-|    |    |    | 明示的バックアップ方法         | UserBackupKind          | text         | System.String   |              |          |
 
 ### index
 
