@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -10,56 +11,13 @@ using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
-    public enum PlatformThemeColor
-    {
-        Dark,
-        Light,
-    }
-
-    public interface IPlatformThemeLoader
-    {
-        #region define
-
-        event EventHandler? Changed;
-
-        #endregion
-
-        #region property
-
-        /// <summary>
-        /// Windowsモードの色。
-        /// <para>タスクバーとかの色っぽい。</para>
-        /// </summary>
-        PlatformThemeColor WindowsColor { get; }
-        /// <summary>
-        /// アプリモードの色。
-        /// <para>背景色っぽい。</para>
-        /// </summary>
-        PlatformThemeColor ApplicationColor { get; }
-        /// <summary>
-        /// アクセントカラー！
-        /// </summary>
-        Color AccentColor { get; }
-
-        /// <summary>
-        /// アクセントカラーをスタートメニューとかに使用するか。
-        /// </summary>
-        bool ColorPrevalence { get; }
-        /// <summary>
-        /// 透明効果。
-        /// </summary>
-        bool EnableTransparency { get; }
-
-        #endregion
-    }
-
     public class PlatformThemeLoader : DisposerBase, IPlatformThemeLoader
     {
         public PlatformThemeLoader(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
 
-            LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(300), loggerFactory);
+            LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(500), loggerFactory);
 
             ApplyFromRegistry();
             ApplyAccentColor();
@@ -171,29 +129,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         #endregion
     }
 
-    public static class IPlatformThemeLoaderExtensions
-    {
-        #region function
-
-        public static Color GetWindowColor(this IPlatformThemeLoader @this)
-        {
-            if(@this.ColorPrevalence) {
-                // 透明度どうしよう
-                return @this.AccentColor;
-            }
-
-            switch(@this.WindowsColor) {
-                case PlatformThemeColor.Dark:
-                    return Color.FromArgb(0xff, 0x11, 0x11, 0x11);
-
-                case PlatformThemeColor.Light:
-                    return Color.FromArgb(0xff, 0xf0, 0xf0, 0xf0);
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        #endregion
-    }
 }
