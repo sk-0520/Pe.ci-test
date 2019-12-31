@@ -117,12 +117,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public sealed class AppGeneralSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppGeneralSettingEditorElement>
     {
-        public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IReadOnlyCollection<string> cultureNames, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            //TODO: リソース制限が必要
-            var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
-            CultureInfoItems = new ObservableCollection<CultureInfo>(cultures);
+            CultureInfoItems = new ObservableCollection<CultureInfo>();
+            var cultures = cultureNames.Select(i => CultureInfo.GetCultureInfo(i));
+            CultureInfoItems.Add(CultureInfo.InvariantCulture);
+            CultureInfoItems.AddRange(cultures);
         }
 
         #region property

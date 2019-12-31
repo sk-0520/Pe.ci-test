@@ -50,6 +50,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        public string SelectLanguage()
+        {
+            var statement = LoadStatement();
+            return Commander.QueryFirst<string>(statement);
+        }
         public string SelectUserBackupDirectoryPath()
         {
             var statement = LoadStatement();

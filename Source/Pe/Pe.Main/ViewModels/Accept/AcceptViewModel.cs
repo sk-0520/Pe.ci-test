@@ -1,19 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models.Element.Accept;
+using ContentTypeTextNet.Pe.Main.Views.Accept;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Services.Dialogs;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
-    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService
+    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService, IViewLifecycleReceiver
     {
         public AcceptViewModel(AcceptElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -48,6 +53,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         #region function
         #endregion
+
+        #region IViewLifecycleReceiver
+
+        public void ReceiveViewInitialized(Window window)
+        {
+            var view = (AcceptWindow)window;
+            //view.documentAccept.do
+            using(var stream = Model.GetAcceptDocumentXamlStream()) {
+                view.documentAccept.Document = (FlowDocument)XamlReader.Load(stream);
+            }
+        }
+
+        public void ReceiveViewLoaded(Window window)
+        { }
+
+        public void ReceiveViewUserClosing(CancelEventArgs e)
+        { }
+
+
+        public void ReceiveViewClosing(CancelEventArgs e)
+        { }
+
+        public void ReceiveViewClosed()
+        { }
+
+        #endregion
+
 
         #region IDialogService
 

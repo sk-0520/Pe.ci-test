@@ -29,6 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Resources\File\Accept\AcceptDocument.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
@@ -45,6 +49,12 @@
   <ItemGroup>
     <Folder Include="doc\help\" />
     <Folder Include="doc\license\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\File\Accept\AcceptDocument.xaml">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

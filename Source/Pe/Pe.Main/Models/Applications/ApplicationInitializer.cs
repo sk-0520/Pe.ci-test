@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,6 +12,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
@@ -136,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, loggerFactory)) {
-                    var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
+                    using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(WindowKind.Accept, view));
                     view.ShowDialog();
@@ -273,6 +275,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
                 .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
+                .Register<Configuration, Configuration>(environmentParameters.Configuration)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
                 /*
@@ -343,6 +346,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return manager;
         }
 
+
         public bool Initialize(App app, StartupEventArgs e)
         {
             InitializeEnvironmentVariable();
@@ -366,7 +370,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 logger.LogInformation("初回実行");
                 if(!skipAccept) {
                     // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                    var dialogResult = ShowAcceptView(new DiContainer(), loggerFactory);
+                    var dialogResult = ShowAcceptView(new DiContainer(false), loggerFactory);
                     if(!dialogResult) {
                         // 初回の使用許諾を得られなかったのでばいちゃ
                         logger.LogInformation("使用許諾得られず");
@@ -390,10 +394,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
-            //TODO: バージョンアップに伴う使用許諾
-            if(!IsFirstStartup && !skipAccept) {
-            }
-
             var factory = pack.factory;
             pack.accessor.Dispose();
 
@@ -405,6 +405,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             StatusManager = SetupStatusManager(DiContainer);
             ClipboardManager = SetupClipboardManager(DiContainer);
 
+
+            var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Current);
+            cultureServiceChanger.ChangeCulture();
+
+            //バージョンアップに伴う使用許諾
+            if(!IsFirstStartup && !skipAccept) {
+                var dialogResult = ShowAcceptView(DiContainer, loggerFactory);
+                if(!dialogResult) {
+                    // バージョンアップに伴う使用許諾を得られなかったのでおわる
+                    logger.LogInformation("バージョンアップ後 使用許諾得られず");
+                    return false;
+                }
+            }
 
             return true;
         }
