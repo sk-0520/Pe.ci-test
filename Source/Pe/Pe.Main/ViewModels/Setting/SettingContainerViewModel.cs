@@ -8,6 +8,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public SettingContainerViewModel(SettingContainerElement model, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public SettingContainerViewModel(SettingContainerElement model, Configuration configuration , ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
             };
 
-            GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, DispatcherWrapper, LoggerFactory);
+            GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, configuration, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
             LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, DispatcherWrapper, LoggerFactory);

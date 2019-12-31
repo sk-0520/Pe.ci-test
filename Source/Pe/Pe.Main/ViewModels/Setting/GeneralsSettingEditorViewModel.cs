@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
 
@@ -10,11 +11,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public class GeneralsSettingEditorViewModel : SettingEditorViewModelBase<GeneralsSettingEditorElement>
     {
-        public GeneralsSettingEditorViewModel(GeneralsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public GeneralsSettingEditorViewModel(GeneralsSettingEditorElement model, Configuration configuration, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             AppExecuteSettingEditor = new AppExecuteSettingEditorViewModel(Model.AppExecuteSettingEditor, DispatcherWrapper, LoggerFactory);
-            AppGeneralSettingEditor = new AppGeneralSettingEditorViewModel(Model.AppGeneralSettingEditor, DispatcherWrapper, LoggerFactory);
+            AppGeneralSettingEditor = new AppGeneralSettingEditorViewModel(Model.AppGeneralSettingEditor, configuration.General.SupportCultures, DispatcherWrapper, LoggerFactory);
             AppUpdateSettingEditor = new AppUpdateSettingEditorViewModel(Model.AppUpdateSettingEditor, DispatcherWrapper, LoggerFactory);
             AppCommandSettingEditor = new AppCommandSettingEditorViewModel(Model.AppCommandSettingEditor, DispatcherWrapper, LoggerFactory);
             AppNoteSettingEditor = new AppNoteSettingEditorViewModel(Model.AppNoteSettingEditor, DispatcherWrapper, LoggerFactory);

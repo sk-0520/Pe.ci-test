@@ -275,6 +275,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
                 .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
+                .Register<Configuration, Configuration>(environmentParameters.Configuration)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
                 /*
@@ -345,23 +346,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return manager;
         }
 
-        string LoadLanguageName(IDiContainer diContainer)
-        {
-            var barrier = diContainer.Get<IMainDatabaseBarrier>();
-            string lang;
-            using(var commander = barrier.WaitRead()) {
-                var dao = diContainer.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
-                lang = dao.SelectLanguage();
-            }
-
-            // もうちょっと柔軟性あってもいいと思うよ
-            var environmentParameters = diContainer.Get<EnvironmentParameters>();
-            var supportCultures = environmentParameters.Configuration.General.SupportCultures;
-            return supportCultures
-                .FirstOrDefault(i => i.Equals(lang, StringComparison.OrdinalIgnoreCase))
-                ?? string.Empty
-            ;
-        }
 
         public bool Initialize(App app, StartupEventArgs e)
         {
@@ -421,12 +405,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             StatusManager = SetupStatusManager(DiContainer);
             ClipboardManager = SetupClipboardManager(DiContainer);
 
-            var languageName = LoadLanguageName(DiContainer);
-            if(string.IsNullOrWhiteSpace(languageName)) {
-                CultureService.Current.ChangeAutoCulture();
-            } else {
-                CultureService.Current.ChangeCulture(languageName);
-            }
+
+            var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Current);
+            cultureServiceChanger.ChangeCulture();
 
             //バージョンアップに伴う使用許諾
             if(!IsFirstStartup && !skipAccept) {
