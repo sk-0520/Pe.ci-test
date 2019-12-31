@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -53,6 +54,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogTrace("[MSG WND] hwnd = {0}, msg = {1}({2}), wParam = {3}, lParam = {4}", hwnd, msg, (WM)msg, wParam, lParam);
             return IntPtr.Zero;
+        }
+
+        private void InitializeSystem()
+        {
+            SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+            SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+            SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
+        }
+
+        private void UninitializeSystem()
+        {
+            SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
+            SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+            SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
         }
 
         private void InitializeHook()
@@ -199,6 +214,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);
+        }
+
+        void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        {
+            Logger.LogInformation("セッション終了検知: Reason = {0}, Cancel = {1}", e.Reason, e.Cancel);
+
+            CloseViews();
+            DisposeElements();
+            BackupSettingsDefault();
+        }
+
+
+        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            Logger.LogInformation("セッション変更検知: Reason = {0}", e.Reason);
+
+            if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
+                ResetElements();
+                if(e.Reason == SessionSwitchReason.SessionUnlock) {
+                    // アップデート処理とかとか
+                }
+            } else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
+                BackupSettingsDefault();
+            }
+        }
+
+        void SystemEvents_DisplaySettingsChanging(object? sender, EventArgs e)
+        {
+            Logger.LogInformation("ディスプレイ変更検知");
+
+            ResetElements();
         }
 
 

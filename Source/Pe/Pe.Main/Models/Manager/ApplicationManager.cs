@@ -293,6 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             DebugExecuteBefore();
 #endif
+            InitializeSystem();
             InitializeHook();
 
             StartHook();
@@ -528,6 +529,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             );
         }
 
+        private void ResetElements()
+        {
+            CloseViews();
+            DisposeElements();
+
+            ExecuteElements();
+        }
 
         #endregion
 
