@@ -86,9 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         public ICollectionView CreateView()
         {
-            return new CollectionViewSource() {
-                Source = EditableViewModels
-            }.View;
+            return new ListCollectionView(EditableViewModels);
         }
 
         public int IndexOf(TViewModel viewModel) => EditableViewModels.IndexOf(viewModel);
