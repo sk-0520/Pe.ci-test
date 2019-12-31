@@ -29,6 +29,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Note;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -569,8 +570,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             var width = area.Width * layout.Width;
             var height = area.Height * layout.Height;
             return new Rect(
-                center.X + (area.Width / 2 * layout.X) - (width / 2),
-                center.Y - (area.Height / 2 * layout.Y) - (height / 2),
+                logicalBounds.X + center.X + (area.Width / 2 * layout.X) - (width / 2),
+                logicalBounds.Y + center.Y - (area.Height / 2 * layout.Y) - (height / 2),
                 width,
                 height
             );
@@ -598,8 +599,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             );
 
             return new Rect(
-                (WindowLeft + ((WindowWidth - logicalBounds.X) / 2) - center.X) / (area.Width / 2),
-                -(WindowTop + ((NormalWindowHeight - logicalBounds.Y) / 2) - center.Y) / (area.Height / 2),
+                ((WindowLeft - logicalBounds.X) + (WindowWidth / 2) - center.X) / (area.Width / 2),
+                -((WindowTop - logicalBounds.Y) + (NormalWindowHeight / 2) - center.Y) / (area.Height / 2),
                 WindowWidth / area.Width,
                 NormalWindowHeight / area.Height
             );
@@ -699,9 +700,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void DelayNotifyWindowAreaChanged()
         {
-            Logger.LogDebug("モデルへの位置・サイズ通知抑制: {0}, {1}", Model.NoteId, WindowAreaChangedTimer.Interval);
+            Logger.LogDebug("モデルへの位置・サイズ通知: {0}", Model.NoteId);
 
             var viewAreaChangeTargets = ViewAreaChangeTarget.Location;
+
+            var nowScreen = DpiScaleOutputor.GetOwnerScreen();
+            if(Model.DockScreen.DeviceName != nowScreen.DeviceName) {
+                Logger.LogDebug("所属スクリーン変更: {0} -> {1}", Model.DockScreen.DeviceName, nowScreen.DeviceName);
+                Model.ChangeDockScreen(nowScreen);
+                viewAreaChangeTargets |= ViewAreaChangeTarget.Screen;
+            }
+
             var rect = Model.LayoutKind switch
             {
                 NoteLayoutKind.Absolute => CurrentWindowToAbsoluteLayout(),

@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         None = 0,
         Location = 0b0000_0001,
         Suze = 0b0000_0010,
+        Screen = 0b0000_0100,
     }
 
     public class NoteData : DataBase

@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string BackgroundColor { get; } = "BackgroundColor";
             public static string ContentKind { get; } = "ContentKind";
             public static string LayoutKind { get; } = "LayoutKind";
-
+            public static string ScreenName { get; } = "ScreenName";
 
             #endregion
         }
@@ -146,6 +146,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var param = ConvertFromData(noteData, commonStatus);
             return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateScreen(Guid noteId, string screenName, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.NoteId] = noteId;
+            parameter[Column.ScreenName] = screenName;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateCompact(Guid noteId, bool isCompact, IDatabaseCommonStatus databaseCommonStatus)
