@@ -25,13 +25,16 @@ namespace ContentTypeTextNet.Pe.Main.Models
             ProjectName = section.GetValue<string>("project-name");
             MutexName = section.GetValue<string>("mutex-name");
             LoggingConfigFileName = section.GetValue<string>("log-conf-file-name");
+            SupportCultures = section.GetSection("support-cultures").Get<string[]>();
         }
 
-        #region IGeneralConfiguration
+        #region property
 
         public string ProjectName { get; }
         public string MutexName { get; }
         public string LoggingConfigFileName { get; }
+
+        public IReadOnlyList<string> SupportCultures { get; }
 
         #endregion
     }
