@@ -366,7 +366,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 logger.LogInformation("初回実行");
                 if(!skipAccept) {
                     // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                    var dialogResult = ShowAcceptView(new DiContainer(), loggerFactory);
+                    var dialogResult = ShowAcceptView(new DiContainer(false), loggerFactory);
                     if(!dialogResult) {
                         // 初回の使用許諾を得られなかったのでばいちゃ
                         logger.LogInformation("使用許諾得られず");

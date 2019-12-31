@@ -8,10 +8,13 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
-  Title="AcceptWindow"
+  ResizeMode="CanResizeWithGrip"
   Height="450"
   Width="800"
+
+  Title="{Binding Resources.String_Accept_Caption, Source={x:Static app_main:CultureService.Current}}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -22,9 +25,22 @@
     </app_core_view:RequestTrigger>
   </i:Interaction.Triggers>
   <Grid>
-    <StackPanel>
-      <Button Command="{Binding AffirmativeCommand}">OK</Button>
-      <Button Command="{Binding NegativeCommand}">Cancel</Button>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <RichTextBox Grid.Row="0" />
+
+    <StackPanel Grid.Row="1">
+      <Button Command="{Binding AffirmativeCommand}" Content="{Binding Resources.String_Common_Command_Ok, Source={x:Static app_main:CultureService.Current}}" />
+      <Button Command="{Binding NegativeCommand}" Content="{Binding Resources.String_Common_Command_Cancel, Source={x:Static app_main:CultureService.Current}}" />
     </StackPanel>
+
+    <StatusBar Grid.Row="2">
+      <ResizeGrip HorizontalContentAlignment="Right" />
+    </StatusBar>
+
   </Grid>
 </Window>

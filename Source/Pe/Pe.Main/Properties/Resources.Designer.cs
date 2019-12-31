@@ -120,6 +120,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   使用許諾  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Accept_Caption {
+            get {
+                return ResourceManager.GetString("String_Accept_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キャンセル(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Command_Cancel {
+            get {
+                return ResourceManager.GetString("String_Common_Command_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OK に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Command_Ok {
+            get {
+                return ResourceManager.GetString("String_Common_Command_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動設定グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherGroup_ImportItem_Name {

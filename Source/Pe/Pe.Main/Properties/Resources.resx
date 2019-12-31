@@ -127,6 +127,15 @@
   <data name="File_Highlighting_Tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\highlighting\tag.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="String_Accept_Caption" xml:space="preserve">
+    <value>使用許諾 </value>
+  </data>
+  <data name="String_Common_Command_Cancel" xml:space="preserve">
+    <value>キャンセル(_C)</value>
+  </data>
+  <data name="String_Common_Command_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="String_LauncherGroup_ImportItem_Name" xml:space="preserve">
     <value>自動設定グループ</value>
   </data>
