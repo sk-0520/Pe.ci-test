@@ -390,10 +390,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
-            //TODO: バージョンアップに伴う使用許諾
-            if(!IsFirstStartup && !skipAccept) {
-            }
-
             var factory = pack.factory;
             pack.accessor.Dispose();
 
@@ -405,6 +401,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             StatusManager = SetupStatusManager(DiContainer);
             ClipboardManager = SetupClipboardManager(DiContainer);
 
+            //バージョンアップに伴う使用許諾
+            if(!IsFirstStartup && !skipAccept) {
+                var dialogResult = ShowAcceptView(DiContainer, loggerFactory);
+                if(!dialogResult) {
+                    // バージョンアップに伴う使用許諾を得られなかったのでおわる
+                    logger.LogInformation("バージョンアップ後 使用許諾得られず");
+                    return false;
+                }
+            }
 
             return true;
         }
