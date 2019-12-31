@@ -9,6 +9,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Theme
@@ -16,21 +17,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
     internal abstract class ThemeBase
     {
 
-        public ThemeBase(IDispatcherWrapper dispatcherWrapper, ILogger logger)
+        public ThemeBase(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILogger logger)
         {
+            PlatformThemeLoader = platformThemeLoader;
             DispatcherWrapper = dispatcherWrapper;
             Logger = logger;
+
+            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
         }
 
-        public ThemeBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeBase(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
+            PlatformThemeLoader = platformThemeLoader;
             DispatcherWrapper = dispatcherWrapper;
             Logger = loggerFactory.CreateLogger(GetType());
+
+            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
         }
 
         #region property
 
         protected ILogger Logger { get; }
+        protected IPlatformThemeLoader PlatformThemeLoader { get; }
         /// <summary>
         /// <see cref="DependencyObject"/>作成用のディスパッチャー。
         /// <para>だけどまず呼び出し側で UI スレッドであることを保証するので内部的にどうこうする場合にしゃあなし使うのであって原則使用しない。</para>
@@ -89,7 +97,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
 
+        protected virtual void ChangedPlatformTheme()
+        { }
 
         #endregion
+
+        private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
+        {
+            DispatcherWrapper.Invoke(ChangedPlatformTheme);
+        }
     }
 }

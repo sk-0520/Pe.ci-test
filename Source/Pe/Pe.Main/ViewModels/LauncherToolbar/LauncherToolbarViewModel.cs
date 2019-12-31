@@ -30,6 +30,8 @@ using System.Windows.Controls.Primitives;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using System.Windows.Media;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -41,9 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformThemeLoader platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            PlatformThemeLoader = platformThemeLoader;
             DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
             LauncherGroupTheme = launcherGroupTheme;
@@ -85,6 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendItemMenu), nameof(IsOpendItemMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
+
+            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed; ;
         }
 
         #region property
@@ -92,6 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
+        IPlatformThemeLoader PlatformThemeLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
@@ -112,6 +118,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public bool IsTopmost
         {
             get => Model.IsTopmost;
+        }
+
+        public Brush ToolbarBackground
+        {
+            get => LauncherToolbarTheme.GetToolbarBackground(ToolbarPosition, ViewState.Active, IconBox, IsIconOnly, TextWidth);
         }
 
         public LauncherToolbarIconDirection IconDirection => Model.IconDirection;
@@ -451,6 +462,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    PlatformThemeLoader.Changed -= PlatformThemeLoader_Changed;
                     LauncherItemCollection.Dispose();
                     LauncherGroupCollection.Dispose();
                 }
@@ -465,5 +477,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
+
+        private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
+        {
+            DispatcherWrapper.Invoke(() => {
+                var themePropertyNames = new[] {
+                    nameof(ToolbarBackground),
+                };
+                foreach(var themePropertyName in themePropertyNames) {
+                    RaisePropertyChanged(themePropertyName);
+                }
+            });
+        }
+
     }
 }

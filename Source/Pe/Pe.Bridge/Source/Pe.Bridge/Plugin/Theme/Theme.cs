@@ -14,6 +14,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         #endregion
     }
 
+    public enum ViewState
+    {
+        Active,
+        Inactive,
+        Disable
+    }
+
     public interface ITheme : IPlugin
     {
         #region function

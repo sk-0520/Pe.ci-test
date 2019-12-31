@@ -61,6 +61,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     }
                     break;
 
+                case (int)WM.WM_SETTINGCHANGE:
+                    PlatformThemeLoader.WndProc_WM_SETTINGCHANGE(hwnd, msg, wParam, lParam, ref handled);
+                    break;
+
+                case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
+                    PlatformThemeLoader.WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(hwnd, msg, wParam, lParam, ref handled);
+                    break;
             }
 
             return IntPtr.Zero;

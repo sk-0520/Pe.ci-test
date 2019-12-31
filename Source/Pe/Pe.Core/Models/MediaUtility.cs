@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                   (color.A << 24)
                 | (color.R << 16)
                 | (color.G << 8)
-                | (color.B << 0)
+                | (color.B)
             );
         }
         /// <summary>
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 (byte)(rawColor >> 24),
                 (byte)(rawColor >> 16),
                 (byte)(rawColor >> 8),
-                (byte)(rawColor >> 0)
+                (byte)(rawColor)
             );
         }
         /// <summary>

@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
 using Microsoft.Extensions.Logging;
@@ -20,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
-        public LauncherToolbarTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWrapper, loggerFactory)
+        public LauncherToolbarTheme(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
@@ -180,6 +181,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         public ControlTemplate GetLauncherItemNormalButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemNormalButton"];
         public ControlTemplate GetLauncherItemToggleButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemToggleButton"];
+
+        public Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        {
+            var color = PlatformThemeLoader.GetWindowColor();
+            return new SolidColorBrush(color);
+        }
 
         #endregion
     }

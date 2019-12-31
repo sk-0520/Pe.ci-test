@@ -40,6 +40,7 @@ using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -50,6 +51,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.LoggerFactory));
             Logger = LoggerFactory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
+            PlatformThemeLoader = new PlatformThemeLoader(LoggerFactory);
+
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer!.Make<OrderManagerImpl>(); //initializer.OrderManager;
@@ -71,6 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         bool IsFirstStartup { get; }
         ILogger Logger { get; set; }
+        PlatformThemeLoader PlatformThemeLoader { get; }
 
         WindowManager WindowManager { get; set; }
         OrderManagerImpl OrderManager { get; set; }
@@ -129,6 +133,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //if(!initializer.Initialize(e.Args)) {
             //    return false;
             //}
+            ApplicationDiContainer.Register<IPlatformThemeLoader, PlatformThemeLoader>(PlatformThemeLoader);
+
             MakeMessageWindow();
             RegisterManagers();
 
