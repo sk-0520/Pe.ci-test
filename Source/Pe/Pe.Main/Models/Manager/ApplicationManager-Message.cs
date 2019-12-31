@@ -53,6 +53,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private IntPtr MessageWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             Logger.LogTrace("[MSG WND] hwnd = {0}, msg = {1}({2}), wParam = {3}, lParam = {4}", hwnd, msg, (WM)msg, wParam, lParam);
+
+            switch(msg) {
+                case (int)WM.WM_DEVICECHANGE: {
+                        var deviceChangedData = new DeviceChangedData(hwnd, msg, wParam, lParam);
+                        CatchDeviceChanged(deviceChangedData);
+                    }
+                    break;
+
+            }
+
             return IntPtr.Zero;
         }
 
@@ -99,14 +109,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MouseHooker.Dispose();
         }
 
-        void StartHook() {
+        void StartHook()
+        {
             if(KeyActionChecker.HasJob) {
                 KeyboradHooker.Register();
             }
             //MouseHooker.Register();
         }
 
-        void StopHook() {
+        void StopHook()
+        {
             KeyboradHooker.Unregister();
             MouseHooker.Unregister();
         }
@@ -199,6 +211,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return jobs.OfType<KeyActionPressedJobBase>().Any(i => i.ConveySystem);
         }
 
+        void CatchDeviceChanged(DeviceChangedData deviceChangedData)
+        {
+            Logger.LogInformation("デバイス状態検知: {0}", deviceChangedData.DBT);
+
+            // デバイス状態が変更されたか
+            if(deviceChangedData.DBT == DBT.DBT_DEVNODES_CHANGED /*&& Initialized && !IsPause*/) {
+                // デバイス変更前のスクリーン数が異なっていればディスプレイの抜き差しが行われたと判定する
+
+                // 変更通知から現在数をAPIでまともに取得する
+                var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
+                if(LauncherToolbarElements.Count != rawScreenCount) {
+                    // 数が変わってりゃ待機
+                    Logger.LogInformation("ディスプレイ数変更検知: WindowsAPI = {0}, Toolbar = {1}", rawScreenCount, LauncherToolbarElements.Count);
+                    var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+
+                    CloseViews();
+                    DisposeElements();
+
+                    Task.Run(() => {
+                        // Forms で取得するディスプレイ数の合計値は少し遅れる
+                        int waitMax = environmentParameters.Configuration.Display.ChangedRetryCount;
+                        int waitCount = 0;
+
+                        var managedScreenCount = Screen.AllScreens.Length;
+                        while(rawScreenCount != managedScreenCount) {
+                            if(waitMax < ++waitCount) {
+                                // タイムアウト
+                                Logger.LogWarning("ディスプレイ数変更検知: タイムアウト");
+                                break;
+                            }
+                            Thread.Sleep(environmentParameters.Configuration.Display.ChangedRetryWaitTime);
+                            managedScreenCount = Screen.AllScreens.Length;
+                        }
+
+                    }).ContinueWith(t => {
+                        ExecuteElements();
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                }
+            }
+        }
+
         #endregion
 
         private void KeyboradHooker_KeyDown(object? sender, KeyboardHookEventArgs e)
@@ -231,7 +284,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("セッション変更検知: Reason = {0}", e.Reason);
 
             if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
-                ResetElements();
+                ResetViewElements();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     // アップデート処理とかとか
                 }
@@ -244,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("ディスプレイ変更検知");
 
-            ResetElements();
+            ResetViewElements();
         }
 
 

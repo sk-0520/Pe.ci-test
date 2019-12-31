@@ -70,6 +70,23 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class DisplayConfiguration : ConfigurationBase
+    {
+        public DisplayConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            ChangedRetryCount = section.GetValue<int>("changed-retry-count");
+            ChangedRetryWaitTime = section.GetValue<TimeSpan>("changed-retry-wait");
+        }
+
+        #region property
+
+        public int ChangedRetryCount { get; }
+        public TimeSpan ChangedRetryWaitTime { get; }
+
+        #endregion
+    }
+
     public class Configuration
     {
         public Configuration(IConfigurationRoot configurationRoot)
@@ -77,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             General = new GeneralConfiguration(configurationRoot.GetSection("general"));
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
+            Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
         }
 
         #region property
@@ -84,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public GeneralConfiguration General { get; }
         public BackupConfiguration Backup { get; }
         public FileConfiguration File { get; }
+        public DisplayConfiguration Display { get; }
         #endregion
     }
 }

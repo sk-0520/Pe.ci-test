@@ -529,7 +529,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             );
         }
 
-        private void ResetElements()
+        private void ResetViewElements()
         {
             CloseViews();
             DisposeElements();
