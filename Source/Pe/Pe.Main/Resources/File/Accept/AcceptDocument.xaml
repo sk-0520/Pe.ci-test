@@ -1,0 +1,27 @@
+<FlowDocument
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <Paragraph FontSize="20pt" FontWeight="Bold" TextDecorations="Underline">ソフトウェア使用許諾</Paragraph>
+  <Paragraph>
+    本文書を確認したうえで本ソフトウェア(以下、${APP})を使用する場合は「OK」、使用しない場合は「キャンセル」を押下してください。
+    <LineBreak />
+    このダイアログは初回起動やバージョンアップで大きな変更があった場合などに表示されます。
+  </Paragraph>
+  <Paragraph>
+    ${APP} は XXX でライセンスされています。
+    <LineBreak />
+    付属するサードパーティ製のソフトウェアなどに関してはそれぞれの適用しているライセンスとなります。
+  </Paragraph>
+
+  <List>
+    <ListItem>
+      <Paragraph>
+        <TextBlock>Webサイト</TextBlock>
+        <LineBreak />
+        <Hyperlink>${WEB}</Hyperlink>
+      </Paragraph>
+    </ListItem>
+  </List>
+
+</FlowDocument>

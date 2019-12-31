@@ -61,6 +61,28 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   &lt;FlowDocument
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///&gt;
+        ///  &lt;Paragraph FontSize=&quot;20pt&quot; FontWeight=&quot;Bold&quot; TextDecorations=&quot;Underline&quot;&gt;ソフトウェア使用許諾&lt;/Paragraph&gt;
+        ///  &lt;Paragraph&gt;
+        ///    本文書を確認したうえで本ソフトウェア(以下、${APP})を使用する場合は「OK」、使用しない場合は「キャンセル」を押下してください。
+        ///    &lt;LineBreak /&gt;
+        ///    このダイアログは初回起動やバージョンアップで大きな変更があった場合などに表示されます。
+        ///  &lt;/Paragraph&gt;
+        ///  &lt;Paragraph&gt;
+        ///    ${APP} は XXX でライセンスされています。
+        ///    &lt;LineBreak /&gt;
+        ///    付属するサードパーティ製のソフトウェアなどに関しては [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string File_Accept_AcceptDocument {
+            get {
+                return ResourceManager.GetString("File_Accept_AcceptDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Update&quot;&gt;
         ///	&lt;!--TODO:キーと値で分離--&gt;
