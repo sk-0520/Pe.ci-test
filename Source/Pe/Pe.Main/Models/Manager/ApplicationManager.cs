@@ -293,6 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             DebugExecuteBefore();
 #endif
+            InitializeSystem();
             InitializeHook();
 
             StartHook();
@@ -390,20 +391,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
             var settingDirectory = environmentParameters.SettingTemporaryDirectory;
-            var directoryCleaner = new DirectoryCleaner(settingDirectory, 10, TimeSpan.FromSeconds(500), LoggerFactory);
+            var directoryCleaner = new DirectoryCleaner(settingDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
             directoryCleaner.Clear(false);
 
-            var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
-            var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
+            var settings = new {
+                Main = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.MainFile.Name)),
+                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name)),
+            };
+            //var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
+            //var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
 
-            environmentParameters.SettingFile.CopyTo(settingDatabaseFile.FullName);
-            environmentParameters.FileFile.CopyTo(fileDatabaseFile.FullName);
+            environmentParameters.MainFile.CopyTo(settings.Main.FullName);
+            environmentParameters.FileFile.CopyTo(settings.File.FullName);
 
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
             var factory = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(settingDatabaseFile),
-                new ApplicationDatabaseFactory(fileDatabaseFile),
+                new ApplicationDatabaseFactory(settings.Main),
+                new ApplicationDatabaseFactory(settings.File),
                 new ApplicationDatabaseFactory()
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
@@ -430,15 +435,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     CloseViews();
                     DisposeElements();
 
-                    //TODO: 設定用DBを永続用DBと切り替え
+                    // 設定用DBを永続用DBと切り替え
                     var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
                     var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
                         .Select(i => i.StopConnection())
                         .ToList()
                     ;
 
-                    settingDatabaseFile.CopyTo(environmentParameters.SettingFile.FullName, true);
-                    fileDatabaseFile.CopyTo(environmentParameters.FileFile.FullName, true);
+                    // バックアップ処理開始
+                    string userBackupDirectoryPath;
+                    using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
+                        var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+                        userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
+                    }
+                    try {
+                        BackupSettings(
+                            environmentParameters.UserSettingDirectory,
+                            environmentParameters.UserBackupDirectory,
+                            DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
+                            environmentParameters.Configuration.Backup.SettingCount,
+                            userBackupDirectoryPath
+                        );
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
+                    }
+
+                    settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
+                    settings.File.CopyTo(environmentParameters.FileFile.FullName, true);
 
                     foreach(var stopping in stoppings) {
                         stopping.Dispose();
@@ -470,10 +493,49 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 container.UnregisterDatabase();
                 container.Dispose();
             }
-
-
         }
 
+        void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount, string userBackupDirectoryPath)
+        {
+            // アプリケーション側バックアップ
+            var settingBackupper = new SettingBackupper(LoggerFactory);
+            settingBackupper.BackupUserSetting(sourceDirectory, targetDirectory, backupFileBaseName, enabledCount);
+
+            // ユーザー設定側バックアップ
+            var expandeduserBackupDirectoryPath = Environment.ExpandEnvironmentVariables(userBackupDirectoryPath ?? string.Empty);
+            if(!string.IsNullOrWhiteSpace(expandeduserBackupDirectoryPath)) {
+                var dir = new DirectoryInfo(expandeduserBackupDirectoryPath);
+                settingBackupper.BackupUserSettingToCustomDirectory(sourceDirectory, dir);
+            }
+        }
+
+        void BackupSettingsDefault()
+        {
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+
+            // バックアップ処理開始
+            string userBackupDirectoryPath;
+            using(var commander = ApplicationDiContainer.Get<IMainDatabaseBarrier>().WaitRead()) {
+                var appGeneralSettingEntityDao = ApplicationDiContainer.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+                userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
+            }
+
+            BackupSettings(
+                environmentParameters.UserSettingDirectory,
+                environmentParameters.UserBackupDirectory,
+                DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
+                environmentParameters.Configuration.Backup.SettingCount,
+                userBackupDirectoryPath
+            );
+        }
+
+        private void ResetElements()
+        {
+            CloseViews();
+            DisposeElements();
+
+            ExecuteElements();
+        }
 
         #endregion
 

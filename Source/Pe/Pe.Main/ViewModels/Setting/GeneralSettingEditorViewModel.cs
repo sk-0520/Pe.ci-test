@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -125,11 +127,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public RequestSender UserBackupDirectorySelecteRequest { get; } = new RequestSender();
+
+
         public ObservableCollection<CultureInfo> CultureInfoItems { get; }
         public CultureInfo SelectedCultureInfo
         {
             get => Model.CultureInfo;
             set => SetModelValue(value, nameof(Model.CultureInfo));
+        }
+
+        public string UserBackupDirectoryPath
+        {
+            get => Model.UserBackupDirectoryPath;
+            set => SetModelValue(value);
         }
 
         public bool IsRegisterStartup
@@ -156,6 +167,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region command
 
+        public ICommand UserBackupDirectorySelectCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectDirectory(
+                    UserBackupDirectorySelecteRequest,
+                    dialogRequester.ExpandPath(UserBackupDirectoryPath),
+                    r => {
+                        UserBackupDirectoryPath = r.ResponseFilePaths[0];
+                    }
+                );
+            }
+        ));
 
         #endregion
 

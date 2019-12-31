@@ -36,18 +36,54 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class BackupConfiguration : ConfigurationBase
+    {
+        public BackupConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            SettingCount = section.GetValue<int>("setting-count");
+            ArchiveCount = section.GetValue<int>("archive-count");
+        }
+
+        #region property
+
+        public int SettingCount { get; }
+        public int ArchiveCount { get; }
+
+        #endregion
+    }
+
+    public class FileConfiguration : ConfigurationBase
+    {
+        public FileConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            DirectoryRemoveWaitCount = section.GetValue<int>("dir-remove-wait-count");
+            DirectoryRemoveWaitTime = section.GetValue<TimeSpan>("dir-remove-wait-time");
+        }
+
+        #region property
+
+        public int DirectoryRemoveWaitCount { get; }
+        public TimeSpan DirectoryRemoveWaitTime{ get; }
+
+        #endregion
+    }
 
     public class Configuration
     {
         public Configuration(IConfigurationRoot configurationRoot)
         {
             General = new GeneralConfiguration(configurationRoot.GetSection("general"));
+            Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
+            File = new FileConfiguration(configurationRoot.GetSection("file"));
         }
 
         #region property
 
         public GeneralConfiguration General { get; }
-
+        public BackupConfiguration Backup { get; }
+        public FileConfiguration File { get; }
         #endregion
     }
 }
