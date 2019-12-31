@@ -390,7 +390,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
             var settingDirectory = environmentParameters.SettingTemporaryDirectory;
-            var directoryCleaner = new DirectoryCleaner(settingDirectory, 10, TimeSpan.FromSeconds(500), LoggerFactory);
+            var directoryCleaner = new DirectoryCleaner(settingDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
             directoryCleaner.Clear(false);
 
             var settings = new {
@@ -441,6 +441,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         .ToList()
                     ;
 
+                    // バックアップ処理開始
+                    string userBackupDirectoryPath;
+                    using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
+                        var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+                        userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
+                    }
+                    try {
+                        BackupSettings(
+                            environmentParameters.UserSettingDirectory,
+                            environmentParameters.UserBackupDirectory,
+                            DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
+                            environmentParameters.Configuration.Backup.SettingCount,
+                            userBackupDirectoryPath
+                        );
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
+                    }
+
                     settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
                     settings.File.CopyTo(environmentParameters.FileFile.FullName, true);
 
@@ -474,8 +492,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 container.UnregisterDatabase();
                 container.Dispose();
             }
+        }
 
+        void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount, string userBackupDirectoryPath)
+        {
+            // アプリケーション側バックアップ
+            var settingBackupper = new SettingBackupper(LoggerFactory);
+            settingBackupper.BackupUserSetting(sourceDirectory, targetDirectory, backupFileBaseName, enabledCount);
 
+            // ユーザー設定側バックアップ
+            var expandeduserBackupDirectoryPath = Environment.ExpandEnvironmentVariables(userBackupDirectoryPath ?? string.Empty);
+            if(!string.IsNullOrWhiteSpace(expandeduserBackupDirectoryPath)) {
+                var dir = new DirectoryInfo(expandeduserBackupDirectoryPath);
+                settingBackupper.BackupUserSettingToCustomDirectory(sourceDirectory, dir);
+            }
+        }
+
+        void BackupSettingsDefault()
+        {
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+
+            // バックアップ処理開始
+            string userBackupDirectoryPath;
+            using(var commander = ApplicationDiContainer.Get<IMainDatabaseBarrier>().WaitRead()) {
+                var appGeneralSettingEntityDao = ApplicationDiContainer.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+                userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
+            }
+
+            BackupSettings(
+                environmentParameters.UserSettingDirectory,
+                environmentParameters.UserBackupDirectory,
+                DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
+                environmentParameters.Configuration.Backup.SettingCount,
+                userBackupDirectoryPath
+            );
         }
 
 

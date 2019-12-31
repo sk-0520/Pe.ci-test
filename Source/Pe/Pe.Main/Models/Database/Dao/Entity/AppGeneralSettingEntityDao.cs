@@ -50,6 +50,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        public string SelectUserBackupDirectoryPath()
+        {
+            var statement = LoadStatement();
+            return Commander.QueryFirst<string>(statement);
+        }
+
         public bool UpdateSettingGeneralSetting(SettingAppGeneralSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
