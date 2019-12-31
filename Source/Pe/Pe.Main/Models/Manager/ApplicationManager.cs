@@ -39,6 +39,7 @@ using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -458,6 +459,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         );
                     } catch(Exception ex) {
                         Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
+                    }
+
+                    var accessorPack = container.Get<IDatabaseAccessorPack>();
+                    var databaseSetupper = container.Build<DatabaseSetupper>();
+                    foreach(var accessor in accessorPack.Items) {
+                        databaseSetupper.Tune(accessor);
                     }
 
                     settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);

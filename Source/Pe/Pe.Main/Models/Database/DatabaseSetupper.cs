@@ -126,6 +126,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             return mainAccessor.Query<Version>(statement, null, false).FirstOrDefault();
         }
 
+
+        private void Vacuum(IDatabaseCommander commander)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
+            commander.Execute(statement);
+        }
+
+        private void Reindex(IDatabaseCommander commander)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
+            commander.Execute(statement);
+        }
+
+        private void Analyze(IDatabaseCommander commander)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
+            commander.Execute(statement);
+        }
+
+        public void Tune(IDatabaseCommander commander)
+        {
+            Vacuum(commander);
+            Reindex(commander);
+            Analyze(commander);
+        }
+
+
         #endregion
     }
 }
