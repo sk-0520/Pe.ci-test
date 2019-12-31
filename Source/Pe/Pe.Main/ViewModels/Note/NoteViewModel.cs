@@ -61,11 +61,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             ClipboardManager = clipboardManager;
             DispatcherWrapper = dispatcherWrapper;
 
-            WindowAreaChangedTimer = new DispatcherTimer() {
-                Interval = TimeSpan.FromSeconds(0.5),
-            };
-            WindowAreaChangedTimer.Tick += WindowAreaChangedTimer_Tick!;
-
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
             Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
@@ -113,7 +108,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
         IDisposable? WindowHandleSource { get; set; }
 
-        DispatcherTimer WindowAreaChangedTimer { get; }
 
         public Guid NoteId => Model.NoteId;
         public bool IsLink => Model.ContentElement?.IsLink ?? false;
@@ -151,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set
             {
                 if(SetProperty(ref this._windowLeft, value)) {
-                    DelayNotifyWindowAreaChange();
+                    DelayNotifyWindowAreaChanged();
                 }
             }
         }
@@ -161,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set
             {
                 if(SetProperty(ref this._windowTop, value)) {
-                    DelayNotifyWindowAreaChange();
+                    DelayNotifyWindowAreaChanged();
                 }
             }
         }
@@ -172,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set
             {
                 if(SetProperty(ref this._windowWidth, value)) {
-                    DelayNotifyWindowAreaChange();
+                    DelayNotifyWindowAreaChanged();
                 }
             }
         }
@@ -183,7 +177,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set
             {
                 if(SetProperty(ref this._windowHeight, value)) {
-                    DelayNotifyWindowAreaChange();
+                    if(!IsCompact) {
+                        NormalWindowHeight = this._windowHeight;
+                    }
+                    DelayNotifyWindowAreaChanged();
                 }
             }
         }
@@ -548,9 +545,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         Rect AbsoluteLayoutToWindow(NoteLayoutData layout)
         {
+            var logicalBounds = UIUtility.ToLogicalPixel(Model.DockScreen.DeviceBounds, DpiScaleOutputor);
             return new Rect(
-                layout.X,
-                layout.Y,
+                logicalBounds.X + layout.X,
+                logicalBounds.Y + layout.Y,
                 layout.Width,
                 layout.Height
             );
@@ -684,23 +682,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }, DispatcherPriority.Render);
         }
 
-        void DelayNotifyWindowAreaChange()
-        {
-            if(!CanLayoutNotify) {
-                Logger.LogTrace("モデルへの位置・サイズ通知抑制 無効: {0}, {1}", Model.NoteId, WindowAreaChangedTimer.Interval);
-                return;
-            }
-
-            if(WindowAreaChangedTimer.IsEnabled) {
-                Logger.LogTrace("モデルへの位置・サイズ通知抑制: {0}, {1}", Model.NoteId, WindowAreaChangedTimer.Interval);
-                WindowAreaChangedTimer.Stop();
-            }
-            WindowAreaChangedTimer.Start();
-        }
-
         void DelayNotifyWindowAreaChanged()
         {
-            Logger.LogDebug("モデルへの位置・サイズ通知: {0}", Model.NoteId);
+            Logger.LogDebug("モデルへの位置・サイズ通知: {0}, {1}", Model.NoteId, CanLayoutNotify);
+            if(!CanLayoutNotify) {
+                Logger.LogDebug("モデルへの通知抑制中");
+                return;
+            }
 
             var viewAreaChangeTargets = ViewAreaChangeTarget.Location;
 
@@ -878,11 +866,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public void Flush()
         {
-            if(WindowAreaChangedTimer.IsEnabled) {
-                WindowAreaChangedTimer.Stop();
-                DelayNotifyWindowAreaChanged();
-            }
-
             Model.SafeFlush();
         }
 
@@ -891,12 +874,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
-        }
-
-        private void WindowAreaChangedTimer_Tick(object sender, EventArgs e)
-        {
-            WindowAreaChangedTimer.Stop();
-            DelayNotifyWindowAreaChanged();
         }
 
     }
