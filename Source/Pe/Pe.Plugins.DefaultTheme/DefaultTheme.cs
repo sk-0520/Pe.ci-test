@@ -18,17 +18,17 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         public IPluginInformation IPluginInformation => throw new NotImplementedException();
 
-        public ILauncherGroupTheme GetLauncherGroupTheme()
+        public ILauncherGroupTheme GetLauncherGroupTheme(IThemeParameter parameter)
         {
             throw new NotImplementedException();
         }
 
-        public ILauncherToolbarTheme GetLauncherToolbarTheme()
+        public ILauncherToolbarTheme GetLauncherToolbarTheme(IThemeParameter parameter)
         {
             throw new NotImplementedException();
         }
 
-        public INoteTheme GetNoteTheme()
+        public INoteTheme GetNoteTheme(IThemeParameter parameter)
         {
             throw new NotImplementedException();
         }

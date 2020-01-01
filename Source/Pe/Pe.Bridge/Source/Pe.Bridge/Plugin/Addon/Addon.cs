@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
-    public interface Addon: IPlugin
+    public interface IAddon: IPlugin
     {
     }
 }

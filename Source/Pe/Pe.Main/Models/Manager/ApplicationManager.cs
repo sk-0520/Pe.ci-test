@@ -43,6 +43,8 @@ using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -58,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
-            OrderManager = ApplicationDiContainer!.Make<OrderManagerImpl>(); //initializer.OrderManager;
+            OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
             StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
@@ -68,7 +70,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            PluginStore = ApplicationDiContainer.Build<PluginStore>();
+            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
+            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
+            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
         }
 
         #region property
@@ -99,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         KeyActionChecker KeyActionChecker { get; }
         KeyActionAssistant KeyActionAssistant { get; }
 
-        PluginStore PluginStore { get; }
+        PluginContainer PluginContainer { get; }
 
         #endregion
 
@@ -203,8 +207,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             SetDynamicPlatformTheme();
             //});
 
-            foreach(var plugin in PluginStore.GetPlugins()) {
-                PluginStore.AddPlugin(plugin);
+            foreach(var plugin in PluginContainer.GetPlugins()) {
+                PluginContainer.AddPlugin(plugin);
             }
 
             MakeMessageWindow();

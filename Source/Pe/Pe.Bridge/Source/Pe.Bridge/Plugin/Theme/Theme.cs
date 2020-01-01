@@ -54,9 +54,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     {
         #region function
 
-        ILauncherGroupTheme GetLauncherGroupTheme();
-        ILauncherToolbarTheme GetLauncherToolbarTheme();
-        INoteTheme GetNoteTheme();
+        ILauncherGroupTheme GetLauncherGroupTheme(IThemeParameter parameter);
+        ILauncherToolbarTheme GetLauncherToolbarTheme(IThemeParameter parameter);
+        INoteTheme GetNoteTheme(IThemeParameter parameter);
 
         #endregion
     }
