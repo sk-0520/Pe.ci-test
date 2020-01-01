@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return CurrentTheme.BuildLauncherGroupTheme(CreateParameter());
+            return DispatcherWrapper.Get(() => CurrentTheme.BuildLauncherGroupTheme(CreateParameter()));
         }
 
         public ILauncherToolbarTheme GetLauncherToolbarTheme()
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return CurrentTheme.BuildLauncherToolbarTheme(CreateParameter());
+            return DispatcherWrapper.Get(() => CurrentTheme.BuildLauncherToolbarTheme(CreateParameter()));
         }
 
         public INoteTheme GetNoteTheme()
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return CurrentTheme.BuildNoteTheme(CreateParameter());
+            return DispatcherWrapper.Get(() => CurrentTheme.BuildNoteTheme(CreateParameter()));
         }
 
         #endregion

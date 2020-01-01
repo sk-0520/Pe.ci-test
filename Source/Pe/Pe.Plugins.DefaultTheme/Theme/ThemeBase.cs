@@ -19,8 +19,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             PlatformTheme = parameter.PlatformTheme;
             DispatcherWrapper = parameter.DispatcherWrapper;
             Logger = parameter.LoggerFactory.CreateLogger(GetType());
-
-            PlatformTheme.Changed += PlatformThemeLoader_Changed;
         }
 
         #region property
@@ -81,14 +79,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
 
-        protected virtual void ChangedPlatformTheme()
-        { }
-
         #endregion
-
-        private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
-        {
-            DispatcherWrapper.Invoke(ChangedPlatformTheme);
-        }
     }
 }

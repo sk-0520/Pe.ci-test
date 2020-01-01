@@ -13,7 +13,6 @@
         <ResourceDictionary Source="/Views/Resources/PlatformTheme.xaml" />
 
         <ResourceDictionary Source="/Views/Resources/Theme/General/General.xaml" />
-        <ResourceDictionary Source="/Views/Resources/Theme/General/ImageResource.xaml" />
 
         <ResourceDictionary Source="/Views/ManagerResource.xaml" />
       </ResourceDictionary.MergedDictionaries>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
@@ -19,6 +20,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #endregion
 
+        #region property
+
+        ResourceDictionary? ResourceDictionary { get; set; }
+        #endregion
+
         #region ITheme
 
         public PluginId PluginId => Id;
@@ -29,10 +35,19 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         public void Initialize()
         {
+            ResourceDictionary = new ResourceDictionary();
+            var uri = new Uri("pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/ImageResource.xaml", UriKind.Absolute);
+            ResourceDictionary.Source = uri;
+
+            Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
             IsInitialized = true;
         }
         public void Uninitialize()
         {
+            if(ResourceDictionary != null) {
+                Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
+            }
+
             IsInitialized = false;
         }
 

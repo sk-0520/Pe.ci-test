@@ -12,10 +12,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Page Remove="Views\Resources\ImageResource.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj">
       <Private>false</Private>
     </ProjectReference>
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Resources\ImageResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
   </ItemGroup>
 
 </Project>
