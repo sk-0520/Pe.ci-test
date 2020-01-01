@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region property
 
-        ref PluginId PluginId { get; }
+        PluginId PluginId { get; }
 
         IPluginInformation IPluginInformation { get; }
 

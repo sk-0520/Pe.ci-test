@@ -25,7 +25,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     {
         #region function
 
-        IFontTheme GetFontTheme();
         ILauncherGroupTheme GetLauncherGroupTheme();
         ILauncherToolbarTheme GetLauncherToolbarTheme();
         INoteTheme GetNoteTheme();

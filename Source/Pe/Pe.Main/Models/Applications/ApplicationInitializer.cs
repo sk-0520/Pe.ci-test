@@ -301,7 +301,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
                 .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
                 .Register<INoteTheme, NoteTheme>(DiLifecycle.Transient)
-                .Register<IFontTheme, FontTheme>(DiLifecycle.Transient)
             ;
 
             //ApplicationDiContainer.Initialize(() => container);
