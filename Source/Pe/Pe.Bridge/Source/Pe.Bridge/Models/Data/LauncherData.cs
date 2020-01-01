@@ -8,5 +8,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     {
         DirectoryNormal,
         DirectoryOpen,
+        File,
+        Gear,
+        Config,
+        Builder,
+        Bookmark,
+        Book,
+        Light,
+        Shortcut,
+        Storage,
+        Cloud,
+        User,
     }
 }
