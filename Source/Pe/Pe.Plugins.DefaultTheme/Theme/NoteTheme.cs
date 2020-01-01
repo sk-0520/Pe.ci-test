@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    public class NoteTheme : ThemeBase, INoteTheme
+    internal class NoteTheme : ThemeBase, INoteTheme
     {
         public NoteTheme(IThemeParameter parameter)
             : base(parameter)

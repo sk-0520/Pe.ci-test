@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    public class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
+    internal class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
     {
         public LauncherGroupTheme(IThemeParameter parameter)
             : base(parameter)
