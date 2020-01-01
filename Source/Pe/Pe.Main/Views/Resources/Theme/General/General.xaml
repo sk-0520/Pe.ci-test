@@ -57,14 +57,14 @@
           <Border Padding="2,4">
             <StackPanel
               Orientation="Horizontal"
-              Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
-              TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+              Background="{DynamicResource PlatformTheme-AccentColors-BaseBrush}"
+              TextElement.Foreground="{DynamicResource PlatformTheme-AccentTextColors-BaseBrush}"
               TextElement.FontWeight="Bold"
               TextElement.FontSize="9"
               Margin="0"
             >
               <ContentControl Content="{TemplateBinding Icon}" />
-              <Label Content="{TemplateBinding Header}" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+              <Label Content="{TemplateBinding Header}" Foreground="{DynamicResource PlatformTheme-AccentTextColors-BaseBrush}"/>
             </StackPanel>
           </Border>
         </ControlTemplate>
