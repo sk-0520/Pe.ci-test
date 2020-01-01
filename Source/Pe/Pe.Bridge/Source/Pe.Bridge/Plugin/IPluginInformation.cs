@@ -27,6 +27,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
     }
 
+    public static class PluginLicense
+    {
+        #region property
+
+        public static string Unknown => "unknown";
+        public static string GnuGeneralPublicLicense1 => "GPLv1";
+        public static string GnuGeneralPublicLicense2 => "GPLv2";
+        public static string GnuGeneralPublicLicense3 => "GPLv3";
+
+        #endregion
+    }
+
     public interface IPluginAuthor
     {
         IAuthor PluginAuthor { get; }
