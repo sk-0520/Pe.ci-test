@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             Logger = loggerFactory.CreateLogger(GetType());
 
-            LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(500), loggerFactory);
+            LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(400), loggerFactory);
             Refresh();
         }
 
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             var rawColor = (uint)wParam.ToInt64();
             AccentColor = MediaUtility.ConvertColorFromRawColor(rawColor);
-            OnThemeChanged();// LazyChanger.DelayAction(OnThemeChanged);
+            LazyChanger.DelayAction(OnThemeChanged);
             handled = true;
         }
 
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             var lParamMessage = Marshal.PtrToStringAuto(lParam);
             if(lParamMessage == "ImmersiveColorSet") {
                 ApplyFromRegistry();
-                OnThemeChanged();// LazyChanger.DelayAction(OnThemeChanged);
+                LazyChanger.DelayAction(OnThemeChanged);
             }
             handled = true;
         }
@@ -153,6 +153,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 MediaUtility.AddBrightness(nonTransAccentColor, 0.6)
             );
         }
+
+        public PlatformAccentColors GetTextColor(PlatformAccentColors accentColors)
+        {
+            return new PlatformAccentColors(
+                MediaUtility.GetAutoColor(accentColors.Accent),
+                MediaUtility.GetAutoColor(accentColors.Base),
+                MediaUtility.GetAutoColor(accentColors.Highlight),
+                MediaUtility.GetAutoColor(accentColors.Accent),
+                MediaUtility.GetAutoColor(accentColors.Disable)
+            );
+        }
+
 
         #endregion
 

@@ -125,6 +125,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             get => LauncherToolbarTheme.GetToolbarBackground(ToolbarPosition, ViewState.Active, IconBox, IsIconOnly, TextWidth);
         }
 
+        public Brush ToolbarForeground
+        {
+            get => LauncherToolbarTheme.GetToolbarForeground();
+        }
+
         public LauncherToolbarIconDirection IconDirection => Model.IconDirection;
 
         public bool IsOpendAppMenu
@@ -483,6 +488,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             DispatcherWrapper.Invoke(() => {
                 var themePropertyNames = new[] {
                     nameof(ToolbarBackground),
+                    nameof(ToolbarForeground),
                 };
                 foreach(var themePropertyName in themePropertyNames) {
                     RaisePropertyChanged(themePropertyName);

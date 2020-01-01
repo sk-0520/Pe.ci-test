@@ -188,6 +188,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             return new SolidColorBrush(color);
         }
 
+        public Brush GetToolbarForeground()
+        {
+            var color = PlatformThemeLoader.GetTaskbarColor();
+            return new SolidColorBrush(MediaUtility.GetAutoColor(color));
+        }
+
         #endregion
     }
 }

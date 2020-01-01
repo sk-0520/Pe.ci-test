@@ -44,10 +44,25 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         #region property
 
+        /// <summary>
+        /// 透明度を含む。
+        /// </summary>
         public Color Accent { get; }
+        /// <summary>
+        /// 透明度を含まない。
+        /// </summary>
         public Color Base { get; }
+        /// <summary>
+        /// 透明度を含まない。
+        /// </summary>
         public Color Highlight { get; }
+        /// <summary>
+        /// 透明度を含まない。
+        /// </summary>
         public Color Active { get; }
+        /// <summary>
+        /// 透明度を含まない。
+        /// </summary>
         public Color Disable { get; }
 
         #endregion
@@ -94,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         PlatformThemeColors GetWindowsThemeColors(PlatformThemeKind themeKind);
         PlatformThemeColors GetApplicationThemeColors(PlatformThemeKind themeKind);
         PlatformAccentColors GetAccentColors(Color accentColor);
+        PlatformAccentColors GetTextColor(PlatformAccentColors accentColors);
 
         #endregion
     }

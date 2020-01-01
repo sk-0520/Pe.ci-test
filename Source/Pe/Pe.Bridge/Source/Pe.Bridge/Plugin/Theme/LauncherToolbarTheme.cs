@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         ControlTemplate GetLauncherItemToggleButtonControlTemplate();
 
         Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth);
-
+        Brush GetToolbarForeground();
         #endregion
     }
 }

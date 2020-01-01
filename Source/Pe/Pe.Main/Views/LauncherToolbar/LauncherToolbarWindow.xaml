@@ -329,12 +329,12 @@
         <app_main_view_lt:LauncherContentControl Title="pe" >
           <app_main_view_lt:LauncherContentControl.Icon>
             <ContentControl
-            Template="{StaticResource NormalIcon}"
-            Content="{StaticResource Image-HamburgerMenu}"
-            Width="{Binding IconBox, Converter={StaticResource IconScaleToWidthConverter}}"
-            Height="{Binding IconBox, Converter={StaticResource IconScaleToHeightConverter}}"
-            Background="Black"
-            Foreground="Gray"
+              Template="{StaticResource NormalIcon}"
+              Content="{StaticResource Image-HamburgerMenu}"
+              Width="{Binding IconBox, Converter={StaticResource IconScaleToWidthConverter}}"
+              Height="{Binding IconBox, Converter={StaticResource IconScaleToHeightConverter}}"
+              Background="{Binding ToolbarForeground}"
+              Foreground="{Binding ToolbarForeground}"
           />
           </app_main_view_lt:LauncherContentControl.Icon>
         </app_main_view_lt:LauncherContentControl>
