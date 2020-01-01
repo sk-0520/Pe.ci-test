@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         public Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
-            var color = PlatformThemeLoader.GetWindowColor();
+            var color = PlatformThemeLoader.GetTaskbarColor();
             return new SolidColorBrush(color);
         }
 

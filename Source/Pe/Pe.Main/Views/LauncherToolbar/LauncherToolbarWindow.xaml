@@ -26,6 +26,7 @@
   ResizeMode="NoResize"
   ShowInTaskbar="False"
   AllowDrop="True"
+  AllowsTransparency="True"
 
   Topmost="{Binding IsTopmost}"
 

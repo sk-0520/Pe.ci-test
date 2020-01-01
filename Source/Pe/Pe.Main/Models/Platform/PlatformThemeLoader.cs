@@ -18,9 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             Logger = loggerFactory.CreateLogger(GetType());
 
             LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(500), loggerFactory);
-
-            ApplyFromRegistry();
-            ApplyAccentColor();
+            Refresh();
         }
 
         #region property
@@ -37,13 +35,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             using var reg = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
 
-            WindowsColor = Convert.ToBoolean(reg.GetValue("SystemUsesLightTheme"))
-                ? PlatformThemeColor.Light
-                : PlatformThemeColor.Dark
+            WindowsThemeKind = Convert.ToBoolean(reg.GetValue("SystemUsesLightTheme"))
+                ? PlatformThemeKind.Light
+                : PlatformThemeKind.Dark
             ;
-            ApplicationColor = Convert.ToBoolean(reg.GetValue("AppsUseLightTheme"))
-                ? PlatformThemeColor.Light
-                : PlatformThemeColor.Dark
+            ApplicationThemeKind = Convert.ToBoolean(reg.GetValue("AppsUseLightTheme"))
+                ? PlatformThemeKind.Light
+                : PlatformThemeKind.Dark
             ;
 
             ColorPrevalence = Convert.ToBoolean(reg.GetValue("ColorPrevalence"));
@@ -67,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             var rawColor = (uint)wParam.ToInt64();
             AccentColor = MediaUtility.ConvertColorFromRawColor(rawColor);
-            LazyChanger.DelayAction(OnThemeChanged);
+            OnThemeChanged();// LazyChanger.DelayAction(OnThemeChanged);
             handled = true;
         }
 
@@ -76,9 +74,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             var lParamMessage = Marshal.PtrToStringAuto(lParam);
             if(lParamMessage == "ImmersiveColorSet") {
                 ApplyFromRegistry();
-                LazyChanger.DelayAction(OnThemeChanged);
+                OnThemeChanged();// LazyChanger.DelayAction(OnThemeChanged);
             }
             handled = true;
+        }
+
+        public void Refresh()
+        {
+            ApplyFromRegistry();
+            ApplyAccentColor();
+        }
+
+        private PlatformThemeColors GetColors(PlatformThemeKind themeKind)
+        {
+            switch(themeKind) {
+                case PlatformThemeKind.Dark:
+                    return new PlatformThemeColors(
+                        Color.FromRgb(0x00, 0x00, 0x00),
+                        Color.FromRgb(0xff, 0xff, 0xff),
+                        Color.FromRgb(0x80, 0x80, 0x80),
+                        Color.FromRgb(0xcc, 0xcc, 0xcc)
+                    );
+
+                case PlatformThemeKind.Light:
+                    return new PlatformThemeColors(
+                        Color.FromRgb(0xff, 0xff, 0xff),
+                        Color.FromRgb(0x00, 0x00, 0x00),
+                        Color.FromRgb(0xcc, 0xcc, 0xcc),
+                        Color.FromRgb(0x80, 0x80, 0x80)
+                    );
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion
@@ -90,12 +118,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// Windowsモードの色。
         /// <para>タスクバーとかの色っぽい。</para>
         /// </summary>
-        public PlatformThemeColor WindowsColor { get; private set; }
+        public PlatformThemeKind WindowsThemeKind { get; private set; }
         /// <summary>
         /// アプリモードの色。
         /// <para>背景色っぽい。</para>
         /// </summary>
-        public PlatformThemeColor ApplicationColor { get; private set; }
+        public PlatformThemeKind ApplicationThemeKind { get; private set; }
         /// <summary>
         /// アクセントカラー！
         /// </summary>
@@ -109,6 +137,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// 透明効果。
         /// </summary>
         public bool EnableTransparency { get; private set; }
+
+
+        public PlatformThemeColors GetWindowsThemeColors(PlatformThemeKind themeKind) => GetColors(themeKind);
+        public PlatformThemeColors GetApplicationThemeColors(PlatformThemeKind themeKind) => GetColors(themeKind);
+
+        public PlatformAccentColors GetAccentColors(Color accentColor)
+        {
+            var nonTransAccentColor = MediaUtility.GetNonTransparentColor(accentColor);
+            return new PlatformAccentColors(
+                accentColor,
+                nonTransAccentColor,
+                MediaUtility.AddBrightness(nonTransAccentColor, 0.9),
+                MediaUtility.AddBrightness(nonTransAccentColor, 1.2),
+                MediaUtility.AddBrightness(nonTransAccentColor, 0.6)
+            );
+        }
 
         #endregion
 

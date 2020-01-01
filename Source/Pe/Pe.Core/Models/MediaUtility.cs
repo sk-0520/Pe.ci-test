@@ -123,6 +123,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
         }
 
+        public static Color AddBrightness(Color baseColor, double brightness)
+        {
+            return Color.FromArgb(
+                baseColor.A,
+                (byte)(baseColor.R * brightness),
+                (byte)(baseColor.G * brightness),
+                (byte)(baseColor.B * brightness)
+            );
+        }
+
         /// <summary>
         /// 指定ビットマップソースから全ピクセル情報を取得。
         /// </summary>
