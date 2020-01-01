@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //if(!initializer.Initialize(e.Args)) {
             //    return false;
             //}
-            ApplicationDiContainer.Register<IPlatformThemeLoader, PlatformThemeLoader>(PlatformThemeLoader);
+            ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
 
             //ApplicationDiContainer.Get<IDispatcherWrapper>().Invoke(() => {
             SetStaticPlatformTheme();

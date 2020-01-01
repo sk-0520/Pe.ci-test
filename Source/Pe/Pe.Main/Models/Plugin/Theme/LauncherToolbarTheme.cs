@@ -15,13 +15,14 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
-        public LauncherToolbarTheme(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarTheme(IPlatformTheme platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
         { }
 
@@ -184,13 +185,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         public Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
-            var color = PlatformThemeLoader.GetTaskbarColor();
+            var color = PlatformTheme.GetTaskbarColor();
             return new SolidColorBrush(color);
         }
 
         public Brush GetToolbarForeground()
         {
-            var color = PlatformThemeLoader.GetTaskbarColor();
+            var color = PlatformTheme.GetTaskbarColor();
             return new SolidColorBrush(MediaUtility.GetAutoColor(color));
         }
 

@@ -1,48 +1,31 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Theme
+namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal abstract class ThemeBase
+    public abstract class ThemeBase
     {
-
-        public ThemeBase(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILogger logger)
+        public ThemeBase(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
-            PlatformThemeLoader = platformThemeLoader;
-            DispatcherWrapper = dispatcherWrapper;
-            Logger = logger;
-
-            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
-        }
-
-        public ThemeBase(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-        {
-            PlatformThemeLoader = platformThemeLoader;
+            PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
             Logger = loggerFactory.CreateLogger(GetType());
 
-            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
+            PlatformTheme.Changed += PlatformThemeLoader_Changed;
         }
 
         #region property
 
         protected ILogger Logger { get; }
-        protected IPlatformThemeLoader PlatformThemeLoader { get; }
-        /// <summary>
-        /// <see cref="DependencyObject"/>作成用のディスパッチャー。
-        /// <para>だけどまず呼び出し側で UI スレッドであることを保証するので内部的にどうこうする場合にしゃあなし使うのであって原則使用しない。</para>
-        /// </summary>
+        protected IPlatformTheme PlatformTheme { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion

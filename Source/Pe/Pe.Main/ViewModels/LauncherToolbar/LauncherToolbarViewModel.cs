@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformThemeLoader platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             PlatformThemeLoader = platformThemeLoader;
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
-        IPlatformThemeLoader PlatformThemeLoader { get; }
+        IPlatformTheme PlatformThemeLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }

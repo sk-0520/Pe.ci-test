@@ -12,13 +12,14 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class NoteTheme : ThemeBase, INoteTheme
     {
-        public NoteTheme(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteTheme(IPlatformTheme platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
         { }
 

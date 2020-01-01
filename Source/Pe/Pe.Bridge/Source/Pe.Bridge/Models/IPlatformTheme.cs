@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
     }
 
-    public interface IPlatformThemeLoader
+    public interface IPlatformTheme
     {
         #region define
 
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     {
         #region function
 
-        public static Color GetTaskbarColor(this IPlatformThemeLoader @this)
+        public static Color GetTaskbarColor(this IPlatformTheme @this)
         {
             // 透明度どうしよう
             Color result;

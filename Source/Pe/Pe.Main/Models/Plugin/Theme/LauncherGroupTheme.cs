@@ -16,13 +16,14 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Theme
 {
     internal class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
     {
-        public LauncherGroupTheme(IPlatformThemeLoader platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupTheme(IPlatformTheme platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
         { }
 

@@ -11,7 +11,7 @@ using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
-    public class PlatformThemeLoader : DisposerBase, IPlatformThemeLoader
+    public class PlatformThemeLoader : DisposerBase, IPlatformTheme
     {
         public PlatformThemeLoader(ILoggerFactory loggerFactory)
         {
