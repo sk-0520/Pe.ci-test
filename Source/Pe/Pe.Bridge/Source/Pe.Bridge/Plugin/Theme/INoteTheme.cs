@@ -37,15 +37,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         [return: PixelKind(Px.Logical)]
         Size GetResizeGripSize();
 
-        IReadOnlyColorPair<Brush> GetCaptionBrush(IReadOnlyColorPair<Color> baseColor);
-        Brush GetBorderBrush(IReadOnlyColorPair<Color> baseColor);
-        IReadOnlyColorPair<Brush> GetContentBrush(IReadOnlyColorPair<Color> baseColor);
-        Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor);
+        ColorPair<Brush> GetCaptionBrush(ColorPair<Color> baseColor);
+        Brush GetBorderBrush(ColorPair<Color> baseColor);
+        ColorPair<Brush> GetContentBrush(ColorPair<Color> baseColor);
+        Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, ColorPair<Color> baseColor);
 
-        DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor);
-        DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor);
+        DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor);
+        DependencyObject GetResizeGripImage(ColorPair<Color> baseColor);
 
-        DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor);
+        DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, ColorPair<Color> baseColor);
 
         #endregion
     }

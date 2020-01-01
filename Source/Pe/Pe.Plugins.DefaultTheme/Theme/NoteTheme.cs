@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             }
         }
 
-        DependencyObject GetCaptionImageCore(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor)
+        DependencyObject GetCaptionImageCore(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
@@ -118,9 +118,9 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             );
         }
 
-        public IReadOnlyColorPair<Brush> GetCaptionBrush(IReadOnlyColorPair<Color> baseColor)
+        public ColorPair<Brush> GetCaptionBrush(ColorPair<Color> baseColor)
         {
-            var pair = ColorPair.Create(new SolidColorBrush(baseColor.Foreground), new SolidColorBrush(baseColor.Background));
+            var pair = new ColorPair<Brush>(new SolidColorBrush(baseColor.Foreground), new SolidColorBrush(baseColor.Background));
 
             FreezableUtility.SafeFreeze(pair.Foreground);
             FreezableUtility.SafeFreeze(pair.Background);
@@ -128,12 +128,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return pair;
         }
 
-        public Brush GetBorderBrush(IReadOnlyColorPair<Color> baseColor)
+        public Brush GetBorderBrush(ColorPair<Color> baseColor)
         {
             return FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Background));
         }
 
-        public IReadOnlyColorPair<Brush> GetContentBrush(IReadOnlyColorPair<Color> baseColor)
+        public ColorPair<Brush> GetContentBrush(ColorPair<Color> baseColor)
         {
             /*
             旧PeではXAML上でこれをかけ合わせてた
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             );
         }
 
-        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor)
+        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, ColorPair<Color> baseColor)
         {
             // TODO: 色調整
             switch(buttonState) {
@@ -175,12 +175,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             }
         }
 
-        public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
         {
             return DispatcherWrapper.Get(() => GetCaptionImageCore(noteCaption, isEnabled, baseColor));
         }
 
-        public DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetResizeGripImage(ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return viewBox;
         }
 
-        public DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, ColorPair<Color> baseColor)
         {
             var size = new Size((int)iconBox, isCompact ? (int)iconBox / 2 : (int)iconBox);
             var box = CreateBox(baseColor.Foreground, baseColor.Background, size);

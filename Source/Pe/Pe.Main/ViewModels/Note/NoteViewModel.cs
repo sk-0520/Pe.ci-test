@@ -712,7 +712,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, rect.Location, rect.Size);
         }
 
-        IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
+        ColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

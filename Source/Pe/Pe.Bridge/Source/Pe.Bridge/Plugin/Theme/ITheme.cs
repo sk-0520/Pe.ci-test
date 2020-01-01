@@ -4,18 +4,8 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
-    public interface IReadOnlyColorPair<out T>
-    {
-        #region property
 
-        T Foreground { get; }
-        T Background { get; }
-
-        #endregion
-    }
-
-    //TODO: 構造体で一本化したい
-    public class ColorPair<T> : IReadOnlyColorPair<T>
+    public readonly struct ColorPair<T>
     {
         public ColorPair(T foreground, T background)
         {
