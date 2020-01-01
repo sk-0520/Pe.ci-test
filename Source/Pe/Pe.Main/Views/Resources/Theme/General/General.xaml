@@ -98,8 +98,15 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="GroupBox">
-          <StackPanel>
-            <ContentPresenter Margin="4" ContentSource="Header" RecognizesAccessKey="True" />
+          <StackPanel Margin="0, 0, 0, 8">
+            <Border
+              Background="{DynamicResource PlatformTheme-AccentColors-BaseBrush}"
+              TextElement.Foreground="{DynamicResource PlatformTheme-AccentTextColors-BaseBrush}"
+              TextElement.FontWeight="Bold"
+              Margin="0,4,0,2"
+            >
+              <ContentPresenter Margin="4" ContentSource="Header" RecognizesAccessKey="True" />
+            </Border>
             <ContentPresenter />
           </StackPanel>
         </ControlTemplate>
