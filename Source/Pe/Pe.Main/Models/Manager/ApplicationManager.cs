@@ -43,6 +43,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Theme;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
