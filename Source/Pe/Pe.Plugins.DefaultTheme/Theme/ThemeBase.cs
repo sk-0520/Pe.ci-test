@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
@@ -13,11 +14,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     public abstract class ThemeBase
     {
-        public ThemeBase(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeBase(IThemeParameter parameter)
         {
-            PlatformTheme = platformTheme;
-            DispatcherWrapper = dispatcherWrapper;
-            Logger = loggerFactory.CreateLogger(GetType());
+            PlatformTheme = parameter.PlatformTheme;
+            DispatcherWrapper = parameter.DispatcherWrapper;
+            Logger = parameter.LoggerFactory.CreateLogger(GetType());
 
             PlatformTheme.Changed += PlatformThemeLoader_Changed;
         }

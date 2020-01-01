@@ -12,6 +12,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         IPluginInformation IPluginInformation { get; }
 
+        bool IsInitialized { get; }
+
+        #endregion
+
+        #region function
+
+        void Initialize();
+        void Uninitialize();
+
         #endregion
     }
 }

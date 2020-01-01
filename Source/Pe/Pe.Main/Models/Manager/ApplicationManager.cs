@@ -45,6 +45,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -69,10 +70,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
-
-            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
-            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
-            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
         }
 
         #region property
@@ -103,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         KeyActionChecker KeyActionChecker { get; }
         KeyActionAssistant KeyActionAssistant { get; }
 
-        PluginContainer PluginContainer { get; }
+        PluginContainer? PluginContainer { get; set; }
 
         #endregion
 
@@ -130,10 +127,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void RegisterPlugins()
         {
             Debug.Assert(ApplicationDiContainer != null);
+            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
+            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
+            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
 
-            ApplicationDiContainer.Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient);
-            ApplicationDiContainer.Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient);
-            ApplicationDiContainer.Register<INoteTheme, NoteTheme>(DiLifecycle.Transient);
+            foreach(var plugin in PluginContainer.GetPlugins()) {
+                PluginContainer.AddPlugin(plugin);
+            }
+            PluginContainer.Theme.SetCurrentTheme(DefaultTheme.Id);
+
+            ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
+            ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
+            ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
         }
 
         void RegisterManagers()
@@ -206,10 +211,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             SetStaticPlatformTheme();
             SetDynamicPlatformTheme();
             //});
-
-            foreach(var plugin in PluginContainer.GetPlugins()) {
-                PluginContainer.AddPlugin(plugin);
-            }
 
             MakeMessageWindow();
             RegisterPlugins();

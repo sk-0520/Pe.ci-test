@@ -3,34 +3,52 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 {
     public class DefaultTheme : ITheme
     {
+        #region define
+
+        public static readonly PluginId Id = new PluginId(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "default-theme");
+
+        #endregion
+
         #region variable
 
         #endregion
 
         #region ITheme
 
-        public PluginId PluginId { get; } = new PluginId(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "default-theme");
+        public PluginId PluginId => Id;
 
         public IPluginInformation IPluginInformation => throw new NotImplementedException();
 
-        public ILauncherGroupTheme GetLauncherGroupTheme(IThemeParameter parameter)
+        public bool IsInitialized { get; private set; }
+
+        public void Initialize()
         {
-            throw new NotImplementedException();
+            IsInitialized = true;
+        }
+        public void Uninitialize()
+        {
+            IsInitialized = false;
         }
 
-        public ILauncherToolbarTheme GetLauncherToolbarTheme(IThemeParameter parameter)
+        public ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter)
         {
-            throw new NotImplementedException();
+            return new LauncherGroupTheme(parameter);
         }
 
-        public INoteTheme GetNoteTheme(IThemeParameter parameter)
+        public ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {
-            throw new NotImplementedException();
+            return new LauncherToolbarTheme(parameter);
+        }
+
+        public INoteTheme BuildNoteTheme(IThemeParameter parameter)
+        {
+            return new NoteTheme(parameter);
         }
 
         #endregion

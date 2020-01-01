@@ -15,8 +15,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     public class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
     {
-        public LauncherGroupTheme(IPlatformTheme platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
+        public LauncherGroupTheme(IThemeParameter parameter)
+            : base(parameter)
         { }
 
         #region property

@@ -15,8 +15,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     public class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
-        public LauncherToolbarTheme(IPlatformTheme platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
+        public LauncherToolbarTheme(IThemeParameter parameter)
+            : base(parameter)
         { }
 
         #region property

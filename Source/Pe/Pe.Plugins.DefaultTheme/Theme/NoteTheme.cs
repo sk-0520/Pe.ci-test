@@ -15,8 +15,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     public class NoteTheme : ThemeBase, INoteTheme
     {
-        public NoteTheme(IPlatformTheme platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
+        public NoteTheme(IThemeParameter parameter)
+            : base(parameter)
         { }
 
         #region property
