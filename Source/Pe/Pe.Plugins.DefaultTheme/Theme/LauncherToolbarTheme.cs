@@ -2,25 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Main.Models.Platform;
-using ContentTypeTextNet.Pe.Main.Models.Theme;
-using ContentTypeTextNet.Pe.Main.Views.Extend;
-using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Theme
+namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
+    public class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
         public LauncherToolbarTheme(IPlatformTheme platformThemeLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(platformThemeLoader, dispatcherWrapper, loggerFactory)
