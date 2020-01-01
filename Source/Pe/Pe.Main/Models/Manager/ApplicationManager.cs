@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            PluginManager = ApplicationDiContainer.Build<PluginManager>();
+            PluginStore = ApplicationDiContainer.Build<PluginStore>();
         }
 
         #region property
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         KeyActionChecker KeyActionChecker { get; }
         KeyActionAssistant KeyActionAssistant { get; }
 
-        PluginManager PluginManager { get; }
+        PluginStore PluginStore { get; }
 
         #endregion
 
@@ -203,8 +203,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             SetDynamicPlatformTheme();
             //});
 
-            foreach(var plugin in PluginManager.GetPlugins()) {
-                PluginManager.AddPlugin(plugin);
+            foreach(var plugin in PluginStore.GetPlugins()) {
+                PluginStore.AddPlugin(plugin);
             }
 
             MakeMessageWindow();

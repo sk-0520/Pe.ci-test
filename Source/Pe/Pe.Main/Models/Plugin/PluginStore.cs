@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    public class PluginManager
+    public class PluginStore
     {
-        public PluginManager(ILoggerFactory loggerFactory)
+        public PluginStore(ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
