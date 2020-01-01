@@ -41,6 +41,8 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -65,6 +67,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
+
+            PluginManager = ApplicationDiContainer.Build<PluginManager>();
         }
 
         #region property
@@ -95,6 +99,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         KeyActionChecker KeyActionChecker { get; }
         KeyActionAssistant KeyActionAssistant { get; }
 
+        PluginManager PluginManager { get; }
+
         #endregion
 
         #region function
@@ -114,6 +120,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 view.ShowDialog();
 
             }
+        }
+
+
+        private void RegisterPlugins()
+        {
+            Debug.Assert(ApplicationDiContainer != null);
+
+            ApplicationDiContainer.Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient);
+            ApplicationDiContainer.Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient);
+            ApplicationDiContainer.Register<INoteTheme, NoteTheme>(DiLifecycle.Transient);
         }
 
         void RegisterManagers()
@@ -138,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ControlColor"] = colors.Control;
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BorderColor"] = colors.Border;
             }
-       }
+        }
 
         void SetDynamicPlatformTheme()
         {
@@ -183,12 +199,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IPlatformThemeLoader, PlatformThemeLoader>(PlatformThemeLoader);
 
             //ApplicationDiContainer.Get<IDispatcherWrapper>().Invoke(() => {
-                SetStaticPlatformTheme();
-                SetDynamicPlatformTheme();
+            SetStaticPlatformTheme();
+            SetDynamicPlatformTheme();
             //});
 
+            foreach(var plugin in PluginManager.GetPlugins()) {
+                PluginManager.AddPlugin(plugin);
+            }
+
             MakeMessageWindow();
+            RegisterPlugins();
             RegisterManagers();
+
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");
@@ -200,7 +222,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return true;
         }
-
 
         public ManagerViewModel CreateViewModel()
         {

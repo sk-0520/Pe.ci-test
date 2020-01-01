@@ -297,10 +297,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
-
-                .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
-                .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
-                .Register<INoteTheme, NoteTheme>(DiLifecycle.Transient)
             ;
 
             //ApplicationDiContainer.Initialize(() => container);
