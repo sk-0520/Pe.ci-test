@@ -68,6 +68,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
 
+            ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
+            ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
+            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
+            ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManager);
+            ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
+
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
@@ -145,17 +151,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
             ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
             ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
-        }
-
-        void RegisterManagers()
-        {
-            Debug.Assert(ApplicationDiContainer != null);
-
-            ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
-            ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
-            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
-            ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManager);
-            ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
         }
 
         void SetStaticPlatformTheme()
@@ -255,7 +250,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             MakeMessageWindow();
             RegisterPlugins();
-            RegisterManagers();
 
 
             Logger = LoggerFactory.CreateLogger(GetType());
