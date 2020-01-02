@@ -61,7 +61,10 @@ size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath)
 
 size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath)
 {
-    PathCombine(buffer, rootDirPath, _T("Pe.Main.exe"));
+    TCHAR binPath[MAX_PATH];
+    binPath[0] = 0;
+    PathCombine(binPath, rootDirPath, _T("bin"));
+    PathCombine(buffer, binPath, _T("Pe.Main.exe"));
     outputDebug(buffer);
     return lstrlen(buffer);
 }
