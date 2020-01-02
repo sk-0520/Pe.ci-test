@@ -14,7 +14,7 @@
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
 
-    <ToggleButton x:Name="locker" Grid.Column="0" Content="鍵">
+    <ToggleButton x:Name="locker" Grid.Column="0" Content="{Binding LockContent, ElementName=root}">
       <ToggleButton.Style>
         <Style TargetType="ToggleButton">
           <Style.Triggers>
