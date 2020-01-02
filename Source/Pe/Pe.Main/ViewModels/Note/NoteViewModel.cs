@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         NoteContentViewModelBase? _content;
 
         bool _showLinkChangeConfim;
+        bool _isPopupRemoveNote;
 
         #endregion
 
@@ -268,6 +269,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public IDragAndDrop DragAndDrop { get; }
 
         bool PrepareToRemove { get; set; }
+        public bool IsPopupRemoveNote
+        {
+            get => this._isPopupRemoveNote;
+            set => SetProperty(ref this._isPopupRemoveNote, value);
+        }
 
         #region theme
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
@@ -394,6 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand RemoveCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 PrepareToRemove = true;
+                IsPopupRemoveNote = false;
                 CloseRequest.Send();
             }
         ));
