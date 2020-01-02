@@ -128,15 +128,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !file.Exists;
         }
 
-        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILoggerFactory loggerFactory)
+        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILoggerFactory? loggerFactory)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
+                if(loggerFactory != null) {
+                    diContainer.Register<ILoggerFactory, ILoggerFactory>(loggerFactory);
+                }
+
                 diContainer
-                    .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                     .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
-                using(var windowManager = new WindowManager(diContainer, loggerFactory)) {
+                using(var windowManager = new WindowManager(diContainer, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(WindowKind.Accept, view));
@@ -405,7 +408,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             //バージョンアップに伴う使用許諾
             if(!IsFirstStartup && !skipAccept) {
-                var dialogResult = ShowAcceptView(DiContainer, loggerFactory);
+                var dialogResult = ShowAcceptView(DiContainer, null);
                 if(!dialogResult) {
                     // バージョンアップに伴う使用許諾を得られなかったのでおわる
                     logger.LogInformation("バージョンアップ後 使用許諾得られず");

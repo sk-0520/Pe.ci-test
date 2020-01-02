@@ -34,6 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         void ApplyFromRegistry()
         {
             using var reg = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+            if(reg == null) {
+                Logger.LogWarning("テーマ取得できず");
+                return;
+            }
 
             WindowsThemeKind = Convert.ToBoolean(reg.GetValue("SystemUsesLightTheme"))
                 ? PlatformThemeKind.Light

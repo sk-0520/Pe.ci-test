@@ -8,6 +8,7 @@ using System.Windows;
 using ContentTypeTextNet.Pe.Main;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using Microsoft.Extensions.Logging;
 using Prism;
 
 namespace ContentTypeTextNet.Pe.Main
@@ -20,6 +21,7 @@ namespace ContentTypeTextNet.Pe.Main
         #region property
 
         ApplicationManager? ApplicationManager { get; set; }
+        ILogger? Logger { get; set; }
         #endregion
 
         protected override void OnStartup(StartupEventArgs e)
@@ -30,6 +32,8 @@ namespace ContentTypeTextNet.Pe.Main
 #endif
             var initializer = new ApplicationInitializer();
             initializer.Initialize(this, e);
+
+            Logger = initializer.LoggerFactory.CreateLogger(GetType());
 
             ApplicationManager = new ApplicationManager(initializer);
 
@@ -47,6 +51,15 @@ namespace ContentTypeTextNet.Pe.Main
             var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
             notifyIcon.DataContext = viewModel;
             //Shutdown();
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            if(Logger != null) {
+                Logger.LogError(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
+            } else {
+                MessageBox.Show(e.Exception.ToString());
+            }
         }
     }
 }
