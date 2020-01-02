@@ -46,6 +46,7 @@ using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
+using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -168,6 +169,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void SetDynamicPlatformTheme()
         {
+            ApplicationDiContainer.Get<IDispatcherWrapper>().VerifyAccess();
+
             var colors = PlatformThemeLoader.ApplicationThemeKind switch
             {
                 PlatformThemeKind.Dark => (active: "Dark", inactive: "Light"),
@@ -185,6 +188,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Application.Current.Resources["PlatformTheme-ThemeColors2-ControlColor"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-ControlColor"];
             Application.Current.Resources["PlatformTheme-ThemeColors2-BorderColor"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-BorderColor"];
 
+            Application.Current.Resources["PlatformTheme-ThemeColors-BackgroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-BackgroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-ForegroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-ForegroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-ControlBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-ControlBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-BorderBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-BorderBrush"];
+
+            Application.Current.Resources["PlatformTheme-ThemeColors2-BackgroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-BackgroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-ForegroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-ForegroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-ControlBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-ControlBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-BorderBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-BorderBrush"];
+
+
             var accent = PlatformThemeLoader.GetAccentColors(PlatformThemeLoader.AccentColor);
             Application.Current.Resources["PlatformTheme-AccentColors-AccentColor"] = accent.Accent;
             Application.Current.Resources["PlatformTheme-AccentColors-BaseColor"] = accent.Base;
@@ -198,6 +212,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Application.Current.Resources["PlatformTheme-AccentTextColors-HighlightColor"] = text.Highlight;
             Application.Current.Resources["PlatformTheme-AccentTextColors-ActiveColor"] = text.Active;
             Application.Current.Resources["PlatformTheme-AccentTextColors-DisableColor"] = text.Disable;
+
+            void ApplyAccentBrush(string name) {
+                var color = (Color)Application.Current.Resources[name + "Color"];
+                var brush = FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
+                Application.Current.Resources[name + "Brush"] = brush;
+            }
+            var names = new[] {
+                "PlatformTheme-AccentColors-Accent",
+                "PlatformTheme-AccentColors-Base",
+                "PlatformTheme-AccentColors-Highlight",
+                "PlatformTheme-AccentColors-Active",
+                "PlatformTheme-AccentColors-Disable",
+
+                "PlatformTheme-AccentTextColors-Accent",
+                "PlatformTheme-AccentTextColors-Base",
+                "PlatformTheme-AccentTextColors-Highlight",
+                "PlatformTheme-AccentTextColors-Active",
+                "PlatformTheme-AccentTextColors-Disable",
+            };
+            foreach(var name in names ) {
+                ApplyAccentBrush(name);
+            }
         }
 
         public bool Startup(App app, StartupEventArgs e)
@@ -809,7 +845,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {
-            SetDynamicPlatformTheme();
+            ApplicationDiContainer.Get<IDispatcherWrapper>().Invoke(() => {
+                SetDynamicPlatformTheme();
+            });
         }
 
 
