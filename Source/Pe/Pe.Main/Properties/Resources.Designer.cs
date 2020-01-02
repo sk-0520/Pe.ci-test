@@ -178,6 +178,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   コマンド(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Command {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   終了(_X) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_Menu_Exit {

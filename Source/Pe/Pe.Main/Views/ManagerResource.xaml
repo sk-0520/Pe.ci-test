@@ -102,6 +102,14 @@
       <MenuItem Header="{Binding Resources.String_AppManager_Menu_Note_Hidden, Source={x:Static app_main:CultureService.Current}}" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
     </MenuItem>
 
+    <MenuItem Header="{Binding Resources.String_AppManager_Menu_Command, Source={x:Static app_main:CultureService.Current}}">
+      <MenuItem.Icon>
+        <ContentControl Content="{StaticResource App-Image-Command}" Style="{StaticResource MenuIcon}" />
+      </MenuItem.Icon>
+    </MenuItem>
+
+    <Separator />
+
     <MenuItem Header="{Binding Resources.String_AppManager_Menu_About, Source={x:Static app_main:CultureService.Current}}">
       <MenuItem.Icon>
         <ContentControl Content="{StaticResource App-Image-About}" Style="{StaticResource MenuIcon}" />

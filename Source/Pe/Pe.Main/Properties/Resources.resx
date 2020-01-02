@@ -142,6 +142,9 @@
   <data name="String_AppManager_Menu_About_Version" xml:space="preserve">
     <value>バージョン情報(_V)</value>
   </data>
+  <data name="String_AppManager_Menu_Command" xml:space="preserve">
+    <value>コマンド(_C)</value>
+  </data>
   <data name="String_AppManager_Menu_Exit" xml:space="preserve">
     <value>終了(_X)</value>
   </data>
