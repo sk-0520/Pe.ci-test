@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
-                viewBox.Width = GetCaptionHeight();
+                viewBox.Width = GetCaptionHeight() * 0.8;
                 viewBox.Height = viewBox.Width;
 
                 var canvas = new Canvas();
@@ -159,25 +159,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, ColorPair<Color> baseColor)
         {
-            // TODO: 色調整
-            switch(buttonState) {
-                case NoteCaptionButtonState.None:
-                    return FreezableUtility.GetSafeFreeze(Brushes.Transparent);
-
-                case NoteCaptionButtonState.Over:
-                    return FreezableUtility.GetSafeFreeze(Brushes.Lime);
-
-                case NoteCaptionButtonState.Pressed:
-                    return FreezableUtility.GetSafeFreeze(Brushes.Red);
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return Brushes.Transparent;
         }
 
         public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
         {
-            return DispatcherWrapper.Get(() => GetCaptionImageCore(noteCaption, isEnabled, baseColor));
+            return GetCaptionImageCore(noteCaption, isEnabled, baseColor);
         }
 
         public DependencyObject GetResizeGripImage(ColorPair<Color> baseColor)
