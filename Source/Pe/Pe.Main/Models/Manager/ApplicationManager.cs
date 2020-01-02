@@ -845,9 +845,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {
-            ApplicationDiContainer.Get<IDispatcherWrapper>().Invoke(() => {
+            ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                 SetDynamicPlatformTheme();
-            });
+            }, DispatcherPriority.ApplicationIdle);
         }
 
 
