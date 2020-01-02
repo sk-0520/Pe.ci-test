@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
@@ -24,6 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
 
+            ThemeProperties = new ThemeProperties(this);
+
             PlatformTheme.Changed += PlatformTheme_Changed;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
@@ -35,13 +38,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         ICommandTheme CommandTheme { get; }
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+
+        ThemeProperties ThemeProperties { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
 
         #region theme
 
+        [ThemeProperty]
         public Thickness ViewBorderThickness => CommandTheme.GetViewBorderThickness();
+        [ThemeProperty]
         public Thickness ViewResizeThickness
         {
             get
@@ -52,27 +59,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 return thickness;
             }
         }
+        [ThemeProperty]
         public Brush ViewActiveBorderBrush => CommandTheme.GetViewBorderBrush(true);
+        [ThemeProperty]
         public Brush ViewInactiveBorderBrush => CommandTheme.GetViewBorderBrush(false);
 
+        [ThemeProperty]
         public Brush ViewActiveBackgroundBrush => CommandTheme.GetViewBackgroundBrush(true);
+        [ThemeProperty]
         public Brush ViewInactiveBackgroundBrush => CommandTheme.GetViewBackgroundBrush(false);
+        [ThemeProperty]
         public double GripWidth => CommandTheme.GetGripWidth();
+        [ThemeProperty]
         public Brush GripActiveBrush => CommandTheme.GetGripBrush(true);
+        [ThemeProperty]
         public Brush GripInactiveBrush => CommandTheme.GetGripBrush(true);
 
+        [ThemeProperty]
         public Thickness InputBorderThickness => CommandTheme.GetInputBorderThickness();
 
+        [ThemeProperty]
         public Brush InputEmptyBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Empty);
+        [ThemeProperty]
         public Brush InputFindingBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Finding);
+        [ThemeProperty]
         public Brush InputNotFoundBorderBrush => CommandTheme.GetInputBorderBrush(InputState.NotFound);
 
+        [ThemeProperty]
         public Brush InputEmptyBackground => CommandTheme.GetInputBackground(InputState.Empty);
+        [ThemeProperty]
         public Brush InputFindingBackground => CommandTheme.GetInputBackground(InputState.Finding);
+        [ThemeProperty]
         public Brush InputNotFoundBackground => CommandTheme.GetInputBackground(InputState.NotFound);
 
+        [ThemeProperty]
         public Brush InputEmptyForeground => CommandTheme.GetInputForeground(InputState.Empty);
+        [ThemeProperty]
         public Brush InputFindingForeground => CommandTheme.GetInputForeground(InputState.Finding);
+        [ThemeProperty]
         public Brush InputNotFoundForeground => CommandTheme.GetInputForeground(InputState.NotFound);
 
         #endregion
@@ -147,36 +171,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         private void PlatformTheme_Changed(object? sender, EventArgs e)
         {
             DispatcherWrapper.Begin(() => {
-                var themePropertyNames = new[] {
-                    nameof(ViewBorderThickness),
-                    nameof(ViewResizeThickness),
-
-                    nameof(ViewActiveBorderBrush),
-                    nameof(ViewInactiveBorderBrush),
-
-                    nameof(ViewActiveBackgroundBrush),
-                    nameof(ViewInactiveBackgroundBrush),
-
-                    nameof(GripWidth),
-
-                    nameof(GripActiveBrush),
-                    nameof(GripInactiveBrush),
-
-                    nameof(InputBorderThickness),
-
-                    nameof(InputEmptyBorderBrush ),
-                    nameof(InputFindingBorderBrush ),
-                    nameof(InputNotFoundBorderBrush ),
-
-                    nameof(InputEmptyBackground ),
-                    nameof(InputFindingBackground ),
-                    nameof(InputNotFoundBackground ),
-
-                    nameof(InputEmptyForeground),
-                    nameof(InputFindingForeground),
-                    nameof(InputNotFoundForeground),
-                };
-                foreach(var themePropertyName in themePropertyNames) {
+                foreach(var themePropertyName in ThemeProperties.GetPropertyNames()) {
                     RaisePropertyChanged(themePropertyName);
                 }
             }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
