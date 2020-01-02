@@ -120,6 +120,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             get => Model.IsTopmost;
         }
 
+        public object ToolbarMainIcon
+        {
+            get => LauncherToolbarTheme.GetToolbarMainIcon(IconBox);
+        }
+
         public Brush ToolbarBackground
         {
             get => LauncherToolbarTheme.GetToolbarBackground(ToolbarPosition, ViewState.Active, IconBox, IsIconOnly, TextWidth);

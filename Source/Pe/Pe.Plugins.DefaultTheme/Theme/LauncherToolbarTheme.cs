@@ -163,6 +163,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return new Size(4, 4);
         }
 
+        public DependencyObject GetToolbarMainIcon(IconBox iconBox)
+        {
+            return (DependencyObject)Application.Current.Resources["Image-HamburgerMenu"];
+        }
+
         public DependencyObject GetToolbarImage(IReadOnlyScreenData currentScreen, IReadOnlyList<IReadOnlyScreenData> allScreens, IconBox iconBox, bool isStrong)
         {
             return GetToolbarImageCore(currentScreen, allScreens, iconBox, isStrong);

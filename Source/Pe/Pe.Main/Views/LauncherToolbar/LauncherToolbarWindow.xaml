@@ -328,14 +328,17 @@
       <Grid>
         <app_main_view_lt:LauncherContentControl Title="{Binding DataContext.SelectedLauncherGroup.Name, ElementName=root}" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}">
           <app_main_view_lt:LauncherContentControl.Icon>
-            <ContentControl
-              Template="{StaticResource NormalIcon}"
-              Content="{StaticResource Image-HamburgerMenu}"
+            <Viewbox
               Width="{Binding IconBox, Converter={StaticResource IconScaleToWidthConverter}}"
               Height="{Binding IconBox, Converter={StaticResource IconScaleToHeightConverter}}"
-              Background="{Binding ToolbarForeground}"
-              Foreground="{Binding ToolbarForeground}"
-          />
+            >
+              <ContentControl
+                Template="{StaticResource NormalIcon}"
+                Content="{Binding ToolbarMainIcon}"
+                Background="{Binding ToolbarForeground}"
+                Foreground="{Binding ToolbarForeground}"
+              />
+            </Viewbox>
           </app_main_view_lt:LauncherContentControl.Icon>
         </app_main_view_lt:LauncherContentControl>
         <Popup x:Name="appPopup" Style="{StaticResource DropMenu}" IsOpen="{Binding IsChecked, ElementName=appButton}">
