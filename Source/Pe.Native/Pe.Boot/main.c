@@ -90,6 +90,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             TCHAR s[1000];
             swprintf(s, 1000 - 1, _T("起動前停止: %d ms"), waitTime);
             outputDebug(s);
+            Sleep(waitTime);
+            outputDebug(_T("待機終了"));
         }
 
         // commandArg の確保に失敗してても引数無し扱いで起動となる
