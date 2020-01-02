@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 {
-    public class ExtendsExecuteElement : ElementBase
+    public class ExtendsExecuteElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 

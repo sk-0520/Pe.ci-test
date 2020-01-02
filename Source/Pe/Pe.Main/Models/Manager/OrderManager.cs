@@ -37,6 +37,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -81,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
         WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element);
         WindowItem CreateNoteWindow(NoteElement element);
+        WindowItem CreateCommandWindow(CommandElement element);
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
         WindowItem CreateSettingWindow(SettingContainerElement element);
 
@@ -246,6 +248,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 return new WindowItem(WindowKind.Note, window);
             }
+
+            public WindowItem CreateCommandWindow(CommandElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    //c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    return c.Build<NoteViewModel>(element);
+                });
+                var window = DiContainer.BuildView<NoteWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.Note, window);
+            }
+
 
             public WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element)
             {

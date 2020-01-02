@@ -47,6 +47,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -71,6 +72,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
+
+            CommandElement = ApplicationDiContainer.Build<CommandElement>();
         }
 
         #region property
@@ -92,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
+        CommandElement CommandElement { get; }
         SettingContainerElement? SettingElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
@@ -490,6 +494,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Application.Current.Shutdown();
         }
 
+        public void ShowCommandView()
+        {
+            if(!CommandElement.IsInitialized) {
+                CommandElement.Initialize();
+            }
+
+            CommandElement.StartView();
+        }
+
         /// <summary>
         /// すべてここで完結する神の所業。
         /// </summary>
@@ -785,7 +798,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-
         public WindowItem CreateNoteWindow(NoteElement element)
         {
             var windowItem = OrderManager.CreateNoteWindow(element);
@@ -794,6 +806,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return windowItem;
         }
+
+        public WindowItem CreateCommandWindow(CommandElement element)
+        {
+            var windowItem = OrderManager.CreateCommandWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
 
         public WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element)
         {
