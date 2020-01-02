@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         DependencyObject GetToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
         {
-            var drawSize = new Size((int)iconBox, (int)iconBox);
+            var drawSize = new Size((int)iconBox * 2, (int)iconBox);
             var strongSize = new Size(0.2f, 0.3f);
             //using(var targetGraphics = CreateGraphics()) {
             //	var image = new Bitmap(imageSize.Width, imageSize.Height, targetGraphics);
