@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("セッション変更検知: Reason = {0}", e.Reason);
 
             if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
-                ResetViewElements();
+                ResetScreenViewElements();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     // アップデート処理とかとか
                 }
@@ -304,7 +304,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("ディスプレイ変更検知");
 
-            ResetViewElements();
+            ResetScreenViewElements();
         }
 
 

@@ -664,10 +664,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             );
         }
 
-        private void ResetViewElements()
+        private void ResetScreenViewElements()
         {
-            CloseViews();
-            DisposeElements();
+            CloseLauncherToolbarViews();
+            CloseNoteViews();
+
+            DisposeLauncherToolbarElements();
+            DisposeLauncherGroupElements();
+            DisposeNoteElements();
 
             ExecuteElements();
         }
