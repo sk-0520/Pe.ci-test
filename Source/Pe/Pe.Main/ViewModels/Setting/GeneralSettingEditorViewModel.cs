@@ -241,8 +241,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         IGeneralTheme GeneralTheme { get; }
-        public Geometry BoldIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontBold, Bridge.Models.Data.IconBox.Small);
-        public Geometry ItalicIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontItalic, Bridge.Models.Data.IconBox.Small);
 
         public FontViewModel? Font { get; private set; }
         public IconBox IconBox
@@ -311,9 +309,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         IGeneralTheme GeneralTheme { get; }
-        public Geometry BoldIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontBold, Bridge.Models.Data.IconBox.Small);
-        public Geometry ItalicIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontItalic, Bridge.Models.Data.IconBox.Small);
-
         public FontViewModel? Font { get; private set; }
         public NoteCreateTitleKind TitleKind
         {
@@ -378,8 +373,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
         IGeneralTheme GeneralTheme { get; }
-        public Geometry BoldIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontBold, Bridge.Models.Data.IconBox.Small);
-        public Geometry ItalicIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontItalic, Bridge.Models.Data.IconBox.Small);
 
         public FontViewModel? Font { get; private set; }
         public Color OutputForegroundColor

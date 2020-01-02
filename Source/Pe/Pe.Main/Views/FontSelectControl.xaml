@@ -32,8 +32,12 @@
       </ComboBox.ItemTemplate>
     </ComboBox>
     <DockPanel HorizontalAlignment="Stretch" Width="Auto">
-      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsBold, ElementName=root}" IsEnabled="{Binding IsEnabledBold, ElementName=root}" Content="{Binding BoldContent, ElementName=root, TargetNullValue=B}" />
-      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, ElementName=root}" IsEnabled="{Binding IsEnabledItalic, ElementName=root}"  Content="{Binding ItalicContent, ElementName=root, TargetNullValue=I}"/>
+      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsBold, ElementName=root}" IsEnabled="{Binding IsEnabledBold, ElementName=root}">
+        <ContentControl Content="{StaticResource App-Image-Font-Bold}" Style="{StaticResource FontIcon}" />
+      </ToggleButton>
+      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, ElementName=root}" IsEnabled="{Binding IsEnabledItalic, ElementName=root}">
+        <ContentControl Content="{StaticResource App-Image-Font-Italic}" Style="{StaticResource FontIcon}" />
+      </ToggleButton>
       <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, ElementName=root}" />
       <!--<xctk:DoubleUpDown Minimum="{Binding SizeMinimum, ElementName=root}" Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, ElementName=root}" />-->
       <app_core_views:NumericUpDown Minimum="{Binding SizeMinimum, ElementName=root}"  Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, Mode=TwoWay, ElementName=root}" />

@@ -458,12 +458,6 @@
                     SizeMinimum="{Binding Font.MinimumSize}"
                     SizeMaximum="{Binding Font.MaximumSize}"
                   >
-                    <app_main_view:FontSelectControl.BoldContent>
-                      <ContentControl Content="{Binding BoldIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
-                    </app_main_view:FontSelectControl.BoldContent>
-                    <app_main_view:FontSelectControl.ItalicContent>
-                      <ContentControl Content="{Binding ItalicIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
-                    </app_main_view:FontSelectControl.ItalicContent>
                     <app_main_view:FontSelectControl.Style>
                       <Style TargetType="app_main_view:FontSelectControl">
                         <Style.Triggers>

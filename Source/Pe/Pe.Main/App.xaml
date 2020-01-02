@@ -11,8 +11,8 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Views/Resources/PlatformTheme.xaml" />
-
-        <ResourceDictionary Source="/Views/Resources/Theme/General/General.xaml" />
+        <ResourceDictionary Source="/Views/Resources/General.xaml" />
+        <ResourceDictionary Source="/Views/Resources/Image.xaml" />
 
         <ResourceDictionary Source="/Views/ManagerResource.xaml" />
       </ResourceDictionary.MergedDictionaries>

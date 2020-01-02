@@ -299,13 +299,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public Geometry LockIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.Lock, Bridge.Models.Data.IconBox.Small);
-        public Geometry LockOpenIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.LockOpen, Bridge.Models.Data.IconBox.Small);
-
-        public Geometry BoldIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontBold, Bridge.Models.Data.IconBox.Small);
-        public Geometry ItalicIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontItalic, Bridge.Models.Data.IconBox.Small);
-
-
         #region content kind changing
         public NoteContentKind ChangingContentKind
         {

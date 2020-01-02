@@ -160,5 +160,11 @@
     <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
   </Style>
 
+  <Style x:Key="FontIcon" TargetType="ContentControl">
+    <Setter Property="Template" Value="{StaticResource SmallIcon}" />
+    <Setter Property="Foreground" Value="Transparent" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+  </Style>
+
 
 </ResourceDictionary>

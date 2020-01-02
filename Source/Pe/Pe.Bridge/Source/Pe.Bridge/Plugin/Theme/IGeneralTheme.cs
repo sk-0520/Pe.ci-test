@@ -11,13 +11,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     public enum GeneralGeometryImageKind
     {
         Menu,
-
-        Lock,
-        LockOpen,
-
-        FontBold,
-        FontItalic,
-        FontUnderline,
     }
 
     public interface IGeneralTheme
