@@ -326,7 +326,7 @@
         </Style>
       </ToggleButton.Style>
       <Grid>
-        <app_main_view_lt:LauncherContentControl Title="pe" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}">
+        <app_main_view_lt:LauncherContentControl Title="{Binding DataContext.SelectedLauncherGroup.Name, ElementName=root}" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}">
           <app_main_view_lt:LauncherContentControl.Icon>
             <ContentControl
               Template="{StaticResource NormalIcon}"
