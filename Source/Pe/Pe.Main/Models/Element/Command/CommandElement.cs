@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -12,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement : ElementBase, IViewShowStarter
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -20,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             StatementLoader = statementLoader;
             OrderManager = orderManager;
             WindowManager = windowManager;
+            NotifyManager = notifyManager;
         }
 
         #region property
@@ -29,7 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         IDatabaseStatementLoader StatementLoader { get; }
         IOrderManager OrderManager { get; }
         IWindowManager WindowManager { get; }
+        INotifyManager NotifyManager { get; }
         bool ViewCreated { get; set; }
+
+        public ObservableCollection<LauncherItemElement> LauncherItemElements { get; } = new ObservableCollection<LauncherItemElement>();
 
         #endregion
 
@@ -41,13 +49,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             WindowManager.GetWindowItems(WindowKind.Command).First().Window.Hide();
         }
+
+        private void RefreshLauncherItems()
+        {
+            IReadOnlyList<Guid> ids;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                ids = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
+            }
+
+            var launcherItemElements = ids
+                .Select(i => OrderManager.GetOrCreateLauncherItemElement(i))
+                .ToList();
+            ;
+            LauncherItemElements.SetRange(launcherItemElements);
+        }
+
+        public void Refresh()
+        {
+            // アイテム一覧とったりなんかしたりあれこれしたり
+            RefreshLauncherItems();
+        }
+
         #endregion
 
         #region ElementBase
 
         protected override void InitializeImpl()
         {
-            // アイテム一覧とったりなんかしたりあれこれしたり
+            Refresh();
         }
 
         #endregion

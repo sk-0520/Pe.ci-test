@@ -5,7 +5,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
@@ -17,40 +19,43 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         #region ICommandTheme
 
-        public DependencyObject GetExecuteButton()
-        {
-            throw new NotImplementedException();
-        }
-
         public Brush GetGripBrush(bool isActive)
         {
-            throw new NotImplementedException();
+            var color = PlatformTheme.GetTaskbarColor();
+            var fore = MediaUtility.GetAutoColor(color);
+            return new SolidColorBrush(fore);
         }
 
         [return: PixelKind(Px.Logical)]
         public double GetGripWidth()
         {
-            throw new NotImplementedException();
+            return 8;
+        }
+
+        public Thickness GetInputBorderThickness()
+        {
+            return new Thickness(2);
+        }
+
+        public Brush GetInputBorderBrush(InputState inputState)
+        {
+            return Brushes.Gray;
         }
 
         public Brush GetInputBackground(InputState inputState)
         {
-            throw new NotImplementedException();
-        }
-
-        public Border GetInputBorder(InputState inputState)
-        {
-            throw new NotImplementedException();
+            return Brushes.White;
         }
 
         public Brush GetInputForeground(InputState inputState)
         {
-            throw new NotImplementedException();
+            return Brushes.Black;
         }
 
         public Brush GetViewBackgroundBrush(bool isActive)
         {
-            throw new NotImplementedException();
+            var color = PlatformTheme.GetTaskbarColor();
+            return new SolidColorBrush(color);
         }
 
         public Thickness GetViewBorderThickness()
@@ -60,7 +65,9 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public Brush GetViewBorderBrush(bool isActive)
         {
-            throw new NotImplementedException();
+            var color = PlatformTheme.GetTaskbarColor();
+            color.A = (byte)(isActive ? 0xff : 0x80);
+            return new SolidColorBrush(color);
         }
 
         #endregion

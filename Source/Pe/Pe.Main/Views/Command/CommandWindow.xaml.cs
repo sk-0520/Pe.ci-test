@@ -32,5 +32,17 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         #endregion
 
+        #region Window
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            if(e.Source == this.grip) {
+                DragMove();
+            }
+        }
+        #endregion
+
     }
 }

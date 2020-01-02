@@ -8,27 +8,81 @@
   Height="450"
   Width="800"
 
+  AllowsTransparency="True"
+  WindowStyle="None"
+  Background="Transparent"
+  SizeToContent="Height"
+  MinWidth="100"
+  MaxWidth="400"
+  Topmost="True"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
   <Window.Resources>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-    <WindowChrome x:Key="NormalWindowChrome"
-        ResizeBorderThickness="{Binding ViewBorderThickness}"
-        CaptionHeight="0"
-      />
-    <WindowChrome x:Key="CompactWindowChrome"
-        ResizeBorderThickness="0"
-        CaptionHeight="0"
-      />
-    <WindowChrome x:Key="LockWindowChrome"
-        ResizeBorderThickness="0"
-        CaptionHeight="0"
-      />
   </Window.Resources>
-  <Grid>
+  <Window.Style>
+    <Style TargetType="Window">
+      <Setter Property="WindowChrome.WindowChrome">
+        <Setter.Value>
+          <WindowChrome
+            CaptionHeight="0"
+            ResizeBorderThickness="{Binding ViewResizeThickness}"
+          />
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Style>
 
-  </Grid>
+  <Border BorderThickness="{Binding ViewBorderThickness}">
+    <Border.Style>
+      <Style TargetType="Border">
+        <Setter Property="BorderBrush" Value="{Binding ViewActiveBorderBrush}" />
+        <Setter Property="Background" Value="{Binding ViewActiveBackgroundBrush}" />
+      </Style>
+    </Border.Style>
+
+    <Grid VerticalAlignment="Center">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <Border x:Name="grip" Grid.Column="0" Cursor="SizeAll" Width="{Binding GripWidth}">
+        <Border.Style>
+          <Style TargetType="Border">
+            <Setter Property="Background" Value="{Binding GripActiveBrush}" />
+          </Style>
+        </Border.Style>
+      </Border>
+
+      <Grid Grid.Column="1">
+        <!-- アイコン描画領域 -->
+      </Grid>
+
+      <Border Grid.Column="2" BorderThickness="{Binding InputBorderThickness}" >
+        <Border.Style>
+          <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="{Binding InputEmptyBorderBrush}" />
+          </Style>
+        </Border.Style>
+        <TextBox BorderThickness="0">
+          <TextBox.Style>
+            <Style TargetType="TextBox">
+              <Setter Property="Background" Value="{Binding InputEmptyBackground}" />
+              <Setter Property="Foreground" Value="{Binding InputEmptyForeground}" />
+            </Style>
+          </TextBox.Style>
+        </TextBox>
+      </Border>
+
+      <Button Grid.Column="3" Content="exec"/>
+
+    </Grid>
+  </Border>
+
 </Window>

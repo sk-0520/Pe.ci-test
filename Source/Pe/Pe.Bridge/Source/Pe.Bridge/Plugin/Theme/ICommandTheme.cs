@@ -58,11 +58,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <returns></returns>
         Brush GetGripBrush(bool isActive);
 
-        Border GetInputBorder(InputState inputState);
+        Thickness GetInputBorderThickness();
+        Brush GetInputBorderBrush(InputState inputState);
         Brush GetInputForeground(InputState inputState);
         Brush GetInputBackground(InputState inputState);
-
-        DependencyObject GetExecuteButton();
 
         #endregion
     }
