@@ -44,6 +44,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
+    <ProjectReference Include="..\Pe.Plugins.DefaultTheme\Pe.Plugins.DefaultTheme.csproj" />
   </ItemGroup>
 
   <ItemGroup>

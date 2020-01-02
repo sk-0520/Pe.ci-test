@@ -1,0 +1,9 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/ImageResource.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/LauncherToolbar.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

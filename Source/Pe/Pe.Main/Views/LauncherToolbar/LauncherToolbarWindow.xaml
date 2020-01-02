@@ -26,8 +26,11 @@
   ResizeMode="NoResize"
   ShowInTaskbar="False"
   AllowDrop="True"
+  AllowsTransparency="True"
 
   Topmost="{Binding IsTopmost}"
+
+  Background="{Binding ToolbarBackground}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -155,7 +158,7 @@
             <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
           </i:EventTrigger>
         </i:Interaction.Triggers>
-        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
+        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}" />
       </Button>
     </DataTemplate>
     <!--#endregion -->
@@ -204,7 +207,7 @@
             <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
           </i:EventTrigger>
         </i:Interaction.Triggers>
-        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
+        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}" />
       </Button>
     </DataTemplate>
 
@@ -323,16 +326,21 @@
         </Style>
       </ToggleButton.Style>
       <Grid>
-        <app_main_view_lt:LauncherContentControl Title="pe" >
+        <app_main_view_lt:LauncherContentControl Title="{Binding DataContext.SelectedLauncherGroup.Name, ElementName=root}" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}">
           <app_main_view_lt:LauncherContentControl.Icon>
-            <ContentControl
-            Template="{StaticResource NormalIcon}"
-            Content="{StaticResource Image-HamburgerMenu}"
-            Width="{Binding IconBox, Converter={StaticResource IconScaleToWidthConverter}}"
-            Height="{Binding IconBox, Converter={StaticResource IconScaleToHeightConverter}}"
-            Background="Black"
-            Foreground="Gray"
-          />
+            <Viewbox
+              Width="{Binding IconBox, Converter={StaticResource IconScaleToWidthConverter}}"
+              Height="{Binding IconBox, Converter={StaticResource IconScaleToHeightConverter}}"
+            >
+              <Canvas Width="24" Height="24">
+                <Path
+                  Data="{Binding ToolbarMainIcon}"
+                  Fill="{Binding ToolbarForeground}"
+                  Stroke="{Binding ToolbarForeground}"
+                  StrokeThickness="1"
+                />
+              </Canvas>
+            </Viewbox>
           </app_main_view_lt:LauncherContentControl.Icon>
         </app_main_view_lt:LauncherContentControl>
         <Popup x:Name="appPopup" Style="{StaticResource DropMenu}" IsOpen="{Binding IsChecked, ElementName=appButton}">

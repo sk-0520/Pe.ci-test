@@ -1,40 +1,30 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Theme
+namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal abstract class ThemeBase
+    public abstract class ThemeBase
     {
-
-        public ThemeBase(IDispatcherWrapper dispatcherWrapper, ILogger logger)
+        public ThemeBase(IThemeParameter parameter)
         {
-            DispatcherWrapper = dispatcherWrapper;
-            Logger = logger;
-        }
-
-        public ThemeBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-        {
-            DispatcherWrapper = dispatcherWrapper;
-            Logger = loggerFactory.CreateLogger(GetType());
+            PlatformTheme = parameter.PlatformTheme;
+            DispatcherWrapper = parameter.DispatcherWrapper;
+            Logger = parameter.LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
         protected ILogger Logger { get; }
-        /// <summary>
-        /// <see cref="DependencyObject"/>作成用のディスパッチャー。
-        /// <para>だけどまず呼び出し側で UI スレッドであることを保証するので内部的にどうこうする場合にしゃあなし使うのであって原則使用しない。</para>
-        /// </summary>
+        protected IPlatformTheme PlatformTheme { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
@@ -88,7 +78,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
         }
 
         protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
-
 
         #endregion
     }

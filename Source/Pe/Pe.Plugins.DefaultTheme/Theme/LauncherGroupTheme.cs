@@ -1,28 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Theme;
-using ContentTypeTextNet.Pe.Main.Views.Extend;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Theme
+namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     internal class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
     {
-        public LauncherGroupTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWrapper, loggerFactory)
+        public LauncherGroupTheme(IThemeParameter parameter)
+            : base(parameter)
         { }
 
         #region property
@@ -32,16 +26,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         string GetResourceKey(LauncherGroupImageName imageName)
         {
-            switch(imageName) {
-                case LauncherGroupImageName.DirectoryNormal:
-                    return "Image-LauncherGroup-Directory-Normal";
-
-                case LauncherGroupImageName.DirectoryOpen:
-                    return "Image-LauncherGroup-Directory-Open";
-
-                default:
-                    throw new NotSupportedException();
-            }
+            return imageName switch
+            {
+                LauncherGroupImageName.DirectoryNormal => "Image-LauncherGroup-Directory-Normal",
+                LauncherGroupImageName.DirectoryOpen => "Image-LauncherGroup-Directory-Open",
+                LauncherGroupImageName.File => "Image-LauncherGroup-File",
+                LauncherGroupImageName.Gear => "Image-LauncherGroup-Gear",
+                LauncherGroupImageName.Config => "Image-LauncherGroup-Config",
+                LauncherGroupImageName.Builder => "Image-LauncherGroup-Builder",
+                LauncherGroupImageName.Book => "Image-LauncherGroup-Book",
+                LauncherGroupImageName.Bookmark => "Image-LauncherGroup-Bookmark",
+                LauncherGroupImageName.Light => "Image-LauncherGroup-Light",
+                LauncherGroupImageName.Shortcut => "Image-LauncherGroup-Shortcut",
+                LauncherGroupImageName.Storage => "Image-LauncherGroup-Storage",
+                LauncherGroupImageName.Cloud => "Image-LauncherGroup-Cloud",
+                LauncherGroupImageName.User => "Image-LauncherGroup-User",
+                _ => throw new NotImplementedException(),
+            };
         }
 
         DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, bool isStrong)

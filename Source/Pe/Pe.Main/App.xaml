@@ -10,10 +10,11 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/VIews/Resources/Theme/General/General.xaml" />
-        <ResourceDictionary Source="/VIews/Resources/Theme/General/ImageResource.xaml" />
+        <ResourceDictionary Source="/Views/Resources/PlatformTheme.xaml" />
+        <ResourceDictionary Source="/Views/Resources/General.xaml" />
+        <ResourceDictionary Source="/Views/Resources/Image.xaml" />
 
-        <ResourceDictionary Source="/VIews/ManagerResource.xaml" />
+        <ResourceDictionary Source="/Views/ManagerResource.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

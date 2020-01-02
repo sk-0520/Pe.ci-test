@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,12 +11,12 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Theme
+namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     internal class NoteTheme : ThemeBase, INoteTheme
     {
-        public NoteTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWrapper, loggerFactory)
+        public NoteTheme(IThemeParameter parameter)
+            : base(parameter)
         { }
 
         #region property
@@ -52,11 +50,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             }
         }
 
-        DependencyObject GetCaptionImageCore(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor)
+        DependencyObject GetCaptionImageCore(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
-                viewBox.Width = GetCaptionHeight();
+                viewBox.Width = GetCaptionHeight() * 0.8;
                 viewBox.Height = viewBox.Width;
 
                 var canvas = new Canvas();
@@ -120,9 +118,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             );
         }
 
-        public IReadOnlyColorPair<Brush> GetCaptionBrush(IReadOnlyColorPair<Color> baseColor)
+        public ColorPair<Brush> GetCaptionBrush(ColorPair<Color> baseColor)
         {
-            var pair = ColorPair.Create(new SolidColorBrush(baseColor.Foreground), new SolidColorBrush(baseColor.Background));
+            var pair = new ColorPair<Brush>(new SolidColorBrush(baseColor.Foreground), new SolidColorBrush(baseColor.Background));
 
             FreezableUtility.SafeFreeze(pair.Foreground);
             FreezableUtility.SafeFreeze(pair.Background);
@@ -130,12 +128,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             return pair;
         }
 
-        public Brush GetBorderBrush(IReadOnlyColorPair<Color> baseColor)
+        public Brush GetBorderBrush(ColorPair<Color> baseColor)
         {
             return FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Background));
         }
 
-        public IReadOnlyColorPair<Brush> GetContentBrush(IReadOnlyColorPair<Color> baseColor)
+        public ColorPair<Brush> GetContentBrush(ColorPair<Color> baseColor)
         {
             /*
             旧PeではXAML上でこれをかけ合わせてた
@@ -159,30 +157,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             );
         }
 
-        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, IReadOnlyColorPair<Color> baseColor)
+        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, ColorPair<Color> baseColor)
         {
-            // TODO: 色調整
-            switch(buttonState) {
-                case NoteCaptionButtonState.None:
-                    return FreezableUtility.GetSafeFreeze(Brushes.Transparent);
-
-                case NoteCaptionButtonState.Over:
-                    return FreezableUtility.GetSafeFreeze(Brushes.Lime);
-
-                case NoteCaptionButtonState.Pressed:
-                    return FreezableUtility.GetSafeFreeze(Brushes.Red);
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return Brushes.Transparent;
         }
 
-        public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
         {
-            return DispatcherWrapper.Get(() => GetCaptionImageCore(noteCaption, isEnabled, baseColor));
+            return GetCaptionImageCore(noteCaption, isEnabled, baseColor);
         }
 
-        public DependencyObject GetResizeGripImage(IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetResizeGripImage(ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
@@ -212,7 +197,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
             return viewBox;
         }
 
-        public DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, IReadOnlyColorPair<Color> baseColor)
+        public DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, ColorPair<Color> baseColor)
         {
             var size = new Size((int)iconBox, isCompact ? (int)iconBox / 2 : (int)iconBox);
             var box = CreateBox(baseColor.Foreground, baseColor.Background, size);

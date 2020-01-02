@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
@@ -31,7 +33,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
         }
 
         #region property
-
 
         PropertyChangedHooker PropertyChangedHooker { get; }
 
@@ -86,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 
         public virtual double MinimumSize => 6;
         public virtual double MaximumSize => 72;
+
         #endregion
 
         #region function

@@ -152,7 +152,7 @@
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
 
-          <TextBox x:Name="inputTitle" Grid.Column="0" Background="Transparent" BorderThickness="0" Foreground="{Binding CaptionForeground}" >
+          <TextBox x:Name="inputTitle" Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Foreground="{Binding CaptionForeground}" >
             <i:Interaction.Triggers>
               <i:EventTrigger EventName="LostFocus">
                 <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
@@ -527,7 +527,9 @@
                               <Setter Property="IsChecked" Value="False" />
                             </DataTrigger>
                             <Trigger Property="IsChecked" Value="True">
-                              --><!-- 一定時間経過で非活性 --><!--
+                              -->
+                    <!-- 一定時間経過で非活性 -->
+                    <!--
                               <Trigger.EnterActions>
                                 <BeginStoryboard>
                                   <BeginStoryboard.Storyboard>
@@ -546,11 +548,14 @@
                     </ToggleButton>
                     <Button Grid.Column="1" IsEnabled="{Binding IsChecked, ElementName=removeLocker}" Command="{Binding RemoveCommand}" Content="remove" />
                     -->
-                    <app_core_view:LockButton>
-                      <app_core_view:LockButton.LockContent>
-                        <Button Grid.Column="1" Command="{Binding RemoveCommand}" Content="remove" />
-                      </app_core_view:LockButton.LockContent>
-                    </app_core_view:LockButton>
+                    <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}" Content="remove?" />
+                    <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchRemoveNote}">
+                      <Border Style="{StaticResource PopupMenuBorder}">
+                        <StackPanel>
+                          <MenuItem Header="remove!" Command="{Binding RemoveCommand}" />
+                        </StackPanel>
+                      </Border>
+                    </Popup>
                   </Grid>
                 </Grid>
 

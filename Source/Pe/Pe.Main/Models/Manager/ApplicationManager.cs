@@ -40,6 +40,13 @@ using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
+using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -50,9 +57,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.LoggerFactory));
             Logger = LoggerFactory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
+            PlatformThemeLoader = new PlatformThemeLoader(LoggerFactory);
+            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
+
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
-            OrderManager = ApplicationDiContainer!.Make<OrderManagerImpl>(); //initializer.OrderManager;
+            OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
             StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
@@ -61,7 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
-
         }
 
         #region property
@@ -71,6 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         bool IsFirstStartup { get; }
         ILogger Logger { get; set; }
+        PlatformThemeLoader PlatformThemeLoader { get; }
 
         WindowManager WindowManager { get; set; }
         OrderManagerImpl OrderManager { get; set; }
@@ -90,6 +100,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         MouseHooker MouseHooker { get; }
         KeyActionChecker KeyActionChecker { get; }
         KeyActionAssistant KeyActionAssistant { get; }
+
+        PluginContainer? PluginContainer { get; set; }
 
         #endregion
 
@@ -112,6 +124,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+
+        private void RegisterPlugins()
+        {
+            Debug.Assert(ApplicationDiContainer != null);
+            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
+            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
+            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
+
+            foreach(var plugin in PluginContainer.GetPlugins()) {
+                PluginContainer.AddPlugin(plugin);
+            }
+            PluginContainer.Theme.SetCurrentTheme(DefaultTheme.Id);
+
+            ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
+            ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
+            ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
+            ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
+        }
+
         void RegisterManagers()
         {
             Debug.Assert(ApplicationDiContainer != null);
@@ -123,14 +154,105 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
         }
 
+        void SetStaticPlatformTheme()
+        {
+            var themes = new[] { PlatformThemeKind.Dark, PlatformThemeKind.Light };
+            foreach(var theme in themes) {
+                var themeKey = theme.ToString();
+                var colors = PlatformThemeLoader.GetApplicationThemeColors(PlatformThemeKind.Dark);
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BackgroundColor"] = colors.Background;
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ForegroundColor"] = colors.Foreground;
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ControlColor"] = colors.Control;
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BorderColor"] = colors.Border;
+            }
+        }
+
+        void SetDynamicPlatformTheme()
+        {
+            ApplicationDiContainer.Get<IDispatcherWrapper>().VerifyAccess();
+
+            var colors = PlatformThemeLoader.ApplicationThemeKind switch
+            {
+                PlatformThemeKind.Dark => (active: "Dark", inactive: "Light"),
+                PlatformThemeKind.Light => (active: "Light", inactive: "Dark"),
+                _ => throw new NotImplementedException(),
+            };
+
+            Application.Current.Resources["PlatformTheme-ThemeColors-BackgroundColor"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-BackgroundColor"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-ForegroundColor"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-ForegroundColor"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-ControlColor"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-ControlColor"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-BorderColor"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-BorderColor"];
+
+            Application.Current.Resources["PlatformTheme-ThemeColors2-BackgroundColor"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-BackgroundColor"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-ForegroundColor"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-ForegroundColor"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-ControlColor"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-ControlColor"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-BorderColor"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-BorderColor"];
+
+            Application.Current.Resources["PlatformTheme-ThemeColors-BackgroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-BackgroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-ForegroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-ForegroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-ControlBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-ControlBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors-BorderBrush"] = Application.Current.Resources["PlatformTheme-" + colors.active + "ThemeColors-BorderBrush"];
+
+            Application.Current.Resources["PlatformTheme-ThemeColors2-BackgroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-BackgroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-ForegroundBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-ForegroundBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-ControlBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-ControlBrush"];
+            Application.Current.Resources["PlatformTheme-ThemeColors2-BorderBrush"] = Application.Current.Resources["PlatformTheme-" + colors.inactive + "ThemeColors-BorderBrush"];
+
+
+            var accent = PlatformThemeLoader.GetAccentColors(PlatformThemeLoader.AccentColor);
+            Application.Current.Resources["PlatformTheme-AccentColors-AccentColor"] = accent.Accent;
+            Application.Current.Resources["PlatformTheme-AccentColors-BaseColor"] = accent.Base;
+            Application.Current.Resources["PlatformTheme-AccentColors-HighlightColor"] = accent.Highlight;
+            Application.Current.Resources["PlatformTheme-AccentColors-ActiveColor"] = accent.Active;
+            Application.Current.Resources["PlatformTheme-AccentColors-DisableColor"] = accent.Disable;
+
+            var text = PlatformThemeLoader.GetTextColor(accent);
+            Application.Current.Resources["PlatformTheme-AccentTextColors-AccentColor"] = text.Accent;
+            Application.Current.Resources["PlatformTheme-AccentTextColors-BaseColor"] = text.Base;
+            Application.Current.Resources["PlatformTheme-AccentTextColors-HighlightColor"] = text.Highlight;
+            Application.Current.Resources["PlatformTheme-AccentTextColors-ActiveColor"] = text.Active;
+            Application.Current.Resources["PlatformTheme-AccentTextColors-DisableColor"] = text.Disable;
+
+            void ApplyAccentBrush(string name) {
+                var color = (Color)Application.Current.Resources[name + "Color"];
+                var brush = FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
+                Application.Current.Resources[name + "Brush"] = brush;
+            }
+            var names = new[] {
+                "PlatformTheme-AccentColors-Accent",
+                "PlatformTheme-AccentColors-Base",
+                "PlatformTheme-AccentColors-Highlight",
+                "PlatformTheme-AccentColors-Active",
+                "PlatformTheme-AccentColors-Disable",
+
+                "PlatformTheme-AccentTextColors-Accent",
+                "PlatformTheme-AccentTextColors-Base",
+                "PlatformTheme-AccentTextColors-Highlight",
+                "PlatformTheme-AccentTextColors-Active",
+                "PlatformTheme-AccentTextColors-Disable",
+            };
+            foreach(var name in names ) {
+                ApplyAccentBrush(name);
+            }
+        }
+
         public bool Startup(App app, StartupEventArgs e)
         {
             //var initializer = new ApplicationInitializer();
             //if(!initializer.Initialize(e.Args)) {
             //    return false;
             //}
+            ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
+
+            //ApplicationDiContainer.Get<IDispatcherWrapper>().Invoke(() => {
+            SetStaticPlatformTheme();
+            SetDynamicPlatformTheme();
+            //});
+
             MakeMessageWindow();
+            RegisterPlugins();
             RegisterManagers();
+
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");
@@ -142,7 +264,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return true;
         }
-
 
         public ManagerViewModel CreateViewModel()
         {
@@ -721,5 +842,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
         #endregion
+
+        private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
+        {
+            ApplicationDiContainer.Get<IDispatcherWrapper>().Invoke(() => {
+                SetDynamicPlatformTheme();
+            });
+        }
+
+
     }
 }

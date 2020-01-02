@@ -137,12 +137,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
     public class SavingFontElement : FontElement
     {
-        public SavingFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IFontTheme fontTheme, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public SavingFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(fontId, mainDatabaseBarrier, statementLoader, loggerFactory)
         {
             DefaultFontKind = defaultFontKind;
             ParentUpdater = parentUpdater;
-            FontTheme = fontTheme;
             IdFactory = idFactory;
 
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
@@ -152,7 +151,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         public DefaultFontKind DefaultFontKind { get; }
 
         ParentUpdater ParentUpdater { get; }
-        IFontTheme FontTheme { get; }
         IIdFactory IdFactory { get; }
 
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }

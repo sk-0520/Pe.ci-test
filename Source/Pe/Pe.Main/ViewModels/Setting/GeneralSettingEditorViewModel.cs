@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
@@ -231,11 +232,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public sealed class AppCommandSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppCommandSettingEditorElement>
     {
-        public AppCommandSettingEditorViewModel(AppCommandSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AppCommandSettingEditorViewModel(AppCommandSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            GeneralTheme = generalTheme;
+        }
 
         #region property
+
+        IGeneralTheme GeneralTheme { get; }
 
         public FontViewModel? Font { get; private set; }
         public IconBox IconBox
@@ -295,12 +300,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public sealed class AppNoteSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppNoteSettingEditorElement>
     {
-        public AppNoteSettingEditorViewModel(AppNoteSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AppNoteSettingEditorViewModel(AppNoteSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            GeneralTheme = generalTheme;
+        }
 
         #region property
 
+        IGeneralTheme GeneralTheme { get; }
         public FontViewModel? Font { get; private set; }
         public NoteCreateTitleKind TitleKind
         {
@@ -357,11 +365,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public sealed class AppStandardInputOutputSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppStandardInputOutputSettingEditorElement>
     {
-        public AppStandardInputOutputSettingEditorViewModel(AppStandardInputOutputSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AppStandardInputOutputSettingEditorViewModel(AppStandardInputOutputSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            GeneralTheme = generalTheme;
+        }
 
         #region property
+        IGeneralTheme GeneralTheme { get; }
 
         public FontViewModel? Font { get; private set; }
         public Color OutputForegroundColor
@@ -414,11 +425,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public sealed class AppWindowSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppWindowSettingEditorElement>
     {
-        public AppWindowSettingEditorViewModel(AppWindowSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AppWindowSettingEditorViewModel(AppWindowSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
+
         public bool IsEnabled
         {
             get => Model.IsEnabled;

@@ -26,7 +26,6 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
-using ContentTypeTextNet.Pe.Main.Models.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Note;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
@@ -50,13 +49,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         NoteContentViewModelBase? _content;
 
         bool _showLinkChangeConfim;
+        bool _isPopupRemoveNote;
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
+            GeneralTheme = generalTheme;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
             DispatcherWrapper = dispatcherWrapper;
@@ -100,6 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         bool CanLayoutNotify { get; set; }
 
         INoteTheme NoteTheme { get; }
+        IGeneralTheme GeneralTheme { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -267,6 +269,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public IDragAndDrop DragAndDrop { get; }
 
         bool PrepareToRemove { get; set; }
+        public bool IsPopupRemoveNote
+        {
+            get => this._isPopupRemoveNote;
+            set => SetProperty(ref this._isPopupRemoveNote, value);
+        }
 
         #region theme
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
@@ -386,6 +393,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand RemoveCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 PrepareToRemove = true;
+                IsPopupRemoveNote = false;
                 CloseRequest.Send();
             }
         ));
@@ -713,7 +721,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Model.ChangeViewAreaDelaySave(viewAreaChangeTargets, rect.Location, rect.Size);
         }
 
-        IReadOnlyColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
+        ColorPair<Color> GetColorPair() => ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor);
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

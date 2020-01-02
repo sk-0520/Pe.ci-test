@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
@@ -28,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         ControlTemplate GetLauncherItemNormalButtonControlTemplate();
         ControlTemplate GetLauncherItemToggleButtonControlTemplate();
 
+        Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth);
+        Brush GetToolbarForeground();
         #endregion
     }
 }

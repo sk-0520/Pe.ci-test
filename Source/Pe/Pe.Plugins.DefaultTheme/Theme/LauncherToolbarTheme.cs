@@ -2,26 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
-using ContentTypeTextNet.Pe.Main.Models.Theme;
-using ContentTypeTextNet.Pe.Main.Views.Extend;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Theme
+namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     internal class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
     {
-        public LauncherToolbarTheme(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(dispatcherWrapper, loggerFactory)
+        public LauncherToolbarTheme(IThemeParameter parameter)
+            : base(parameter)
         { }
 
         #region property
@@ -82,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         DependencyObject GetToolbarPositionImageCore(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
         {
-            var drawSize = new Size((int)iconBox, (int)iconBox);
+            var drawSize = new Size((int)iconBox * 2, (int)iconBox);
             var strongSize = new Size(0.2f, 0.3f);
             //using(var targetGraphics = CreateGraphics()) {
             //	var image = new Bitmap(imageSize.Width, imageSize.Height, targetGraphics);
@@ -180,6 +175,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Theme
 
         public ControlTemplate GetLauncherItemNormalButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemNormalButton"];
         public ControlTemplate GetLauncherItemToggleButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemToggleButton"];
+
+        public Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        {
+            var color = PlatformTheme.GetTaskbarColor();
+            return new SolidColorBrush(color);
+        }
+
+        public Brush GetToolbarForeground()
+        {
+            var color = PlatformTheme.GetTaskbarColor();
+            return new SolidColorBrush(MediaUtility.GetAutoColor(color));
+        }
 
         #endregion
     }

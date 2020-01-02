@@ -15,7 +15,6 @@ using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
-using ContentTypeTextNet.Pe.Main.Models.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
@@ -297,11 +296,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
-
-                .Register<ILauncherToolbarTheme, LauncherToolbarTheme>(DiLifecycle.Transient)
-                .Register<ILauncherGroupTheme, LauncherGroupTheme>(DiLifecycle.Transient)
-                .Register<INoteTheme, NoteTheme>(DiLifecycle.Transient)
-                .Register<IFontTheme, FontTheme>(DiLifecycle.Transient)
             ;
 
             //ApplicationDiContainer.Initialize(() => container);
