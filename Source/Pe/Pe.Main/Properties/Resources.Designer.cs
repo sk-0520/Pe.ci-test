@@ -151,6 +151,123 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   情報(_A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_About {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ヘルプ(_H) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_About_Help {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_About_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   バージョン情報(_V) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_About_Version {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_About_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   終了(_X) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Exit {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Note {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最後面へ移動(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Note_Bottom {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Note_Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Note_Compact {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Note_Compact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   新規作成(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Note_Create {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Note_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   非表示(_H) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Note_Hidden {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Note_Hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面へ移動(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Note_Topmost {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Note_Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示中(_V) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Note_Visible {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Note_Visible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pe 設定(_S) ... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Setting {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Menu_Toolbar {
+            get {
+                return ResourceManager.GetString("String_AppManager_Menu_Toolbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   キャンセル(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Command_Cancel {

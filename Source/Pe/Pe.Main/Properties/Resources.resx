@@ -133,6 +133,45 @@
   <data name="String_Accept_Caption" xml:space="preserve">
     <value>使用許諾 </value>
   </data>
+  <data name="String_AppManager_Menu_About" xml:space="preserve">
+    <value>情報(_A)</value>
+  </data>
+  <data name="String_AppManager_Menu_About_Help" xml:space="preserve">
+    <value>ヘルプ(_H)</value>
+  </data>
+  <data name="String_AppManager_Menu_About_Version" xml:space="preserve">
+    <value>バージョン情報(_V)</value>
+  </data>
+  <data name="String_AppManager_Menu_Exit" xml:space="preserve">
+    <value>終了(_X)</value>
+  </data>
+  <data name="String_AppManager_Menu_Note" xml:space="preserve">
+    <value>ノート(_N)</value>
+  </data>
+  <data name="String_AppManager_Menu_Note_Bottom" xml:space="preserve">
+    <value>最後面へ移動(_B)</value>
+  </data>
+  <data name="String_AppManager_Menu_Note_Compact" xml:space="preserve">
+    <value>最小化(_N)</value>
+  </data>
+  <data name="String_AppManager_Menu_Note_Create" xml:space="preserve">
+    <value>新規作成(_C)</value>
+  </data>
+  <data name="String_AppManager_Menu_Note_Hidden" xml:space="preserve">
+    <value>非表示(_H)</value>
+  </data>
+  <data name="String_AppManager_Menu_Note_Topmost" xml:space="preserve">
+    <value>最前面へ移動(_T)</value>
+  </data>
+  <data name="String_AppManager_Menu_Note_Visible" xml:space="preserve">
+    <value>表示中(_V)</value>
+  </data>
+  <data name="String_AppManager_Menu_Setting" xml:space="preserve">
+    <value>Pe 設定(_S) ...</value>
+  </data>
+  <data name="String_AppManager_Menu_Toolbar" xml:space="preserve">
+    <value>ツールバー(_T)</value>
+  </data>
   <data name="String_Common_Command_Cancel" xml:space="preserve">
     <value>キャンセル(_C)</value>
   </data>
