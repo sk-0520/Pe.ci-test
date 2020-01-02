@@ -71,6 +71,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             return new NoteTheme(parameter);
         }
 
+        public ICommandTheme BuildCommandTheme(IThemeParameter parameter)
+        {
+            return new CommandTheme(parameter);
+        }
+
         #endregion
     }
 }
