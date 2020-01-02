@@ -25,7 +25,7 @@
         </DataTemplate>
       </ContentControl.Resources>
     </ContentControl>
-    <TextBlock Grid.Column="1">
+    <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
       <TextBlock.Style>
         <Style TargetType="TextBlock">
           <Style.Triggers>

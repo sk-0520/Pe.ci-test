@@ -158,7 +158,7 @@
             <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
           </i:EventTrigger>
         </i:Interaction.Triggers>
-        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
+        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}" />
       </Button>
     </DataTemplate>
     <!--#endregion -->
@@ -207,7 +207,7 @@
             <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
           </i:EventTrigger>
         </i:Interaction.Triggers>
-        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" />
+        <app_main_view_lt:LauncherContentControl Title="{Binding Name, Mode=OneTime}" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}" />
       </Button>
     </DataTemplate>
 
@@ -326,7 +326,7 @@
         </Style>
       </ToggleButton.Style>
       <Grid>
-        <app_main_view_lt:LauncherContentControl Title="pe" >
+        <app_main_view_lt:LauncherContentControl Title="pe" Foreground="{Binding DataContext.ToolbarForeground, ElementName=root}">
           <app_main_view_lt:LauncherContentControl.Icon>
             <ContentControl
               Template="{StaticResource NormalIcon}"
