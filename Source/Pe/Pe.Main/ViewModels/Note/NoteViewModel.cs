@@ -52,10 +52,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
+            GeneralTheme = generalTheme;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
             DispatcherWrapper = dispatcherWrapper;
@@ -99,6 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         bool CanLayoutNotify { get; set; }
 
         INoteTheme NoteTheme { get; }
+        IGeneralTheme GeneralTheme { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -290,6 +292,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
 
         #endregion
+
+        public Geometry LockIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.Lock, Bridge.Models.Data.IconBox.Small);
+        public Geometry LockOpenIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.LockOpen, Bridge.Models.Data.IconBox.Small);
+
+        public Geometry BoldIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontBold, Bridge.Models.Data.IconBox.Small);
+        public Geometry ItalicIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontItalic, Bridge.Models.Data.IconBox.Small);
+
 
         #region content kind changing
         public NoteContentKind ChangingContentKind

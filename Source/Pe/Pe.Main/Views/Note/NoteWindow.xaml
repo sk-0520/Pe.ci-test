@@ -152,7 +152,7 @@
             <ColumnDefinition Width="Auto"/>
           </Grid.ColumnDefinitions>
 
-          <TextBox x:Name="inputTitle" Grid.Column="0" Background="Transparent" BorderThickness="0" Foreground="{Binding CaptionForeground}" >
+          <TextBox x:Name="inputTitle" Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Foreground="{Binding CaptionForeground}" >
             <i:Interaction.Triggers>
               <i:EventTrigger EventName="LostFocus">
                 <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
@@ -458,6 +458,12 @@
                     SizeMinimum="{Binding Font.MinimumSize}"
                     SizeMaximum="{Binding Font.MaximumSize}"
                   >
+                    <app_main_view:FontSelectControl.BoldContent>
+                      <ContentControl Content="{Binding BoldIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                    </app_main_view:FontSelectControl.BoldContent>
+                    <app_main_view:FontSelectControl.ItalicContent>
+                      <ContentControl Content="{Binding ItalicIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                    </app_main_view:FontSelectControl.ItalicContent>
                     <app_main_view:FontSelectControl.Style>
                       <Style TargetType="app_main_view:FontSelectControl">
                         <Style.Triggers>

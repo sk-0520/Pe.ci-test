@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     {
         #region function
 
+        IGeneralTheme BuildGeneralTheme(IThemeParameter parameter);
         ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter);
         ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter);
         INoteTheme BuildNoteTheme(IThemeParameter parameter);

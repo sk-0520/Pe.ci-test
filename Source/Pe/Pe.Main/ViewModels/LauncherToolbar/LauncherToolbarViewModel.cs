@@ -43,13 +43,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IDispatcherWrapper dispatcherWrapper, ILauncherGroupTheme launcherGroupTheme, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, ILauncherGroupTheme launcherGroupTheme, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             PlatformThemeLoader = platformThemeLoader;
             DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
             LauncherGroupTheme = launcherGroupTheme;
+            GeneralTheme = generalTheme;
 
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups) {
                 ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LauncherGroupTheme, LoggerFactory),
@@ -101,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
+        IGeneralTheme GeneralTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         public IconBox IconBox => Model.IconBox;
@@ -122,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public object ToolbarMainIcon
         {
-            get => LauncherToolbarTheme.GetToolbarMainIcon(IconBox);
+            get => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.Menu, IconBox);
         }
 
         public Brush ToolbarBackground

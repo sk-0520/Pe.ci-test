@@ -257,6 +257,61 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #endregion
 
+        #region BoldContentProperty
+
+        public static readonly DependencyProperty BoldContentProperty = DependencyProperty.Register(
+            nameof(BoldContent),
+            typeof(object),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                null,
+                new PropertyChangedCallback(OnBoldContentPropertyChanged)
+            )
+        );
+
+        public object BoldContent
+        {
+            get { return GetValue(BoldContentProperty); }
+            set { SetValue(BoldContentProperty, value); }
+        }
+
+        static void OnBoldContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.BoldContent = e.NewValue;
+            }
+        }
+
+        #endregion
+
+        #region ItalicContentProperty
+
+        public static readonly DependencyProperty ItalicContentProperty = DependencyProperty.Register(
+            nameof(ItalicContent),
+            typeof(object),
+            typeof(FontSelectControl),
+            new FrameworkPropertyMetadata(
+                null,
+                new PropertyChangedCallback(OnItalicContentPropertyChanged)
+            )
+        );
+
+        public object ItalicContent
+        {
+            get { return GetValue(ItalicContentProperty); }
+            set { SetValue(ItalicContentProperty, value); }
+        }
+
+        static void OnItalicContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as FontSelectControl;
+            if(ctrl != null) {
+                ctrl.ItalicContent = e.NewValue;
+            }
+        }
+
+        #endregion
         #region CustomContentProperty
 
         public static readonly DependencyProperty CustomContentProperty = DependencyProperty.Register(

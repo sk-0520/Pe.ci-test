@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
@@ -14,11 +16,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public class LauncherToobarSettingEditorViewModel : SettingItemViewModelBase<LauncherToobarSettingEditorElement>
     {
-        public LauncherToobarSettingEditorViewModel(LauncherToobarSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToobarSettingEditorViewModel(LauncherToobarSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            GeneralTheme = generalTheme;
+        }
 
         #region property
+        IGeneralTheme GeneralTheme { get; }
+        public Geometry BoldIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontBold, Bridge.Models.Data.IconBox.Small);
+        public Geometry ItalicIcon => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.FontItalic, Bridge.Models.Data.IconBox.Small);
+
 
         public FontViewModel? Font { get; private set; }
         public Guid LauncherGroupId { get; private set; }

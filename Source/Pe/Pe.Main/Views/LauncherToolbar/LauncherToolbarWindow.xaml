@@ -332,12 +332,14 @@
               Width="{Binding IconBox, Converter={StaticResource IconScaleToWidthConverter}}"
               Height="{Binding IconBox, Converter={StaticResource IconScaleToHeightConverter}}"
             >
-              <ContentControl
-                Template="{StaticResource NormalIcon}"
-                Content="{Binding ToolbarMainIcon}"
-                Background="{Binding ToolbarForeground}"
-                Foreground="{Binding ToolbarForeground}"
-              />
+              <Canvas Width="24" Height="24">
+                <Path
+                  Data="{Binding ToolbarMainIcon}"
+                  Fill="{Binding ToolbarForeground}"
+                  Stroke="{Binding ToolbarForeground}"
+                  StrokeThickness="1"
+                />
+              </Canvas>
             </Viewbox>
           </app_main_view_lt:LauncherContentControl.Icon>
         </app_main_view_lt:LauncherContentControl>

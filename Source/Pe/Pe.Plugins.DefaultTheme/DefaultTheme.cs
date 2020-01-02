@@ -51,6 +51,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             IsInitialized = false;
         }
 
+        public IGeneralTheme BuildGeneralTheme(IThemeParameter parameter)
+        {
+            return new GeneralTheme(parameter);
+        }
+
         public ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter)
         {
             return new LauncherGroupTheme(parameter);

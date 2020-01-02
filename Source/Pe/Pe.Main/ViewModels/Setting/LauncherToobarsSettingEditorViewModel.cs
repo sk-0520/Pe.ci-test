@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -19,17 +20,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         LauncherToobarSettingEditorViewModel? _selectedToolbar;
 
         #endregion
-        public LauncherToobarsSettingEditorViewModel(LauncherToobarsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToobarsSettingEditorViewModel(LauncherToobarsSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
+            GeneralTheme = generalTheme;
             ToolbarCollection = new ActionModelViewModelObservableCollectionManager<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel>(Model.Toolbars) {
-                ToViewModel = m => new LauncherToobarSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
+                ToViewModel = m => new LauncherToobarSettingEditorViewModel(m, GeneralTheme, DispatcherWrapper, LoggerFactory),
             };
             ToolbarItems = ToolbarCollection.GetDefaultView();
         }
 
         #region property
-
+        IGeneralTheme GeneralTheme { get; }
         public RequestSender ShowAllScreensRequest { get; } = new RequestSender();
 
         ModelViewModelObservableCollectionManagerBase<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel> ToolbarCollection { get; }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         { }
 
         #region property
+
+
         #endregion
     }
 }

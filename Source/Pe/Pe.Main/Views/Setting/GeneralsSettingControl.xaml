@@ -125,7 +125,14 @@
                                 Size="{Binding Font.Size}"
                                 SizeMinimum="{Binding Font.MinimumSize}"
                                 SizeMaximum="{Binding Font.MaximumSize}"
-                              />
+                              >
+                                <app_main_views:FontSelectControl.BoldContent>
+                                  <ContentControl Content="{Binding BoldIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                                </app_main_views:FontSelectControl.BoldContent>
+                                <app_main_views:FontSelectControl.ItalicContent>
+                                  <ContentControl Content="{Binding ItalicIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                                </app_main_views:FontSelectControl.ItalicContent>
+                              </app_main_views:FontSelectControl>
                             </Setter.Value>
                           </Setter>
                         </DataTrigger>
@@ -173,7 +180,14 @@
                                 Size="{Binding Font.Size}"
                                 SizeMinimum="{Binding Font.MinimumSize}"
                                 SizeMaximum="{Binding Font.MaximumSize}"
-                              />
+                              >
+                                <app_main_views:FontSelectControl.BoldContent>
+                                  <ContentControl Content="{Binding BoldIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                                </app_main_views:FontSelectControl.BoldContent>
+                                <app_main_views:FontSelectControl.ItalicContent>
+                                  <ContentControl Content="{Binding ItalicIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                                </app_main_views:FontSelectControl.ItalicContent>
+                              </app_main_views:FontSelectControl>
                             </Setter.Value>
                           </Setter>
                         </DataTrigger>
@@ -222,7 +236,14 @@
                                 Size="{Binding Font.Size}"
                                 SizeMinimum="{Binding Font.MinimumSize}"
                                 SizeMaximum="{Binding Font.MaximumSize}"
-                              />
+                              >
+                                <app_main_views:FontSelectControl.BoldContent>
+                                  <ContentControl Content="{Binding BoldIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                                </app_main_views:FontSelectControl.BoldContent>
+                                <app_main_views:FontSelectControl.ItalicContent>
+                                  <ContentControl Content="{Binding ItalicIcon}" Template="{StaticResource SmallIcon}" Background="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" Foreground="Transparent" />
+                                </app_main_views:FontSelectControl.ItalicContent>
+                              </app_main_views:FontSelectControl>
                             </Setter.Value>
                           </Setter>
                         </DataTrigger>

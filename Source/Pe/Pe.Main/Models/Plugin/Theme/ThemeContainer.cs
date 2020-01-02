@@ -60,6 +60,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             }
         }
 
+        public IGeneralTheme GetGeneralTheme()
+        {
+            if(CurrentTheme == null) {
+                throw new InvalidOperationException();
+            }
+            return DispatcherWrapper.Get(() => CurrentTheme.BuildGeneralTheme(CreateParameter()));
+        }
+
         public ILauncherGroupTheme GetLauncherGroupTheme()
         {
             if(CurrentTheme == null) {
