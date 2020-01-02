@@ -35,10 +35,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         Brush GetViewBackgroundBrush(bool isActive);
 
         /// <summary>
-        /// ウィンドウの枠線取得。
+        /// ウィンドウの枠サイズ。
         /// </summary>
         /// <returns></returns>
-        Border GetViewBorder(bool isActive);
+        Thickness GetViewBorderThickness();
+
+        /// <summary>
+        /// ウィンドウの枠ブラシ。
+        /// </summary>
+        /// <returns></returns>
+        Brush GetViewBorderBrush(bool isActive);
 
         /// <summary>
         /// つかむところの幅。

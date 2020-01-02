@@ -38,6 +38,8 @@ using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
+using ContentTypeTextNet.Pe.Main.ViewModels.Command;
+using ContentTypeTextNet.Pe.Main.Views.Command;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -253,12 +255,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
                     //c.Register<ILoggerFactory, ILoggerFactory>(element);
-                    return c.Build<NoteViewModel>(element);
+                    return c.Build<CommandViewModel>(element);
                 });
-                var window = DiContainer.BuildView<NoteWindow>();
+                var window = DiContainer.BuildView<CommandWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.Note, window);
+                return new WindowItem(WindowKind.Command, window);
             }
 
 

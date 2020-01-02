@@ -53,7 +53,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             throw new NotImplementedException();
         }
 
-        public Border GetViewBorder(bool isActive)
+        public Thickness GetViewBorderThickness()
+        {
+            return new Thickness(2);
+        }
+
+        public Brush GetViewBorderBrush(bool isActive)
         {
             throw new NotImplementedException();
         }
