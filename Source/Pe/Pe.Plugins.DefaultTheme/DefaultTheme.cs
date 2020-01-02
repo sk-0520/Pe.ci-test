@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         public void Initialize()
         {
             ResourceDictionary = new ResourceDictionary();
-            var uri = new Uri("pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/ImageResource.xaml", UriKind.Absolute);
+            var uri = new Uri("pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/ThemeResource.xaml", UriKind.Absolute);
             ResourceDictionary.Source = uri;
 
             Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);

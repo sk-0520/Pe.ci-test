@@ -114,17 +114,6 @@
     </Setter>
   </Style>
 
-  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemNormalButton" TargetType="Button">
-    <ContentPresenter />
-    <ControlTemplate.Triggers>
-    </ControlTemplate.Triggers>
-  </ControlTemplate>
-  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemToggleButton" TargetType="ToggleButton">
-    <ContentPresenter />
-    <ControlTemplate.Triggers>
-    </ControlTemplate.Triggers>
-  </ControlTemplate>
-
   <Style
     x:Key="SettingEditor"
     TargetType="sharpdevelop_avalonedit:TextEditor"
