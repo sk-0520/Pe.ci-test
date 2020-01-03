@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #region variable
         #endregion
 
-        public CommandItemViewModel(IReadOnlyCommandItem item, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public CommandItemViewModel(ICommandItem item, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             Item = item;
             IconBox = iconBox;
@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #region property
 
-        IReadOnlyCommandItem Item { get; }
+        ICommandItem Item { get; }
         IconBox IconBox { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         public string Header => Item.Header;

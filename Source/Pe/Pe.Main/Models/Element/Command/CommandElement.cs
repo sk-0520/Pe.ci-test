@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
 
-        public ObservableCollection<WrapModel<IReadOnlyCommandItem>> CommandItems { get; } = new ObservableCollection<WrapModel<IReadOnlyCommandItem>>();
+        public ObservableCollection<WrapModel<ICommandItem>> CommandItems { get; } = new ObservableCollection<WrapModel<ICommandItem>>();
 
         public bool FindTag { get; private set; }
         public TimeSpan HideWaitTime { get; private set; }
@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             RefreshLauncherItems();
         }
 
-        IEnumerable<IReadOnlyCommandItem> ListupCommandItems(string inputValue)
+        IEnumerable<ICommandItem> ListupCommandItems(string inputValue)
         {
             foreach(var item in ListupLauncherItemsElements(inputValue)) {
                 yield return item;
@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 Logger.LogTrace("検索開始");
                 var stopwatch = Stopwatch.StartNew();
 
-                var commandItems = new List<IReadOnlyCommandItem>();
+                var commandItems = new List<ICommandItem>();
                 if(string.IsNullOrWhiteSpace(inputValue)) {
                     var items = LauncherItemElements
                         .Select(i => new LauncherCommandItemElement(i, LoggerFactory))

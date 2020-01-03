@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
-    public abstract class CommandItemElementBase : ElementBase, IReadOnlyCommandItem
+    public abstract class CommandItemElementBase : ElementBase, ICommandItem
     {
         public CommandItemElementBase(ILoggerFactory loggerFactory)
             : base(loggerFactory)

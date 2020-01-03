@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
             ThemeProperties = new ThemeProperties(this);
 
-            CommandItemCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<IReadOnlyCommandItem>, CommandItemViewModel>(Model.CommandItems) {
+            CommandItemCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<ICommandItem>, CommandItemViewModel>(Model.CommandItems) {
                 ToViewModel = m => new CommandItemViewModel(m.Data, IconBox, DispatcherWrapper, LoggerFactory),
             };
             CommandItems = CommandItemCollection.GetDefaultView();
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
-        ModelViewModelObservableCollectionManagerBase<WrapModel<IReadOnlyCommandItem>, CommandItemViewModel> CommandItemCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
         public ICollectionView CommandItems { get; }
 
         public CommandItemViewModel? SelectedItem
