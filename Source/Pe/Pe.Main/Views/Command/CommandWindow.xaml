@@ -78,7 +78,7 @@
           Width="{Binding IconBox, Converter={StaticResource IconBoxToWidthConverter}}"
           Height="{Binding IconBox, Converter={StaticResource IconBoxToHeightConverter}}"
           Margin="{Binding SelectedIconMargin}"
-          Content="{Binding SelectedItem.Icon}"
+          Content="{Binding CurrentSelectedItem.Icon}"
         />
       </Grid>
 

@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #region variable
 
         bool _isOpend;
+        CommandItemViewModel? _currentSelectedItem;
         CommandItemViewModel? _selectedItem;
         string _inputValue = string.Empty;
 
@@ -59,10 +60,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         ModelViewModelObservableCollectionManagerBase<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
         public ICollectionView CommandItems { get; }
 
+        public CommandItemViewModel? CurrentSelectedItem
+        {
+            get => this._currentSelectedItem;
+            set => SetProperty(ref this._currentSelectedItem, value);
+        }
+
         public CommandItemViewModel? SelectedItem
         {
             get => this._selectedItem;
-            set => SetProperty(ref this._selectedItem, value);
+            set
+            {
+                SetProperty(ref this._selectedItem, value);
+                if(SelectedItem != null) {
+                    CurrentSelectedItem = SelectedItem;
+                }
+            }
         }
 
         ThemeProperties ThemeProperties { get; }
@@ -158,6 +171,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         void UpdateCommandItems(string inputValue)
         {
+            CurrentSelectedItem = SelectedItem;
             Model.UpdateCommandItemsAsync(inputValue).ContinueWith(t => {
                 SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
             });
