@@ -37,9 +37,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public static IReadOnlyCollection<string> ImageFileExtensions { get; } = new[] { "png", "bmp", "jpeg", "jpg" };
 
+        protected BitmapSource? CacheImageSource { get; private set; }
+
         #endregion
 
         #region function
+
+        public void ResetCache()
+        {
+            CacheImageSource = null;
+            RunningStatusImpl.State = RunningState.None;
+        }
 
         protected BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBynaryItems)
         {
@@ -137,9 +145,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             ThrowIfDisposed();
 
+            if(CacheImageSource != null && RunningStatus.State == RunningState.End) {
+                Logger.LogTrace("キャッシュ使用");
+                RunningStatusImpl.State = RunningState.End;
+                return CacheImageSource;
+            }
+
             RunningStatusImpl.State = RunningState.Running;
             try {
                 var iconImage = await LoadImplAsync(cancellationToken);
+                CacheImageSource = iconImage;
                 RunningStatusImpl.State = RunningState.End;
                 return iconImage;
             } catch(OperationCanceledException ex) {
