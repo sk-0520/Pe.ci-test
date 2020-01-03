@@ -36,14 +36,14 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public Thickness GetInputBorderThickness()
         {
-            return new Thickness(20);
+            return new Thickness(2);
         }
 
         public Brush GetInputBorderBrush(InputState inputState)
         {
             return inputState switch
             {
-                InputState.Empty => Brushes.Blue,
+                InputState.Empty => Brushes.AliceBlue,
                 InputState.Finding => Brushes.Lime,
                 InputState.Listup => Brushes.Yellow,
                 InputState.NotFound => Brushes.Red,

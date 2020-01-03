@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
                 Model.UpdateCommandItemsAsync(this._inputValue).ContinueWith(t => {
                     SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
-
+                    //System.Threading.Thread.Sleep(5000);
                     if(SelectedItem == null && !string.IsNullOrWhiteSpace(this._inputValue)) {
                         CurrentSelectedItem = null;
                         InputState = InputState.NotFound;

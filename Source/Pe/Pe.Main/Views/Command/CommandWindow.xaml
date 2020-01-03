@@ -99,13 +99,13 @@
             <Style TargetType="Border">
               <Style.Triggers>
                 <DataTrigger Binding="{Binding InputState}" Value="Finding">
-                  <Setter Property="Background" Value="{Binding InputFindingBorderBrush}" />
+                  <Setter Property="BorderBrush" Value="{Binding InputFindingBorderBrush}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding InputState}" Value="Listup">
-                  <Setter Property="Background" Value="{Binding InputListupBorderBrush}" />
+                  <Setter Property="BorderBrush" Value="{Binding InputListupBorderBrush}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding InputState}" Value="NotFound">
-                  <Setter Property="Background" Value="{Binding InputNotFoundBorderBrush}" />
+                  <Setter Property="BorderBrush" Value="{Binding InputNotFoundBorderBrush}" />
                 </DataTrigger>
               </Style.Triggers>
               <Setter Property="BorderBrush" Value="{Binding InputEmptyBorderBrush}" />
