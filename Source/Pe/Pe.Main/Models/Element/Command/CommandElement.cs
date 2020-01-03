@@ -34,6 +34,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             WindowManager = windowManager;
             NotifyManager = notifyManager;
 
+            NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
+            NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
+
             IconClearTimer = new Timer() {
                 Interval = TimeSpan.FromSeconds(10).TotalMilliseconds,
             };
@@ -44,7 +47,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             };
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
         }
-
 
         #region property
 
@@ -165,6 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             var launcherItemElements = ids
                 .Select(i => OrderManager.GetOrCreateLauncherItemElement(i))
+                .Where(i=> i.IsEnabledCommandLauncher)
                 .ToList();
             ;
             LauncherItemElements.SetRange(launcherItemElements);
@@ -364,6 +367,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             CloseView();
         }
 
+        private void NotifyManager_LauncherItemChanged(object? sender, LauncherItemChangedEventArgs e)
+        {
+            var element = LauncherItemElements.FirstOrDefault(i => i.LauncherItemId == e.LauncherItemId);
+            if(element != null) {
+                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
+                if(element.IsEnabledCommandLauncher) {
+                    Logger.LogInformation("コマンドランチャーから既存ランチャーアイテムの除外: {0}", element.LauncherItemId);
+                    LauncherItemElements.Remove(element);
+                }
+            }
+        }
+
+        private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
+        {
+            var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
+            if(element.IsEnabledCommandLauncher) {
+                Logger.LogInformation("コマンドランチャーへ新規ランチャーアイテムの追加: {0}", element.LauncherItemId);
+                LauncherItemElements.Add(element);
+            }
+        }
 
     }
 }
