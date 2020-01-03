@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             if(CanVisible && EnabledUpdate) {
                 var noteContentConverter = new NoteContentConverter(LoggerFactory);
-                DispatcherWrapper.Invoke(() => {
+                DispatcherWrapper.Begin(() => {
                     if(!IsDisposed) {
                         var content = noteContentConverter.ToRtfString(Document);
                         Model?.ChangeRichTextContent(content);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -24,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         bool _isOpend;
         CommandItemViewModel? _selectedItem;
+        string _inputValue = string.Empty;
 
         #endregion
 
@@ -76,6 +78,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         }
 
         public IconBox IconBox => Model.IconBox;
+
+        public string InputValue
+        {
+            get => this._inputValue;
+            set
+            {
+                SetProperty(ref this._inputValue, value);
+                UpdateCommandItems(this._inputValue);
+            }
+        }
 
         #region theme
 
@@ -143,6 +155,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #endregion
 
         #region function
+
+        void UpdateCommandItems(string inputValue)
+        {
+            Model.UpdateCommandItemsAsync(inputValue).ContinueWith(t => {
+                SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+            });
+        }
+
         #endregion
 
         #region IViewLifecycleReceiver
@@ -154,10 +174,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             var commandWindow = (CommandWindow)window;
             InputCommand = commandWindow.inputCommand;
 
-            InputCommand.TextChanged += InputCommand_TextChanged;
+            InputCommand.KeyDown += InputCommand_KeyDown;
         }
-
-
 
         public void ReceiveViewLoaded(Window window)
         {
@@ -178,7 +196,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void ReceiveViewClosed()
         {
             if(InputCommand != null) {
-                InputCommand.TextChanged -= InputCommand_TextChanged;
+                InputCommand.KeyDown -= InputCommand_KeyDown;
             }
 
             Model.ReceiveViewClosed();
@@ -207,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             if(!IsDisposed) {
                 if(disposing) {
                     if(InputCommand != null) {
-                        InputCommand.TextChanged -= InputCommand_TextChanged;
+                        InputCommand.KeyDown -= InputCommand_KeyDown;
                     }
 
                     PlatformTheme.Changed -= PlatformTheme_Changed;
@@ -234,11 +252,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
 
-        private void InputCommand_TextChanged(object sender, TextChangedEventArgs e)
+        private void InputCommand_KeyDown(object sender, KeyEventArgs e)
         {
-            Model.UpdateCommandItemsAsync(InputCommand!.Text).ContinueWith(t => {
-                SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
-            });
+            //InputMethod.Current.ImeState
         }
 
     }

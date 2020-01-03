@@ -89,7 +89,7 @@
               <Setter Property="BorderBrush" Value="{Binding InputEmptyBorderBrush}" />
             </Style>
           </Border.Style>
-          <TextBox x:Name="inputCommand" BorderThickness="0">
+          <TextBox x:Name="inputCommand" BorderThickness="0" Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged, Delay=100}">
             <TextBox.Style>
               <Style TargetType="TextBox">
                 <Setter Property="Background" Value="{Binding InputEmptyBackground}" />
