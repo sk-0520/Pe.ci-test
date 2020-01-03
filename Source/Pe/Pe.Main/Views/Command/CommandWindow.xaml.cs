@@ -51,19 +51,21 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             }
         }
 
+        /*
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
 
-            this.popupItems.IsOpen = true;
+            //this.popupItems.IsOpen = true;
         }
 
         protected override void OnDeactivated(EventArgs e)
         {
             base.OnDeactivated(e);
 
-            this.popupItems.IsOpen = false;
+            //this.popupItems.IsOpen = false;
         }
+        */
 
         #endregion
 

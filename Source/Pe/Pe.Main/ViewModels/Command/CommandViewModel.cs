@@ -14,8 +14,10 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using ContentTypeTextNet.Pe.Main.Views.Command;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
@@ -44,6 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 ToViewModel = m => new CommandItemViewModel(m.Data, IconBox, DispatcherWrapper, LoggerFactory),
             };
             CommandItems = CommandItemCollection.GetDefaultView();
+
+            Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
 
             PlatformTheme.Changed += PlatformTheme_Changed;
 
@@ -97,10 +101,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             get => this._inputValue;
             set
             {
+                CurrentSelectedItem = SelectedItem;
                 SetProperty(ref this._inputValue, value);
-                UpdateCommandItems(this._inputValue);
+                Model.UpdateCommandItemsAsync(this._inputValue).ContinueWith(t => {
+                    SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+
+                    if(SelectedItem == null && !string.IsNullOrWhiteSpace(this._inputValue)) {
+                        CurrentSelectedItem = null;
+                    }
+                });
             }
         }
+
+        public FontViewModel Font { get; private set; }
 
         #region theme
 
@@ -165,17 +178,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #endregion
 
         #region command
+
+        public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Logger.LogInformation("exec!");
+            },
+            () => SelectedItem != null
+        ));
+
+        public ICommand UpSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Logger.LogInformation("up!");
+            }
+        ));
+
+        public ICommand DownSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Logger.LogInformation("down!");
+            }
+        ));
         #endregion
 
         #region function
-
-        void UpdateCommandItems(string inputValue)
-        {
-            CurrentSelectedItem = SelectedItem;
-            Model.UpdateCommandItemsAsync(inputValue).ContinueWith(t => {
-                SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
-            });
-        }
 
         #endregion
 
@@ -193,7 +217,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public void ReceiveViewLoaded(Window window)
         {
-            Model.UpdateCommandItemsAsync(string.Empty);
+            Model.UpdateCommandItemsAsync(string.Empty).ContinueWith(t => {
+                SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+            });
         }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
