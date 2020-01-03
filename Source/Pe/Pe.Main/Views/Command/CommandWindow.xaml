@@ -97,6 +97,17 @@
         <Border BorderThickness="{Binding InputBorderThickness}" >
           <Border.Style>
             <Style TargetType="Border">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding InputState}" Value="Finding">
+                  <Setter Property="Background" Value="{Binding InputFindingBorderBrush}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding InputState}" Value="Listup">
+                  <Setter Property="Background" Value="{Binding InputListupBorderBrush}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding InputState}" Value="NotFound">
+                  <Setter Property="Background" Value="{Binding InputNotFoundBorderBrush}" />
+                </DataTrigger>
+              </Style.Triggers>
               <Setter Property="BorderBrush" Value="{Binding InputEmptyBorderBrush}" />
             </Style>
           </Border.Style>
@@ -117,6 +128,20 @@
 
             <TextBox.Style>
               <Style TargetType="TextBox">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding InputState}" Value="Finding">
+                    <Setter Property="Background" Value="{Binding InputEmptyBackground}" />
+                    <Setter Property="Foreground" Value="{Binding InputEmptyForeground}" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding InputState}" Value="Listup">
+                    <Setter Property="Background" Value="{Binding InputListupBackground}" />
+                    <Setter Property="Foreground" Value="{Binding InputListupForeground}" />
+                  </DataTrigger>
+                  <DataTrigger Binding="{Binding InputState}" Value="NotFound">
+                    <Setter Property="Background" Value="{Binding InputNotFoundBackground}" />
+                    <Setter Property="Foreground" Value="{Binding InputNotFoundForeground}" />
+                  </DataTrigger>
+                </Style.Triggers>
                 <Setter Property="Background" Value="{Binding InputEmptyBackground}" />
                 <Setter Property="Foreground" Value="{Binding InputEmptyForeground}" />
               </Style>
@@ -188,7 +213,7 @@
         </Popup>
       </Grid>
 
-      <Button Grid.Column="3" Content="exec"/>
+      <Button Grid.Column="3" Content="{Binding InputState}"/>
 
     </Grid>
   </Border>

@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                     if(SelectedItem == null && !string.IsNullOrWhiteSpace(this._inputValue)) {
                         CurrentSelectedItem = null;
                         InputState = InputState.NotFound;
-                    } else {
+                    } else if(!isEmpty) {
                         InputState = InputState.Listup;
                     }
                 });
