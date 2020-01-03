@@ -38,7 +38,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             {
                 var icon = Item.GetIcon(IconBox);
                 if(icon is IconImageLoaderBase iconLoader) {
-                    return new IconViewerViewModel(iconLoader, DispatcherWrapper, LoggerFactory);
+                    return new IconViewerViewModel(iconLoader, DispatcherWrapper, LoggerFactory) {
+                        UseCache = true,
+                    };
                 }
                 return icon;
             }

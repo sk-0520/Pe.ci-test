@@ -37,6 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public static IReadOnlyCollection<string> ImageFileExtensions { get; } = new[] { "png", "bmp", "jpeg", "jpg" };
 
+        protected BitmapSource? CachedImage { get; private set; }
+
         #endregion
 
         #region function
@@ -133,14 +135,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected abstract Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken);
 
-        public async Task<BitmapSource?> LoadAsync(CancellationToken cancellationToken)
+        public async Task<BitmapSource?> LoadAsync(bool useCache, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
+
+            if(useCache && CachedImage != null) {
+                Logger.LogTrace("メモリキャッシュされたイメージの使用");
+                RunningStatusImpl.State = RunningState.End;
+                return CachedImage;
+            }
 
             RunningStatusImpl.State = RunningState.Running;
             try {
                 var iconImage = await LoadImplAsync(cancellationToken);
                 RunningStatusImpl.State = RunningState.End;
+                if(useCache) {
+                    CachedImage = iconImage;
+                }
                 return iconImage;
             } catch(OperationCanceledException ex) {
                 Logger.LogWarning(ex, ex.Message);
@@ -151,6 +162,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 RunningStatusImpl.State = RunningState.Error;
                 throw;
             }
+        }
+
+        public void ClearCache()
+        {
+            CachedImage = null;
+        }
+
+        #endregion
+
+        #region BindModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    ClearCache();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

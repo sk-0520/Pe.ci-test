@@ -32,6 +32,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return 8;
         }
 
+        public Thickness GetSelectedIconMargin(IconBox iconBox) => new Thickness(1);
+
         public Thickness GetInputBorderThickness()
         {
             return new Thickness(2);

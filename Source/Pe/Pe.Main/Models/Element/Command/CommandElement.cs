@@ -61,6 +61,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             Debug.Assert(ViewCreated);
 
             WindowManager.GetWindowItems(WindowKind.Command).First().Window.Hide();
+
+            foreach(var element in LauncherItemElements) {
+                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
+            }
         }
 
         private void RefreshSetting()

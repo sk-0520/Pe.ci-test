@@ -26,6 +26,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         IReadOnlyList<Range> HeaderMatches { get; }
         IReadOnlyList<Range> DescriptionMatches { get; }
 
+        double Score { get; }
+
         #endregion
 
         #region function

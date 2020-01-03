@@ -109,6 +109,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public Brush GripInactiveBrush => CommandTheme.GetGripBrush(true);
 
         [ThemeProperty]
+        public Thickness SelectedIconMargin => CommandTheme.GetSelectedIconMargin(IconBox);
+
+        [ThemeProperty]
         public Thickness InputBorderThickness => CommandTheme.GetInputBorderThickness();
 
         [ThemeProperty]

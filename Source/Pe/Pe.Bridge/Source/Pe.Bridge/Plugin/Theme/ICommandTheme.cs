@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
@@ -57,6 +58,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// </summary>
         /// <returns></returns>
         Brush GetGripBrush(bool isActive);
+
+        Thickness GetSelectedIconMargin(IconBox iconBox);
 
         Thickness GetInputBorderThickness();
         Brush GetInputBorderBrush(InputState inputState);
