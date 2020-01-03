@@ -70,6 +70,7 @@
 
       <Grid Grid.Column="1">
         <!-- アイコン描画領域 -->
+        <ContentControl Content="{Binding SelectedItem.Icon}" />
       </Grid>
 
       <Grid Grid.Column="2">
@@ -90,26 +91,25 @@
         </Border>
         <Popup
           x:Name="popupItems"
+          MaxHeight="300"
           MinWidth="{Binding ActualWidth, ElementName=inputCommand}"
           PlacementTarget="{Binding ElementName=inputCommand}"
           IsOpen="{Binding ElementName=inputCommand, Path=IsFocused,Mode=OneWay}"
         >
-          <Border>
-            <ListBox x:Name="listItems" ItemsSource="{Binding CommandItems}">
-              <ListBox.ItemTemplate>
-                <DataTemplate>
-                  <StackPanel Orientation="Horizontal">
-                    <!--<Image Style="{StaticResource ItemImage}" Source="{Binding Image}" />-->
-                    <ContentControl Content="{Binding Icon}" />
-                    <TextBlock Text="{Binding Header}" />
-                    <TextBlock Text=" " />
-                    <TextBlock Text="{Binding Description}" />
-                  </StackPanel>
-                </DataTemplate>
-              </ListBox.ItemTemplate>
+          <ListBox x:Name="listItems" SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding CommandItems}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <!--<Image Style="{StaticResource ItemImage}" Source="{Binding Image}" />-->
+                  <ContentControl Content="{Binding Icon}" />
+                  <TextBlock Text="{Binding Header}" />
+                  <TextBlock Text=" " />
+                  <TextBlock Text="{Binding Description}" />
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
 
-            </ListBox>
-          </Border>
+          </ListBox>
         </Popup>
       </Grid>
 

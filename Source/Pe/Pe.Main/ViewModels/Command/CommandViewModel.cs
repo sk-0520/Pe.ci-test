@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #region variable
 
         bool _isOpend;
+        CommandItemViewModel? _selectedItem;
 
         #endregion
 
@@ -54,6 +56,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         ModelViewModelObservableCollectionManagerBase<WrapModel<IReadOnlyCommandItem>, CommandItemViewModel> CommandItemCollection { get; }
         public ICollectionView CommandItems { get; }
+
+        public CommandItemViewModel? SelectedItem
+        {
+            get => this._selectedItem;
+            set => SetProperty(ref this._selectedItem, value);
+        }
 
         ThemeProperties ThemeProperties { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
@@ -227,6 +235,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         private void InputCommand_TextChanged(object sender, TextChangedEventArgs e)
         {
             Model.UpdateCommandItemsAsync(InputCommand!.Text);
+            SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
         }
 
     }
