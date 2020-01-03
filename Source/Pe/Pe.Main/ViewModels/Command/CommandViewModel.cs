@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         CommandItemViewModel? _currentSelectedItem;
         CommandItemViewModel? _selectedItem;
         string _inputValue = string.Empty;
+        InputState _inputState;
 
         #endregion
 
@@ -105,17 +106,34 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             {
                 CurrentSelectedItem = SelectedItem;
                 SetProperty(ref this._inputValue, value);
+
+                var isEmpty = string.IsNullOrWhiteSpace(this._inputValue);
+                if(isEmpty) {
+                    InputState = InputState.Empty;
+                } else {
+                    InputState = InputState.Finding;
+                }
+
                 Model.UpdateCommandItemsAsync(this._inputValue).ContinueWith(t => {
                     SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
 
                     if(SelectedItem == null && !string.IsNullOrWhiteSpace(this._inputValue)) {
                         CurrentSelectedItem = null;
+                        InputState = InputState.NotFound;
+                    } else {
+                        InputState = InputState.Listup;
                     }
                 });
             }
         }
 
         public FontViewModel Font { get; private set; }
+
+        public InputState InputState
+        {
+            get => this._inputState;
+            set => SetProperty(ref this._inputState, value);
+        }
 
         #region theme
 
@@ -159,6 +177,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Finding);
         [ThemeProperty]
+        public Brush InputListupBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Listup);
+        [ThemeProperty]
         public Brush InputNotFoundBorderBrush => CommandTheme.GetInputBorderBrush(InputState.NotFound);
 
         [ThemeProperty]
@@ -166,12 +186,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingBackground => CommandTheme.GetInputBackground(InputState.Finding);
         [ThemeProperty]
+        public Brush InputListupBackground => CommandTheme.GetInputBackground(InputState.Listup);
+        [ThemeProperty]
         public Brush InputNotFoundBackground => CommandTheme.GetInputBackground(InputState.NotFound);
 
         [ThemeProperty]
         public Brush InputEmptyForeground => CommandTheme.GetInputForeground(InputState.Empty);
         [ThemeProperty]
         public Brush InputFindingForeground => CommandTheme.GetInputForeground(InputState.Finding);
+        [ThemeProperty]
+        public Brush InputListupForeground => CommandTheme.GetInputForeground(InputState.Listup);
         [ThemeProperty]
         public Brush InputNotFoundForeground => CommandTheme.GetInputForeground(InputState.NotFound);
 

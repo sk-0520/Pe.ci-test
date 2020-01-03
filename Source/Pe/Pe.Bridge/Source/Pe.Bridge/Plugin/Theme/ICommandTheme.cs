@@ -16,9 +16,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// </summary>
         Empty,
         /// <summary>
-        /// 入力中。
+        /// 検索。
         /// </summary>
         Finding,
+        /// <summary>
+        /// 検索完了。
+        /// </summary>
+        Listup,
         /// <summary>
         /// 検索対象なし。
         /// </summary>

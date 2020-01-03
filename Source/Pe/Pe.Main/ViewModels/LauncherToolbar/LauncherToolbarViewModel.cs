@@ -492,7 +492,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {
-            DispatcherWrapper.Invoke(() => {
+            DispatcherWrapper.Begin(() => {
                 var themePropertyNames = new[] {
                     nameof(ToolbarBackground),
                     nameof(ToolbarForeground),
@@ -500,7 +500,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 foreach(var themePropertyName in themePropertyNames) {
                     RaisePropertyChanged(themePropertyName);
                 }
-            });
+            }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
     }
