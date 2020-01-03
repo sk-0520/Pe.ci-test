@@ -55,8 +55,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         IDatabaseStatementLoader StatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
-        public string? Name { get; private set; }
-        public string? Code { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Code { get; private set; } = string.Empty;
         public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; private set; }
         public string? Comment { get; private set; }

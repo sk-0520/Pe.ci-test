@@ -23,7 +23,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         public CommandWindow()
         {
             InitializeComponent();
+
+            PopupAttacher = new PopupAttacher(this, this.popupItems);
         }
+
+        #region property
+
+        PopupAttacher PopupAttacher { get; }
+
+        #endregion
 
         #region IDpiScaleOutputor
 
@@ -42,6 +50,21 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
                 DragMove();
             }
         }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            this.popupItems.IsOpen = true;
+        }
+
+        protected override void OnDeactivated(EventArgs e)
+        {
+            base.OnDeactivated(e);
+
+            this.popupItems.IsOpen = false;
+        }
+
         #endregion
 
     }

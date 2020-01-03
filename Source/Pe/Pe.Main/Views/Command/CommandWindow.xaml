@@ -1,8 +1,12 @@
 <Window
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.Views.Command.CommandWindow"
 
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_main_viewmodels_iconviewer="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.IconViewer"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 
   Title="CommandWindow"
   Height="450"
@@ -22,6 +26,10 @@
   <Window.Resources>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconViewerViewModel}">
+      <app_main_views:ImageViewerControl IconViewer="{Binding }" />
+    </DataTemplate>
   </Window.Resources>
   <Window.Style>
     <Style TargetType="Window">
@@ -64,21 +72,46 @@
         <!-- アイコン描画領域 -->
       </Grid>
 
-      <Border Grid.Column="2" BorderThickness="{Binding InputBorderThickness}" >
-        <Border.Style>
-          <Style TargetType="Border">
-            <Setter Property="BorderBrush" Value="{Binding InputEmptyBorderBrush}" />
-          </Style>
-        </Border.Style>
-        <TextBox BorderThickness="0">
-          <TextBox.Style>
-            <Style TargetType="TextBox">
-              <Setter Property="Background" Value="{Binding InputEmptyBackground}" />
-              <Setter Property="Foreground" Value="{Binding InputEmptyForeground}" />
+      <Grid Grid.Column="2">
+        <Border BorderThickness="{Binding InputBorderThickness}" >
+          <Border.Style>
+            <Style TargetType="Border">
+              <Setter Property="BorderBrush" Value="{Binding InputEmptyBorderBrush}" />
             </Style>
-          </TextBox.Style>
-        </TextBox>
-      </Border>
+          </Border.Style>
+          <TextBox x:Name="inputCommand" BorderThickness="0">
+            <TextBox.Style>
+              <Style TargetType="TextBox">
+                <Setter Property="Background" Value="{Binding InputEmptyBackground}" />
+                <Setter Property="Foreground" Value="{Binding InputEmptyForeground}" />
+              </Style>
+            </TextBox.Style>
+          </TextBox>
+        </Border>
+        <Popup
+          x:Name="popupItems"
+          MinWidth="{Binding ActualWidth, ElementName=inputCommand}"
+          PlacementTarget="{Binding ElementName=inputCommand}"
+          IsOpen="{Binding ElementName=inputCommand, Path=IsFocused,Mode=OneWay}"
+        >
+          <Border>
+            <ListBox x:Name="listItems" ItemsSource="{Binding CommandItems}">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal">
+                    <!--<Image Style="{StaticResource ItemImage}" Source="{Binding Image}" />-->
+                    <ContentControl Content="{Binding Icon}" />
+                    <TextBlock Text="{Binding Header}" />
+                    <TextBlock Text=" " />
+                    <TextBlock Text="{Binding Description}" />
+                  </StackPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+
+            </ListBox>
+          </Border>
+        </Popup>
+      </Grid>
 
       <Button Grid.Column="3" Content="exec"/>
 

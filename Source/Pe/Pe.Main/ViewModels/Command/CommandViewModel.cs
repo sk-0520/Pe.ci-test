@@ -6,17 +6,25 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Views.Command;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
     public class CommandViewModel : SingleModelViewModelBase<CommandElement>, IViewLifecycleReceiver
     {
+        #region variable
+
+        bool _isOpend;
+
+        #endregion
+
         public CommandViewModel(CommandElement model, IGeneralTheme generalTheme, ICommandTheme commandTheme, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
@@ -26,6 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             DispatcherWrapper = dispatcherWrapper;
 
             ThemeProperties = new ThemeProperties(this);
+
+            CommandItemCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<IReadOnlyCommandItem>, CommandItemViewModel>(Model.CommandItems) {
+                ToViewModel = m => new CommandItemViewModel(m.Data, IconBox, DispatcherWrapper, LoggerFactory),
+            };
+            CommandItems = CommandItemCollection.GetDefaultView();
 
             PlatformTheme.Changed += PlatformTheme_Changed;
 
@@ -39,10 +52,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
+        ModelViewModelObservableCollectionManagerBase<WrapModel<IReadOnlyCommandItem>, CommandItemViewModel> CommandItemCollection { get; }
+        public ICollectionView CommandItems { get; }
+
         ThemeProperties ThemeProperties { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        TextBox? InputCommand { get; set; }
+
+        public bool IsOpend
+        {
+            get => this._isOpend;
+            set => SetProperty(ref this._isOpend, value);
+        }
+
+        public IconBox IconBox => Model.IconBox;
 
         #region theme
 
@@ -115,10 +140,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void ReceiveViewInitialized(Window window)
         {
             DpiScaleOutputor = (IDpiScaleOutputor)window;
+
+            var commandWindow = (CommandWindow)window;
+            InputCommand = commandWindow.inputCommand;
+
+            InputCommand.TextChanged += InputCommand_TextChanged;
         }
 
+
+
         public void ReceiveViewLoaded(Window window)
-        { }
+        {
+            Model.UpdateCommandItemsAsync(string.Empty);
+        }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
         {
@@ -133,6 +167,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public void ReceiveViewClosed()
         {
+            if(InputCommand != null) {
+                InputCommand.TextChanged -= InputCommand_TextChanged;
+            }
+
             Model.ReceiveViewClosed();
         }
 
@@ -158,6 +196,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    if(InputCommand != null) {
+                        InputCommand.TextChanged -= InputCommand_TextChanged;
+                    }
+
                     PlatformTheme.Changed -= PlatformTheme_Changed;
                     PropertyChangedHooker.Dispose();
                 }
@@ -181,5 +223,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
+
+        private void InputCommand_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Model.UpdateCommandItemsAsync(InputCommand!.Text);
+        }
+
     }
 }
