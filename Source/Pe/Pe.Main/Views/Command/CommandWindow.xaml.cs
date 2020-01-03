@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Command
 {
@@ -30,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         #region property
 
         PopupAttacher PopupAttacher { get; }
+        CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
 
@@ -37,6 +39,16 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         public Point GetDpiScale() => UIUtility.GetDpiScale(this);
         public Screen GetOwnerScreen() => Screen.FromHandle(HandleUtility.GetWindowHandle(this));
+
+        #endregion
+
+        #region function
+
+        public ICommand ScrollSelectedItemCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                this.listItems.ScrollIntoView(this.listItems.SelectedItem);
+            }
+        ));
 
         #endregion
 

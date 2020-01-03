@@ -56,6 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
 
         #region property
+        public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
+
         IGeneralTheme GeneralTheme { get; }
         ICommandTheme CommandTheme { get; }
         IPlatformTheme PlatformTheme { get; }
@@ -188,18 +190,49 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public ICommand UpSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Logger.LogInformation("up!");
+                UpDownSelectItem(true);
             }
         ));
 
         public ICommand DownSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Logger.LogInformation("down!");
+                UpDownSelectItem(false);
             }
         ));
         #endregion
 
         #region function
+
+        void UpDownSelectItem(bool isUp)
+        {
+            if(CommandItemCollection.ViewModels.Count == 0) {
+                Logger.LogTrace("列挙アイテムなし");
+                return;
+            }
+
+            if(SelectedItem == null) {
+                // 多分ここには来ないはずだけど一応
+                SelectedItem = isUp
+                    ? CommandItemCollection.ViewModels.First()
+                    : CommandItemCollection.ViewModels.Last()
+                ;
+            } else {
+                var index = CommandItemCollection.ViewModels.IndexOf(SelectedItem);
+                if(isUp) {
+                    SelectedItem = index == 0
+                        ? CommandItemCollection.ViewModels.Last()
+                        : CommandItemCollection.ViewModels[index - 1]
+                    ;
+                } else {
+                    SelectedItem = index == CommandItemCollection.ViewModels.Count - 1
+                        ? CommandItemCollection.ViewModels[0]
+                        : CommandItemCollection.ViewModels[index + 1]
+                    ;
+                }
+            }
+
+            ScrollSelectedItemRequest.Send();
+        }
 
         #endregion
 
