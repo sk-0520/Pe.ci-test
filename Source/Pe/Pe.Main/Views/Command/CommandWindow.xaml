@@ -68,9 +68,10 @@
         </Border.Style>
       </Border>
 
+      <!-- アイコン描画領域 跡地 -->
       <Grid Grid.Column="1">
-        <!-- アイコン描画領域 -->
-        <ContentControl Content="{Binding SelectedItem.Icon}" />
+        <!-- 別にいらんなぁ、と。 -->
+        <!--<ContentControl Content="{Binding SelectedItem.Icon}" />-->
       </Grid>
 
       <Grid Grid.Column="2">

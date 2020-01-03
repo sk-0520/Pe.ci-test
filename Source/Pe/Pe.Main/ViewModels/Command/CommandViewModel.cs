@@ -140,7 +140,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #endregion
 
         #region function
-
         #endregion
 
         #region IViewLifecycleReceiver
@@ -234,8 +233,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private void InputCommand_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Model.UpdateCommandItemsAsync(InputCommand!.Text);
-            SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+            Model.UpdateCommandItemsAsync(InputCommand!.Text).ContinueWith(t => {
+                SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+            });
         }
 
     }
