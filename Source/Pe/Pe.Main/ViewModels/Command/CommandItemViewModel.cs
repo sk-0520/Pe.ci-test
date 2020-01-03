@@ -31,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         IDispatcherWrapper DispatcherWrapper { get; }
         public string Header => Item.Header;
         public string Description => Item.Description;
+        public string Kind => Item.Kind;
+        public double Score => Item.Score;
 
         public object Icon
         {

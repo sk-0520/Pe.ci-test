@@ -139,13 +139,28 @@
           >
             <ListBox.ItemTemplate>
               <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                  <!--<Image Style="{StaticResource ItemImage}" Source="{Binding Image}" />-->
-                  <ContentControl Content="{Binding Icon}" />
-                  <TextBlock Text="{Binding Header}" />
-                  <TextBlock Text=" " />
-                  <TextBlock Text="{Binding Description}" />
-                </StackPanel>
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding Icon}" />
+                  <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Header}" />
+
+                  <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding Kind}" />
+                    <TextBlock Grid.Column="1" Text="{Binding Description}" />
+                  </Grid>
+                </Grid>
               </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
