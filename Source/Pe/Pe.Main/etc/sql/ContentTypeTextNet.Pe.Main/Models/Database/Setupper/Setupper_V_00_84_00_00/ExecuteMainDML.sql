@@ -336,9 +336,9 @@ insert into
 	(
 		FontId,
 		IconBox,
+		Width,
 		HideWaitTime,
 		FindTag,
-		FindFile,
 
 		CreatedTimestamp,
 		CreatedAccount,
@@ -354,9 +354,9 @@ insert into
 	(
 /* FontId                */ @CommandFontId,
 /* IconBox               */ 'small',
+/* Width                 */ 200,
 /* HideWaitTime          */ '0.00:00:03.0',
 /* FindTag               */ true,
-/* FindFile              */ true,
 
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,

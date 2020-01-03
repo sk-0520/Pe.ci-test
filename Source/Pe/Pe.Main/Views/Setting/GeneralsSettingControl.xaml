@@ -134,6 +134,14 @@
                   </ContentControl.Style>
                 </ContentControl>
 
+                <Label>width</Label>
+                <app_core_views:NumericUpDown
+                  Increment="1"
+                  Value="{Binding Width}"
+                  Minimum="{Binding MinimumWidth}"
+                  Maximum="{Binding MaximumWidth}"
+                />
+
                 <Label>wait</Label>
                 <app_core_views:NumericUpDown
                   Increment="0.5"
@@ -150,7 +158,6 @@
                 </WrapPanel>
 
                 <CheckBox Content="find tag" IsChecked="{Binding FindTag}" />
-                <CheckBox Content="find file" IsChecked="{Binding FindFile}" />
 
               </StackPanel>
             </GroupBox>

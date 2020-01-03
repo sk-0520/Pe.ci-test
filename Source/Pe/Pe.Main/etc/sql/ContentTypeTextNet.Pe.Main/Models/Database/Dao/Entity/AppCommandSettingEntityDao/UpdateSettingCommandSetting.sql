@@ -3,9 +3,9 @@ update
 set
 	FontId                = @FontId,
 	IconBox               = @IconBox,
+	Width                 = @Width,
 	HideWaitTime          = @HideWaitTime,
 	FindTag               = @FindTag,
-	FindFile              = @FindFile,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

@@ -130,9 +130,9 @@ ___
 |    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |          |
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |          |
+|    | o  |              | 横幅                     | Width                 | real         | System.Double   |              |          |
 |    | o  |              | 非表示待機時間           | HideWaitTime          | text         | System.TimeSpan |              |          |
 |    | o  |              | タグ検索                 | FindTag               |              | System.Boolean  |              |          |
-|    | o  |              | ファイル検索             | FindFile              |              | System.Boolean  |              |          |
 
 ### index
 

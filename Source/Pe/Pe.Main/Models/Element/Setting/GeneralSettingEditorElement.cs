@@ -228,9 +228,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         //public Guid FontId { get; set; }
         public FontElement? Font { get; private set; }
         public IconBox IconBox { get; set; }
+        public double Width { get; set; }
         public TimeSpan HideWaitTime { get; set; }
         public bool FindTag { get; set; }
-        public bool FindFile { get; set; }
 
         #endregion
 
@@ -251,9 +251,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Font.Initialize();
 
             IconBox = setting.IconBox;
+            Width = setting.Width;
             HideWaitTime = setting.HideWaitTime;
             FindTag = setting.FindTag;
-            FindFile = setting.FindFile;
         }
 
         protected override void SaveImpl(DatabaseCommandPack commadPack)
@@ -264,9 +264,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var data = new SettingAppCommandSettingData() {
                 FontId = Font.FontId,
                 IconBox = IconBox,
+                Width = Width,
                 HideWaitTime = HideWaitTime,
                 FindTag = FindTag,
-                FindFile = FindFile,
             };
             appCommandSettingEntityDao.UpdateSettingCommandSetting(data, commadPack.CommonStatus);
 
