@@ -14,8 +14,6 @@
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 
   Title="CommandWindow"
-  Height="450"
-  Width="800"
 
   AllowsTransparency="True"
   WindowStyle="None"
@@ -24,6 +22,8 @@
   MinWidth="100"
   MaxWidth="400"
   Topmost="True"
+
+  Width="{Binding WindowWidth, Mode=TwoWay, Delay=1000}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -213,7 +213,7 @@
         </Popup>
       </Grid>
 
-      <Button Grid.Column="3" Content="{Binding InputState}"/>
+      <Button Grid.Column="3" Content="exec"/>
 
     </Grid>
   </Border>

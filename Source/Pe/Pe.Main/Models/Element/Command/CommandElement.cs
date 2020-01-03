@@ -21,14 +21,15 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
-    public class CommandElement : ElementBase, IViewShowStarter
+    public class CommandElement : ElementBase, IViewShowStarter, IFlushable
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
+            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
             OrderManager = orderManager;
             WindowManager = windowManager;
             NotifyManager = notifyManager;
@@ -50,11 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         IOrderManager OrderManager { get; }
         IWindowManager WindowManager { get; }
         INotifyManager NotifyManager { get; }
         bool ViewCreated { get; set; }
-
+        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
 
         IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
@@ -62,6 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public ObservableCollection<WrapModel<ICommandItem>> CommandItems { get; } = new ObservableCollection<WrapModel<ICommandItem>>();
 
         public bool FindTag { get; private set; }
+        public double Width { get; private set; }
         public TimeSpan HideWaitTime { get; private set; }
         public IconBox IconBox { get; private set; }
 
@@ -77,6 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             Debug.Assert(ViewCreated);
 
             WindowManager.GetWindowItems(WindowKind.Command).First().Window.Hide();
+            Flush();
 
             StartIconClear();
         }
@@ -120,9 +124,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
             Font.Initialize();
 
-            FindTag = setting.FindTag;
-            HideWaitTime = setting.HideWaitTime;
             IconBox = setting.IconBox;
+            Width = setting.Width;
+            HideWaitTime = setting.HideWaitTime;
+            FindTag = setting.FindTag;
         }
 
         private void RefreshLauncherItems()
@@ -226,6 +231,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             });
         }
 
+        public void ChangeViewWidthDelaySave(double width)
+        {
+            var diff = Math.Abs(Width - width);
+            if(diff < double.Epsilon) {
+                Logger.LogTrace("{Width} - {width}: {Abs} < {Epsilon}", Width, width, diff, double.Epsilon);
+                return;
+            }
+            Width = width;
+
+            MainDatabaseLazyWriter.Stock(c => {
+                var dao = new AppCommandSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                dao.UpdatCommandSettingWidth(Width, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
         #endregion
 
         #region ElementBase
@@ -233,6 +253,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         protected override void InitializeImpl()
         {
             Refresh();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                Flush();
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
@@ -287,6 +316,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             ViewCreated = false;
         }
 
+
+        #endregion
+
+        #region IFlushable
+
+        public void Flush()
+        {
+            MainDatabaseLazyWriter.SafeFlush();
+        }
 
         #endregion
 

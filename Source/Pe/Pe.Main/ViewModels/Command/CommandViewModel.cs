@@ -91,6 +91,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
         TextBox? InputCommand { get; set; }
 
+        public double WindowWidth
+        {
+            get => Model.Width;
+            set => Model.ChangeViewWidthDelaySave(value);
+        }
+
         public bool IsOpend
         {
             get => this._isOpend;
