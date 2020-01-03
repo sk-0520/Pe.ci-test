@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         IOrderManager OrderManager { get; }
         IWindowManager WindowManager { get; }
         INotifyManager NotifyManager { get; }
-        bool ViewCreated { get; set; }
+        public bool ViewCreated { get; private set; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
 
@@ -75,14 +75,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region function
 
-        public void Hide()
+        public void HideView(bool force)
         {
             Debug.Assert(ViewCreated);
 
-            WindowManager.GetWindowItems(WindowKind.Command).First().Window.Hide();
             Flush();
-
-            StartIconClear();
+            if(force) {
+                ClearIcon();
+                CloseView();
+            } else {
+                WindowManager.GetWindowItems(WindowKind.Command).First().Window.Hide();
+                StartIconClear();
+            }
         }
 
 
@@ -99,6 +103,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
             IconClearTimer.Stop();
         }
+        private void ClearIcon()
+        {
+            Logger.LogDebug("アイコンキャッシュ破棄開始");
+            foreach(var element in LauncherItemElements) {
+                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
+            }
+            StopIconClear();
+            Logger.LogDebug("アイコンキャッシュ破棄終了");
+        }
 
         private void StartViewClose()
         {
@@ -111,6 +124,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 Logger.LogTrace("ビュー破棄待機 停止");
             }
             ViewCloseTimer.Stop();
+        }
+        private void CloseView()
+        {
+            Logger.LogDebug("ビュー破棄開始");
+
+            var view = WindowManager.GetWindowItems(WindowKind.Command).First().Window;
+            view.Dispatcher.Invoke(() => {
+                view.Close();
+                ViewCreated = false;
+                Logger.LogDebug("ビュー破棄終了");
+            });
+            StopViewClose();
         }
 
         private void RefreshSetting()
@@ -330,27 +355,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         private void IconClearTimerr_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Logger.LogDebug("アイコンキャッシュ破棄開始");
-            foreach(var element in LauncherItemElements) {
-                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
-            }
-            StopIconClear();
-            Logger.LogDebug("アイコンキャッシュ破棄終了");
-
+            ClearIcon();
             StartViewClose();
         }
 
         private void ViewCloseTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Logger.LogDebug("ビュー破棄開始");
-
-            var view = WindowManager.GetWindowItems(WindowKind.Command).First().Window;
-            view.Dispatcher.Invoke(() => {
-                view.Close();
-                ViewCreated = false;
-                Logger.LogDebug("ビュー破棄終了");
-            });
-            StopViewClose();
+            CloseView();
         }
 
 

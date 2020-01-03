@@ -512,6 +512,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StopHook();
             UninitializeSystem();
 
+            if(CommandElement.ViewCreated) {
+                CommandElement.HideView(true);
+            }
+
             var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
             Logger.LogDebug("遅延書き込み処理停止");
@@ -613,6 +617,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("設定適用のため各要素生成");
                     RebuildHook();
                     ExecuteElements();
+                    CommandElement.Refresh();
                 } else {
                     Logger.LogInformation("設定は保存されなかったため現在要素継続");
                 }

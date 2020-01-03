@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void ReceiveViewUserClosing(CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
-            Model.Hide();
+            Model.HideView(false);
         }
 
         public void ReceiveViewClosing(CancelEventArgs e)
