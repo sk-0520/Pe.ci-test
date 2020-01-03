@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -30,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         CommandItemViewModel? _selectedItem;
         string _inputValue = string.Empty;
         InputState _inputState;
+        bool _isActive;
 
         #endregion
 
@@ -50,6 +52,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
 
+            HideWaitTimer = new DispatcherTimer(DispatcherPriority.Normal) {
+                Interval = Model.HideWaitTime,
+            };
+            HideWaitTimer.Tick += HideWaitTimer_Tick;
+
             PlatformTheme.Changed += PlatformTheme_Changed;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
@@ -63,6 +70,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         ICommandTheme CommandTheme { get; }
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+
+        DispatcherTimer HideWaitTimer { get; }
 
         ModelViewModelObservableCollectionManagerBase<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
         public ICollectionView CommandItems { get; }
@@ -294,6 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void ReceiveViewClosed()
         {
             Model.ReceiveViewClosed();
+            HideWaitTimer.Stop();
         }
 
         #endregion
@@ -342,6 +352,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+        }
+
+        private void HideWaitTimer_Tick(object? sender, EventArgs e)
+        {
+            Model.HideView(false);
+            HideWaitTimer.Stop();
         }
 
 
