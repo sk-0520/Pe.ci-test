@@ -134,6 +134,8 @@
               <Style.Triggers>
                 <MultiDataTrigger>
                   <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsVisible, ElementName=root}" Value="True" />
+                    <Condition Binding="{Binding IsActive, ElementName=root}" Value="True" />
                     <Condition Binding="{Binding ElementName=inputCommand, Path=IsFocused}" Value="True" />
                     <Condition Binding="{Binding ElementName=listItems, Path=HasItems}" Value="True" />
                   </MultiDataTrigger.Conditions>

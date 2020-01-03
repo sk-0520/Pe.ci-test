@@ -80,6 +80,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         */
 
         #endregion
-
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -31,7 +32,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             OrderManager = orderManager;
             WindowManager = windowManager;
             NotifyManager = notifyManager;
+
+            IconClearTimer = new Timer() {
+                Interval = TimeSpan.FromSeconds(10).TotalMilliseconds,
+            };
+            IconClearTimer.Elapsed += IconClearTimerr_Elapsed;
+
+            ViewCloseTimer = new Timer() {
+                Interval = TimeSpan.FromSeconds(10).TotalMilliseconds,
+            };
+            ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
         }
+
 
         #region property
 
@@ -52,6 +64,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public bool FindTag { get; private set; }
         public TimeSpan HideWaitTime { get; private set; }
         public IconBox IconBox { get; private set; }
+
+        Timer IconClearTimer { get; }
+        Timer ViewCloseTimer { get; }
+
         #endregion
 
         #region function
@@ -62,9 +78,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             WindowManager.GetWindowItems(WindowKind.Command).First().Window.Hide();
 
-            foreach(var element in LauncherItemElements) {
-                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
+            StartIconClear();
+        }
+
+
+        private void StartIconClear()
+        {
+            IconClearTimer.Stop();
+            IconClearTimer.Start();
+        }
+        private void StopIconClear()
+        {
+            StopViewClose();
+            if(IconClearTimer.Enabled) {
+                Logger.LogTrace("アイコンキャッシュ破棄待機 停止");
             }
+            IconClearTimer.Stop();
+        }
+
+        private void StartViewClose()
+        {
+            ViewCloseTimer.Stop();
+            ViewCloseTimer.Start();
+        }
+        private void StopViewClose()
+        {
+            if(ViewCloseTimer.Enabled) {
+                Logger.LogTrace("ビュー破棄待機 停止");
+            }
+            ViewCloseTimer.Stop();
         }
 
         private void RefreshSetting()
@@ -216,6 +258,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 windowItem.Window.Show();
                 ViewCreated = true;
             } else {
+                StopIconClear();
+
                 var windoItem = WindowManager.GetWindowItems(WindowKind.Command).First();
                 if(windoItem.Window.IsVisible) {
                     windoItem.Window.Activate();
@@ -245,6 +289,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
 
         #endregion
+
+        private void IconClearTimerr_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Logger.LogDebug("アイコンキャッシュ破棄開始");
+            foreach(var element in LauncherItemElements) {
+                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
+            }
+            StopIconClear();
+            Logger.LogDebug("アイコンキャッシュ破棄終了");
+
+            StartViewClose();
+        }
+
+        private void ViewCloseTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Logger.LogDebug("ビュー破棄開始");
+
+            var view = WindowManager.GetWindowItems(WindowKind.Command).First().Window;
+            view.Dispatcher.Invoke(() => {
+                view.Close();
+                ViewCreated = false;
+                Logger.LogDebug("ビュー破棄終了");
+            });
+            StopViewClose();
+        }
+
 
     }
 }

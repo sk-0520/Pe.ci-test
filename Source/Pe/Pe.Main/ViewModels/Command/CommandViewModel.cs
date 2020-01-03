@@ -241,11 +241,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void ReceiveViewInitialized(Window window)
         {
             DpiScaleOutputor = (IDpiScaleOutputor)window;
-
-            var commandWindow = (CommandWindow)window;
-            InputCommand = commandWindow.inputCommand;
-
-            InputCommand.KeyDown += InputCommand_KeyDown;
         }
 
         public void ReceiveViewLoaded(Window window)
@@ -268,10 +263,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public void ReceiveViewClosed()
         {
-            if(InputCommand != null) {
-                InputCommand.KeyDown -= InputCommand_KeyDown;
-            }
-
             Model.ReceiveViewClosed();
         }
 
@@ -297,12 +288,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    if(InputCommand != null) {
-                        InputCommand.KeyDown -= InputCommand_KeyDown;
-                    }
-
                     PlatformTheme.Changed -= PlatformTheme_Changed;
                     PropertyChangedHooker.Dispose();
+                    CommandItemCollection.Dispose();
+                    Font.Dispose();
                 }
             }
 
@@ -325,10 +314,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
 
-        private void InputCommand_KeyDown(object sender, KeyEventArgs e)
-        {
-            //InputMethod.Current.ImeState
-        }
 
     }
 }
