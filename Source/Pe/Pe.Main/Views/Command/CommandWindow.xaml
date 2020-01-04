@@ -56,6 +56,12 @@
     <app_core_views:RequestTrigger SourceObject="{Binding ScrollSelectedItemRequest}">
       <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
+    <i:EventTrigger EventName="Activated">
+      <i:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
+    </i:EventTrigger>
+    <i:EventTrigger EventName="Deactivated">
+      <i:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}" CommandParameter="{Binding ElementName=root}" />
+    </i:EventTrigger>
   </i:Interaction.Triggers>
 
   <Border BorderThickness="{Binding ViewBorderThickness}">

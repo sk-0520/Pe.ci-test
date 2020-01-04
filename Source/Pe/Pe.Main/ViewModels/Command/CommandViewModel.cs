@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         CommandItemViewModel? _selectedItem;
         string _inputValue = string.Empty;
         InputState _inputState;
-        bool _isActive;
+        //bool _isActive;
 
         #endregion
 
@@ -238,6 +238,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 UpDownSelectItem(false);
             }
         ));
+
+        public ICommand ViewActivatedCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                HideWaitTimer.Stop();
+            }
+        ));
+        public ICommand ViewDeactivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+            o => {
+                if(o.IsVisible) {
+                    HideWaitTimer.Stop();
+                    HideWaitTimer.Start();
+                }
+            }
+        ));
+
         #endregion
 
         #region function
