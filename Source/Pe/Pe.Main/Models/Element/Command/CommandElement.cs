@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
@@ -310,19 +312,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public void StartView()
         {
+            IntPtr hWnd;
             if(!ViewCreated) {
                 var windowItem = OrderManager.CreateCommandWindow(this);
                 windowItem.Window.Show();
+                hWnd = HandleUtility.GetWindowHandle(windowItem.Window);
                 ViewCreated = true;
             } else {
                 StopIconClear();
 
-                var windoItem = WindowManager.GetWindowItems(WindowKind.Command).First();
-                if(windoItem.Window.IsVisible) {
-                    windoItem.Window.Activate();
+                var windowItem = WindowManager.GetWindowItems(WindowKind.Command).First();
+                hWnd = HandleUtility.GetWindowHandle(windowItem.Window);
+                if(windowItem.Window.IsVisible) {
+                    windowItem.Window.Activate();
                 } else {
-                    windoItem.Window.Show();
+                    windowItem.Window.Show();
                 }
+            }
+            if(hWnd != IntPtr.Zero) {
+                var deviceCursorPosition = MouseUtility.GetDevicePosition();
+                NativeMethods.SetWindowPos(hWnd, IntPtr.Zero, (int)deviceCursorPosition.X, (int)deviceCursorPosition.Y, 0, 0, SWP.SWP_NOSIZE);
             }
         }
 
