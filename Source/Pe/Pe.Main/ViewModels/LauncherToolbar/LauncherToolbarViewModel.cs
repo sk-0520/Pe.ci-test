@@ -32,6 +32,7 @@ using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -231,6 +232,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                LauncherItems.Refresh();
            }
        ));
+
+        public ICommand RemoveCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherDetailViewModelBase>(
+            o => {
+                Debug.Assert(SelectedLauncherGroup != null);
+
+#pragma warning disable CS0219 // 変数は割り当てられていますが、その値は使用されていません
+                var itemIndex = 0;
+#pragma warning restore CS0219 // 変数は割り当てられていますが、その値は使用されていません
+                var targetIndex = 0;
+                Model.RemoveLauncherItem(SelectedLauncherGroup.LauncherGroupId, o.LauncherItemId, targetIndex);
+            }
+        ));
 
 
         #endregion

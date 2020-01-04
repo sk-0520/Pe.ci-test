@@ -224,6 +224,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             LoadLauncherItems();
         }
 
+        public void RemoveLauncherItem(Guid launcherGroupId, Guid launcherItemId, int index)
+        {
+            NotifyManager.SendLauncherItemRemoveInGroup(launcherGroupId, launcherItemId, index);
+        }
+
+
         void UpdateDesign()
         {
             ThrowIfDisposed();

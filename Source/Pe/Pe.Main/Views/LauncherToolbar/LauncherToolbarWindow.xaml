@@ -142,7 +142,7 @@
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="others" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="customize" Command="{Binding CustomizeCommand}" />
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove?">
-            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove!" />
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove!" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
           </MenuItem>
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="property" Command="{Binding ShowPropertyCommand}" />
 

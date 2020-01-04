@@ -71,6 +71,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void SendLauncherItemChanged(Guid launcherItemIds);
         void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId);
+        /// <summary>
+        /// グループからランチャーアイテムが破棄されたことを通知。
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="launcherItemId"></param>
+        /// <param name="index">同一の<see cref="launcherItemId"/>に該当するもののうち何番目のアイテムかを示す。</param>
+        void SendLauncherItemRemoveInGroup(Guid groupId, Guid launcherItemId, int index);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
         #endregion
@@ -109,6 +116,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherItemRegistered?.Invoke(this, e);
         }
 
+        void OnLauncherItemRemovedInGroup(Guid groupId, Guid launcherItemId, int index)
+        {
+        }
+
         void OnCustomizeLauncherItemExited(Guid launcherItemId)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
@@ -129,6 +140,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             OnLauncherItemChanged(launcherItemId);
         }
+        public void SendLauncherItemRemoveInGroup(Guid groupId, Guid launcherItemId, int number)
+        {
+            OnLauncherItemRemovedInGroup(groupId, launcherItemId, number);
+        }
+
         public void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId)
         {
             OnLauncherItemRegistered(groupId, launcherItemId);

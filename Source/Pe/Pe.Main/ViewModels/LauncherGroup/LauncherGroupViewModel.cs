@@ -25,6 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
 
         #region property
 
+        public Guid LauncherGroupId => Model.LauncherGroupId;
+
         public int RowIndex { get; set; }
         IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
