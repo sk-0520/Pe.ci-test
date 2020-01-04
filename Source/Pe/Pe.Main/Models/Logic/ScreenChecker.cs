@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region function
 
-        public bool FindMaybe(Screen screen, IScreenData data)
+        public bool FindMaybe(IScreen screen, IScreenData data)
         {
             if(data.ScreenName == screen.DeviceName) {
                 return true;

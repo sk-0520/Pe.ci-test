@@ -48,6 +48,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -317,7 +318,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId, default(Screen), NoteStartupPosition.Setting);
+                var element = CreateNoteElement(noteId, default(IScreen), NoteStartupPosition.Setting);
                 result.Add(element);
             }
 
@@ -340,7 +341,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
-        public NoteElement CreateNote(Screen dockScreen)
+        public NoteElement CreateNote(IScreen dockScreen)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
@@ -698,7 +699,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             return OrderManager.CreateLauncherGroupElement(launcherGroupId);
         }
-        public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        public LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
             return OrderManager.CreateLauncherToolbarElement(dockScreen, launcherGroups);
         }
@@ -708,23 +709,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
         {
             return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen, iconElement);
         }
 
-        public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
+        public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
         {
             return OrderManager.CreateExtendsExecuteElement(captionName, launcherFileData, launcherEnvironmentVariables, screen);
         }
 
-        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen)
+        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen)
         {
             return OrderManager.CreateLauncherExtendsExecuteElement(launcherItemId, screen);
         }
 
 
-        public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition)
+        public NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition)
         {
             return OrderManager.CreateNoteElement(noteId, screen, startupPosition);
         }
@@ -765,7 +766,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
         }
 
-        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)
+        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, IScreen screen)
         {
             var element = OrderManager.CreateStandardInputOutputElement(id, process, screen);
             StandardInputOutputs.Add(element);

@@ -416,7 +416,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         /// <summary>
         /// 対象ディスプレイ。
         /// </summary>
-        public Screen DockScreen => Model.DockScreen;
+        public IScreen DockScreen => Model.DockScreen;
 
         #endregion
 

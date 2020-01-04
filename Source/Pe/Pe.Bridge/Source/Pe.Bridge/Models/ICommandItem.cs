@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region function
 
         object GetIcon(IconBox iconBox);
-        void Execute();
+        void Execute(IScreen screen);
 
         #endregion
     }

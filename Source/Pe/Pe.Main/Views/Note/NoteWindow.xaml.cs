@@ -13,6 +13,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -228,7 +229,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         #region IDpiScaleOutputor
 
         public Point GetDpiScale() => UIUtility.GetDpiScale(this);
-        public Screen GetOwnerScreen() => Screen.FromHandle(HandleUtility.GetWindowHandle(this));
+        public IScreen GetOwnerScreen() => Screen.FromHandle(HandleUtility.GetWindowHandle(this));
 
         #endregion
 

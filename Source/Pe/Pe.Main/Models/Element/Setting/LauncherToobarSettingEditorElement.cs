@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool IsAutoHide { get; set; }
         public bool IsIconOnly { get; set; }
 
-        public Screen? Screen { get; set; }
+        public IScreen? Screen { get; set; }
         public string ScreenName { get; set; } = string.Empty;
 
         #endregion
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsAutoHide = data.IsAutoHide;
             IsIconOnly = data.IsIconOnly;
 
-            var screens = Screen.AllScreens;
+            var screens = ContentTypeTextNet.Pe.Core.Compatibility.Forms.Screen.AllScreens;
             var screenChecker = new ScreenChecker();
             foreach(var screen in screens) {
                 if(screenChecker.FindMaybe(screen, screenToolbar)) {

@@ -5,6 +5,7 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="screen"></param>
         /// <param name = "logger"></param>
         /// <returns></returns>
-        public string GetName(Screen screen)
+        public string GetName(IScreen screen)
         {
             foreach(var screem in GetScreens(screen.DeviceName)) {
                 if(!string.IsNullOrWhiteSpace(screem.Name)) {
@@ -95,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return device.DeviceString;
         }
 
-        public bool RegisterDatabase(Screen screen, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
+        public bool RegisterDatabase(IScreen screen, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
             var screensDao = new ScreensEntityDao(commander, statementLoader, implementation, LoggerFactory);
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
