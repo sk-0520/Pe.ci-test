@@ -230,9 +230,18 @@
     <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />
   </i:Interaction.Behaviors>
 
-  <Window.Visibility>
-    <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
-  </Window.Visibility>
+  <Window.Style>
+    <Style TargetType="Window">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding ExistsFullScreenWindow}" Value="True">
+          <!-- Visibility 操作するともろもろの都合でウィンドウが閉じられるのだ！ -->
+          <Setter Property="Opacity" Value="0" />
+        </DataTrigger>
+      </Style.Triggers>
+      <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    </Style>
+  </Window.Style>
+
   <Window.ContextMenu>
     <ContextMenu ItemsSource="{Binding LauncherGroupItems}" ItemContainerStyle="{StaticResource GroupMenuItem}" />
   </Window.ContextMenu>

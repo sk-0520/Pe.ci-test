@@ -271,12 +271,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 ExtendData.ExistsFullScreenWindow = fullScreen;
             }
 
-            var _ignore_ = false;
-            if(_ignore_) {
-                if(AppDesktopToolbarFullScreen != null) {
-                    var e = new AppDesktopToolbarFullScreenEventArgs(fullScreen);
-                    AppDesktopToolbarFullScreen(View, e);
-                }
+            if(AppDesktopToolbarFullScreen != null) {
+                var e = new AppDesktopToolbarFullScreenEventArgs(fullScreen);
+                AppDesktopToolbarFullScreen(View, e);
             }
         }
 
@@ -827,7 +824,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                         if(CallbackMessage != 0 && msg == CallbackMessage) {
                             switch(wParam.ToInt32()) {
                                 case (int)ABN.ABN_FULLSCREENAPP:
-                                    // フルスクリーン
+                                    // フルスクリーン検知
                                     OnAppDesktopToolbarFullScreen(WindowsUtility.ConvertBoolFromLParam(lParam));
                                     //return IntPtr.Zero;
                                     break;
