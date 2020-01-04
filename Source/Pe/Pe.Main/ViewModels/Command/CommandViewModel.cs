@@ -224,6 +224,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             () => {
                 Logger.LogInformation("コマンドアイテムの起動: {0}", SelectedItem!.Header);
                 SelectedItem.Execute(DpiScaleOutputor.GetOwnerScreen());
+
+                // 役目は終わったのでコマンドランチャーを閉じる
+                Model.HideView(false);
             },
             () => SelectedItem != null
         ));

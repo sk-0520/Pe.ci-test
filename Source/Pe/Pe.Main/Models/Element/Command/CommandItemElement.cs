@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public abstract double Score { get; }
 
         public abstract object GetIcon(IconBox iconBox);
-        public abstract void Execute(IScreen screen);
+        public abstract void Execute(IScreen screen, bool isExtend);
 
         #endregion
 
@@ -74,9 +74,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             return LauncherItemElement.Icon.IconImageLoaderPack.IconItems[iconBox];
         }
 
-        public override void Execute(IScreen screen)
+        public override void Execute(IScreen screen, bool isExtend)
         {
-            LauncherItemElement.Execute(screen);
+            if(isExtend) {
+                LauncherItemElement.OpenExtendsExecuteView(screen);
+            } else {
+                LauncherItemElement.Execute(screen);
+            }
         }
 
         protected override void InitializeImpl()

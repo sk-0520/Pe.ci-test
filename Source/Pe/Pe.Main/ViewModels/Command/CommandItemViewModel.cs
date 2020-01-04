@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -54,7 +55,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public void Execute(IScreen screen)
         {
-            Item.Execute(screen);
+            var isExtend = Keyboard.Modifiers == ModifierKeys.Shift;
+            Item.Execute(screen, isExtend);
         }
 
         #endregion

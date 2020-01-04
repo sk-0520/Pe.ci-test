@@ -130,6 +130,7 @@
           >
             <TextBox.InputBindings>
               <KeyBinding Gesture="Enter" Command="{Binding ExecuteCommand}" />
+              <KeyBinding Gesture="Enter" Modifiers="Shift" Command="{Binding ExecuteCommand}" />
               <KeyBinding Gesture="Up" Command="{Binding UpSelectItemCommand}" />
               <KeyBinding Gesture="Down" Command="{Binding DownSelectItemCommand}" />
             </TextBox.InputBindings>

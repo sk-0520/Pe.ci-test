@@ -33,7 +33,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region function
 
         object GetIcon(IconBox iconBox);
-        void Execute(IScreen screen);
+
+        /// <summary>
+        /// コマンドアイテムの実行。
+        /// </summary>
+        /// <param name="screen">コマンドランチャーの所在地。</param>
+        /// <param name="isExtend">拡張機能(コマンドアイテム依存)を用いるか。</param>
+        void Execute(IScreen screen, bool isExtend);
 
         #endregion
     }
