@@ -377,8 +377,8 @@
 
               <Separator />
 
-              <MenuItem Header="topmost" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding SwitchTopmostCommand}" />
-              <MenuItem Header="auto hide" IsChecked="{Binding IsAutoHide, Mode=OneWay}" Command="{Binding SwitchAutoHideCommand}" />
+              <MenuItem Header="topmost" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
+              <MenuItem Header="auto hide" IsChecked="{Binding IsAutoHide, Mode=OneWay}" Command="{Binding ToggleAutoHideCommand}" />
 
               <Separator />
 

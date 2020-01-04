@@ -202,13 +202,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             o => o.HasValue && o.Value != ToolbarPosition
         ));
 
-        public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.ChangeTopmostDelaySave(!Model.IsTopmost);
             }
         ));
 
-        public ICommand SwitchAutoHideCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleAutoHideCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.ChangeAutoHideDelaySave(!Model.IsAutoHide);
             }

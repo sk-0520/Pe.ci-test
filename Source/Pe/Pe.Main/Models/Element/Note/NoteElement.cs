@@ -311,7 +311,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             notesEntityDao.UpdateFontId(NoteId, fontElement.FontId, DatabaseCommonStatus.CreateCurrentAccount());
         }
 
-        public void SwitchCompactDelaySave()
+        public void ToggleCompactDelaySave()
         {
             ThrowIfDisposed();
 
@@ -321,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 notesEntityDao.UpdateCompact(NoteId, IsCompact, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
-        public void SwitchTopmostDelaySave()
+        public void ToggleTopmostDelaySave()
         {
             ThrowIfDisposed();
 
@@ -332,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void SwitchLockDelaySave()
+        public void ToggleLockDelaySave()
         {
             ThrowIfDisposed();
 
@@ -343,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void SwitchTextWrapDelaySave()
+        public void ToggleTextWrapDelaySave()
         {
             ThrowIfDisposed();
 

@@ -364,7 +364,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 .ToList()
             ;
             foreach(var note in noteItems) {
-                note.SwitchCompactCommand.ExecuteIfCanExecute(null);
+                note.ToggleCompactCommand.ExecuteIfCanExecute(null);
             }
         }
 

@@ -326,12 +326,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand SwitchCompactCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleCompactCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(!IsCompact) {
                     NormalWindowHeight = WindowHeight;
                 }
-                Model.SwitchCompactDelaySave();
+                Model.ToggleCompactDelaySave();
                 // レイアウト変更(高さ)通知を抑制
                 if(!IsCompact) {
                     this._windowHeight = NormalWindowHeight;
@@ -341,21 +341,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 RaisePropertyChanged(nameof(WindowHeight));
             }
         ));
-        public ICommand SwitchTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchTopmostDelaySave();
+                Model.ToggleTopmostDelaySave();
             }
         ));
 
-        public ICommand SwitchLockCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleLockCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchLockDelaySave();
+                Model.ToggleLockDelaySave();
             }
         ));
 
-        public ICommand SwitchTextWrapCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleTextWrapCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.SwitchTextWrapDelaySave();
+                Model.ToggleTextWrapDelaySave();
             }
         ));
 
