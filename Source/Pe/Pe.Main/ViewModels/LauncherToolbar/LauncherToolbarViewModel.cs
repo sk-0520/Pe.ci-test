@@ -33,6 +33,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using System.Diagnostics;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -93,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ExistsFullScreenWindow), nameof(ExistsFullScreenWindow));
 
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
+            ThemeProperties = new ThemeProperties(this);
         }
 
         #region property
@@ -106,6 +108,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         ILauncherGroupTheme LauncherGroupTheme { get; }
         IGeneralTheme GeneralTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
+        ThemeProperties ThemeProperties { get; }
+
 
         public IconBox IconBox => Model.IconBox;
         public Thickness ButtonPadding => Model.ButtonPadding;
@@ -124,16 +128,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             get => Model.IsTopmost;
         }
 
+        [ThemeProperty]
         public object ToolbarMainIcon
         {
             get => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.Menu, IconBox);
         }
 
+        [ThemeProperty]
         public Brush ToolbarBackground
         {
             get => LauncherToolbarTheme.GetToolbarBackground(ToolbarPosition, ViewState.Active, IconBox, IsIconOnly, TextWidth);
         }
 
+        [ThemeProperty]
         public Brush ToolbarForeground
         {
             get => LauncherToolbarTheme.GetToolbarForeground();
@@ -179,12 +186,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
         }
 
+        [ThemeProperty]
         public DependencyObject ToolbarPositionLeftIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Left);
+        [ThemeProperty]
         public DependencyObject ToolbarPositionTopIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Top);
+        [ThemeProperty]
         public DependencyObject ToolbarPositionRightIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Right);
+        [ThemeProperty]
         public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
 
+        [ThemeProperty]
         public ControlTemplate LauncherItemNormalButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate());
+        [ThemeProperty]
         public ControlTemplate LauncherItemToggleButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate());
 
         #endregion
@@ -510,12 +523,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {
             DispatcherWrapper.Begin(() => {
-                var themePropertyNames = new[] {
-                    nameof(ToolbarBackground),
-                    nameof(ToolbarForeground),
-                };
-                foreach(var themePropertyName in themePropertyNames) {
-                    RaisePropertyChanged(themePropertyName);
+                foreach(var propertName in ThemeProperties.GetPropertyNames()) {
+                    RaisePropertyChanged(propertName);
                 }
             }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }

@@ -29,6 +29,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.Models.Note;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -53,14 +54,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
             GeneralTheme = generalTheme;
+            PlatformTheme = platformTheme;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
             DispatcherWrapper = dispatcherWrapper;
+
+            PlatformTheme.Changed += PlatformTheme_Changed;
 
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
             Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
@@ -102,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         INoteTheme NoteTheme { get; }
         IGeneralTheme GeneralTheme { get; }
+        IPlatformTheme PlatformTheme { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -276,26 +281,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
         #region theme
+
+        [ThemeProperty]
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
+        [ThemeProperty]
         public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
+        [ThemeProperty]
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
+        [ThemeProperty]
         public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.None, GetColorPair());
+        [ThemeProperty]
         public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Over, GetColorPair());
+        [ThemeProperty]
         public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Pressed, GetColorPair());
+        [ThemeProperty]
         public Brush? CaptionForeground { get; private set; }
+        [ThemeProperty]
         public Brush? CaptionBackground { get; private set; }
+        [ThemeProperty]
         public Brush? ContentBackground { get; private set; }
+        [ThemeProperty]
         public Brush? ContentForeground { get; private set; }
 
+        [ThemeProperty]
         public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(GetColorPair());
 
+        [ThemeProperty]
         public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, GetColorPair());
+        [ThemeProperty]
         public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, false, GetColorPair());
+        [ThemeProperty]
         public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, true, GetColorPair());
+        [ThemeProperty]
         public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, GetColorPair());
 
+        [ThemeProperty]
         public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, GetColorPair());
+        [ThemeProperty]
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
+
 
         #endregion
 
@@ -882,6 +906,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+        }
+
+        private void PlatformTheme_Changed(object? sender, EventArgs e)
+        {
+            ApplyTheme();
         }
 
     }
