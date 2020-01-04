@@ -174,12 +174,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public Brush ViewActiveBackgroundBrush => CommandTheme.GetViewBackgroundBrush(true);
         [ThemeProperty]
         public Brush ViewInactiveBackgroundBrush => CommandTheme.GetViewBackgroundBrush(false);
+
         [ThemeProperty]
         public double GripWidth => CommandTheme.GetGripWidth();
         [ThemeProperty]
         public Brush GripActiveBrush => CommandTheme.GetGripBrush(true);
         [ThemeProperty]
-        public Brush GripInactiveBrush => CommandTheme.GetGripBrush(true);
+        public Brush GripInactiveBrush => CommandTheme.GetGripBrush(false);
 
         [ThemeProperty]
         public Thickness SelectedIconMargin => CommandTheme.GetSelectedIconMargin(IconBox);

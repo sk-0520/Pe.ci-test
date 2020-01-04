@@ -21,9 +21,10 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public Brush GetGripBrush(bool isActive)
         {
-            var color = PlatformTheme.GetTaskbarColor();
-            var fore = MediaUtility.GetAutoColor(color);
-            return new SolidColorBrush(fore);
+            //var color = PlatformTheme.GetTaskbarColor();
+            //var fore = MediaUtility.GetAutoColor(color);
+            //return new SolidColorBrush(fore);
+            return (Brush)Application.Current.Resources["ICommandTheme-GetGripBrush"];
         }
 
         [return: PixelKind(Px.Logical)]

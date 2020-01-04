@@ -67,8 +67,14 @@
   <Border BorderThickness="{Binding ViewBorderThickness}">
     <Border.Style>
       <Style TargetType="Border">
-        <Setter Property="BorderBrush" Value="{Binding ViewActiveBorderBrush}" />
-        <Setter Property="Background" Value="{Binding ViewActiveBackgroundBrush}" />
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding IsActive, ElementName=root}" Value="True">
+            <Setter Property="BorderBrush" Value="{Binding ViewActiveBorderBrush}" />
+            <Setter Property="Background" Value="{Binding ViewActiveBackgroundBrush}" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="BorderBrush" Value="{Binding ViewInactiveBorderBrush}" />
+        <Setter Property="Background" Value="{Binding ViewInactiveBackgroundBrush}" />
       </Style>
     </Border.Style>
 
@@ -83,7 +89,12 @@
       <Border x:Name="grip" Grid.Column="0" Cursor="SizeAll" Width="{Binding GripWidth}">
         <Border.Style>
           <Style TargetType="Border">
-            <Setter Property="Background" Value="{Binding GripActiveBrush}" />
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsActive, ElementName=root}" Value="True">
+                <Setter Property="BorderBrush" Value="{Binding GripActiveBrush}" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="{Binding GripInactiveBrush}" />
           </Style>
         </Border.Style>
       </Border>
