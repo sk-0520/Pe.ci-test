@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
 
-            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed; ;
+            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
         }
 
         #region property

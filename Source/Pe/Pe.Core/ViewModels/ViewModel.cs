@@ -76,7 +76,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
             where TCommand : ICommand
         {
-            ThrowIfDisposed();
+            if(IsDisposed) {
+                // なーんかワケわからんことになるので破棄後は null を返すようにしておく
+                return default!;
+            }
 
             //var sb = new StringBuilder();
             //sb.Append(GetType().FullName);
