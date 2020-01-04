@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
         {
-            if(e.GroupId == LauncherGroupId) {
+            if(e.LauncherGroupId == LauncherGroupId) {
                 // 自グループにアイテムが登録されたので放り込んでおく
                 LauncherItemIds.Add(e.LauncherItemId);
             }

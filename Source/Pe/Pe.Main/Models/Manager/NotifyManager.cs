@@ -45,15 +45,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class LauncherItemRegisteredEventArgs : NotifyEventArgs
     {
-        public LauncherItemRegisteredEventArgs(Guid groupId, Guid launcherItemId)
+        public LauncherItemRegisteredEventArgs(Guid launcherGroupId, Guid launcherItemId)
         {
-            GroupId = groupId;
+            LauncherGroupId = launcherGroupId;
             LauncherItemId = launcherItemId;
         }
 
         #region property
 
-        public Guid GroupId { get; }
+        public Guid LauncherGroupId { get; }
         public Guid LauncherItemId { get; }
 
         #endregion
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region function
 
         void SendLauncherItemChanged(Guid launcherItemIds);
-        void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId);
+        void SendLauncherItemRegistered(Guid launcherGroupId, Guid launcherItemId);
         /// <summary>
         /// グループからランチャーアイテムが破棄されたことを通知。
         /// </summary>
@@ -161,11 +161,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LauncherItemChanged?.Invoke(this, e);
         }
 
-        void OnLauncherItemRegistered(Guid groupId, Guid launcherItemId)
+        void OnLauncherItemRegistered(Guid launcherGroupId, Guid launcherItemId)
         {
             ThrowIfEmptyLauncherItemId(launcherItemId);
 
-            var e = new LauncherItemRegisteredEventArgs(groupId, launcherItemId);
+            var e = new LauncherItemRegisteredEventArgs(launcherGroupId, launcherItemId);
             LauncherItemRegistered?.Invoke(this, e);
         }
 
@@ -212,9 +212,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             OnLauncherItemRemovedInGroup(launcherGroupId, launcherItemId, number);
         }
 
-        public void SendLauncherItemRegistered(Guid groupId, Guid launcherItemId)
+        public void SendLauncherItemRegistered(Guid launcherGroupId, Guid launcherItemId)
         {
-            OnLauncherItemRegistered(groupId, launcherItemId);
+            OnLauncherItemRegistered(launcherGroupId, launcherItemId);
         }
 
         public void SendCustomizeLauncherItemExited(Guid launcherItemId)

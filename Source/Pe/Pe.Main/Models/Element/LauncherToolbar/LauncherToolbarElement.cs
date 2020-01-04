@@ -587,7 +587,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         }
         private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
         {
-            if(e.GroupId == SelectedLauncherGroup?.LauncherGroupId) {
+            if(e.LauncherGroupId == SelectedLauncherGroup?.LauncherGroupId) {
                 // 現在表示中グループの表示を更新
                 var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
                 LauncherItems.Add(element);
