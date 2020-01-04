@@ -140,9 +140,9 @@
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="copy work" Command="{Binding CopyWorkingDirectoryCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="others" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="setting">
-            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="customize" Command="{Binding CustomizeCommand}" />
-            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="customize" Command="{Binding CustomizeCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove?">
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="remove!" />
           </MenuItem>
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="property" Command="{Binding ShowPropertyCommand}" />
 
