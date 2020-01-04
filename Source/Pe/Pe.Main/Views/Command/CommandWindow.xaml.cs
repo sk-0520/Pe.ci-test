@@ -90,5 +90,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         }
 
         #endregion
+
+        private void ListBoxItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // https://social.msdn.microsoft.com/Forums/ja-JP/4f9083f6-a97c-454e-8cce-38be5714d851/listbox1239512461125401250812540124891250112457125401245912473123?forum=wpfja
+            ((ListBoxItem)sender).IsSelected = true;
+            this.inputCommand.Focus();
+        }
     }
 }

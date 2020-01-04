@@ -161,6 +161,8 @@
           MaxHeight="300"
           MinWidth="{Binding ActualWidth, ElementName=inputCommand}"
           PlacementTarget="{Binding ElementName=inputCommand}"
+          Placement="Bottom"
+          AllowsTransparency="True"
         >
           <Popup.Style>
             <Style TargetType="Popup">
@@ -169,7 +171,7 @@
                   <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding IsVisible, ElementName=root}" Value="True" />
                     <Condition Binding="{Binding IsActive, ElementName=root}" Value="True" />
-                    <Condition Binding="{Binding ElementName=inputCommand, Path=IsFocused}" Value="True" />
+                    <!--<Condition Binding="{Binding ElementName=inputCommand, Path=IsFocused}" Value="True" />-->
                     <Condition Binding="{Binding ElementName=listItems, Path=HasItems}" Value="True" />
                   </MultiDataTrigger.Conditions>
                   <Setter Property="IsOpen" Value="True" />
@@ -184,6 +186,12 @@
             Focusable="False"
             IsTabStop="False"
           >
+            <ListBox.ItemContainerStyle>
+              <Style TargetType="ListBoxItem">
+                <Setter Property="Focusable" Value="False"/>
+                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown" />
+              </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
               <DataTemplate>
                 <Grid>
@@ -196,7 +204,7 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <ContentControl Grid.Row="0" Grid.Column="0" Content="{Binding Icon}" />
+                  <ContentControl Focusable="False" IsTabStop="False" Grid.Row="0" Grid.Column="0" Content="{Binding Icon}" />
                   <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Header}" />
 
                   <Grid Grid.Row="1" Grid.Column="1">
