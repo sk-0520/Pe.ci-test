@@ -316,9 +316,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         { }
     }
 
-    public sealed class KeyActionCommandJob : KeyActionPressedJobBase<KeyActionLauncherItemData>
+    public sealed class KeyActionCommandJob : KeyActionPressedJobBase<KeyActionCommandData>
     {
-        public KeyActionCommandJob(KeyActionLauncherItemData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        public KeyActionCommandJob(KeyActionCommandData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
         }

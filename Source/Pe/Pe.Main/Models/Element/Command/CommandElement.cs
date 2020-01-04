@@ -312,26 +312,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public void StartView()
         {
-            IntPtr hWnd;
+            static void MoveCursorPosition(WindowItem item)
+            {
+                var hWnd = HandleUtility.GetWindowHandle(item.Window);
+                if(hWnd != IntPtr.Zero) {
+                    var deviceCursorPosition = MouseUtility.GetDevicePosition();
+                    NativeMethods.SetWindowPos(hWnd, IntPtr.Zero, (int)deviceCursorPosition.X, (int)deviceCursorPosition.Y, 0, 0, SWP.SWP_NOSIZE);
+                }
+            }
+
             if(!ViewCreated) {
                 var windowItem = OrderManager.CreateCommandWindow(this);
                 windowItem.Window.Show();
-                hWnd = HandleUtility.GetWindowHandle(windowItem.Window);
+                MoveCursorPosition(windowItem);
                 ViewCreated = true;
             } else {
                 StopIconClear();
 
                 var windowItem = WindowManager.GetWindowItems(WindowKind.Command).First();
-                hWnd = HandleUtility.GetWindowHandle(windowItem.Window);
+                MoveCursorPosition(windowItem);
                 if(windowItem.Window.IsVisible) {
                     windowItem.Window.Activate();
                 } else {
                     windowItem.Window.Show();
                 }
-            }
-            if(hWnd != IntPtr.Zero) {
-                var deviceCursorPosition = MouseUtility.GetDevicePosition();
-                NativeMethods.SetWindowPos(hWnd, IntPtr.Zero, (int)deviceCursorPosition.X, (int)deviceCursorPosition.Y, 0, 0, SWP.SWP_NOSIZE);
             }
         }
 

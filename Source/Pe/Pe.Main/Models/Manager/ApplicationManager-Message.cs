@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -133,6 +134,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
         {
             switch(job) {
+                case KeyActionCommandJob commandJob:
+                    Logger.LogInformation("キーからの起動: コマンドランチャー");
+                    ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                        ShowCommandView();
+                    });
+                    break;
+
                 case KeyActionLauncherItemJob launcherItemJob:
                     Logger.LogInformation("キーからの起動: アイテム = {0}, キー = {1}", launcherItemJob.PressedData.LauncherItemId, launcherItemJob.CommonData.KeyActionId);
 
