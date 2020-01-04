@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Command
@@ -32,6 +33,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         PopupAttacher PopupAttacher { get; }
         CommandStore CommandStore { get; } = new CommandStore();
+        [Injection]
+        ILogger? Logger { get; set; }
 
         #endregion
 
@@ -63,14 +66,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             }
         }
 
-        /*
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
 
             //this.popupItems.IsOpen = true;
+            this.inputCommand.Focus();
         }
 
+        /*
         protected override void OnDeactivated(EventArgs e)
         {
             base.OnDeactivated(e);
@@ -78,6 +82,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             //this.popupItems.IsOpen = false;
         }
         */
+
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+            Logger.LogInformation("{0}", FocusManager.GetFocusedElement(this));
+        }
 
         #endregion
     }

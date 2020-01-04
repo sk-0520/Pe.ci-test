@@ -92,6 +92,8 @@
       <Grid Grid.Column="1">
         <!-- 別にいらんなぁ、と。 -->
         <ContentControl
+          Focusable="False"
+          IsTabStop="False"
           Width="{Binding IconBox, Converter={StaticResource IconBoxToWidthConverter}}"
           Height="{Binding IconBox, Converter={StaticResource IconBoxToHeightConverter}}"
           Margin="{Binding SelectedIconMargin}"
@@ -179,6 +181,8 @@
             x:Name="listItems"
             ScrollViewer.CanContentScroll="True"
             SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding CommandItems}"
+            Focusable="False"
+            IsTabStop="False"
           >
             <ListBox.ItemTemplate>
               <DataTemplate>
@@ -215,11 +219,11 @@
               </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
 
-            </ListBox>
+          </ListBox>
         </Popup>
       </Grid>
 
-      <Button Grid.Column="3" Content="exec"/>
+      <Button Grid.Column="3" Focusable="False" IsTabStop="False" Content="exec"/>
 
     </Grid>
   </Border>
