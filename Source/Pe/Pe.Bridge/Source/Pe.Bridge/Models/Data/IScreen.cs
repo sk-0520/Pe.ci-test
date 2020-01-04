@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
-    public interface IReadOnlyScreenData
+    public interface IScreen
     {
         #region property
         /// <summary>

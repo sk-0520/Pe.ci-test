@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// <see cref="System.Windows.Forms.Screen"/> 互換クラス。
     /// </summary>
     [Serializable]
-    public class Screen : IReadOnlyScreenData
+    public class Screen : IScreen
     {
         internal Screen(WinForms.Screen screen)
         {
