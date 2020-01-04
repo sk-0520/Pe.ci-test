@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     regOption |= RegexOptions.IgnoreCase;
                 }
 
-                return new Regex(pattern, regOption);
+                return new Regex(wildcard, regOption);
             }
 
             // とりあえずの部分一致
