@@ -227,9 +227,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
                 // 役目は終わったのでコマンドランチャーを閉じる
                 Model.HideView(false);
+                InputValue = string.Empty;
             },
             () => SelectedItem != null
-        ));
+        ).ObservesProperty(() => SelectedItem));
 
         public ICommand UpSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -376,6 +377,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         private void HideWaitTimer_Tick(object? sender, EventArgs e)
         {
             Model.HideView(false);
+            InputValue = string.Empty;
             HideWaitTimer.Stop();
         }
 

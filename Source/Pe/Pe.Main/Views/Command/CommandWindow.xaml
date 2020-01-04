@@ -232,7 +232,27 @@
         </Popup>
       </Grid>
 
-      <Button Grid.Column="3" Focusable="False" IsTabStop="False" Content="exec"/>
+      <Button Grid.Column="3" Focusable="False" IsTabStop="False" Command="{Binding ExecuteCommand}">
+        <ContentControl
+          Content="{StaticResource App-Image-Execute}"
+          Foreground="Transparent"
+          Background="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+        >
+          <ContentControl.Style>
+            <Style TargetType="ContentControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IconBox}" Value="Normal">
+                  <Setter Property="Template" Value="{StaticResource NormalIcon}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IconBox}" Value="Big">
+                  <Setter Property="Template" Value="{StaticResource BigIcon}" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Template" Value="{StaticResource SmallIcon}" />
+            </Style>
+          </ContentControl.Style>
+        </ContentControl>
+      </Button>
 
     </Grid>
   </Border>
