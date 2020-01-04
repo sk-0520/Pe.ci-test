@@ -237,10 +237,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             o => {
                 Debug.Assert(SelectedLauncherGroup != null);
 
-#pragma warning disable CS0219 // 変数は割り当てられていますが、その値は使用されていません
-                var itemIndex = 0;
-#pragma warning restore CS0219 // 変数は割り当てられていますが、その値は使用されていません
-                var targetIndex = 0;
+                var targetIndex = LauncherItemCollection.ViewModels
+                    .Where(i => i.LauncherItemId == o.LauncherItemId)
+                    .Counting()
+                    .First(i => i.Value == o)
+                    .Number
+                ;
+
                 Model.RemoveLauncherItem(SelectedLauncherGroup.LauncherGroupId, o.LauncherItemId, targetIndex);
             }
         ));

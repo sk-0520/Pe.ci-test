@@ -93,6 +93,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ExecuteDelete(builder);
         }
 
+        public bool DeleteGroupItemsLauncherItem(Guid launcherGroupId, Guid launcherItemId, int index)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherGroupId = launcherGroupId,
+                LauncherItemId = launcherItemId,
+                ItemIndex = index,
+            };
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
         #endregion
     }
 }

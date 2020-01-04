@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// </summary>
         public bool RemoveViewModelToDispose { get; set; } = true;
 
+        public int Count => EditableViewModels.Count;
+
         #endregion
 
         #region function

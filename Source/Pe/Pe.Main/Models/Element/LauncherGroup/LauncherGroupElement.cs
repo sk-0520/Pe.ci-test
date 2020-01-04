@@ -79,6 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         protected override void InitializeImpl()
         {
             NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
+            NotifyManager.LauncherItemRemovedInLauncherGroup += NotifyManager_LauncherItemRemovedInLauncherGroup;
 
             LoadGroup();
         }
@@ -87,6 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
         {
             if(!IsDisposed) {
                 NotifyManager.LauncherItemRegistered -= NotifyManager_LauncherItemRegistered;
+                NotifyManager.LauncherItemRemovedInLauncherGroup -= NotifyManager_LauncherItemRemovedInLauncherGroup;
             }
 
             base.Dispose(disposing);
@@ -107,6 +109,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
                 LauncherItemIds.Add(e.LauncherItemId);
             }
         }
+
+        private void NotifyManager_LauncherItemRemovedInLauncherGroup(object? sender, LauncherItemRemoveInLauncherGroupEventArgs e)
+        {
+            if(e.LauncherGroupId == LauncherGroupId) {
+                var removedItemIndex = LauncherItemIds
+                    .Counting()
+                    .Where(i => i.Value == e.LauncherItemId)
+                    .Counting()
+                    .First(i => i.Number == e.Index)
+                    .Value.Number
+                ;
+                LauncherItemIds.RemoveAt(removedItemIndex);
+            }
+        }
+
 
     }
 }

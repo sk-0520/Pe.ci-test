@@ -226,7 +226,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void RemoveLauncherItem(Guid launcherGroupId, Guid launcherItemId, int index)
         {
-            NotifyManager.SendLauncherItemRemoveInGroup(launcherGroupId, launcherItemId, index);
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherGroupItemsEntityDao.DeleteGroupItemsLauncherItem(launcherGroupId, launcherItemId, index);
+
+                commander.Commit();
+            }
+
+            // モデル側で削除するために通知
+            NotifyManager.SendLauncherItemRemoveInLauncherGroup(launcherGroupId, launcherItemId, index);
         }
 
 
@@ -403,6 +411,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
             NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
             NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
+            NotifyManager.LauncherItemRemovedInLauncherGroup += NotifyManager_LauncherItemRemovedInLauncherGroup;
 
             var launcherToolbarId = GetLauncherToolbarId();
             if(launcherToolbarId == Guid.Empty) {
@@ -419,6 +428,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             if(!IsDisposed) {
                 NotifyManager.LauncherItemChanged -= NotifyManager_LauncherItemChanged;
                 NotifyManager.LauncherItemRegistered -= NotifyManager_LauncherItemRegistered;
+                NotifyManager.LauncherItemRemovedInLauncherGroup -= NotifyManager_LauncherItemRemovedInLauncherGroup;
                 Flush();
             }
 
@@ -581,6 +591,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 // 現在表示中グループの表示を更新
                 var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
                 LauncherItems.Add(element);
+            }
+        }
+
+        private void NotifyManager_LauncherItemRemovedInLauncherGroup(object? sender, LauncherItemRemoveInLauncherGroupEventArgs e)
+        {
+            if(e.LauncherGroupId == SelectedLauncherGroup?.LauncherGroupId) {
+                var removedItemIndex = LauncherItems
+                    .Counting()
+                    .Where(i => i.Value.LauncherItemId == e.LauncherItemId)
+                    .Counting()
+                    .First(i => i.Number == e.Index)
+                    .Value.Number
+                ;
+                LauncherItems.RemoveAt(removedItemIndex);
             }
         }
 
