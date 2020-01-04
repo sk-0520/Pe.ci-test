@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugHook();
             //DebugKeyAction();
             //DebugSetting();
-            //ShowCommandView();
+            ShowCommandView();
         }
 
         void DebugCustomize()

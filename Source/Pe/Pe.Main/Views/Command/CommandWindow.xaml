@@ -89,20 +89,19 @@
       </Border>
 
       <!-- アイコン描画領域 跡地 -->
-      <Grid Grid.Column="1">
+      <Grid Grid.Column="1" Margin="{Binding SelectedIconMargin}">
         <!-- 別にいらんなぁ、と。 -->
         <ContentControl
           Focusable="False"
           IsTabStop="False"
           Width="{Binding IconBox, Converter={StaticResource IconBoxToWidthConverter}}"
           Height="{Binding IconBox, Converter={StaticResource IconBoxToHeightConverter}}"
-          Margin="{Binding SelectedIconMargin}"
           Content="{Binding CurrentSelectedItem.Icon}"
         />
       </Grid>
 
       <Grid Grid.Column="2">
-        <Border BorderThickness="{Binding InputBorderThickness}" >
+        <Border VerticalAlignment="Center" BorderThickness="{Binding InputBorderThickness}" >
           <Border.Style>
             <Style TargetType="Border">
               <Style.Triggers>
@@ -122,6 +121,7 @@
           <TextBox
             x:Name="inputCommand"
             BorderThickness="0"
+            VerticalAlignment="Center"
             Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged, Delay=200}"
             FontFamily="{Binding Font.FontFamily}"
             FontSize="{Binding Font.FontSize}"
@@ -232,27 +232,20 @@
         </Popup>
       </Grid>
 
-      <Button Grid.Column="3" Focusable="False" IsTabStop="False" Command="{Binding ExecuteCommand}">
-        <ContentControl
-          Content="{StaticResource App-Image-Execute}"
-          Foreground="Transparent"
-          Background="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-        >
-          <ContentControl.Style>
-            <Style TargetType="ContentControl">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding IconBox}" Value="Normal">
-                  <Setter Property="Template" Value="{StaticResource NormalIcon}" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding IconBox}" Value="Big">
-                  <Setter Property="Template" Value="{StaticResource BigIcon}" />
-                </DataTrigger>
-              </Style.Triggers>
-              <Setter Property="Template" Value="{StaticResource SmallIcon}" />
-            </Style>
-          </ContentControl.Style>
-        </ContentControl>
-      </Button>
+      <Border
+        Grid.Column="3"
+        Margin="{Binding SelectedIconMargin}"
+      >
+        <Button
+        Focusable="False"
+        IsTabStop="False"
+        Command="{Binding ExecuteCommand}"
+        Width="{Binding IconBox, Converter={StaticResource IconBoxToWidthConverter}}"
+        Height="{Binding IconBox, Converter={StaticResource IconBoxToHeightConverter}}"
+        Template="{Binding ExecuteButtonControlTemplate}"
+      />
+
+      </Border>
 
     </Grid>
   </Border>

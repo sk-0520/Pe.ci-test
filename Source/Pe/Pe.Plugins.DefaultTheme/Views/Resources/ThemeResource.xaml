@@ -4,6 +4,7 @@
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/ImageResource.xaml" />
-    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/LauncherToolbar.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/LauncherToolbarTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/CommandTheme.xaml" />
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

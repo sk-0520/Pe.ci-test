@@ -214,6 +214,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputNotFoundForeground => CommandTheme.GetInputForeground(InputState.NotFound);
 
+        [ThemeProperty]
+        public ControlTemplate ExecuteButtonControlTemplate => CommandTheme.GetExecuteButtonControlTemplate(IconBox);
+
         #endregion
 
         #endregion

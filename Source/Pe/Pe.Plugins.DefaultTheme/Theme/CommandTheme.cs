@@ -79,6 +79,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return new SolidColorBrush(color);
         }
 
+        public ControlTemplate GetExecuteButtonControlTemplate(IconBox icon)
+        {
+            return (ControlTemplate)Application.Current.Resources["ICommandTheme-ExecuteButton"];
+        }
+
         #endregion
     }
 }

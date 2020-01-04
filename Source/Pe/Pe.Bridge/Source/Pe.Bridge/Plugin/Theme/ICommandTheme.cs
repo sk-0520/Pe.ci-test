@@ -70,6 +70,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         Brush GetInputForeground(InputState inputState);
         Brush GetInputBackground(InputState inputState);
 
+        ControlTemplate GetExecuteButtonControlTemplate(IconBox icon);
+
         #endregion
     }
 }
