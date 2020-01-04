@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class LauncherItemRemoveInLauncherGroupEventArgs: NotifyEventArgs
+    public class LauncherItemRemoveInLauncherGroupEventArgs : NotifyEventArgs
     {
         public LauncherItemRemoveInLauncherGroupEventArgs(Guid launcherGroupId, Guid launcherItemId, int index)
         {
@@ -72,6 +73,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     }
 
     /// <summary>
+    /// フルスクリーン状態。
+    /// </summary>
+    public class FullScreenEventArgs : NotifyEventArgs
+    {
+        public FullScreenEventArgs(IScreen screen, bool isFullScreen, IntPtr hWnd)
+        {
+            Screen = screen;
+            IsFullScreen = isFullScreen;
+            FullScreenWindowHandle = hWnd;
+        }
+
+        #region property
+
+        /// <summary>
+        /// 対象ディスプレイ。
+        /// </summary>
+        public IScreen Screen { get; }
+        /// <summary>
+        /// フルスクリーン状態。
+        /// </summary>
+        public bool IsFullScreen { get; }
+        /// <summary>
+        /// フルスクリーン化した対象ウィンドウハンドル。
+        /// <para><see cref="IsFullScreen"/>が真の場合に有効値が設定される。</para>
+        /// </summary>
+        public IntPtr FullScreenWindowHandle { get; }
+
+
+        #endregion
+    }
+
+    /// <summary>
     /// アプリケーションからの通知を発行する。
     /// </summary>
     public interface INotifyManager
@@ -82,6 +115,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         event EventHandler<LauncherItemRemoveInLauncherGroupEventArgs>? LauncherItemRemovedInLauncherGroup;
         event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
+
+        event EventHandler<FullScreenEventArgs>? FullScreenChanged;
 
         #endregion
 
@@ -150,6 +185,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CustomizeLauncherItemExited?.Invoke(this, e);
         }
 
+        void OnFullScreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
+        {
+            var e = new FullScreenEventArgs(screen, isFullScreen, hWnd);
+            FullScreenChanged?.Invoke(this, e);
+        }
+
         #endregion
 
         #region INotifyManager
@@ -158,6 +199,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public event EventHandler<LauncherItemRemoveInLauncherGroupEventArgs>? LauncherItemRemovedInLauncherGroup;
         public event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
+
+        public event EventHandler<FullScreenEventArgs>? FullScreenChanged;
+
 
         public void SendLauncherItemChanged(Guid launcherItemId)
         {
