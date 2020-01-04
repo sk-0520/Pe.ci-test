@@ -50,5 +50,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #endregion
 
+        #region function
+
+        public void Execute(IScreen screen)
+        {
+            Item.Execute(screen);
+        }
+
+        #endregion
     }
 }

@@ -222,7 +222,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public ICommand ExecuteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Logger.LogInformation("exec!");
+                Logger.LogInformation("コマンドアイテムの起動: {0}", SelectedItem!.Header);
+                SelectedItem.Execute(DpiScaleOutputor.GetOwnerScreen());
             },
             () => SelectedItem != null
         ));
