@@ -359,7 +359,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Invoke(() => {
+            DispatcherWrapper.Begin(() => {
                 foreach(var raisePropertyName in raisePropertyNames) {
                     raiser(raisePropertyName);
                 }
@@ -375,7 +375,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Invoke(() => {
+            DispatcherWrapper.Begin(() => {
                 foreach(var raiseCommand in raiseDelegateCommands) {
                     raiseCommand.RaiseCanExecuteChanged();
                 }
@@ -383,7 +383,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             if(raiseCommands.Count != 0) {
                 // 個別にやる方法はわからん
-                DispatcherWrapper.Invoke(() => {
+                DispatcherWrapper.Begin(() => {
                     CommandManager.InvalidateRequerySuggested();
                 });
             }

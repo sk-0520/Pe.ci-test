@@ -56,12 +56,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 //RtfContent = content;
 
                 var noteContentConverter = new NoteContentConverter(LoggerFactory);
-                using(var stream = noteContentConverter.ToRtfStream(content)) {
-                    DispatcherWrapper.Invoke(() => {
-                        var range = new TextRange(Document.ContentStart, Document.ContentEnd);
-                        range.Load(stream, DataFormats.Rtf);
-                    });
-                }
+                var stream = noteContentConverter.ToRtfStream(content);
+                DispatcherWrapper.Begin(() => {
+                    var range = new TextRange(Document.ContentStart, Document.ContentEnd);
+                    range.Load(stream, DataFormats.Rtf);
+                    stream.Dispose();
+                });
             });
         }
 

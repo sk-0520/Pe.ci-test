@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         public ICommand ClearOutputCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 try {
-                    DispatcherWrapper.Invoke(() => {
+                    DispatcherWrapper.Begin(() => {
                         Terminal!.Clear();
                     });
                 } catch(Exception ex) {
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 return;
             }
 
-            DispatcherWrapper.Invoke(() => {
+            DispatcherWrapper.Begin(() => {
                 var prevLine = TextDocument.Lines.Last<DocumentLine>();
                 var prevEndOffset = prevLine.EndOffset;
 
@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 return;
             }
 
-            DispatcherWrapper.Invoke(() => {
+            DispatcherWrapper.Begin(() => {
                 var selectionIndex = Terminal.SelectionStart;
                 var selectionLength = Terminal.SelectionLength;
 
