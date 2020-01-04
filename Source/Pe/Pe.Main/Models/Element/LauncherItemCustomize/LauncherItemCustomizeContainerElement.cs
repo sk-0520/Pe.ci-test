@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeContainerElement(Screen screen, LauncherItemCustomizeEditorElement editorElement, LauncherIconElement launcherIconElement, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeContainerElement(IScreen screen, LauncherItemCustomizeEditorElement editorElement, LauncherIconElement launcherIconElement, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = editorElement.LauncherItemId;
@@ -37,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region property
 
-        public Screen Screen { get; }
+        public IScreen Screen { get; }
         public LauncherItemCustomizeEditorElement Editor { get; }
         public LauncherIconElement Icon { get; }
 

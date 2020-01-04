@@ -1,8 +1,8 @@
 select
 	AppCommandSetting.FontId,
 	AppCommandSetting.IconBox,
+	AppCommandSetting.Width,
 	AppCommandSetting.HideWaitTime,
-	AppCommandSetting.FindTag,
-	AppCommandSetting.FindFile
+	AppCommandSetting.FindTag
 from
 	AppCommandSetting

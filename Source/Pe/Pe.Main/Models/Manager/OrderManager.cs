@@ -37,6 +37,9 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.Setting;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Element.Command;
+using ContentTypeTextNet.Pe.Main.ViewModels.Command;
+using ContentTypeTextNet.Pe.Main.Views.Command;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -64,23 +67,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region function
 
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
-        LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
+        LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
-        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement);
-        ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen);
-        LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen);
+        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement);
+        ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen);
+        LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen);
 
-        NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition);
+        NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition);
         bool RemoveNoteElement(Guid noteId);
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater);
 
-        StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen);
+        StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, IScreen screen);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
         WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element);
         WindowItem CreateNoteWindow(NoteElement element);
+        WindowItem CreateCommandWindow(CommandElement element);
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
         WindowItem CreateSettingWindow(SettingContainerElement element);
 
@@ -113,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+            public LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
             {
                 var element = DiContainer.Make<LauncherToolbarElement>(new object[] { dockScreen, launcherGroups });
                 element.Initialize();
@@ -137,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
             }
 
-            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
+            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
             {
                 var customizeLauncherEditorElement = DiContainer.Build<LauncherItemCustomizeEditorElement>(launcherItemId);
                 customizeLauncherEditorElement.Initialize();
@@ -146,23 +150,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return customizeLauncherItemContainerElement;
             }
 
-            public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
+            public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
             {
                 var element = DiContainer.Build<ExtendsExecuteElement>(captionName, launcherFileData, launcherEnvironmentVariables, screen);
                 element.Initialize();
                 return element;
             }
-            public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen)
+            public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen)
             {
                 var element = DiContainer.Build<LauncherExtendsExecuteElement>(launcherItemId, screen);
                 element.Initialize();
                 return element;
             }
 
-            public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition)
+            public NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition)
             {
                 var element = screen == null
-                    ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<Screen>(), startupPosition)
+                    ? DiContainer.Build<NoteElement>(noteId, DiDefaultParameter.Create<IScreen>(), startupPosition)
                     : DiContainer.Build<NoteElement>(noteId, screen, startupPosition)
                 ;
                 element.Initialize();
@@ -188,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)
+            public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, IScreen screen)
             {
                 var element = DiContainer.Build<StandardInputOutputElement>(id, process, screen);
                 element.Initialize();
@@ -246,6 +250,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 return new WindowItem(WindowKind.Note, window);
             }
+
+            public WindowItem CreateCommandWindow(CommandElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    //c.Register<ILoggerFactory, ILoggerFactory>(element);
+                    return c.Build<CommandViewModel>(element);
+                });
+                var window = DiContainer.BuildView<CommandWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.Command, window);
+            }
+
 
             public WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element)
             {

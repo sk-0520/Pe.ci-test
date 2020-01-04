@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         #endregion
 
-        public StandardInputOutputElement(string captionName, Process process, Screen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
+        public StandardInputOutputElement(string captionName, Process process, IScreen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             if(!process.EnableRaisingEvents) {
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         public string CaptionName { get; }
         public Process Process { get; }
-        Screen Screen { get; }
+        IScreen Screen { get; }
         IOrderManager OrderManager { get; }
 
         public StreamReceiver? OutputStreamReceiver { get; private set; }

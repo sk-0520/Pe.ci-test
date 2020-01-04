@@ -38,6 +38,19 @@
     </Viewbox>
   </ControlTemplate>
 
+  <ControlTemplate x:Key="BigIcon" TargetType="ContentControl">
+    <Viewbox Width="{StaticResource Icon-Size-Big}" Height="{StaticResource Icon-Size-Big}">
+      <Canvas Width="24" Height="24">
+        <Path
+          Data="{TemplateBinding Content}"
+          Fill="{TemplateBinding Background}"
+          Stroke="{TemplateBinding Foreground}"
+          StrokeThickness="{StaticResource Icon-Stroke-Big}"
+        />
+      </Canvas>
+    </Viewbox>
+  </ControlTemplate>
+
   <DropShadowEffect x:Key="Effect-Strong"
     Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
     ShadowDepth="0"
@@ -161,6 +174,12 @@
   </Style>
 
   <Style x:Key="FontIcon" TargetType="ContentControl">
+    <Setter Property="Template" Value="{StaticResource SmallIcon}" />
+    <Setter Property="Foreground" Value="Transparent" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+  </Style>
+
+  <Style x:Key="ButtonIcon" TargetType="ContentControl">
     <Setter Property="Template" Value="{StaticResource SmallIcon}" />
     <Setter Property="Foreground" Value="Transparent" />
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />

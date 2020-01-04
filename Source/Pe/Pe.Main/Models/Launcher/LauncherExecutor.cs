@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -76,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, Screen screen)
+        ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IScreen screen)
         {
 
             var process = new Process();
@@ -159,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return result;
         }
 
-        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, Screen screen)
+        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IScreen screen)
         {
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));

@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         #region function
 
-        DependencyObject GetToolbarImageCore(IReadOnlyScreenData currentScreen, IReadOnlyList<IReadOnlyScreenData> allScreens, IconBox iconBox, bool isStrong)
+        DependencyObject GetToolbarImageCore(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong)
         {
             var basePos = new Point(Math.Abs(allScreens.Min(s => s.DeviceBounds.Left)), Math.Abs(allScreens.Min(s => s.DeviceBounds.Top)));
             var drawSize = new IconSize(iconBox);
@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return new Size(4, 4);
         }
 
-        public DependencyObject GetToolbarImage(IReadOnlyScreenData currentScreen, IReadOnlyList<IReadOnlyScreenData> allScreens, IconBox iconBox, bool isStrong)
+        public DependencyObject GetToolbarImage(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong)
         {
             return GetToolbarImageCore(currentScreen, allScreens, iconBox, isStrong);
         }

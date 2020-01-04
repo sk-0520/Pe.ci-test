@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 {
-    public class ExtendsExecuteElement : ElementBase
+    public class ExtendsExecuteElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #endregion
 
-        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             CaptionName = captionName;
@@ -41,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         public IReadOnlyList<LauncherEnvironmentVariableData> EnvironmentVariables { get; protected set; }
         public IReadOnlyList<LauncherHistoryData> HistoryOptions { get; protected set; } = new List<LauncherHistoryData>();
         public IReadOnlyList<LauncherHistoryData> HistoryWorkDirectories { get; protected set; } = new List<LauncherHistoryData>();
-        public Screen Screen { get; }
+        public IScreen Screen { get; }
 
         IOrderManager OrderManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -60,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region function
 
-        public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
+        public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -132,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
     public sealed class LauncherExtendsExecuteElement : ExtendsExecuteElement, ILauncherItemId
     {
-        public LauncherExtendsExecuteElement(Guid launcherItemId, Screen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), screen, orderManager, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -206,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             HistoryWorkDirectories = histories2.Where(i => i.Kind == LauncherHistoryKind.WorkDirectory).ToList();
         }
 
-        public override ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, Screen screen)
+        public override ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IScreen screen)
         {
             var result = base.Execute(fileData, environmentVariables, screen);
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -55,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         IDatabaseStatementLoader StatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
-        public string? Name { get; private set; }
-        public string? Code { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Code { get; private set; } = string.Empty;
         public LauncherItemKind Kind { get; private set; }
         public bool IsEnabledCommandLauncher { get; private set; }
         public string? Comment { get; private set; }
@@ -116,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
-        ILauncherExecuteResult ExecuteFile(Screen screen)
+        ILauncherExecuteResult ExecuteFile(IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -138,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        public ILauncherExecuteResult Execute(Screen screen)
+        public ILauncherExecuteResult Execute(IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -169,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        public void OpenExtendsExecuteView(Screen screen)
+        public void OpenExtendsExecuteView(IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -179,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             });
         }
 
-        public void OpenExtendsExecuteViewWidthArgument(string argument, Screen screen)
+        public void OpenExtendsExecuteViewWidthArgument(string argument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -275,7 +276,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ClipboardManager.Set(data);
         }
 
-        public void OpenCustomizeView(Screen screen)
+        public void OpenCustomizeView(IScreen screen)
         {
             ThrowIfDisposed();
 

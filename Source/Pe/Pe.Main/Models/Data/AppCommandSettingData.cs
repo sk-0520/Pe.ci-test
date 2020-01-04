@@ -15,9 +15,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public Guid FontId { get; set; }
         public IconBox IconBox { get; set; }
+        public double Width { get; set; }
         public TimeSpan HideWaitTime { get; set; }
         public bool FindTag { get; set; }
-        public bool FindFile { get; set; }
 
         #endregion
     }

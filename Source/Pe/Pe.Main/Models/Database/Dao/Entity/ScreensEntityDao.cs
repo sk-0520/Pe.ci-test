@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.QuerySingle<bool>(statement, param);
         }
 
-        public bool InsertScreen(Screen screen, IDatabaseCommonStatus commonStatus)
+        public bool InsertScreen(IScreen screen, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new ScreensRowDto() {

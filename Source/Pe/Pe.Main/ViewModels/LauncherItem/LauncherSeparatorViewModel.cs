@@ -8,12 +8,13 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
     public class LauncherSeparatorViewModel : LauncherDetailViewModelBase
     {
-        public LauncherSeparatorViewModel(LauncherItemElement model, Screen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherSeparatorViewModel(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory)
         { }
 

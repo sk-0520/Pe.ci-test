@@ -83,9 +83,9 @@ create table [AppCommandSetting] (
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[FontId] text not null /* フォント  */,
 	[IconBox] text not null /* アイコンサイズ  */,
+	[Width] real not null /* 横幅  */,
 	[HideWaitTime] text not null /* 非表示待機時間  */,
 	[FindTag]  not null /* タグ検索  */,
-	[FindFile]  not null /* ファイル検索  */,
 	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;

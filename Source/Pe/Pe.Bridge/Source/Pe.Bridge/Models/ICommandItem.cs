@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
+
+namespace ContentTypeTextNet.Pe.Bridge.Models.Data
+{
+    public interface ICommandItem
+    {
+        #region property
+
+        /// <summary>
+        /// メイン表示文字列。
+        /// </summary>
+        string Header { get; }
+        /// <summary>
+        /// 追記文言。
+        /// </summary>
+        string Description { get; }
+        /// <summary>
+        /// 小さく表示する種別文言。
+        /// </summary>
+        string Kind { get; }
+
+        IReadOnlyList<Range> HeaderMatches { get; }
+        IReadOnlyList<Range> DescriptionMatches { get; }
+
+        double Score { get; }
+
+        #endregion
+
+        #region function
+
+        object GetIcon(IconBox iconBox);
+
+        /// <summary>
+        /// コマンドアイテムの実行。
+        /// </summary>
+        /// <param name="screen">コマンドランチャーの所在地。</param>
+        /// <param name="isExtend">拡張機能(コマンドアイテム依存)を用いるか。</param>
+        void Execute(IScreen screen, bool isExtend);
+
+        #endregion
+    }
+}

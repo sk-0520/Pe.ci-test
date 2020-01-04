@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using System.Diagnostics;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #endregion
 
-        public LauncherDetailViewModelBase(LauncherItemElement model, Screen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public LauncherDetailViewModelBase(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             Screen = screen;
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region property
 
-        protected Screen Screen { get; }
+        protected IScreen Screen { get; }
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
         public LauncherIconViewModel Icon { get; }
 
@@ -156,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
     {
         #region function
 
-        public static LauncherDetailViewModelBase Create(LauncherItemElement model, Screen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public static LauncherDetailViewModelBase Create(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
         {
             switch(model.Kind) {
                 case LauncherItemKind.File:

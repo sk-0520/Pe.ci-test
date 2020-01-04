@@ -16,9 +16,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public Guid FontId { get; set; }
         public string IconBox { get; set; } = string.Empty;
+        public double Width { get; set; }
         public TimeSpan HideWaitTime { get; set; }
         public bool FindTag { get; set; }
-        public bool FindFile { get; set; }
 
         #endregion
     }
@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string Width { get; } = "Width";
 
             #endregion
         }
@@ -59,9 +60,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var result = new SettingAppCommandSettingData() {
                 FontId = dto.FontId,
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
+                Width = dto.Width,
                 HideWaitTime = dto.HideWaitTime,
                 FindTag = dto.FindTag,
-                FindFile = dto.FindFile,
             };
             return result;
         }
@@ -75,12 +76,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var dto = new AppCommandSettingEntityDto() {
                 FontId = data.FontId,
                 IconBox = iconBoxTransfer.ToString(data.IconBox),
+                Width = data.Width,
                 HideWaitTime = data.HideWaitTime,
                 FindTag = data.FindTag,
-                FindFile = data.FindFile,
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;
+        }
+
+        public bool UpdatCommandSettingWidth(double width, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.Width] = width;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
 

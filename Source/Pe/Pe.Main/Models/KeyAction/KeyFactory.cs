@@ -141,6 +141,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             });
         }
 
+        KeyActionCommandJob CreateCommandJob(KeyItem item)
+        {
+            var pressedOptionConverter = new PressedOptionConverter();
+
+            var data = new KeyActionCommandData(item.Action.KeyActionId);
+
+            data.ConveySystem = pressedOptionConverter.ToConveySystem(item.Options);
+
+            return new KeyActionCommandJob(data, item.Mappings);
+        }
+
         KeyActionLauncherItemJob CreateLauncherItemJob(KeyItem item)
         {
             var launcherItemContentConverter = new LauncherItemContentConverter();
@@ -163,6 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return CreateJobs(items, (id, item) => {
                 KeyActionPressedJobBase job = item.Action.KeyActionKind switch
                 {
+                    KeyActionKind.Command => CreateCommandJob(item),
                     KeyActionKind.LauncherItem => CreateLauncherItemJob(item),
                     _ => throw new NotImplementedException(),
                 };

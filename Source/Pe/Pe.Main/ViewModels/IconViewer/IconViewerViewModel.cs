@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         #region variable
 
         ImageSource? _imageSource = null;
+        bool _useCache = false;
 
         #endregion
 
@@ -51,6 +52,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         public IconBox IconBox => Model.IconBox;
 
+        public bool UseCache
+        {
+            get => this._useCache;
+            set => SetProperty(ref this._useCache, value);
+        }
+
         #endregion
 
         #region command
@@ -60,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         public async Task LoadAsync(CancellationToken cancellationToken)
         {
-            this._imageSource = await Model.LoadAsync(cancellationToken);
+            this._imageSource = await Model.LoadAsync(UseCache, cancellationToken);
             RaisePropertyChanged(nameof(ImageSource));
         }
 

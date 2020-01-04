@@ -47,6 +47,8 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Main.Models.Element.Command;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -67,10 +69,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
 
+            ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
+            ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
+            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
+            ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManager);
+            ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
+
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
+
+            CommandElement = ApplicationDiContainer.Build<CommandElement>();
         }
 
         #region property
@@ -92,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
+        CommandElement CommandElement { get; }
         SettingContainerElement? SettingElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
@@ -141,17 +152,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
             ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
             ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
-        }
+            ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
 
-        void RegisterManagers()
-        {
-            Debug.Assert(ApplicationDiContainer != null);
-
-            ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
-            ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
-            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
-            ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManager);
-            ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
         }
 
         void SetStaticPlatformTheme()
@@ -251,7 +253,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             MakeMessageWindow();
             RegisterPlugins();
-            RegisterManagers();
 
 
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -317,7 +318,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var result = new List<NoteElement>(noteIds.Count);
             foreach(var noteId in noteIds) {
-                var element = CreateNoteElement(noteId, default(Screen), NoteStartupPosition.Setting);
+                var element = CreateNoteElement(noteId, default(IScreen), NoteStartupPosition.Setting);
                 result.Add(element);
             }
 
@@ -340,7 +341,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
-        public NoteElement CreateNote(Screen dockScreen)
+        public NoteElement CreateNote(IScreen dockScreen)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
@@ -490,6 +491,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Application.Current.Shutdown();
         }
 
+        public void ShowCommandView()
+        {
+            if(!CommandElement.IsInitialized) {
+                CommandElement.Initialize();
+            }
+
+            CommandElement.StartView();
+        }
+
         /// <summary>
         /// すべてここで完結する神の所業。
         /// </summary>
@@ -502,6 +512,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             StopHook();
             UninitializeSystem();
+
+            if(CommandElement.ViewCreated) {
+                CommandElement.HideView(true);
+            }
 
             var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
@@ -604,6 +618,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("設定適用のため各要素生成");
                     RebuildHook();
                     ExecuteElements();
+                    CommandElement.Refresh();
                 } else {
                     Logger.LogInformation("設定は保存されなかったため現在要素継続");
                 }
@@ -684,7 +699,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             return OrderManager.CreateLauncherGroupElement(launcherGroupId);
         }
-        public LauncherToolbarElement CreateLauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
+        public LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
         {
             return OrderManager.CreateLauncherToolbarElement(dockScreen, launcherGroups);
         }
@@ -694,23 +709,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
 
-        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, Screen screen, LauncherIconElement iconElement)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
         {
             return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen, iconElement);
         }
 
-        public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, Screen screen)
+        public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
         {
             return OrderManager.CreateExtendsExecuteElement(captionName, launcherFileData, launcherEnvironmentVariables, screen);
         }
 
-        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, Screen screen)
+        public LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen)
         {
             return OrderManager.CreateLauncherExtendsExecuteElement(launcherItemId, screen);
         }
 
 
-        public NoteElement CreateNoteElement(Guid noteId, Screen? screen, NoteStartupPosition startupPosition)
+        public NoteElement CreateNoteElement(Guid noteId, IScreen? screen, NoteStartupPosition startupPosition)
         {
             return OrderManager.CreateNoteElement(noteId, screen, startupPosition);
         }
@@ -751,7 +766,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
         }
 
-        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, Screen screen)
+        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, IScreen screen)
         {
             var element = OrderManager.CreateStandardInputOutputElement(id, process, screen);
             StandardInputOutputs.Add(element);
@@ -785,7 +800,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
-
         public WindowItem CreateNoteWindow(NoteElement element)
         {
             var windowItem = OrderManager.CreateNoteWindow(element);
@@ -794,6 +808,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return windowItem;
         }
+
+        public WindowItem CreateCommandWindow(CommandElement element)
+        {
+            var windowItem = OrderManager.CreateCommandWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
 
         public WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element)
         {

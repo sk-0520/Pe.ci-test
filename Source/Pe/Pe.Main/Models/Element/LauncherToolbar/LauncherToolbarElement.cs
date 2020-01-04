@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarElement(Screen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public LauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DockScreen = dockScreen;
@@ -374,7 +374,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             NotifyManager.SendLauncherItemRegistered(SelectedLauncherGroup.LauncherGroupId, data.Item.LauncherItemId);
         }
 
-        public void OpenExtendsExecuteView(Guid launcherItemId, string argument, Screen screen)
+        public void OpenExtendsExecuteView(Guid launcherItemId, string argument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -555,7 +555,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// 対象ディスプレイ。
         /// </summary>
         [PixelKind(Px.Logical)]
-        public Screen DockScreen { get; }
+        public IScreen DockScreen { get; }
 
         #endregion
 

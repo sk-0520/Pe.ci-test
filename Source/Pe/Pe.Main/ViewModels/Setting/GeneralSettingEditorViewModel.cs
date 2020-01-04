@@ -255,6 +255,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         //    set => SetModelValue(value);
         //}
 
+        public double MinimumWidth => 100;
+        public double MaximumWidth => 400;
+        public double Width
+        {
+            get => Model.Width;
+            set => SetModelValue(value);
+        }
+
         public double MinimumHideWaitSeconds => TimeSpan.FromMilliseconds(250).TotalSeconds;
         public double MaximumHideWaitSeconds => TimeSpan.FromSeconds(5).TotalSeconds;
         public double HideWaitMilliseconds
@@ -266,11 +274,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public bool FindTag
         {
             get => Model.FindTag;
-            set => SetModelValue(value);
-        }
-        public bool FindFile
-        {
-            get => Model.FindFile;
             set => SetModelValue(value);
         }
 

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         bool _textWrap;
         bool _isLink;
         string _title = string.Empty;
-        Screen? _dockScreen;
+        IScreen? _dockScreen;
 
         NoteLayoutKind _layoutKind;
         NoteContentKind _contentKind;
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteElement(Guid noteId, Screen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// <summary>
         /// DB から取得して設定したりそれでも保存しなかったりするまさに変数。
         /// </summary>
-        public Screen DockScreen
+        public IScreen DockScreen
         {
             get => this._dockScreen ?? Screen.PrimaryScreen; //TODO: [NOTE]決定的に間違ってる気がする
             private set => SetProperty(ref this._dockScreen, value);
@@ -248,7 +249,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             return noteData;
         }
 
-        Screen GetDockScreen(string screenDeviceName)
+        IScreen GetDockScreen(string screenDeviceName)
         {
             ThrowIfDisposed();
 
@@ -368,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public void ChangeDockScreen(Screen screen)
+        public void ChangeDockScreen(IScreen screen)
         {
             DockScreen = screen;
         }

@@ -230,8 +230,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public sealed class KeyActionCommandData : KeyActionPressedDataBase
     {
-        public KeyActionCommandData(Guid keyActionId, KeyActionKind keyActionKind)
-            : base(keyActionId, keyActionKind)
+        public KeyActionCommandData(Guid keyActionId)
+            : base(keyActionId, KeyActionKind.Command)
         { }
     }
 

@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         /// <summary>
         /// 対象ディスプレイ。
         /// </summary>
-        Screen DockScreen { get; }
+        IScreen DockScreen { get; }
 
         #endregion
     }
