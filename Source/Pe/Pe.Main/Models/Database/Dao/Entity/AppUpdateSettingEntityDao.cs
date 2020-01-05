@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string CheckReleaseVersion => "CheckReleaseVersion";
 
             #endregion
         }
@@ -59,6 +60,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var dto = new AppUpdateSettingEntityDto() {
                 CheckReleaseVersion = data.IsCheckReleaseVersion,
                 CheckRcVersion = data.IsCheckRcVersion,
+            };
+            commonStatus.WriteCommon(dto);
+            return Commander.Execute(statement, dto) == 1;
+        }
+
+        public bool UpdateReleaseVersion(bool isCheck, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = new AppUpdateSettingEntityDto() {
+                CheckReleaseVersion = isCheck,
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;

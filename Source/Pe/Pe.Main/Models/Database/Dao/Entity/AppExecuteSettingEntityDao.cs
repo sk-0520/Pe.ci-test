@@ -38,7 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public static class Column
         {
             #region property
-
+            public static string UserId => "UserId";
+            public static string SendUsageStatistics => "SendUsageStatistics";
 
             #endregion
         }
@@ -58,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        public bool UpdateSettingExecuteSetting(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)
+        public bool UpdateExecuteSettingUser(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new AppExecuteSettingEntityDto() {
@@ -67,6 +68,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;
+        }
+
+        public bool UpdateExecuteSettingAcceptInput(string userId, bool sendUsageStatistics, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.UserId] = userId;
+            parameter[Column.SendUsageStatistics] = sendUsageStatistics;
+
+            return Commander.Execute(statement, parameter) == 1;
         }
 
 

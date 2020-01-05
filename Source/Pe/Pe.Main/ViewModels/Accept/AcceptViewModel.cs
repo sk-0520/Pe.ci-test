@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Accept;
 using ContentTypeTextNet.Pe.Main.Views.Accept;
 using Microsoft.Extensions.Logging;
@@ -20,14 +21,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
     public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService, IViewLifecycleReceiver
     {
-        public AcceptViewModel(AcceptElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AcceptViewModel(AcceptElement model, Configuration configuration, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        { }
+        {
+            Configuration = configuration;
+        }
 
         #region property
 
         //public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
         public RequestSender CloseRequest { get; } = new RequestSender();
+
+        Configuration Configuration { get; }
 
         public bool SendUsageStatistics
         {
@@ -39,6 +44,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         {
             get => Model.CheckUpdate;
             set => SetModelValue(value);
+        }
+
+        #endregion
+
+        #region command
+
+        public ICommand OpenProjectUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+           () => OpenUri(Configuration.General.ProjectRepositoryUri)
+        ));
+        public ICommand OpenForumUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+           () => OpenUri(Configuration.General.ProjectForumUri)
+        ));
+        public ICommand OpenWebSiteUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+           () => OpenUri(Configuration.General.ProjectWebSiteUri)
+        ));
+
+        #endregion
+
+        #region function
+
+        void OpenUri(Uri uri)
+        {
+
         }
 
         #endregion
@@ -61,9 +89,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
             }
         ));
 
-        #endregion
-
-        #region function
         #endregion
 
         #region IViewLifecycleReceiver

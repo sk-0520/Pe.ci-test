@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
             ProjectRepositoryUri = section.GetValue<Uri>("project-repository-uri");
             ProjectForumUri = section.GetValue<Uri>("project-forum-uri");
-            ProjectWebsiteUri = section.GetValue<Uri>("project-website-uri");
+            ProjectWebSiteUri = section.GetValue<Uri>("project-website-uri");
         }
 
         #region property
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         public Uri ProjectRepositoryUri { get; }
         public Uri ProjectForumUri { get; }
-        public Uri ProjectWebsiteUri { get; }
+        public Uri ProjectWebSiteUri { get; }
 
         #endregion
     }

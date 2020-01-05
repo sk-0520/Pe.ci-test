@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -128,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !file.Exists;
         }
 
-        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, bool hasSetting, ILoggerFactory? loggerFactory)
+        AcceptResult ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, EnvironmentParameters environmentParameters, ILoggerFactory? loggerFactory)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 if(loggerFactory != null) {
@@ -137,17 +138,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 diContainer
                     .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+                    .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
+                    .Register<Configuration, Configuration>(environmentParameters.Configuration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
-                    acceptModel.HasSetting = hasSetting;
                     acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(WindowKind.Accept, view));
                     view.ShowDialog();
 
-                    return acceptModel.Accepted;
+                    return new AcceptResult(
+                        acceptModel.Accepted,
+                        acceptModel.CheckUpdate,
+                        acceptModel.SendUsageStatistics
+                    );
                 }
             }
         }
@@ -363,14 +369,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");
             }
 
-
+            AcceptResult? acceptResult = null; ;
             IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
             if(IsFirstStartup) {
                 logger.LogInformation("初回実行");
                 if(!skipAccept) {
                     // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                    var dialogResult = ShowAcceptView(new DiContainer(false), false, loggerFactory);
-                    if(!dialogResult) {
+                    acceptResult = ShowAcceptView(new DiContainer(false), environmentParameters, loggerFactory);
+                    if(!acceptResult.Accepted) {
                         // 初回の使用許諾を得られなかったのでばいちゃ
                         logger.LogInformation("使用許諾得られず");
                         return false;
@@ -407,13 +413,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Current);
             cultureServiceChanger.ChangeCulture();
 
-            //TODO: バージョンアップに伴う使用許諾
-            if(!IsFirstStartup && !skipAccept) {
-                var dialogResult = ShowAcceptView(DiContainer, true, null);
-                if(!dialogResult) {
-                    // バージョンアップに伴う使用許諾を得られなかったのでおわる
-                    logger.LogInformation("バージョンアップ後 使用許諾得られず");
-                    return false;
+            if(acceptResult != null) {
+                Debug.Assert(IsFirstStartup);
+                var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
+                var userIdManager = DiContainer.Build<UserIdManager>();
+                var userId = userIdManager.CreateFromEnvironment();
+                using(var commander = mainDatabaseBarrier.WaitWrite()) {
+                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
+                    appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.SendUsageStatistics, DatabaseCommonStatus.CreateCurrentAccount());
+
+                    var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(commander, commander.Implementation);
+                    appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.CheckUpdate, DatabaseCommonStatus.CreateCurrentAccount());
+
+                    commander.Commit();
                 }
             }
 

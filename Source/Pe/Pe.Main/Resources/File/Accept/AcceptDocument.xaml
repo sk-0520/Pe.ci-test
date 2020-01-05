@@ -40,15 +40,11 @@
       <LineBreak />
       <Run>付属するサードパーティ製のソフトウェアなどに関してはそれぞれの適用しているライセンスとなります。</Run>
     </Paragraph>
-  </Section>
-
-  <Section>
-    <Paragraph Style="{StaticResource Header}">使用許諾変更履歴</Paragraph>
-    <List Tag="CHANGE-NOTES">
-      <ListItem>
-        <Paragraph>なし</Paragraph>
-      </ListItem>
-    </List>
+    <Paragraph>
+      <Run>本使用許諾はバージョンアップ等で断りなく変更され、その際は許諾されたものとします。</Run>
+      <LineBreak />
+      <Run>現在の使用許諾がどのようなものかはヘルプにて確認してください。</Run>
+    </Paragraph>
   </Section>
 
   <Section>

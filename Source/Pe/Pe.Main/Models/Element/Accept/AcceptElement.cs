@@ -17,10 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
 
         #region property
 
-        internal bool HasSetting { get; set; }
-
         public bool Accepted { get; set; }
-
         public bool CheckUpdate { get; set; }
         public bool SendUsageStatistics { get; set; }
 
