@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         ));
 
         public Version Version => Assembly.GetExecutingAssembly().GetName().Version!;
-        public string Revision => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+        public string Revision => Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
         #endregion
 
