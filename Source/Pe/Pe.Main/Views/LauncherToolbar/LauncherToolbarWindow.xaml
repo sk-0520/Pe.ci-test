@@ -76,6 +76,7 @@
           <Setter Property="Icon" Value="{Binding Icon.Large}" />
         </DataTrigger>
       </Style.Triggers>
+      <EventSetter Event="PreviewMouseDoubleClick" Handler="LauncherContentControl_PreviewMouseDoubleClick" />
       <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root}" />
       <Setter Property="IsIconOnly" Value="{Binding DataContext.IsIconOnly, ElementName=root}" />
       <Setter Property="TextWidth" Value="{Binding DataContext.TextWidth, ElementName=root}" />
@@ -225,6 +226,9 @@
     <app_core_views:RequestTrigger SourceObject="{Binding ExpandShortcutFileRequest}">
       <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
+    <i:EventTrigger EventName="MouseDoubleClick">
+      <i:InvokeCommandAction Command="{Binding AutoHideToHideCommand}" />
+    </i:EventTrigger>
   </i:Interaction.Triggers>
   <i:Interaction.Behaviors>
     <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />

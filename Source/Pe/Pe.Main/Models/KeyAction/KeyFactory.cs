@@ -168,6 +168,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return new KeyActionLauncherItemJob(data, item.Mappings);
         }
 
+        KeyActionLauncherToolbarJob CreateLauncherToolbarJob(KeyItem item)
+        {
+            var launcherToolbarContentConverter = new LauncherToolbarContentConverter();
+            var pressedOptionConverter = new PressedOptionConverter();
+
+            var data = new KeyActionLauncherToolbarData(
+                item.Action.KeyActionId,
+                launcherToolbarContentConverter.ToKeyActionContentLauncherToolbar(item.Action.KeyActionContent)
+            );
+
+            data.ConveySystem = pressedOptionConverter.ToConveySystem(item.Options);
+
+            return new KeyActionLauncherToolbarJob(data, item.Mappings);
+        }
+
+
         public IEnumerable<KeyActionPressedJobBase> CreatePressedJobs()
         {
             var items = LoadKeyActionPressedData();
@@ -176,6 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 {
                     KeyActionKind.Command => CreateCommandJob(item),
                     KeyActionKind.LauncherItem => CreateLauncherItemJob(item),
+                    KeyActionKind.LauncherToolbar => CreateLauncherToolbarJob(item),
                     _ => throw new NotImplementedException(),
                 };
                 return job;

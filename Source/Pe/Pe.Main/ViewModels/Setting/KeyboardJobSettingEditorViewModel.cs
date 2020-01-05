@@ -362,7 +362,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         public KeyboardLauncherToolbarJobSettingEditorViewModel(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            // 将来的に何か増えてもOKにしたい思いとこのタイミング以外で何もできないのでしゃあなし
+            Content = KeyActionContentLauncherToolbar.AutoHiddenToHide;
+        }
 
         #region KeyboardPressedJobSettingEditorViewModelBase
 

@@ -98,5 +98,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
         }
 
         #endregion
+
+
+        private void LauncherContentControl_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

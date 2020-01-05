@@ -134,29 +134,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
         {
             switch(job) {
-                case KeyActionCommandJob commandJob:
-                    Logger.LogInformation("キーからの起動: コマンドランチャー");
-                    ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
-                        ShowCommandView();
-                    });
+                case KeyActionCommandJob commandJob: {
+                        Logger.LogInformation("キーからの起動: コマンドランチャー");
+                        ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                            ShowCommandView();
+                        });
+                    }
                     break;
 
-                case KeyActionLauncherItemJob launcherItemJob:
-                    Logger.LogInformation("キーからの起動: アイテム = {0}, キー = {1}", launcherItemJob.PressedData.LauncherItemId, launcherItemJob.CommonData.KeyActionId);
+                case KeyActionLauncherItemJob launcherItemJob: {
+                        Logger.LogInformation("キーからの起動: アイテム = {0}, キー = {1}", launcherItemJob.PressedData.LauncherItemId, launcherItemJob.CommonData.KeyActionId);
 
-                    NativeMethods.GetCursorPos(out var podPoint);
-                    var deviceCursorLocation = PodStructUtility.Convert(podPoint);
-                    var screen = Screen.FromDevicePoint(deviceCursorLocation);
-                    var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
-                    switch(launcherItemJob.PressedData.LauncherItemKind) {
-                        case KeyActionContentLauncherItem.Execute:
-                            element.Execute(screen);
-                            break;
-                        case KeyActionContentLauncherItem.ExtendsExecute:
-                            element.OpenExtendsExecuteView(screen);
-                            break;
-                        default:
-                            throw new NotImplementedException();
+                        NativeMethods.GetCursorPos(out var podPoint);
+                        var deviceCursorLocation = PodStructUtility.Convert(podPoint);
+                        var screen = Screen.FromDevicePoint(deviceCursorLocation);
+                        var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
+                        switch(launcherItemJob.PressedData.LauncherItemKind) {
+                            case KeyActionContentLauncherItem.Execute:
+                                element.Execute(screen);
+                                break;
+                            case KeyActionContentLauncherItem.ExtendsExecute:
+                                element.OpenExtendsExecuteView(screen);
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    }
+                    break;
+
+                case KeyActionLauncherToolbarJob launcherToolbarJob: {
+                        ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                            var windowItems = WindowManager.GetWindowItems(WindowKind.LauncherToolbar);
+                            foreach(var windowItem in windowItems) {
+                                var viewModel = (ViewModels.LauncherToolbar.LauncherToolbarViewModel)windowItem.ViewModel;
+                                if(viewModel.IsVisible && viewModel.IsAutoHide) {
+                                    viewModel.AppDesktopToolbarExtend!.HideView(true);
+                                }
+                            }
+                        });
                     }
                     break;
 

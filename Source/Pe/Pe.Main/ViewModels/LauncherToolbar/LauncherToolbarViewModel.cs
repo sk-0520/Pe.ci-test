@@ -262,6 +262,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         ));
 
+        public ICommand AutoHideToHideCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                if(IsVisible && IsAutoHide) {
+                    AppDesktopToolbarExtend!.HideView(true);
+                }
+            }
+        ));
 
         #endregion
 

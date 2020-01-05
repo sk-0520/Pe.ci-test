@@ -261,12 +261,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class KeyActionLauncherToolbarData : KeyActionPressedDataBase
     {
-        public KeyActionLauncherToolbarData(Guid keyActionId)
+        public KeyActionLauncherToolbarData(Guid keyActionId, KeyActionContentLauncherToolbar launcherToolbarKind)
             : base(keyActionId, KeyActionKind.LauncherToolbar)
         {
+            LauncherToolbarKind = launcherToolbarKind;
         }
 
         #region property
+
+        public KeyActionContentLauncherToolbar LauncherToolbarKind { get; }
+
         #endregion
     }
 

@@ -339,4 +339,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
+    public sealed class KeyActionLauncherToolbarJob : KeyActionPressedJobBase<KeyActionLauncherToolbarData>
+    {
+        public KeyActionLauncherToolbarJob(KeyActionLauncherToolbarData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+            : base(actionData, mappings)
+        {
+        }
+
+        #region property
+        #endregion
+    }
+
+
 }
