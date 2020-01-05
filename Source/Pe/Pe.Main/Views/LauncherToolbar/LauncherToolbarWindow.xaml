@@ -257,6 +257,9 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
           </DataTrigger>
+          <DataTrigger Binding="{Binding IsHiding}" Value="True">
+            <Setter Property="Visibility" Value="Collapsed" />
+          </DataTrigger>
         </Style.Triggers>
       </Style>
     </Grid.Style>
