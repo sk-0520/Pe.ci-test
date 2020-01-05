@@ -51,6 +51,7 @@
 
     <StatusBar Grid.Row="2">
       <TextBlock Text="{Binding Version, Mode=OneTime}" />
+      <TextBlock Text="{Binding Revision, Mode=OneTime}" />
     </StatusBar>
 
   </Grid>

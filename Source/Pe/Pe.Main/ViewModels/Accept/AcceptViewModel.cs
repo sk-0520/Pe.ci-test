@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System.Windows;
@@ -62,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         ));
 
         public Version Version => Assembly.GetExecutingAssembly().GetName().Version!;
+        public string Revision => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
 
         #endregion
 
