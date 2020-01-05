@@ -8,6 +8,7 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
   Icon="/Resources/Icon/App.ico"
@@ -15,8 +16,6 @@
   Height="450"
   Width="800"
   WindowStartupLocation="CenterScreen"
-
-  Title="{Binding Resources.String_Accept_Caption, Source={x:Static app_main:CultureService.Current}}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -26,6 +25,12 @@
       <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
     </app_core_view:RequestTrigger>
   </i:Interaction.Triggers>
+  <Window.Resources>
+    <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+  </Window.Resources>
+  <Window.Title>
+    <Binding Path="Resources.String_Accept_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+  </Window.Title>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
