@@ -493,7 +493,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     switch(toKind) {
                         case NoteContentKind.RichText:
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor));
+                            return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 
                         case NoteContentKind.Plain:

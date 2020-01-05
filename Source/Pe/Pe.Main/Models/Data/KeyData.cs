@@ -274,6 +274,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class KeyActionNoteData : KeyActionPressedDataBase
+    {
+        public KeyActionNoteData(Guid keyActionId, KeyActionContentNote noteKind)
+            : base(keyActionId, KeyActionKind.Note)
+        {
+            NoteKind = noteKind;
+        }
+
+        #region property
+
+        public KeyActionContentNote NoteKind { get; }
+
+        #endregion
+    }
 
     public interface IReadOnlyKeyMappingData
     {

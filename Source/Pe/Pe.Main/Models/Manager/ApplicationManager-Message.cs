@@ -175,6 +175,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     }
                     break;
 
+                case KeyActionNoteJob noteJob: {
+                        switch(noteJob.PressedData.NoteKind) {
+                            case KeyActionContentNote.Create:
+                                var deviceCursorPos = MouseUtility.GetDevicePosition();
+                                var screen = Screen.FromDevicePoint(deviceCursorPos);
+                                var noteElement = CreateNote(screen, NoteStartupPosition.CursorPosition);
+
+                                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                                    noteElement.StartView();
+                                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                                break;
+
+                            case KeyActionContentNote.ZOrderTop:
+                                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                                    MoveZOrderAllNotes(true);
+                                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                                break;
+
+                            case KeyActionContentNote.ZOrderBottom:
+                                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                                    MoveZOrderAllNotes(false);
+                                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                                break;
+
+                            default:
+                                throw new NotImplementedException();
+                        }
+
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }

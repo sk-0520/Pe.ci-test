@@ -183,6 +183,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return new KeyActionLauncherToolbarJob(data, item.Mappings);
         }
 
+        KeyActionNoteJob CreateNoteJon(KeyItem item)
+        {
+            var noteContentConverter = new NoteContentConverter();
+            var pressedOptionConverter = new PressedOptionConverter();
+
+            var data = new KeyActionNoteData(
+                item.Action.KeyActionId,
+                noteContentConverter.ToKeyActionContentNote(item.Action.KeyActionContent)
+            );
+
+            data.ConveySystem = pressedOptionConverter.ToConveySystem(item.Options);
+
+            return new KeyActionNoteJob(data, item.Mappings);
+        }
 
         public IEnumerable<KeyActionPressedJobBase> CreatePressedJobs()
         {
@@ -193,6 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                     KeyActionKind.Command => CreateCommandJob(item),
                     KeyActionKind.LauncherItem => CreateLauncherItemJob(item),
                     KeyActionKind.LauncherToolbar => CreateLauncherToolbarJob(item),
+                    KeyActionKind.Note => CreateNoteJon(item),
                     _ => throw new NotImplementedException(),
                 };
                 return job;

@@ -341,12 +341,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
-        public NoteElement CreateNote(IScreen dockScreen)
+        public NoteElement CreateNote(IScreen dockScreen, NoteStartupPosition noteStartupPosition)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
             var noteId = idFactory.CreateNoteId();
             Logger.LogInformation("new note id: {0}, {1}", noteId, ObjectDumper.GetDumpString(dockScreen));
-            var noteElement = CreateNoteElement(noteId, dockScreen, NoteStartupPosition.CenterScreen);
+            var noteElement = CreateNoteElement(noteId, dockScreen, noteStartupPosition);
 
             NoteElements.Add(noteElement);
 

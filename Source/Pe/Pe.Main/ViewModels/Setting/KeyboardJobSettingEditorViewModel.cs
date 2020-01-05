@@ -408,7 +408,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        #region MyRegion
+        #region KeyboardPressedJobSettingEditorViewModelBase
 
         public override KeyActionContentNote Content
         {
@@ -419,6 +419,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     return noteContentConverter.ToKeyActionContentNote(Model.Content);
                 } catch(Exception ex) {
                     Logger.LogWarning(ex, ex.Message);
+                    // 泥臭い
+                    Model.Content = noteContentConverter.ToContent(KeyActionContentNote.Create);
                 }
                 return KeyActionContentNote.Create;
             }

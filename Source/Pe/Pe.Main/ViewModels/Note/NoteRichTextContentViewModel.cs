@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     var range = new TextRange(Document.ContentStart, Document.ContentEnd);
                     range.Load(stream, DataFormats.Rtf);
                     stream.Dispose();
-                });
+                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
             });
         }
 

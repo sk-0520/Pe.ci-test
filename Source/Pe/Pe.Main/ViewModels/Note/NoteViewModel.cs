@@ -564,11 +564,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     layout.Y = logicalScreenCursorLocation.Y;
                 } else {
                     Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
+                    var area = new Size(
+                        deviceScreenBounds.Width / 100,
+                        deviceScreenBounds.Height / 100
+                    );
+                    var center = new Point(
+                        deviceScreenBounds.Width / 2,
+                        deviceScreenBounds.Height / 2
+                    );
 
                     layout.Width = 20;
                     layout.Height = 20;
-                    layout.X = deviceScreenCursorLocation.X * (deviceScreenBounds.Width / 100);
-                    layout.Y = deviceScreenCursorLocation.Y * (deviceScreenBounds.Height / 100);
+
+                    var width = area.Width * layout.Width;
+                    var height = area.Height * layout.Height;
+
+                    var x = deviceCursorLocation.X - deviceScreenBounds.X;
+                    var y = deviceCursorLocation.Y - deviceScreenBounds.Y;
+
+                    layout.X = ((x) + (width / 2) - center.X) / (area.Width / 2);
+                    layout.Y = -((y) + (height / 2) - center.Y) / (area.Height / 2);
                 }
             }
 

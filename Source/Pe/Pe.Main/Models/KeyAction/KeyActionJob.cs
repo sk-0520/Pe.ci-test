@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 if(mods.Any(i => i != ModifierKey.None)) {
                     throw new ArgumentException("setting: any none");
                 }
-            }else if(Mapping.Key == Key.None) {
+            } else if(Mapping.Key == Key.None) {
                 throw new ArgumentException(nameof(mapping) + "." + nameof(mapping.Key));
             }
         }
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public abstract class KeyActionPressedJobBase: KeyActionJobBase<KeyActionPressedDataBase>
+    public abstract class KeyActionPressedJobBase : KeyActionJobBase<KeyActionPressedDataBase>
     {
         public KeyActionPressedJobBase(KeyActionPressedDataBase actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
@@ -350,5 +350,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
+    public sealed class KeyActionNoteJob : KeyActionPressedJobBase<KeyActionNoteData>
+    {
+        public KeyActionNoteJob(KeyActionNoteData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+            : base(actionData, mappings)
+        { }
+    }
 
 }
