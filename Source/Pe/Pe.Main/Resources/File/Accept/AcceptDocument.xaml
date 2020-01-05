@@ -42,6 +42,14 @@
     </Paragraph>
   </Section>
 
+  <Section>
+    <Paragraph Style="{StaticResource Header}">使用許諾変更履歴</Paragraph>
+    <List Tag="CHANGE-NOTES">
+      <ListItem>
+        <Paragraph>なし</Paragraph>
+      </ListItem>
+    </List>
+  </Section>
 
   <Section>
     <Paragraph Style="{StaticResource Header}">確認事項</Paragraph>
@@ -62,15 +70,6 @@
           <LineBreak />
           <Run>本機能は設定によりいつでも切り替え可能です。</Run>
         </Paragraph>
-      </ListItem>
-    </List>
-  </Section>
-
-  <Section>
-    <Paragraph Style="{StaticResource Header}">使用許諾変更履歴</Paragraph>
-    <List Tag="CHANGE-NOTES">
-      <ListItem>
-        <Paragraph>なし</Paragraph>
       </ListItem>
     </List>
   </Section>

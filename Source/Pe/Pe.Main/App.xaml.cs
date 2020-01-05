@@ -31,7 +31,11 @@ namespace ContentTypeTextNet.Pe.Main
             DebugStartup();
 #endif
             var initializer = new ApplicationInitializer();
-            initializer.Initialize(this, e);
+            var accepted = initializer.Initialize(this, e);
+            if(!accepted) {
+                Shutdown();
+                return;
+            }
 
             Logger = initializer.LoggerFactory.CreateLogger(GetType());
 
