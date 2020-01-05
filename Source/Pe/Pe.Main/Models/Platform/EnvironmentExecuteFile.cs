@@ -151,8 +151,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         public IReadOnlyList<EnvironmentPathExecuteItem> GetItems(ILoggerFactory loggerFactory)
         {
-            if(LastSearch + CacheTime < DateTime.Now) {
-                LastSearch = DateTime.Now;
+            if(LastSearch + CacheTime < DateTime.UtcNow) {
+                LastSearch = DateTime.UtcNow;
                 var environmentExecuteFile = new EnvironmentExecuteFile(loggerFactory);
                 var pathItems = environmentExecuteFile.GetPathExecuteFiles();
                 PathItemsCache.AddRange(pathItems);

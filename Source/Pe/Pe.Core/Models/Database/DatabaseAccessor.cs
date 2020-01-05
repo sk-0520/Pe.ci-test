@@ -331,9 +331,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var formattedStatement = Implementation.PreFormatStatement(statement);
             LoggingStatement(formattedStatement, parameter);
-            var startTime = DateTime.Now;
+            var startTime = DateTime.UtcNow;
             var result = BaseConnection.Execute(formattedStatement, parameter, transaction?.Transaction);
-            LoggingExecuteResult(result, startTime, DateTime.Now);
+            LoggingExecuteResult(result, startTime, DateTime.UtcNow);
             return result;
         }
 
@@ -353,9 +353,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             LoggingStatement(formattedStatement, parameter);
 
             var dataTable = new DataTable();
-            var startTime = DateTime.Now;
+            var startTime = DateTime.UtcNow;
             dataTable.Load(BaseConnection.ExecuteReader(statement, parameter, transaction?.Transaction));
-            LoggingDataTable(dataTable, startTime, DateTime.Now);
+            LoggingDataTable(dataTable, startTime, DateTime.UtcNow);
             return dataTable;
         }
 

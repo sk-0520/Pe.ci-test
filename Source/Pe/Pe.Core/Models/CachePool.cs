@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Value = value;
             IsManaged = isManaged;
             LifeTime = lifeTime;
-            CreatedTimestamp = DateTime.Now;
+            CreatedTimestamp = DateTime.UtcNow;
         }
 
         #region ICacheItem
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ThrowIfDisposed();
 
             lock(item) {
-                item.AccessTimestamp = DateTime.Now;
+                item.AccessTimestamp = DateTime.UtcNow;
                 item.AccessCount += 1;
             }
         }
@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var item = Store.GetOrAdd(key, k => CreateCacheItem(valueFactory(k), isManaged, lifeTime));
 
-            if(!item.CheckEnabled(DateTime.Now)) {
+            if(!item.CheckEnabled(DateTime.UtcNow)) {
                 DisposeItem(item);
                 // スレッドとか難しいことは考えないでござる
                 Store[key] = CreateCacheItem(valueFactory(key), isManaged, lifeTime);
@@ -199,8 +199,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ThrowIfDisposed();
 
             if(Store.TryGetValue(key, out var item)) {
-                if(item.CheckEnabled(DateTime.Now)) {
-                    if(item.CheckEnabled(DateTime.Now)) {
+                if(item.CheckEnabled(DateTime.UtcNow)) {
+                    if(item.CheckEnabled(DateTime.UtcNow)) {
                         UpdateItemState(item);
                         value = item.Value;
                         return true;
@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             ThrowIfDisposed();
 
-            var timestamp = DateTime.Now;
+            var timestamp = DateTime.UtcNow;
             var pairs = Store
                 .ToList()
                 .Where(p => p.Value.CheckEnabled(timestamp))
