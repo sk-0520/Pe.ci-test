@@ -10,6 +10,7 @@
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
+  Icon="/Resources/Icon/App.ico"
   ResizeMode="CanResizeWithGrip"
   Height="450"
   Width="800"
@@ -31,15 +32,24 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <FlowDocumentReader x:Name="documentAccept" Grid.Row="0" Margin="0" ViewingMode="Scroll" IsPageViewEnabled="False" IsTwoPageViewEnabled="False"  />
+    <FlowDocumentReader x:Name="documentAccept" Grid.Row="0" Margin="0" ViewingMode="Scroll" IsPageViewEnabled="False" IsTwoPageViewEnabled="False" Focusable="False" IsTabStop="False" />
 
-    <StackPanel Grid.Row="1">
-      <Button Command="{Binding AffirmativeCommand}" Content="{Binding Resources.String_Common_Command_Ok, Source={x:Static app_main:CultureService.Current}}" />
-      <Button Command="{Binding NegativeCommand}" Content="{Binding Resources.String_Common_Command_Cancel, Source={x:Static app_main:CultureService.Current}}" />
-    </StackPanel>
+    <Grid Grid.Row="1">
+      <Grid.Resources>
+        <Style TargetType="Button">
+          <Setter Property="Margin" Value="8" />
+        </Style>
+      </Grid.Resources>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="0" Command="{Binding AffirmativeCommand}" Content="{Binding Resources.String_Accept_Command_Affirmative, Source={x:Static app_main:CultureService.Current}}" />
+      <Button Grid.Column="1" Command="{Binding NegativeCommand}" Content="{Binding Resources.String_Accept_Command_Negative, Source={x:Static app_main:CultureService.Current}}" IsDefault="True" />
+    </Grid>
 
     <StatusBar Grid.Row="2">
-      <ResizeGrip HorizontalContentAlignment="Right" />
+      <TextBlock Text="{Binding Version, Mode=OneTime}" />
     </StatusBar>
 
   </Grid>

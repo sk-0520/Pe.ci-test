@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Documents;
@@ -59,6 +60,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         public ICommand OpenWebSiteUriCommand => GetOrCreateCommand(() => new DelegateCommand(
            () => OpenUri(Configuration.General.ProjectWebSiteUri)
         ));
+
+        public Version Version => Assembly.GetExecutingAssembly().GetName().Version!;
 
         #endregion
 
