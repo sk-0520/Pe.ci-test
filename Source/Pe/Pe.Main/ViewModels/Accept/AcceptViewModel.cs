@@ -117,7 +117,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         #endregion
 
-
         #region IDialogService
 
         public void Show(string name, IDialogParameters parameters, Action<IDialogResult> callback)
@@ -131,7 +130,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         }
 
         #endregion
-
-
     }
 }
