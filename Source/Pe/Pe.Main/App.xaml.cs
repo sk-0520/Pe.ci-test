@@ -51,6 +51,10 @@ namespace ContentTypeTextNet.Pe.Main
             var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
             notifyIcon.DataContext = viewModel;
             //Shutdown();
+
+            Dispatcher.BeginInvoke(new Action(() => {
+                Logger.LogInformation("つかえるよ！");
+            }), System.Windows.Threading.DispatcherPriority.SystemIdle);
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

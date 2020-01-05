@@ -402,11 +402,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             StatusManager = SetupStatusManager(DiContainer);
             ClipboardManager = SetupClipboardManager(DiContainer);
 
-
             var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Current);
             cultureServiceChanger.ChangeCulture();
 
-            //バージョンアップに伴う使用許諾
+            //TODO: バージョンアップに伴う使用許諾
             if(!IsFirstStartup && !skipAccept) {
                 var dialogResult = ShowAcceptView(DiContainer, null);
                 if(!dialogResult) {
