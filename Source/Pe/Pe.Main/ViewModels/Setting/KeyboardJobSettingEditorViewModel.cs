@@ -343,6 +343,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     return launcherItemContentConverter.ToKeyActionContentLauncherItem(Model.Content);
                 } catch(Exception ex) {
                     Logger.LogWarning(ex, ex.Message);
+                    // 泥臭い
+                    Model.Content = launcherItemContentConverter.ToContent(KeyActionContentLauncherItem.Execute);
                 }
                 return KeyActionContentLauncherItem.Execute;
             }
