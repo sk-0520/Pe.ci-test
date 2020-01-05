@@ -91,6 +91,6 @@
     <Exec Command="robocopy /MIR /PURGE /R:3 /S &quot;$(ProjectDir)etc&quot; &quot;$(OutDir)..\etc&quot;&#xD;&#xA;robocopy /MIR /PURGE /R:3 /S &quot;$(ProjectDir)doc&quot; &quot;$(OutDir)..\doc&quot;&#xD;&#xA;robocopy /MIR /PURGE /R:3 /S &quot;$(ProjectDir)bat&quot; &quot;$(OutDir)..\bat&quot;&#xD;&#xA;if %25ERRORLEVEL%25 lss 8 exit 0" />
   </Target>
 
-  <ProjectExtensions><VisualStudio><UserProperties etc_4appsettings_1json__JsonSchema="conf" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" etc_4appsettings_1json__JsonSchema="conf" /></VisualStudio></ProjectExtensions>
 
 </Project>

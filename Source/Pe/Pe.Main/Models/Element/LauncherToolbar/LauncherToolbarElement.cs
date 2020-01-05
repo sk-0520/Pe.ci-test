@@ -26,7 +26,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 {
-    public class LauncherToolbarElement : ContextElementBase, IAppDesktopToolbarExtendData, IViewShowStarter, IViewCloseReceiver, IFlushable
+    public class LauncherToolbarElement : ElementBase, IAppDesktopToolbarExtendData, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
         #region variable
 
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         #endregion
 
         public LauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
-            : base(diContainer, loggerFactory)
+            : base(loggerFactory)
         {
             DockScreen = dockScreen;
             LauncherGroups = launcherGroups;
