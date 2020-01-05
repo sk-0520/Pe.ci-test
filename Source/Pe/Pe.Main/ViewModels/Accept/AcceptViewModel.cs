@@ -29,6 +29,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         //public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
         public RequestSender CloseRequest { get; } = new RequestSender();
 
+        public bool SendUsageStatistics
+        {
+            get => Model.SendUsageStatistics;
+            set => SetModelValue(value);
+        }
+
+        public bool CheckUpdate
+        {
+            get => Model.CheckUpdate;
+            set => SetModelValue(value);
+        }
+
         #endregion
 
         #region IDialogCommand

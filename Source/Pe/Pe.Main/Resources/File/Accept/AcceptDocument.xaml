@@ -2,26 +2,110 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
-  <Paragraph FontSize="20pt" FontWeight="Bold" TextDecorations="Underline">ソフトウェア使用許諾</Paragraph>
-  <Paragraph>
-    本文書を確認したうえで本ソフトウェア(以下、${APP})を使用する場合は「OK」、使用しない場合は「キャンセル」を押下してください。
-    <LineBreak />
-    このダイアログは初回起動やバージョンアップで大きな変更があった場合などに表示されます。
-  </Paragraph>
-  <Paragraph>
-    ${APP} は XXX でライセンスされています。
-    <LineBreak />
-    付属するサードパーティ製のソフトウェアなどに関してはそれぞれの適用しているライセンスとなります。
+  <FlowDocument.Resources>
+    <Style x:Key="Header" TargetType="Paragraph">
+      <Setter Property="Margin" Value="0, 20, 0, 10" />
+      <Setter Property="FontSize" Value="16pt" />
+      <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+  </FlowDocument.Resources>
+
+  <Paragraph
+    FontSize="20pt"
+    FontWeight="Bold"
+    TextDecorations="Underline"
+    TextAlignment="Center"
+  >
+    ソフトウェア使用許諾
   </Paragraph>
 
-  <List>
-    <ListItem>
-      <Paragraph>
-        <TextBlock>Webサイト</TextBlock>
-        <LineBreak />
-        <Hyperlink>${WEB}</Hyperlink>
-      </Paragraph>
-    </ListItem>
-  </List>
+  <Section>
+    <Paragraph>
+      <Run>本文書を確認したうえで本ソフトウェア(以下、</Run>
+      <Run Tag="APP" />
+      <Run>)を使用する場合は「</Run>
+      <Run Tag="ACCEPT-AFFIRMATIVE" />
+      <Run>」、使用しない場合は「</Run>
+      <Run Tag="ACCEPT-NEGATIVE" />
+      <Run>」を押下してください。</Run>
+      <LineBreak />
+      <Run>このダイアログは初回起動やバージョンアップで大きな変更があった場合などに表示されます。</Run>
+    </Paragraph>
+    <Paragraph>
+      <Run Tag="APP" />
+      <Run>は</Run>
+      <Run Tag="LICENSE" />
+      <Run>でライセンスされています。</Run>
+      <Run>実行前にソースを取得・確認するには以下のリンクを参照してください。</Run>
+      <LineBreak />
+      <Run>付属するサードパーティ製のソフトウェアなどに関してはそれぞれの適用しているライセンスとなります。</Run>
+    </Paragraph>
+  </Section>
+
+
+  <Section>
+    <Paragraph Style="{StaticResource Header}">確認事項</Paragraph>
+    <List>
+      <ListItem>
+        <Paragraph>
+          <CheckBox IsChecked="{Binding CheckUpdate}">バージョンチェックを行う</CheckBox>
+          <LineBreak />
+          <Run>最新バージョンがリリースされている場合に通知します。</Run>
+        </Paragraph>
+      </ListItem>
+      <ListItem>
+        <Paragraph>
+          <CheckBox IsChecked="{Binding SendUsageStatistics}">使用統計情報の送信を許可する</CheckBox>
+          <LineBreak />
+          <Run Tag="APP" />
+          <Run>では不具合検知・機能改善のため各種使用統計を収集します。</Run>
+          <LineBreak />
+          <Run>本機能は設定によりいつでも切り替え可能です。</Run>
+        </Paragraph>
+      </ListItem>
+    </List>
+  </Section>
+
+  <Section>
+    <Paragraph Style="{StaticResource Header}">使用許諾変更履歴</Paragraph>
+    <List Tag="CHANGE-NOTES">
+      <ListItem>
+        <Paragraph>なし</Paragraph>
+      </ListItem>
+    </List>
+  </Section>
+
+  <Section>
+    <Paragraph Style="{StaticResource Header}">各種情報</Paragraph>
+    <List>
+      <ListItem>
+        <Paragraph>
+          <TextBlock>プロジェクトページ</TextBlock>
+          <LineBreak />
+          <Hyperlink Command="{Binding OpenProjectUriCommand}">
+            <Run Tag="PROJECT-URI"/>
+          </Hyperlink>
+        </Paragraph>
+      </ListItem>
+      <ListItem>
+        <Paragraph>
+          <TextBlock>フォーラム</TextBlock>
+          <LineBreak />
+          <Hyperlink Command="{Binding OpenForumUriCommand}">
+            <Run Tag="FORUM-URI"/>
+          </Hyperlink>
+        </Paragraph>
+      </ListItem>
+      <ListItem>
+        <Paragraph>
+          <TextBlock>Webサイト</TextBlock>
+          <LineBreak />
+          <Hyperlink Command="{Binding OpenWebSiteUriCommand}">
+            <Run Tag="WEBSITE-URI"/>
+          </Hyperlink>
+        </Paragraph>
+      </ListItem>
+    </List>
+  </Section>
 
 </FlowDocument>

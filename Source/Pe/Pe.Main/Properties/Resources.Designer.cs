@@ -65,16 +65,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
         ///&gt;
-        ///  &lt;Paragraph FontSize=&quot;20pt&quot; FontWeight=&quot;Bold&quot; TextDecorations=&quot;Underline&quot;&gt;ソフトウェア使用許諾&lt;/Paragraph&gt;
-        ///  &lt;Paragraph&gt;
-        ///    本文書を確認したうえで本ソフトウェア(以下、${APP})を使用する場合は「OK」、使用しない場合は「キャンセル」を押下してください。
-        ///    &lt;LineBreak /&gt;
-        ///    このダイアログは初回起動やバージョンアップで大きな変更があった場合などに表示されます。
-        ///  &lt;/Paragraph&gt;
-        ///  &lt;Paragraph&gt;
-        ///    ${APP} は XXX でライセンスされています。
-        ///    &lt;LineBreak /&gt;
-        ///    付属するサードパーティ製のソフトウェアなどに関しては [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///  &lt;FlowDocument.Resources&gt;
+        ///    &lt;Style x:Key=&quot;Header&quot; TargetType=&quot;Paragraph&quot;&gt;
+        ///      &lt;Setter Property=&quot;Margin&quot; Value=&quot;0, 20, 0, 10&quot; /&gt;
+        ///      &lt;Setter Property=&quot;FontSize&quot; Value=&quot;16pt&quot; /&gt;
+        ///      &lt;Setter Property=&quot;FontWeight&quot; Value=&quot;Bold&quot; /&gt;
+        ///    &lt;/Style&gt;
+        ///  &lt;/FlowDocument.Resources&gt;
+        ///
+        ///  &lt;Paragraph
+        ///    FontSize=&quot;20pt&quot;
+        ///    FontWeight=&quot;Bold&quot;
+        ///    TextDecorations=&quot;Und [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string File_Accept_AcceptDocument {
             get {
@@ -147,6 +149,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Accept_Caption {
             get {
                 return ResourceManager.GetString("String_Accept_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   使用する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Accept_Command_Affirmative {
+            get {
+                return ResourceManager.GetString("String_Accept_Command_Affirmative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   使用しない(N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Accept_Command_Negative {
+            get {
+                return ResourceManager.GetString("String_Accept_Command_Negative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   使用する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Accept_PlaceHolder_Affirmative {
+            get {
+                return ResourceManager.GetString("String_Accept_PlaceHolder_Affirmative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   使用しない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Accept_PlaceHolder_Negative {
+            get {
+                return ResourceManager.GetString("String_Accept_PlaceHolder_Negative", resourceCulture);
             }
         }
         

@@ -133,6 +133,19 @@
   <data name="String_Accept_Caption" xml:space="preserve">
     <value>使用許諾 </value>
   </data>
+  <data name="String_Accept_Command_Affirmative" xml:space="preserve">
+    <value>使用する</value>
+    <comment>ショートカットキーで事故られても困る</comment>
+  </data>
+  <data name="String_Accept_Command_Negative" xml:space="preserve">
+    <value>使用しない(N)</value>
+  </data>
+  <data name="String_Accept_PlaceHolder_Affirmative" xml:space="preserve">
+    <value>使用する</value>
+  </data>
+  <data name="String_Accept_PlaceHolder_Negative" xml:space="preserve">
+    <value>使用しない</value>
+  </data>
   <data name="String_AppManager_Menu_About" xml:space="preserve">
     <value>情報(_A)</value>
   </data>

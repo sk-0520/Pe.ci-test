@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !file.Exists;
         }
 
-        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, ILoggerFactory? loggerFactory)
+        bool ShowAcceptView(IDiScopeContainerFactory scopeContainerCreator, bool hasSetting, ILoggerFactory? loggerFactory)
         {
             using(var diContainer = scopeContainerCreator.CreateChildContainer()) {
                 if(loggerFactory != null) {
@@ -141,6 +141,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ;
                 using(var windowManager = new WindowManager(diContainer, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
+                    acceptModel.HasSetting = hasSetting;
+                    acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
                     windowManager.Register(new WindowItem(WindowKind.Accept, view));
                     view.ShowDialog();
@@ -367,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 logger.LogInformation("初回実行");
                 if(!skipAccept) {
                     // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                    var dialogResult = ShowAcceptView(new DiContainer(false), loggerFactory);
+                    var dialogResult = ShowAcceptView(new DiContainer(false), false, loggerFactory);
                     if(!dialogResult) {
                         // 初回の使用許諾を得られなかったのでばいちゃ
                         logger.LogInformation("使用許諾得られず");
@@ -407,7 +409,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             //TODO: バージョンアップに伴う使用許諾
             if(!IsFirstStartup && !skipAccept) {
-                var dialogResult = ShowAcceptView(DiContainer, null);
+                var dialogResult = ShowAcceptView(DiContainer, true, null);
                 if(!dialogResult) {
                     // バージョンアップに伴う使用許諾を得られなかったのでおわる
                     logger.LogInformation("バージョンアップ後 使用許諾得られず");
