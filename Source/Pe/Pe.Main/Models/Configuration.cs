@@ -26,6 +26,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
             MutexName = section.GetValue<string>("mutex-name");
             LoggingConfigFileName = section.GetValue<string>("log-conf-file-name");
             SupportCultures = section.GetSection("support-cultures").Get<string[]>();
+
+            ProjectRepositoryUri = section.GetValue<Uri>("project-repository-uri");
+            ProjectForumUri = section.GetValue<Uri>("project-forum-uri");
+            ProjectWebsiteUri = section.GetValue<Uri>("project-website-uri");
         }
 
         #region property
@@ -35,6 +39,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public string LoggingConfigFileName { get; }
 
         public IReadOnlyList<string> SupportCultures { get; }
+
+        public Uri ProjectRepositoryUri { get; }
+        public Uri ProjectForumUri { get; }
+        public Uri ProjectWebsiteUri { get; }
 
         #endregion
     }
@@ -68,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #region property
 
         public int DirectoryRemoveWaitCount { get; }
-        public TimeSpan DirectoryRemoveWaitTime{ get; }
+        public TimeSpan DirectoryRemoveWaitTime { get; }
 
         #endregion
     }
