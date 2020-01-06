@@ -30,7 +30,8 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <TabControl Grid.Row="0" ItemsSource="{Binding EditorItems}" SelectedItem="{Binding SelectedEditor}" TabStripPlacement="Left">
+    <TabControl Grid.Row="0" SelectedValue="{Binding SelectedEditor}" SelectedValuePath="Tag"  TabStripPlacement="Left">
+      <!--
       <TabControl.Resources>
         <DataTemplate DataType="{x:Type app_main_viewmodels_setting:GeneralsSettingEditorViewModel}">
           <app_main_views_setting:GeneralsSettingControl Editor="{Binding}" />
@@ -48,11 +49,28 @@
           <app_main_views_setting:KeyboardSettingControl Editor="{Binding}" />
         </DataTemplate>
       </TabControl.Resources>
-      <TabControl.ItemTemplate>
+      -->
+      <!--<TabControl.ItemTemplate>
         <DataTemplate>
           <TextBlock Text="{Binding Header}" />
         </DataTemplate>
-      </TabControl.ItemTemplate>
+      </TabControl.ItemTemplate>-->
+
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding GeneralSettingEditor}">
+        <app_main_views_setting:GeneralsSettingControl Editor="{Binding GeneralSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherItemsSettingEditor}">
+        <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding LauncherItemsSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherGroupsSettingEditor}">
+        <app_main_views_setting:LauncherGroupsSettingControl Editor="{Binding LauncherGroupsSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherToobarsSettingEditor}">
+        <app_main_views_setting:LauncherToobarsSettingControl Editor="{Binding LauncherToobarsSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding KeyboardSettingEditor}">
+        <app_main_views_setting:KeyboardSettingControl Editor="{Binding KeyboardSettingEditor}" />
+      </TabItem>
     </TabControl>
 
     <StackPanel Grid.Row="1" Orientation="Horizontal">

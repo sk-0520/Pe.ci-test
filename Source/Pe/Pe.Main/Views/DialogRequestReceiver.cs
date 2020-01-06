@@ -94,8 +94,8 @@ namespace ContentTypeTextNet.Pe.Main.Views
         {
             Debug.Assert(View != null);
 
-            View.Loaded -= View_Loaded;
-            View.Unloaded += View_Unloaded;
+            //View.Loaded -= View_Loaded;
+            //View.Unloaded += View_Unloaded;
             OwnerWindow = Window.GetWindow(View);
         }
 
@@ -103,9 +103,9 @@ namespace ContentTypeTextNet.Pe.Main.Views
         {
             Debug.Assert(View != null);
 
-            View.Unloaded -= View_Unloaded;
-            View = null;
-            OwnerWindow = null;
+            //View.Unloaded -= View_Unloaded;
+            //View = null;
+            //OwnerWindow = null;
         }
 
 
