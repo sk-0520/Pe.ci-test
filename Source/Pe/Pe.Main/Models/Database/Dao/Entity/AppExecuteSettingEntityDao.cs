@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        public bool UpdateExecuteSettingUser(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)
+        public bool UpdateSettingExecuteSetting(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = new AppExecuteSettingEntityDto() {

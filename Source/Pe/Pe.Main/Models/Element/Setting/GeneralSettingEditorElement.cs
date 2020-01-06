@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 SendUsageStatistics = SendUsageStatistics,
                 UserId = UserId,
             };
-            appExecuteSettingEntityDao.UpdateExecuteSettingUser(data, commandPack.CommonStatus);
+            appExecuteSettingEntityDao.UpdateSettingExecuteSetting(data, commandPack.CommonStatus);
         }
 
         #endregion
