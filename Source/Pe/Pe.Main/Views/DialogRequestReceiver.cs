@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -15,14 +16,22 @@ namespace ContentTypeTextNet.Pe.Main.Views
 {
     public class DialogRequestReceiver
     {
-        public DialogRequestReceiver(DependencyObject view)
+        public DialogRequestReceiver(FrameworkElement view)
         {
-            View = view;
+
+            if(view.IsLoaded) {
+                OwnerWindow = Window.GetWindow(view);
+                View = null;
+            } else {
+                View = view;
+                View.Loaded += View_Loaded;
+            }
         }
 
         #region property
 
-        DependencyObject View { get; }
+        FrameworkElement? View { get; set; }
+        Window? OwnerWindow { get; set; }
 
         #endregion
 
@@ -30,6 +39,10 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         public void ReceiveFileSystemSelectDialogRequest(RequestEventArgs o)
         {
+            if(OwnerWindow == null) {
+                throw new InvalidOperationException();
+            }
+
             var fileSelectParameter = (FileSystemSelectDialogRequestParameter)o.Parameter;
             FileSystemDialogBase dialog = fileSelectParameter.FileSystemDialogMode switch
             {
@@ -42,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
                 dialog.FileName = fileSelectParameter.FilePath;
                 dialog.Filters.SetRange(fileSelectParameter.Filter);
 
-                if(dialog.ShowDialog(Window.GetWindow(View)).GetValueOrDefault()) {
+                if(dialog.ShowDialog(OwnerWindow).GetValueOrDefault()) {
                     o.Callback(new FileSystemSelectDialogRequestResponse() {
                         ResponseIsCancel = false,
                         ResponseFilePaths = new[] { dialog.FileName },
@@ -75,5 +88,13 @@ namespace ContentTypeTextNet.Pe.Main.Views
         }
 
         #endregion
+
+        private void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            Debug.Assert(View != null);
+
+            View.Loaded -= View_Loaded;
+            OwnerWindow = Window.GetWindow(View);
+        }
     }
 }
