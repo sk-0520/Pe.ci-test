@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ContentTypeTextNet.Pe.Core.Models
@@ -10,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
+        protected IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
         public IEnumerable<ICommand> Commands => CommandCache.Values;
 
         #endregion
@@ -43,4 +45,43 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
     }
+
+    public class ElementCommandStore : CommandStore
+    {
+        public ElementCommandStore(FrameworkElement view)
+        {
+            View = view;
+            if(View.IsLoaded) {
+                View.Unloaded += View_Unloaded;
+            } else {
+                View.Loaded += View_Loaded;
+            }
+        }
+
+        #region property
+
+        FrameworkElement? View { get; set; }
+
+        #endregion
+
+        private void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            Debug.Assert(View != null);
+
+            View.Loaded -= View_Loaded;
+            View.Unloaded += View_Unloaded;
+        }
+
+        private void View_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Debug.Assert(View != null);
+
+            CommandCache.Clear();
+
+            View.Unloaded -= View_Unloaded;
+            View = null;
+        }
+
+    }
+
 }

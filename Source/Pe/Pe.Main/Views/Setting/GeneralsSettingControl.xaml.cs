@@ -24,7 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         public GeneralsSettingControl()
         {
             InitializeComponent();
-            DialogRequestReceiver = new DialogRequestReceiver(this);
+            //DialogRequestReceiver = new DialogRequestReceiver(this);
+            CommandStore = new ElementCommandStore(this);
         }
 
         #region Editor
@@ -55,17 +56,20 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        DialogRequestReceiver DialogRequestReceiver { get; }
-        CommandStore CommandStore { get; } = new CommandStore();
+        //DialogRequestReceiver DialogRequestReceiver { get; }
+        ElementCommandStore CommandStore { get; }
 
         #endregion
 
         #region command
 
+        //ICommand? _fileSelectCommand;
         public ICommand FileSelectCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
-            o => {
-                DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
-            }
+                    o => {
+                        var DialogRequestReceiver = new DialogRequestReceiver(this);
+
+                        DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
+                    }
         ));
 
         #endregion

@@ -18,12 +18,13 @@ namespace ContentTypeTextNet.Pe.Main.Views
     {
         public DialogRequestReceiver(FrameworkElement view)
         {
+            View = view;
 
-            if(view.IsLoaded) {
+            View = view;
+            if(View.IsLoaded) {
                 OwnerWindow = Window.GetWindow(view);
-                View = null;
+                View.Unloaded += View_Unloaded;
             } else {
-                View = view;
                 View.Loaded += View_Loaded;
             }
         }
@@ -94,7 +95,19 @@ namespace ContentTypeTextNet.Pe.Main.Views
             Debug.Assert(View != null);
 
             View.Loaded -= View_Loaded;
+            View.Unloaded += View_Unloaded;
             OwnerWindow = Window.GetWindow(View);
         }
+
+        private void View_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Debug.Assert(View != null);
+
+            View.Unloaded -= View_Unloaded;
+            View = null;
+            OwnerWindow = null;
+        }
+
+
     }
 }
