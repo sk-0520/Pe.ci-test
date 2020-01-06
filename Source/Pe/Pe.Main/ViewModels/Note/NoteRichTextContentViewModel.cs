@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         var content = noteContentConverter.ToRtfString(Document);
                         Model?.ChangeRichTextContent(content);
                     }
-                });
+                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
             }
         }
 
