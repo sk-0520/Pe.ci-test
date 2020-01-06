@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Accept;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Views.Accept;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -21,7 +22,7 @@ using Prism.Services.Dialogs;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
-    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService, IViewLifecycleReceiver
+    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService, IViewLifecycleReceiver, IBuildStatus
     {
         public AcceptViewModel(AcceptElement model, Configuration configuration, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -61,9 +62,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         public ICommand OpenWebSiteUriCommand => GetOrCreateCommand(() => new DelegateCommand(
            () => OpenUri(Configuration.General.ProjectWebSiteUri)
         ));
-
-        public Version Version => Assembly.GetExecutingAssembly().GetName().Version!;
-        public string Revision => Assembly.GetEntryAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
         #endregion
 
@@ -134,6 +132,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region IBuildStatus
+        public BuildType BuildType => BuildStatus.BuildType;
+        public Version Version => BuildStatus.Version;
+        public string Revision => BuildStatus.Revision;
         #endregion
     }
 }

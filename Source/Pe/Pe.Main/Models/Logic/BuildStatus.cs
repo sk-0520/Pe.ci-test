@@ -44,11 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 #endif
             }
         }
-
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-        public static Version Version { get; } = Assembly.GetExecutingAssembly().GetName().Version;
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
-        public static string Revision { get; } = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+        public static Version Version { get; } = Assembly.GetExecutingAssembly()!.GetName()!.Version!;
+        public static string Revision { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
         #endregion
     }

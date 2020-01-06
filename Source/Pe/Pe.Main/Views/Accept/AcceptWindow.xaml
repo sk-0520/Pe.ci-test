@@ -17,6 +17,10 @@
   Width="800"
   WindowStartupLocation="CenterScreen"
 
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
@@ -38,7 +42,18 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <FlowDocumentReader x:Name="documentAccept" Grid.Row="0" Margin="0" ViewingMode="Scroll" IsPageViewEnabled="False" IsTwoPageViewEnabled="False" Focusable="False" IsTabStop="False" />
+    <FlowDocumentReader
+      x:Name="documentAccept"
+      Grid.Row="0"
+      Margin="0"
+      ViewingMode="Scroll"
+      IsPageViewEnabled="False"
+      IsTwoPageViewEnabled="False"
+      Focusable="False"
+      IsTabStop="False"
+      Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
+      Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+    />
 
     <Grid Grid.Row="1">
       <Grid.Resources>
@@ -55,6 +70,7 @@
     </Grid>
 
     <StatusBar Grid.Row="2">
+      <TextBlock Text="{Binding BuildType, Mode=OneTime}" />
       <TextBlock Text="{Binding Version, Mode=OneTime}" />
       <TextBlock Text="{Binding Revision, Mode=OneTime}" />
     </StatusBar>

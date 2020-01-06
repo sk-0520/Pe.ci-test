@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Text;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -16,12 +17,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
             var caption = (string)value ?? string.Empty;
             var header = BuildStatus.BuildType switch
             {
-                BuildType.Debug => "[DEBUG] ",
-                BuildType.Beta => "[β] ",
                 BuildType.Release => string.Empty,
-                _ => "💩 "
+                _ => "[" + BuildStatus.BuildType.ToString() + "] ",
             };
-            return header + caption;
+            var footer = BuildStatus.BuildType switch
+            {
+                BuildType.Release => string.Empty,
+                _ => " " + BuildStatus.Version + " <" + BuildStatus.Revision + ">",
+            };
+            return header + caption + footer;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -12,7 +12,7 @@
     <RootNamespace>ContentTypeTextNet.Pe.Main</RootNamespace>
     <AssemblyName>Pe.Main</AssemblyName>
     <Version>0.84.0</Version>
-    <AssemblyInformationalVersion>0000000000000000000000000000000000000000</AssemblyInformationalVersion>
+    <InformationalVersion>0000000000000000000000000000000000000000</InformationalVersion>
     <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
