@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         public DialogFilterItem CreateAllFilter() => new DialogFilterItem("all", string.Empty, "*");
 
-        private void SelectFileSystem(RequestSender requestSender, string path, FileSystemDialogMode fileSystemDialogMode, IEnumerable<DialogFilterItem> filters, Action<FileSystemSelectDialogRequestResponse> response)
+        private void SelectFileSystem(IRequestSender requestSender, string path, FileSystemDialogMode fileSystemDialogMode, IEnumerable<DialogFilterItem> filters, Action<FileSystemSelectDialogRequestResponse> response)
         {
             var parameter = new FileSystemSelectDialogRequestParameter() {
                 FilePath = path,
@@ -100,18 +100,18 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <param name="path"></param>
         /// <param name="filters"></param>
         /// <param name="response"><see cref="FileSystemSelectDialogRequestResponse.ResponseIsCancel"/>は真。</param>
-        public void SelectFile(RequestSender requestSender, string path, bool isOpen, IEnumerable<DialogFilterItem> filters, Action<FileSystemSelectDialogRequestResponse> response)
+        public void SelectFile(IRequestSender requestSender, string path, bool isOpen, IEnumerable<DialogFilterItem> filters, Action<FileSystemSelectDialogRequestResponse> response)
         {
             var mode = isOpen ? FileSystemDialogMode.FileOpen : FileSystemDialogMode.FileSave;
             SelectFileSystem(requestSender, path, mode, filters, response);
         }
-        public void SelectDirectory(RequestSender requestSender, string path, Action<FileSystemSelectDialogRequestResponse> response)
+        public void SelectDirectory(IRequestSender requestSender, string path, Action<FileSystemSelectDialogRequestResponse> response)
         {
             SelectFileSystem(requestSender, path, FileSystemDialogMode.Directory, Enumerable.Empty<DialogFilterItem>(), response);
         }
 
 
-        public void SelectIcon(RequestSender requestSender, string path, int index, Action<IconSelectDialogRequestResponse> response)
+        public void SelectIcon(IRequestSender requestSender, string path, int index, Action<IconSelectDialogRequestResponse> response)
         {
             var parameter = new IconSelectDialogRequestParameter() {
                 FileName = path,

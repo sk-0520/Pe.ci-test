@@ -25,6 +25,7 @@
     <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
   </UserControl.Resources>
 
+
   <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.CustomizeItems, ElementName=root}">
     <ItemsControl.Resources>
       <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
@@ -41,14 +42,6 @@
       <!--#region 共通 -->
       <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeCommonViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
-          <i:Interaction.Triggers>
-            <app_core_views:RequestTrigger SourceObject="{Binding IconSelectRequest}">
-              <prism:InvokeCommandAction Command="{Binding IconSelectCommand ,ElementName=root}" />
-            </app_core_views:RequestTrigger>
-            <app_core_views:RequestTrigger SourceObject="{Binding ImageSelectRequest}">
-              <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
-            </app_core_views:RequestTrigger>
-          </i:Interaction.Triggers>
           <StackPanel>
             <Grid>
               <Grid.ColumnDefinitions>
@@ -134,12 +127,6 @@
       <!--#region ファイル -->
       <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeFileViewModel}">
         <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="file">
-          <i:Interaction.Triggers>
-            <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
-              <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
-            </app_core_views:RequestTrigger>
-          </i:Interaction.Triggers>
-
           <StackPanel>
             <Grid>
               <Grid.ColumnDefinitions>
@@ -351,7 +338,19 @@
     </ItemsControl.Resources>
     <ItemsControl.ItemsPanel>
       <ItemsPanelTemplate>
-        <StackPanel />
+        <StackPanel>
+          <i:Interaction.Triggers>
+            <app_core_views:RequestTrigger SourceObject="{Binding Editor.IconSelectRequest, ElementName=root}">
+              <prism:InvokeCommandAction Command="{Binding IconSelectCommand ,ElementName=root}" />
+            </app_core_views:RequestTrigger>
+            <app_core_views:RequestTrigger SourceObject="{Binding Editor.ImageSelectRequest, ElementName=root}">
+              <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
+            </app_core_views:RequestTrigger>
+            <app_core_views:RequestTrigger SourceObject="{Binding Editor.FileSelectRequest, ElementName=root}">
+              <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
+            </app_core_views:RequestTrigger>
+          </i:Interaction.Triggers>
+        </StackPanel>
       </ItemsPanelTemplate>
     </ItemsControl.ItemsPanel>
   </ItemsControl>

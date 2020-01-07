@@ -24,14 +24,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             DispatcherWrapper = dispatcherWrapper;
 
-            Common = new LauncherItemCustomizeCommonViewModel(Model, DispatcherWrapper, LoggerFactory);
+            Common = new LauncherItemCustomizeCommonViewModel(Model, IconSelectRequest, ImageSelectRequest, DispatcherWrapper, LoggerFactory);
 
             var items = new List<LauncherItemCustomizeDetailViewModelBase>();
             items.Add(Common);
 
             switch(Model.Kind) {
                 case LauncherItemKind.File: {
-                        var file = new LauncherItemCustomizeFileViewModel(Model, DispatcherWrapper, LoggerFactory);
+                        var file = new LauncherItemCustomizeFileViewModel(Model, FileSelectRequest, DispatcherWrapper, LoggerFactory);
                         var env = new LauncherItemCustomizeEnvironmentVariableViewModel(Model, DispatcherWrapper, LoggerFactory);
 
                         items.Add(file);
@@ -66,6 +66,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region property
 
         protected IDispatcherWrapper DispatcherWrapper { get; }
+
+        public RequestSender IconSelectRequest { get; } = new RequestSender();
+        public RequestSender ImageSelectRequest { get; } = new RequestSender();
+        public RequestSender FileSelectRequest { get; } = new RequestSender();
 
         public List<LauncherItemCustomizeDetailViewModelBase> CustomizeItems { get; }
 

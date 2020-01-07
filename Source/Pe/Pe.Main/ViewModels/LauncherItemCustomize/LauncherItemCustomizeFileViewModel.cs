@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeFileViewModel(LauncherItemCustomizeEditorElement model, IRequestSender fileSelectRequest, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             if(Model.Kind != Models.Data.LauncherItemKind.File) {
@@ -47,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 throw new ArgumentNullException(nameof(model) + "." + nameof(Model.File));
             }
             File = Model.File;
+            FileSelectRequest = fileSelectRequest;
         }
 
         #region property
@@ -61,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         private static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
-        public RequestSender FileSelectRequest { get; } = new RequestSender();
+        public IRequestSender FileSelectRequest { get; }
 
         public string Path
         {

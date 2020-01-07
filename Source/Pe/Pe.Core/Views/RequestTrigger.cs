@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected override string GetEventName()
         {
-            return nameof(RequestSender.Raised);
+            return nameof(IRequestSender.Raised);
         }
 
         #endregion

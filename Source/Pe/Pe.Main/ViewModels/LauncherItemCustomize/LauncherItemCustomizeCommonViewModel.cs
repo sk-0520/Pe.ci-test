@@ -26,15 +26,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeCommonViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeCommonViewModel(LauncherItemCustomizeEditorElement model, IRequestSender iconSelectRequest, IRequestSender imageSelectRequest, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            IconSelectRequest = iconSelectRequest;
+            ImageSelectRequest = imageSelectRequest;
+        }
 
         #region property
 
 
-        public RequestSender IconSelectRequest { get; } = new RequestSender();
-        public RequestSender ImageSelectRequest { get; } = new RequestSender();
+        public IRequestSender IconSelectRequest { get; }
+        public IRequestSender ImageSelectRequest { get; }
 
 
         [Required]

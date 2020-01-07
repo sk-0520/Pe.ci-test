@@ -9,7 +9,7 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
-    public class RequestSender: BindableBase
+    public interface IRequestSender
     {
         #region event
 
@@ -17,6 +17,21 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
+        #region function
+
+        public void Send();
+        public void Send(RequestParameter requestParameter);
+        public void Send(RequestParameter requestParameter, Action<RequestResponse> callback);
+
+        public Task<RequestResponse> SendAsync(IDispatcherWrapper dispatcherWrapper);
+        public Task<RequestResponse> SendAsync(RequestParameter requestParameter, IDispatcherWrapper dispatcherWrapper);
+        public Task<RequestResponse> SendAsync(RequestParameter requestParameter, IDispatcherWrapper dispatcherWrapper, CancellationToken token);
+
+        #endregion
+    }
+
+    public class RequestSender : BindableBase, IRequestSender
+    {
         public RequestSender()
         { }
 
@@ -36,6 +51,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         {
             Raised!.Invoke(this, new RequestEventArgs(requestParameter, callback));
         }
+
+        #endregion
+
+        #region IRequestSender
+
+        public event EventHandler<RequestEventArgs>? Raised;
 
         public void Send() => Send(EmptyParameter);
         public void Send(RequestParameter requestParameter) => Send(requestParameter, EmptyCallback);
@@ -70,11 +91,11 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         #endregion
     }
 
-    public static class RequestSenderExtensions
+    public static class IRequestSenderExtensions
     {
         #region function
 
-        public static void Send<TRequestResponse>(this RequestSender @this, RequestParameter requestParameter, Action<TRequestResponse> callback)
+        public static void Send<TRequestResponse>(this IRequestSender @this, RequestParameter requestParameter, Action<TRequestResponse> callback)
             where TRequestResponse : RequestResponse
         {
             @this.Send(requestParameter, r => {
@@ -83,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             });
         }
 
-        public static TResult Send<TRequestResponse, TResult>(this RequestSender @this, RequestParameter requestParameter, Func<TRequestResponse, TResult> callback)
+        public static TResult Send<TRequestResponse, TResult>(this IRequestSender @this, RequestParameter requestParameter, Func<TRequestResponse, TResult> callback)
             where TRequestResponse : RequestResponse
         {
             TResult result = default!;

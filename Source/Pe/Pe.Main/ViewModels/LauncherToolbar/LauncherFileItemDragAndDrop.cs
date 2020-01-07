@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public void DragLeave(UIElement sender, DragEventArgs e)
         { }
 
-        public void RegisterDropFile(RequestSender requestSender, string path, Action<string, bool> register)
+        public void RegisterDropFile(IRequestSender requestSender, string path, Action<string, bool> register)
         {
             if(PathUtility.IsShortcut(path)) {
                 var request = new CommonMessageDialogRequestParameter() {
