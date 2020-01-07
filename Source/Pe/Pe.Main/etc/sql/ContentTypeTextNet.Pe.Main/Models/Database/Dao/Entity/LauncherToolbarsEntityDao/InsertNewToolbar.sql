@@ -32,7 +32,7 @@ insert into
 /* PositionKind             */ AppLauncherToolbarSetting.PositionKind,
 /* Direction                */ AppLauncherToolbarSetting.Direction,
 /* IconBox                  */ AppLauncherToolbarSetting.IconBox,
-/* FontId                   */ AppLauncherToolbarSetting.FontId,
+/* FontId                   */ @FontId,
 /* AutoHideTimeout          */ AppLauncherToolbarSetting.AutoHideTimeout,
 /* TextWidth                */ AppLauncherToolbarSetting.TextWidth,
 /* IsVisible                */ AppLauncherToolbarSetting.IsVisible,
