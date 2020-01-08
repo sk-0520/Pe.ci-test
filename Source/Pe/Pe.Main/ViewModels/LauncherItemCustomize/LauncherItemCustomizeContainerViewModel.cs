@@ -17,7 +17,6 @@ using Prism.Commands;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using Microsoft.AppCenter.Analytics;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -45,10 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Analytics.TrackEvent("LauncherItemSave", new TrackProperties() {
-                    [nameof(LauncherItemKind)] = Editor.Common.Kind.ToString(),
-                });
-
+                
                 Editor.Flush();
                 if(Validate()) {
                     Model.Save();

@@ -49,9 +49,6 @@ using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter.Analytics;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -262,21 +259,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var configuration = ApplicationDiContainer.Build<Configuration>();
 
-            AppCenter.Start(
-                configuration.Api.AppCenter,
-                typeof(Crashes),
-                typeof(Analytics)
-            );
-            AppCenter.SetUserId(setting.UserId);
+            //AppCenter.Start(
+            //    configuration.Api.AppCenter,
+            //    typeof(Crashes),
+            //    typeof(Analytics)
+            //);
+            //AppCenter.SetUserId(setting.UserId);
         }
 
         public bool Startup(App app, StartupEventArgs e)
         {
             StartupUsageStatistics();
-
-            Analytics.TrackEvent("START", new TrackProperties() {
-                ["CommandLines"] = string.Join(' ', e.Args.Select(i => "<" + i + ">")),
-            });
 
             //var initializer = new ApplicationInitializer();
             //if(!initializer.Initialize(e.Args)) {

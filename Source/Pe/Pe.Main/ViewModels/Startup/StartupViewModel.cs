@@ -9,7 +9,6 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Startup;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
-using Microsoft.AppCenter.Analytics;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
@@ -29,16 +28,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         public ICommand ImportProgramsCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Analytics.TrackEvent("ImportProgramsCommand");
-
                 Model.ShowImportProgramsView();
             }
         ));
 
         public ICommand RegisterStartupCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Analytics.TrackEvent("RegisterStartupCommand");
-
                 if(!Model.ExistsStartup()) {
                     Model.RegisterStartup();
                 }
@@ -47,8 +42,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         public ICommand ShowNotificationAreaCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Analytics.TrackEvent("ShowNotificationAreaCommand");
-
                 var systemExecutor = new SystemExecutor(LoggerFactory);
                 systemExecutor.OpenNotificationAreaHistory();
             }
