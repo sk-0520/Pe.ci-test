@@ -53,23 +53,6 @@ create table [AppUpdateSetting] (
 )
 ;
 
---// table: AppWindowSetting
-create table [AppWindowSetting] (
-	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
-	[CreatedAccount] text not null /* 作成ユーザー名  */,
-	[CreatedProgramName] text not null /* 作成プログラム名  */,
-	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
-	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
-	[UpdatedAccount] text not null /* 更新ユーザー名  */,
-	[UpdatedProgramName] text not null /* 更新プログラム名  */,
-	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
-	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[IsEnabled]  not null /* 有効  */,
-	[Count] integer not null /* 保持数  */,
-	[Interval] text not null /* 保存間隔  */
-)
-;
-
 --// table: AppCommandSetting
 create table [AppCommandSetting] (
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
@@ -579,7 +562,6 @@ create table [KeyMappings] (
 	foreign key([KeyActionId]) references [KeyActions]([KeyActionId])
 )
 ;
-
 
 
 

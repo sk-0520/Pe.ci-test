@@ -293,42 +293,6 @@ insert into
 	)
 ;
 
---// AppWindowSetting
-insert into
-	AppWindowSetting
-	(
-		IsEnabled,
-		Count,
-		Interval,
-
-		CreatedTimestamp,
-		CreatedAccount,
-		CreatedProgramName,
-		CreatedProgramVersion,
-		UpdatedTimestamp,
-		UpdatedAccount,
-		UpdatedProgramName,
-		UpdatedProgramVersion,
-		UpdatedCount
-	)
-	values
-	(
-/* IsEnabled             */ true,
-/* Count                 */ 10,
-/* Interval              */ '0.00:10.00.0',
-
-/* CreatedTimestamp      */ @CreatedTimestamp,
-/* CreatedAccount        */ @CreatedAccount,
-/* CreatedProgramName    */ @CreatedProgramName,
-/* CreatedProgramVersion */ @CreatedProgramVersion,
-/* UpdatedTimestamp      */ @UpdatedTimestamp,
-/* UpdatedAccount        */ @UpdatedAccount,
-/* UpdatedProgramName    */ @UpdatedProgramName,
-/* UpdatedProgramVersion */ @UpdatedProgramVersion,
-/* UpdatedCount          */ 0
-	)
-;
-
 
 --// AppCommandSetting
 insert into

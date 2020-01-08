@@ -410,50 +410,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     }
 
 
-    public class AppWindowSettingEditorElement : GeneralSettingEditorElementBase
-    {
-        public AppWindowSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
-        { }
-
-        #region property
-
-        public bool IsEnabled { get; set; }
-        public int Count { get; set; }
-        public TimeSpan Interval { get; set; }
-
-        #endregion
-
-        #region function
-        #endregion
-
-        #region GeneralSettingEditorBase
-
-        protected override void InitializeImpl()
-        {
-            SettingAppWindowSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appWindowSettingEntityDao = new AppWindowSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                setting = appWindowSettingEntityDao.SelectSettingWindowSetting();
-            }
-
-            IsEnabled = setting.IsEnabled;
-            Count = setting.Count;
-            Interval = setting.Interval;
-        }
-
-        protected override void SaveImpl(DatabaseCommandPack commadPack)
-        {
-            var appWindowSettingEntityDao = new AppWindowSettingEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
-            var data = new SettingAppWindowSettingData() {
-                IsEnabled = IsEnabled,
-                Count = Count,
-                Interval = Interval,
-            };
-            appWindowSettingEntityDao.UpdateSettingWindowSetting(data, commadPack.CommonStatus);
-        }
-
-        #endregion
-    }
 
 }

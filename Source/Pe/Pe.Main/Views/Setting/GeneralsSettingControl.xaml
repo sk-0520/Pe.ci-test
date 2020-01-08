@@ -254,18 +254,6 @@
             </GroupBox>
           </DataTemplate>
 
-          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppWindowSettingEditorViewModel}">
-            <GroupBox Header="{Binding Header}">
-              <StackPanel>
-                <CheckBox IsChecked="{Binding IsEnabled}" Content="enable" />
-                <Label>count</Label>
-                <app_core_views:NumericUpDown Value="{Binding Count, Mode=TwoWay}" Minimum="{Binding CountMinimum}" Maximum="{Binding CountMaximum}" />
-                <Label>interval</Label>
-                <app_core_views:NumericUpDown Value="{Binding IntervalMinutes, Mode=TwoWay}" Minimum="{Binding IntervalMinimum}" Maximum="{Binding IntervalMaximum}" />
-              </StackPanel>
-            </GroupBox>
-          </DataTemplate>
-
         </ItemsControl.Resources>
       </ItemsControl>
     </ScrollViewer>

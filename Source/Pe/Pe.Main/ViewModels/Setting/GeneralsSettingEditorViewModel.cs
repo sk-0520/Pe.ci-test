@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using Microsoft.Extensions.Logging;
@@ -21,7 +22,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AppCommandSettingEditor = new AppCommandSettingEditorViewModel(Model.AppCommandSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
             AppNoteSettingEditor = new AppNoteSettingEditorViewModel(Model.AppNoteSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
             AppStandardInputOutputSettingEditor = new AppStandardInputOutputSettingEditorViewModel(Model.AppStandardInputOutputSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
-            AppWindowSettingEditor = new AppWindowSettingEditorViewModel(Model.AppWindowSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new ObservableCollection<IGeneralSettingEditor>() {
                 AppExecuteSettingEditor,
@@ -30,7 +30,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 AppCommandSettingEditor,
                 AppNoteSettingEditor,
                 AppStandardInputOutputSettingEditor,
-                AppWindowSettingEditor,
             };
         }
 
@@ -42,8 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         AppCommandSettingEditorViewModel AppCommandSettingEditor { get; }
         AppNoteSettingEditorViewModel AppNoteSettingEditor { get; }
         AppStandardInputOutputSettingEditorViewModel AppStandardInputOutputSettingEditor { get; }
-        AppWindowSettingEditorViewModel AppWindowSettingEditor { get; }
 
+        [IgnoreValidation]
         public ObservableCollection<IGeneralSettingEditor> EditorItems { get; }
 
         #endregion
