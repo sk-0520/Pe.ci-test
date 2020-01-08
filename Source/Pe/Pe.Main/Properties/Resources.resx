@@ -191,6 +191,9 @@
   <data name="String_Common_Command_Cancel" xml:space="preserve">
     <value>キャンセル(_C)</value>
   </data>
+  <data name="String_Common_Command_Close" xml:space="preserve">
+    <value>閉じる(_X)</value>
+  </data>
   <data name="String_Common_Command_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
@@ -238,5 +241,17 @@
   </data>
   <data name="String_Setting_Header_LauncherToolbars" xml:space="preserve">
     <value>toolbars</value>
+  </data>
+  <data name="String_Startup_Caption" xml:space="preserve">
+    <value>スタート</value>
+  </data>
+  <data name="String_Startup_Command_ImportPrograms" xml:space="preserve">
+    <value>プログラム自動取り込み(_P)</value>
+  </data>
+  <data name="String_Startup_Command_NotifyArea" xml:space="preserve">
+    <value>通知領域設定(_N)</value>
+  </data>
+  <data name="String_Startup_Command_RegisterStartup" xml:space="preserve">
+    <value>スタートアップ登録(_S)</value>
   </data>
 </root>

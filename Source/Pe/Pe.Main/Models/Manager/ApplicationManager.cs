@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");
 
-            if(IsFirstStartup) {
+            if(IsFirstStartup || true) {
                 // 初期登録の画面を表示
                 ShowStartupView();
             }

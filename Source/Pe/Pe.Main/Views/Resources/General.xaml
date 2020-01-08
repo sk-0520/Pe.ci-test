@@ -6,6 +6,8 @@
   <sys:Double x:Key="Icon-Size-Small">16</sys:Double>
   <sys:Double x:Key="Icon-Size-Normal">32</sys:Double>
   <sys:Double x:Key="Icon-Size-Big">64</sys:Double>
+  <sys:Double x:Key="Icon-Size-Jumbo">128</sys:Double>
+  <sys:Double x:Key="Icon-Size-Large">256</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Small">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Normal">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Big">1</sys:Double>
@@ -61,6 +63,14 @@
   <Style x:Key="Image-Big" TargetType="Control">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Big}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Big}" />
+  </Style>
+  <Style x:Key="Image-Jumbo" TargetType="Control">
+    <Setter Property="Width" Value="{StaticResource Icon-Size-Jumbo}" />
+    <Setter Property="Height" Value="{StaticResource Icon-Size-Jumbo}" />
+  </Style>
+  <Style x:Key="Image-Large" TargetType="Control">
+    <Setter Property="Width" Value="{StaticResource Icon-Size-Large}" />
+    <Setter Property="Height" Value="{StaticResource Icon-Size-Large}" />
   </Style>
 
   <DropShadowEffect x:Key="Effect-Strong"
@@ -183,6 +193,19 @@
   </Style>
   <Style x:Key="DefaultHorizonGridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}" TargetType="GridSplitter">
     <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
+  </Style>
+
+  <Style x:Key="DialogCommand" TargetType="UniformGrid">
+    <Style.Resources>
+      <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Margin" Value="3,0" />
+        <Setter Property="Padding" Value="4" />
+      </Style>
+    </Style.Resources>
+    <Setter Property="Rows" Value="1" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Right" />
+    <Setter Property="Margin" Value="10,2" />
   </Style>
 
   <Style x:Key="Path-FontIcon" TargetType="ContentControl">

@@ -23,4 +23,89 @@
     </Viewbox>
   </ControlTemplate>
 
+  <ControlTemplate x:Key="App-Image-Flag" >
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0,-0.000199999999999534L0,1.2368 7.382,15.9998 11.618,15.9998 8.217,9.1968 16,1.4138 16,-0.000199999999999534z" />
+                  <GeometryDrawing Brush="#FF424242" Geometry="F1M7,9L10,15 8,15 1,1 15,1z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <!-- https://seeklogo.net/microsoft-windows-logo-vector-87012.html -->
+  <ControlTemplate x:Key="App-Image-Windows" >
+    <Viewbox>
+      <Canvas Name="svg4532" Width="682.66669" Height="682.66669">
+        <Canvas.RenderTransform>
+          <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources>
+          <PathGeometry xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="clipPath4548" Figures="M 0 512 H 512 V 0 H 0 Z" FillRule="NonZero"/>
+        </Canvas.Resources>
+        <!--Unknown tag: metadata-->
+        <!--Unknown tag: sodipodi:namedview-->
+        <Canvas Name="g4540">
+          <Canvas.RenderTransform>
+            <MatrixTransform Matrix="1.3333333 0 0 -1.3333333 0 682.66667"/>
+          </Canvas.RenderTransform>
+          <Canvas Name="g4542">
+            <Canvas Name="g4544" Clip="{StaticResource clipPath4548}">
+              <Canvas Name="g4550">
+                <Canvas.RenderTransform>
+                  <TranslateTransform X="238.2978" Y="433.0218"/>
+                </Canvas.RenderTransform>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4552" Fill="#FF0078D6">
+                  <Path.Data>
+                    <PathGeometry Figures="m 0 0 c 75.427 12.315 152.393 23.09 227.819 33.865 v -3.079 -197.033 c -75.426 0 -152.392 -1.539 -227.819 -1.539 z" FillRule="NonZero"/>
+                  </Path.Data>
+                </Path>
+              </Canvas>
+              <Canvas Name="g4554">
+                <Canvas.RenderTransform>
+                  <TranslateTransform X="45.8828" Y="406.8534"/>
+                </Canvas.RenderTransform>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4556" Fill="#FF0078D6">
+                  <Path.Data>
+                    <PathGeometry Figures="m 0 0 c 56.955 9.236 113.91 16.933 172.404 23.09 v -164.707 c -58.494 0 -115.449 -1.54 -172.404 -1.54 z" FillRule="NonZero"/>
+                  </Path.Data>
+                </Path>
+              </Canvas>
+              <Canvas Name="g4558">
+                <Canvas.RenderTransform>
+                  <TranslateTransform X="45.8828" Y="246.7641"/>
+                </Canvas.RenderTransform>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4560" Fill="#FF0078D6">
+                  <Path.Data>
+                    <PathGeometry Figures="M 0 0 C 56.955 0 113.91 -1.539 172.404 0 V -166.247 C 113.91 -158.55 56.955 -150.853 0 -143.157 Z" FillRule="NonZero"/>
+                  </Path.Data>
+                </Path>
+              </Canvas>
+              <Canvas Name="g4562">
+                <Canvas.RenderTransform>
+                  <TranslateTransform X="238.2978" Y="245.2248"/>
+                </Canvas.RenderTransform>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4564" Fill="#FF0078D6">
+                  <Path.Data>
+                    <PathGeometry Figures="m 0 0 h 227.819 v -190.876 -9.236 C 152.393 -187.797 75.427 -178.561 0 -167.786 Z" FillRule="NonZero"/>
+                  </Path.Data>
+                </Path>
+              </Canvas>
+            </Canvas>
+          </Canvas>
+        </Canvas>
+      </Canvas>
+    </Viewbox>
+  </ControlTemplate>
+
 </ResourceDictionary>

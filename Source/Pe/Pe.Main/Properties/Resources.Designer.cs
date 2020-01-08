@@ -324,6 +324,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   閉じる(_X) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Command_Close {
+            get {
+                return ResourceManager.GetString("String_Common_Command_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   OK に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Command_Ok {
@@ -464,6 +473,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Header_LauncherToolbars {
             get {
                 return ResourceManager.GetString("String_Setting_Header_LauncherToolbars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スタート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Startup_Caption {
+            get {
+                return ResourceManager.GetString("String_Startup_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プログラム自動取り込み(_P) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Startup_Command_ImportPrograms {
+            get {
+                return ResourceManager.GetString("String_Startup_Command_ImportPrograms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通知領域設定(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Startup_Command_NotifyArea {
+            get {
+                return ResourceManager.GetString("String_Startup_Command_NotifyArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スタートアップ登録(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Startup_Command_RegisterStartup {
+            get {
+                return ResourceManager.GetString("String_Startup_Command_RegisterStartup", resourceCulture);
             }
         }
     }
