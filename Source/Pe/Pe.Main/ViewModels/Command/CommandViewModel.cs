@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -114,6 +116,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public IconBox IconBox => Model.IconBox;
 
+        CancellationTokenSource? InputCancellationTokenSource { get; set; }
+
         public string InputValue
         {
             get => this._inputValue;
@@ -122,6 +126,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 CurrentSelectedItem = SelectedItem;
                 SetProperty(ref this._inputValue, value);
 
+                if(InputCancellationTokenSource != null) {
+                    Logger.LogDebug("入力中の何かしらをキャンセル");
+                    InputCancellationTokenSource.Cancel();
+                }
+
+                InputCancellationTokenSource = new CancellationTokenSource();
+
                 var isEmpty = string.IsNullOrWhiteSpace(this._inputValue);
                 if(isEmpty) {
                     InputState = InputState.Empty;
@@ -129,14 +140,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                     InputState = InputState.Finding;
                 }
 
-                Model.UpdateCommandItemsAsync(this._inputValue).ContinueWith(t => {
-                    SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
-                    //System.Threading.Thread.Sleep(5000);
-                    if(SelectedItem == null && !string.IsNullOrWhiteSpace(this._inputValue)) {
-                        CurrentSelectedItem = null;
-                        InputState = InputState.NotFound;
-                    } else if(!isEmpty) {
-                        InputState = InputState.Listup;
+
+                Model.UpdateCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token).ContinueWith(t => {
+                    if(t.IsCanceled) {
+                        Logger.LogTrace("cancel!");
+                    } else if(t.IsCompletedSuccessfully) {
+                        InputCancellationTokenSource.Dispose();
+                        InputCancellationTokenSource = null;
+
+                        SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+                        if(SelectedItem == null && !string.IsNullOrWhiteSpace(this._inputValue)) {
+                            CurrentSelectedItem = null;
+                            InputState = InputState.NotFound;
+                        } else if(!isEmpty) {
+                            InputState = InputState.Listup;
+                        }
                     }
                 });
             }
@@ -308,7 +326,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public void ReceiveViewLoaded(Window window)
         {
-            Model.UpdateCommandItemsAsync(string.Empty).ContinueWith(t => {
+            Model.UpdateCommandItemsAsync(string.Empty, CancellationToken.None).ContinueWith(t => {
                 SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
             });
         }

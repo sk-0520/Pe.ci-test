@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -20,6 +21,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
+using Timer = System.Timers.Timer;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
@@ -169,7 +171,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             var launcherItemElements = ids
                 .Select(i => OrderManager.GetOrCreateLauncherItemElement(i))
-                .Where(i=> i.IsEnabledCommandLauncher)
+                .Where(i => i.IsEnabledCommandLauncher)
                 .ToList();
             ;
             LauncherItemElements.SetRange(launcherItemElements);
@@ -182,15 +184,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             RefreshLauncherItems();
         }
 
-        IEnumerable<ICommandItem> ListupCommandItems(string inputValue)
+        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, CancellationToken cancellationToken)
         {
-            foreach(var item in ListupLauncherItemsElements(inputValue)) {
+            foreach(var item in ListupLauncherItemsElements(inputValue, cancellationToken)) {
                 yield return item;
             }
         }
 
 
-        IEnumerable<LauncherCommandItemElement> ListupLauncherItemsElements(string inputValue)
+        IEnumerable<LauncherCommandItemElement> ListupLauncherItemsElements(string inputValue, CancellationToken cancellationToken)
         {
             var simpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(inputValue);
@@ -204,6 +206,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
 
             foreach(var element in LauncherItemElements) {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var nameMatches = Matches(regex, element.Name);
                 if(nameMatches.Any()) {
                     Logger.LogTrace("ランチャー: 名前一致, {0}, {1}", element.Name, element.LauncherItemId);
@@ -230,11 +234,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 }
 
                 if(FindTag) {
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
             }
         }
 
-        public Task UpdateCommandItemsAsync(string inputValue)
+        public Task UpdateCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 Logger.LogTrace("検索開始");
@@ -247,17 +252,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                     ;
                     commandItems.AddRange(items);
                 } else {
-                    foreach(var item in ListupCommandItems(inputValue)) {
+                    foreach(var item in ListupCommandItems(inputValue, cancellationToken)) {
                         commandItems.Add(item);
                     }
                 }
+                cancellationToken.ThrowIfCancellationRequested();
 
                 Logger.LogTrace("検索終了: {0}", stopwatch.Elapsed);
 
                 return commandItems.Select(i => WrapModel.Create(i, LoggerFactory)).ToList();
-            }).ContinueWith(t => {
-                var commandItems = t.Result;
-                CommandItems.SetRange(commandItems);
+            }, cancellationToken).ContinueWith(t => {
+                if(t.IsCompletedSuccessfully) {
+                    var commandItems = t.Result;
+                    CommandItems.SetRange(commandItems);
+                }
             });
         }
 
