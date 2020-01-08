@@ -117,7 +117,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", Path.ChangeExtension(filePath, "xml"));
                 logger.LogInformation("ファイルログ出力開始");
             } else {
-                NLog.LogManager.LogFactory.Configuration.Variables.Add("logfile", "nul");
+                NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", "nul");
+                NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", "nul");
             }
 
             return loggerFactory;
