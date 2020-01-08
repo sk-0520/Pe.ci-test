@@ -18,6 +18,7 @@
   xmlns:app_main_model_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main_viewmodel_note="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Note"
 
+  Icon="/Resources/Icon/App.ico"
   Title="NoteWindow"
   Left="{Binding WindowLeft, Mode=TwoWay, Delay=500}"
   Top="{Binding WindowTop, Mode=TwoWay, Delay=500}"

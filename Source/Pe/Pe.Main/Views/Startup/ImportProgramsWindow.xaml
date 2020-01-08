@@ -6,9 +6,10 @@
 
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
-  
+
     xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
+  Icon="/Resources/Icon/App.ico"
   Title="ImportProgramsWindow"
   Width="800"
   Height="450"

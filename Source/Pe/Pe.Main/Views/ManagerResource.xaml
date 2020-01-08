@@ -134,13 +134,13 @@
       <Style TargetType="Taskbar:TaskbarIcon">
         <Style.Triggers>
           <DataTrigger Binding="{Binding BuildType}" Value="Debug">
-            <Setter Property="IconSource" Value="/Resources/Icon/NotifyIcon/App-debug.ico" />
+            <Setter Property="IconSource" Value="/Resources/Icon/App-debug.ico" />
           </DataTrigger>
           <DataTrigger Binding="{Binding BuildType}" Value="Beta">
-            <Setter Property="IconSource" Value="/Resources/Icon/NotifyIcon/App-beta.ico" />
+            <Setter Property="IconSource" Value="/Resources/Icon/App-beta.ico" />
           </DataTrigger>
           <DataTrigger Binding="{Binding BuildType}" Value="Release">
-            <Setter Property="IconSource" Value="/Resources/Icon/NotifyIcon/App-release.ico" />
+            <Setter Property="IconSource" Value="/Resources/Icon/App.ico" />
           </DataTrigger>
         </Style.Triggers>
       </Style>

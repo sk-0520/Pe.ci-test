@@ -23,10 +23,9 @@
 
   <ItemGroup>
     <None Remove="nlog.config" />
+    <None Remove="Resources\Icon\App-beta.ico" />
+    <None Remove="Resources\Icon\App-debug.ico" />
     <None Remove="Resources\Icon\App.ico" />
-    <None Remove="Resources\Icon\NotifyIcon\App-beta.ico" />
-    <None Remove="Resources\Icon\NotifyIcon\App-debug.ico" />
-    <None Remove="Resources\Icon\NotifyIcon\App-release.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,10 +60,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Icon\App-beta.ico" />
+    <Resource Include="Resources\Icon\App-debug.ico" />
     <Resource Include="Resources\Icon\App.ico" />
-    <Resource Include="Resources\Icon\NotifyIcon\App-beta.ico" />
-    <Resource Include="Resources\Icon\NotifyIcon\App-debug.ico" />
-    <Resource Include="Resources\Icon\NotifyIcon\App-release.ico" />
   </ItemGroup>
 
   <ItemGroup>

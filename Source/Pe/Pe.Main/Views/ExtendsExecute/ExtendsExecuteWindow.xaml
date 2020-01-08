@@ -11,6 +11,7 @@
   xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
+  Icon="/Resources/Icon/App.ico"
   SizeToContent="Height"
   ResizeMode="NoResize"
   Title="ExtendsExecuteWindow"

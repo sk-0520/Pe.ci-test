@@ -29,4 +29,5 @@ node_modules/
 /Source/Documents/dist
 .vscode/
 */**/Properties/launchSettings.json
-
+/Resource/Icon/*.png
+/Resource/Icon/*.ico

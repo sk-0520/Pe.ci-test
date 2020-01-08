@@ -12,6 +12,7 @@
   xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
+  Icon="/Resources/Icon/App.ico"
   Title="SettingWindow"
   Width="800"
   Height="450"

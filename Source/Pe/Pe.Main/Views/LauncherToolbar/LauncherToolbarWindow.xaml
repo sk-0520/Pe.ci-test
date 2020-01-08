@@ -20,6 +20,7 @@
   Height="450"
   Width="800"
 
+  Icon="/Resources/Icon/App.ico"
   WindowStyle="None"
   WindowStartupLocation="Manual"
   BorderThickness="0"
