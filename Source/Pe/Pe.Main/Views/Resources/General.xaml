@@ -51,6 +51,19 @@
     </Viewbox>
   </ControlTemplate>
 
+  <Style x:Key="Image-Small" TargetType="Control">
+    <Setter Property="Width" Value="{StaticResource Icon-Size-Small}" />
+    <Setter Property="Height" Value="{StaticResource Icon-Size-Small}" />
+  </Style>
+  <Style x:Key="Image-Normal" TargetType="Control">
+    <Setter Property="Width" Value="{StaticResource Icon-Size-Normal}" />
+    <Setter Property="Height" Value="{StaticResource Icon-Size-Normal}" />
+  </Style>
+  <Style x:Key="Image-Big" TargetType="Control">
+    <Setter Property="Width" Value="{StaticResource Icon-Size-Big}" />
+    <Setter Property="Height" Value="{StaticResource Icon-Size-Big}" />
+  </Style>
+
   <DropShadowEffect x:Key="Effect-Strong"
     Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
     ShadowDepth="0"

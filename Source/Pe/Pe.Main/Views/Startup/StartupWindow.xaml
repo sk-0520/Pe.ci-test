@@ -14,7 +14,17 @@
 >
   <Grid>
     <StackPanel>
-      <Button Command="{Binding ImportProgramsCommand}">import programs</Button>
+      <Button Command="{Binding ImportProgramsCommand}">
+        <StackPanel>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-FindinFiles}" />
+          <Control Style="{StaticResource Image-Normal}" Template="{StaticResource App-Image-FindinFiles}" />
+          <Control Style="{StaticResource Image-Big}" Template="{StaticResource App-Image-FindinFiles}" />
+          <TextBlock>
+        import programs
+
+          </TextBlock>
+        </StackPanel>
+      </Button>
       <Button Command="{Binding RegisterStartupCommand}">register startup</Button>
       <Button Command="{Binding ShowNotificationAreaCommand}">notify area</Button>
     </StackPanel>
