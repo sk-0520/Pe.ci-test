@@ -9,10 +9,11 @@
   <sys:Double x:Key="Icon-Stroke-Small">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Normal">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Big">1</sys:Double>
+
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
 
 
-  <ControlTemplate x:Key="SmallIcon" TargetType="ContentControl">
+  <ControlTemplate x:Key="Path-Small" TargetType="ContentControl">
     <Viewbox Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
       <Canvas Width="24" Height="24">
         <Path
@@ -24,8 +25,7 @@
       </Canvas>
     </Viewbox>
   </ControlTemplate>
-
-  <ControlTemplate x:Key="NormalIcon" TargetType="ContentControl">
+  <ControlTemplate x:Key="Path-Normal" TargetType="ContentControl">
     <Viewbox Width="{StaticResource Icon-Size-Normal}" Height="{StaticResource Icon-Size-Normal}">
       <Canvas Width="24" Height="24">
         <Path
@@ -37,8 +37,7 @@
       </Canvas>
     </Viewbox>
   </ControlTemplate>
-
-  <ControlTemplate x:Key="BigIcon" TargetType="ContentControl">
+  <ControlTemplate x:Key="Path-Big" TargetType="ContentControl">
     <Viewbox Width="{StaticResource Icon-Size-Big}" Height="{StaticResource Icon-Size-Big}">
       <Canvas Width="24" Height="24">
         <Path
@@ -186,20 +185,14 @@
     <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
   </Style>
 
-  <Style x:Key="FontIcon" TargetType="ContentControl">
-    <Setter Property="Template" Value="{StaticResource SmallIcon}" />
+  <Style x:Key="Path-FontIcon" TargetType="ContentControl">
+    <Setter Property="Template" Value="{StaticResource Path-Small}" />
     <Setter Property="Foreground" Value="Transparent" />
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
   </Style>
 
-  <Style x:Key="ButtonIcon" TargetType="ContentControl">
-    <Setter Property="Template" Value="{StaticResource SmallIcon}" />
-    <Setter Property="Foreground" Value="Transparent" />
-    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-  </Style>
-
-  <Style x:Key="MenuIcon" TargetType="ContentControl">
-    <Setter Property="Template" Value="{StaticResource SmallIcon}" />
+  <Style x:Key="Path-MenuIcon" TargetType="ContentControl">
+    <Setter Property="Template" Value="{StaticResource Path-Small}" />
     <Setter Property="Foreground" Value="Transparent" />
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
   </Style>
