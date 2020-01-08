@@ -49,6 +49,9 @@ using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -215,7 +218,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Application.Current.Resources["PlatformTheme-AccentTextColors-ActiveColor"] = text.Active;
             Application.Current.Resources["PlatformTheme-AccentTextColors-DisableColor"] = text.Disable;
 
-            void ApplyAccentBrush(string name) {
+            void ApplyAccentBrush(string name)
+            {
                 var color = (Color)Application.Current.Resources[name + "Color"];
                 var brush = FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
                 Application.Current.Resources[name + "Brush"] = brush;
@@ -233,18 +237,55 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 "PlatformTheme-AccentTextColors-Active",
                 "PlatformTheme-AccentTextColors-Disable",
             };
-            foreach(var name in names ) {
+            foreach(var name in names) {
                 ApplyAccentBrush(name);
             }
         }
 
+        void StartupUsageStatistics()
+        {
+            var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            SettingAppExecuteSettingData setting;
+            using(var commander = mainDatabaseBarrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
+                setting = dao.SelectSettingExecuteSetting();
+            }
+
+            if(!setting.SendUsageStatistics) {
+                Logger.LogInformation("統計情報送信: 無効");
+                return;
+            }
+
+            var userIdManager = ApplicationDiContainer.Build<UserIdManager>();
+            if(!userIdManager.IsValidUserId(setting.UserId)) {
+                Logger.LogWarning("ユーザーIDが不正: {0}", setting.UserId);
+            }
+
+            var configuration = ApplicationDiContainer.Build<Configuration>();
+
+            AppCenter.Start(
+                configuration.Api.AppCenter,
+                typeof(Crashes),
+                typeof(Analytics)
+            );
+            AppCenter.SetUserId(setting.UserId);
+        }
+
         public bool Startup(App app, StartupEventArgs e)
         {
+            StartupUsageStatistics();
+
+            Analytics.TrackEvent("START", new Dictionary<string, string>() {
+                ["CommandLines"] = string.Join(' ', e.Args.Select(i => "<" + i + ">")),
+            });
+
             //var initializer = new ApplicationInitializer();
             //if(!initializer.Initialize(e.Args)) {
             //    return false;
             //}
             ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
+
+            //setting.UserId
 
             //ApplicationDiContainer.Get<IDispatcherWrapper>().Invoke(() => {
             SetStaticPlatformTheme();

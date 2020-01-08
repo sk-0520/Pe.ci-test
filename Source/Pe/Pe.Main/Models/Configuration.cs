@@ -47,6 +47,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class ApiConfiguration: ConfigurationBase
+    {
+        public ApiConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            AppCenter = section.GetValue<string>("app-center");
+        }
+
+        #region property
+
+        public string AppCenter { get; }
+
+        #endregion
+    }
+
     public class BackupConfiguration : ConfigurationBase
     {
         public BackupConfiguration(IConfigurationSection section)
@@ -103,6 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Configuration(IConfigurationRoot configurationRoot)
         {
             General = new GeneralConfiguration(configurationRoot.GetSection("general"));
+            Api = new ApiConfiguration(configurationRoot.GetSection("api"));
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
@@ -111,6 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #region property
 
         public GeneralConfiguration General { get; }
+        public ApiConfiguration Api { get; }
         public BackupConfiguration Backup { get; }
         public FileConfiguration File { get; }
         public DisplayConfiguration Display { get; }

@@ -473,13 +473,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 Debug.Assert(IsFirstStartup);
                 var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
                 var userIdManager = DiContainer.Build<UserIdManager>();
-                var userId = userIdManager.CreateFromEnvironment();
+                var userId = acceptResult.SendUsageStatistics
+                    ? userIdManager.CreateFromEnvironment()
+                    : string.Empty
+                ;
                 using(var commander = mainDatabaseBarrier.WaitWrite()) {
                     var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
                     appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.SendUsageStatistics, DatabaseCommonStatus.CreateCurrentAccount());
 
                     var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(commander, commander.Implementation);
                     appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.CheckUpdate, DatabaseCommonStatus.CreateCurrentAccount());
+
+                    commander.Commit();
+                }
+            } else {
+                var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
+                using(var commander = mainDatabaseBarrier.WaitWrite()) {
+                    var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
+                    var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+
+                    if(setting.SendUsageStatistics) {
+                        var userIdManager = DiContainer.Build<UserIdManager>();
+                        if(!userIdManager.IsValidUserId(setting.UserId)) {
+                            logger.LogInformation("統計情報送信は有効だがユーザーIDが不正のため無効化: {0}", setting.UserId);
+                            appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(string.Empty, false, DatabaseCommonStatus.CreateCurrentAccount());
+                            commander.Commit();
+                        }
+                    }
 
                     commander.Commit();
                 }
