@@ -205,7 +205,7 @@
     <Setter Property="Rows" Value="1" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalAlignment" Value="Right" />
-    <Setter Property="Margin" Value="10,2" />
+    <Setter Property="Margin" Value="10,2,20,2" />
   </Style>
 
   <Style x:Key="Path-FontIcon" TargetType="ContentControl">

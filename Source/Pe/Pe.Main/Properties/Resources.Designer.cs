@@ -342,6 +342,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ランチャーアイテム取り込み に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ImportPrograms_Caption {
+            get {
+                return ResourceManager.GetString("String_ImportPrograms_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   取り込み(_I) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ImportPrograms_Command_Import {
+            get {
+                return ResourceManager.GetString("String_ImportPrograms_Command_Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動設定グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherGroup_ImportItem_Name {

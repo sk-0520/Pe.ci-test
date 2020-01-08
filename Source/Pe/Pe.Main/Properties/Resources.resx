@@ -197,6 +197,12 @@
   <data name="String_Common_Command_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="String_ImportPrograms_Caption" xml:space="preserve">
+    <value>ランチャーアイテム取り込み</value>
+  </data>
+  <data name="String_ImportPrograms_Command_Import" xml:space="preserve">
+    <value>取り込み(_I)</value>
+  </data>
   <data name="String_LauncherGroup_ImportItem_Name" xml:space="preserve">
     <value>自動設定グループ</value>
   </data>

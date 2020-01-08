@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -20,13 +21,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
     public class ImportProgramsElement : ContextElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader statementLoader, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DatabaseBarrier = databaseBarrier;
             StatementLoader = statementLoader;
             WindowManager = windowManager;
             IdFactory = idFactory;
+            DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
@@ -35,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         IDatabaseStatementLoader StatementLoader { get; }
         IWindowManager WindowManager { get; }
         IIdFactory IdFactory { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
 
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
@@ -77,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 .GroupBy(f => f.Name)
                 .OrderBy(g => g.Key)
                 .Select(g => g.First())
-                .Select(f => new ProgramElement(f, LoggerFactory) {
+                .Select(f => new ProgramElement(f, DispatcherWrapper, LoggerFactory) {
                     IsImport = true,
                 })
             ;

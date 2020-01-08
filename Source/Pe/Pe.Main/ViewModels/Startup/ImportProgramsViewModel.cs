@@ -52,13 +52,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         ));
 
         public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                UserTracker.TrackAsync(nameof(ImportCommand), new TrackProperties() {
+            async () => {
+                var _ = UserTracker.TrackAsync(nameof(ImportCommand), new TrackProperties() {
                     ["TotalCount"] = Model.ProgramItems.Count.ToString(),
                     ["ImportCount"] = Model.ProgramItems.Count(i => i.IsImport).ToString(),
                 });
-
-                Model.ImportAsync().ConfigureAwait(false);
+                //TODO: 入力制限が必要
+                await Model.ImportAsync();
+                CloseRequest.Send();
             }
         ));
 

@@ -187,6 +187,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    public class IconImageLoader : IconImageLoaderBase
+    {
+        public IconImageLoader(IconData iconData, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(iconBox, dispatcherWrapper, loggerFactory)
+        {
+            IconData = iconData;
+        }
+
+        #region property
+
+        IconData IconData { get; }
+
+        #endregion
+
+        #region IconImageLoaderBase
+
+        protected override Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken)
+        {
+            return GetIconImageAsync(IconData, cancellationToken);
+        }
+
+        #endregion
+    }
+
     public class IconImageLoaderPack : IIconPack<IconImageLoaderBase>
     {
         #region variable
