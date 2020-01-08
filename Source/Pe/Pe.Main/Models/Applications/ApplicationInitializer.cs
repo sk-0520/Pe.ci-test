@@ -91,7 +91,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             loggerFactory.AddProvider(prov);
 
             var logger = loggerFactory.CreateLogger(GetType());
-            logger.LogInformation("開発用ログ出力開始");
+            logger.LogInformation("ログ出力開始");
+
+            var enabledLog = new HashSet<string>();
 
             // ログ出力(ファイル・ディレクトリが存在しなければ終了で構わない)
             if(!string.IsNullOrWhiteSpace(outputPath)) {
@@ -120,30 +122,52 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 switch(Path.GetExtension(filePath)?.ToLowerInvariant() ?? string.Empty) {
                     case ".log":
                         NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", filePath);
+                        enabledLog.Add("log");
                         switch(withLog) {
                             case "xml":
                                 NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", Path.ChangeExtension(filePath, "xml"));
+                                enabledLog.Add("xml");
                                 break;
                         }
                         break;
 
                     case ".xml":
                         NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", filePath);
+                        enabledLog.Add("xml");
                         switch(withLog) {
                             case "log":
                                 NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", Path.ChangeExtension(filePath, "log"));
+                                enabledLog.Add("log");
                                 break;
                         }
                         break;
-
-                    default:
-                        NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", filePath);
-                        break;
                 }
-                logger.LogInformation("ファイルログ出力開始");
-            } else {
-                NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", "nul");
-                NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", "nul");
+                NLog.LogManager.LogFactory.Configuration.Variables.Add("dirPath", Path.GetDirectoryName(filePath));
+            }
+
+            var programmableTargets = enabledLog
+                .Select(i => NLog.LogManager.Configuration.FindTargetByName(i))
+                .ToList()
+            ;
+
+            foreach(var loggingRule in NLog.LogManager.Configuration.LoggingRules) {
+                if(loggingRule.RuleName == "programmable") {
+                    foreach(var programmableTarget in programmableTargets) {
+                        loggingRule.Targets.Add(programmableTarget);
+                    }
+                }
+            }
+
+            if(programmableTargets.Any()) {
+                var stopwatch = Stopwatch.StartNew();
+                NLog.LogManager.ReconfigExistingLoggers();
+                NLog.LogManager.Flush();
+                //NLog.LogManager.GetCurrentClassLogger();
+                logger = loggerFactory.CreateLogger(GetType());
+                logger.LogInformation("可変ログあり: {0}", stopwatch.Elapsed);
+                foreach(var programmableTarget in programmableTargets) {
+                    logger.LogInformation("{0}", programmableTarget);
+                }
             }
 
             return loggerFactory;
