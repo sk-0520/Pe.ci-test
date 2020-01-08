@@ -134,7 +134,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 windowManager.Register(new WindowItem(WindowKind.Startup, view));
 
                 view.ShowDialog();
-
             }
         }
 
@@ -275,7 +274,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             StartupUsageStatistics();
 
-            Analytics.TrackEvent("START", new Dictionary<string, string>() {
+            Analytics.TrackEvent("START", new TrackProperties() {
                 ["CommandLines"] = string.Join(' ', e.Args.Select(i => "<" + i + ">")),
             });
 

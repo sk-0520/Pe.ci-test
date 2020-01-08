@@ -9,7 +9,9 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Startup;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
@@ -53,6 +55,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                Analytics.TrackEvent("ImportPrograms-Import", new TrackProperties() {
+                    [nameof(Model.ProgramItems) + "." + nameof(Model.ProgramItems.Count)] = Model.ProgramItems.Count.ToString(),
+                    [nameof(Model.ProgramItems) + ":Import"] = Model.ProgramItems.Count(i => i.IsImport).ToString(),
+                });
+
                 Model.ImportAsync().ConfigureAwait(false);
             }
         ));
