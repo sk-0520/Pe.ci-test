@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #region property
 
         string CommandLineKeyLog { get; } = "log";
+        string CommandLineKeyWithLog { get; } = "with-log";
         string CommandLineSwitchForceLog { get; } = "force-log";
 
         string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
@@ -61,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyMachineDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
+            commandLine.Add(longKey: CommandLineKeyWithLog, hasValue: true);
             commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchAcceptSkip, hasValue: false);
 
@@ -79,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return new EnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
         }
 
-        ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, bool createDirectory, [CallerFilePath] string callerFilePath = "")
+        ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, [CallerFilePath] string callerFilePath = "")
         {
             var loggerFactory = new LoggerFactory();
             NLog.LogManager.LoadConfiguration(logginConfigFilePath);
@@ -107,14 +109,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     }
                 }
 
-                // ディレクトリ指定であればタイムスタンプ付きでファイル生成
+                // ディレクトリ指定であればタイムスタンプ付きでファイル生成(プレーンログ)
                 var filePath = expandedOutputPath;
                 if(Directory.Exists(expandedOutputPath)) {
                     var fileName = PathUtility.AppendExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss"), "log");
                     filePath = Path.Combine(expandedOutputPath, fileName);
                 }
-                NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", filePath);
-                NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", Path.ChangeExtension(filePath, "xml"));
+
+                //TODO: なんかうまいことする
+                switch(Path.GetExtension(filePath)?.ToLowerInvariant() ?? string.Empty) {
+                    case ".log":
+                        NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", filePath);
+                        switch(withLog) {
+                            case "xml":
+                                NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", Path.ChangeExtension(filePath, "xml"));
+                                break;
+                        }
+                        break;
+
+                    case ".xml":
+                        NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", filePath);
+                        switch(withLog) {
+                            case "log":
+                                NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", Path.ChangeExtension(filePath, "log"));
+                                break;
+                        }
+                        break;
+
+                    default:
+                        NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", filePath);
+                        break;
+                }
                 logger.LogInformation("ファイルログ出力開始");
             } else {
                 NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", "nul");
@@ -363,7 +388,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var environmentParameters = InitializeEnvironment(commandLine);
 
             var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
-            var loggerFactory = CreateLoggerFactory(logginConfigFilePath, commandLine.GetValue(CommandLineKeyLog, string.Empty), commandLine.ExistsSwitch(CommandLineSwitchForceLog));
+            var loggerFactory = CreateLoggerFactory(
+                logginConfigFilePath,
+                commandLine.GetValue(CommandLineKeyLog, string.Empty),
+                commandLine.GetValue(CommandLineKeyWithLog, string.Empty),
+                commandLine.ExistsSwitch(CommandLineSwitchForceLog)
+            );
             var logger = loggerFactory.CreateLogger(GetType());
 
             var skipAccept = commandLine.ExistsSwitch(CommandLineSwitchAcceptSkip);
