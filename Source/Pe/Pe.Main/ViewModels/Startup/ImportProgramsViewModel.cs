@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Startup;
+using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
@@ -19,9 +20,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
     public class ImportProgramsViewModel : SingleModelViewModelBase<ImportProgramsElement>
     {
-        public ImportProgramsViewModel(ImportProgramsElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ImportProgramsViewModel(ImportProgramsElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            UserTracker = userTracker;
+            DispatcherWrapper = dispatcherWrapper;
+
             ProgramCollection = new ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel>(Model.ProgramItems) {
                 ToViewModel = m => new ProgramViewModel(m, LoggerFactory),
             };
@@ -34,7 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel> ProgramCollection { get; }
         public ReadOnlyObservableCollection<ProgramViewModel> ProgramItems => ProgramCollection.ViewModels;
 
-
+        IUserTracker UserTracker { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
 
@@ -54,6 +59,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                UserTracker.TrackAsync(nameof(ImportCommand), new TrackProperties() {
+                    ["TotalCount"] = Model.ProgramItems.Count.ToString(),
+                    ["ImportCount"] = Model.ProgramItems.Count(i => i.IsImport).ToString(),
+                });
+
                 Model.ImportAsync().ConfigureAwait(false);
             }
         ));

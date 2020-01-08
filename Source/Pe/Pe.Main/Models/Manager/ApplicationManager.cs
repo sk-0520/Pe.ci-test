@@ -49,6 +49,7 @@ using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -238,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        void StartupUsageStatistics()
+        (bool sendUsageStatistics, string userId) GetUsageStatistics()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             SettingAppExecuteSettingData setting;
@@ -249,22 +250,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(!setting.SendUsageStatistics) {
                 Logger.LogInformation("統計情報送信: 無効");
-                return;
+                return (false, string.Empty);
             }
 
             var userIdManager = ApplicationDiContainer.Build<UserIdManager>();
             if(!userIdManager.IsValidUserId(setting.UserId)) {
                 Logger.LogWarning("ユーザーIDが不正: {0}", setting.UserId);
+                return (false, string.Empty);
             }
 
-            var configuration = ApplicationDiContainer.Build<Configuration>();
+            return (setting.SendUsageStatistics, setting.UserId);
+        }
 
-            //AppCenter.Start(
-            //    configuration.Api.AppCenter,
-            //    typeof(Crashes),
-            //    typeof(Analytics)
-            //);
-            //AppCenter.SetUserId(setting.UserId);
+        void StartupUsageStatistics()
+        {
+            var userTracker = new UserTracker(LoggerFactory);
+            ApplicationDiContainer.Register<IUserTracker, UserTracker>(userTracker);
+
+            //var configuration = ApplicationDiContainer.Build<Configuration>();
+            var setting = GetUsageStatistics();
+            if(setting.sendUsageStatistics) {
+                //AppCenter.Start(
+                //    configuration.Api.AppCenter,
+                //    typeof(Crashes),
+                //    typeof(Analytics)
+                //);
+                //AppCenter.SetUserId(setting.UserId);
+            }
         }
 
         public bool Startup(App app, StartupEventArgs e)
