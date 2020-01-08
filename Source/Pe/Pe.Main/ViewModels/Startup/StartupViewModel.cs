@@ -9,13 +9,15 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Startup;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
+using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
-    public class StartupViewModel : SingleModelViewModelBase<StartupElement>
+    public class StartupViewModel : ElementViewModelBase<StartupElement>
     {
-        public StartupViewModel(StartupElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public StartupViewModel(StartupElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         { }
 
         #region property

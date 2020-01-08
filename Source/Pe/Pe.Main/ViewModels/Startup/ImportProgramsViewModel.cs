@@ -18,16 +18,13 @@ using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
-    public class ImportProgramsViewModel : SingleModelViewModelBase<ImportProgramsElement>
+    public class ImportProgramsViewModel : ElementViewModelBase<ImportProgramsElement>
     {
         public ImportProgramsViewModel(ImportProgramsElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
-            UserTracker = userTracker;
-            DispatcherWrapper = dispatcherWrapper;
-
             ProgramCollection = new ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel>(Model.ProgramItems) {
-                ToViewModel = m => new ProgramViewModel(m, LoggerFactory),
+                ToViewModel = m => new ProgramViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory),
             };
         }
 
@@ -37,9 +34,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel> ProgramCollection { get; }
         public ReadOnlyObservableCollection<ProgramViewModel> ProgramItems => ProgramCollection.ViewModels;
-
-        IUserTracker UserTracker { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
 
