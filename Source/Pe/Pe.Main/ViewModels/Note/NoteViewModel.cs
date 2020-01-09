@@ -674,6 +674,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ApplyCaption()
         {
+            DispatcherWrapper.VerifyAccess();
+
             var captionPair = NoteTheme.GetCaptionBrush(GetColorPair());
             CaptionForeground = captionPair.Foreground;
             CaptionBackground = captionPair.Background;
@@ -700,6 +702,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ApplyBorder()
         {
+            DispatcherWrapper.VerifyAccess();
+
             var propertyNames = new[] {
                 nameof(BorderBrush),
                 nameof(BorderThickness),
@@ -712,6 +716,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ApplyContent()
         {
+            DispatcherWrapper.VerifyAccess();
+
             var propertyNames = new[] {
                 nameof(ContentBackground),
             };
@@ -722,6 +728,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ApplyTheme()
         {
+            ThrowIfDisposed();
+
             DispatcherWrapper.Begin(() => {
                 ApplyCaption();
                 ApplyBorder();
@@ -898,6 +906,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             if(!IsDisposed) {
                 Flush();
+                PlatformTheme.Changed -= PlatformTheme_Changed;
                 if(disposing) {
                     WindowHandleSource?.Dispose();
                     PropertyChangedHooker.Dispose();
