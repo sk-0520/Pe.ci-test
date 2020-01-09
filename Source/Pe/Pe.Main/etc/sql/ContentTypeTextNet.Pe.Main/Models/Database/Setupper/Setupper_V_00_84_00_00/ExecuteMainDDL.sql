@@ -47,8 +47,7 @@ create table [AppUpdateSetting] (
 	[UpdatedProgramName] text not null /* 更新プログラム名  */,
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[CheckReleaseVersion]  not null /* リリース版をチェック  */,
-	[CheckRcVersion]  not null /* RC版をチェック  */,
+	[UpdateKind] text not null /* アップデート方法  */,
 	[IgnoreVersion] text not null /* 無視するバージョン このバージョン以下を無視する */
 )
 ;

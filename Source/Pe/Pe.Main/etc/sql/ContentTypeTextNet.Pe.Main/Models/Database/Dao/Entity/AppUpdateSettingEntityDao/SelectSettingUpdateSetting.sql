@@ -1,5 +1,4 @@
 select
-	AppUpdateSetting.CheckReleaseVersion,
-	AppUpdateSetting.CheckRcVersion
+	AppUpdateSetting.UpdateKind
 from
 	AppUpdateSetting

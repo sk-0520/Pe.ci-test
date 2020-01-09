@@ -101,8 +101,9 @@
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppUpdateSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}">
               <StackPanel>
-                <CheckBox IsChecked="{Binding IsCheckReleaseVersion}" Content="release" />
-                <CheckBox IsChecked="{Binding IsCheckRcVersion}" Content="rc" />
+                <RadioButton IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.None}}">none</RadioButton>
+                <RadioButton IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Notify}}">notify</RadioButton>
+                <RadioButton IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Auto}}">auto</RadioButton>
               </StackPanel>
             </GroupBox>
           </DataTemplate>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
         #region property
 
         public bool Accepted { get; set; }
-        public bool CheckUpdate { get; set; } = true;
+        public UpdateKind UpdateKind { get; set; } = UpdateKind.Auto;
         public bool SendUsageStatistics { get; set; } = true;
 
         #endregion

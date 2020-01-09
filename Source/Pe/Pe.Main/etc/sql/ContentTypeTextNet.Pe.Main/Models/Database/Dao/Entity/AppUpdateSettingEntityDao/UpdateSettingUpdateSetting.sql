@@ -1,8 +1,7 @@
 update
 	AppUpdateSetting
 set
-	CheckReleaseVersion   = @CheckReleaseVersion,
-	CheckRcVersion        = @CheckRcVersion,
+	UpdateKind            = @UpdateKind,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

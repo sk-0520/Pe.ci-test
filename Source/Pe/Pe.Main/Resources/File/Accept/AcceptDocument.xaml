@@ -52,9 +52,11 @@
     <List>
       <ListItem>
         <Paragraph>
-          <CheckBox IsChecked="{Binding CheckUpdate}">バージョンチェックを行う</CheckBox>
+          <CheckBox IsChecked="{Binding UpdateKindIsAuto}">自動的にアップデートする</CheckBox>
           <LineBreak />
-          <Run>最新バージョンがリリースされている場合に通知します。</Run>
+          <Run>常に最新を使用する前提で実装しています。</Run>
+          <LineBreak />
+          <Run>本機能は設定にて切り替え可能です。</Run>
         </Paragraph>
       </ListItem>
       <ListItem>
@@ -64,7 +66,7 @@
           <Run Tag="APP" />
           <Run>では不具合検知・機能改善のため各種使用統計を収集します。</Run>
           <LineBreak />
-          <Run>本機能は設定によりいつでも切り替え可能です。</Run>
+          <Run>本機能は設定にて切り替え可能です。</Run>
         </Paragraph>
       </ListItem>
     </List>

@@ -261,8 +261,7 @@ insert into
 insert into
 	AppUpdateSetting
 	(
-		CheckReleaseVersion,
-		CheckRcVersion,
+		UpdateKind,
 		IgnoreVersion,
 
 		CreatedTimestamp,
@@ -277,8 +276,7 @@ insert into
 	)
 	values
 	(
-/* CheckReleaseVersion   */ false,
-/* CheckRcVersion        */ false,
+/* UpdateKind            */ 'none',
 /* IgnoreVersion         */ '0.0.0',
 
 /* CreatedTimestamp      */ @CreatedTimestamp,

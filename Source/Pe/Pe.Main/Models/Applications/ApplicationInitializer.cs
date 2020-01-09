@@ -202,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                     return new AcceptResult(
                         acceptModel.Accepted,
-                        acceptModel.CheckUpdate,
+                        acceptModel.UpdateKind,
                         acceptModel.SendUsageStatistics
                     );
                 }
@@ -482,7 +482,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.SendUsageStatistics, DatabaseCommonStatus.CreateCurrentAccount());
 
                     var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(commander, commander.Implementation);
-                    appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.CheckUpdate, DatabaseCommonStatus.CreateCurrentAccount());
+                    appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.UpdateKind, DatabaseCommonStatus.CreateCurrentAccount());
 
                     commander.Commit();
                 }

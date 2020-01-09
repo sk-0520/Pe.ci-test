@@ -180,8 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        public bool IsCheckReleaseVersion { get; set; }
-        public bool IsCheckRcVersion { get; set; }
+        public UpdateKind UpdateKind { get; set; }
 
         #endregion
 
@@ -198,16 +197,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 setting = appUpdateSettingEntityDao.SelectSettingUpdateSetting();
             }
 
-            IsCheckReleaseVersion = setting.IsCheckReleaseVersion;
-            IsCheckRcVersion = setting.IsCheckRcVersion;
+            UpdateKind = setting.UpdateKind;
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
             var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppUpdateSettingData() {
-                IsCheckReleaseVersion = IsCheckReleaseVersion,
-                IsCheckRcVersion = IsCheckRcVersion,
+                UpdateKind = UpdateKind,
             };
             appUpdateSettingEntityDao.UpdateSettingUpdateSetting(data, commandPack.CommonStatus);
         }

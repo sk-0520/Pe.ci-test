@@ -6,17 +6,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     public class AcceptResult
     {
-        public AcceptResult(bool accepted, bool checkUpdate, bool sendUsageStatistics)
+        public AcceptResult(bool accepted, UpdateKind updateKind, bool sendUsageStatistics)
         {
             Accepted = accepted;
-            CheckUpdate = checkUpdate;
+            UpdateKind = updateKind;
             SendUsageStatistics = sendUsageStatistics;
         }
 
         #region property
 
         public bool Accepted { get; }
-        public bool CheckUpdate { get; }
+        public UpdateKind UpdateKind { get; }
         public bool SendUsageStatistics { get; }
 
         #endregion

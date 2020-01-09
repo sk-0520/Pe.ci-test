@@ -14,8 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region property
 
-        public bool CheckReleaseVersion { get; set; }
-        public bool CheckRcVersion { get; set; }
+        public string UpdateKind { get; set; } = string.Empty;
         public Version IgnoreVersion { get; set; } = new Version(0, 0, 0, 0);
 
         #endregion
@@ -33,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
-            public static string CheckReleaseVersion => "CheckReleaseVersion";
+            public static string UpdateKind => "UpdateKind";
 
             #endregion
         }
@@ -44,11 +43,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public SettingAppUpdateSettingData SelectSettingUpdateSetting()
         {
+            var updateKindTransfer = new EnumTransfer<UpdateKind>();
+
             var statement = LoadStatement();
             var dto = Commander.QueryFirst<AppUpdateSettingEntityDto>(statement);
             var result = new SettingAppUpdateSettingData() {
-                IsCheckReleaseVersion = dto.CheckReleaseVersion,
-                IsCheckRcVersion = dto.CheckRcVersion,
+                UpdateKind = updateKindTransfer.ToEnum(dto.UpdateKind),
             };
             return result;
         }
@@ -56,20 +56,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool UpdateSettingUpdateSetting(SettingAppUpdateSettingData data, IDatabaseCommonStatus commonStatus)
         {
+            var updateKindTransfer = new EnumTransfer<UpdateKind>();
+
             var statement = LoadStatement();
             var dto = new AppUpdateSettingEntityDto() {
-                CheckReleaseVersion = data.IsCheckReleaseVersion,
-                CheckRcVersion = data.IsCheckRcVersion,
+                UpdateKind = updateKindTransfer.ToString(data.UpdateKind),
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;
         }
 
-        public bool UpdateReleaseVersion(bool isCheck, IDatabaseCommonStatus commonStatus)
+        public bool UpdateReleaseVersion(UpdateKind updateKind, IDatabaseCommonStatus commonStatus)
         {
+            var updateKindTransfer = new EnumTransfer<UpdateKind>();
+
             var statement = LoadStatement();
             var dto = new AppUpdateSettingEntityDto() {
-                CheckReleaseVersion = isCheck,
+                UpdateKind = updateKindTransfer.ToString(updateKind),
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;

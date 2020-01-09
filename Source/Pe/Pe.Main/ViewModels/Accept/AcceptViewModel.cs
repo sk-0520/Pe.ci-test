@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Accept;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Views.Accept;
@@ -43,10 +44,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
             set => SetModelValue(value);
         }
 
-        public bool CheckUpdate
+        public UpdateKind UpdateKind
         {
-            get => Model.CheckUpdate;
+            get => Model.UpdateKind;
             set => SetModelValue(value);
+        }
+
+        public bool UpdateKindIsAuto
+        {
+            get => Model.UpdateKind == UpdateKind.Auto;
+            set
+            {
+                SetModelValue(value ? UpdateKind.Auto : UpdateKind.Notify, nameof(Model.UpdateKind));
+            }
         }
 
         #endregion

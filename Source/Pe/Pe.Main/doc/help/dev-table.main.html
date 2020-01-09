@@ -74,8 +74,7 @@ ___
 |    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                              |
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                              |
 |    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                      |
-|    | o  |    | リリース版をチェック     | CheckReleaseVersion   |              | System.Boolean  |              |                              |
-|    | o  |    | RC版をチェック           | CheckRcVersion        |              | System.Boolean  |              |                              |
+|    | o  |    | アップデート方法         | UpdateKind            | text         | System.String   |              |                              |
 |    | o  |    | 無視するバージョン       | IgnoreVersion         | text         | System.Version  |              | このバージョン以下を無視する |
 
 ### index

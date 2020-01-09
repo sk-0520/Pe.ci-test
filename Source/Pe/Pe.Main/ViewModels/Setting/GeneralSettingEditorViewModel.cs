@@ -202,14 +202,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        public bool IsCheckReleaseVersion
+        public UpdateKind UpdateKind
         {
-            get => Model.IsCheckReleaseVersion;
-            set => SetModelValue(value);
-        }
-        public bool IsCheckRcVersion
-        {
-            get => Model.IsCheckRcVersion;
+            get => Model.UpdateKind;
             set => SetModelValue(value);
         }
 
