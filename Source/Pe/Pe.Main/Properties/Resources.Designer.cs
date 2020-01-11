@@ -342,6 +342,114 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ディレクトリ選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Tooltip_SelectDirectory {
+            get {
+                return ResourceManager.GetString("String_Common_Tooltip_SelectDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイル選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Tooltip_SelectFile {
+            get {
+                return ResourceManager.GetString("String_Common_Tooltip_SelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${ITEM} を指定して実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Caption {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Command_Execute {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Command_Execute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンド に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_Command {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   環境変数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_EnvironmentVariables {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_EnvironmentVariables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   編集 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_EnvironmentVariables_Edit {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_EnvironmentVariables_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   オプション に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_Options {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   その他 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_Others {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   管理者実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_Others_RunAdmin {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_Others_RunAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   標準入出力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_Others_StandardInputOutput {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_Others_StandardInputOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Label_WorkDirectory {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Label_WorkDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランチャーアイテム取り込み に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ImportPrograms_Caption {

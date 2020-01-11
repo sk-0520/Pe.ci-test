@@ -197,6 +197,42 @@
   <data name="String_Common_Command_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="String_Common_Tooltip_SelectDirectory" xml:space="preserve">
+    <value>ディレクトリ選択</value>
+  </data>
+  <data name="String_Common_Tooltip_SelectFile" xml:space="preserve">
+    <value>ファイル選択</value>
+  </data>
+  <data name="String_ExtendsExecute_Caption" xml:space="preserve">
+    <value>${ITEM} を指定して実行</value>
+  </data>
+  <data name="String_ExtendsExecute_Command_Execute" xml:space="preserve">
+    <value>実行</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_Command" xml:space="preserve">
+    <value>コマンド</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_EnvironmentVariables" xml:space="preserve">
+    <value>環境変数</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_EnvironmentVariables_Edit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_Options" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_Others_RunAdmin" xml:space="preserve">
+    <value>管理者実行</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_Others_StandardInputOutput" xml:space="preserve">
+    <value>標準入出力</value>
+  </data>
+  <data name="String_ExtendsExecute_Label_WorkDirectory" xml:space="preserve">
+    <value>作業ディレクトリ</value>
+  </data>
   <data name="String_ImportPrograms_Caption" xml:space="preserve">
     <value>ランチャーアイテム取り込み</value>
   </data>

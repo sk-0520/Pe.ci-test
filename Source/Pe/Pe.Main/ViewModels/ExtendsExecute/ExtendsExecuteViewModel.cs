@@ -73,6 +73,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
 
+        public string Title
+        {
+            get
+            {
+                return TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_ExtendsExecute_Caption,
+                    new Dictionary<string, string>() {
+                        ["ITEM"] = Model.CaptionName,
+                    }
+                );
+            }
+        }
+
         public string ExecuteValue => Model.LauncherFileData.Path;
 
         public string Option
