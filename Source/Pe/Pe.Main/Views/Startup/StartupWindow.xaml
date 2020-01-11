@@ -14,8 +14,12 @@
   WindowStartupLocation="CenterScreen"
   ResizeMode="NoResize"
 
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  mc:Ignorable="d"
+  mc:Ignorable="d" 
 >
   <Window.Resources>
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />

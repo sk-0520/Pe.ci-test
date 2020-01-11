@@ -68,6 +68,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public ObservableCollection<StandardInputOutputHistoryViewModel> InputedHistories { get; } = new ObservableCollection<StandardInputOutputHistoryViewModel>();
 
+        public string Title
+        {
+            get
+            {
+                return TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_StandardInputOutput_Caption,
+                    new Dictionary<string, string>() {
+                        ["ITEM"] = Model.CaptionName,
+                    }
+                );
+            }
+        }
+
         public bool IsTopmost
         {
             get => this._isTopmost;

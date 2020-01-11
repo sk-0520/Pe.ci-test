@@ -31,6 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region property
 
+
         public static BuildType BuildType
         {
             get
@@ -46,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         }
         public static Version Version { get; } = Assembly.GetExecutingAssembly()!.GetName()!.Version!;
         public static string Revision { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
+
 
         #endregion
     }

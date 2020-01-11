@@ -248,6 +248,39 @@
   <data name="String_Setting_Header_LauncherToolbars" xml:space="preserve">
     <value>toolbars</value>
   </data>
+  <data name="String_StandardInputOutput_Caption" xml:space="preserve">
+    <value>${ITEM} の標準入出力</value>
+  </data>
+  <data name="String_StandardInputOutput_Command_AutoScroll" xml:space="preserve">
+    <value>自動スクロール</value>
+  </data>
+  <data name="String_StandardInputOutput_Command_Clear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="String_StandardInputOutput_Command_Kill" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="String_StandardInputOutput_Command_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="String_StandardInputOutput_Command_Topmost" xml:space="preserve">
+    <value>最前面</value>
+  </data>
+  <data name="String_StandardInputOutput_Command_WordWrap" xml:space="preserve">
+    <value>折り返し表示</value>
+  </data>
+  <data name="String_StandardInputOutput_ExitCode" xml:space="preserve">
+    <value>終了コード:</value>
+  </data>
+  <data name="String_StandardInputOutput_Running" xml:space="preserve">
+    <value>実行中 ...</value>
+  </data>
+  <data name="String_StandardInputOutput_StandardInputOutput_Header" xml:space="preserve">
+    <value>標準入出力</value>
+  </data>
+  <data name="String_StandardInputOutput_StandardInputOutput_Send" xml:space="preserve">
+    <value>入力</value>
+  </data>
   <data name="String_Startup_Caption" xml:space="preserve">
     <value>スタート</value>
   </data>

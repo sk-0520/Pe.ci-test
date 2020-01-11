@@ -214,5 +214,35 @@
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
   </Style>
 
+  <Style x:Key="DefaultHorizontal-ToolBarTray" TargetType="ToolBarTray">
+    <Setter Property="Orientation" Value="Horizontal"/>
+    <Setter Property="Background"  Value="Transparent"/>
+  </Style>
+  <Style x:Key="DefaultVertical-ToolBarTray" TargetType="ToolBarTray">
+    <Setter Property="Orientation" Value="Vertical"/>
+    <Setter Property="Background"  Value="Transparent"/>
+  </Style>
+
+  <Style x:Key="DefaultToolbar" TargetType="ToolBar">
+    <Setter Property="ToolBarTray.IsLocked" Value="True" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+  </Style>
+  <Style x:Key="DefaultHorizontal-Toolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+  <Style x:Key="DefaultVertical-Toolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+  </Style>
+
+  <Style x:Key="ImageLabel-Small" TargetType="StackPanel">
+    <Style.Resources>
+      <Style TargetType="Control" BasedOn="{StaticResource Image-Small}">
+        <Setter Property="Margin" Value="2,0,1,0" />
+      </Style>
+      <Style TargetType="AccessText" />
+      <Style TargetType="TextBlock" />
+    </Style.Resources>
+    <Setter Property="Orientation" Value="Horizontal" />
+  </Style>
 
 </ResourceDictionary>

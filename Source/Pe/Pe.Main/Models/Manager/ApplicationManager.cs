@@ -249,7 +249,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             container.Dispose();
         }
 
-        void ShowStartupView()
+        public void ShowStartupView()
         {
             using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer

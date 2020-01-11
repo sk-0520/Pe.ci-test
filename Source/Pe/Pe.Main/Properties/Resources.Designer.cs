@@ -495,6 +495,105 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ${ITEM} の標準入出力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Caption {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動スクロール に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Command_AutoScroll {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Command_AutoScroll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   クリア に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Command_Clear {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Command_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Command_Kill {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Command_Kill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   保存 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Command_Save {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Command_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Command_Topmost {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Command_Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   折り返し表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Command_WordWrap {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Command_WordWrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   終了コード: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_ExitCode {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_ExitCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   実行中 ... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Running {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Running", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   標準入出力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_StandardInputOutput_Header {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_StandardInputOutput_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   入力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_StandardInputOutput_Send {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_StandardInputOutput_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   スタート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Startup_Caption {

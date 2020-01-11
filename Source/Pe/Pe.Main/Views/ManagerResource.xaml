@@ -133,6 +133,7 @@
     x:Key="root"
     Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
     ContextMenu="{StaticResource ContextMenu}"
+    DoubleClickCommand="{Binding OpenStartupCommand}"
   >
     <Taskbar:TaskbarIcon.Style>
       <Style TargetType="Taskbar:TaskbarIcon">

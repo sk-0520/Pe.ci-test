@@ -15,17 +15,22 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var caption = (string)value ?? string.Empty;
+
             var header = BuildStatus.BuildType switch
             {
                 BuildType.Release => string.Empty,
                 _ => "[" + BuildStatus.BuildType.ToString() + "] ",
             };
+
             var footer = BuildStatus.BuildType switch
             {
                 BuildType.Release => string.Empty,
                 _ => " " + BuildStatus.Version + " <" + BuildStatus.Revision + ">",
             };
-            return header + caption + footer;
+
+            //TODO: 直書き
+            var appName = "Pe";
+            return header + caption + footer + " - " + appName;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -117,6 +117,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 ApplicationManager.ShowSettingView();
             }
         ));
+        public ICommand OpenStartupCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                // めんどいし直接ビュー開くよ
+                ApplicationManager.ShowStartupView();
+            }
+        ));
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
