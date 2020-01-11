@@ -6,8 +6,9 @@
 
   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 
-  xmlns:app_view_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -15,14 +16,28 @@
   d:DesignHeight="450"
 >
   <UserControl.Resources>
-    <app_view_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
+    <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
+    <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
   </UserControl.Resources>
   <StackPanel Orientation="Vertical">
     <ComboBox x:Name="listFont" SelectedValue="{Binding SelectedFontFamily, ElementName=root}" SelectedValuePath="Source" ItemsSource="{Binding ItemsSource, ElementName=root}">
       <ComboBox.ItemsPanel>
         <ItemsPanelTemplate>
-          <!-- TODO: サイズ固定-->
-          <VirtualizingStackPanel Width="200" ScrollUnit="Item" />
+          <VirtualizingStackPanel
+            VirtualizingStackPanel.IsVirtualizing="True"
+            VirtualizingStackPanel.VirtualizationMode="Recycling"
+            ScrollUnit="Item"
+          >
+            <VirtualizingStackPanel.Style>
+              <Style TargetType="VirtualizingStackPanel">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding ActualWidth, ElementName=listFont, Converter={StaticResource LessEqual-DoubleCompareConverter}, ConverterParameter=200}" Value="True">
+                    <Setter Property="Width"  Value="200" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </VirtualizingStackPanel.Style>
+          </VirtualizingStackPanel>
         </ItemsPanelTemplate>
       </ComboBox.ItemsPanel>
       <ComboBox.ItemTemplate>
