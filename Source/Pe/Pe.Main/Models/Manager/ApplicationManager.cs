@@ -174,6 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var settingElement = container.Build<SettingContainerElement>();
             settingElement.Initialize();
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
+            WindowManager.Register(windowItem);
             var dialogResult = windowItem.Window.ShowDialog();
 
             if(settingElement.IsSubmit) {

@@ -45,12 +45,12 @@ namespace ContentTypeTextNet.Pe.Main
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-            FrameworkElement.LanguageProperty.OverrideMetadata(
-                typeof(FrameworkElement),
-                new FrameworkPropertyMetadata(
-                    XmlLanguage.GetLanguage(culture.IetfLanguageTag)
-                )
-            );
+            //FrameworkElement.LanguageProperty.OverrideMetadata(
+            //    typeof(FrameworkElement),
+            //    new FrameworkPropertyMetadata(
+            //        XmlLanguage.GetLanguage(culture.IetfLanguageTag)
+            //    )
+            //);
 
             OnPropertyChanged(nameof(Resources));
         }
@@ -65,6 +65,8 @@ namespace ContentTypeTextNet.Pe.Main
         {
             ChangeCultureCore(StartupCulture);
         }
+
+        public XmlLanguage GetXmlLanguage() => XmlLanguage.GetLanguage(Culture.IetfLanguageTag);
 
         #endregion
     }

@@ -2,18 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Markup;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
     public class CultureServiceChanger
     {
-        public CultureServiceChanger(CultureService cultureService, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, Configuration configuration, ILoggerFactory loggerFactory)
+        public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, Configuration configuration, ILoggerFactory loggerFactory)
         {
             CultureService = cultureService;
+            WindowManager = windowManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             StatementLoader = statementLoader;
             Configuration = configuration;
@@ -24,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #region property
 
         CultureService CultureService { get; }
+        IWindowManager WindowManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         Configuration Configuration { get; }
@@ -56,6 +61,16 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 CultureService.ChangeAutoCulture();
             } else {
                 CultureService.ChangeCulture(languageName);
+            }
+
+            var language = CultureService.GetXmlLanguage();
+            var views = EnumUtility.GetMembers<WindowKind>()
+                .Select(i => WindowManager.GetWindowItems(i))
+                .SelectMany(i => i)
+                .Select(i => i.Window)
+            ;
+            foreach(var view in views) {
+                view.Language = language;
             }
         }
 

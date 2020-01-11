@@ -17,7 +17,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class SettingContainerViewModel : SingleModelViewModelBase<SettingContainerElement>
+    public class SettingContainerViewModel : SingleModelViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -47,7 +47,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 LauncherToobarsSettingEditor,
                 KeyboardSettingEditor,
             };
-            //this._selectedEditor = EditorItems.First();
             this._selectedEditor = GeneralSettingEditor;
         }
 
@@ -112,6 +111,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             SelectedEditor.Load();
         }
+
+        public void ReceiveViewUserClosing(CancelEventArgs e)
+        { }
+
+        public void ReceiveViewClosing(CancelEventArgs e)
+        { }
+
+        public void ReceiveViewClosed()
+        { }
 
         #endregion
 

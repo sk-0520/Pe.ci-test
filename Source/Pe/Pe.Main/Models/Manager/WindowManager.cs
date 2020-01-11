@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -117,11 +118,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class WindowManager : ManagerBase, IWindowManager
     {
-        public WindowManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public WindowManager(IDiContainer diContainer, CultureService cultureService, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
-        { }
+        {
+            CultureService = cultureService;
+        }
 
         #region property
+
+        CultureService CultureService { get; }
 
         ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();
         ISet<Window> Windows { get; } = new HashSet<Window>();
@@ -157,6 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
+            item.Window.Language = CultureService.GetXmlLanguage();
             item.Window.SourceInitialized += Window_SourceInitialized!;
             item.Window.Loaded += Window_Loaded;
             item.Window.Closing += Window_Closing;
