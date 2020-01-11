@@ -48,10 +48,10 @@
     </ComboBox>
     <DockPanel HorizontalAlignment="Stretch" Width="Auto">
       <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsBold, ElementName=root}" IsEnabled="{Binding IsEnabledBold, ElementName=root}">
-        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-ImageFont-Bold}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Bold}" />
       </ToggleButton>
       <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, ElementName=root}" IsEnabled="{Binding IsEnabledItalic, ElementName=root}">
-        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-ImageFont-Italic}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Italic}" />
       </ToggleButton>
       <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, ElementName=root}" />
       <!--<xctk:DoubleUpDown Minimum="{Binding SizeMinimum, ElementName=root}" Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, ElementName=root}" />-->

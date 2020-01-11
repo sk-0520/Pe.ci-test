@@ -43,7 +43,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="App-ImageFont-Bold">
+  <ControlTemplate x:Key="App-Image-Font-Bold">
     <Viewbox>
       <Rectangle Width="16" Height="16">
         <Rectangle.Fill>
@@ -63,7 +63,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="App-ImageFont-Italic">
+  <ControlTemplate x:Key="App-Image-Font-Italic">
     <Viewbox>
       <Rectangle Width="16" Height="16">
         <Rectangle.Fill>
@@ -83,7 +83,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="App-ImageFont-Undeline">
+  <ControlTemplate x:Key="App-Image-Font-Undeline">
     <Viewbox>
       <Rectangle Width="16" Height="16">
         <Rectangle.Fill>
@@ -103,7 +103,7 @@
     </Viewbox>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="App-ImageFont-StrikeThrough">
+  <ControlTemplate x:Key="App-Image-Font-StrikeThrough">
     <Viewbox>
       <Rectangle Width="16" Height="16">
         <Rectangle.Fill>
@@ -114,6 +114,206 @@
                   <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
                   <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M12.9131,11.8975C12.4681,11.8975 12.0551,11.8045 11.6851,11.6225 11.3071,11.4295 10.9931,11.1705 10.7411,10.8475 10.6761,10.7665 10.6151,10.6795 10.5581,10.5885 10.0991,11.5145 9.3571,11.8755 8.6871,11.8755 8.5421,11.8755 8.3531,11.8555 8.1461,11.7875L4.8281,11.7845C4.6121,11.8595 4.3851,11.8975 4.1501,11.8975 3.8221,11.8975 3.5161,11.8315 3.2421,11.7015 2.9451,11.5535 2.7101,11.3615 2.5241,11.1215 2.3561,10.9055 2.2251,10.6445 2.1401,10.3515 2.0641,10.0915 2.0261,9.8095 2.0261,9.5125 2.0261,9.4595 2.0281,9.4065 2.0301,9.3535L2.0001,9.0005 2.0001,7.0005 2.3721,7.0005 2.3721,5.9515 2.7261,5.6525C2.8331,5.5615 2.9621,5.4775 3.1191,5.3945 3.2531,5.3235 3.4001,5.2595 3.5641,5.2015 3.7181,5.1465 3.8791,5.1005 4.0501,5.0635 4.2461,5.0215 4.4411,5.0005 4.6311,5.0005 5.0151,5.0005 5.3651,5.0745 5.6721,5.2205 5.7881,5.2765 5.8981,5.3415 6.0001,5.4155L6.0001,3.0005 8.8121,3.0005 8.8121,5.0005C9.1601,5.0005 10.1001,5.1185 10.6281,6.3095 10.6811,6.2295 10.7351,6.1535 10.7941,6.0805 11.0651,5.7405 11.4011,5.4725 11.7921,5.2845 12.1811,5.0955 12.6151,5.0005 13.0831,5.0005 13.2401,5.0005 13.3921,5.0125 13.5321,5.0355 13.6681,5.0575 13.7881,5.0855 13.9021,5.1175 14.0311,5.1555 14.1391,5.1945 14.2361,5.2365 14.3671,5.2935 14.4711,5.3495 14.5531,5.4035L15.0001,5.7005 15.0001,11.1115 14.5711,11.4105C14.3581,11.5575 14.1231,11.6735 13.8511,11.7635 13.5581,11.8555 13.2571,11.8975 12.9131,11.8975" />
                   <GeometryDrawing Brush="#FF414141" Geometry="F1M8.4609,10.0312C8.1639,10.0312,7.9119,9.6032,7.8129,9.0052L7.8129,9.0002 9.1099,9.0002C9.0109,9.6012,8.7589,10.0312,8.4609,10.0312 M7.8129,7.8852C7.9119,7.2862 8.1639,6.8592 8.4609,6.8592 8.7759,6.8592 9.0399,7.3422 9.1249,8.0002L7.8129,8.0002z M5.1599,9.3742C5.1209,9.5122 5.0649,9.6322 4.9939,9.7332 4.9219,9.8372 4.8359,9.9152 4.7359,9.9752 4.6359,10.0342 4.5229,10.0652 4.3989,10.0652 4.3089,10.0652 4.2279,10.0462 4.1549,10.0122 4.0829,9.9792 4.0209,9.9322 3.9699,9.8762 3.9199,9.8172 3.8799,9.7492 3.8529,9.6672 3.8249,9.5852 3.8119,9.4952 3.8119,9.4012 3.8119,9.2942 3.8199,9.2002 3.8389,9.1202 3.8489,9.0742 3.8739,9.0392 3.8929,9.0002L5.2099,9.0002C5.2039,9.1312,5.1929,9.2582,5.1599,9.3742 M12.2519,7.2812C12.3589,7.1442 12.4869,7.0402 12.6369,6.9692 12.7839,6.8972 12.9429,6.8622 13.1119,6.8622 13.2839,6.8622 13.4429,6.8962 13.5899,6.9652 13.7359,7.0332 13.8729,7.1232 13.9999,7.2362L13.9999,6.2372C13.9579,6.2092 13.9039,6.1822 13.8409,6.1552 13.7769,6.1272 13.7069,6.1022 13.6289,6.0792 13.5499,6.0572 13.4659,6.0372 13.3729,6.0222 13.2819,6.0082 13.1849,6.0002 13.0829,6.0002 12.7669,6.0002 12.4809,6.0612 12.2269,6.1842 11.9709,6.3082 11.7539,6.4812 11.5749,6.7042 11.3969,6.9282 11.2589,7.1982 11.1619,7.5142 11.1149,7.6672 11.0819,7.8292 11.0579,8.0002L9.9849,8.0002C9.9139,6.8812 9.5499,6.0002 8.8129,6.0002 8.2109,6.0002 7.9249,6.5002 7.8129,6.7752L7.8129,4.0002 6.9999,4.0002 6.9999,8.0002 5.9999,8.0002 5.9999,7.8232C5.9999,7.5352 5.9729,7.2782 5.9169,7.0532 5.8619,6.8282 5.7779,6.6382 5.6659,6.4812 5.5549,6.3242 5.4129,6.2052 5.2409,6.1232 5.0689,6.0412 4.8659,6.0002 4.6309,6.0002 4.5109,6.0002 4.3879,6.0132 4.2609,6.0412 4.1339,6.0682 4.0129,6.1022 3.8979,6.1432 3.7819,6.1842 3.6789,6.2292 3.5859,6.2782 3.4939,6.3262 3.4229,6.3722 3.3719,6.4152L3.3719,7.3452C3.5309,7.1872 3.7129,7.0612 3.9189,6.9672 4.1239,6.8722 4.3339,6.8252 4.5479,6.8252 4.7619,6.8252 4.9269,6.9012 5.0439,7.0512 5.1599,7.2012 5.2179,7.4442 5.2179,7.7782L4.1849,7.9662C4.1469,7.9722,4.1229,7.9912,4.0869,8.0002L2.9999,8.0002 2.9999,9.0002 3.0859,9.0002C3.0499,9.1612 3.0259,9.3292 3.0259,9.5122 3.0259,9.7162 3.0509,9.9032 3.1009,10.0732 3.1499,10.2452 3.2219,10.3892 3.3169,10.5102 3.4119,10.6342 3.5289,10.7272 3.6699,10.7982 3.8099,10.8642 3.9699,10.8972 4.1499,10.8972 4.3799,10.8972 4.5829,10.8332 4.7569,10.7062 4.9309,10.5752 5.0779,10.3872 5.1979,10.1392L5.2109,10.1392 5.2109,10.7842 5.9999,10.7842 5.9999,9.0002 6.9999,9.0002 6.9999,10.7872 7.8129,10.7872 7.8129,10.1642C7.9909,10.5242 8.2699,10.8752 8.6879,10.8752 9.4169,10.8752 9.8499,10.0512 9.9659,9.0002L11.0479,9.0002C11.0699,9.1732 11.1029,9.3392 11.1509,9.4952 11.2389,9.7822 11.3659,10.0282 11.5299,10.2332 11.6939,10.4442 11.8939,10.6062 12.1279,10.7252 12.3609,10.8412 12.6219,10.8972 12.9129,10.8972 13.1519,10.8972 13.3589,10.8702 13.5349,10.8152 13.7109,10.7572 13.8649,10.6822 13.9999,10.5892L13.9999,9.6452C13.9389,9.7002 13.8689,9.7512 13.7939,9.7962 13.7189,9.8442 13.6429,9.8852 13.5649,9.9232 13.4869,9.9542 13.4079,9.9812 13.3289,10.0032 13.2489,10.0242 13.1719,10.0382 13.0969,10.0382 12.9099,10.0382 12.7439,10.0012 12.5979,9.9282 12.4509,9.8542 12.3249,9.7512 12.2219,9.6182 12.1179,9.4832 12.0399,9.3192 11.9859,9.1282 11.9759,9.0902 11.9789,9.0402 11.9709,9.0002L13.9999,9.0002 13.9999,8.0002 11.9669,8.0002C11.9809,7.9322 11.9769,7.8482 11.9949,7.7872 12.0579,7.5872 12.1439,7.4182 12.2519,7.2812" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Setting">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M16,5.5C16,8.538 13.538,11 10.5,11 10.225,11 9.957,10.973 9.693,10.934 9.667,10.93 9.641,10.927 9.615,10.922 9.337,10.877 9.066,10.816 8.804,10.731L4.268,15.268C3.795,15.74 3.167,16 2.5,16 1.833,16 1.205,15.74 0.731999999999999,15.268 -0.242000000000001,14.293 -0.242000000000001,12.707 0.731999999999999,11.732L5.269,7.196C5.184,6.934 5.123,6.662 5.078,6.384 5.073,6.359 5.07,6.333 5.066,6.307 5.027,6.043 5,5.775 5,5.5 5,2.462 7.462,0 10.5,0 13.538,0 16,2.462 16,5.5" />
+                  <GeometryDrawing Brush="#FF424242" Geometry="F1M15,5.5C15,7.985 12.985,10 10.5,10 9.807,10 9.158,9.83 8.571,9.55L3.561,14.561C3.268,14.854 2.884,15 2.5,15 2.116,15 1.732,14.854 1.439,14.561 0.853999999999999,13.975 0.853999999999999,13.025 1.439,12.439L6.45,7.429C6.17,6.842 6,6.193 6,5.5 6,3.015 8.015,1 10.5,1 11.193,1 11.842,1.17 12.429,1.45L9.636,4.243 11.757,6.364 14.55,3.571C14.83,4.158,15,4.807,15,5.5" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Toolbar">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M14,2.0005L2,2.0005 2,12.0005 4,12.0005 4,14.0005 12,14.0005 12,12.0005 14,12.0005z" />
+                  <GeometryDrawing Brush="#FF414141" Geometry="F1M4,4L12,4 12,10 4,10z M13,11L13,3 3,3 3,11 7,11 7,12 5,12 5,13 11,13 11,12 9,12 9,11z" />
+                  <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M12,4L4,4 4,10 12,10z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Note">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1,15L15,15 15,0 1,0z" />
+                  <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M11,5L11,6 6,6 6,5 6,4 11,4z M4,13L13,13 13,2 4,2z" />
+                  <GeometryDrawing Brush="#FF424242" Geometry="F1M11,4L11,5 11,6 6,6 6,5 6,4z M13,13L4,13 4,2 13,2z M2,1L2,2 3,2 3,3 2,3 2,4 3,4 3,5 2,5 2,6 3,6 3,7 2,7 2,8 3,8 3,9 2,9 2,10 3,10 3,11 2,11 2,12 3,12 3,13 2,13 2,14 14,14 14,1z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Note-Create">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M13.9736,8.9829L12.0156,8.9829 13.3096,10.2759 11.2196,12.3599 9.9996,11.1409 9.9996,12.9999 7.0016,12.9999 7.0016,11.0129 5.6536,12.3609 3.5676,10.2749 4.8596,8.9829 2.9996,8.9829 2.9996,5.9999 4.8596,5.9999 3.5666,4.7069 5.6546,2.6209 7.0176,3.9839 7.0176,1.9999 9.9996,1.9999 9.9996,3.8429 11.2236,2.6199 13.3086,4.7089 12.0156,5.9999 13.9736,5.9999z" />
+                  <GeometryDrawing Brush="#FFC27D1A" Geometry="F1M8.8345,6.4214L9.5055,7.0944 11.8945,4.7074 11.2225,4.0344z M4.9815,10.2754L5.6535,10.9474 8.0405,8.5604 7.3675,7.8874z M9.5725,7.0004L9.5705,7.9824 12.9735,7.9834 12.9735,7.0004z M4.0005,7.9824L7.4015,7.9824 7.4015,7.0004 4.0005,7.0004z M9.5055,7.8874L8.8335,8.5604 11.2205,10.9474 11.8945,10.2754z M5.6535,4.0344L4.9805,4.7074 7.3675,7.0934 8.0395,6.4214z M9.0005,8.5974L8.0025,8.5974 8.0025,11.9994 9.0005,11.9994z M9.0005,6.4004L8.0185,6.4004 8.0185,2.9994 9.0005,2.9994z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Note-Topmost">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0.5859,7.9999L2.5859,9.9999 0.5859,12.0009 2.9999,14.4139 7.9999,9.4139 12.9999,14.4139 15.4139,12.0009 13.4149,9.9999 15.4139,7.9999 7.9999,0.585900000000001z" />
+                  <GeometryDrawing Brush="#FF424242" Geometry="F1M8,8L13,13 14,12 8,6 2,12 3,13z M8,4L13,9 14,8 8,2 2,8 3,9z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Note-Bottom">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M8.0001,5.5861L3.0001,0.5861 0.5861,3.0001 2.5861,5.0001 0.5861,7.0001 8.0001,14.4141 15.4141,7.0001 13.4141,5.0001 15.4141,3.0001 12.9991,0.5861z" />
+                  <GeometryDrawing Brush="#FF424242" Geometry="F1M3,2L2,3 8,9 14,3 13,2 8,7z M3,6L2,7 8,13 14,7 13,6 8,11z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Command">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0,14L16,14 16,1.999 0,1.999z" />
+                  <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M3.9785,11.1035L3.2715,10.3965 5.6675,7.9995 3.2715,5.6035 3.9785,4.8965 7.0825,7.9995z M1.9995,11.9995L13.9995,11.9995 13.9995,3.9995 1.9995,3.9995z" />
+                  <GeometryDrawing Brush="#FF424242" Geometry="F1M7.082,8L3.978,4.896 3.271,5.604 5.668,8 3.271,10.396 3.978,11.104z M2,12L14,12 14,4 2,4z M15,13L1,13 1,3 15,3z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-System">
+    <Viewbox>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-System2">
+    <Viewbox>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-About">
+    <Viewbox>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-About-Help">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1,16L15,16 15,0 1,0z" />
+                  <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M9,11L7,11 7,13 9,13z M9,10L7,10 7,9C7,7.897,7.897,7,9,7L9,5.203C8.841,5.115 8.495,5 8,5 7.505,5 7.159,5.115 7,5.203L7,6 5,6 5,5C5,3.841 6.262,3 8,3 9.738,3 11,3.841 11,5L11,7C11,8.103,10.102,9,9,9z" />
+                  <GeometryDrawing Brush="#FF1AA1E2" Geometry="F1M11,7C11,8.103,10.102,9,9,9L9,10 7,10 7,9C7,7.897,7.897,7,9,7L9,5.203C8.841,5.115 8.495,5 8,5 7.505,5 7.159,5.115 7,5.203L7,6 5,6 5,5C5,3.841 6.262,3 8,3 9.738,3 11,3.841 11,5z M9,13L7,13 7,11 9,11z M2,15L14,15 14,1 2,1z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Exit">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M15,14L1,14 1,1.999 15,1.999z" />
+                  <GeometryDrawing Brush="#FFA1260D" Geometry="F1M12,11L10,11 8,8.999 6,11 4,11 7,7.999 4,4.999 6,4.999 8,6.999 10,4.999 12,4.999 9,7.999z M2,13L14,13 14,2.999 2,2.999z" />
+                  <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M4,4.999L6,4.999 8,6.999 10,4.999 12,4.999 9,7.999 12,11 10,11 8,8.999 6,11 4,11 7,7.999z" />
                 </DrawingGroup.Children>
               </DrawingGroup>
             </DrawingBrush.Drawing>

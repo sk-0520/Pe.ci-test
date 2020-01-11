@@ -41,14 +41,14 @@
 
     <MenuItem Header="{Binding Resources.String_AppManager_Menu_Setting, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenSettingCommand}">
       <MenuItem.Icon>
-        <ContentControl Content="{StaticResource App-Path-Setting}" Style="{StaticResource Path-MenuIcon}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Setting}" />
       </MenuItem.Icon>
     </MenuItem>
     <Separator />
 
     <MenuItem Header="{Binding Resources.String_AppManager_Menu_Toolbar, Source={x:Static app_main:CultureService.Current}}" ItemsSource="{Binding LauncherToolbarItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}">
       <MenuItem.Icon>
-        <ContentControl Content="{StaticResource App-Path-Toolbar}" Style="{StaticResource Path-MenuIcon}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Toolbar}" />
       </MenuItem.Icon>
       <!--<MenuItem.ItemContainerStyle>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -76,12 +76,12 @@
         </Style>
       </MenuItem.Resources>
       <MenuItem.Icon>
-        <ContentControl Content="{StaticResource App-Path-Note}" Style="{StaticResource Path-MenuIcon}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note}" />
       </MenuItem.Icon>
 
       <MenuItem Header="{Binding Resources.String_AppManager_Menu_Note_Create, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CreateNoteCommand}">
         <MenuItem.Icon>
-          <ContentControl Content="{StaticResource App-Path-Note-Create}" Style="{StaticResource Path-MenuIcon}" />
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note-Create}" />
         </MenuItem.Icon>
       </MenuItem>
       <Separator />
@@ -89,12 +89,12 @@
       <Separator />
       <MenuItem Header="{Binding Resources.String_AppManager_Menu_Note_Topmost, Source={x:Static app_main:CultureService.Current}}" Command="{Binding MoveZOrderTopAllNotesCommand}">
         <MenuItem.Icon>
-          <ContentControl Content="{StaticResource App-Path-Note-Topmost}" Style="{StaticResource Path-MenuIcon}" />
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note-Topmost}" />
         </MenuItem.Icon>
       </MenuItem>
       <MenuItem Header="{Binding Resources.String_AppManager_Menu_Note_Bottom, Source={x:Static app_main:CultureService.Current}}" Command="{Binding MoveZOrderBottomAllNotesCommand}">
         <MenuItem.Icon>
-          <ContentControl Content="{StaticResource App-Path-Note-Bottom}" Style="{StaticResource Path-MenuIcon}" />
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note-Bottom}" />
         </MenuItem.Icon>
       </MenuItem>
       <Separator />
@@ -104,25 +104,29 @@
 
     <MenuItem Header="{Binding Resources.String_AppManager_Menu_Command, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ShowCommandViewCommand}">
       <MenuItem.Icon>
-        <ContentControl Content="{StaticResource App-Path-Command}" Style="{StaticResource Path-MenuIcon}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Command}" />
       </MenuItem.Icon>
     </MenuItem>
 
     <Separator />
 
     <MenuItem Header="{Binding Resources.String_AppManager_Menu_About, Source={x:Static app_main:CultureService.Current}}">
-      <MenuItem.Icon>
-        <ContentControl Content="{StaticResource App-Path-About}" Style="{StaticResource Path-MenuIcon}" />
-      </MenuItem.Icon>
       <MenuItem Header="{Binding Resources.String_AppManager_Menu_About_Help, Source={x:Static app_main:CultureService.Current}}">
         <MenuItem.Icon>
-          <ContentControl Content="{StaticResource App-Path-About-Help}" Style="{StaticResource Path-MenuIcon}" />
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-About-Help}" />
         </MenuItem.Icon>
       </MenuItem>
       <MenuItem Header="{Binding Resources.String_AppManager_Menu_About_Version, Source={x:Static app_main:CultureService.Current}}">
+        <MenuItem.Icon>
+          <Image Source="/Resources/Icon/App.ico" />
+        </MenuItem.Icon>
       </MenuItem>
     </MenuItem>
-    <MenuItem Header="{Binding Resources.String_AppManager_Menu_Exit, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExitCommand}" />
+    <MenuItem Header="{Binding Resources.String_AppManager_Menu_Exit, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExitCommand}">
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Exit}" />
+      </MenuItem.Icon>
+    </MenuItem>
   </ContextMenu>
 
   <Taskbar:TaskbarIcon
