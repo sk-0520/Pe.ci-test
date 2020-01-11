@@ -197,6 +197,9 @@
   <data name="String_Common_Command_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="String_Common_Tooltip_Clear" xml:space="preserve">
+    <value>クリア</value>
+  </data>
   <data name="String_Common_Tooltip_SelectDirectory" xml:space="preserve">
     <value>ディレクトリ選択</value>
   </data>
@@ -250,6 +253,78 @@
   </data>
   <data name="String_LauncherGroup_NewItem_Name" xml:space="preserve">
     <value>新しいグループ</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Comment_Header" xml:space="preserve">
+    <value>コメント</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Header" xml:space="preserve">
+    <value>共通</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Label_Code" xml:space="preserve">
+    <value>コード</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Label_Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Label_Kind" xml:space="preserve">
+    <value>種別</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Label_Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Label_Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Label_Others_UseCommandLauncher" xml:space="preserve">
+    <value>コマンドランチャーで使用</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Tooltip_SelectIcon" xml:space="preserve">
+    <value>アイコン選択</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Tooltip_SelectImage" xml:space="preserve">
+    <value>画像選択</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_EnvironmentVariable_Header" xml:space="preserve">
+    <value>環境変数</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Command_IsEnabled_CustomEnvironmentVariable" xml:space="preserve">
+    <value>環境変数を編集する</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu" xml:space="preserve">
+    <value>標準入出力を使用する</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Command_RunAdministrator" xml:space="preserve">
+    <value>管理者として実行</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Header" xml:space="preserve">
+    <value>ファイル</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Label_Options" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Label_Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Label_Path" xml:space="preserve">
+    <value>パス</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_File_Label_WorkDirectory" xml:space="preserve">
+    <value>作業Directory</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_StoreApp_Header" xml:space="preserve">
+    <value>ストアアプリ</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_StoreApp_Label_Options" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_StoreApp_Label_ProtocolAlias" xml:space="preserve">
+    <value>プロトコル/エイリアス</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Tag_Header" xml:space="preserve">
+    <value>タグ</value>
+  </data>
+  <data name="String_LauncherItemCustomizeWindow_Caption" xml:space="preserve">
+    <value>${ITEM} を編集</value>
   </data>
   <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
     <value>新しいアイテム</value>

@@ -56,6 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             protected set => SetProperty(ref this._isVisible, value);
         }
 
+        public string CaptionName => Editor.Name;
+
         #endregion
 
         #region function

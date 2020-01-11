@@ -10,11 +10,12 @@
 
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
 
-  xmlns:app_viewmodel_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_viewmodel_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -39,9 +40,10 @@
       <!--<sys:Int32 x:Key="LabelColumn">0</sys:Int32>
       <sys:Int32 x:Key="ContentColumn">1</sys:Int32>
       <sys:Double x:Key="MultiLine-Height">50</sys:Double>-->
+
       <!--#region 共通 -->
-      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeCommonViewModel}">
-        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="common">
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeCommonViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Common_Header, Source={x:Static app_main:CultureService.Current}}">
           <StackPanel>
             <Grid>
               <Grid.ColumnDefinitions>
@@ -49,7 +51,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="ID" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Id, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding LauncherItemId, Mode=OneWay}" IsReadOnly="True" />
             </Grid>
 
@@ -59,7 +61,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="Kind" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Kind, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Kind, Mode=OneWay}" IsReadOnly="True" />
             </Grid>
 
@@ -69,7 +71,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="name" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Name, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Name}" />
             </Grid>
 
@@ -79,7 +81,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="code" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Code, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Code}" />
 
             </Grid>
@@ -100,9 +102,15 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" IsReadOnly="True" Text="{Binding IconPath, Mode=OneWay}" />
-                <Button Grid.Column="1" Content="icon" Command="{Binding IconFileSelectCommand}" />
-                <Button Grid.Column="2" Content="image" Command="{Binding IconImageSelectCommand}" />
-                <Button Grid.Column="3" Content="clear" Command="{Binding IconClearSelectCommand}" />
+                <Button Grid.Column="1" Command="{Binding IconClearSelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_Clear, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
+                </Button>
+                <Button Grid.Column="2" Command="{Binding IconFileSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_Tooltip_SelectIcon, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Icon}" />
+                </Button>
+                <Button Grid.Column="3" Command="{Binding IconImageSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_Tooltip_SelectImage, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Image}" />
+                </Button>
               </Grid>
             </Grid>
 
@@ -112,9 +120,9 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="others" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Others, Source={x:Static app_main:CultureService.Current}}" />
               <StackPanel Grid.Column="1">
-                <CheckBox IsChecked="{Binding IsEnabledCommandLauncher}" Content="command launcher" />
+                <CheckBox IsChecked="{Binding IsEnabledCommandLauncher}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Others_UseCommandLauncher, Source={x:Static app_main:CultureService.Current}}" />
               </StackPanel>
             </Grid>
 
@@ -125,8 +133,8 @@
       <!--#endregion-->
 
       <!--#region ファイル -->
-      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeFileViewModel}">
-        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="file">
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeFileViewModel}">
+        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_File_Header, Source={x:Static app_main:CultureService.Current}}">
           <StackPanel>
             <Grid>
               <Grid.ColumnDefinitions>
@@ -134,7 +142,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="path" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_Path, Source={x:Static app_main:CultureService.Current}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -172,8 +180,12 @@
                     </app_core_views_selector:ComboBoxItemTemplateSelector>
                   </ComboBox.ItemTemplateSelector>
                 </ComboBox>
-                <Button Grid.Column="1" Content="file" Command="{Binding LauncherFileSelectCommand}" />
-                <Button Grid.Column="2" Content="dir" Command="{Binding LauncherDirectorySelectCommand}" />
+                <Button Grid.Column="1" Command="{Binding LauncherFileSelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectFile, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-File}" />
+                </Button>
+                <Button Grid.Column="2" Command="{Binding LauncherDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
+                </Button>
               </Grid>
             </Grid>
 
@@ -183,7 +195,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="option" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_Options, Source={x:Static app_main:CultureService.Current}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -193,9 +205,15 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" Text="{Binding Option}" />
-                <Button Grid.Column="1" Content="file" Command="{Binding OptionFileSelectCommand}" />
-                <Button Grid.Column="2" Content="dir" Command="{Binding OptionDirectorySelectCommand}" />
-                <Button Grid.Column="3" Content="clear" Command="{Binding OptionClearCommand}" />
+                <Button Grid.Column="1" Command="{Binding OptionClearCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_Clear, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
+                </Button>
+                <Button Grid.Column="2" Command="{Binding OptionFileSelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectFile, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-File}" />
+                </Button>
+                <Button Grid.Column="3" Command="{Binding OptionDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
+                </Button>
               </Grid>
 
             </Grid>
@@ -206,7 +224,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="dir" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_WorkDirectory, Source={x:Static app_main:CultureService.Current}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -215,8 +233,12 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" Text="{Binding WorkingDirectoryPath}" />
-                <Button Grid.Column="1" Content="dir" Command="{Binding WorkingDirectorySelectCommand}" />
-                <Button Grid.Column="2" Content="clear" Command="{Binding WorkingDirectoryClearCommand}" />
+                <Button Grid.Column="1" Command="{Binding WorkingDirectoryClearCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_Clear, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
+                </Button>
+                <Button Grid.Column="2" Command="{Binding WorkingDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
+                </Button>
               </Grid>
 
             </Grid>
@@ -227,11 +249,11 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="othes" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_Others, Source={x:Static app_main:CultureService.Current}}" />
               <StackPanel Grid.Column="1">
-                <CheckBox IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" Content="env" />
-                <CheckBox IsChecked="{Binding IsEnabledStandardInputOutput}" Content="stdio" />
-                <CheckBox IsChecked="{Binding RunAdministrator}" Content="admin" />
+                <CheckBox IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Command_IsEnabled_CustomEnvironmentVariable, Source={x:Static app_main:CultureService.Current}}" />
+                <CheckBox IsChecked="{Binding IsEnabledStandardInputOutput}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu, Source={x:Static app_main:CultureService.Current}}" />
+                <CheckBox IsChecked="{Binding RunAdministrator}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Command_RunAdministrator, Source={x:Static app_main:CultureService.Current}}" />
               </StackPanel>
             </Grid>
 
@@ -241,8 +263,8 @@
       <!--#endregion-->
 
       <!--#region ストアアプリ -->
-      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeStoreAppViewModel}">
-        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="store app">
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeStoreAppViewModel}">
+        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Header, Source={x:Static app_main:CultureService.Current}}">
           <StackPanel>
             <Grid>
               <Grid.ColumnDefinitions>
@@ -250,7 +272,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="protocol/alias" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Label_ProtocolAlias, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding ProtocolAlias}" />
 
             </Grid>
@@ -261,7 +283,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="option" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Label_Options, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Option}" />
             </Grid>
 
@@ -281,8 +303,8 @@
       <!--#endregion -->
 
       <!--#region 環境変数 -->
-      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeEnvironmentVariableViewModel}">
-        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="env" >
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeEnvironmentVariableViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_EnvironmentVariable_Header, Source={x:Static app_main:CultureService.Current}}" >
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Style="{StaticResource LabelDefinition}" />
@@ -303,8 +325,8 @@
       <!--#endregion -->
 
       <!--#region タグ -->
-      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeTagViewModel}">
-        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="tag" >
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeTagViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Tag_Header, Source={x:Static app_main:CultureService.Current}}" >
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Style="{StaticResource LabelDefinition}" />
@@ -319,8 +341,8 @@
       <!--#endregion -->
 
       <!--#region コメント -->
-      <DataTemplate DataType="{x:Type app_viewmodel_launcher_item_customize:LauncherItemCustomizeCommentViewModel}">
-        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="comment" >
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeCommentViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Comment_Header, Source={x:Static app_main:CultureService.Current}}" >
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Style="{StaticResource LabelDefinition}" />

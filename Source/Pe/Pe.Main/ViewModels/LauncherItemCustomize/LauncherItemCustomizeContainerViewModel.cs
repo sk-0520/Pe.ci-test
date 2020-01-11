@@ -17,6 +17,7 @@ using Prism.Commands;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
@@ -38,13 +39,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeEditorViewModel Editor { get; }
         public LauncherIconViewModel Icon { get; }
 
+        public string Title
+        {
+            get
+            {
+                return TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_LauncherItemCustomizeWindow_Caption,
+                    new Dictionary<string, string>() {
+                        ["ITEM"] = Model.CaptionName,
+                    }
+                );
+            }
+        }
+
+
         #endregion
 
         #region command
 
         public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                
+
                 Editor.Flush();
                 if(Validate()) {
                     Model.Save();

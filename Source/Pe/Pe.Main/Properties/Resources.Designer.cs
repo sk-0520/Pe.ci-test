@@ -342,6 +342,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   クリア に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Tooltip_Clear {
+            get {
+                return ResourceManager.GetString("String_Common_Tooltip_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ディレクトリ選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Tooltip_SelectDirectory {
@@ -509,6 +518,223 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_LauncherItem_NewItem_Name {
             get {
                 return ResourceManager.GetString("String_LauncherItem_NewItem_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コメント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Comment_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Comment_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   共通 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Label_Code {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Label_Id {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種別 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Label_Kind {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   名前 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Label_Name {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   その他 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Label_Others {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンドランチャーで使用 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Label_Others_UseCommandLauncher {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Others_UseCommandLauncher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイコン選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Tooltip_SelectIcon {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Tooltip_SelectIcon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   画像選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Tooltip_SelectImage {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Tooltip_SelectImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   環境変数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_EnvironmentVariable_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_EnvironmentVariable_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   標準入出力を使用する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   環境変数を編集する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Command_IsEnabled_CustomEnvironmentVariable {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Command_IsEnabled_CustomEnvironmentVaria" +
+                        "ble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   管理者として実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Command_RunAdministrator {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Command_RunAdministrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   オプション に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Label_Options {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   その他 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Label_Others {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   パス に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Label_Path {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   作業Directory に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_File_Label_WorkDirectory {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_WorkDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ストアアプリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_StoreApp_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_StoreApp_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   オプション に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_StoreApp_Label_Options {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_StoreApp_Label_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロトコル/エイリアス に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_StoreApp_Label_ProtocolAlias {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_StoreApp_Label_ProtocolAlias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Tag_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Tag_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${ITEM} を編集 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeWindow_Caption {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeWindow_Caption", resourceCulture);
             }
         }
         
