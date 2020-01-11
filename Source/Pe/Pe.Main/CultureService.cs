@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
+using System.Windows;
+using System.Windows.Markup;
 
 namespace ContentTypeTextNet.Pe.Main
 {
@@ -39,6 +41,16 @@ namespace ContentTypeTextNet.Pe.Main
 
             CultureInfo.CurrentCulture = culture;
             CultureInfo.CurrentUICulture = culture;
+
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    XmlLanguage.GetLanguage(culture.IetfLanguageTag)
+                )
+            );
 
             OnPropertyChanged(nameof(Resources));
         }

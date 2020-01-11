@@ -157,11 +157,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                item.Window.SourceInitialized += Window_SourceInitialized!;
-                item.Window.Loaded += Window_Loaded;
-                item.Window.Closing += Window_Closing;
-            }
+            item.Window.SourceInitialized += Window_SourceInitialized!;
+            item.Window.Loaded += Window_Loaded;
+            item.Window.Closing += Window_Closing;
             item.Window.Closed += Window_Closed!;
 
             return true;
@@ -223,6 +221,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogDebug("ウィンドウハンドル生成: {0}", window);
 
             window.SourceInitialized -= Window_SourceInitialized!;
+
+
 
             var item = Items.First(i => i.Window == window);
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
