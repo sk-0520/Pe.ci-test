@@ -203,6 +203,12 @@
   <data name="String_Common_Tooltip_SelectFile" xml:space="preserve">
     <value>ファイル選択</value>
   </data>
+  <data name="String_EnvironmentValieableEditor_Label_Merge" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="String_EnvironmentValieableEditor_Label_Remove" xml:space="preserve">
+    <value>削除</value>
+  </data>
   <data name="String_ExtendsExecute_Caption" xml:space="preserve">
     <value>${ITEM} を指定して実行</value>
   </data>

@@ -360,6 +360,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   変更 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_EnvironmentValieableEditor_Label_Merge {
+            get {
+                return ResourceManager.GetString("String_EnvironmentValieableEditor_Label_Merge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_EnvironmentValieableEditor_Label_Remove {
+            get {
+                return ResourceManager.GetString("String_EnvironmentValieableEditor_Label_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ${ITEM} を指定して実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_Caption {
