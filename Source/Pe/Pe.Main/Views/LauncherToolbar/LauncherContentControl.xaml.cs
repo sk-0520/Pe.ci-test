@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 
 namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
@@ -155,6 +156,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
         }
 
         #endregion
-
     }
 }

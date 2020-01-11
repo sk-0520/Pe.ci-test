@@ -2,6 +2,60 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
+  <ControlTemplate x:Key="App-Image-App-Main" TargetType="Control">
+    <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+      <Canvas Name="svg8" Width="4.2333332" Height="4.2333335">
+        <Canvas.RenderTransform>
+          <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources>
+          <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="backgroundLinearGradient" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
+            <LinearGradientBrush.GradientStops>
+              <GradientStopCollection>
+                <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                <GradientStop Color="#40FFFFFF" Offset="1"/>
+              </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+          </LinearGradientBrush>
+          <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient4491" MappingMode="Absolute" StartPoint="2,2" EndPoint="2,4">
+            <LinearGradientBrush.GradientStops>
+              <GradientStopCollection>
+                <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                <GradientStop Color="#40FFFFFF" Offset="1"/>
+              </GradientStopCollection>
+            </LinearGradientBrush.GradientStops>
+            <LinearGradientBrush.Transform>
+              <MatrixTransform Matrix="1 0 0 1.000008 2.3412797e-7 -0.00232186"/>
+            </LinearGradientBrush.Transform>
+          </LinearGradientBrush>
+        </Canvas.Resources>
+        <!--Unknown tag: sodipodi:namedview-->
+        <!--Unknown tag: metadata-->
+        <Canvas Name="layer1">
+          <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="-292.76665"/>
+          </Canvas.RenderTransform>
+          <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="0.26458356" Canvas.Top="293.03122" Width="3.7041664" Height="3.7041826" Name="rect4522" Fill="{StaticResource linearGradient4491}" StrokeThickness="0.46302316" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+          <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4493" Fill="#FF000000" StrokeThickness="0.21603137" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+            <Path.Data>
+              <PathGeometry Figures="m 0.52916667 293.5604 v 2.11667 H 1.0583332 v -0.84667 h 0.5291667 c 0.2645833 0 0.5291666 0 0.5291666 -0.635 0 -0.635 -0.2645833 -0.635 -0.5291666 -0.635 z m 0.52916653 0.21167 h 0.2645833 c 0.2645834 0 0.2645834 0 0.2645834 0.42333 0 0.42334 0 0.42333 -0.2645834 0.42333 H 1.0583332 Z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+          <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4497" Fill="#FF000000" StrokeThickness="0.24153042" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
+            <Path.Data>
+              <PathGeometry Figures="m 2.6458333 294.35415 c 0 0 -0.2645833 0 -0.2645833 0.26458 v 0.79375 c 0 0.26309 0.2645833 0.26458 0.2645833 0.26458 h 0.79375 c 0.2645834 0 0.2645834 0 0.2645833 -0.26458 h -0.79375 -0.2645833 v -0.26458 h 0.79375 c 0 0 0.2645833 0 0.2645833 -0.26459 v -0.26458 c 0 -0.26458 -0.2645833 -0.26458 -0.2645833 -0.26458 z m 0 0.26458 h 0.79375 v 0.26458 h -0.79375 z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+          <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="rect4492" Fill="#E6000000" StrokeThickness="5.98672056" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">
+            <Path.Data>
+              <PathGeometry Figures="m 0 292.76665 v 4.23333 h 4.2333333 v -4.23333 z m 0.26458333 0.26458 H 3.96875 v 3.70417 H 0.26458333 Z" FillRule="NonZero"/>
+            </Path.Data>
+          </Path>
+        </Canvas>
+      </Canvas>
+    </Viewbox>
+  </ControlTemplate>
+
   <ControlTemplate x:Key="App-Image-FindinFiles" TargetType="Control" >
     <Viewbox>
       <Rectangle Width="16" Height="16">

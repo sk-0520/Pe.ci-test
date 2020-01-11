@@ -335,6 +335,72 @@
   <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
     <value>新しいアイテム</value>
   </data>
+  <data name="String_LauncherToolbar_AppMenu_Groups_Header" xml:space="preserve">
+    <value>グループ</value>
+  </data>
+  <data name="String_LauncherToolbar_AppMenu_Menu_AutoHide" xml:space="preserve">
+    <value>自動的に隠す</value>
+  </data>
+  <data name="String_LauncherToolbar_AppMenu_Menu_Close" xml:space="preserve">
+    <value>非表示</value>
+  </data>
+  <data name="String_LauncherToolbar_AppMenu_Menu_Topmost" xml:space="preserve">
+    <value>最前面</value>
+  </data>
+  <data name="String_LauncherToolbar_AppMenu_Position_Header" xml:space="preserve">
+    <value>ツールバー位置</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Copy_Header" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Copy_Menu_Options" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Copy_Menu_ParentDirectory" xml:space="preserve">
+    <value>親ディレクトリ</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Copy_Menu_Path" xml:space="preserve">
+    <value>パス</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Copy_Menu_WorkDirectory" xml:space="preserve">
+    <value>作業ディレクトリ</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Execute_Header" xml:space="preserve">
+    <value>実行</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Execute_Menu_Execute" xml:space="preserve">
+    <value>通常実行</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Execute_Menu_ExtendsExecute" xml:space="preserve">
+    <value>指定して実行</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Groups_Header" xml:space="preserve">
+    <value>グループ</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Open_Header" xml:space="preserve">
+    <value>ディレクトリ</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Open_Menu_ParentDirectory" xml:space="preserve">
+    <value>親ディレクトリ</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Open_Menu_WorkDirectory" xml:space="preserve">
+    <value>作業ディレクトリ</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Others_Header" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Others_Menu_Customize" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Others_Menu_Property" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Confirm" xml:space="preserve">
+    <value>削除？</value>
+  </data>
+  <data name="String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Execute" xml:space="preserve">
+    <value>削除！</value>
+  </data>
   <data name="String_Note_Busy" xml:space="preserve">
     <value>処理中...</value>
   </data>

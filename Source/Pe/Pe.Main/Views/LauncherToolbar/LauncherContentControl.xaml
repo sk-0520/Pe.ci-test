@@ -39,5 +39,6 @@
         </Style>
       </TextBlock.Style>
     </TextBlock>
+
   </Grid>
 </UserControl>

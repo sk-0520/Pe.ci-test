@@ -73,6 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         public string? Name => Model.Name;
         public string? Comment => Model.Comment;
+        public bool HasComment => !string.IsNullOrWhiteSpace(Comment);
 
         public bool NowLoading
         {

@@ -757,6 +757,204 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   グループ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Groups_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Groups_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Menu_AutoHide {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Menu_AutoHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Menu_Close {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Menu_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Menu_Topmost {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Menu_Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Position_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Position_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Copy_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   オプション に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_Options {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   親ディレクトリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_ParentDirectory {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_ParentDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   パス に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_Path {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_WorkDirectory {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_WorkDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Execute_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通常実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Execute_Menu_Execute {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_Menu_Execute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定して実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Execute_Menu_ExtendsExecute {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_Menu_ExtendsExecute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   グループ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Groups_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Groups_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ディレクトリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Open_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Open_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   親ディレクトリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Open_Menu_ParentDirectory {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Open_Menu_ParentDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Open_Menu_WorkDirectory {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Open_Menu_WorkDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   その他 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Others_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   編集 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Customize {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Customize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロパティ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Property {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Confirm {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除！ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Execute {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Execute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   処理中... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Busy {

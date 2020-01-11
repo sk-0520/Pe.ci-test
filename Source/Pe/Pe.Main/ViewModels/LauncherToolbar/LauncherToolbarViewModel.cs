@@ -208,6 +208,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             o => {
                 if(o.HasValue) {
                     Model.ChangeToolbarPositionDelaySave(o.Value);
+                    DispatcherWrapper.Begin(() => {
+                        RaisePropertyChanged(nameof(LauncherItems));
+                    }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                 } else {
                     Logger.LogTrace("こないはず");
                 }

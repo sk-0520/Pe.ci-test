@@ -14,7 +14,7 @@
 
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
-  xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_model_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main_viewmodel_note="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Note"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
@@ -71,7 +71,7 @@
     </ResourceDictionary>
   </Window.Resources>
   <Window.Title>
-    <Binding Path="Title" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+    <Binding Path="Title" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
   <i:Interaction.Triggers>
     <i:EventTrigger EventName="Deactivated">
@@ -428,7 +428,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Column="0" Content="{Binding Resources.String_Note_Format_Label_Font, Source={x:Static app_main:CultureService.Current}}" />
-                  <app_main_view:FontSelectControl
+                  <app_main_views:FontSelectControl
                     Grid.Column="1"
                     SelectedFontFamily="{Binding Font.FontFamily}"
                     IsBold="{Binding Font.IsBold}"
@@ -437,8 +437,8 @@
                     SizeMinimum="{Binding Font.MinimumSize}"
                     SizeMaximum="{Binding Font.MaximumSize}"
                   >
-                    <app_main_view:FontSelectControl.Style>
-                      <Style TargetType="app_main_view:FontSelectControl">
+                    <app_main_views:FontSelectControl.Style>
+                      <Style TargetType="app_main_views:FontSelectControl">
                         <Style.Triggers>
                           <DataTrigger Binding="{Binding ContentKind}" Value="RichText">
                             <Setter Property="IsEnabled" Value="False" />
@@ -446,8 +446,8 @@
                           </DataTrigger>
                         </Style.Triggers>
                       </Style>
-                    </app_main_view:FontSelectControl.Style>
-                  </app_main_view:FontSelectControl>
+                    </app_main_views:FontSelectControl.Style>
+                  </app_main_views:FontSelectControl>
                 </Grid>
 
               </StackPanel>
