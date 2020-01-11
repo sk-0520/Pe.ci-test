@@ -200,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region SettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_Header_LauncherItems;
+        public override string Header => Properties.Resources.String_Setting_LauncherItems_Header;
 
         public override void Flush()
         {

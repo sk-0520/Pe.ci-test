@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region SettingEditorViewModelBase
-        public override string Header => Properties.Resources.String_Setting_Header_General;
+        public override string Header => Properties.Resources.String_Setting_Generals_Header;
 
         public override void Flush()
         {

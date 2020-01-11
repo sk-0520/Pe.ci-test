@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_General_Header_Execute;
+        public override string Header => Properties.Resources.String_Setting_Generals_Execute_Header;
 
         #endregion
     }
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_General_Header_General;
+        public override string Header => Properties.Resources.String_Setting_Generals_General_Header;
 
         #endregion
     }
@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_General_Header_Update;
+        public override string Header => Properties.Resources.String_Setting_Generals_Update_Header;
 
         #endregion
     }
@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_General_Header_Command;
+        public override string Header => Properties.Resources.String_Setting_Generals_Command_Header;
 
         protected override void BuildChildren()
         {
@@ -348,7 +348,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_General_Header_Note;
+        public override string Header => Properties.Resources.String_Setting_Generals_Note_Header;
 
         protected override void BuildChildren()
         {
@@ -409,7 +409,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region GeneralSettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_General_Header_StandardInputOutput;
+        public override string Header => Properties.Resources.String_Setting_Generals_StandardInputOutput_Header;
 
         protected override void BuildChildren()
         {

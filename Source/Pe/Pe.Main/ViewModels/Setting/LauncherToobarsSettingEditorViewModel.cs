@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region SettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_Header_LauncherToolbars;
+        public override string Header => Properties.Resources.String_Setting_LauncherToolbars_Header;
 
         public override void Flush()
         {

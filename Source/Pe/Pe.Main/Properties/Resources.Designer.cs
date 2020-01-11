@@ -1252,110 +1252,137 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ディスプレイ識別 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Screen_Caption {
+            get {
+                return ResourceManager.GetString("String_Screen_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   マウスクリックかキー入力(どれでも)でディスプレイ識別ウィンドウを閉じてください に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Screen_Close_Message {
+            get {
+                return ResourceManager.GetString("String_Screen_Close_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   メインディスプレイ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Screen_Primary {
+            get {
+                return ResourceManager.GetString("String_Screen_Primary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   command に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_General_Header_Command {
+        public static string String_Setting_Generals_Command_Header {
             get {
-                return ResourceManager.GetString("String_Setting_General_Header_Command", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Command_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   execute に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_General_Header_Execute {
+        public static string String_Setting_Generals_Execute_Header {
             get {
-                return ResourceManager.GetString("String_Setting_General_Header_Execute", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Execute_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   general に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_General_Header_General {
+        public static string String_Setting_Generals_General_Header {
             get {
-                return ResourceManager.GetString("String_Setting_General_Header_General", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_General_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   general に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   note に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_General_Header_Note {
+        public static string String_Setting_Generals_Note_Header {
             get {
-                return ResourceManager.GetString("String_Setting_General_Header_Note", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   stdio に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_General_Header_StandardInputOutput {
+        public static string String_Setting_Generals_StandardInputOutput_Header {
             get {
-                return ResourceManager.GetString("String_Setting_General_Header_StandardInputOutput", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   update に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_General_Header_Update {
+        public static string String_Setting_Generals_Update_Header {
             get {
-                return ResourceManager.GetString("String_Setting_General_Header_Update", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Update_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   window に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_General_Header_Window {
+        public static string String_Setting_Generals_Window_Header {
             get {
-                return ResourceManager.GetString("String_Setting_General_Header_Window", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   general に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Header_General {
-            get {
-                return ResourceManager.GetString("String_Setting_Header_General", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Window_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   keyboard に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Header_Keyboard {
+        public static string String_Setting_Keyboard_Header {
             get {
-                return ResourceManager.GetString("String_Setting_Header_Keyboard", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Keyboard_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   groups に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Header_LauncherGroups {
+        public static string String_Setting_LauncherGroups_Header {
             get {
-                return ResourceManager.GetString("String_Setting_Header_LauncherGroups", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   items に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Header_LauncherItems {
+        public static string String_Setting_LauncherItems_Header {
             get {
-                return ResourceManager.GetString("String_Setting_Header_LauncherItems", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherItems_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   toolbars に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Header_LauncherToolbars {
+        public static string String_Setting_LauncherToolbars_Header {
             get {
-                return ResourceManager.GetString("String_Setting_Header_LauncherToolbars", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Header", resourceCulture);
             }
         }
         

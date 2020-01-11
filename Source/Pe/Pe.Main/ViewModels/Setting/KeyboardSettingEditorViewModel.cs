@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region SettingEditorViewModelBase
 
-        public override string Header => Properties.Resources.String_Setting_Header_Keyboard;
+        public override string Header => Properties.Resources.String_Setting_Keyboard_Header;
 
         public override void Flush()
         {

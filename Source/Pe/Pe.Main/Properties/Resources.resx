@@ -500,40 +500,49 @@
   <data name="String_Note_Status_Label_WordWrap" xml:space="preserve">
     <value>右端で折り返す</value>
   </data>
-  <data name="String_Setting_General_Header_Command" xml:space="preserve">
+  <data name="String_Screen_Caption" xml:space="preserve">
+    <value>ディスプレイ識別</value>
+  </data>
+  <data name="String_Screen_Close_Message" xml:space="preserve">
+    <value>マウスクリックかキー入力(どれでも)でディスプレイ識別ウィンドウを閉じてください</value>
+  </data>
+  <data name="String_Screen_Primary" xml:space="preserve">
+    <value>メインディスプレイ</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Header" xml:space="preserve">
     <value>command</value>
   </data>
-  <data name="String_Setting_General_Header_Execute" xml:space="preserve">
+  <data name="String_Setting_Generals_Execute_Header" xml:space="preserve">
     <value>execute</value>
   </data>
-  <data name="String_Setting_General_Header_General" xml:space="preserve">
+  <data name="String_Setting_Generals_General_Header" xml:space="preserve">
     <value>general</value>
   </data>
-  <data name="String_Setting_General_Header_Note" xml:space="preserve">
+  <data name="String_Setting_Generals_Header" xml:space="preserve">
+    <value>general</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Header" xml:space="preserve">
     <value>note</value>
   </data>
-  <data name="String_Setting_General_Header_StandardInputOutput" xml:space="preserve">
+  <data name="String_Setting_Generals_StandardInputOutput_Header" xml:space="preserve">
     <value>stdio</value>
   </data>
-  <data name="String_Setting_General_Header_Update" xml:space="preserve">
+  <data name="String_Setting_Generals_Update_Header" xml:space="preserve">
     <value>update</value>
   </data>
-  <data name="String_Setting_General_Header_Window" xml:space="preserve">
+  <data name="String_Setting_Generals_Window_Header" xml:space="preserve">
     <value>window</value>
   </data>
-  <data name="String_Setting_Header_General" xml:space="preserve">
-    <value>general</value>
-  </data>
-  <data name="String_Setting_Header_Keyboard" xml:space="preserve">
+  <data name="String_Setting_Keyboard_Header" xml:space="preserve">
     <value>keyboard</value>
   </data>
-  <data name="String_Setting_Header_LauncherGroups" xml:space="preserve">
+  <data name="String_Setting_LauncherGroups_Header" xml:space="preserve">
     <value>groups</value>
   </data>
-  <data name="String_Setting_Header_LauncherItems" xml:space="preserve">
+  <data name="String_Setting_LauncherItems_Header" xml:space="preserve">
     <value>items</value>
   </data>
-  <data name="String_Setting_Header_LauncherToolbars" xml:space="preserve">
+  <data name="String_Setting_LauncherToolbars_Header" xml:space="preserve">
     <value>toolbars</value>
   </data>
   <data name="String_StandardInputOutput_Caption" xml:space="preserve">
