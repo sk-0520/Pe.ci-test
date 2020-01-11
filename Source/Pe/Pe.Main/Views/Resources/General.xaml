@@ -208,12 +208,6 @@
     <Setter Property="Margin" Value="10,2,20,2" />
   </Style>
 
-  <Style x:Key="Path-FontIcon" TargetType="ContentControl">
-    <Setter Property="Template" Value="{StaticResource Path-Small}" />
-    <Setter Property="Foreground" Value="Transparent" />
-    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-  </Style>
-
   <Style x:Key="Path-MenuIcon" TargetType="ContentControl">
     <Setter Property="Template" Value="{StaticResource Path-Small}" />
     <Setter Property="Foreground" Value="Transparent" />

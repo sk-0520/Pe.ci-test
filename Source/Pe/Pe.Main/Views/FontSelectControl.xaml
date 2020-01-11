@@ -42,16 +42,16 @@
       </ComboBox.ItemsPanel>
       <ComboBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Height="20" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
+          <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
     <DockPanel HorizontalAlignment="Stretch" Width="Auto">
       <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsBold, ElementName=root}" IsEnabled="{Binding IsEnabledBold, ElementName=root}">
-        <ContentControl Content="{StaticResource App-Path-Font-Bold}" Style="{StaticResource Path-FontIcon}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-ImageFont-Bold}" />
       </ToggleButton>
       <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, ElementName=root}" IsEnabled="{Binding IsEnabledItalic, ElementName=root}">
-        <ContentControl Content="{StaticResource App-Path-Font-Italic}" Style="{StaticResource Path-FontIcon}" />
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-ImageFont-Italic}" />
       </ToggleButton>
       <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, ElementName=root}" />
       <!--<xctk:DoubleUpDown Minimum="{Binding SizeMinimum, ElementName=root}" Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, ElementName=root}" />-->
