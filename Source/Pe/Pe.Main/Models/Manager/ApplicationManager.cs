@@ -104,7 +104,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
         CommandElement CommandElement { get; }
-        SettingContainerElement? SettingElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
@@ -118,6 +117,137 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
 
         #region function
+
+        /// <summary>
+        /// すべてここで完結する神の所業。
+        /// </summary>
+        public void ShowSettingView()
+        {
+            StopHook();
+            UninitializeSystem();
+
+            if(CommandElement.ViewCreated) {
+                CommandElement.HideView(true);
+            }
+
+            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+
+            Logger.LogDebug("遅延書き込み処理停止");
+            var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
+            var lazyWriterItemMap = new Dictionary<IDatabaseLazyWriter, IDisposable>();
+            foreach(var lazyWriter in lazyWriterPack.Items) {
+                lazyWriter.Flush();
+                var pausing = lazyWriter.Pause();
+                lazyWriterItemMap.Add(lazyWriter, pausing);
+            }
+
+            // 現在DBを編集用として再構築
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var settingDirectory = environmentParameters.SettingTemporaryDirectory;
+            var directoryCleaner = new DirectoryCleaner(settingDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
+            directoryCleaner.Clear(false);
+
+            var settings = new {
+                Main = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.MainFile.Name)),
+                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name)),
+            };
+            //var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
+            //var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
+
+            environmentParameters.MainFile.CopyTo(settings.Main.FullName);
+            environmentParameters.FileFile.CopyTo(settings.File.FullName);
+
+            // DIを設定処理用に付け替え
+            var container = ApplicationDiContainer.Scope();
+            var factory = new ApplicationDatabaseFactoryPack(
+                new ApplicationDatabaseFactory(settings.Main),
+                new ApplicationDatabaseFactory(settings.File),
+                new ApplicationDatabaseFactory()
+            );
+            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
+
+            container
+                .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
+                .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
+            ;
+
+            var settingElement = container.Build<SettingContainerElement>();
+            settingElement.Initialize();
+            var windowItem = OrderManager.CreateSettingWindow(settingElement);
+            var dialogResult = windowItem.Window.ShowDialog();
+
+            if(settingElement.IsSubmit) {
+                Logger.LogInformation("設定適用のため現在表示要素の破棄");
+                CloseViews();
+                DisposeElements();
+
+                // 設定用DBを永続用DBと切り替え
+                var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
+                var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
+                    .Select(i => i.StopConnection())
+                    .ToList()
+                ;
+
+                // バックアップ処理開始
+                string userBackupDirectoryPath;
+                using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
+                    var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+                    userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
+                }
+                try {
+                    BackupSettings(
+                        environmentParameters.UserSettingDirectory,
+                        environmentParameters.UserBackupDirectory,
+                        DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
+                        environmentParameters.Configuration.Backup.SettingCount,
+                        userBackupDirectoryPath
+                    );
+                } catch(Exception ex) {
+                    Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
+                }
+
+                var accessorPack = container.Get<IDatabaseAccessorPack>();
+                var databaseSetupper = container.Build<DatabaseSetupper>();
+                foreach(var accessor in accessorPack.Items) {
+                    databaseSetupper.Tune(accessor);
+                }
+
+                settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
+                settings.File.CopyTo(environmentParameters.FileFile.FullName, true);
+
+                foreach(var stopping in stoppings) {
+                    stopping.Dispose();
+                }
+                var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Current);
+                cultureServiceChanger.ChangeCulture();
+
+                Logger.LogInformation("設定適用のため各要素生成");
+                RebuildHook();
+                ExecuteElements();
+                CommandElement.Refresh();
+            } else {
+                Logger.LogInformation("設定は保存されなかったため現在要素継続");
+            }
+            StartHook();
+            InitializeSystem();
+
+            Logger.LogDebug("遅延書き込み処理再開");
+            foreach(var pair in lazyWriterItemMap) {
+                if(settingElement.IsSubmit) {
+                    // 確定処理の書き込みが天に召されるのでため込んでいた処理(ないはず)を消す
+                    pair.Key.ClearStock();
+                }
+                pair.Value.Dispose();
+            }
+
+            if(changing.Success) {
+                changing.SuccessValue?.Dispose();
+            }
+
+            settingElement.Dispose();
+            container.UnregisterDatabase();
+            container.Dispose();
+        }
 
         void ShowStartupView()
         {
@@ -545,150 +675,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CommandElement.StartView();
         }
 
-        /// <summary>
-        /// すべてここで完結する神の所業。
-        /// </summary>
-        public void ShowSettingView()
-        {
-            if(SettingElement != null) {
-                Logger.LogWarning("せっていちゅう");
-                return;
-            }
-
-            StopHook();
-            UninitializeSystem();
-
-            if(CommandElement.ViewCreated) {
-                CommandElement.HideView(true);
-            }
-
-            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
-
-            Logger.LogDebug("遅延書き込み処理停止");
-            var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
-            var lazyWriterItemMap = new Dictionary<IDatabaseLazyWriter, IDisposable>();
-            foreach(var lazyWriter in lazyWriterPack.Items) {
-                lazyWriter.Flush();
-                var pausing = lazyWriter.Pause();
-                lazyWriterItemMap.Add(lazyWriter, pausing);
-            }
-
-            // 現在DBを編集用として再構築
-            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
-            var settingDirectory = environmentParameters.SettingTemporaryDirectory;
-            var directoryCleaner = new DirectoryCleaner(settingDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
-            directoryCleaner.Clear(false);
-
-            var settings = new {
-                Main = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.MainFile.Name)),
-                File = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name)),
-            };
-            //var settingDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.SettingFile.Name));
-            //var fileDatabaseFile = new FileInfo(Path.Combine(settingDirectory.FullName, environmentParameters.FileFile.Name));
-
-            environmentParameters.MainFile.CopyTo(settings.Main.FullName);
-            environmentParameters.FileFile.CopyTo(settings.File.FullName);
-
-            // DIを設定処理用に付け替え
-            var container = ApplicationDiContainer.Scope();
-            var factory = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(settings.Main),
-                new ApplicationDatabaseFactory(settings.File),
-                new ApplicationDatabaseFactory()
-            );
-            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
-
-            container
-                .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
-                .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
-            ;
-
-            SettingElement = container.Build<SettingContainerElement>();
-            SettingElement.Closed += Element_Closed;
-            SettingElement.Initialize();
-            SettingElement.StartView();
-
-            void Element_Closed(object? sender, System.EventArgs e)
-            {
-                Debug.Assert(SettingElement == sender);
-                Debug.Assert(SettingElement != null);
-
-                SettingElement.Closed -= Element_Closed;
-
-                if(SettingElement.IsSubmit) {
-                    Logger.LogInformation("設定適用のため現在表示要素の破棄");
-                    CloseViews();
-                    DisposeElements();
-
-                    // 設定用DBを永続用DBと切り替え
-                    var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
-                    var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
-                        .Select(i => i.StopConnection())
-                        .ToList()
-                    ;
-
-                    // バックアップ処理開始
-                    string userBackupDirectoryPath;
-                    using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
-                        var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
-                        userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
-                    }
-                    try {
-                        BackupSettings(
-                            environmentParameters.UserSettingDirectory,
-                            environmentParameters.UserBackupDirectory,
-                            DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
-                            environmentParameters.Configuration.Backup.SettingCount,
-                            userBackupDirectoryPath
-                        );
-                    } catch(Exception ex) {
-                        Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
-                    }
-
-                    var accessorPack = container.Get<IDatabaseAccessorPack>();
-                    var databaseSetupper = container.Build<DatabaseSetupper>();
-                    foreach(var accessor in accessorPack.Items) {
-                        databaseSetupper.Tune(accessor);
-                    }
-
-                    settings.Main.CopyTo(environmentParameters.MainFile.FullName, true);
-                    settings.File.CopyTo(environmentParameters.FileFile.FullName, true);
-
-                    foreach(var stopping in stoppings) {
-                        stopping.Dispose();
-                    }
-                    var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Current);
-                    cultureServiceChanger.ChangeCulture();
-
-                    Logger.LogInformation("設定適用のため各要素生成");
-                    RebuildHook();
-                    ExecuteElements();
-                    CommandElement.Refresh();
-                } else {
-                    Logger.LogInformation("設定は保存されなかったため現在要素継続");
-                }
-                StartHook();
-                InitializeSystem();
-
-                Logger.LogDebug("遅延書き込み処理再開");
-                foreach(var pair in lazyWriterItemMap) {
-                    if(SettingElement.IsSubmit) {
-                        // 確定処理の書き込みが天に召されるのでため込んでいた処理(ないはず)を消す
-                        pair.Key.ClearStock();
-                    }
-                    pair.Value.Dispose();
-                }
-
-                if(changing.Success) {
-                    changing.SuccessValue?.Dispose();
-                }
-
-                SettingElement.Dispose();
-                SettingElement = null;
-                container.UnregisterDatabase();
-                container.Dispose();
-            }
-        }
 
         void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount, string userBackupDirectoryPath)
         {

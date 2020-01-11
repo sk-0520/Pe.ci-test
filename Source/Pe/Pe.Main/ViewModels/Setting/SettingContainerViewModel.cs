@@ -17,7 +17,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class SettingContainerViewModel : SingleModelViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
+    public class SettingContainerViewModel : SingleModelViewModelBase<SettingContainerElement>
     {
         #region variable
 
@@ -111,21 +111,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public void ReceiveViewLoaded(Window window)
         {
             SelectedEditor.Load();
-        }
-
-        public void ReceiveViewUserClosing(CancelEventArgs e)
-        {
-            e.Cancel = !Model.ReceiveViewUserClosing();
-        }
-
-        public void ReceiveViewClosing(CancelEventArgs e)
-        {
-            e.Cancel = !Model.ReceiveViewClosing();
-        }
-
-        public void ReceiveViewClosed()
-        {
-            Model.ReceiveViewClosed();
         }
 
         #endregion

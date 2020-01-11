@@ -18,14 +18,8 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class SettingContainerElement : ContextElementBase, IViewShowStarter, IViewCloseReceiver
+    public class SettingContainerElement : ContextElementBase
     {
-        #region event
-
-        public event EventHandler? Closed;
-
-        #endregion
-
         #region variable
 
         bool _isVisible;
@@ -57,8 +51,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         ///<para>みんなで共有する。</para>
         /// </summary>
         public ObservableCollection<LauncherItemSettingEditorElement> AllLauncherItems { get; } = new ObservableCollection<LauncherItemSettingEditorElement>();
-
-        bool ViewCreated { get; set; }
 
         public bool IsVisible
         {
@@ -143,52 +135,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         #endregion
-
-        #region IViewShowStarter
-
-        public bool CanStartShowView
-        {
-            get
-            {
-                if(ViewCreated) {
-                    return false;
-                }
-
-                return IsVisible;
-            }
-        }
-
-        public void StartView()
-        {
-            var windowItem = ServiceLocator.Get<IOrderManager>().CreateSettingWindow(this);
-            windowItem.Window.Show();
-
-            ViewCreated = true;
-        }
-
-        #endregion
-
-        #region IViewCloseReceiver
-
-        public bool ReceiveViewUserClosing()
-        {
-            return true;
-        }
-
-        public bool ReceiveViewClosing()
-        {
-            return true;
-        }
-
-        public void ReceiveViewClosed()
-        {
-            ViewCreated = false;
-
-            Closed?.Invoke(this, new EventArgs());
-        }
-
-
-        #endregion
-
     }
 }
