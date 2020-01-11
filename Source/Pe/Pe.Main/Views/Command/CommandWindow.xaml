@@ -12,14 +12,17 @@
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_viewmodels_iconviewer="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.IconViewer"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
   Icon="/Resources/Icon/App.ico"
-  Title="CommandWindow"
 
   AllowsTransparency="True"
   WindowStyle="None"
+  ResizeMode="CanResize"
   Background="Transparent"
   SizeToContent="Height"
+  ShowInTaskbar="False"
   MinWidth="100"
   MaxWidth="400"
   Topmost="True"
@@ -34,6 +37,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_core_views_converter:IconBoxToWidthConverter x:Key="IconBoxToWidthConverter" />
     <app_core_views_converter:IconBoxToHeightConverter x:Key="IconBoxToHeightConverter" />
+    <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
 
     <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconViewerViewModel}">
       <app_main_views:ImageViewerControl IconViewer="{Binding }" />
@@ -52,6 +56,9 @@
       </Setter>
     </Style>
   </Window.Style>
+  <Window.Title>
+    <Binding Path="Resources.String_Command_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+  </Window.Title>
 
   <i:Interaction.Triggers>
     <app_core_views:RequestTrigger SourceObject="{Binding ScrollSelectedItemRequest}">
@@ -247,6 +254,7 @@
       <Border
         Grid.Column="3"
         Margin="{Binding SelectedIconMargin}"
+        ToolTip="{Binding Resources.String_Command_Tooltip_Execute, Source={x:Static app_main:CultureService.Current}}"
       >
         <Button
         Focusable="False"

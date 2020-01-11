@@ -315,6 +315,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   コマンドランチャー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Command_Caption {
+            get {
+                return ResourceManager.GetString("String_Command_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンドを実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Command_Tooltip_Execute {
+            get {
+                return ResourceManager.GetString("String_Command_Tooltip_Execute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   キャンセル(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Command_Cancel {

@@ -58,6 +58,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         #region Window
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            UIUtility.SetToolWindowStyle(this, false, false);
+        }
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);

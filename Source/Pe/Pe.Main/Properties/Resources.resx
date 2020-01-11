@@ -188,6 +188,12 @@
   <data name="String_AppManager_Menu_Toolbar" xml:space="preserve">
     <value>ツールバー(_T)</value>
   </data>
+  <data name="String_Command_Caption" xml:space="preserve">
+    <value>コマンドランチャー</value>
+  </data>
+  <data name="String_Command_Tooltip_Execute" xml:space="preserve">
+    <value>コマンドを実行</value>
+  </data>
   <data name="String_Common_Command_Cancel" xml:space="preserve">
     <value>キャンセル(_C)</value>
   </data>
