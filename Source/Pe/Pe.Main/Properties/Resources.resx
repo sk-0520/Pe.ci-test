@@ -335,6 +335,105 @@
   <data name="String_LauncherItem_NewItem_Name" xml:space="preserve">
     <value>新しいアイテム</value>
   </data>
+  <data name="String_Note_Busy" xml:space="preserve">
+    <value>処理中...</value>
+  </data>
+  <data name="String_Note_Caption_Tooltip_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="String_Note_Caption_Tooltip_ToggleCompact" xml:space="preserve">
+    <value>最小化切り替え</value>
+  </data>
+  <data name="String_Note_Caption_Tooltip_ToggleTopmost" xml:space="preserve">
+    <value>最前面切り替え</value>
+  </data>
+  <data name="String_Note_Format_Header" xml:space="preserve">
+    <value>フォーマット</value>
+  </data>
+  <data name="String_Note_Format_Label_Background" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="String_Note_Format_Label_Font" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="String_Note_Format_Label_Foreground" xml:space="preserve">
+    <value>前景</value>
+  </data>
+  <data name="String_Note_Format_Label_Kind" xml:space="preserve">
+    <value>種別</value>
+  </data>
+  <data name="String_Note_Format_Label_Kind_Plain" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="String_Note_Format_Label_Kind_RichText" xml:space="preserve">
+    <value>RTF</value>
+  </data>
+  <data name="String_Note_Format_Label_Layout" xml:space="preserve">
+    <value>位置</value>
+  </data>
+  <data name="String_Note_Format_Label_Layout_Absolute" xml:space="preserve">
+    <value>絶対</value>
+  </data>
+  <data name="String_Note_Format_Label_Layout_Relative" xml:space="preserve">
+    <value>相対</value>
+  </data>
+  <data name="String_Note_KindChanging_Change" xml:space="preserve">
+    <value>${FROM-KIND} から ${TO-KIND} への変換により一部情報が失われます</value>
+  </data>
+  <data name="String_Note_KindChanging_Command_Convert" xml:space="preserve">
+    <value>変換(_T)</value>
+  </data>
+  <data name="String_Note_Link_Command_Delete" xml:space="preserve">
+    <value>ファイルを削除してリンク切断</value>
+  </data>
+  <data name="String_Note_Link_Command_OpenLink" xml:space="preserve">
+    <value>ファイルからリンク作成</value>
+  </data>
+  <data name="String_Note_Link_Command_SaveLink" xml:space="preserve">
+    <value>入力内容からリンク作成</value>
+  </data>
+  <data name="String_Note_Link_Command_Unlink" xml:space="preserve">
+    <value>リンク切断</value>
+  </data>
+  <data name="String_Note_Link_Linking" xml:space="preserve">
+    <value>リンクされています</value>
+  </data>
+  <data name="String_Note_Link_NotLinking" xml:space="preserve">
+    <value>リンクされていません</value>
+  </data>
+  <data name="String_Note_Operation_Command_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="String_Note_Operation_Command_Copy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="String_Note_Operation_Command_Remove_Confirm" xml:space="preserve">
+    <value>削除？</value>
+  </data>
+  <data name="String_Note_Operation_Command_Remove_Execute" xml:space="preserve">
+    <value>削除！</value>
+  </data>
+  <data name="String_Note_Operation_Header" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="String_Note_Status_Command_Link" xml:space="preserve">
+    <value>リンク</value>
+  </data>
+  <data name="String_Note_Status_Header" xml:space="preserve">
+    <value>状態</value>
+  </data>
+  <data name="String_Note_Status_Label_Compact" xml:space="preserve">
+    <value>最小化</value>
+  </data>
+  <data name="String_Note_Status_Label_Lock" xml:space="preserve">
+    <value>固定</value>
+  </data>
+  <data name="String_Note_Status_Label_Topmost" xml:space="preserve">
+    <value>最前面</value>
+  </data>
+  <data name="String_Note_Status_Label_WordWrap" xml:space="preserve">
+    <value>右端で折り返す</value>
+  </data>
   <data name="String_Setting_General_Header_Command" xml:space="preserve">
     <value>command</value>
   </data>

@@ -72,6 +72,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class LauncherExecutePathParameter: ILauncherExecutePathParameter
+    {
+        public LauncherExecutePathParameter(string path, string option, string workDirectoryPath)
+        {
+            Path = path;
+            Option = option;
+            WorkDirectoryPath = workDirectoryPath;
+        }
+
+        #region ILauncherExecutePathParameter
+
+        public string Path { get; set; }
+        public string Option { get; set; }
+        public string WorkDirectoryPath { get; set; }
+
+        #endregion
+    }
+
     public interface ILauncherExecuteCustomParameter
     {
         #region property

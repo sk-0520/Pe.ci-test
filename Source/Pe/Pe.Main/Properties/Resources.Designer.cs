@@ -757,6 +757,303 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   処理中... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Busy {
+            get {
+                return ResourceManager.GetString("String_Note_Busy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   閉じる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Caption_Tooltip_Close {
+            get {
+                return ResourceManager.GetString("String_Note_Caption_Tooltip_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化切り替え に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Caption_Tooltip_ToggleCompact {
+            get {
+                return ResourceManager.GetString("String_Note_Caption_Tooltip_ToggleCompact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面切り替え に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Caption_Tooltip_ToggleTopmost {
+            get {
+                return ResourceManager.GetString("String_Note_Caption_Tooltip_ToggleTopmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォーマット に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Header {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   背景 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Background {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Font {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前景 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Foreground {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Foreground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種別 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Kind {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   テキスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Kind_Plain {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Kind_Plain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   RTF に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Kind_RichText {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Kind_RichText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Layout {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   絶対 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Layout_Absolute {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Layout_Absolute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   相対 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Label_Layout_Relative {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Label_Layout_Relative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${FROM-KIND} から ${TO-KIND} への変換により一部情報が失われます に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_KindChanging_Change {
+            get {
+                return ResourceManager.GetString("String_Note_KindChanging_Change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   変換(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_KindChanging_Command_Convert {
+            get {
+                return ResourceManager.GetString("String_Note_KindChanging_Command_Convert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルを削除してリンク切断 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_Command_Delete {
+            get {
+                return ResourceManager.GetString("String_Note_Link_Command_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルからリンク作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_Command_OpenLink {
+            get {
+                return ResourceManager.GetString("String_Note_Link_Command_OpenLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   入力内容からリンク作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_Command_SaveLink {
+            get {
+                return ResourceManager.GetString("String_Note_Link_Command_SaveLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リンク切断 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_Command_Unlink {
+            get {
+                return ResourceManager.GetString("String_Note_Link_Command_Unlink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リンクされています に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_Linking {
+            get {
+                return ResourceManager.GetString("String_Note_Link_Linking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リンクされていません に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_NotLinking {
+            get {
+                return ResourceManager.GetString("String_Note_Link_NotLinking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   閉じる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Operation_Command_Close {
+            get {
+                return ResourceManager.GetString("String_Note_Operation_Command_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Operation_Command_Copy {
+            get {
+                return ResourceManager.GetString("String_Note_Operation_Command_Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Operation_Command_Remove_Confirm {
+            get {
+                return ResourceManager.GetString("String_Note_Operation_Command_Remove_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除！ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Operation_Command_Remove_Execute {
+            get {
+                return ResourceManager.GetString("String_Note_Operation_Command_Remove_Execute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   操作 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Operation_Header {
+            get {
+                return ResourceManager.GetString("String_Note_Operation_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リンク に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_Command_Link {
+            get {
+                return ResourceManager.GetString("String_Note_Status_Command_Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   状態 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_Header {
+            get {
+                return ResourceManager.GetString("String_Note_Status_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_Label_Compact {
+            get {
+                return ResourceManager.GetString("String_Note_Status_Label_Compact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   固定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_Label_Lock {
+            get {
+                return ResourceManager.GetString("String_Note_Status_Label_Lock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_Label_Topmost {
+            get {
+                return ResourceManager.GetString("String_Note_Status_Label_Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右端で折り返す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_Label_WordWrap {
+            get {
+                return ResourceManager.GetString("String_Note_Status_Label_WordWrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   command に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_General_Header_Command {

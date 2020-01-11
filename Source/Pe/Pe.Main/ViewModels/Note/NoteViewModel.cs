@@ -30,6 +30,7 @@ using ContentTypeTextNet.Pe.Main.Models.Note;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -333,18 +334,36 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public bool ShowContentKindChangeConfim
         {
             get => this._showContentKindChangeConfim;
-            set => SetProperty(ref this._showContentKindChangeConfim, value);
+            set
+            {
+                SetProperty(ref this._showContentKindChangeConfim, value);
+                if(ShowContentKindChangeConfim) {
+                    RaisePropertyChanged(nameof(ChangingContentKindMessage));
+                }
+            }
         }
+        public string ChangingContentKindMessage
+        {
+            get
+            {
+                return TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_Note_KindChanging_Change,
+                    new Dictionary<string, string>() {
+                        //TODO: ローカライズ
+                        ["FROM-KIND"] = ContentKind.ToString(),
+                        ["TO-KIND"] = ChangingContentKind.ToString(),
+                    }
+                );
+            }
+        }
+
+        #endregion
 
         public bool ShowLinkChangeConfim
         {
             get => this._showLinkChangeConfim;
             private set => SetProperty(ref this._showLinkChangeConfim, value);
         }
-        //bool CanLoadContentKind { get; set; }
-
-        #endregion
-
 
         #endregion
 
@@ -487,6 +506,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             () => !IsLink
         ).ObservesProperty(() => IsLink));
 
+        public ICommand OpenLinkFileDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                if(string.IsNullOrWhiteSpace(LinkPath)) {
+                    Logger.LogWarning("リンク未設定");
+                    return;
+                }
+
+                try {
+                    var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
+                    var parameter = new LauncherExecutePathParameter(LinkPath, string.Empty, string.Empty);
+                    var result = launcherExecutor.OpenParentDirectory(LauncherItemKind.File, parameter);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+        ));
 
         #endregion
 
