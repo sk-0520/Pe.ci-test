@@ -59,7 +59,7 @@
                       </Grid.ColumnDefinitions>
 
                       <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding SourceKey}" IsVisibleModifierKey="False" />
-                      <TextBlock Grid.Row="0" Grid.Column="1" Text="-&gt;" />
+                      <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Resources.String_Setting_Keyboard_Replace_To, Source={x:Static app_main:CultureService.Current}}" />
                       <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="2" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding ReplaceKey}" IsVisibleModifierKey="False" />
                     </Grid>
                   </Expander.Header>
@@ -184,7 +184,10 @@
             </StackPanel>
 
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardCommandJobSettingEditorViewModel}">
-              <Expander x:Name="item" Header="command">
+              <Expander x:Name="item">
+                <Expander.Header>
+                  <TextBlock Text="{Binding Resources.String_Setting_Keyboard_Pressed_Command_Header, Source={x:Static app_main:CultureService.Current}}" />
+                </Expander.Header>
                 <StackPanel>
                   <ContentControl Content="{StaticResource Mappings}" />
                   <ContentControl Content="{StaticResource Common}" />
@@ -201,7 +204,7 @@
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="launcher item" />
+                    <TextBlock Grid.Column="0" Text="{Binding Resources.String_Setting_Keyboard_Pressed_LauncherItem_Header, Source={x:Static app_main:CultureService.Current}}" />
                     <ComboBox Grid.Column="1" ItemsSource="{Binding AllLauncherItems}" SelectedItem="{Binding LauncherItem}">
                       <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -242,7 +245,10 @@
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardLauncherToolbarJobSettingEditorViewModel}">
-              <Expander x:Name="item" Header="hide toolbar">
+              <Expander x:Name="item">
+                <Expander.Header>
+                  <TextBlock Text="{Binding Resources.String_Setting_Keyboard_Pressed_Toolbar_Header, Source={x:Static app_main:CultureService.Current}}" />
+                </Expander.Header>
                 <StackPanel>
                   <ContentControl Content="{StaticResource Mappings}" />
                   <ContentControl Content="{StaticResource Common}" />
@@ -258,8 +264,7 @@
                       <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" Text="note" />
+                    <TextBlock Grid.Column="0" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Note_Header, Source={x:Static app_main:CultureService.Current}}" />
                     <ComboBox Grid.Column="1" ItemsSource="{Binding ContentItems}" SelectedItem="{Binding Content}">
                       <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>

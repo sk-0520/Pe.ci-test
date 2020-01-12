@@ -1774,6 +1774,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   コマンド型ランチャー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Command_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Command_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   押下 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Header {
@@ -1837,6 +1846,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ランチャーアイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_LauncherItem_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_LauncherItem_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Note_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Note_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Toolbar_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Toolbar_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   置換 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Replace_Header {
@@ -1851,6 +1887,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Keyboard_Replace_Label_Add {
             get {
                 return ResourceManager.GetString("String_Setting_Keyboard_Replace_Label_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   → に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Replace_To {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Replace_To", resourceCulture);
             }
         }
         

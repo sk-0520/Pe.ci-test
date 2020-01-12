@@ -674,6 +674,9 @@
   <data name="String_Setting_Keyboard_Ignore_Label_Add" xml:space="preserve">
     <value>追加</value>
   </data>
+  <data name="String_Setting_Keyboard_Pressed_Command_Header" xml:space="preserve">
+    <value>コマンド型ランチャー</value>
+  </data>
   <data name="String_Setting_Keyboard_Pressed_Header" xml:space="preserve">
     <value>押下</value>
   </data>
@@ -688,6 +691,7 @@
   </data>
   <data name="String_Setting_Keyboard_Pressed_Label_Add_Toolbar" xml:space="preserve">
     <value>ツールバー非表示追加</value>
+    <comment>ツールバー処理増加に伴い内容変更の可能性あり</comment>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Label_ConveySystem" xml:space="preserve">
     <value>システムへ通知</value>
@@ -695,11 +699,24 @@
   <data name="String_Setting_Keyboard_Pressed_Label_Forever" xml:space="preserve">
     <value>永久</value>
   </data>
+  <data name="String_Setting_Keyboard_Pressed_LauncherItem_Header" xml:space="preserve">
+    <value>ランチャーアイテム</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Note_Header" xml:space="preserve">
+    <value>ノート</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Toolbar_Header" xml:space="preserve">
+    <value>ツールバー非表示</value>
+    <comment>ツールバー処理増加に伴い内容変更の可能性あり</comment>
+  </data>
   <data name="String_Setting_Keyboard_Replace_Header" xml:space="preserve">
     <value>置換</value>
   </data>
   <data name="String_Setting_Keyboard_Replace_Label_Add" xml:space="preserve">
     <value>追加</value>
+  </data>
+  <data name="String_Setting_Keyboard_Replace_To" xml:space="preserve">
+    <value>→</value>
   </data>
   <data name="String_Setting_Keyboard_Tooltip_Remove" xml:space="preserve">
     <value>💩削除</value>
