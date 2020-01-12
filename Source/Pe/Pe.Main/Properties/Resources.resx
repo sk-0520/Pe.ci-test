@@ -515,6 +515,9 @@
   <data name="String_Screen_Primary" xml:space="preserve">
     <value>メインディスプレイ</value>
   </data>
+  <data name="String_Setting_Caption" xml:space="preserve">
+    <value>設定</value>
+  </data>
   <data name="String_Setting_Generals_Command_Header" xml:space="preserve">
     <value>コマンド型ランチャー</value>
   </data>
@@ -674,11 +677,17 @@
   <data name="String_Setting_Keyboard_Ignore_Label_Add" xml:space="preserve">
     <value>追加</value>
   </data>
+  <data name="String_Setting_Keyboard_Pressed_Command_AddMapping" xml:space="preserve">
+    <value>マッピング追加</value>
+  </data>
   <data name="String_Setting_Keyboard_Pressed_Command_Header" xml:space="preserve">
     <value>コマンド型ランチャー</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Header" xml:space="preserve">
     <value>押下</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Label_Add" xml:space="preserve">
+    <value>追加</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Label_Add_Command" xml:space="preserve">
     <value>コマンド型ランチャー追加</value>

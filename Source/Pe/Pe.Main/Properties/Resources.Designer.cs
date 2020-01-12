@@ -1297,6 +1297,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Caption {
+            get {
+                return ResourceManager.GetString("String_Setting_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンド型ランチャー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Command_Header {
@@ -1774,6 +1783,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   マッピング追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Command_AddMapping {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Command_AddMapping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンド型ランチャー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Command_Header {
@@ -1788,6 +1806,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Keyboard_Pressed_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Label_Add {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add", resourceCulture);
             }
         }
         

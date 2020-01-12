@@ -18,6 +18,11 @@
 >
   <UserControl.Resources>
     <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+
+    <Style x:Key="ExpanderHeaderInner" TargetType="FrameworkElement">
+      <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}, Mode=OneWayToSource}" />
+      <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -34,7 +39,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0">
+      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
         <Label  Content="{Binding Resources.String_Setting_Keyboard_Replace_Header, Source={x:Static app_main:CultureService.Current}}" />
         <Button Content="{Binding Resources.String_Setting_Keyboard_Replace_Label_Add, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddReplaceJobCommand, ElementName=root}" />
       </ToolBar>
@@ -51,7 +56,7 @@
               <Grid>
                 <Expander>
                   <Expander.Header>
-                    <Grid>
+                    <Grid Style="{StaticResource ExpanderHeaderInner}">
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -85,7 +90,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0">
+      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
         <Label  Content="{Binding Resources.String_Setting_Keyboard_Ignore_Header, Source={x:Static app_main:CultureService.Current}}" />
         <Button Content="{Binding Resources.String_Setting_Keyboard_Ignore_Label_Add, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
       </ToolBar>
@@ -102,7 +107,7 @@
               <Grid>
                 <Expander>
                   <Expander.Header>
-                    <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.DisableKeyItems, ElementName=root}" Key="{Binding Key}" IsVisibleModifierKey="False" />
+                    <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0"  Style="{StaticResource ExpanderHeaderInner}" KeyItemsSource="{Binding Editor.DisableKeyItems, ElementName=root}" Key="{Binding Key}" IsVisibleModifierKey="False" />
                   </Expander.Header>
                   <Expander.Content>
                     <StackPanel>
@@ -127,10 +132,10 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0">
+      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
         <Label  Content="{Binding Resources.String_Setting_Keyboard_Pressed_Header, Source={x:Static app_main:CultureService.Current}}" />
         <Grid>
-          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="add" />
+          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Label_Add, Source={x:Static app_main:CultureService.Current}}" />
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateJob}">
             <Border Style="{StaticResource PopupMenuBorder}">
               <StackPanel>
@@ -175,7 +180,7 @@
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
-              <Button Content="add mapping" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
+              <Button Content="{Binding Resources.String_Setting_Keyboard_Pressed_Command_AddMapping, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
             </StackPanel>
             <StackPanel x:Key="Common" x:Shared="False">
               <CheckBox Content="{Binding Resources.String_Setting_Keyboard_Pressed_Label_ConveySystem, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ConveySystem}" />
@@ -186,7 +191,7 @@
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardCommandJobSettingEditorViewModel}">
               <Expander x:Name="item">
                 <Expander.Header>
-                  <TextBlock Text="{Binding Resources.String_Setting_Keyboard_Pressed_Command_Header, Source={x:Static app_main:CultureService.Current}}" />
+                  <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Command_Header, Source={x:Static app_main:CultureService.Current}}" />
                 </Expander.Header>
                 <StackPanel>
                   <ContentControl Content="{StaticResource Mappings}" />
@@ -198,7 +203,7 @@
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardLauncherItemJobSettingEditorViewModel}">
               <Expander x:Name="item">
                 <Expander.Header>
-                  <Grid>
+                  <Grid Style="{StaticResource ExpanderHeaderInner}">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
@@ -247,7 +252,7 @@
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardLauncherToolbarJobSettingEditorViewModel}">
               <Expander x:Name="item">
                 <Expander.Header>
-                  <TextBlock Text="{Binding Resources.String_Setting_Keyboard_Pressed_Toolbar_Header, Source={x:Static app_main:CultureService.Current}}" />
+                  <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Toolbar_Header, Source={x:Static app_main:CultureService.Current}}" />
                 </Expander.Header>
                 <StackPanel>
                   <ContentControl Content="{StaticResource Mappings}" />
@@ -259,7 +264,7 @@
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardNoteJobSettingEditorViewModel}">
               <Expander x:Name="item">
                 <Expander.Header>
-                  <Grid>
+                  <Grid Style="{StaticResource ExpanderHeaderInner}">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />

@@ -11,15 +11,27 @@
   xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
   xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
   Icon="/Resources/Icon/App.ico"
-  Title="SettingWindow"
   Width="800"
   Height="450"
+  WindowStartupLocation="CenterScreen"
+  ResizeMode="CanResizeWithGrip"
+
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
+  <Window.Resources>
+    <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+  </Window.Resources>
+  <Window.Title>
+    <Binding Path="Resources.String_Setting_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+  </Window.Title>
   <i:Interaction.Triggers>
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
@@ -75,9 +87,9 @@
       </TabItem>
     </TabControl>
 
-    <StackPanel Grid.Row="1" Orientation="Horizontal">
-      <Button Content="ok" Command="{Binding SubmitCommand}" />
-      <Button Content="cancel" Command="{Binding CloseCommand, ElementName=root}" />
-    </StackPanel>
+    <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
+      <Button IsDefault="True" Content="{Binding Resources.String_Common_Command_Ok, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SubmitCommand}" />
+      <Button IsCancel="True" Content="{Binding Resources.String_Common_Command_Cancel, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}" />
+    </UniformGrid>
   </Grid>
 </Window>
