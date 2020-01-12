@@ -150,24 +150,24 @@
       <ContextMenu.ItemsSource>
         <CompositeCollection>
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_Header, Source={x:Static app_main:CultureService.Current}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_Menu_Execute, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExecuteSimpleCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_Menu_ExtendsExecute, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExecuteExtendsCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_Execute_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExecuteSimpleCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_ExtendsExecute_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExecuteExtendsCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_Header, Source={x:Static app_main:CultureService.Current}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_Menu_ParentDirectory, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenParentDirectoryCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_Menu_WorkDirectory, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenWorkingDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_ParentDirectory_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenParentDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_WorkDirectory_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenWorkingDirectoryCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Header, Source={x:Static app_main:CultureService.Current}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Menu_Path, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyExecutePathCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Menu_Options, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyOptionCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Menu_ParentDirectory, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyParentDirectoryCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Menu_WorkDirectory, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyWorkingDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Path_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyExecutePathCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Options_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyOptionCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_ParentDirectory_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyParentDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_WorkDirectory_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CopyWorkingDirectoryCommand}" />
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Header, Source={x:Static app_main:CultureService.Current}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Menu_Customize, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CustomizeCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Menu_Property, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ShowPropertyCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Confirm, Source={x:Static app_main:CultureService.Current}}">
-            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Execute, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Customize_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CustomizeCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Property_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ShowPropertyCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A, Source={x:Static app_main:CultureService.Current}}">
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
           </MenuItem>
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Groups_Header, Source={x:Static app_main:CultureService.Current}}" />
@@ -431,12 +431,12 @@
 
               <Separator />
 
-              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Menu_Topmost, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
-              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Menu_AutoHide, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsAutoHide, Mode=OneWay}" Command="{Binding ToggleAutoHideCommand}" />
+              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
+              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_AutoHide_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsAutoHide, Mode=OneWay}" Command="{Binding ToggleAutoHideCommand}" />
 
               <Separator />
 
-              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Menu_Close, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand}" />
+              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Close_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand}" />
 
               <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_AppMenu_Groups_Header, Source={x:Static app_main:CultureService.Current}}" />
 

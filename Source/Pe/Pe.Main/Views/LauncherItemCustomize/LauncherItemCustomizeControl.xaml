@@ -51,7 +51,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Id, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Id_A, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding LauncherItemId, Mode=OneWay}" IsReadOnly="True" />
             </Grid>
 
@@ -61,7 +61,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Kind, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Kind, Mode=OneWay}" IsReadOnly="True" />
             </Grid>
 
@@ -71,7 +71,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Name, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Name_A, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Name}" />
             </Grid>
 
@@ -81,7 +81,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Code, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Code_A, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Code}" />
 
             </Grid>
@@ -102,13 +102,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" IsReadOnly="True" Text="{Binding IconPath, Mode=OneWay}" />
-                <Button Grid.Column="1" Command="{Binding IconClearSelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_Clear, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="1" Command="{Binding IconClearSelectCommand}" ToolTip="{Binding Resources.String_Common_Clear, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
                 </Button>
-                <Button Grid.Column="2" Command="{Binding IconFileSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_Tooltip_SelectIcon, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="2" Command="{Binding IconFileSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_SelectIcon, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Icon}" />
                 </Button>
-                <Button Grid.Column="3" Command="{Binding IconImageSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_Tooltip_SelectImage, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="3" Command="{Binding IconImageSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_SelectImage, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Image}" />
                 </Button>
               </Grid>
@@ -120,9 +120,9 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Others, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Others_A, Source={x:Static app_main:CultureService.Current}}" />
               <StackPanel Grid.Column="1">
-                <CheckBox IsChecked="{Binding IsEnabledCommandLauncher}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Label_Others_UseCommandLauncher, Source={x:Static app_main:CultureService.Current}}" />
+                <CheckBox IsChecked="{Binding IsEnabledCommandLauncher}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Others_UseCommandLauncher_A, Source={x:Static app_main:CultureService.Current}}" />
               </StackPanel>
             </Grid>
 
@@ -142,7 +142,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_Path, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Path_A, Source={x:Static app_main:CultureService.Current}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -180,10 +180,10 @@
                     </app_core_views_selector:ComboBoxItemTemplateSelector>
                   </ComboBox.ItemTemplateSelector>
                 </ComboBox>
-                <Button Grid.Column="1" Command="{Binding LauncherFileSelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectFile, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="1" Command="{Binding LauncherFileSelectCommand}" ToolTip="{Binding Resources.String_Common_SelectFile, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-File}" />
                 </Button>
-                <Button Grid.Column="2" Command="{Binding LauncherDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="2" Command="{Binding LauncherDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
                 </Button>
               </Grid>
@@ -195,7 +195,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_Options, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Options_A, Source={x:Static app_main:CultureService.Current}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -205,13 +205,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" Text="{Binding Option}" />
-                <Button Grid.Column="1" Command="{Binding OptionClearCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_Clear, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="1" Command="{Binding OptionClearCommand}" ToolTip="{Binding Resources.String_Common_Clear, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
                 </Button>
-                <Button Grid.Column="2" Command="{Binding OptionFileSelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectFile, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="2" Command="{Binding OptionFileSelectCommand}" ToolTip="{Binding Resources.String_Common_SelectFile, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-File}" />
                 </Button>
-                <Button Grid.Column="3" Command="{Binding OptionDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="3" Command="{Binding OptionDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
                 </Button>
               </Grid>
@@ -224,7 +224,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_WorkDirectory, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_WorkDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -233,10 +233,10 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0" Text="{Binding WorkingDirectoryPath}" />
-                <Button Grid.Column="1" Command="{Binding WorkingDirectoryClearCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_Clear, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="1" Command="{Binding WorkingDirectoryClearCommand}" ToolTip="{Binding Resources.String_Common_Clear, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
                 </Button>
-                <Button Grid.Column="2" Command="{Binding WorkingDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_Tooltip_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+                <Button Grid.Column="2" Command="{Binding WorkingDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
                 </Button>
               </Grid>
@@ -249,7 +249,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Label_Others, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Others_A, Source={x:Static app_main:CultureService.Current}}" />
               <StackPanel Grid.Column="1">
                 <CheckBox IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Command_IsEnabled_CustomEnvironmentVariable, Source={x:Static app_main:CultureService.Current}}" />
                 <CheckBox IsChecked="{Binding IsEnabledStandardInputOutput}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu, Source={x:Static app_main:CultureService.Current}}" />
@@ -272,7 +272,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Label_ProtocolAlias, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_ProtocolAlias_A, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding ProtocolAlias}" />
 
             </Grid>
@@ -283,7 +283,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Label_Options, Source={x:Static app_main:CultureService.Current}}" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Options_A, Source={x:Static app_main:CultureService.Current}}" />
               <TextBox Grid.Column="1" Text="{Binding Option}" />
             </Grid>
 

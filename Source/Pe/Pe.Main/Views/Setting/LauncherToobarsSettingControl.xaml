@@ -88,12 +88,12 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_ToolbarPosition, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_ToolbarPosition_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_ToolbarPosition_Left, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Left}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_ToolbarPosition_Top, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Top}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_ToolbarPosition_Right, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Right}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_ToolbarPosition_Bottom, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Bottom}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_ToolbarPosition_Left_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Left}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_ToolbarPosition_Top_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Top}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_ToolbarPosition_Right_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Right}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_ToolbarPosition_Bottom_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ToolbarPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:AppDesktopToolbarPosition.Bottom}}" />
                   </WrapPanel>
                 </Grid>
 
@@ -103,11 +103,11 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_IconDirection, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_IconDirection_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_IconDirection_LeftTop, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.LeftTop}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_IconDirection_Center, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.Center}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_IconDirection_RightBottom, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.RightBottom}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_IconDirection_LeftTop_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.LeftTop}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_IconDirection_Center_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.Center}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_IconDirection_RightBottom_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconDirection, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarIconDirection.RightBottom}}" />
                   </WrapPanel>
                 </Grid>
 
@@ -117,11 +117,11 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_Icon, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Icon_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_Icon_Small, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_Icon_Normal, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Label_Icon_Big, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Icon_Small_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Icon_Normal_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
+                    <RadioButton Content="{Binding Resources.String_Setting_LauncherToolbars_Icon_Big_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
                   </WrapPanel>
                 </Grid>
 
@@ -131,7 +131,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_TextFont, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_TextFont_A, Source={x:Static app_main:CultureService.Current}}" />
                   <ContentControl Grid.Column="1">
                     <ContentControl.Style>
                       <Style TargetType="ContentControl">
@@ -162,7 +162,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label x:Name="textWidth" Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_TextWidth, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label x:Name="textWidth" Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_TextWidth_A, Source={x:Static app_main:CultureService.Current}}" />
                   <app_core_views:NumericUpDown Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="{Binding ActualWidth, ElementName=textWidth}" Minimum="{Binding MinimumTextWidth}" Maximum="{Binding MaximumTextWidth}" Value="{Binding TextWidth}" />
                 </Grid>
 
@@ -172,11 +172,11 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_AutoHide, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_AutoHide_A, Source={x:Static app_main:CultureService.Current}}" />
 
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <CheckBox VerticalAlignment="Center" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_AutoHide_Enabled, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsAutoHide}" />
-                    <Label x:Name="autoHideUnit" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_AutoHide_Unit, Source={x:Static app_main:CultureService.Current}}" />
+                    <CheckBox VerticalAlignment="Center" Content="{Binding Resources.String_Setting_LauncherToolbars_AutoHide_Enabled_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsAutoHide}" />
+                    <Label x:Name="autoHideUnit" Content="{Binding Resources.String_Setting_LauncherToolbars_AutoHide_Unit_A, Source={x:Static app_main:CultureService.Current}}" />
                     <app_core_views:NumericUpDown VerticalAlignment="Center" Width="{Binding ActualWidth, ElementName=autoHideUnit}" Minimum="{Binding MinimumAutoHideTimeSeconds}" Maximum="{Binding MaximumAutoHideTimeSeconds}" Value="{Binding AutoHideTimeSeconds}" />
                   </WrapPanel>
                 </Grid>
@@ -187,11 +187,11 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Label_Others, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Others_A, Source={x:Static app_main:CultureService.Current}}" />
 
                   <WrapPanel Grid.Column="1" VerticalAlignment="Center">
-                    <CheckBox Content="{Binding Resources.String_Setting_LauncherToolbars_Label_Visible, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsVisible}" />
-                    <CheckBox Content="{Binding Resources.String_Setting_LauncherToolbars_Label_IconOnly, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsIconOnly}" />
+                    <CheckBox Content="{Binding Resources.String_Setting_LauncherToolbars_Visible_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsVisible}" />
+                    <CheckBox Content="{Binding Resources.String_Setting_LauncherToolbars_IconOnly_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsIconOnly}" />
                   </WrapPanel>
 
                 </Grid>

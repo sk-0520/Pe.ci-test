@@ -37,11 +37,11 @@
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
 
-    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Resources.String_EnvironmentValieableEditor_Label_Merge, Source={x:Static app_main:CultureService.Current}}"  />
+    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Resources.String_EnvironmentValieableEditor_Merge_A, Source={x:Static app_main:CultureService.Current}}"  />
     <sharpdevelop_avalonedit:TextEditor x:Name="envMergeEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="0" Document="{Binding MergeTextDocument, ElementName=root}" Loaded="EnvMergeEditor_Loaded" />
     <ItemsControl Grid.Row="2" Grid.Column="0" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding MergeErrorItemsSource, ElementName=root}" />
 
-    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Resources.String_EnvironmentValieableEditor_Label_Remove, Source={x:Static app_main:CultureService.Current}}" />
+    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Resources.String_EnvironmentValieableEditor_Remove_A, Source={x:Static app_main:CultureService.Current}}" />
     <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
     <ItemsControl Grid.Row="2" Grid.Column="1" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding RemoveErrorItemsSource, ElementName=root}" />
   </Grid>

@@ -55,19 +55,19 @@
           </Popup>
         </Grid>
         -->
-        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_AddGroup, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddNewNormalGroupCommand, ElementName=root}">
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddGroup, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddNewNormalGroupCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
         </Button>
-        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_RemoveGroup, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveSelectedGroupCommand, ElementName=root}">
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_RemoveGroup, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveSelectedGroupCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
         </Button>
 
         <Separator />
 
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Up, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.UpSelectedGroupCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.UpSelectedGroupCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
         </RepeatButton>
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Down, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.DownSelectedGroupCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.DownSelectedGroupCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
         </RepeatButton>
       </ToolBar>
@@ -110,7 +110,7 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Id, Source={x:Static app_main:CultureService.Current}}" />
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Id_A, Source={x:Static app_main:CultureService.Current}}" />
                 <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding Editor.SelectedGroup.LauncherGroupId, ElementName=root, Mode=OneWay}" />
               </Grid>
 
@@ -120,7 +120,7 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Kind, Source={x:Static app_main:CultureService.Current}}" />
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
                 <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding Editor.SelectedGroup.Kind, ElementName=root, Mode=OneWay}" />
               </Grid>
 
@@ -130,7 +130,7 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Name, Source={x:Static app_main:CultureService.Current}}" />
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Name_A, Source={x:Static app_main:CultureService.Current}}" />
                 <TextBox Grid.Column="1" Text="{Binding Editor.SelectedGroup.Name, ElementName=root}" />
               </Grid>
 
@@ -140,7 +140,7 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Image, Source={x:Static app_main:CultureService.Current}}" />
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Image_A, Source={x:Static app_main:CultureService.Current}}" />
                 <Grid Grid.Column="1" >
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -175,16 +175,16 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
-        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_RemoveItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, ElementName=root}">
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_RemoveItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
         </Button>
 
         <Separator />
 
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Up, Source={x:Static app_main:CultureService.Current}}"  Command="{Binding Editor.UpSelectedLauncherItemCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Current}}"  Command="{Binding Editor.UpSelectedLauncherItemCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
         </RepeatButton>
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Down, Source={x:Static app_main:CultureService.Current}}"  Command="{Binding Editor.DownSelectedLauncherItemCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Current}}"  Command="{Binding Editor.DownSelectedLauncherItemCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
         </RepeatButton>
       </ToolBar>
@@ -228,7 +228,7 @@
         </ToolBar.Resources>
 
         <DockPanel HorizontalAlignment="Stretch">
-          <Button DockPanel.Dock="Left" ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_AddItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddSelectedLauncheritemCommand, ElementName=root}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button DockPanel.Dock="Left" ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddSelectedLauncheritemCommand, ElementName=root}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
           </Button>
           <TextBox Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />

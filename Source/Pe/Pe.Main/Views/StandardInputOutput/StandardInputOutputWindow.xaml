@@ -48,19 +48,19 @@
       <ToggleButton IsChecked="{Binding IsTopmost}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-Topmost}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Command_Topmost, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Topmost_A, Source={x:Static app_main:CultureService.Current}}" />
         </StackPanel>
       </ToggleButton>
       <ToggleButton IsChecked="{Binding AutoScroll}" >
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-AutoScroll}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Command_AutoScroll, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_AutoScroll_A, Source={x:Static app_main:CultureService.Current}}" />
         </StackPanel>
       </ToggleButton>
       <ToggleButton IsChecked="{Binding WordWrap}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-WordWrap}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Command_WordWrap, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_WordWrap_A, Source={x:Static app_main:CultureService.Current}}" />
         </StackPanel>
       </ToggleButton>
 
@@ -69,13 +69,13 @@
       <Button Command="{Binding SaveCommand}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-SaveAs}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Command_Save, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Save_A, Source={x:Static app_main:CultureService.Current}}" />
         </StackPanel>
       </Button>
       <Button Command="{Binding ClearOutputCommand}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-Clear}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Command_Clear, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Clear_A, Source={x:Static app_main:CultureService.Current}}" />
         </StackPanel>
       </Button>
 
@@ -84,7 +84,7 @@
       <Button Command="{Binding KillOutputCommand}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-StandardInputOutput-Kill}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Command_Kill, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Kill_A, Source={x:Static app_main:CultureService.Current}}" />
         </StackPanel>
       </Button>
 

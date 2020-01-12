@@ -65,8 +65,8 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
-      <Button Grid.Column="0" Command="{Binding AffirmativeCommand}" Content="{Binding Resources.String_Accept_Command_Affirmative, Source={x:Static app_main:CultureService.Current}}" />
-      <Button IsDefault="True" IsCancel="True" Grid.Column="1" Command="{Binding NegativeCommand}" Content="{Binding Resources.String_Accept_Command_Negative, Source={x:Static app_main:CultureService.Current}}" />
+      <Button Grid.Column="0" Command="{Binding AffirmativeCommand}" Content="{Binding Resources.String_Accept_Affirmative_A, Source={x:Static app_main:CultureService.Current}}" />
+      <Button IsDefault="True" IsCancel="True" Grid.Column="1" Command="{Binding NegativeCommand}" Content="{Binding Resources.String_Accept_Negative_A, Source={x:Static app_main:CultureService.Current}}" />
     </Grid>
 
     <StatusBar Grid.Row="2">

@@ -88,8 +88,8 @@
     </TabControl>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button IsDefault="True" Content="{Binding Resources.String_Common_Command_Ok, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SubmitCommand}" />
-      <Button IsCancel="True" Content="{Binding Resources.String_Common_Command_Cancel, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}" />
+      <Button IsDefault="True" Content="{Binding Resources.String_Common_Ok_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SubmitCommand}" />
+      <Button IsCancel="True" Content="{Binding Resources.String_Common_Cancel_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}" />
     </UniformGrid>
   </Grid>
 </Window>

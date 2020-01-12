@@ -144,6 +144,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   使用する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Accept_Affirmative {
+            get {
+                return ResourceManager.GetString("String_Accept_Affirmative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   使用する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Accept_Affirmative_A {
+            get {
+                return ResourceManager.GetString("String_Accept_Affirmative_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   使用許諾  に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Accept_Caption {
@@ -153,164 +171,146 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   使用する に類似しているローカライズされた文字列を検索します。
+        ///   使用しない に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Accept_Command_Affirmative {
+        public static string String_Accept_Negative {
             get {
-                return ResourceManager.GetString("String_Accept_Command_Affirmative", resourceCulture);
+                return ResourceManager.GetString("String_Accept_Negative", resourceCulture);
             }
         }
         
         /// <summary>
         ///   使用しない(N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Accept_Command_Negative {
+        public static string String_Accept_Negative_A {
             get {
-                return ResourceManager.GetString("String_Accept_Command_Negative", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   使用する に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Accept_PlaceHolder_Affirmative {
-            get {
-                return ResourceManager.GetString("String_Accept_PlaceHolder_Affirmative", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   使用しない に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Accept_PlaceHolder_Negative {
-            get {
-                return ResourceManager.GetString("String_Accept_PlaceHolder_Negative", resourceCulture);
+                return ResourceManager.GetString("String_Accept_Negative_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   情報(_A) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_About {
+        public static string String_AppManager_About_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_About", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_About_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ヘルプ(_H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_About_Help {
+        public static string String_AppManager_About_Help_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_About_Help", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_About_Help_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   バージョン情報(_V) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_About_Version {
+        public static string String_AppManager_About_Version_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_About_Version", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_About_Version_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   コマンド(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Command {
+        public static string String_AppManager_Command_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Command", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Command_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   終了(_X) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Exit {
+        public static string String_AppManager_Exit_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Exit", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Exit_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ノート(_N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Note {
+        public static string String_AppManager_Note_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Note", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Note_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最後面へ移動(_B) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Note_Bottom {
+        public static string String_AppManager_Note_Bottom_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Note_Bottom", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Note_Bottom_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最小化(_N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Note_Compact {
+        public static string String_AppManager_Note_Compact_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Note_Compact", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Note_Compact_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   新規作成(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Note_Create {
+        public static string String_AppManager_Note_Create_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Note_Create", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Note_Create_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   非表示(_H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Note_Hidden {
+        public static string String_AppManager_Note_Hidden_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Note_Hidden", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Note_Hidden_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最前面へ移動(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Note_Topmost {
+        public static string String_AppManager_Note_Topmost_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Note_Topmost", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Note_Topmost_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   表示中(_V) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Note_Visible {
+        public static string String_AppManager_Note_Visible_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Note_Visible", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Note_Visible_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Pe 設定(_S) ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Setting {
+        public static string String_AppManager_Setting_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Setting", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Setting_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ツールバー(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_Menu_Toolbar {
+        public static string String_AppManager_Toolbar_A {
             get {
-                return ResourceManager.GetString("String_AppManager_Menu_Toolbar", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_Toolbar_A", resourceCulture);
             }
         }
         
@@ -326,99 +326,99 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   コマンドを実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Command_Tooltip_Execute {
+        public static string String_Command_Execute {
             get {
-                return ResourceManager.GetString("String_Command_Tooltip_Execute", resourceCulture);
+                return ResourceManager.GetString("String_Command_Execute", resourceCulture);
             }
         }
         
         /// <summary>
         ///   キャンセル(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Common_Command_Cancel {
+        public static string String_Common_Cancel_A {
             get {
-                return ResourceManager.GetString("String_Common_Command_Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   閉じる(_X) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Common_Command_Close {
-            get {
-                return ResourceManager.GetString("String_Common_Command_Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   OK に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Common_Command_Ok {
-            get {
-                return ResourceManager.GetString("String_Common_Command_Ok", resourceCulture);
+                return ResourceManager.GetString("String_Common_Cancel_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   クリア に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Common_Tooltip_Clear {
+        public static string String_Common_Clear {
             get {
-                return ResourceManager.GetString("String_Common_Tooltip_Clear", resourceCulture);
+                return ResourceManager.GetString("String_Common_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   閉じる(_X) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Close_A {
+            get {
+                return ResourceManager.GetString("String_Common_Close_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   下へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Common_Tooltip_Down {
+        public static string String_Common_Down {
             get {
-                return ResourceManager.GetString("String_Common_Tooltip_Down", resourceCulture);
+                return ResourceManager.GetString("String_Common_Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OK に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Ok_A {
+            get {
+                return ResourceManager.GetString("String_Common_Ok_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ディレクトリ選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Common_Tooltip_SelectDirectory {
+        public static string String_Common_SelectDirectory {
             get {
-                return ResourceManager.GetString("String_Common_Tooltip_SelectDirectory", resourceCulture);
+                return ResourceManager.GetString("String_Common_SelectDirectory", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ファイル選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Common_Tooltip_SelectFile {
+        public static string String_Common_SelectFile {
             get {
-                return ResourceManager.GetString("String_Common_Tooltip_SelectFile", resourceCulture);
+                return ResourceManager.GetString("String_Common_SelectFile", resourceCulture);
             }
         }
         
         /// <summary>
         ///   上へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Common_Tooltip_Up {
+        public static string String_Common_Up {
             get {
-                return ResourceManager.GetString("String_Common_Tooltip_Up", resourceCulture);
+                return ResourceManager.GetString("String_Common_Up", resourceCulture);
             }
         }
         
         /// <summary>
         ///   変更 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_EnvironmentValieableEditor_Label_Merge {
+        public static string String_EnvironmentValieableEditor_Merge_A {
             get {
-                return ResourceManager.GetString("String_EnvironmentValieableEditor_Label_Merge", resourceCulture);
+                return ResourceManager.GetString("String_EnvironmentValieableEditor_Merge_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_EnvironmentValieableEditor_Label_Remove {
+        public static string String_EnvironmentValieableEditor_Remove_A {
             get {
-                return ResourceManager.GetString("String_EnvironmentValieableEditor_Label_Remove", resourceCulture);
+                return ResourceManager.GetString("String_EnvironmentValieableEditor_Remove_A", resourceCulture);
             }
         }
         
@@ -432,6 +432,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   コマンド に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Command_A {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Command_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_Command_Execute {
@@ -441,74 +450,65 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   コマンド に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_ExtendsExecute_Label_Command {
-            get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_Command", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   環境変数 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Label_EnvironmentVariables {
+        public static string String_ExtendsExecute_EnvironmentVariables_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_EnvironmentVariables", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_EnvironmentVariables_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   編集 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Label_EnvironmentVariables_Edit {
+        public static string String_ExtendsExecute_EnvironmentVariables_Edit_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_EnvironmentVariables_Edit", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_EnvironmentVariables_Edit_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   オプション に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Label_Options {
+        public static string String_ExtendsExecute_Options_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_Options", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Options_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   その他 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Label_Others {
+        public static string String_ExtendsExecute_Others_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_Others", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Others_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   管理者実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Label_Others_RunAdmin {
+        public static string String_ExtendsExecute_Others_RunAdmin_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_Others_RunAdmin", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Others_RunAdmin_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   標準入出力 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Label_Others_StandardInputOutput {
+        public static string String_ExtendsExecute_Others_StandardInputOutput_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_Others_StandardInputOutput", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Others_StandardInputOutput_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Label_WorkDirectory {
+        public static string String_ExtendsExecute_WorkDirectory_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Label_WorkDirectory", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_WorkDirectory_A", resourceCulture);
             }
         }
         
@@ -524,9 +524,9 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   取り込み(_I) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ImportPrograms_Command_Import {
+        public static string String_ImportPrograms_Import_A {
             get {
-                return ResourceManager.GetString("String_ImportPrograms_Command_Import", resourceCulture);
+                return ResourceManager.GetString("String_ImportPrograms_Import_A", resourceCulture);
             }
         }
         
@@ -567,6 +567,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   コード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Code_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Code_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   共通 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_Common_Header {
@@ -576,74 +585,65 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   コード に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Label_Code {
-            get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Code", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   ID に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Label_Id {
+        public static string String_LauncherItemCustomizeControl_Common_Id_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Id", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Id_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   種別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Label_Kind {
+        public static string String_LauncherItemCustomizeControl_Common_Kind_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Kind", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Kind_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   名前 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Label_Name {
+        public static string String_LauncherItemCustomizeControl_Common_Name_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Name", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Name_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   その他 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Label_Others {
+        public static string String_LauncherItemCustomizeControl_Common_Others_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Others", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Others_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   コマンドランチャーで使用 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Label_Others_UseCommandLauncher {
+        public static string String_LauncherItemCustomizeControl_Common_Others_UseCommandLauncher_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Label_Others_UseCommandLauncher", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Others_UseCommandLauncher_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   アイコン選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Tooltip_SelectIcon {
+        public static string String_LauncherItemCustomizeControl_Common_SelectIcon {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Tooltip_SelectIcon", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_SelectIcon", resourceCulture);
             }
         }
         
         /// <summary>
         ///   画像選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Tooltip_SelectImage {
+        public static string String_LauncherItemCustomizeControl_Common_SelectImage {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Tooltip_SelectImage", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_SelectImage", resourceCulture);
             }
         }
         
@@ -696,36 +696,36 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   オプション に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_File_Label_Options {
+        public static string String_LauncherItemCustomizeControl_File_Options_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_Options", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Options_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   その他 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_File_Label_Others {
+        public static string String_LauncherItemCustomizeControl_File_Others_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_Others", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Others_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   パス に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_File_Label_Path {
+        public static string String_LauncherItemCustomizeControl_File_Path_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_Path", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Path_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   作業Directory に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_File_Label_WorkDirectory {
+        public static string String_LauncherItemCustomizeControl_File_WorkDirectory_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Label_WorkDirectory", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_WorkDirectory_A", resourceCulture);
             }
         }
         
@@ -741,18 +741,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   オプション に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_StoreApp_Label_Options {
+        public static string String_LauncherItemCustomizeControl_StoreApp_Options_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_StoreApp_Label_Options", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_StoreApp_Options_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   プロトコル/エイリアス に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_StoreApp_Label_ProtocolAlias {
+        public static string String_LauncherItemCustomizeControl_StoreApp_ProtocolAlias_A {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_StoreApp_Label_ProtocolAlias", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_StoreApp_ProtocolAlias_A", resourceCulture);
             }
         }
         
@@ -775,6 +775,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_AutoHide_A {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_AutoHide_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_AppMenu_Close_A {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Close_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_AppMenu_Groups_Header {
@@ -784,38 +802,20 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
+        ///   ツールバー位置 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_AppMenu_Menu_AutoHide {
+        public static string String_LauncherToolbar_AppMenu_Position_Header {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Menu_AutoHide", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   非表示 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_LauncherToolbar_AppMenu_Menu_Close {
-            get {
-                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Menu_Close", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Position_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最前面 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_AppMenu_Menu_Topmost {
+        public static string String_LauncherToolbar_AppMenu_Topmost_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Menu_Topmost", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ツールバー位置 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_LauncherToolbar_AppMenu_Position_Header {
-            get {
-                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Position_Header", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_AppMenu_Topmost_A", resourceCulture);
             }
         }
         
@@ -831,36 +831,54 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   オプション に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_Options {
+        public static string String_LauncherToolbar_FileContextMenu_Copy_Options_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_Options", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Options_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   親ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_ParentDirectory {
+        public static string String_LauncherToolbar_FileContextMenu_Copy_ParentDirectory_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_ParentDirectory", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_ParentDirectory_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   パス に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_Path {
+        public static string String_LauncherToolbar_FileContextMenu_Copy_Path_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_Path", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Path_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Copy_Menu_WorkDirectory {
+        public static string String_LauncherToolbar_FileContextMenu_Copy_WorkDirectory_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_Menu_WorkDirectory", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Copy_WorkDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通常実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Execute_Execute_A {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_Execute_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定して実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Execute_ExtendsExecute_A {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_ExtendsExecute_A", resourceCulture);
             }
         }
         
@@ -870,24 +888,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_LauncherToolbar_FileContextMenu_Execute_Header {
             get {
                 return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   通常実行 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Execute_Menu_Execute {
-            get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_Menu_Execute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   指定して実行 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Execute_Menu_ExtendsExecute {
-            get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Execute_Menu_ExtendsExecute", resourceCulture);
             }
         }
         
@@ -912,18 +912,27 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   親ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Open_Menu_ParentDirectory {
+        public static string String_LauncherToolbar_FileContextMenu_Open_ParentDirectory_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Open_Menu_ParentDirectory", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Open_ParentDirectory_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Open_Menu_WorkDirectory {
+        public static string String_LauncherToolbar_FileContextMenu_Open_WorkDirectory_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Open_Menu_WorkDirectory", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Open_WorkDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   編集 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_FileContextMenu_Others_Customize_A {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Customize_A", resourceCulture);
             }
         }
         
@@ -937,38 +946,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   編集 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Customize {
-            get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Customize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   プロパティ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Property {
+        public static string String_LauncherToolbar_FileContextMenu_Others_Property_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Property", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Property_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   削除？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Confirm {
+        public static string String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Confirm", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   削除！ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Execute {
+        public static string String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A {
             get {
-                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Menu_Remove_Execute", resourceCulture);
+                return ResourceManager.GetString("String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A", resourceCulture);
             }
         }
         
@@ -984,27 +984,54 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   閉じる に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Caption_Tooltip_Close {
+        public static string String_Note_Caption_Close {
             get {
-                return ResourceManager.GetString("String_Note_Caption_Tooltip_Close", resourceCulture);
+                return ResourceManager.GetString("String_Note_Caption_Close", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最小化切り替え に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Caption_Tooltip_ToggleCompact {
+        public static string String_Note_Caption_ToggleCompact {
             get {
-                return ResourceManager.GetString("String_Note_Caption_Tooltip_ToggleCompact", resourceCulture);
+                return ResourceManager.GetString("String_Note_Caption_ToggleCompact", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最前面切り替え に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Caption_Tooltip_ToggleTopmost {
+        public static string String_Note_Caption_ToggleTopmost {
             get {
-                return ResourceManager.GetString("String_Note_Caption_Tooltip_ToggleTopmost", resourceCulture);
+                return ResourceManager.GetString("String_Note_Caption_ToggleTopmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   背景 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Background_A {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Background_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Font_A {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Font_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前景 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Format_Foreground_A {
+            get {
+                return ResourceManager.GetString("String_Note_Format_Foreground_A", resourceCulture);
             }
         }
         
@@ -1018,83 +1045,56 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   背景 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Format_Label_Background {
-            get {
-                return ResourceManager.GetString("String_Note_Format_Label_Background", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   フォント に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Format_Label_Font {
-            get {
-                return ResourceManager.GetString("String_Note_Format_Label_Font", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   前景 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Format_Label_Foreground {
-            get {
-                return ResourceManager.GetString("String_Note_Format_Label_Foreground", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   種別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Format_Label_Kind {
+        public static string String_Note_Format_Kind_A {
             get {
-                return ResourceManager.GetString("String_Note_Format_Label_Kind", resourceCulture);
+                return ResourceManager.GetString("String_Note_Format_Kind_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   テキスト に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Format_Label_Kind_Plain {
+        public static string String_Note_Format_Kind_Plain_A {
             get {
-                return ResourceManager.GetString("String_Note_Format_Label_Kind_Plain", resourceCulture);
+                return ResourceManager.GetString("String_Note_Format_Kind_Plain_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   RTF に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Format_Label_Kind_RichText {
+        public static string String_Note_Format_Kind_RichText_A {
             get {
-                return ResourceManager.GetString("String_Note_Format_Label_Kind_RichText", resourceCulture);
+                return ResourceManager.GetString("String_Note_Format_Kind_RichText_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   位置 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Format_Label_Layout {
+        public static string String_Note_Format_Layout_A {
             get {
-                return ResourceManager.GetString("String_Note_Format_Label_Layout", resourceCulture);
+                return ResourceManager.GetString("String_Note_Format_Layout_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   絶対 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Format_Label_Layout_Absolute {
+        public static string String_Note_Format_Layout_Absolute_A {
             get {
-                return ResourceManager.GetString("String_Note_Format_Label_Layout_Absolute", resourceCulture);
+                return ResourceManager.GetString("String_Note_Format_Layout_Absolute_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   相対 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Format_Label_Layout_Relative {
+        public static string String_Note_Format_Layout_Relative_A {
             get {
-                return ResourceManager.GetString("String_Note_Format_Label_Layout_Relative", resourceCulture);
+                return ResourceManager.GetString("String_Note_Format_Layout_Relative_A", resourceCulture);
             }
         }
         
@@ -1110,45 +1110,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   変換(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_KindChanging_Command_Convert {
+        public static string String_Note_KindChanging_Convert_A {
             get {
-                return ResourceManager.GetString("String_Note_KindChanging_Command_Convert", resourceCulture);
+                return ResourceManager.GetString("String_Note_KindChanging_Convert_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ファイルを削除してリンク切断 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Link_Command_Delete {
+        public static string String_Note_Link_Delete_A {
             get {
-                return ResourceManager.GetString("String_Note_Link_Command_Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ファイルからリンク作成 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Link_Command_OpenLink {
-            get {
-                return ResourceManager.GetString("String_Note_Link_Command_OpenLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   入力内容からリンク作成 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Link_Command_SaveLink {
-            get {
-                return ResourceManager.GetString("String_Note_Link_Command_SaveLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   リンク切断 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Link_Command_Unlink {
-            get {
-                return ResourceManager.GetString("String_Note_Link_Command_Unlink", resourceCulture);
+                return ResourceManager.GetString("String_Note_Link_Delete_A", resourceCulture);
             }
         }
         
@@ -1171,38 +1144,47 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ファイルからリンク作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_OpenLink_A {
+            get {
+                return ResourceManager.GetString("String_Note_Link_OpenLink_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   入力内容からリンク作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_SaveLink_A {
+            get {
+                return ResourceManager.GetString("String_Note_Link_SaveLink_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   リンク切断 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Link_Unlink_A {
+            get {
+                return ResourceManager.GetString("String_Note_Link_Unlink_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   閉じる に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Operation_Command_Close {
+        public static string String_Note_Operation_Close_A {
             get {
-                return ResourceManager.GetString("String_Note_Operation_Command_Close", resourceCulture);
+                return ResourceManager.GetString("String_Note_Operation_Close_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   コピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Operation_Command_Copy {
+        public static string String_Note_Operation_Copy_A {
             get {
-                return ResourceManager.GetString("String_Note_Operation_Command_Copy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   削除？ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Operation_Command_Remove_Confirm {
-            get {
-                return ResourceManager.GetString("String_Note_Operation_Command_Remove_Confirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   削除！ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Note_Operation_Command_Remove_Execute {
-            get {
-                return ResourceManager.GetString("String_Note_Operation_Command_Remove_Execute", resourceCulture);
+                return ResourceManager.GetString("String_Note_Operation_Copy_A", resourceCulture);
             }
         }
         
@@ -1216,11 +1198,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   リンク に類似しているローカライズされた文字列を検索します。
+        ///   削除？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Status_Command_Link {
+        public static string String_Note_Operation_Remove_Confirm_A {
             get {
-                return ResourceManager.GetString("String_Note_Status_Command_Link", resourceCulture);
+                return ResourceManager.GetString("String_Note_Operation_Remove_Confirm_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   削除！ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Operation_Remove_Execute_A {
+            get {
+                return ResourceManager.GetString("String_Note_Operation_Remove_Execute_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_Compact_A {
+            get {
+                return ResourceManager.GetString("String_Note_Status_Compact_A", resourceCulture);
             }
         }
         
@@ -1234,38 +1234,38 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   最小化 に類似しているローカライズされた文字列を検索します。
+        ///   リンク に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Status_Label_Compact {
+        public static string String_Note_Status_Link_A {
             get {
-                return ResourceManager.GetString("String_Note_Status_Label_Compact", resourceCulture);
+                return ResourceManager.GetString("String_Note_Status_Link_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   固定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Status_Label_Lock {
+        public static string String_Note_Status_Lock_A {
             get {
-                return ResourceManager.GetString("String_Note_Status_Label_Lock", resourceCulture);
+                return ResourceManager.GetString("String_Note_Status_Lock_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最前面 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Status_Label_Topmost {
+        public static string String_Note_Status_Topmost_A {
             get {
-                return ResourceManager.GetString("String_Note_Status_Label_Topmost", resourceCulture);
+                return ResourceManager.GetString("String_Note_Status_Topmost_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   右端で折り返す に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_Status_Label_WordWrap {
+        public static string String_Note_Status_WordWrap_A {
             get {
-                return ResourceManager.GetString("String_Note_Status_Label_WordWrap", resourceCulture);
+                return ResourceManager.GetString("String_Note_Status_WordWrap_A", resourceCulture);
             }
         }
         
@@ -1306,6 +1306,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   検索条件 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Find_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Find_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグを検索する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Find_Tag_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Find_Tag_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Font_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Font_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンド型ランチャー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Command_Header {
@@ -1315,101 +1342,74 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   検索条件 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Command_Label_Find {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Find", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   タグを検索する に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Command_Label_Find_Tag {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Find_Tag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   フォント に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Command_Label_Font {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Font", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   アイコン に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Command_Label_Icon {
+        public static string String_Setting_Generals_Command_Icon_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Command_Icon_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   大 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Command_Label_Icon_Big {
+        public static string String_Setting_Generals_Command_Icon_Big_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon_Big", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Command_Icon_Big_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   中 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Command_Label_Icon_Normal {
+        public static string String_Setting_Generals_Command_Icon_Normal_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon_Normal", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Command_Icon_Normal_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   小 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Command_Label_Icon_Small {
+        public static string String_Setting_Generals_Command_Icon_Small_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon_Small", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Command_Icon_Small_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   表示時間 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Command_Label_Wait {
+        public static string String_Setting_Generals_Command_Wait_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Wait", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Command_Wait_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   横幅 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Command_Label_Width {
+        public static string String_Setting_Generals_Command_Width_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Width", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Command_Width_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   環境から生成 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Execute_Command_CreateUserIdFromEnvironment {
+        public static string String_Setting_Generals_Execute_CreateUserIdFromEnvironment_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Execute_Command_CreateUserIdFromEnvironment", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Execute_CreateUserIdFromEnvironment_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ランダムに生成 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Execute_Command_CreateUserIdFromRandom {
+        public static string String_Setting_Generals_Execute_CreateUserIdFromRandom_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Execute_Command_CreateUserIdFromRandom", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Execute_CreateUserIdFromRandom_A", resourceCulture);
             }
         }
         
@@ -1425,18 +1425,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   使用統計情報の送信を許可する に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Execute_Label_SendUsageStatistics {
+        public static string String_Setting_Generals_Execute_SendUsageStatistics_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Execute_Label_SendUsageStatistics", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Execute_SendUsageStatistics_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ユーザーID に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Execute_Label_UserId {
+        public static string String_Setting_Generals_Execute_UserId_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Execute_Label_UserId", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Execute_UserId_A", resourceCulture);
             }
         }
         
@@ -1461,45 +1461,45 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   言語 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_General_Label_Language {
+        public static string String_Setting_Generals_General_Language_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_General_Label_Language", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_General_Language_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   スタートアップ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_General_Label_Starup {
+        public static string String_Setting_Generals_General_Starup_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_General_Label_Starup", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_General_Starup_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   登録する に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_General_Label_Starup_Register {
+        public static string String_Setting_Generals_General_Starup_Register_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_General_Label_Starup_Register", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_General_Starup_Register_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   起動待機時間(秒) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_General_Label_Starup_WaitTime {
+        public static string String_Setting_Generals_General_Starup_WaitTime_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_General_Label_Starup_WaitTime", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_General_Starup_WaitTime_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ユーザーバックアップ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_General_Label_UserBackupDirectory {
+        public static string String_Setting_Generals_General_UserBackupDirectory_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_General_Label_UserBackupDirectory", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_General_UserBackupDirectory_A", resourceCulture);
             }
         }
         
@@ -1513,6 +1513,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Color_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Color_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   背景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Color_Background_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Color_Background_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Color_Foreground_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Color_Foreground_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Font_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Font_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ノート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Note_Header {
@@ -1522,101 +1558,101 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   色 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Note_Label_Color {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Color", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   背景色 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Note_Label_Color_Background {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Color_Background", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   前景色 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Note_Label_Color_Foreground {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Color_Foreground", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   フォント に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Note_Label_Font {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Font", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   レイアウト に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Note_Label_Layout {
+        public static string String_Setting_Generals_Note_Layout_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Layout", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Layout_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   絶対座標 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Note_Label_Layout_Absolute {
+        public static string String_Setting_Generals_Note_Layout_Absolute_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Layout_Absolute", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Layout_Absolute_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   相対座標 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Note_Label_Layout_Relative {
+        public static string String_Setting_Generals_Note_Layout_Relative_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Layout_Relative", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Layout_Relative_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   タイトル に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Note_Label_Title {
+        public static string String_Setting_Generals_Note_Title_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Title", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Title_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   カウント に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Note_Label_Title_Count {
+        public static string String_Setting_Generals_Note_Title_Count_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Title_Count", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Title_Count_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   タイムスタンプ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Note_Label_Title_Timestamp {
+        public static string String_Setting_Generals_Note_Title_Timestamp_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Title_Timestamp", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Title_Timestamp_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最前面 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Note_Label_Topmost {
+        public static string String_Setting_Generals_Note_Topmost_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Topmost", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Note_Topmost_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   標準エラー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_ErrorColor_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_ErrorColor_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   背景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_ErrorColor_Background_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_ErrorColor_Background_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_ErrorColor_Foreground_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_ErrorColor_Foreground_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Font_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Font_A", resourceCulture);
             }
         }
         
@@ -1630,74 +1666,38 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   標準エラー に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_ErrorColor {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_ErrorColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   背景色 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Background {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Background", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   前景色 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Foreground {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Foreground", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   フォント に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_Font {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_Font", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   標準出力 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_OutputColor {
+        public static string String_Setting_Generals_StandardInputOutput_OutputColor_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_OutputColor", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_OutputColor_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   背景色 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_OutputColor_Background {
+        public static string String_Setting_Generals_StandardInputOutput_OutputColor_Background_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_OutputColor_Background", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_OutputColor_Background_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   前景色 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_OutputColor_Foreground {
+        public static string String_Setting_Generals_StandardInputOutput_OutputColor_Foreground_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_OutputColor_Foreground", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_OutputColor_Foreground_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   最前面 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_StandardInputOutput_Label_Topmost {
+        public static string String_Setting_Generals_StandardInputOutput_Topmost_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_Topmost", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Topmost_A", resourceCulture);
             }
         }
         
@@ -1713,36 +1713,36 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   アップデート方法 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Update_Label_UpdateKind {
+        public static string String_Setting_Generals_Update_UpdateKind_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Update_UpdateKind_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   自動アップデート に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Update_Label_UpdateKind_Auto {
+        public static string String_Setting_Generals_Update_UpdateKind_Auto_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind_Auto", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Update_UpdateKind_Auto_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   しない に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Update_Label_UpdateKind_None {
+        public static string String_Setting_Generals_Update_UpdateKind_None_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind_None", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Update_UpdateKind_None_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   通知のみ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Update_Label_UpdateKind_Notify {
+        public static string String_Setting_Generals_Update_UpdateKind_Notify_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind_Notify", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Update_UpdateKind_Notify_A", resourceCulture);
             }
         }
         
@@ -1765,6 +1765,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Ignore_Add_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Ignore_Add_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   無視 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Ignore_Header {
@@ -1776,9 +1785,45 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   追加 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Keyboard_Ignore_Label_Add {
+        public static string String_Setting_Keyboard_Pressed_Add_A {
             get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Ignore_Label_Add", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Add_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンド型ランチャー追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Add_Command_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Add_Command_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ランチャーアイテム追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Add_LauncherItem_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Add_LauncherItem_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Add_Note_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Add_Note_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー非表示追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Add_Toolbar_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Add_Toolbar_A", resourceCulture);
             }
         }
         
@@ -1801,74 +1846,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   押下 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Header {
-            get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   追加 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Label_Add {
-            get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   コマンド型ランチャー追加 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Label_Add_Command {
-            get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_Command", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ランチャーアイテム追加 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Label_Add_LauncherItem {
-            get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_LauncherItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ノート追加 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Label_Add_Note {
-            get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_Note", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ツールバー非表示追加 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Label_Add_Toolbar {
-            get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_Toolbar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   システムへ通知 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Label_ConveySystem {
+        public static string String_Setting_Keyboard_Pressed_ConveySystem_A {
             get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_ConveySystem", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_ConveySystem_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   永久 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Keyboard_Pressed_Label_Forever {
+        public static string String_Setting_Keyboard_Pressed_Forever_A {
             get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Forever", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Forever_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   押下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Header", resourceCulture);
             }
         }
         
@@ -1900,20 +1900,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   置換 に類似しているローカライズされた文字列を検索します。
+        ///   💩削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Keyboard_Replace_Header {
+        public static string String_Setting_Keyboard_Remove {
             get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Replace_Header", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Keyboard_Remove", resourceCulture);
             }
         }
         
         /// <summary>
         ///   追加 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Keyboard_Replace_Label_Add {
+        public static string String_Setting_Keyboard_Replace_Add_A {
             get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Replace_Label_Add", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Keyboard_Replace_Add_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   置換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Replace_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Replace_Header", resourceCulture);
             }
         }
         
@@ -1927,11 +1936,20 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   💩削除 に類似しているローカライズされた文字列を検索します。
+        ///   グループを追加 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Keyboard_Tooltip_Remove {
+        public static string String_Setting_LauncherGroups_AddGroup {
             get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Tooltip_Remove", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_AddGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテムを追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_AddItem {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_AddItem", resourceCulture);
             }
         }
         
@@ -1947,36 +1965,36 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   ID に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherGroups_Edit_Label_Id {
+        public static string String_Setting_LauncherGroups_Edit_Id_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Id", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Id_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   イメージ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherGroups_Edit_Label_Image {
+        public static string String_Setting_LauncherGroups_Edit_Image_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Image", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Image_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ディスプレイ種別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherGroups_Edit_Label_Kind {
+        public static string String_Setting_LauncherGroups_Edit_Kind_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Kind", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Kind_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   名前 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherGroups_Edit_Label_Name {
+        public static string String_Setting_LauncherGroups_Edit_Name_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Name", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Name_A", resourceCulture);
             }
         }
         
@@ -1990,38 +2008,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   グループを追加 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherGroups_Tooltip_AddGroup {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_AddGroup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   アイテムを追加 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherGroups_Tooltip_AddItem {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_AddItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   グループを削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherGroups_Tooltip_RemoveGroup {
+        public static string String_Setting_LauncherGroups_RemoveGroup {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_RemoveGroup", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_RemoveGroup", resourceCulture);
             }
         }
         
         /// <summary>
         ///   アイテムを削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherGroups_Tooltip_RemoveItem {
+        public static string String_Setting_LauncherGroups_RemoveItem {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_RemoveItem", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherGroups_RemoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテムを追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherItems_Add {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherItems_Add", resourceCulture);
             }
         }
         
@@ -2035,20 +2044,38 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   アイテムを追加 に類似しているローカライズされた文字列を検索します。
+        ///   アイテムを削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherItems_Tooltip_Add {
+        public static string String_Setting_LauncherItems_Remove {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherItems_Tooltip_Add", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherItems_Remove", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   アイテムを削除 に類似しているローカライズされた文字列を検索します。
+        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherItems_Tooltip_Remove {
+        public static string String_Setting_LauncherToolbars_AutoHide_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherItems_Tooltip_Remove", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_AutoHide_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   有効 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_AutoHide_Enabled_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_AutoHide_Enabled_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示時間(秒) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_AutoHide_Unit_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_AutoHide_Unit_A", resourceCulture);
             }
         }
         
@@ -2071,191 +2098,173 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_AutoHide {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_AutoHide", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   有効 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_AutoHide_Enabled {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_AutoHide_Enabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   表示時間(秒) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_AutoHide_Unit {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_AutoHide_Unit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   アイコンサイズ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_Icon {
+        public static string String_Setting_LauncherToolbars_Icon_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   大 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_Icon_Big {
+        public static string String_Setting_LauncherToolbars_Icon_Big_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon_Big", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_Big_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   中 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_Icon_Normal {
+        public static string String_Setting_LauncherToolbars_Icon_Normal_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon_Normal", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_Normal_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   小 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_Icon_Small {
+        public static string String_Setting_LauncherToolbars_Icon_Small_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon_Small", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_Small_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   アイコン方向 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_IconDirection {
+        public static string String_Setting_LauncherToolbars_IconDirection_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconDirection_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   中央 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_IconDirection_Center {
+        public static string String_Setting_LauncherToolbars_IconDirection_Center_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection_Center", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconDirection_Center_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   左・上 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_IconDirection_LeftTop {
+        public static string String_Setting_LauncherToolbars_IconDirection_LeftTop_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection_LeftTop", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconDirection_LeftTop_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   右・下 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_IconDirection_RightBottom {
+        public static string String_Setting_LauncherToolbars_IconDirection_RightBottom_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection_RightBottom", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconDirection_RightBottom_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   アイコンのみ表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_IconOnly {
+        public static string String_Setting_LauncherToolbars_IconOnly_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconOnly", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconOnly_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   その他 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_Others {
+        public static string String_Setting_LauncherToolbars_Others_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Others", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Others_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   フォント に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_TextFont {
+        public static string String_Setting_LauncherToolbars_TextFont_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_TextFont", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_TextFont_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   テキスト幅 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_TextWidth {
+        public static string String_Setting_LauncherToolbars_TextWidth_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_TextWidth", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_TextWidth_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ツールバー位置 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition {
+        public static string String_Setting_LauncherToolbars_ToolbarPosition_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   下 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Bottom {
+        public static string String_Setting_LauncherToolbars_ToolbarPosition_Bottom_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Bottom", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Bottom_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   左 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Left {
+        public static string String_Setting_LauncherToolbars_ToolbarPosition_Left_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Left", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Left_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   右 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Right {
+        public static string String_Setting_LauncherToolbars_ToolbarPosition_Right_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Right", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Right_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   上 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Top {
+        public static string String_Setting_LauncherToolbars_ToolbarPosition_Top_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Top", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Top_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_LauncherToolbars_Label_Visible {
+        public static string String_Setting_LauncherToolbars_Visible_A {
             get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Visible", resourceCulture);
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Visible_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動スクロール に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_AutoScroll_A {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_AutoScroll_A", resourceCulture);
             }
         }
         
@@ -2269,56 +2278,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   自動スクロール に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_StandardInputOutput_Command_AutoScroll {
-            get {
-                return ResourceManager.GetString("String_StandardInputOutput_Command_AutoScroll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   クリア に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_StandardInputOutput_Command_Clear {
+        public static string String_StandardInputOutput_Clear_A {
             get {
-                return ResourceManager.GetString("String_StandardInputOutput_Command_Clear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   終了 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_StandardInputOutput_Command_Kill {
-            get {
-                return ResourceManager.GetString("String_StandardInputOutput_Command_Kill", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   保存 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_StandardInputOutput_Command_Save {
-            get {
-                return ResourceManager.GetString("String_StandardInputOutput_Command_Save", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   最前面 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_StandardInputOutput_Command_Topmost {
-            get {
-                return ResourceManager.GetString("String_StandardInputOutput_Command_Topmost", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   折り返し表示 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_StandardInputOutput_Command_WordWrap {
-            get {
-                return ResourceManager.GetString("String_StandardInputOutput_Command_WordWrap", resourceCulture);
+                return ResourceManager.GetString("String_StandardInputOutput_Clear_A", resourceCulture);
             }
         }
         
@@ -2332,11 +2296,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Kill_A {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Kill_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   実行中 ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_StandardInputOutput_Running {
             get {
                 return ResourceManager.GetString("String_StandardInputOutput_Running", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   保存 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Save_A {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Save_A", resourceCulture);
             }
         }
         
@@ -2359,6 +2341,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_Topmost_A {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_Topmost_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   折り返し表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_StandardInputOutput_WordWrap_A {
+            get {
+                return ResourceManager.GetString("String_StandardInputOutput_WordWrap_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   スタート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Startup_Caption {
@@ -2370,27 +2370,27 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   プログラム自動取り込み(_P) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Startup_Command_ImportPrograms {
+        public static string String_Startup_ImportPrograms_A {
             get {
-                return ResourceManager.GetString("String_Startup_Command_ImportPrograms", resourceCulture);
+                return ResourceManager.GetString("String_Startup_ImportPrograms_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   通知領域設定(_N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Startup_Command_NotifyArea {
+        public static string String_Startup_NotifyArea_A {
             get {
-                return ResourceManager.GetString("String_Startup_Command_NotifyArea", resourceCulture);
+                return ResourceManager.GetString("String_Startup_NotifyArea_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   スタートアップ登録(_S) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Startup_Command_RegisterStartup {
+        public static string String_Startup_RegisterStartup_A {
             get {
-                return ResourceManager.GetString("String_Startup_Command_RegisterStartup", resourceCulture);
+                return ResourceManager.GetString("String_Startup_RegisterStartup_A", resourceCulture);
             }
         }
     }
