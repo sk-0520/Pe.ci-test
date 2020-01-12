@@ -1738,11 +1738,128 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   keyboard に類似しているローカライズされた文字列を検索します。
+        ///   💩コメント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Comment {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キーボード に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Keyboard_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無視 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Ignore_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Ignore_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Ignore_Label_Add {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Ignore_Label_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   押下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンド型ランチャー追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Label_Add_Command {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ランチャーアイテム追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Label_Add_LauncherItem {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_LauncherItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Label_Add_Note {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー非表示追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Label_Add_Toolbar {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Add_Toolbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   システムへ通知 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Label_ConveySystem {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_ConveySystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   永久 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_Label_Forever {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Label_Forever", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   置換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Replace_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Replace_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Replace_Label_Add {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Replace_Label_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   💩削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Tooltip_Remove {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Tooltip_Remove", resourceCulture);
             }
         }
         

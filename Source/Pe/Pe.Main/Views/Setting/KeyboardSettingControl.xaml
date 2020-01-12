@@ -7,6 +7,7 @@
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
   xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_modes_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
 
@@ -34,8 +35,8 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
-        <Label  Content="replace" />
-        <Button Content="add" Command="{Binding Editor.AddReplaceJobCommand, ElementName=root}" />
+        <Label  Content="{Binding Resources.String_Setting_Keyboard_Replace_Header, Source={x:Static app_main:CultureService.Current}}" />
+        <Button Content="{Binding Resources.String_Setting_Keyboard_Replace_Label_Add, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddReplaceJobCommand, ElementName=root}" />
       </ToolBar>
 
       <ScrollViewer Grid.Row="1">
@@ -85,8 +86,8 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
-        <Label  Content="ignore" />
-        <Button Content="add" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
+        <Label  Content="{Binding Resources.String_Setting_Keyboard_Ignore_Header, Source={x:Static app_main:CultureService.Current}}" />
+        <Button Content="{Binding Resources.String_Setting_Keyboard_Ignore_Label_Add, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
       </ToolBar>
 
       <ScrollViewer Grid.Row="1">
@@ -105,7 +106,7 @@
                   </Expander.Header>
                   <Expander.Content>
                     <StackPanel>
-                      <CheckBox Grid.Column="1" Content="forever" IsChecked="{Binding Forever}" />
+                      <CheckBox Grid.Column="1" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Label_Forever, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding Forever}" />
                       <TextBox Text="{Binding Comment}" />
                       <Button Content="x" Command="{Binding Editor.RemoveDisableJobCommand, ElementName=root}" CommandParameter="{Binding}" />
                     </StackPanel>
@@ -127,16 +128,16 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0">
-        <Label  Content="key pressed" />
+        <Label  Content="{Binding Resources.String_Setting_Keyboard_Pressed_Header, Source={x:Static app_main:CultureService.Current}}" />
         <Grid>
           <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="add" />
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateJob}">
             <Border Style="{StaticResource PopupMenuBorder}">
               <StackPanel>
-                <MenuItem Header="command" Command="{Binding Editor.AddCommandJobCommand, ElementName=root}" />
-                <MenuItem Header="launcher item" Command="{Binding Editor.AddLauncherItemJobCommand, ElementName=root}" />
-                <MenuItem Header="hide toolbar" Command="{Binding Editor.AddLauncherToolbarJobCommand, ElementName=root}" />
-                <MenuItem Header="note" Command="{Binding Editor.AddNoteJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Label_Add_Command, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddCommandJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Label_Add_LauncherItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddLauncherItemJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Label_Add_Toolbar, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddLauncherToolbarJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Label_Add_Note, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddNoteJobCommand, ElementName=root}" />
 
               </StackPanel>
             </Border>
@@ -177,7 +178,7 @@
               <Button Content="add mapping" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
             </StackPanel>
             <StackPanel x:Key="Common" x:Shared="False">
-              <CheckBox Content="system" IsChecked="{Binding ConveySystem}" />
+              <CheckBox Content="{Binding Resources.String_Setting_Keyboard_Pressed_Label_ConveySystem, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ConveySystem}" />
               <TextBox Text="{Binding Comment}" />
               <Button Content="x" Command="{Binding Editor.RemovePressedJobCommand, ElementName=root}" CommandParameter="{Binding}" />
             </StackPanel>

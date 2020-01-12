@@ -662,8 +662,47 @@
   <data name="String_Setting_Generals_Update_Label_UpdateKind_Notify" xml:space="preserve">
     <value>通知のみ</value>
   </data>
+  <data name="String_Setting_Keyboard_Comment" xml:space="preserve">
+    <value>💩コメント</value>
+  </data>
   <data name="String_Setting_Keyboard_Header" xml:space="preserve">
-    <value>keyboard</value>
+    <value>キーボード</value>
+  </data>
+  <data name="String_Setting_Keyboard_Ignore_Header" xml:space="preserve">
+    <value>無視</value>
+  </data>
+  <data name="String_Setting_Keyboard_Ignore_Label_Add" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Header" xml:space="preserve">
+    <value>押下</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Label_Add_Command" xml:space="preserve">
+    <value>コマンド型ランチャー追加</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Label_Add_LauncherItem" xml:space="preserve">
+    <value>ランチャーアイテム追加</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Label_Add_Note" xml:space="preserve">
+    <value>ノート追加</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Label_Add_Toolbar" xml:space="preserve">
+    <value>ツールバー非表示追加</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Label_ConveySystem" xml:space="preserve">
+    <value>システムへ通知</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_Label_Forever" xml:space="preserve">
+    <value>永久</value>
+  </data>
+  <data name="String_Setting_Keyboard_Replace_Header" xml:space="preserve">
+    <value>置換</value>
+  </data>
+  <data name="String_Setting_Keyboard_Replace_Label_Add" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="String_Setting_Keyboard_Tooltip_Remove" xml:space="preserve">
+    <value>💩削除</value>
   </data>
   <data name="String_Setting_LauncherGroups_Edit_Header" xml:space="preserve">
     <value>編集</value>
