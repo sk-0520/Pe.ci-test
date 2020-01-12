@@ -1720,15 +1720,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   window に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Generals_Window_Header {
-            get {
-                return ResourceManager.GetString("String_Setting_Generals_Window_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   keyboard に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Header {
@@ -1747,11 +1738,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   items に類似しているローカライズされた文字列を検索します。
+        ///   ランチャーアイテム に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherItems_Header {
             get {
                 return ResourceManager.GetString("String_Setting_LauncherItems_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテムを追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherItems_Tooltip_Add {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherItems_Tooltip_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテムを削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherItems_Tooltip_Remove {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherItems_Tooltip_Remove", resourceCulture);
             }
         }
         

@@ -656,9 +656,6 @@
   <data name="String_Setting_Generals_Update_Label_UpdateKind_Notify" xml:space="preserve">
     <value>通知のみ</value>
   </data>
-  <data name="String_Setting_Generals_Window_Header" xml:space="preserve">
-    <value>window</value>
-  </data>
   <data name="String_Setting_Keyboard_Header" xml:space="preserve">
     <value>keyboard</value>
   </data>
@@ -666,7 +663,13 @@
     <value>groups</value>
   </data>
   <data name="String_Setting_LauncherItems_Header" xml:space="preserve">
-    <value>items</value>
+    <value>ランチャーアイテム</value>
+  </data>
+  <data name="String_Setting_LauncherItems_Tooltip_Add" xml:space="preserve">
+    <value>アイテムを追加</value>
+  </data>
+  <data name="String_Setting_LauncherItems_Tooltip_Remove" xml:space="preserve">
+    <value>アイテムを削除</value>
   </data>
   <data name="String_Setting_LauncherToolbars_Header" xml:space="preserve">
     <value>toolbars</value>

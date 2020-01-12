@@ -617,6 +617,46 @@
     </Viewbox>
   </ControlTemplate>
 
+  <ControlTemplate x:Key="App-Image-Add" TargetType="Control">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6.0003,-0.000199999999999534L6.0003,5.9998 0.000300000000000189,5.9998 0.000300000000000189,9.9998 6.0003,9.9998 6.0003,15.9998 10.0003,15.9998 10.0003,9.9998 16.0003,9.9998 16.0003,5.9998 10.0003,5.9998 10.0003,-0.000199999999999534z" />
+                  <GeometryDrawing Brush="#FF388934" Geometry="F1M15,9L9,9 9,15 7,15 7,9 1,9 1,7 7,7 7,1 9,1 9,7 15,7z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Remove" TargetType="Control">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M8,10.8281L5,13.8281 2.172,11.0001 5.172,8.0001 2.172,5.0001 5,2.1721 8,5.1721 11,2.1721 13.828,5.0001 10.828,8.0001 13.828,11.0001 11,13.8281z" />
+                  <GeometryDrawing Brush="#FFE51400" Geometry="F1M9.4141,8L12.4141,11 11.0001,12.414 8.0001,9.414 5.0001,12.414 3.5861,11 6.5861,8 3.5861,5 5.0001,3.586 8.0001,6.586 11.0001,3.586 12.4141,5z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
   <ControlTemplate x:Key="App-Image-StandardInputOutput-Kill" TargetType="Control">
     <Viewbox>
       <Rectangle Width="16" Height="16">

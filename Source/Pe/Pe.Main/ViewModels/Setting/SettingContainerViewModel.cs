@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
             };
             this._selectedEditor = GeneralSettingEditor;
+            this._selectedEditor = LauncherItemsSettingEditor;
         }
 
         #region property
@@ -109,6 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public void ReceiveViewLoaded(Window window)
         {
+            RaisePropertyChanged(nameof(SelectedEditor));
             SelectedEditor.Load();
         }
 
