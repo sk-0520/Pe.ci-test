@@ -5,11 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models.Database
+namespace ContentTypeTextNet.Pe.Main.Models.Database
 {
     /// <summary>
     /// enum の属性設定にて <see cref="EnumTransfer{TEnum}"/> を制御する。
-    /// <para>これ Core じゃなくて Main で持つべきだろ。。。</para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class EnumTransferAttribute : Attribute
