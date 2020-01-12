@@ -9,6 +9,7 @@
 
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -41,7 +42,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0">
+      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
         <!--
         <Grid>
           <ToggleButton x:Name="switchCreateGroup" IsChecked="{Binding Editor.IsPopupCreateGroupMenu, ElementName=root}" Content="+" />
@@ -54,13 +55,21 @@
           </Popup>
         </Grid>
         -->
-        <Button Content="add" Command="{Binding Editor.AddNewNormalGroupCommand, ElementName=root}" />
-        <Button Content="del" Command="{Binding Editor.RemoveSelectedGroupCommand, ElementName=root}" />
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_AddGroup, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddNewNormalGroupCommand, ElementName=root}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
+        </Button>
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_RemoveGroup, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveSelectedGroupCommand, ElementName=root}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+        </Button>
 
         <Separator />
 
-        <RepeatButton Content="up" Command="{Binding Editor.UpSelectedGroupCommand, ElementName=root}" />
-        <RepeatButton Content="down" Command="{Binding Editor.DownSelectedGroupCommand, ElementName=root}" />
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Up, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.UpSelectedGroupCommand, ElementName=root}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
+        </RepeatButton>
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Down, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.DownSelectedGroupCommand, ElementName=root}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
+        </RepeatButton>
       </ToolBar>
 
       <ListBox Grid.Row="1" AllowDrop="True" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
@@ -81,7 +90,7 @@
 
       <GridSplitter Grid.Row="2" Style="{StaticResource DefaultHorizonGridSplitter}" />
 
-      <GroupBox Grid.Row="3" Header="edit">
+      <GroupBox Grid.Row="3" VerticalAlignment="Top" Header="{Binding Resources.String_Setting_LauncherGroups_Edit_Header, Source={x:Static app_main:CultureService.Current}}">
         <ScrollViewer VerticalScrollBarVisibility="Auto" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, ElementName=root}">
           <StackPanel>
             <StackPanel.Resources>
@@ -101,7 +110,7 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="id" />
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Id, Source={x:Static app_main:CultureService.Current}}" />
                 <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding Editor.SelectedGroup.LauncherGroupId, ElementName=root, Mode=OneWay}" />
               </Grid>
 
@@ -111,7 +120,7 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="kind" />
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Kind, Source={x:Static app_main:CultureService.Current}}" />
                 <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding Editor.SelectedGroup.Kind, ElementName=root, Mode=OneWay}" />
               </Grid>
 
@@ -121,7 +130,7 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="name" />
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Name, Source={x:Static app_main:CultureService.Current}}" />
                 <TextBox Grid.Column="1" Text="{Binding Editor.SelectedGroup.Name, ElementName=root}" />
               </Grid>
 
@@ -131,24 +140,23 @@
                   <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="group-image" />
-                <ComboBox Grid.Column="1" ItemsSource="{Binding Editor.GroupIconItems, ElementName=root}" SelectedValuePath="Value" SelectedValue="{Binding Editor.SelectedGroup.ImageName, ElementName=root}">
-                  <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                      <ContentControl Content="{Binding Icon}" />
-                    </DataTemplate>
-                  </ComboBox.ItemTemplate>
-                </ComboBox>
-              </Grid>
+                <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Label_Image, Source={x:Static app_main:CultureService.Current}}" />
+                <Grid Grid.Column="1" >
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
 
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Style="{StaticResource LabelDefinition}" />
-                  <ColumnDefinition Style="{StaticResource ContentDefinition}" />
-                </Grid.ColumnDefinitions>
+                  <ComboBox Grid.Column="0" ItemsSource="{Binding Editor.GroupIconItems, ElementName=root}" SelectedValuePath="Value" SelectedValue="{Binding Editor.SelectedGroup.ImageName, ElementName=root}">
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <ContentControl Content="{Binding Icon}" />
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
 
-                <Label Grid.Column="0" Content="group-color" />
-                <app_core_views:ColorCanvas Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Editor.SelectedGroup.ImageColor, ElementName=root, Mode=TwoWay}" />
+                  <app_core_views:ColorCanvas Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Editor.SelectedGroup.ImageColor, ElementName=root, Mode=TwoWay}" />
+                </Grid>
               </Grid>
             </StackPanel>
           </StackPanel>
@@ -166,13 +174,19 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0">
-        <Button Content="del" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, ElementName=root}" />
+      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_RemoveItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, ElementName=root}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+        </Button>
 
         <Separator />
 
-        <RepeatButton Content="up" Command="{Binding Editor.UpSelectedLauncherItemCommand, ElementName=root}" />
-        <RepeatButton Content="down" Command="{Binding Editor.DownSelectedLauncherItemCommand, ElementName=root}" />
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Up, Source={x:Static app_main:CultureService.Current}}"  Command="{Binding Editor.UpSelectedLauncherItemCommand, ElementName=root}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
+        </RepeatButton>
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Tooltip_Down, Source={x:Static app_main:CultureService.Current}}"  Command="{Binding Editor.DownSelectedLauncherItemCommand, ElementName=root}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
+        </RepeatButton>
       </ToolBar>
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, ElementName=root}">
@@ -206,7 +220,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0">
+      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
         <ToolBar.Resources>
           <Style TargetType="{x:Type ToolBarPanel}">
             <Setter Property="Orientation" Value="Vertical"/>
@@ -214,7 +228,9 @@
         </ToolBar.Resources>
 
         <DockPanel HorizontalAlignment="Stretch">
-          <Button DockPanel.Dock="Left" Content="add" Command="{Binding Editor.AddSelectedLauncheritemCommand, ElementName=root}" />
+          <Button DockPanel.Dock="Left" ToolTip="{Binding Resources.String_Setting_LauncherGroups_Tooltip_AddItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddSelectedLauncheritemCommand, ElementName=root}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
+          </Button>
           <TextBox Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
         </DockPanel>
       </ToolBar>

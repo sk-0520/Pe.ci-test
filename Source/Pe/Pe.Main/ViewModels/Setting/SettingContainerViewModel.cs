@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
             };
             this._selectedEditor = GeneralSettingEditor;
-            this._selectedEditor = LauncherItemsSettingEditor;
+            this._selectedEditor = LauncherGroupsSettingEditor;
         }
 
         #region property

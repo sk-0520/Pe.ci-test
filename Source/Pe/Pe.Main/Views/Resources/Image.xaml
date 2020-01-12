@@ -657,6 +657,48 @@
     </Viewbox>
   </ControlTemplate>
 
+  <ControlTemplate x:Key="App-Image-Up" TargetType="Control">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M9.4141,8L13.0001,8 13.0001,6.586 8.4141,2 7.5861,2 3.0001,6.586 3.0001,8 6.5861,8 3.0001,11.586 3.0001,13 13.0001,13 13.0001,11.586z" />
+                  <GeometryDrawing Brush="#FF414141" Geometry="F1M8,3L4,7 12,7z" />
+                  <GeometryDrawing Brush="#FF414141" Geometry="F1M4,12L12,12 8,8z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="App-Image-Down" TargetType="Control">
+    <Viewbox>
+      <Rectangle Width="16" Height="16">
+        <Rectangle.Fill>
+          <DrawingBrush>
+            <DrawingBrush.Drawing>
+              <DrawingGroup>
+                <DrawingGroup.Children>
+                  <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                  <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M9.4141,8L13.0001,8 13.0001,9.414 8.4141,14 7.5861,14 3.0001,9.414 3.0001,8 6.5861,8 3.0001,4.414 3.0001,3 13.0001,3 13.0001,4.414z" />
+                  <GeometryDrawing Brush="#FF414141" Geometry="F1M12,4L4,4 8,8z" />
+                  <GeometryDrawing Brush="#FF414141" Geometry="F1M8,13L12,9 4,9z" />
+                </DrawingGroup.Children>
+              </DrawingGroup>
+            </DrawingBrush.Drawing>
+          </DrawingBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Viewbox>
+  </ControlTemplate>
+
   <ControlTemplate x:Key="App-Image-StandardInputOutput-Kill" TargetType="Control">
     <Viewbox>
       <Rectangle Width="16" Height="16">

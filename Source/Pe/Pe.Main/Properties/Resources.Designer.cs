@@ -369,6 +369,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   下へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Tooltip_Down {
+            get {
+                return ResourceManager.GetString("String_Common_Tooltip_Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ディレクトリ選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Tooltip_SelectDirectory {
@@ -383,6 +392,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Common_Tooltip_SelectFile {
             get {
                 return ResourceManager.GetString("String_Common_Tooltip_SelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Tooltip_Up {
+            get {
+                return ResourceManager.GetString("String_Common_Tooltip_Up", resourceCulture);
             }
         }
         
@@ -1729,7 +1747,52 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   groups に類似しているローカライズされた文字列を検索します。
+        ///   編集 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Edit_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Edit_Label_Id {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   イメージ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Edit_Label_Image {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種別 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Edit_Label_Kind {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   名前 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Edit_Label_Name {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Edit_Label_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherGroups_Header {
             get {
@@ -1738,7 +1801,43 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ランチャーアイテム に類似しているローカライズされた文字列を検索します。
+        ///   グループを追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Tooltip_AddGroup {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_AddGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテムを追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Tooltip_AddItem {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_AddItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   グループを削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Tooltip_RemoveGroup {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_RemoveGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテムを削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherGroups_Tooltip_RemoveItem {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherGroups_Tooltip_RemoveItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテム に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherItems_Header {
             get {
