@@ -1774,7 +1774,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   種別 に類似しているローカライズされた文字列を検索します。
+        ///   ディスプレイ種別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherGroups_Edit_Label_Kind {
             get {
@@ -1864,11 +1864,209 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   toolbars に類似しているローカライズされた文字列を検索します。
+        ///   識別 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Command_Screen {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Command_Screen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherToolbars_Header {
             get {
                 return ResourceManager.GetString("String_Setting_LauncherToolbars_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_AutoHide {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_AutoHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   有効 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_AutoHide_Enabled {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_AutoHide_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示時間(秒) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_AutoHide_Unit {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_AutoHide_Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイコンサイズ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_Icon {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   大 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_Icon_Big {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon_Big", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_Icon_Normal {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   小 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_Icon_Small {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Icon_Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイコン方向 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_IconDirection {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中央 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_IconDirection_Center {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection_Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左・上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_IconDirection_LeftTop {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection_LeftTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右・下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_IconDirection_RightBottom {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconDirection_RightBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイコンのみ表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_IconOnly {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_IconOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   その他 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_Others {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_TextFont {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_TextFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   テキスト幅 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_TextWidth {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_TextWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Bottom {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Left {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Right {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_ToolbarPosition_Top {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_ToolbarPosition_Top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_Label_Visible {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_Label_Visible", resourceCulture);
             }
         }
         

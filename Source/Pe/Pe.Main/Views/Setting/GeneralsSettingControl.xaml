@@ -137,9 +137,10 @@
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <CheckBox Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_General_Label_Starup_Register, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsRegisterStartup}" />
-                    <CheckBox Grid.Column="1" Content="{Binding Resources.String_Setting_Generals_General_Label_Starup_WaitTime, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding DelayStartup}" />
+                    <CheckBox x:Name="startWaitTime" Grid.Column="1" Content="{Binding Resources.String_Setting_Generals_General_Label_Starup_WaitTime, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding DelayStartup}" />
                     <app_core_views:NumericUpDown
-                       Grid.Column="2"
+                      Grid.Column="2"
+                      Width="{Binding ActualWidth, ElementName=startWaitTime}"
                       Minimum="{Binding MinimumStartupWaitTimeSeconds}"
                       Maximum="{Binding MaximumStartupWaitTimeSeconds}"
                       Value="{Binding StartupWaitTimeSeconds}"
@@ -234,10 +235,13 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Command_Label_Width, Source={x:Static app_main:CultureService.Current}}"></Label>
+                  <Label x:Name="commandViewWidth" Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Command_Label_Width, Source={x:Static app_main:CultureService.Current}}"></Label>
                   <app_core_views:NumericUpDown
                     Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Increment="1"
+                    Width="{Binding ActualWidth, ElementName=commandViewWidth}"
                     Value="{Binding Width}"
                     Minimum="{Binding MinimumWidth}"
                     Maximum="{Binding MaximumWidth}"
@@ -250,10 +254,13 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Content="{Binding Resources.String_Setting_Generals_Command_Label_Wait, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label x:Name="commandWaitTime" Content="{Binding Resources.String_Setting_Generals_Command_Label_Wait, Source={x:Static app_main:CultureService.Current}}" />
                   <app_core_views:NumericUpDown
                     Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Increment="0.5"
+                    Width="{Binding ActualWidth, ElementName=commandWaitTime}"
                     Value="{Binding HideWaitMilliseconds}"
                     Minimum="{Binding MinimumHideWaitSeconds}"
                     Maximum="{Binding MaximumHideWaitSeconds}"

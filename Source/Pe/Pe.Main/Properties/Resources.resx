@@ -675,7 +675,7 @@
     <value>イメージ</value>
   </data>
   <data name="String_Setting_LauncherGroups_Edit_Label_Kind" xml:space="preserve">
-    <value>種別</value>
+    <value>ディスプレイ種別</value>
   </data>
   <data name="String_Setting_LauncherGroups_Edit_Label_Name" xml:space="preserve">
     <value>名前</value>
@@ -704,8 +704,74 @@
   <data name="String_Setting_LauncherItems_Tooltip_Remove" xml:space="preserve">
     <value>アイテムを削除</value>
   </data>
+  <data name="String_Setting_LauncherToolbars_Command_Screen" xml:space="preserve">
+    <value>識別</value>
+  </data>
   <data name="String_Setting_LauncherToolbars_Header" xml:space="preserve">
-    <value>toolbars</value>
+    <value>ツールバー</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_AutoHide" xml:space="preserve">
+    <value>自動的に隠す</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_AutoHide_Enabled" xml:space="preserve">
+    <value>有効</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_AutoHide_Unit" xml:space="preserve">
+    <value>表示時間(秒)</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_Icon" xml:space="preserve">
+    <value>アイコンサイズ</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_IconDirection" xml:space="preserve">
+    <value>アイコン方向</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_IconDirection_Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_IconDirection_LeftTop" xml:space="preserve">
+    <value>左・上</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_IconDirection_RightBottom" xml:space="preserve">
+    <value>右・下</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_IconOnly" xml:space="preserve">
+    <value>アイコンのみ表示</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_Icon_Big" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_Icon_Normal" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_Icon_Small" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_TextFont" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_TextWidth" xml:space="preserve">
+    <value>テキスト幅</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_ToolbarPosition" xml:space="preserve">
+    <value>ツールバー位置</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_ToolbarPosition_Bottom" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_ToolbarPosition_Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_ToolbarPosition_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_ToolbarPosition_Top" xml:space="preserve">
+    <value>上</value>
+  </data>
+  <data name="String_Setting_LauncherToolbars_Label_Visible" xml:space="preserve">
+    <value>表示</value>
   </data>
   <data name="String_StandardInputOutput_Caption" xml:space="preserve">
     <value>${ITEM} の標準入出力</value>
