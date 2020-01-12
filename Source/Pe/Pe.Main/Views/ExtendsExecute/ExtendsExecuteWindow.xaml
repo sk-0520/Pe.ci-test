@@ -19,7 +19,7 @@
 
   Height="450"
   Width="800"
-  
+
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
@@ -181,7 +181,7 @@
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
       <Button IsDefault="True" Content="{Binding Resources.String_ExtendsExecute_Command_Execute, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExecuteCommand}" />
-      <Button Content="{Binding Resources.String_Common_Command_Close, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}" />
+      <Button IsCancel="True" Content="{Binding Resources.String_Common_Command_Close, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}" />
     </UniformGrid>
 
   </Grid>
