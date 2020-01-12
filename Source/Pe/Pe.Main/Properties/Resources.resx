@@ -510,25 +510,151 @@
     <value>メインディスプレイ</value>
   </data>
   <data name="String_Setting_Generals_Command_Header" xml:space="preserve">
-    <value>command</value>
+    <value>コマンド型ランチャー</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Find" xml:space="preserve">
+    <value>検索条件</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Find_Tag" xml:space="preserve">
+    <value>タグを検索する</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Font" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Icon" xml:space="preserve">
+    <value>アイコン</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Icon_Big" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Icon_Normal" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Icon_Small" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Wait" xml:space="preserve">
+    <value>表示時間</value>
+  </data>
+  <data name="String_Setting_Generals_Command_Label_Width" xml:space="preserve">
+    <value>横幅</value>
+  </data>
+  <data name="String_Setting_Generals_Execute_Command_CreateUserIdFromEnvironment" xml:space="preserve">
+    <value>環境から生成</value>
+  </data>
+  <data name="String_Setting_Generals_Execute_Command_CreateUserIdFromRandom" xml:space="preserve">
+    <value>ランダムに生成</value>
   </data>
   <data name="String_Setting_Generals_Execute_Header" xml:space="preserve">
-    <value>execute</value>
+    <value>実行環境</value>
+  </data>
+  <data name="String_Setting_Generals_Execute_Label_SendUsageStatistics" xml:space="preserve">
+    <value>使用統計情報の送信を許可する</value>
+  </data>
+  <data name="String_Setting_Generals_Execute_Label_UserId" xml:space="preserve">
+    <value>ユーザーID</value>
+  </data>
+  <data name="String_Setting_Generals_Execute_UserIdDescription" xml:space="preserve">
+    <value>ユーザーIDと使用統計情報について</value>
   </data>
   <data name="String_Setting_Generals_General_Header" xml:space="preserve">
-    <value>general</value>
+    <value>基本</value>
+  </data>
+  <data name="String_Setting_Generals_General_Label_Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="String_Setting_Generals_General_Label_Starup" xml:space="preserve">
+    <value>スタートアップ</value>
+  </data>
+  <data name="String_Setting_Generals_General_Label_Starup_Register" xml:space="preserve">
+    <value>登録する</value>
+  </data>
+  <data name="String_Setting_Generals_General_Label_Starup_WaitTime" xml:space="preserve">
+    <value>起動待機時間(秒)</value>
+  </data>
+  <data name="String_Setting_Generals_General_Label_UserBackupDirectory" xml:space="preserve">
+    <value>ユーザーバックアップ</value>
   </data>
   <data name="String_Setting_Generals_Header" xml:space="preserve">
-    <value>general</value>
+    <value>基本</value>
   </data>
   <data name="String_Setting_Generals_Note_Header" xml:space="preserve">
-    <value>note</value>
+    <value>ノート</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Color" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Color_Background" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Color_Foreground" xml:space="preserve">
+    <value>前景色</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Font" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Layout" xml:space="preserve">
+    <value>レイアウト</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Layout_Absolute" xml:space="preserve">
+    <value>絶対座標</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Layout_Relative" xml:space="preserve">
+    <value>相対座標</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Title" xml:space="preserve">
+    <value>タイトル</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Title_Count" xml:space="preserve">
+    <value>カウント</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Title_Timestamp" xml:space="preserve">
+    <value>タイムスタンプ</value>
+  </data>
+  <data name="String_Setting_Generals_Note_Label_Topmost" xml:space="preserve">
+    <value>最前面</value>
   </data>
   <data name="String_Setting_Generals_StandardInputOutput_Header" xml:space="preserve">
-    <value>stdio</value>
+    <value>標準入出力</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_ErrorColor" xml:space="preserve">
+    <value>標準エラー</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Background" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Foreground" xml:space="preserve">
+    <value>前景色</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_Font" xml:space="preserve">
+    <value>フォント</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_OutputColor" xml:space="preserve">
+    <value>標準出力</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_OutputColor_Background" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_OutputColor_Foreground" xml:space="preserve">
+    <value>前景色</value>
+  </data>
+  <data name="String_Setting_Generals_StandardInputOutput_Label_Topmost" xml:space="preserve">
+    <value>最前面</value>
   </data>
   <data name="String_Setting_Generals_Update_Header" xml:space="preserve">
-    <value>update</value>
+    <value>アップデート</value>
+  </data>
+  <data name="String_Setting_Generals_Update_Label_UpdateKind" xml:space="preserve">
+    <value>アップデート方法</value>
+  </data>
+  <data name="String_Setting_Generals_Update_Label_UpdateKind_Auto" xml:space="preserve">
+    <value>自動アップデート</value>
+  </data>
+  <data name="String_Setting_Generals_Update_Label_UpdateKind_None" xml:space="preserve">
+    <value>しない</value>
+  </data>
+  <data name="String_Setting_Generals_Update_Label_UpdateKind_Notify" xml:space="preserve">
+    <value>通知のみ</value>
   </data>
   <data name="String_Setting_Generals_Window_Header" xml:space="preserve">
     <value>window</value>

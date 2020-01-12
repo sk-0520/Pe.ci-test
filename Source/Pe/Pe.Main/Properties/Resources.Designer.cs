@@ -1279,7 +1279,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   command に類似しているローカライズされた文字列を検索します。
+        ///   コマンド型ランチャー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Command_Header {
             get {
@@ -1288,7 +1288,106 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   execute に類似しているローカライズされた文字列を検索します。
+        ///   検索条件 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Find {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Find", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグを検索する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Find_Tag {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Find_Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Font {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイコン に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Icon {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   大 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Icon_Big {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon_Big", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Icon_Normal {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   小 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Icon_Small {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Icon_Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示時間 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Wait {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Wait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   横幅 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Command_Label_Width {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Command_Label_Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   環境から生成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Execute_Command_CreateUserIdFromEnvironment {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Execute_Command_CreateUserIdFromEnvironment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ランダムに生成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Execute_Command_CreateUserIdFromRandom {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Execute_Command_CreateUserIdFromRandom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   実行環境 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Execute_Header {
             get {
@@ -1297,7 +1396,34 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   general に類似しているローカライズされた文字列を検索します。
+        ///   使用統計情報の送信を許可する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Execute_Label_SendUsageStatistics {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Execute_Label_SendUsageStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Execute_Label_UserId {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Execute_Label_UserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーIDと使用統計情報について に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Execute_UserIdDescription {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Execute_UserIdDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   基本 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_General_Header {
             get {
@@ -1306,7 +1432,52 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   general に類似しているローカライズされた文字列を検索します。
+        ///   言語 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_General_Label_Language {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_General_Label_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   スタートアップ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_General_Label_Starup {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_General_Label_Starup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   登録する に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_General_Label_Starup_Register {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_General_Label_Starup_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   起動待機時間(秒) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_General_Label_Starup_WaitTime {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_General_Label_Starup_WaitTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーバックアップ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_General_Label_UserBackupDirectory {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_General_Label_UserBackupDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   基本 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Header {
             get {
@@ -1315,7 +1486,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   note に類似しているローカライズされた文字列を検索します。
+        ///   ノート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Note_Header {
             get {
@@ -1324,7 +1495,106 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   stdio に類似しているローカライズされた文字列を検索します。
+        ///   色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Color {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   背景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Color_Background {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Color_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Color_Foreground {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Color_Foreground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Font {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   レイアウト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Layout {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Layout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   絶対座標 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Layout_Absolute {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Layout_Absolute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   相対座標 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Layout_Relative {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Layout_Relative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Title {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   カウント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Title_Count {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Title_Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイムスタンプ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Title_Timestamp {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Title_Timestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_Label_Topmost {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_Label_Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   標準入出力 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_StandardInputOutput_Header {
             get {
@@ -1333,11 +1603,119 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   update に類似しているローカライズされた文字列を検索します。
+        ///   標準エラー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_ErrorColor {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_ErrorColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   背景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Background {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Foreground {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_ErrorColor_Foreground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_Font {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_Font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   標準出力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_OutputColor {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_OutputColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   背景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_OutputColor_Background {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_OutputColor_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前景色 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_OutputColor_Foreground {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_OutputColor_Foreground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_StandardInputOutput_Label_Topmost {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_StandardInputOutput_Label_Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Update_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Generals_Update_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデート方法 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Update_Label_UpdateKind {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動アップデート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Update_Label_UpdateKind_Auto {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   しない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Update_Label_UpdateKind_None {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通知のみ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Update_Label_UpdateKind_Notify {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Update_Label_UpdateKind_Notify", resourceCulture);
             }
         }
         
