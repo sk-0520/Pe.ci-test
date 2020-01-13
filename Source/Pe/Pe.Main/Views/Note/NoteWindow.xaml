@@ -15,8 +15,8 @@
   xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
 
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
-  xmlns:app_main_model_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
-  xmlns:app_main_viewmodel_note="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Note"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
+  xmlns:app_main_viewmodels_note="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Note"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
@@ -54,6 +54,7 @@
       <cttn_lib_shared_lib_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
       <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+      <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
         ResizeBorderThickness="{Binding BorderThickness}"
@@ -255,7 +256,7 @@
             </Style>
 
             <!--#region テキスト -->
-            <DataTemplate DataType="{x:Type app_main_viewmodel_note:NotePlainContentViewModel}">
+            <DataTemplate DataType="{x:Type app_main_viewmodels_note:NotePlainContentViewModel}">
               <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="Loaded">
@@ -267,7 +268,7 @@
             <!--#endregion -->
 
             <!--#region リッチテキスト -->
-            <DataTemplate DataType="{x:Type app_main_viewmodel_note:NoteRichTextContentViewModel}">
+            <DataTemplate DataType="{x:Type app_main_viewmodels_note:NoteRichTextContentViewModel}">
               <!--<xctk:RichTextBox x:Name="control" Text="{Binding RtfContent, UpdateSourceTrigger=PropertyChanged, Delay=2000}" >
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="Loaded">
@@ -384,8 +385,8 @@
 
                   <Label Grid.Column="0" Content="{Binding Resources.String_Note_Format_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
                   <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding IsLink, Converter={StaticResource LogicalNotConverter}}">
-                    <RadioButton Content="{Binding Resources.String_Note_Format_Kind_Plain_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteContentKind.Plain}}" />
-                    <RadioButton Content="{Binding Resources.String_Note_Format_Kind_RichText_A, Source={x:Static app_main:CultureService.Current}}"   IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteContentKind.RichText}}"  />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.Plain}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.Plain}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.RichText}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.RichText}}"  />
                   </StackPanel>
                 </Grid>
 
@@ -397,8 +398,8 @@
 
                   <Label Grid.Column="0" Content="{Binding Resources.String_Note_Format_Layout_A, Source={x:Static app_main:CultureService.Current}}" />
                   <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding IsLink, Converter={StaticResource LogicalNotConverter}}">
-                    <RadioButton Content="{Binding Resources.String_Note_Format_Layout_Absolute_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteLayoutKind.Absolute}}" />
-                    <RadioButton Content="{Binding Resources.String_Note_Format_Layout_Relative_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_model_data:NoteLayoutKind.Relative}}"  />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Absolute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Relative}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}"  />
                   </StackPanel>
                 </Grid>
 
@@ -594,7 +595,7 @@
                     </Grid>
                   </StackPanel>
                   <StackPanel Visibility="{Binding IsLink, Converter={StaticResource FalseToVisibilityConverter}}" Width="{Binding ActualWidth, ElementName=parent}">
-                    <TextBlock Text="{Binding Resources.String_Note_Link_NotLinking, Source={x:Static app_main:CultureService.Current}}" />
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Resources.String_Note_Link_NotLinking, Source={x:Static app_main:CultureService.Current}}" />
                     <Separator />
                     <Button Content="{Binding Resources.String_Note_Link_SaveLink_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SaveLinkCommand}" />
                     <Button Content="{Binding Resources.String_Note_Link_OpenLink_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenLinkCommand}" />

@@ -434,23 +434,11 @@
   <data name="String_Note_Format_Kind_A" xml:space="preserve">
     <value>種別</value>
   </data>
-  <data name="String_Note_Format_Kind_Plain_A" xml:space="preserve">
-    <value>テキスト</value>
-  </data>
-  <data name="String_Note_Format_Kind_RichText_A" xml:space="preserve">
-    <value>RTF</value>
-  </data>
   <data name="String_Note_Format_Layout_A" xml:space="preserve">
     <value>位置</value>
   </data>
-  <data name="String_Note_Format_Layout_Absolute_A" xml:space="preserve">
-    <value>絶対</value>
-  </data>
-  <data name="String_Note_Format_Layout_Relative_A" xml:space="preserve">
-    <value>相対</value>
-  </data>
   <data name="String_Note_KindChanging_Change" xml:space="preserve">
-    <value>${FROM-KIND} から ${TO-KIND} への変換により一部情報が失われます</value>
+    <value>${FROM-KIND} から ${TO-KIND} への変換により一部情報が失われますがよろしいですか</value>
   </data>
   <data name="String_Note_KindChanging_Convert_A" xml:space="preserve">
     <value>変換(_T)</value>
@@ -533,15 +521,6 @@
   <data name="String_Setting_Generals_Command_Icon_A" xml:space="preserve">
     <value>アイコン</value>
   </data>
-  <data name="String_Setting_Generals_Command_Icon_Big_A" xml:space="preserve">
-    <value>大</value>
-  </data>
-  <data name="String_Setting_Generals_Command_Icon_Normal_A" xml:space="preserve">
-    <value>中</value>
-  </data>
-  <data name="String_Setting_Generals_Command_Icon_Small_A" xml:space="preserve">
-    <value>小</value>
-  </data>
   <data name="String_Setting_Generals_Command_Wait_A" xml:space="preserve">
     <value>表示時間</value>
   </data>
@@ -605,20 +584,8 @@
   <data name="String_Setting_Generals_Note_Layout_A" xml:space="preserve">
     <value>レイアウト</value>
   </data>
-  <data name="String_Setting_Generals_Note_Layout_Absolute_A" xml:space="preserve">
-    <value>絶対座標</value>
-  </data>
-  <data name="String_Setting_Generals_Note_Layout_Relative_A" xml:space="preserve">
-    <value>相対座標</value>
-  </data>
   <data name="String_Setting_Generals_Note_Title_A" xml:space="preserve">
     <value>タイトル</value>
-  </data>
-  <data name="String_Setting_Generals_Note_Title_Count_A" xml:space="preserve">
-    <value>カウント</value>
-  </data>
-  <data name="String_Setting_Generals_Note_Title_Timestamp_A" xml:space="preserve">
-    <value>タイムスタンプ</value>
   </data>
   <data name="String_Setting_Generals_Note_Topmost_A" xml:space="preserve">
     <value>最前面</value>
@@ -655,15 +622,6 @@
   </data>
   <data name="String_Setting_Generals_Update_UpdateKind_A" xml:space="preserve">
     <value>アップデート方法</value>
-  </data>
-  <data name="String_Setting_Generals_Update_UpdateKind_Auto_A" xml:space="preserve">
-    <value>自動アップデート</value>
-  </data>
-  <data name="String_Setting_Generals_Update_UpdateKind_None_A" xml:space="preserve">
-    <value>しない</value>
-  </data>
-  <data name="String_Setting_Generals_Update_UpdateKind_Notify_A" xml:space="preserve">
-    <value>通知のみ</value>
   </data>
   <data name="String_Setting_Keyboard_Comment" xml:space="preserve">
     <value>💩コメント</value>
@@ -769,8 +727,8 @@
   <data name="String_Setting_LauncherItems_Remove" xml:space="preserve">
     <value>アイテムを削除</value>
   </data>
-  <data name="String_Setting_LauncherToolbars_Command_Screen" xml:space="preserve">
-    <value>識別</value>
+  <data name="String_Setting_LauncherToolbars_Screen_A" xml:space="preserve">
+    <value>ディスプレイ識別(_D)</value>
   </data>
   <data name="String_Setting_LauncherToolbars_Header" xml:space="preserve">
     <value>ツールバー</value>
@@ -838,8 +796,8 @@
   <data name="String_StandardInputOutput_StandardInputOutput_Header" xml:space="preserve">
     <value>標準入出力</value>
   </data>
-  <data name="String_StandardInputOutput_StandardInputOutput_Send" xml:space="preserve">
-    <value>入力</value>
+  <data name="String_StandardInputOutput_StandardInputOutput_Send_A" xml:space="preserve">
+    <value>入力(_S)</value>
   </data>
   <data name="String_Startup_Caption" xml:space="preserve">
     <value>スタート</value>
@@ -907,6 +865,36 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Small_A" xml:space="preserve">
     <value>小(_S)</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentLauncherItem.Execute" xml:space="preserve">
+    <value>通常実行</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentLauncherItem.Execute_A" xml:space="preserve">
+    <value>通常実行(_E)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentLauncherItem.ExtendsExecute" xml:space="preserve">
+    <value>指定して実行</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentLauncherItem.ExtendsExecute_A" xml:space="preserve">
+    <value>指定して実行(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentNote.Create" xml:space="preserve">
+    <value>作成</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentNote.Create_A" xml:space="preserve">
+    <value>作成(_C)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentNote.ZOrderBottom" xml:space="preserve">
+    <value>最後面へ移動</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentNote.ZOrderBottom_A" xml:space="preserve">
+    <value>最後面へ移動(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentNote.ZOrderTop" xml:space="preserve">
+    <value>最前面へ移動</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.KeyActionContentNote.ZOrderTop_A" xml:space="preserve">
+    <value>最前面へ移動(_T)</value>
+  </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.Center" xml:space="preserve">
     <value>中央</value>
   </data>
@@ -924,5 +912,92 @@
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.RightBottom_A" xml:space="preserve">
     <value>右・下(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.All" xml:space="preserve">
+    <value>両方</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.All_A" xml:space="preserve">
+    <value>両方(_A)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.Any" xml:space="preserve">
+    <value>どれか</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.Any_A" xml:space="preserve">
+    <value>どれか(_Y)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.Left_A" xml:space="preserve">
+    <value>左(_L)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.None" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.None_A" xml:space="preserve">
+    <value>なし(_N)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.ModifierKey.Right_A" xml:space="preserve">
+    <value>右(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteContentKind.Plain" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteContentKind.Plain_A" xml:space="preserve">
+    <value>テキスト(_P)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteContentKind.RichText" xml:space="preserve">
+    <value>書式付き</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteContentKind.RichText_A" xml:space="preserve">
+    <value>書式付き(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteCreateTitleKind.Count" xml:space="preserve">
+    <value>カウント</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteCreateTitleKind.Count_A" xml:space="preserve">
+    <value>カウント(_C)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteCreateTitleKind.Timestamp" xml:space="preserve">
+    <value>タイムスタンプ</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteCreateTitleKind.Timestamp_A" xml:space="preserve">
+    <value>タイムスタンプ(_T)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteLayoutKind.Absolute" xml:space="preserve">
+    <value>絶対座標</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteLayoutKind.Absolute_A" xml:space="preserve">
+    <value>絶対座標(_A)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteLayoutKind.Relative" xml:space="preserve">
+    <value>相対座標</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteLayoutKind.Relative_A" xml:space="preserve">
+    <value>相対座標(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateKind.Auto" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateKind.Auto_A" xml:space="preserve">
+    <value>自動(_A)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateKind.None" xml:space="preserve">
+    <value>しない</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateKind.None_A" xml:space="preserve">
+    <value>しない(_N)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateKind.Notify" xml:space="preserve">
+    <value>通知のみ</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateKind.Notify_A" xml:space="preserve">
+    <value>通知のみ(_F)</value>
+  </data>
+  <data name="String_Setting_Keyboard_Pressed_LauncherItem_Execute_A" xml:space="preserve">
+    <value>実行方法</value>
   </data>
 </root>

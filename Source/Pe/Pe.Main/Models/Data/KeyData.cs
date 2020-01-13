@@ -55,10 +55,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 実行。
         /// </summary>
+        [EnumResource]
         Execute,
         /// <summary>
         /// 指定して実行。
         /// </summary>
+        [EnumResource]
         ExtendsExecute,
     }
 
@@ -78,14 +80,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 新規ノートの作成。
         /// </summary>
+        [EnumResource]
         Create,
         /// <summary>
         /// 表示中ノートの最前面移動。
         /// </summary>
+        [EnumResource]
         ZOrderTop,
         /// <summary>
         /// 表示中ノートの最後面移動。
         /// </summary>
+        [EnumResource]
         ZOrderBottom,
     }
 
@@ -97,22 +102,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// なし
         /// </summary>
+        [EnumResource]
         None,
         /// <summary>
         /// いずれか。
         /// </summary>
+        [EnumResource]
         Any,
         /// <summary>
         /// 左。
         /// </summary>
+        [EnumResource]
         Left,
         /// <summary>
         /// 右。
         /// </summary>
+        [EnumResource]
         Right,
         /// <summary>
         /// 両方。
         /// </summary>
+        [EnumResource]
         All,
     }
 

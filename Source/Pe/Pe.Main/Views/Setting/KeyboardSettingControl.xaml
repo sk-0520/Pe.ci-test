@@ -9,6 +9,7 @@
   xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main_modes_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,6 +19,7 @@
 >
   <UserControl.Resources>
     <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
     <Style x:Key="ExpanderHeaderInner" TargetType="FrameworkElement">
       <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}, Mode=OneWayToSource}" />
@@ -233,14 +235,14 @@
                 <StackPanel>
                   <Grid>
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition />
-                      <ColumnDefinition />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Content="exec" />
-                    <WrapPanel Grid.Column="1">
-                      <RadioButton Content="execute" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.Execute}}" />
-                      <RadioButton Content="extends" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}}" />
+                    <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Keyboard_Pressed_LauncherItem_Execute_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <WrapPanel Grid.Column="1" VerticalAlignment="Center">
+                      <RadioButton Content="{Binding Source={x:Static app_main_modes_data:KeyActionContentLauncherItem.Execute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.Execute}}" />
+                      <RadioButton Content="{Binding Source={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}}" />
                     </WrapPanel>
                   </Grid>
                   <ContentControl Content="{StaticResource Mappings}" />
@@ -281,7 +283,7 @@
                       </ComboBox.ItemsPanel>
                       <ComboBox.ItemTemplate>
                         <DataTemplate>
-                          <TextBlock Text="{Binding}" />
+                          <TextBlock Text="{Binding Converter={StaticResource EnumToCultureConverter}}" />
                         </DataTemplate>
                       </ComboBox.ItemTemplate>
                     </ComboBox>

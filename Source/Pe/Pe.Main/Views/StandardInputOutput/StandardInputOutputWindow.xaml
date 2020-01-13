@@ -192,7 +192,7 @@
             </ComboBox>
             <Button
               Grid.Column="1"
-              Content="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Send, Source={x:Static app_main:CultureService.Current}}"
+              Content="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Send_A, Source={x:Static app_main:CultureService.Current}}"
               Command="{Binding SendInputCommand}"
             />
           </Grid>

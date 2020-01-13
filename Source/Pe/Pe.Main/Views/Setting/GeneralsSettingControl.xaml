@@ -12,6 +12,7 @@
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main_viewmodels_font="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Font"
   xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
@@ -25,6 +26,8 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+
   </UserControl.Resources>
 
 
@@ -182,9 +185,9 @@
 
                   <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Update_UpdateKind_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Update_UpdateKind_None_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.None}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Update_UpdateKind_Notify_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Notify}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Update_UpdateKind_Auto_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Auto}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:UpdateKind.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.None}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:UpdateKind.Notify}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Notify}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:UpdateKind.Auto}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Auto}}" />
                   </WrapPanel>
                 </Grid>
 
@@ -275,9 +278,9 @@
 
                   <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Command_Icon_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Command_Icon_Small_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Command_Icon_Normal_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Command_Icon_Big_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Small}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Normal}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Big}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
                   </WrapPanel>
                 </Grid>
 
@@ -339,8 +342,8 @@
 
                   <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Note_Title_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Note_Title_Timestamp_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Note_Title_Count_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Count}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteCreateTitleKind.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Count}}" />
                   </WrapPanel>
                 </Grid>
 
@@ -352,8 +355,8 @@
 
                   <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Note_Layout_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Note_Layout_Absolute_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
-                    <RadioButton Content="{Binding Resources.String_Setting_Generals_Note_Layout_Relative_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Absolute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Relative}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}" />
                   </WrapPanel>
                 </Grid>
 

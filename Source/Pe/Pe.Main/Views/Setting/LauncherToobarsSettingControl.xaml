@@ -47,7 +47,7 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Command_Screen, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.ShowAllScreensCommand, ElementName=root}" />
+        <Button Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Screen_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.ShowAllScreensCommand, ElementName=root}" />
         <ComboBox Grid.Column="1" ItemsSource="{Binding Editor.ToolbarItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedToolbar, ElementName=root}">
           <ComboBox.ItemTemplate>
             <DataTemplate>

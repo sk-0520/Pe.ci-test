@@ -7,8 +7,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     public enum UpdateKind
     {
+        [EnumResource]
         None,
+        [EnumResource]
         Notify,
+        [EnumResource]
         Auto,
     }
 

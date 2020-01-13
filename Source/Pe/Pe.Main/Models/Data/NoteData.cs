@@ -12,7 +12,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
     public enum NoteCreateTitleKind
     {
+        [EnumResource]
         Timestamp,
+        [EnumResource]
         Count,
     }
 
@@ -25,13 +27,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public enum NoteLayoutKind
     {
+        [EnumResource]
         Absolute,
+        [EnumResource]
         Relative,
     }
 
     public enum NoteContentKind
     {
+        [EnumResource]
         Plain,
+        [EnumResource]
         RichText,
         [Obsolete]
         Link,

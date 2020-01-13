@@ -4,8 +4,10 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -15,6 +17,11 @@
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:KeyToDisplayConverter x:Key="KeyToDisplayConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+
+    <DataTemplate x:Key="ModifierKey">
+      <TextBlock Text="{Binding Converter={StaticResource EnumToCultureConverter}}" />
+    </DataTemplate>
   </UserControl.Resources>
   <StackPanel>
     <ComboBox ItemsSource="{Binding KeyItemsSource, ElementName=root}" SelectedItem="{Binding Key, ElementName=root}" >
@@ -45,16 +52,16 @@
       </Grid.ColumnDefinitions>
 
       <Label Grid.Row="0" Grid.Column="0" Content="shift" />
-      <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Shift, ElementName=root}" />
+      <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Shift, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
 
       <Label Grid.Row="1" Grid.Column="0" Content="ctrl" />
-      <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Control, ElementName=root}" />
+      <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Control, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
 
       <Label Grid.Row="2" Grid.Column="0" Content="alt" />
-      <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Alt, ElementName=root}" />
+      <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Alt, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
 
       <Label Grid.Row="3" Grid.Column="0" Content="super" />
-      <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Super, ElementName=root}" />
+      <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Super, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
     </Grid>
   </StackPanel>
 </UserControl>

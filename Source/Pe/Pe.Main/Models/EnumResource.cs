@@ -147,6 +147,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public string GetString(object enumValue, ResourceNameKind resourceNameKind)
         {
             var type = enumValue.GetType();
+            if(type == typeof(string)) {
+                return string.Empty;
+            }
 
             var resourceBaseName = Map.TryGetValue(type, out var val)
                 ? GetResourceName(val, type, enumValue)

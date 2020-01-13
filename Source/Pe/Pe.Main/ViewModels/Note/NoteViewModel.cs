@@ -350,8 +350,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     Properties.Resources.String_Note_KindChanging_Change,
                     new Dictionary<string, string>() {
                         //TODO: ローカライズ
-                        ["FROM-KIND"] = ContentKind.ToString(),
-                        ["TO-KIND"] = ChangingContentKind.ToString(),
+                        ["FROM-KIND"] = CultureService.Current.GetString(ContentKind, Models.ResourceNameKind.Normal),
+                        ["TO-KIND"] = CultureService.Current.GetString(ChangingContentKind, Models.ResourceNameKind.Normal),
                     }
                 );
             }
