@@ -405,22 +405,82 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   hidari に類似しているローカライズされた文字列を検索します。
+        ///   下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Bottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Bo" +
+                        "ttom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   下(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Bottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Bo" +
+                        "ttom_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Left {
             get {
-                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Le" +
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Le" +
                         "ft", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   hidari! に類似しているローカライズされた文字列を検索します。
+        ///   左(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Left_A {
             get {
-                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Le" +
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Le" +
                         "ft_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Right {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Ri" +
+                        "ght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Right_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Ri" +
+                        "ght_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Top {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.To" +
+                        "p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Top_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.To" +
+                        "p_A", resourceCulture);
             }
         }
         
@@ -429,7 +489,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_File {
             get {
-                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.File", resourceCulture);
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.File", resourceCulture);
             }
         }
         
@@ -438,7 +498,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_Unknown {
             get {
-                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown", resourceCulture);
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown", resourceCulture);
             }
         }
         
@@ -2249,42 +2309,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_LauncherToolbars_ToolbarPosition_A {
             get {
                 return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   下 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_ToolbarPosition_Bottom_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Bottom_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   左 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_ToolbarPosition_Left_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Left_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   右 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_ToolbarPosition_Right_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Right_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   上 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_ToolbarPosition_Top_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_ToolbarPosition_Top_A", resourceCulture);
             }
         }
         

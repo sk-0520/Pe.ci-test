@@ -76,8 +76,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         IDictionary<Type, EnumResourceMapping> Map { get; } = new Dictionary<Type, EnumResourceMapping>();
 
-        public string NameHeader { get; } = "String_Enum";
-        public string Separator { get; } = ":";
+        public string NameHeader { get; } = "String:Enum";
+        public string Separator { get; } = "-";
 
         #endregion
 

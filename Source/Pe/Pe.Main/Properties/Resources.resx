@@ -823,18 +823,6 @@
   <data name="String_Setting_LauncherToolbars_ToolbarPosition_A" xml:space="preserve">
     <value>ツールバー位置</value>
   </data>
-  <data name="String_Setting_LauncherToolbars_ToolbarPosition_Bottom_A" xml:space="preserve">
-    <value>下</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_ToolbarPosition_Left_A" xml:space="preserve">
-    <value>左</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_ToolbarPosition_Right_A" xml:space="preserve">
-    <value>右</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_ToolbarPosition_Top_A" xml:space="preserve">
-    <value>上</value>
-  </data>
   <data name="String_Setting_LauncherToolbars_Visible_A" xml:space="preserve">
     <value>表示</value>
   </data>
@@ -883,16 +871,34 @@
   <data name="String_Startup_RegisterStartup_A" xml:space="preserve">
     <value>スタートアップ登録(_S)</value>
   </data>
-  <data name="String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.File" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.File" xml:space="preserve">
     <value>ファイル</value>
   </data>
-  <data name="String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown" xml:space="preserve">
     <value>不明</value>
   </data>
-  <data name="String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Left" xml:space="preserve">
-    <value>hidari</value>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Left" xml:space="preserve">
+    <value>左</value>
   </data>
-  <data name="String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Left_A" xml:space="preserve">
-    <value>hidari!</value>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Left_A" xml:space="preserve">
+    <value>左(_L)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Bottom" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Bottom_A" xml:space="preserve">
+    <value>下(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Right_A" xml:space="preserve">
+    <value>右(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Top" xml:space="preserve">
+    <value>上</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Top_A" xml:space="preserve">
+    <value>上(_T)</value>
   </data>
 </root>
