@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// 名前空間.Enum.メンバ名で登録
         /// </summary>
         /// <typeparam name="TEnum"></typeparam>
-        public void Add<TEnum>()
+        public EnumResourceManager Register<TEnum>()
             where TEnum : Enum
         {
             var type = typeof(TEnum);
@@ -100,6 +100,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
             }
 
             Map.Add(type, new EnumResourceMapping(type, enumResources));
+
+            return this;
         }
 
         /// <summary>
@@ -107,11 +109,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         /// <typeparam name="TEnum"></typeparam>
         /// <param name="enumResources"></param>
-        public void Add<TEnum>(IReadOnlyList<EnumResource> enumResources)
+        public EnumResourceManager Register<TEnum>(IReadOnlyList<EnumResource> enumResources)
             where TEnum: Enum
         {
             var type = typeof(TEnum);
             Map.Add(type, new EnumResourceMapping(type, enumResources));
+
+            return this;
         }
 
         string GetResourceName(EnumResourceMapping mapping, Type enumType, object enumValue)

@@ -784,32 +784,14 @@
   <data name="String_Setting_LauncherToolbars_AutoHide_Unit_A" xml:space="preserve">
     <value>表示時間(秒)</value>
   </data>
-  <data name="String_Setting_LauncherToolbars_Icon_A" xml:space="preserve">
+  <data name="String_Setting_LauncherToolbars_IconSize_A" xml:space="preserve">
     <value>アイコンサイズ</value>
   </data>
   <data name="String_Setting_LauncherToolbars_IconDirection_A" xml:space="preserve">
     <value>アイコン方向</value>
   </data>
-  <data name="String_Setting_LauncherToolbars_IconDirection_Center_A" xml:space="preserve">
-    <value>中央</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_IconDirection_LeftTop_A" xml:space="preserve">
-    <value>左・上</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_IconDirection_RightBottom_A" xml:space="preserve">
-    <value>右・下</value>
-  </data>
   <data name="String_Setting_LauncherToolbars_IconOnly_A" xml:space="preserve">
     <value>アイコンのみ表示</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_Icon_Big_A" xml:space="preserve">
-    <value>大</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_Icon_Normal_A" xml:space="preserve">
-    <value>中</value>
-  </data>
-  <data name="String_Setting_LauncherToolbars_Icon_Small_A" xml:space="preserve">
-    <value>小</value>
   </data>
   <data name="String_Setting_LauncherToolbars_Others_A" xml:space="preserve">
     <value>その他</value>
@@ -900,5 +882,47 @@
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Top_A" xml:space="preserve">
     <value>上(_T)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Big" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Big_A" xml:space="preserve">
+    <value>大(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Large" xml:space="preserve">
+    <value>特大</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Large_A" xml:space="preserve">
+    <value>特大(_L)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Normal" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Normal_A" xml:space="preserve">
+    <value>中(_N)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Small" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Small_A" xml:space="preserve">
+    <value>小(_S)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.Center_A" xml:space="preserve">
+    <value>中央(_C)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.LeftTop" xml:space="preserve">
+    <value>左・上</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.LeftTop_A" xml:space="preserve">
+    <value>左・上(_L)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.RightBottom" xml:space="preserve">
+    <value>右・下</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.RightBottom_A" xml:space="preserve">
+    <value>右・下(_R)</value>
   </data>
 </root>

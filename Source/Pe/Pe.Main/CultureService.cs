@@ -88,6 +88,7 @@ namespace ContentTypeTextNet.Pe.Main
             }
 
             Current = cultureService;
+            Current.ChangeAutoCulture();
         }
 
         #endregion

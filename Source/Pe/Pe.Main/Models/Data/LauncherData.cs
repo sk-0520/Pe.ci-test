@@ -52,8 +52,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public enum LauncherToolbarIconDirection
     {
+        [EnumResource]
         LeftTop,
+        [EnumResource]
         Center,
+        [EnumResource]
         RightBottom,
     }
 

@@ -485,6 +485,78 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   大 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Big {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Big", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   大(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Big_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Big_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   特大 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Large {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Large", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   特大(_L) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Large_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Large_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Normal {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Normal_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Normal_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   小 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Small {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   小(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Small_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.IconBox.Small_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_File {
@@ -499,6 +571,66 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_Unknown {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中央 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarIconDirection_Center {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.C" +
+                        "enter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中央(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarIconDirection_Center_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.C" +
+                        "enter_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左・上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarIconDirection_LeftTop {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.L" +
+                        "eftTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左・上(_L) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarIconDirection_LeftTop_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.L" +
+                        "eftTop_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右・下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarIconDirection_RightBottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.R" +
+                        "ightBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右・下(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarIconDirection_RightBottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarIconDirection.R" +
+                        "ightBottom_A", resourceCulture);
             }
         }
         
@@ -2196,42 +2328,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   アイコンサイズ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_Icon_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   大 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_Icon_Big_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_Big_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   中 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_Icon_Normal_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_Normal_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   小 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_Icon_Small_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_Icon_Small_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   アイコン方向 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherToolbars_IconDirection_A {
@@ -2241,38 +2337,20 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   中央 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_IconDirection_Center_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconDirection_Center_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   左・上 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_IconDirection_LeftTop_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconDirection_LeftTop_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   右・下 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_LauncherToolbars_IconDirection_RightBottom_A {
-            get {
-                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconDirection_RightBottom_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   アイコンのみ表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherToolbars_IconOnly_A {
             get {
                 return ResourceManager.GetString("String_Setting_LauncherToolbars_IconOnly_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイコンサイズ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_IconSize_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_IconSize_A", resourceCulture);
             }
         }
         
