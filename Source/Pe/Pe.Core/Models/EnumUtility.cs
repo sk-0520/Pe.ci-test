@@ -63,5 +63,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase);
         }
+
+        public static bool TryParse<TEnum>(string value, out TEnum result, bool ignoreCase = true)
+            where TEnum : struct, Enum
+        {
+            if(Enum.TryParse(typeof(TEnum), value, ignoreCase, out var temp)) {
+                result = (TEnum)temp!;
+                return true;
+            }
+            result = default;
+            return false;
+        }
+
     }
 }

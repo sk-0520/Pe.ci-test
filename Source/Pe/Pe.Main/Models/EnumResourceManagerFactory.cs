@@ -12,8 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             var enumResourceManager = new EnumResourceManager();
 
-            var x = enumResourceManager.GetString(Data.LauncherItemKind.File);
-            var y = enumResourceManager.GetString(Data.LauncherItemKind.Unknown);
+            enumResourceManager.Add<Data.LauncherItemKind> ();
 
             return enumResourceManager;
         }

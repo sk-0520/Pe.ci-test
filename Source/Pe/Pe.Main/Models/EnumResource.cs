@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -65,19 +66,47 @@ namespace ContentTypeTextNet.Pe.Main.Models
         AccessKey,
     }
 
+    /// <summary>
+    /// Enumのリソース名を管理。
+    /// <para>なにをどうしても <see cref="NameHeader"/> + <see cref="Separator"/> が先頭にくっつくことに注意。</para>
+    /// </summary>
     public class EnumResourceManager
     {
         #region property
 
         IDictionary<Type, EnumResourceMapping> Map { get; } = new Dictionary<Type, EnumResourceMapping>();
 
-        string NameHeader { get; } = "String_Enum";
-        string Separator { get; } = ":";
+        public string NameHeader { get; } = "String_Enum";
+        public string Separator { get; } = ":";
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 名前空間.Enum.メンバ名で登録
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        public void Add<TEnum>()
+            where TEnum : Enum
+        {
+            var type = typeof(TEnum);
+            var memberValues = Enum.GetValues(type);
+            var enumResources = new List<EnumResource>(memberValues.Length);
+            foreach(var memberValue in memberValues) {
+                var fieldInfo = type.GetField(memberValue!.ToString()!)!;
+                //var attribute = fieldInfo.GetCustomAttribute<EnumResourceAttribute>();
+                enumResources.Add(new EnumResource((int)memberValue, type.FullName + "." + fieldInfo.Name));
+            }
+
+            Map.Add(type, new EnumResourceMapping(type, enumResources));
+        }
+
+        /// <summary>
+        /// 独自の名前で登録。
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="enumResources"></param>
         public void Add<TEnum>(IReadOnlyList<EnumResource> enumResources)
             where TEnum: Enum
         {
@@ -85,29 +114,44 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Map.Add(type, new EnumResourceMapping(type, enumResources));
         }
 
+        string GetResourceName(EnumResourceMapping mapping, Type enumType, object enumValue)
+        {
+            var baseName = mapping.Items.First(i => i.RawMember == (int)enumValue).ResourceName;
+            var name = NameHeader + Separator + baseName;
+            return name;
+        }
+
+        string GetResourceName(Type enumType, object enumValue)
+        {
+            var fieldInfo = enumType.GetField(enumValue.ToString()!)!;
+            var attribute = fieldInfo.GetCustomAttribute<EnumResourceAttribute>();
+            if(attribute == null) {
+                throw new ArgumentException(nameof(enumType));
+            }
+
+            //TODO: resourceNameKind
+            var baseName = string.IsNullOrWhiteSpace(attribute.ResourceBaseName)
+                ? enumType.FullName + "." + fieldInfo.Name
+                : attribute.ResourceBaseName
+            ;
+            var name = NameHeader + Separator + baseName;
+            return name;
+        }
+
         public string GetString(object enumValue) => GetString(enumValue, ResourceNameKind.Normal);
 
         public string GetString(object enumValue, ResourceNameKind resourceNameKind)
         {
             var type = enumValue.GetType();
-            if(Map.TryGetValue(type, out var val)) {
-            }
 
-            var fieldInfo = type.GetField(enumValue.ToString()!)!;
-            var attribute = fieldInfo.GetCustomAttribute<EnumResourceAttribute>();
-            if(attribute == null) {
-                throw new ArgumentException(nameof(type));
-            }
-
-            //TODO: resourceNameKind
-            var baseName = string.IsNullOrWhiteSpace(attribute.ResourceBaseName)
-                ? type.FullName + "." + fieldInfo.Name
-                : attribute.ResourceBaseName
+            var resourceName = Map.TryGetValue(type, out var val)
+                ? GetResourceName(val, type, enumValue)
+                : GetResourceName(type, enumValue)
             ;
-            var name = NameHeader + Separator + baseName;
-
-            var result = Properties.Resources.ResourceManager.GetString(name);
+            //TODO: resourceNameKind
+            var result = Properties.Resources.ResourceManager.GetString(resourceName);
             return result ?? string.Empty;
+
         }
 
         #endregion

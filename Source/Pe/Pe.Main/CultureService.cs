@@ -76,6 +76,11 @@ namespace ContentTypeTextNet.Pe.Main
 
         public XmlLanguage GetXmlLanguage() => XmlLanguage.GetLanguage(Culture.IetfLanguageTag);
 
+        public string GetString(object enumValue, ResourceNameKind resourceNameKind)
+        {
+            return EnumResourceManager.GetString(enumValue, resourceNameKind);
+        }
+
         internal static void Initialize(CultureService cultureService)
         {
             if(Current != null) {

@@ -15,6 +15,7 @@
   xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main_viewmodel_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
@@ -24,6 +25,7 @@
 >
   <UserControl.Resources>
     <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </UserControl.Resources>
 
 
@@ -62,7 +64,7 @@
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
-              <TextBox Grid.Column="1" Text="{Binding Kind, Mode=OneWay}" IsReadOnly="True" />
+              <TextBox Grid.Column="1" Text="{Binding Kind, Mode=OneWay, Converter={StaticResource EnumToCultureConverter}}" IsReadOnly="True" />
             </Grid>
 
             <Grid>
