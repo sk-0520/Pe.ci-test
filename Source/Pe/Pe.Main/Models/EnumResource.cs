@@ -144,11 +144,18 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             var type = enumValue.GetType();
 
-            var resourceName = Map.TryGetValue(type, out var val)
+            var resourceBaseName = Map.TryGetValue(type, out var val)
                 ? GetResourceName(val, type, enumValue)
                 : GetResourceName(type, enumValue)
             ;
-            //TODO: resourceNameKind
+
+            var resourceName = resourceNameKind switch
+            {
+                ResourceNameKind.AccessKey => resourceBaseName + "_A",
+                ResourceNameKind.Normal => resourceBaseName,
+                _ => throw new NotImplementedException()
+            };
+
             var result = Properties.Resources.ResourceManager.GetString(resourceName);
             return result ?? string.Empty;
 

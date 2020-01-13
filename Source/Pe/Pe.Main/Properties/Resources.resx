@@ -889,4 +889,10 @@
   <data name="String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown" xml:space="preserve">
     <value>不明</value>
   </data>
+  <data name="String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Left" xml:space="preserve">
+    <value>hidari</value>
+  </data>
+  <data name="String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Left_A" xml:space="preserve">
+    <value>hidari!</value>
+  </data>
 </root>

@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             var enumResourceManager = new EnumResourceManager();
 
-            enumResourceManager.Add<Data.LauncherItemKind> ();
+            enumResourceManager.Add<Bridge.Models.Data.AppDesktopToolbarPosition> ();
 
             return enumResourceManager;
         }

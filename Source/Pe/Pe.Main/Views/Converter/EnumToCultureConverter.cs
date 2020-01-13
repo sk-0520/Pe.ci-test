@@ -23,7 +23,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
             var resourceNameKind = ResourceNameKind.Normal;
             var param = (string)parameter;
             if(!string.IsNullOrWhiteSpace(param)) {
-                EnumUtility.TryParse(param, out resourceNameKind);
+                if(!EnumUtility.TryParse(param, out resourceNameKind)) {
+                    resourceNameKind = param.ToUpperInvariant() switch
+                    {
+                        "A" => ResourceNameKind.AccessKey,
+                        _ => ResourceNameKind.Normal,
+                    };
+                }
             }
 
             return CultureService.GetString(value, resourceNameKind);

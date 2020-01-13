@@ -405,6 +405,26 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   hidari に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Left {
+            get {
+                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Le" +
+                        "ft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   hidari! に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Left_A {
+            get {
+                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Bridge.Models.Data.AppDesktopToolbarPosition.Le" +
+                        "ft_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_File {
