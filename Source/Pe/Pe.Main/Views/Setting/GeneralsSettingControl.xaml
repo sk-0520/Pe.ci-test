@@ -143,6 +143,7 @@
                     <CheckBox x:Name="startWaitTime" Grid.Column="1" Content="{Binding Resources.String_Setting_Generals_General_Starup_WaitTime_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding DelayStartup}" />
                     <app_core_views:NumericUpDown
                       Grid.Column="2"
+                      HorizontalAlignment="Left"
                       Width="{Binding ActualWidth, ElementName=startWaitTime}"
                       Minimum="{Binding MinimumStartupWaitTimeSeconds}"
                       Maximum="{Binding MaximumStartupWaitTimeSeconds}"

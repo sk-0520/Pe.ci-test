@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
             };
             this._selectedEditor = GeneralSettingEditor;
-            this._selectedEditor = KeyboardSettingEditor;
+            //this._selectedEditor = KeyboardSettingEditor;
         }
 
         #region property

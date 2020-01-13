@@ -321,7 +321,7 @@
     <value>パス</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_WorkDirectory_A" xml:space="preserve">
-    <value>作業Directory</value>
+    <value>作業ディレクトリ</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_StoreApp_Header" xml:space="preserve">
     <value>ストアアプリ</value>
@@ -698,7 +698,7 @@
     <value>イメージ</value>
   </data>
   <data name="String_Setting_LauncherGroups_Edit_Kind_A" xml:space="preserve">
-    <value>ディスプレイ種別</value>
+    <value>グループ種別</value>
   </data>
   <data name="String_Setting_LauncherGroups_Edit_Name_A" xml:space="preserve">
     <value>名前</value>
@@ -999,5 +999,14 @@
   </data>
   <data name="String_Setting_Keyboard_Pressed_LauncherItem_Execute_A" xml:space="preserve">
     <value>実行方法</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupKind.Normal" xml:space="preserve">
+    <value>通常</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupKind.Normal_A" xml:space="preserve">
+    <value>通常(_A)</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_Common_Icon_A" xml:space="preserve">
+    <value>アイコン(_I)</value>
   </data>
 </root>

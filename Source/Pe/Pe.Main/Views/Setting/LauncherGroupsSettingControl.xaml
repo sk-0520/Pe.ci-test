@@ -11,6 +11,7 @@
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -21,7 +22,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Pe.Core;component/Views/ColorPickerDictionary.xaml" />
       </ResourceDictionary.MergedDictionaries>
-
+      <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
     </ResourceDictionary>
   </UserControl.Resources>
 
@@ -121,7 +122,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
-                <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding Editor.SelectedGroup.Kind, ElementName=root, Mode=OneWay}" />
+                <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding Editor.SelectedGroup.Kind, ElementName=root, Mode=OneWay, Converter={StaticResource EnumToCultureConverter}}" />
               </Grid>
 
               <Grid>

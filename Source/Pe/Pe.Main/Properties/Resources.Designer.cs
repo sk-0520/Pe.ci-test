@@ -655,6 +655,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   通常 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherGroupKind_Normal {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupKind.Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通常(_A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherGroupKind_Normal_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupKind.Normal_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_File {
@@ -1166,6 +1184,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   アイコン(_I) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_Common_Icon_A {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Icon_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ID に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_Common_Id_A {
@@ -1302,7 +1329,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   作業Directory に類似しているローカライズされた文字列を検索します。
+        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_WorkDirectory_A {
             get {
@@ -2445,7 +2472,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ディスプレイ種別 に類似しているローカライズされた文字列を検索します。
+        ///   グループ種別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherGroups_Edit_Kind_A {
             get {

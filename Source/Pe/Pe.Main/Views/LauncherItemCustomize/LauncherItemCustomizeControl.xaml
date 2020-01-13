@@ -94,7 +94,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="icon" />
+              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Icon_A, Source={x:Static app_main:CultureService.Current}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />

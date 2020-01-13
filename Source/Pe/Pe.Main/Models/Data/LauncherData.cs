@@ -175,6 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public enum LauncherGroupKind
     {
+        [EnumResource]
         Normal,
     }
 
