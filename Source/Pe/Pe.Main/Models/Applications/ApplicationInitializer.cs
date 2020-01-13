@@ -420,6 +420,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             );
             var logger = loggerFactory.CreateLogger(GetType());
 
+            var cultureService = new CultureService(EnumResourceManagerFactory.Create());
+            CultureService.Initialize(cultureService);
+
             var skipAccept = commandLine.ExistsSwitch(CommandLineSwitchAcceptSkip);
             if(skipAccept) {
                 logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");

@@ -21,27 +21,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 💩。
         /// </summary>
+        [EnumResource]
         Unknown,
         /// <summary>
         /// ファイルアイテム。
         /// <para>可能な限りPATHを考慮するので旧来のコマンドに近い挙動も可能。</para>
         /// </summary>
+        [EnumResource(typeof(LauncherItemKind), nameof(File))]
         File,
         /// <summary>
         /// ストアアプリ。
         /// <para>プロトコルとかエイリアスであれこれ。</para>
         /// <para><see cref="File"/>と違って小難しい処理は無理。</para>
         /// </summary>
+        [EnumResource(typeof(LauncherItemKind), nameof(StoreApp))]
         StoreApp,
         /// <summary>
         /// プラグインアイテム。
         /// <para>プラグインのみぞ知る機能。</para>
         /// </summary>
+        [EnumResource(typeof(LauncherItemKind), nameof(Addon))]
         Addon,
         /// <summary>
         /// セパレータ。
         /// <para>いる、これ？</para>
         /// </summary>
+        [EnumResource(typeof(LauncherItemKind), nameof(Separator))]
         Separator,
     }
 

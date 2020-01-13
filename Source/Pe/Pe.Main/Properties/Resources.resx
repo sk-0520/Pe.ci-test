@@ -883,4 +883,10 @@
   <data name="String_Startup_RegisterStartup_A" xml:space="preserve">
     <value>スタートアップ登録(_S)</value>
   </data>
+  <data name="String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.File" xml:space="preserve">
+    <value>ファイル</value>
+  </data>
+  <data name="String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown" xml:space="preserve">
+    <value>不明</value>
+  </data>
 </root>

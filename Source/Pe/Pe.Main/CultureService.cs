@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Markup;
+using ContentTypeTextNet.Pe.Main.Models;
 
 namespace ContentTypeTextNet.Pe.Main
 {
@@ -16,11 +17,18 @@ namespace ContentTypeTextNet.Pe.Main
 
         #endregion
 
+        public CultureService(EnumResourceManager enumResourceManager)
+        {
+            EnumResourceManager = enumResourceManager;
+        }
+
         #region property
+
+        EnumResourceManager EnumResourceManager { get; }
 
         static CultureInfo StartupCulture { get; } = CultureInfo.CurrentCulture;
 
-        public static CultureService Current { get; } = new CultureService();
+        public static CultureService Current { get; private set; } = null!;
 
         public Properties.Resources Resources { get; } = new Properties.Resources();
 
@@ -67,6 +75,15 @@ namespace ContentTypeTextNet.Pe.Main
         }
 
         public XmlLanguage GetXmlLanguage() => XmlLanguage.GetLanguage(Culture.IetfLanguageTag);
+
+        internal static void Initialize(CultureService cultureService)
+        {
+            if(Current != null) {
+                throw new InvalidOperationException();
+            }
+
+            Current = cultureService;
+        }
 
         #endregion
     }

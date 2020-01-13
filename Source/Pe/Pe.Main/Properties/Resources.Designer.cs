@@ -405,6 +405,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_File {
+            get {
+                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_Unknown {
+            get {
+                return ResourceManager.GetString("String_Enum:ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   変更 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_EnvironmentValieableEditor_Merge_A {
