@@ -30,7 +30,7 @@
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
-    <Style x:Key="History" TargetType="ComboBox">
+    <Style x:Key="History" TargetType="ComboBox" BasedOn="{StaticResource Horizontal-ComboBox}">
       <Setter Property="IsEditable" Value="True" />
       <Setter Property="ItemTemplateSelector">
         <Setter.Value>
@@ -97,8 +97,8 @@
             <ColumnDefinition Style="{StaticResource ContentDefinition}" />
           </Grid.ColumnDefinitions>
 
-          <Label Grid.Column="0" Content="{Binding Resources.String_ExtendsExecute_Command_A, Source={x:Static app_main:CultureService.Current}}" />
-          <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding ExecuteValue, Mode=OneTime}" />
+          <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_ExtendsExecute_Command_A, Source={x:Static app_main:CultureService.Current}}" />
+          <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Horizontal-TextBox}" Text="{Binding ExecuteValue, Mode=OneTime}" />
         </Grid>
 
         <Grid>
@@ -116,10 +116,10 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Grid.Column="0" Style="{StaticResource History}" Text="{Binding Option}" ItemsSource="{Binding HistoryOptions}" />
-            <Button Grid.Column="1" Command="{Binding OptionFileSelectCommand}" ToolTip="{Binding Resources.String_Common_SelectFile, Source={x:Static app_main:CultureService.Current}}">
+            <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding OptionFileSelectCommand}" ToolTip="{Binding Resources.String_Common_SelectFile, Source={x:Static app_main:CultureService.Current}}">
               <Control Template="{StaticResource App-Image-File}" Style="{StaticResource Image-Small}" />
             </Button>
-            <Button Grid.Column="2" Command="{Binding OptionDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+            <Button Grid.Column="2" VerticalAlignment="Center"  Command="{Binding OptionDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
               <Control Template="{StaticResource App-Image-Directory}" Style="{StaticResource Image-Small}" />
             </Button>
           </Grid>
@@ -131,7 +131,7 @@
             <ColumnDefinition Style="{StaticResource ContentDefinition}" />
           </Grid.ColumnDefinitions>
 
-          <Label Grid.Column="0" Content="{Binding Resources.String_ExtendsExecute_WorkDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
+          <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_ExtendsExecute_WorkDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
           <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="*" />
@@ -139,7 +139,7 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Grid.Column="0" Style="{StaticResource History}" Text="{Binding WorkDirectoryPath}" ItemsSource="{Binding HistoryWorkDirectories}" />
-            <Button Grid.Column="1" Command="{Binding WorkDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
+            <Button Grid.Column="1" VerticalAlignment="Center"  Command="{Binding WorkDirectorySelectCommand}" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}">
               <Control Template="{StaticResource App-Image-Directory}" Style="{StaticResource Image-Small}" />
             </Button>
           </Grid>
@@ -151,10 +151,10 @@
             <ColumnDefinition Style="{StaticResource ContentDefinition}" />
           </Grid.ColumnDefinitions>
 
-          <Label Grid.Column="0" Content="{Binding Resources.String_ExtendsExecute_Others_A, Source={x:Static app_main:CultureService.Current}}" />
+          <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_ExtendsExecute_Others_A, Source={x:Static app_main:CultureService.Current}}" />
           <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-            <CheckBox Content="{Binding Resources.String_ExtendsExecute_Others_StandardInputOutput_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsEnabledStandardInputOutput}" />
-            <CheckBox Content="{Binding Resources.String_ExtendsExecute_Others_RunAdmin_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding RunAdministrator}" />
+            <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_ExtendsExecute_Others_StandardInputOutput_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsEnabledStandardInputOutput}" />
+            <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_ExtendsExecute_Others_RunAdmin_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding RunAdministrator}" />
           </WrapPanel>
         </Grid>
 
@@ -164,9 +164,9 @@
             <ColumnDefinition Style="{StaticResource ContentDefinition}" />
           </Grid.ColumnDefinitions>
 
-          <Label Grid.Column="0" Content="{Binding Resources.String_ExtendsExecute_EnvironmentVariables_A, Source={x:Static app_main:CultureService.Current}}" />
-          <StackPanel Grid.Column="1" >
-            <CheckBox Content="{Binding Resources.String_ExtendsExecute_EnvironmentVariables_Edit_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" />
+          <Label Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_ExtendsExecute_EnvironmentVariables_A, Source={x:Static app_main:CultureService.Current}}" />
+          <StackPanel Grid.Column="1" Margin="{StaticResource TopMargin}" >
+            <CheckBox Style="{StaticResource Vertical-CheckBox}" Content="{Binding Resources.String_ExtendsExecute_EnvironmentVariables_Edit_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsEnabledCustomEnvironmentVariable}" />
             <app_main_views_launcher_item_customize:EnvironmentValieableEditor
               MergeTextDocument="{Binding MergeTextDocument}"
               MergeErrorItemsSource="{Binding MergeErros}"
