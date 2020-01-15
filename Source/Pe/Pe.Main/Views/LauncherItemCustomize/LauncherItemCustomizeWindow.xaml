@@ -41,7 +41,7 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
 
-    <ScrollViewer Grid.Row="0">
+    <ScrollViewer Grid.Row="0" Padding="{StaticResource AllMargin}">
       <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor}" />
     </ScrollViewer>
 
