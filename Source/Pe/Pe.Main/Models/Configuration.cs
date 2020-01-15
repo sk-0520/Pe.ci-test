@@ -27,6 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
             LoggingConfigFileName = section.GetValue<string>("log-conf-file-name");
             SupportCultures = section.GetSection("support-cultures").Get<string[]>();
 
+            LicenseName = section.GetValue<string>("license-name");
+
             ProjectRepositoryUri = section.GetValue<Uri>("project-repository-uri");
             ProjectForumUri = section.GetValue<Uri>("project-forum-uri");
             ProjectWebSiteUri = section.GetValue<Uri>("project-website-uri");
@@ -39,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public string LoggingConfigFileName { get; }
 
         public IReadOnlyList<string> SupportCultures { get; }
+
+        public string LicenseName { get; }
 
         public Uri ProjectRepositoryUri { get; }
         public Uri ProjectForumUri { get; }

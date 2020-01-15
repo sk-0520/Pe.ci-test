@@ -21,21 +21,12 @@
 
   <Section>
     <Paragraph>
-      <Run>本文書を確認したうえで本ソフトウェア(以下、</Run>
-      <Run Tag="APP" />
-      <Run>)を使用する場合は「</Run>
-      <Run Tag="ACCEPT-AFFIRMATIVE" />
-      <Run>」、使用しない場合は「</Run>
-      <Run Tag="ACCEPT-NEGATIVE" />
-      <Run>」を押下してください。</Run>
+      <Run>本文書を確認したうえで本ソフトウェア(以下、${APP})を使用する場合は「${ACCEPT-AFFIRMATIVE}」、使用しない場合は「${ACCEPT-NEGATIVE}」を押下してください。</Run>
       <LineBreak />
       <Run>このダイアログは初回起動やバージョンアップで大きな変更があった場合などに表示されます。</Run>
     </Paragraph>
     <Paragraph>
-      <Run Tag="APP" />
-      <Run>は</Run>
-      <Run Tag="LICENSE" />
-      <Run>でライセンスされています。</Run>
+      <Run>${APP} は ${LICENSE-NAME} でライセンスされています。</Run>
       <Run>実行前にソースを取得・確認するには以下のリンクを参照してください。</Run>
       <LineBreak />
       <Run>付属するサードパーティ製のソフトウェアなどに関してはそれぞれの適用しているライセンスとなります。</Run>
@@ -63,8 +54,7 @@
         <Paragraph>
           <CheckBox IsChecked="{Binding SendUsageStatistics}">使用統計情報の送信を許可する</CheckBox>
           <LineBreak />
-          <Run Tag="APP" />
-          <Run>では不具合検知・機能改善のため各種使用統計を収集します。</Run>
+          <Run>${APP}では不具合検知・機能改善のため各種使用統計を収集します。</Run>
           <LineBreak />
           <Run>本機能は設定にて切り替え可能です。</Run>
         </Paragraph>
@@ -79,8 +69,8 @@
         <Paragraph>
           <TextBlock>プロジェクトページ</TextBlock>
           <LineBreak />
-          <Hyperlink Command="{Binding OpenProjectUriCommand}">
-            <Run Tag="PROJECT-URI"/>
+          <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="${PROJECT-URI}">
+            <Run>${PROJECT-URI}</Run>
           </Hyperlink>
         </Paragraph>
       </ListItem>
@@ -88,8 +78,8 @@
         <Paragraph>
           <TextBlock>フォーラム</TextBlock>
           <LineBreak />
-          <Hyperlink Command="{Binding OpenForumUriCommand}">
-            <Run Tag="FORUM-URI"/>
+          <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="${FORUM-URI}">
+            <Run>${FORUM-URI}</Run>
           </Hyperlink>
         </Paragraph>
       </ListItem>
@@ -97,8 +87,8 @@
         <Paragraph>
           <TextBlock>Webサイト</TextBlock>
           <LineBreak />
-          <Hyperlink Command="{Binding OpenWebSiteUriCommand}">
-            <Run Tag="WEBSITE-URI"/>
+          <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="${WEBSITE-URI}">
+            <Run>${WEBSITE-URI}</Run>
           </Hyperlink>
         </Paragraph>
       </ListItem>

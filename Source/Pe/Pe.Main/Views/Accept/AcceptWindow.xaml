@@ -51,6 +51,10 @@
       IsTwoPageViewEnabled="False"
       Focusable="False"
       IsTabStop="False"
+
+      PreviewMouseRightButtonUp="documentAccept_PreviewMouseRightButtonUp"
+      PreviewKeyDown="documentAccept_PreviewKeyDown"
+
       Foreground="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"
       Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
     />

@@ -25,18 +25,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
     public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService, IViewLifecycleReceiver, IBuildStatus
     {
-        public AcceptViewModel(AcceptElement model, Configuration configuration, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AcceptViewModel(AcceptElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
-        {
-            Configuration = configuration;
-        }
+        { }
 
         #region property
 
         //public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
         public RequestSender CloseRequest { get; } = new RequestSender();
-
-        Configuration Configuration { get; }
 
         public bool SendUsageStatistics
         {
@@ -63,15 +59,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         #region command
 
-        public ICommand OpenProjectUriCommand => GetOrCreateCommand(() => new DelegateCommand(
-           () => OpenUri(Configuration.General.ProjectRepositoryUri)
+        public ICommand OpenUriCommand => GetOrCreateCommand(() => new DelegateCommand<string>(
+           (o) => {
+               try {
+                   var uri = new Uri(o);
+                   OpenUri(uri);
+               }catch(Exception ex) {
+                   Logger.LogError(ex, ex.Message);
+               }
+           }
         ));
-        public ICommand OpenForumUriCommand => GetOrCreateCommand(() => new DelegateCommand(
-           () => OpenUri(Configuration.General.ProjectForumUri)
-        ));
-        public ICommand OpenWebSiteUriCommand => GetOrCreateCommand(() => new DelegateCommand(
-           () => OpenUri(Configuration.General.ProjectWebSiteUri)
-        ));
+
 
         #endregion
 
@@ -79,7 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         void OpenUri(Uri uri)
         {
-
+            var process = Process.Start(new ProcessStartInfo(uri.ToString()) {
+                UseShellExecute = true,
+            });
         }
 
         #endregion

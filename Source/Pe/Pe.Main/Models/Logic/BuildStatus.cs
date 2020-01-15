@@ -48,7 +48,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public static Version Version { get; } = Assembly.GetExecutingAssembly()!.GetName()!.Version!;
         public static string Revision { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
-
+        public static string Name { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyProductAttribute>()!.Product;
+        public static string Copyright { get; }= Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyCopyrightAttribute>()!.Copyright;
         #endregion
     }
 
