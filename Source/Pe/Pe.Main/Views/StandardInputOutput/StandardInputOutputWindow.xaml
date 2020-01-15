@@ -44,7 +44,7 @@
     </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
   <DockPanel>
-    <ToolBar DockPanel.Dock="Top" Style="{StaticResource DefaultHorizontal-Toolbar}">
+    <ToolBar DockPanel.Dock="Top" Style="{StaticResource Horizontal-Toolbar}">
       <ToggleButton IsChecked="{Binding IsTopmost}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-Topmost}" />

@@ -41,7 +41,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+      <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <Label  Content="{Binding Resources.String_Setting_Keyboard_Replace_Header, Source={x:Static app_main:CultureService.Current}}" />
         <Button Content="{Binding Resources.String_Setting_Keyboard_Replace_Add_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddReplaceJobCommand, ElementName=root}" />
       </ToolBar>
@@ -84,7 +84,7 @@
       </ScrollViewer>
     </Grid>
 
-    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+    <GridSplitter Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
     <Grid Grid.Column="2">
       <Grid.RowDefinitions>
@@ -92,7 +92,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+      <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <Label  Content="{Binding Resources.String_Setting_Keyboard_Ignore_Header, Source={x:Static app_main:CultureService.Current}}" />
         <Button Content="{Binding Resources.String_Setting_Keyboard_Ignore_Add_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
       </ToolBar>
@@ -126,7 +126,7 @@
       </ScrollViewer>
     </Grid>
 
-    <GridSplitter Grid.Column="3" Style="{StaticResource DefaultVericalGridSplitter}" />
+    <GridSplitter Grid.Column="3" Style="{StaticResource Verical-GridSplitter}" />
 
     <Grid Grid.Column="4">
       <Grid.RowDefinitions>
@@ -134,7 +134,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+      <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <Label  Content="{Binding Resources.String_Setting_Keyboard_Pressed_Header, Source={x:Static app_main:CultureService.Current}}" />
         <Grid>
           <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Add_A, Source={x:Static app_main:CultureService.Current}}" />

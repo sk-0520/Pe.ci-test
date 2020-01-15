@@ -46,7 +46,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+      <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <ToolBar.Resources>
           <Style TargetType="{x:Type ToolBarPanel}">
             <Setter Property="Orientation" Value="Vertical"/>
@@ -107,7 +107,7 @@
       </ListBox>
     </Grid>
 
-    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+    <GridSplitter Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
     <Grid Grid.Column="2">
       <ScrollViewer x:Name="customize">

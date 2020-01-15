@@ -3,6 +3,41 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 >
+  <sys:Double x:Key="GridSplitterLength">4</sys:Double>
+  <Thickness x:Key="TextBoxPadding">2</Thickness>
+
+  <Thickness x:Key="ItemMargin">1,1,2,1</Thickness>
+  <Thickness x:Key="IndependentMargin">2</Thickness>
+  <Thickness x:Key="IndependentHorizonMargin">2,0</Thickness>
+  <Thickness x:Key="IndependentVericalMargin">0,2</Thickness>
+  <Thickness x:Key="BigIndependentMargin">8</Thickness>
+  <Thickness x:Key="BigIndependentHorizonMargin">8,0</Thickness>
+  <Thickness x:Key="BigIndependentVericalMargin">0,8</Thickness>
+  <sys:Double x:Key="BitMarginWidth">1</sys:Double>
+  <sys:Double x:Key="HalfMarginWidth">4</sys:Double>
+  <sys:Double x:Key="BaseMarginWidth">8</sys:Double>
+  <sys:Double x:Key="SeparatorWidth">4</sys:Double>
+  <sys:Double x:Key="SeparatorHeight">4</sys:Double>
+  <sys:Double x:Key="MenuIndentWidth">8</sys:Double>
+  <sys:Double x:Key="SmallPaddingHeight">6</sys:Double>
+  <sys:Double x:Key="NormalPaddingHeight">12</sys:Double>
+  <sys:Double x:Key="BigPaddingHeight">20</sys:Double>
+  <sys:Double x:Key="SmallIndentWidth">10</sys:Double>
+  <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
+  <sys:Double x:Key="BigIndentWidth">40</sys:Double>
+  <Thickness x:Key="BitMargin" Left="{StaticResource BitMarginWidth}" Top="{StaticResource BitMarginWidth}" Right="{StaticResource BitMarginWidth}" Bottom="{StaticResource BitMarginWidth}" />
+  <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMarginWidth}" Top="0" Right="0" Bottom="0" />
+  <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMarginWidth}" Right="0" Bottom="0" />
+  <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMarginWidth}" Bottom="0" />
+  <Thickness x:Key="BottomMargin" Left="0" Top="0" Right="0" Bottom="{StaticResource BaseMarginWidth}" />
+  <Thickness x:Key="AllMargin" Left="{StaticResource BaseMarginWidth}" Top="{StaticResource BaseMarginWidth}" Right="{StaticResource BaseMarginWidth}" Bottom="{StaticResource BaseMarginWidth}" />
+  <Thickness x:Key="VericalMargin" Left="0" Top="{StaticResource BaseMarginWidth}" Right="0" Bottom="{StaticResource BaseMarginWidth}" />
+  <Thickness x:Key="HorizonMargin" Left="{StaticResource BaseMarginWidth}" Top="0" Right="{StaticResource BaseMarginWidth}" Bottom="0" />
+  <Thickness x:Key="BasePadding" Left="4" Top="4" Right="4" Bottom="4" />
+
+  <Thickness x:Key="VerticalContrlMargin" Left="0" Top="{StaticResource HalfMarginWidth}" Right="0" Bottom="{StaticResource HalfMarginWidth}" />
+  <Thickness x:Key="HorizontalContrlMargin" Left="{StaticResource HalfMarginWidth}" Top="0" Right="{StaticResource HalfMarginWidth}" Bottom="0" />
+
   <sys:Double x:Key="Icon-Size-Small">16</sys:Double>
   <sys:Double x:Key="Icon-Size-Normal">32</sys:Double>
   <sys:Double x:Key="Icon-Size-Big">64</sys:Double>
@@ -12,8 +47,155 @@
   <sys:Double x:Key="Icon-Stroke-Normal">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Big">1</sys:Double>
 
-  <sys:Double x:Key="GridSplitterLength">4</sys:Double>
+  <!--#region controls-->
 
+  <!--#region toolbar -->
+  <Style TargetType="ToolBarTray">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+
+  <Style x:Key="Horizontal-ToolBarTray" TargetType="ToolBarTray" BasedOn="{StaticResource {x:Type ToolBarTray}}">
+    <Setter Property="Orientation" Value="Horizontal"/>
+    <Setter Property="Background"  Value="Transparent"/>
+  </Style>
+  <Style x:Key="Vertical-ToolBarTray" TargetType="ToolBarTray" BasedOn="{StaticResource {x:Type ToolBarTray}}">
+    <Setter Property="Orientation" Value="Vertical"/>
+    <Setter Property="Background"  Value="Transparent"/>
+  </Style>
+
+  <Style TargetType="ToolBar">
+    <Setter Property="ToolBarTray.IsLocked" Value="True" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+  </Style>
+  <Style x:Key="Horizontal-Toolbar" TargetType="ToolBar" BasedOn="{StaticResource {x:Type ToolBar}}">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+  </Style>
+  <Style x:Key="Vertical-Toolbar" TargetType="ToolBar" BasedOn="{StaticResource {x:Type ToolBar}}">
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+  </Style>
+  <!--#endregion-->
+
+  <!--#region  gridsplitter-->
+  <Style TargetType="GridSplitter">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="Background" Value="{DynamicResource SeperatorBrush}"/>
+  </Style>
+  <Style x:Key="Verical-GridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}">
+    <Setter Property="Width" Value="{StaticResource GridSplitterLength}" />
+  </Style>
+  <Style x:Key="Horizon-GridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}">
+    <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
+  </Style>
+  <!--#endregion-->
+
+  <!--#region textbox -->
+  <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Style.Triggers>
+      <Trigger Property="IsReadOnly" Value="True">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="Vertical-TextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="Margin" Value="{StaticResource VerticalContrlMargin}" />
+  </Style>
+  <Style x:Key="Horizontal-TextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Setter Property="Margin" Value="{StaticResource HorizontalContrlMargin}" />
+  </Style>
+
+  <!--#endregion-->
+
+  <!--#region combobox -->
+  <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+    <!--<Setter Property="Padding" Value="{StaticResource TextBoxPadding}" />-->
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="Vertical-ComboBox" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+    <Setter Property="Margin" Value="{StaticResource VerticalContrlMargin}" />
+  </Style>
+  <Style x:Key="Horizontal-ComboBox" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+    <Setter Property="Margin" Value="{StaticResource HorizontalContrlMargin}" />
+  </Style>
+
+  <!--#endregion-->
+
+  <!--#region checkbox -->
+  <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="Vertical-CheckBox" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+    <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
+  </Style>
+  <Style x:Key="Horizontal-CheckBox" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+    <Setter Property="Margin" Value="{StaticResource RightMargin}" />
+  </Style>
+  <!--#endregion-->
+
+  <!--#region radiobutton -->
+  <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="Vertical-RadioButton" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+    <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
+  </Style>
+  <Style x:Key="Horizontal-RadioButton" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
+    <Setter Property="Margin" Value="{StaticResource RightMargin}" />
+  </Style>
+  <!--#endregion-->
+
+  <!--#region separator -->
+  <Style x:Key="Indent" TargetType="Separator">
+    <Setter Property="Background" Value="{x:Null}" />
+  </Style>
+
+  <Style x:Key="Small-Indent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource SmallIndentWidth}" />
+  </Style>
+  <Style x:Key="Normal-Indent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource NormalIndentWidth}" />
+  </Style>
+  <Style x:Key="Big-Indent" TargetType="Separator" BasedOn="{StaticResource Indent}">
+    <Setter Property="Width" Value="{StaticResource BigIndentWidth}" />
+  </Style>
+
+  <Style x:Key="Vertical-Padding" TargetType="Separator">
+    <Setter Property="Background" Value="{x:Null}" />
+  </Style>
+
+  <Style x:Key="Small-Padding" TargetType="Separator" BasedOn="{StaticResource Vertical-Padding}">
+    <Setter Property="Height" Value="{StaticResource SmallPaddingHeight}" />
+  </Style>
+  <Style x:Key="Normal-Padding" TargetType="Separator" BasedOn="{StaticResource Vertical-Padding}">
+    <Setter Property="Height" Value="{StaticResource NormalPaddingHeight}" />
+  </Style>
+  <Style x:Key="Big-Padding" TargetType="Separator" BasedOn="{StaticResource Vertical-Padding}">
+    <Setter Property="Height" Value="{StaticResource BigPaddingHeight}" />
+  </Style>
+  <!--#endregion-->
+
+  <!--#region label-->
+
+  <Style x:Key="HeaderLabel" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <!--#endregion-->
+
+  <!--#endregion-->
+
+  <DropShadowEffect x:Key="Effect-Strong"
+    Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
+    ShadowDepth="0"
+    BlurRadius="8"
+  />
 
   <ControlTemplate x:Key="Path-Small" TargetType="ContentControl">
     <Viewbox Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
@@ -73,18 +255,10 @@
     <Setter Property="Height" Value="{StaticResource Icon-Size-Large}" />
   </Style>
 
-  <DropShadowEffect x:Key="Effect-Strong"
-    Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
-    ShadowDepth="0"
-    BlurRadius="8"
-  />
-
-
   <Style TargetType="MenuItem">
     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     <Setter Property="VerticalContentAlignment" Value="Stretch"/>
   </Style>
-
   <Style x:Key="MenuHeaderItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
     <Setter Property="Template">
       <Setter.Value>
@@ -120,7 +294,6 @@
     <Setter Property="Padding" Value="4" />
     <Setter Property="BorderThickness" Value="1" />
   </Style>
-
   <Style x:Key="PopupMenu" TargetType="Popup">
     <Setter Property="HorizontalOffset" Value="1" />
     <Setter Property="VerticalOffset" Value="1" />
@@ -183,17 +356,6 @@
     </Setter>
   </Style>
 
-  <Style TargetType="GridSplitter">
-    <Setter Property="HorizontalAlignment" Value="Stretch" />
-    <Setter Property="VerticalAlignment" Value="Stretch" />
-    <Setter Property="Background" Value="{DynamicResource SeperatorBrush}"/>
-  </Style>
-  <Style x:Key="DefaultVericalGridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}" TargetType="GridSplitter">
-    <Setter Property="Width" Value="{StaticResource GridSplitterLength}" />
-  </Style>
-  <Style x:Key="DefaultHorizonGridSplitter" BasedOn="{StaticResource {x:Type GridSplitter}}" TargetType="GridSplitter">
-    <Setter Property="Height" Value="{StaticResource GridSplitterLength}" />
-  </Style>
 
   <Style x:Key="DialogCommand" TargetType="UniformGrid">
     <Style.Resources>
@@ -212,26 +374,6 @@
     <Setter Property="Template" Value="{StaticResource Path-Small}" />
     <Setter Property="Foreground" Value="Transparent" />
     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
-  </Style>
-
-  <Style x:Key="DefaultHorizontal-ToolBarTray" TargetType="ToolBarTray">
-    <Setter Property="Orientation" Value="Horizontal"/>
-    <Setter Property="Background"  Value="Transparent"/>
-  </Style>
-  <Style x:Key="DefaultVertical-ToolBarTray" TargetType="ToolBarTray">
-    <Setter Property="Orientation" Value="Vertical"/>
-    <Setter Property="Background"  Value="Transparent"/>
-  </Style>
-
-  <Style x:Key="DefaultToolbar" TargetType="ToolBar">
-    <Setter Property="ToolBarTray.IsLocked" Value="True" />
-    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
-  </Style>
-  <Style x:Key="DefaultHorizontal-Toolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
-    <Setter Property="HorizontalAlignment" Value="Stretch" />
-  </Style>
-  <Style x:Key="DefaultVertical-Toolbar" TargetType="ToolBar" BasedOn="{StaticResource DefaultToolbar}">
-    <Setter Property="VerticalAlignment" Value="Stretch" />
   </Style>
 
   <Style x:Key="ImageLabel-Small" TargetType="StackPanel">

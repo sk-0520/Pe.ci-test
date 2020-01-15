@@ -43,7 +43,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+      <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <!--
         <Grid>
           <ToggleButton x:Name="switchCreateGroup" IsChecked="{Binding Editor.IsPopupCreateGroupMenu, ElementName=root}" Content="+" />
@@ -89,7 +89,7 @@
         </ListBox.ItemTemplate>
       </ListBox>
 
-      <GridSplitter Grid.Row="2" Style="{StaticResource DefaultHorizonGridSplitter}" />
+      <GridSplitter Grid.Row="2" Style="{StaticResource Horizon-GridSplitter}" />
 
       <GroupBox Grid.Row="3" VerticalAlignment="Top" Header="{Binding Resources.String_Setting_LauncherGroups_Edit_Header, Source={x:Static app_main:CultureService.Current}}">
         <ScrollViewer VerticalScrollBarVisibility="Auto" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, ElementName=root}">
@@ -167,7 +167,7 @@
 
     </Grid>
 
-    <GridSplitter Grid.Column="1" Style="{StaticResource DefaultVericalGridSplitter}" />
+    <GridSplitter Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
     <Grid Grid.Column="2" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, ElementName=root}">
       <Grid.RowDefinitions>
@@ -175,7 +175,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+      <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_RemoveItem, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, ElementName=root}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
         </Button>
@@ -213,7 +213,7 @@
       </ListBox>
     </Grid>
 
-    <GridSplitter Grid.Column="3" Style="{StaticResource DefaultVericalGridSplitter}" />
+    <GridSplitter Grid.Column="3" Style="{StaticResource Verical-GridSplitter}" />
 
     <Grid Grid.Column="4" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, ElementName=root}">
       <Grid.RowDefinitions>
@@ -221,7 +221,7 @@
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
-      <ToolBar Grid.Row="0" Style="{StaticResource DefaultHorizontal-Toolbar}">
+      <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <ToolBar.Resources>
           <Style TargetType="{x:Type ToolBarPanel}">
             <Setter Property="Orientation" Value="Vertical"/>
