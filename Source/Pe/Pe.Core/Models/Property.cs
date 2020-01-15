@@ -109,6 +109,65 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    public class PropertyAccesser : IPropertyGetter, IPropertySetter
+    {
+        public PropertyAccesser(object owner, string propertyName)
+        {
+            var ownerProperty = PropertyFactory.CreateOwner(owner);
+            Getter = PropertyFactory.CreateGetter(ownerProperty, propertyName);
+            Setter = PropertyFactory.CreateSetter(ownerProperty, propertyName);
+        }
 
+        #region property
+
+        Func<object, object> Getter { get; }
+        Action<object, object> Setter { get; }
+
+        #endregion
+
+
+        #region IPropertyGetter
+
+        public object Get(object owner) => Getter(owner);
+
+        #endregion
+
+        #region IPropertySetter
+
+        public void Set(object owner, object value) => Setter(owner, value);
+
+        #endregion
+    }
+
+    public class PropertyAccesser<TOwner, TValue> : PropertyAccesser, IPropertyGetter<TOwner, TValue>, IPropertySetter<TOwner, TValue>
+    {
+        public PropertyAccesser(TOwner owner, string propertyName)
+            : base(owner!, propertyName)
+        {
+            var ownerProperty = PropertyFactory.CreateOwner(owner!);
+            Getter = PropertyFactory.CreateGetter<TOwner, TValue>(ownerProperty, propertyName);
+            Setter = PropertyFactory.CreateSetter<TOwner, TValue>(ownerProperty, propertyName);
+        }
+
+        #region property
+
+        Func<TOwner, TValue> Getter { get; }
+        Action<TOwner, TValue> Setter { get; }
+
+        #endregion
+
+        #region IPropertyGetter
+
+        public TValue Get(TOwner owner) => Getter(owner);
+
+        #endregion
+
+        #region IPropertySetter
+
+        public void Set(TOwner owner, TValue value) => Setter(owner, value);
+
+        #endregion
+
+    }
 
 }
