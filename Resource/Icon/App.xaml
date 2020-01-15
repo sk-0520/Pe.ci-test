@@ -32,15 +32,15 @@
       <Canvas.RenderTransform>
         <TranslateTransform X="0" Y="-292.76665"/>
       </Canvas.RenderTransform>
-      <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="0.26458356" Canvas.Top="293.03122" Width="3.7041664" Height="3.7041826" Name="rect4522" Fill="{StaticResource linearGradient4491}" StrokeThickness="0.46302316" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
+      <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="0.26458356" Canvas.Top="293.03122" Width="3.7041664" Height="3.7041826" Name="rect4522" Fill="{StaticResource linearGradient4491}" StrokeThickness="0.2" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1"/>
       <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4493" Fill="#FF000000" StrokeThickness="0.21603137" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
         <Path.Data>
-          <PathGeometry Figures="m 0.52916667 293.5604 v 2.11667 H 1.0583332 v -0.84667 h 0.5291667 c 0.2645833 0 0.5291666 0 0.5291666 -0.635 0 -0.635 -0.2645833 -0.635 -0.5291666 -0.635 z m 0.52916653 0.21167 h 0.2645833 c 0.2645834 0 0.2645834 0 0.2645834 0.42333 0 0.42334 0 0.42333 -0.2645834 0.42333 H 1.0583332 Z" FillRule="NonZero"/>
+          <PathGeometry Figures="m 0.79375 294.08957 v 1.3377 0.2498 h 0.2645832 l 10e-8 -0.79375 H 1.5875 c 0 0 0.5291666 0 0.5291666 -0.52917 0 -0.52917 -0.5291666 -0.52917 -0.5291666 -0.52917 H 1.0583333 c 0 0 -0.2645833 0 -0.2645833 0.26459 z m 0.2645833 0 c 0.79375 0 0.79375 0 0.79375 0.26458 0 0.26458 0 0.26458 -0.7937501 0.26463 z" FillRule="NonZero"/>
         </Path.Data>
       </Path>
       <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4497" Fill="#FF000000" StrokeThickness="0.24153042" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat">
         <Path.Data>
-          <PathGeometry Figures="m 2.6458333 294.35415 c 0 0 -0.2645833 0 -0.2645833 0.26458 v 0.79375 c 0 0.26309 0.2645833 0.26458 0.2645833 0.26458 h 0.79375 c 0.2645834 0 0.2645834 0 0.2645833 -0.26458 h -0.79375 -0.2645833 v -0.26458 h 0.79375 c 0 0 0.2645833 0 0.2645833 -0.26459 v -0.26458 c 0 -0.26458 -0.2645833 -0.26458 -0.2645833 -0.26458 z m 0 0.26458 h 0.79375 v 0.26458 h -0.79375 z" FillRule="NonZero"/>
+          <PathGeometry Figures="m 2.6458333 294.35415 c 0 0 -0.2645834 0 -0.2645834 0.26458 v 0.79375 c 0 0.26459 0.264583 0.26459 0.264583 0.26459 l 0.5291666 -1e-5 c 0.2645834 0 0.2645834 -0.26458 0.2645833 -0.26458 H 2.6458333 v -0.26458 h 0.5291666 c 0 0 0.2645833 0 0.2645833 -0.26459 v -0.26458 c 0 -0.26458 -0.2645833 -0.26458 -0.2645833 -0.26458 z m 0 0.26458 h 0.5291666 v 0.26458 l -0.5291666 1e-5 z" FillRule="NonZero"/>
         </Path.Data>
       </Path>
       <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="rect4492" Fill="#E6000000" StrokeThickness="5.98672056" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="1">

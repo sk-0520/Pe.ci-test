@@ -25,11 +25,11 @@
       <stop
          offset="0"
          id="backgroundLinearGradientStart"
-         style="stop-color:#ff8888;stop-opacity:1" />
+         style="stop-color:#8888ff;stop-opacity:1" />
       <stop
          offset="1"
          id="backgroundLinearGradientEnd"
-         style="stop-color:#ff8888;stop-opacity:0.25" />
+         style="stop-color:#8888ff;stop-opacity:0.25" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
@@ -50,8 +50,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="31.999999"
-     inkscape:cx="7.569694"
-     inkscape:cy="7.0731315"
+     inkscape:cx="9.740729"
+     inkscape:cy="8.2273163"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -62,8 +62,8 @@
      inkscape:pagecheckerboard="true"
      inkscape:window-width="1245"
      inkscape:window-height="772"
-     inkscape:window-x="229"
-     inkscape:window-y="56"
+     inkscape:window-x="491"
+     inkscape:window-y="125"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -87,7 +87,7 @@
      id="layer1"
      transform="translate(0,-292.76665)">
     <rect
-       style="opacity:1;fill:url(#linearGradient4491);fill-opacity:1;stroke:none;stroke-width:0.46302316;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+       style="opacity:1;fill:url(#linearGradient4491);fill-opacity:1;stroke:none;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
        id="rect4522"
        width="3.7041664"
        height="3.7041826"
@@ -95,16 +95,16 @@
        y="293.03122" />
     <path
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.21603137px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 0.52916667,293.5604 v 2.11667 H 1.0583332 v -0.84667 h 0.5291667 c 0.2645833,0 0.5291666,0 0.5291666,-0.635 0,-0.635 -0.2645833,-0.635 -0.5291666,-0.635 z m 0.52916653,0.21167 h 0.2645833 c 0.2645834,0 0.2645834,0 0.2645834,0.42333 0,0.42334 0,0.42333 -0.2645834,0.42333 H 1.0583332 Z"
+       d="m 0.79375,294.08957 v 1.3377 0.2498 h 0.2645832 l 10e-8,-0.79375 H 1.5875 c 0,0 0.5291666,0 0.5291666,-0.52917 0,-0.52917 -0.5291666,-0.52917 -0.5291666,-0.52917 H 1.0583333 c 0,0 -0.2645833,0 -0.2645833,0.26459 z m 0.2645833,0 c 0.79375,0 0.79375,0 0.79375,0.26458 0,0.26458 0,0.26458 -0.7937501,0.26463 z"
        id="path4493"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccsccccsccc" />
+       sodipodi:nodetypes="cccccccccccccc" />
     <path
        style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.24153042px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 2.6458333,294.35415 c 0,0 -0.2645833,0 -0.2645833,0.26458 v 0.79375 c 0,0.26309 0.2645833,0.26458 0.2645833,0.26458 h 0.79375 c 0.2645834,0 0.2645834,0 0.2645833,-0.26458 h -0.79375 -0.2645833 v -0.26458 h 0.79375 c 0,0 0.2645833,0 0.2645833,-0.26459 v -0.26458 c 0,-0.26458 -0.2645833,-0.26458 -0.2645833,-0.26458 z m 0,0.26458 h 0.79375 v 0.26458 h -0.79375 z"
+       d="m 2.6458333,294.35415 c 0,0 -0.2645834,0 -0.2645834,0.26458 v 0.79375 c 0,0.26459 0.264583,0.26459 0.264583,0.26459 l 0.5291666,-1e-5 c 0.2645834,0 0.2645834,-0.26458 0.2645833,-0.26458 H 2.6458333 v -0.26458 h 0.5291666 c 0,0 0.2645833,0 0.2645833,-0.26459 v -0.26458 c 0,-0.26458 -0.2645833,-0.26458 -0.2645833,-0.26458 z m 0,0.26458 h 0.5291666 v 0.26458 l -0.5291666,1e-5 z"
        id="path4497"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="csscccccccssccccccc" />
+       sodipodi:nodetypes="cccccccccssccccccc" />
     <path
        style="opacity:1;fill:#000000;fill-opacity:0.90338165;stroke:none;stroke-width:5.98672056;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
        d="m 0,292.76665 v 4.23333 h 4.2333333 v -4.23333 z m 0.26458333,0.26458 H 3.96875 v 3.70417 H 0.26458333 Z"
