@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -9,16 +7,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        object Get();
+        object Get(object owner);
 
         #endregion
     }
 
-    public interface IPropertyGetter<T>
+    public interface IPropertyGetter<TOwner, TValue>
     {
         #region function
 
-        T Get();
+        TValue Get(TOwner target);
 
         #endregion
     }
@@ -27,16 +25,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        void Set(object value);
+        void Set(object owner, object value);
 
         #endregion
     }
 
-    public interface IPropertySetter<T>
+    public interface IPropertySetter<TOwner, TValue>
     {
         #region function
 
-        void Set(T value);
+        void Set(TOwner owner, TValue value);
 
         #endregion
     }
@@ -48,32 +46,64 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static ParameterExpression CreateOwner(object owner) => Expression.Parameter(owner.GetType(), nameof(owner));
         public static ParameterExpression CreateOwner<T>() => Expression.Parameter(typeof(T), typeof(T).Name);
 
-        public static MemberExpression GetProperty(ParameterExpression owner, string propertyName) => Expression.PropertyOrField(owner, propertyName);
-
-        public static Func<T> CreateGetter<T>(MemberExpression property)
+        public static Delegate CreateGetter(ParameterExpression owner, string propertyName)
         {
-            var lambda = Expression.Lambda<Func<T>>(
+            var property = Expression.PropertyOrField(owner, propertyName);
+
+            var lambda = Expression.Lambda(
                 Expression.Convert(
                     property,
                     property.Type
-                )
+                ),
+                owner
+            );
+            return lambda.Compile();
+        }
+        public static Func<TOwner, TValue> CreateGetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
+        {
+            var property = Expression.PropertyOrField(owner, propertyName);
+
+            var lambda = Expression.Lambda<Func<TOwner, TValue>>(
+                Expression.Convert(
+                    property,
+                    typeof(TValue)
+                ),
+                owner
             );
             return lambda.Compile();
         }
 
-        public static Action<T> CreateSetter<T>(MemberExpression property)
+        public static Delegate CreateSetter(ParameterExpression owner, string propertyName)
         {
-            var lambda = Expression.Lambda<Action<T>>(
+            var property = Expression.PropertyOrField(owner, propertyName);
+            var value = Expression.Parameter(typeof(object), "value");
+
+            var lambda = Expression.Lambda(
                 Expression.Assign(
                     property,
-                    Expression.Convert(
-                        Expression.Parameter(typeof(T), "value"),
-                        typeof(T)
-                    )
-                )
+                    Expression.Convert(value, property.Type)
+                ),
+                owner, value
             );
             return lambda.Compile();
         }
+
+        public static Action<TOwner, TValue> CreateSetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
+        {
+            var property = Expression.PropertyOrField(owner, propertyName);
+            var value = Expression.Parameter(typeof(TValue), "value");
+
+            var lambda = Expression.Lambda<Action<TOwner, TValue>>(
+                Expression.Assign(
+                    property,
+                    Expression.Convert(value, property.Type)
+                ),
+                owner, value
+            );
+            return lambda.Compile();
+        }
+
+
 
         #endregion
     }
