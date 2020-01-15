@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
             var statement = StatementLoader.LoadStatementByCurrent(GetType());
             var param = GetCommonDto();
             param["LauncherGroupId"] = IdFactory.CreateLauncherGroupId();
-            param["Name"] = "@name";
+            param["Name"] = Properties.Resources.String_NewEmptyGroupName;
             return commander.Execute(statement, param);
         }
 

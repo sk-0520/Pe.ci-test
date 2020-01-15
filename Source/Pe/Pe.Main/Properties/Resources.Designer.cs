@@ -1581,6 +1581,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   グループ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_NewEmptyGroupName {
+            get {
+                return ResourceManager.GetString("String_NewEmptyGroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   処理中... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Busy {

@@ -1009,4 +1009,7 @@
   <data name="String_LauncherItemCustomizeControl_Common_Icon_A" xml:space="preserve">
     <value>アイコン(_I)</value>
   </data>
+  <data name="String_NewEmptyGroupName" xml:space="preserve">
+    <value>グループ</value>
+  </data>
 </root>
