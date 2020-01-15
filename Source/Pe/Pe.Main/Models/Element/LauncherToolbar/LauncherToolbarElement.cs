@@ -34,8 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         bool _isTopmost;
         LauncherToolbarIconDirection _iconDirection;
         LauncherGroupElement? _selectedLauncherGroup;
+
         bool _isOpendAppMenu;
-        bool _isOpendItemMenu;
+        bool _isOpendFileItemMenu;
+        bool _isOpendStoreAppItemMenu;
 
         #endregion
 
@@ -141,13 +143,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 PausingAutoHide = IsOpendAppMenu;
             }
         }
-        public bool IsOpendItemMenu
+        public bool IsOpendFileItemMenu
         {
-            get => this._isOpendItemMenu;
+            get => this._isOpendFileItemMenu;
             set
             {
-                SetProperty(ref this._isOpendItemMenu, value);
-                PausingAutoHide = IsOpendItemMenu;
+                SetProperty(ref this._isOpendFileItemMenu, value);
+                PausingAutoHide = IsOpendFileItemMenu;
+            }
+        }
+        public bool IsOpendStoreAppItemMenu
+        {
+            get => this._isOpendStoreAppItemMenu;
+            set
+            {
+                SetProperty(ref this._isOpendStoreAppItemMenu, value);
+                PausingAutoHide = IsOpendFileItemMenu;
             }
         }
 

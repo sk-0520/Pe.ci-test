@@ -139,7 +139,7 @@
     </DataTemplate>
 
     <!--#region ファイル -->
-    <ContextMenu x:Key="FileContextMenu" IsOpen="{Binding DataContext.IsOpendItemMenu, Mode=OneWay, Source={x:Reference root}}">
+    <ContextMenu x:Key="FileContextMenu" IsOpen="{Binding DataContext.IsOpendFileItemMenu, Source={x:Reference root}}">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
         <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
@@ -199,7 +199,7 @@
     <!--#endregion -->
 
     <!--#region ストアアプリ -->
-    <ContextMenu x:Key="StoreAppContextMenu" IsOpen="{Binding DataContext.IsOpendItemMenu, Mode=OneWay, Source={x:Reference root}}">
+    <ContextMenu x:Key="StoreAppContextMenu" IsOpen="{Binding DataContext.IsOpendStoreAppItemMenu, Source={x:Reference root}}">
       <ContextMenu.Resources>
         <CollectionViewSource x:Key="LauncherGroupItems" Source="{Binding DataContext.LauncherGroupItems, Source={x:Reference root}}" />
         <!-- グループメニューアイテムのスタイルを上書きする普通のメニュー -->
