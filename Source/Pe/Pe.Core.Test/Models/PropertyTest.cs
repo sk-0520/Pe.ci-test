@@ -6,16 +6,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
+    public class Get { int Property { get; } = 1; }
+    public class GetSet { int Property { get; set; } }
+
     [TestClass]
     public class PropertyFactoryTest
     {
-        #region define
-
-        public class Get { int Property { get; } = 1; }
-        public class GetSet { int Property { get; set; } }
-
-        #endregion
-
         #region functino
 
         [TestMethod]
@@ -62,6 +58,44 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             psetter.DynamicInvoke(gsi, 10);
             var gi1 = pgetter.DynamicInvoke(gsi);
             Assert.AreEqual(10, gi1);
+        }
+
+        #endregion
+    }
+
+    [TestClass]
+    public class PropertyAccesser
+    {
+        #region function
+
+        [TestMethod]
+        public void GetterTest()
+        {
+            var gi = new Get();
+            var gp = new PropertyAccesser<Get, int>(gi, "Property");
+            var gi1 = gp.Get(gi);
+            Assert.AreEqual(1, gi1);
+        }
+
+        [TestMethod]
+        public void SetterTest()
+        {
+            {
+                var gi = new Get();
+                var gp = new PropertyAccesser<Get, int>(gi, "Property");
+                Assert.IsFalse(gp.PropertyInfo.CanWrite);
+                Assert.ThrowsException<NotSupportedException>(() => gp.Set(gi, 100));
+            }
+
+            {
+                var gsi = new GetSet();
+                var gsp = new PropertyAccesser<GetSet, int>(gsi, "Property");
+                Assert.IsTrue(gsp.PropertyInfo.CanWrite);
+                gsp.Set(gsi, 100);
+                var gsi1 = gsp.Get(gsi);
+                Assert.AreEqual(100, gsi1);
+            }
+
         }
 
         #endregion

@@ -1,5 +1,8 @@
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
+
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Pe.Core.Test")]
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -39,7 +42,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public static class PropertyFactory
+
+    internal static class PropertyFactory
     {
         #region function
 
@@ -114,14 +118,31 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public PropertyAccesser(object owner, string propertyName)
         {
             var ownerProperty = PropertyFactory.CreateOwner(owner);
+            var propertyInfo = ownerProperty.Type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if(propertyInfo == null) {
+                throw new ArgumentException($"{nameof(propertyName)}: {propertyName}");
+            }
+            PropertyInfo = propertyInfo;
+            if(PropertyInfo.CanWrite) {
+                Setter = PropertyFactory.CreateSetter(ownerProperty, propertyName);
+            } else {
+                Setter = ThrowSetter;
+            }
             Getter = PropertyFactory.CreateGetter(ownerProperty, propertyName);
-            Setter = PropertyFactory.CreateSetter(ownerProperty, propertyName);
         }
 
         #region property
 
+        public PropertyInfo PropertyInfo { get; }
+
         Func<object, object> Getter { get; }
         Action<object, object> Setter { get; }
+
+        #endregion
+
+        #region function
+
+        private static void ThrowSetter(object owner,object value) => throw new NotSupportedException();
 
         #endregion
 
@@ -145,14 +166,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
             : base(owner!, propertyName)
         {
             var ownerProperty = PropertyFactory.CreateOwner(owner!);
+            if(PropertyInfo.CanWrite) {
+                Setter = PropertyFactory.CreateSetter<TOwner, TValue>(ownerProperty, propertyName);
+            } else {
+                Setter = ThrowSetter;
+            }
             Getter = PropertyFactory.CreateGetter<TOwner, TValue>(ownerProperty, propertyName);
-            Setter = PropertyFactory.CreateSetter<TOwner, TValue>(ownerProperty, propertyName);
         }
 
         #region property
 
         Func<TOwner, TValue> Getter { get; }
         Action<TOwner, TValue> Setter { get; }
+
+        #endregion
+
+        #region function
+
+        private static void ThrowSetter(TOwner owner, TValue value) => throw new NotSupportedException();
 
         #endregion
 
@@ -170,4 +201,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
+    public class PropertyAccesserFactory
+    {
+        #region function
+
+        public static PropertyAccesser Create(object owner, string propertyName) => new PropertyAccesser(owner, propertyName);
+        public static PropertyAccesser<TOwner, TValue> Create<TOwner, TValue>(TOwner owner, string propertyName) => new PropertyAccesser<TOwner, TValue>(owner, propertyName);
+
+        #endregion
+    }
+
+    public class PropertyCacher
+    {
+        public PropertyCacher(object owner)
+        {
+            var type = owner.GetType();
+            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        }
+    }
 }
