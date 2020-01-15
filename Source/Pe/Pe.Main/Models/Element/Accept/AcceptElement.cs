@@ -10,10 +10,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
 {
-    public class AcceptElement : ContextElementBase
+    public class AcceptElement : ElementBase
     {
         public AcceptElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
-            : base(diContainer, loggerFactory)
+            : base(loggerFactory)
         { }
 
         #region property
@@ -40,12 +40,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
 
         #endregion
 
-        #region ContextElementBase
+        #region ElementBase
 
         protected override void InitializeImpl()
-        {
-            Logger.LogTrace("not impl");
-        }
+        { }
 
         #endregion
     }
