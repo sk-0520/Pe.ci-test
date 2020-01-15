@@ -33,16 +33,19 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
     <Label Grid.Row="0" Grid.Column="0" Content="{Binding Resources.String_EnvironmentValieableEditor_Merge_A, Source={x:Static app_main:CultureService.Current}}"  />
-    <sharpdevelop_avalonedit:TextEditor x:Name="envMergeEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="0" Document="{Binding MergeTextDocument, ElementName=root}" Loaded="EnvMergeEditor_Loaded" />
+    <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="0" x:Name="envMergeEditor" Style="{StaticResource SettingEditor}" Document="{Binding MergeTextDocument, ElementName=root}" Loaded="EnvMergeEditor_Loaded" />
     <ItemsControl Grid.Row="2" Grid.Column="0" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding MergeErrorItemsSource, ElementName=root}" />
 
-    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Resources.String_EnvironmentValieableEditor_Remove_A, Source={x:Static app_main:CultureService.Current}}" />
-    <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Style="{StaticResource SettingEditor}" Grid.Row="1" Grid.Column="1" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
-    <ItemsControl Grid.Row="2" Grid.Column="1" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding RemoveErrorItemsSource, ElementName=root}" />
+    <Separator Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource Normal-Indent}" />
+
+    <Label Grid.Row="0" Grid.Column="2" Content="{Binding Resources.String_EnvironmentValieableEditor_Remove_A, Source={x:Static app_main:CultureService.Current}}" />
+    <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="2" Style="{StaticResource SettingEditor}" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
+    <ItemsControl Grid.Row="2" Grid.Column="2" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding RemoveErrorItemsSource, ElementName=root}" />
   </Grid>
 </UserControl>
