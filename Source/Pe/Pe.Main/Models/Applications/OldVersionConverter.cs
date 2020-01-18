@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
@@ -50,10 +51,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !string.IsNullOrWhiteSpace(oldSettingFilePath) && File.Exists(oldSettingFilePath);
         }
 
-        private void ImportLauncherItems(LauncherItemSettingModel launcherItemSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        private IReadOnlyCollection<Guid> ImportLauncherItems(LauncherItemSettingModel launcherItemSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             Logger.LogInformation("[互換性破棄] " + nameof(LauncherItemFileDropMode) + ": {0}", launcherItemSetting.FileDropMode);
-            Logger.LogInformation("ランチャーアイテム: {0}", launcherItemSetting.Items.Count);
+            Logger.LogInformation("ランチャーアイテム数: {0}", launcherItemSetting.Items.Count);
 
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
 
@@ -63,6 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
 
+            var importedItems = new HashSet<Guid>(launcherItemSetting.Items.Count);
             var codes = new List<string>(launcherItemSetting.Items.Count);
             foreach(var item in launcherItemSetting.Items) {
                 Logger.LogInformation("アイテム取り込み: {0}, {1}", item.Name, item.Id);
@@ -132,9 +134,67 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 if(0 < tags.Count) {
                     launcherTagsEntityDao.InsertTags(launcherItemData.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());
                 }
+
+                importedItems.Add(launcherItemData.LauncherItemId);
             }
+
+            return importedItems;
         }
 
+        private void ImportGroups(LauncherGroupSettingModel launcherGroupSetting, IReadOnlyCollection<Guid> importedItems, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            Logger.LogInformation("グループ数: {0}", launcherGroupSetting.Groups);
+
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+
+            var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            foreach(var group in launcherGroupSetting.Groups) {
+                if(group.GroupKind != GroupKind.LauncherItems) {
+                    Logger.LogInformation("互換性なしグループのため破棄: {0}, {1}", group.GroupKind, group.Id);
+                    continue;
+                }
+
+                var groupStep = launcherFactory.GroupItemStep;
+                var sequence = launcherGroupsEntityDao.SelectMaxSequence() + groupStep;
+
+                var launcherGroupData = new LauncherGroupData() {
+                    LauncherGroupId = group.Id,
+                    Kind = LauncherGroupKind.Normal,
+                    Name = group.Name,
+                    Sequence = sequence,
+                    ImageColor = group.GroupIconColor,
+                };
+                var images = new Dictionary<LauncherGroupIconType, LauncherGroupImageName>() {
+                    [LauncherGroupIconType.Folder] = LauncherGroupImageName.DirectoryNormal,
+                    [LauncherGroupIconType.File] = LauncherGroupImageName.File,
+                    [LauncherGroupIconType.Bookmark] = LauncherGroupImageName.Bookmark,
+                    [LauncherGroupIconType.Builder] = LauncherGroupImageName.Builder,
+                    [LauncherGroupIconType.Config] = LauncherGroupImageName.Config,
+                    [LauncherGroupIconType.Gear] = LauncherGroupImageName.Gear,
+                    [LauncherGroupIconType.LightBulb] = LauncherGroupImageName.Light,
+                    [LauncherGroupIconType.Shortcut] = LauncherGroupImageName.Shortcut,
+                    [LauncherGroupIconType.Storage] = LauncherGroupImageName.Storage,
+                    [LauncherGroupIconType.User] = LauncherGroupImageName.User,
+                };
+                if(images.TryGetValue(group.GroupIconType, out var value)) {
+                    launcherGroupData.ImageName = value;
+                } else {
+                    Logger.LogInformation("[互換性破棄]　" + nameof(LauncherGroupIconType) + ": {0}", group.GroupIconType);
+                    launcherGroupData.ImageName = LauncherGroupImageName.DirectoryNormal;
+                }
+
+                launcherGroupsEntityDao.InsertNewGroup(launcherGroupData, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var currentMaxSequence = launcherGroupItemsEntityDao.SelectMaxSequence(launcherGroupData.LauncherGroupId);
+                var launcherItemIds = group.LauncherItems
+                    .Where(i => importedItems.Contains(i))
+                    .ToList()
+                ;
+                launcherGroupItemsEntityDao.InsertNewItems(launcherGroupData.LauncherGroupId, launcherItemIds, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+        }
 
         public void Execute()
         {
@@ -142,7 +202,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var setting = old.LoadSetting(VariableConstants);
 
             using(var transaction = MainDatabaseAccessor.BeginTransaction()) {
-                ImportLauncherItems(setting.LauncherItemSetting, transaction, transaction.Implementation);
+                var importedItems = ImportLauncherItems(setting.LauncherItemSetting, transaction, transaction.Implementation);
+                ImportGroups(setting.LauncherGroupSetting, importedItems, transaction, transaction.Implementation);
 
                 //transaction.Commit();
             }

@@ -79,8 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var launcherGroupsDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var groupStep = launcherFactory.GroupItemStep;
-                var sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
+                //var groupStep = launcherFactory.GroupItemStep;
+                //var sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
                 launcherGroupsDao.InsertNewGroup(groupData, DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
