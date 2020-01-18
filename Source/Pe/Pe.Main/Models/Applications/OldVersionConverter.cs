@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return !string.IsNullOrWhiteSpace(oldSettingFilePath) && File.Exists(oldSettingFilePath);
         }
 
-        Guid GetOrCreateFont(FontModel font, Guid srcFontId, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        Guid CopyOrCreateFont(FontModel font, Guid srcFontId, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             var fontsEntityDao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
 
@@ -292,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             foreach(var (screen, toolbar) in hitToolbars) {
                 Logger.LogInformation("ツールバー取り込み: {0}", toolbar.Id);
 
-                var fontId = GetOrCreateFont(toolbar.Font, appLauncherToolbarSettingEntityDao.SelectAppLauncherToolbarSettingFontId(), commander, implementation);
+                var fontId = CopyOrCreateFont(toolbar.Font, appLauncherToolbarSettingEntityDao.SelectAppLauncherToolbarSettingFontId(), commander, implementation);
 
                 screensEntityDao.InsertScreen(screen, DatabaseCommonStatus.CreateCurrentAccount());
 
@@ -334,7 +334,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        private void ImportNotes(NoteIndexSettingModel noteIndexSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        private void ImportNotes(NoteSettingModel noteSetting, NoteIndexSettingModel noteIndexSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             var primaryScreen = Screen.PrimaryScreen;
 
@@ -343,10 +343,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             var noteContentsEntityDao = new NoteContentsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
 
+            var settingAppNoteSettingData = appNoteSettingEntityDao.SelectSettingNoteSetting();
+            settingAppNoteSettingData.BackgroundColor = noteSetting.BackColor;
+            settingAppNoteSettingData.ForegroundColor = noteSetting.ForeColor;
+            settingAppNoteSettingData.IsTopmost = noteSetting.IsTopmost;
+            settingAppNoteSettingData.TitleKind = noteSetting.NoteTitle switch
+            {
+                NoteTitle.DefaultCaption => NoteCreateTitleKind.Count,
+                NoteTitle.Timestamp => NoteCreateTitleKind.Timestamp,
+                _ => NoteCreateTitleKind.Count,
+            };
+            appNoteSettingEntityDao.UpdateSettingNoteSetting(settingAppNoteSettingData, DatabaseCommonStatus.CreateCurrentAccount());
+            if(!string.IsNullOrWhiteSpace(noteSetting.Font.Family)) {
+                var fontsEntityDao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+                var fontData = new FontData() {
+                    FamilyName = noteSetting.Font.Family,
+                    IsBold = noteSetting.Font.Bold,
+                    IsItalic = noteSetting.Font.Italic,
+                    Size = noteSetting.Font.Size,
+                };
+                fontsEntityDao.UpdateFont(settingAppNoteSettingData.FontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+
             foreach(var note in noteIndexSetting.Items) {
                 Logger.LogInformation("ノート取り込み: {0}", note.Id);
 
-                var fontId = GetOrCreateFont(note.Font, appNoteSettingEntityDao.SelectAppNoteSettingFontId(), commander, implementation);
+                var fontId = CopyOrCreateFont(note.Font, appNoteSettingEntityDao.SelectAppNoteSettingFontId(), commander, implementation);
 
                 var noteData = new NoteData() {
                     NoteId = note.Id,
@@ -405,7 +427,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 var importedItems = ImportLauncherItems(setting.LauncherItemSetting, transaction, transaction.Implementation);
                 var importedGroups = ImportGroups(setting.LauncherGroupSetting, importedItems, transaction, transaction.Implementation);
                 ImportToolbars(setting.MainSetting.Toolbar, importedGroups, transaction, transaction.Implementation);
-                ImportNotes(setting.NoteIndexSetting, transaction, transaction.Implementation);
+                ImportNotes(setting.MainSetting.Note, setting.NoteIndexSetting, transaction, transaction.Implementation);
 
                 //transaction.Commit();
             }
