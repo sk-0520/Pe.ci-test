@@ -21,6 +21,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string LauncherItemId => "LauncherItemId";
+            public static string IconBox => "IconBox";
+            public static string LastUpdatedTimestamp => "LastUpdatedTimestamp";
 
             #endregion
         }
@@ -46,11 +49,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
-            var parameter = new {
-                LauncherItemId = launcherItemId,
-                IconBox = iconBoxTransfer.ToString(iconBox),
-                LastUpdatedTimestamp = timestamp,
-            };
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.LauncherItemId] = launcherItemId;
+            parameter[Column.IconBox] = iconBoxTransfer.ToString(iconBox);
+            parameter[Column.LastUpdatedTimestamp] = timestamp;
             return Commander.Execute(statement, parameter) == 1;
         }
 
@@ -59,11 +61,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
-            var parameter = new {
-                LauncherItemId = launcherItemId,
-                IconBox = iconBoxTransfer.ToString(iconBox),
-                LastUpdatedTimestamp = timestamp,
-            };
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.LauncherItemId] = launcherItemId;
+            parameter[Column.IconBox] = iconBoxTransfer.ToString(iconBox);
+            parameter[Column.LastUpdatedTimestamp] = timestamp;
             return Commander.Execute(statement, parameter) == 1;
         }
 
