@@ -442,6 +442,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return true;
         }
 
+        public void Tune()
+        {
+            var tuner = ApplicationDiContainer.Build<DatabaseTuner>();
+            tuner.Tune();
+        }
+
         public ManagerViewModel CreateViewModel()
         {
             var viewModel = new ManagerViewModel(this, LoggerFactory);

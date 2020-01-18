@@ -46,6 +46,9 @@ namespace ContentTypeTextNet.Pe.Main
                 return;
             }
 
+            ApplicationManager.Tune();
+
+
             var viewModel = ApplicationManager.CreateViewModel();
             //var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
             //notifyIcon.DataContext = viewModel;

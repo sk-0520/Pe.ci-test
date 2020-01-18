@@ -301,9 +301,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             databaseSetupper.Migrate(accessorPack, lastVersion);
 
-            var tuner = new DatabaseTuner(new IdFactory(loggerFactory), accessorPack, statementLoader, loggerFactory);
-            tuner.Tune();
-
             pack.factory = factoryPack;
             pack.accessor = accessorPack;
             return true;
