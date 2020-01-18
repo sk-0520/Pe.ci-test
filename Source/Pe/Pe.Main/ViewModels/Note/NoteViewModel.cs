@@ -529,9 +529,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         NoteLinkChangeRequestParameter CreateLinkParameter(bool isOpen)
         {
+            var encodingConverter = new EncodingConverter(LoggerFactory!);
+
             var parameter = new NoteLinkChangeRequestParameter() {
                 IsOpen = isOpen,
-                Encoding = EncodingConverter.DefaultEncoding,
             };
             var contentKindFilter = ContentKind switch
             {
@@ -541,6 +542,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             };
             parameter.Filter.Add(contentKindFilter);
             parameter.Filter.Add(new DialogFilterItem("all", string.Empty, "*.*"));
+
+            switch(ContentKind) {
+                case NoteContentKind.Plain:
+                    parameter.Encoding = EncodingConverter.DefaultEncoding;
+                    parameter.Encodings.Add(EncodingConverter.DefaultEncoding);
+                    parameter.Encodings.Add(Encoding.UTF8);
+                    parameter.Encodings.Add(Encoding.Unicode);
+                    parameter.Encodings.Add(Encoding.UTF32);
+                    break;
+
+                case NoteContentKind.RichText:
+                    parameter.Encoding = Encoding.ASCII;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             return parameter;
         }

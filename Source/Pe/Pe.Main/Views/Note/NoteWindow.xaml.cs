@@ -119,34 +119,35 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                     dialog.Filters.SetRange(linkParameter.Filter);
 
                     var encodingConverter = new EncodingConverter(LoggerFactory!);
-
-                    var encodings = new[] {
-                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(encodingConverter.Encoding), encodingConverter.Encoding),
-                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(Encoding.UTF8), Encoding.UTF8),
-                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(Encoding.Unicode), Encoding.Unicode),
-                        //TODO: 文字コードは追々かんがえるよ
-                        CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(Encoding.UTF32), Encoding.UTF32),
-                    };
+                    var encodings = linkParameter.Encodings
+                        .Select(i => CustomizeDialogComboBoxItem.Create(encodingConverter.ToString(i), i))
+                        .ToArray()
+                    ;
                     var defaultItem = encodings.FirstOrDefault(i => EncodingUtility.ToString(i.Value) == EncodingUtility.ToString(linkParameter.Encoding!));
                     var index = Array.IndexOf(encodings, defaultItem);
                     if(index == -1) {
                         index = 0;
                     }
 
-                    CustomizeDialogComboBox<Encoding> encodingComboBox;
-                    using(dialog.Customize.Grouping(nameof(Encoding))) {
-                        encodingComboBox = dialog.Customize.AddComboBox<Encoding>();
-                        foreach(var encoding in encodings) {
-                            encodingComboBox.AddItem(encoding);
+                    CustomizeDialogComboBox<Encoding>? encodingComboBox = null;
+                    if(0 < encodings.Length) {
+                        using(dialog.Customize.Grouping(nameof(Encoding))) {
+                            encodingComboBox = dialog.Customize.AddComboBox<Encoding>();
+                            foreach(var encoding in encodings) {
+                                encodingComboBox.AddItem(encoding);
+                            }
+                            encodingComboBox.SelectedIndex = index;
                         }
-                        encodingComboBox.SelectedIndex = index;
                     }
 
                     if(dialog.ShowDialog(this).GetValueOrDefault()) {
                         o.Callback(new NoteLinkChangeRequestResponse() {
                             ResponseIsCancel = false,
                             ResponseFilePaths = new[] { dialog.FileName },
-                            Encoding = encodings[encodingComboBox.SelectedIndex].Value,
+                            Encoding = 0 < encodings.Length
+                                ? encodings[encodingComboBox!.SelectedIndex].Value
+                                : linkParameter.Encoding
+                            ,
                         });
                     } else {
                         o.Callback(new NoteLinkChangeRequestResponse() {
