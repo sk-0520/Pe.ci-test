@@ -28,7 +28,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class OldVersionConverter
+    public class OldVersionConverter: DisposerBase
     {
         #region define
 
@@ -618,6 +618,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         }
 
+        private void ImportRunning(RunningInformationSettingModel runningInformation, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            appExecuteSettingEntityDao.UpdateOldExecuteSetting(runningInformation.FirstRunning.Version, runningInformation.FirstRunning.Timestamp, runningInformation.ExecuteCount + 1, DatabaseCommonStatus.CreateCurrentAccount());
+        }
 
         public void Execute()
         {
@@ -632,12 +637,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ImportStandardOutputInput(setting.MainSetting.Stream, transaction, transaction.Implementation);
                 ImportCommand(setting.MainSetting.Command, transaction, transaction.Implementation);
                 ImportKeySetting(setting.MainSetting, transaction, transaction.Implementation);
+                ImportRunning(setting.MainSetting.RunningInformation, transaction, transaction.Implementation);
 
                 transaction.Commit();
             }
         }
 
 
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    IndexBodyCaching.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
         #endregion
     }
 }

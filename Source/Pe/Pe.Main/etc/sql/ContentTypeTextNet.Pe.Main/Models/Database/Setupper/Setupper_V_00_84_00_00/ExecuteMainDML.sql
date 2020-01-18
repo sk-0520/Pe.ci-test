@@ -200,11 +200,11 @@ insert into
 	)
 	values
 	(
-/* Accepted              */ false,
+/* Accepted              */ true,
 /* FirstVersion          */ '0.84.0',
-/* FirstTimestamp        */ CURRENT_TIMESTAMP,
+/* FirstTimestamp        */ @CreatedTimestamp,
 /* LastVersion           */ '0.84.0',
-/* LastTimestamp         */ CURRENT_TIMESTAMP,
+/* LastTimestamp         */ @CreatedTimestamp,
 /* ExecuteCount          */ 1,
 /* UserId                */ '',
 /* SendUsageStatistics   */ false,
