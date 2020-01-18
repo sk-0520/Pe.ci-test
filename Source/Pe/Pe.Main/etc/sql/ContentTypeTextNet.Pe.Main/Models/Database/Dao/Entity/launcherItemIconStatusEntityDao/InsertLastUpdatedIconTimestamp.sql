@@ -1,16 +1,9 @@
 insert into
-	LauncherItems
+	LauncherItemIconStatus
 	(
-		[LauncherItemId],
-		[Code],
-		[Name],
-		[Kind],
-		[IconPath],
-		[IconIndex],
-		[IsEnabledCommandLauncher],
-		[ExecuteCount],
-		[LastExecuteTimestamp],
-		[Comment],
+		LauncherItemId,
+		IconBox,
+		LastUpdatedTimestamp,
 
 		[CreatedTimestamp],
 		[CreatedAccount],
@@ -25,15 +18,8 @@ insert into
 	values
 	(
 /* LauncherItemId           */ @LauncherItemId,
-/* Code                     */ @Code,
-/* Name                     */ @Name,
-/* Kind                     */ @Kind,
-/* IconPath                 */ @IconPath,
-/* IconIndex                */ @IconIndex,
-/* IsEnabledCommandLauncher */ @IsEnabledCommandLauncher,
-/* ExecuteCount             */ 0,
-/* LastExecuteTimestamp     */ '0001-01-01T00:00:00',
-/* Comment                  */ @Comment,
+/* IconBox                  */ @IconBox,
+/* LastUpdatedTimestamp     */ @LastUpdatedTimestamp,
 /*                          */
 /* CreatedTimestamp         */ @CreatedTimestamp,
 /* CreatedAccount           */ @CreatedAccount,
@@ -45,3 +31,4 @@ insert into
 /* UpdatedProgramVersion    */ @UpdatedProgramVersion,
 /* UpdatedCount             */ 0
 	)
+

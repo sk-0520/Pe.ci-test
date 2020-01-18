@@ -156,7 +156,6 @@ create table [LauncherItems] (
 	[Kind] text not null /* ランチャー種別  */,
 	[IconPath] text not null /* アイコンパス  */,
 	[IconIndex] integer not null /* アイコンインデックス  */,
-	[LastIconUpdatedTimestamp] datetime not null /* アイコン更新日時 UTC */,
 	[IsEnabledCommandLauncher] boolean not null /* コマンド入力対象  */,
 	[ExecuteCount] integer not null /* 使用回数  */,
 	[LastExecuteTimestamp] datetime not null /* 最終仕様日時 UTC */,

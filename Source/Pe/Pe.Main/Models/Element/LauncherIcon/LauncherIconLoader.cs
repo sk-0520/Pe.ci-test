@@ -163,17 +163,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                     Debug.Assert(stream.Position == debugStream.Position, $"{nameof(stream)}: {stream.Length}, {nameof(debugStream)}: {debugStream.Length}");
                 }
 #endif
-                DateTime iconUpdatedTimestamp;
-                using(var commander = FileDatabaseBarrier.WaitWrite()) {
-                    var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    dao.DeleteImageBinary(LauncherItemId, IconBox);
-                    dao.InsertImageBinary(LauncherItemId, IconBox, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
-                    commander.Commit();
-                    iconUpdatedTimestamp = DateTime.UtcNow;
+                DateTime iconUpdatedTimestamp = DateTime.UtcNow;
+                bool existIconState;
+                using(var commander = FileDatabaseBarrier.WaitRead()) {
+                    var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, IconBox);
                 }
-                using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                    var dao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    dao.UpdateLastUpdatedIconTimestamp(LauncherItemId, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                using(var commander = FileDatabaseBarrier.WaitWrite()) {
+                    var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    if(existIconState) {
+                        launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                    } else {
+                        launcherItemIconStatusEntityDao.InsertLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+
+                    var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, IconBox);
+                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, IconBox, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
                 }
 
