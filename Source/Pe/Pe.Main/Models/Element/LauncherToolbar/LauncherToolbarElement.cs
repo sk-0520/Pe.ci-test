@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             IsIconOnly = displayData.IsIconOnly;
             IsTopmost = displayData.IsTopmost;
             IsAutoHide = displayData.IsAutoHide;
-            AutoHideTimeout = displayData.AutoHideTimeout;
+            AutoHideTime = displayData.AutoHideTime;
             ToolbarPosition = displayData.ToolbarPosition;
             IsVisible = displayData.IsVisible;
             IconDirection = displayData.IconDirection;
@@ -542,7 +542,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <summary>
         /// 自動的に隠れるまでの時間。
         /// </summary>
-        public TimeSpan AutoHideTimeout { get; private set; }
+        public TimeSpan AutoHideTime { get; private set; }
 
         /// <summary>
         /// 表示中のサイズ。

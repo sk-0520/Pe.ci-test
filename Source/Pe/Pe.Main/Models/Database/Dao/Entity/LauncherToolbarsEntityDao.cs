@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public string Direction { get; set; } = string.Empty;
         public string IconBox { get; set; } = string.Empty;
         public Guid FontId { get; set; }
-        public TimeSpan AutoHideTimeout { get; set; }
+        public TimeSpan AutoHideTime { get; set; }
         public long TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
                 FontId = dto.FontId,
-                AutoHideTimeout = dto.AutoHideTimeout,
+                AutoHideTime = dto.AutoHideTime,
                 TextWidth = ToInt(dto.TextWidth),
                 IsVisible = dto.IsVisible,
                 IsTopmost = dto.IsTopmost,
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Direction = iconDirectionTransfer.ToString(data.IconDirection),
                 IconBox = iconBoxTransfer.ToString(data.IconBox),
                 FontId = data.FontId,
-                AutoHideTimeout = data.AutoHideTimeout,
+                AutoHideTime = data.AutoHideTime,
                 TextWidth = data.TextWidth,
                 IsVisible = data.IsVisible,
                 IsTopmost = data.IsTopmost,

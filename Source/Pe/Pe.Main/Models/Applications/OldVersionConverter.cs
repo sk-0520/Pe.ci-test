@@ -343,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     FontId = fontId,
                     Screen = screen,
                     IsTopmost = toolbar.IsTopmost,
-                    AutoHideTimeout = toolbar.HideWaitTime,
+                    AutoHideTime = toolbar.HideWaitTime,
                     TextWidth = (int)toolbar.TextWidth,
                     IsVisible = toolbar.IsVisible,
                     IsAutoHide = toolbar.AutoHide,

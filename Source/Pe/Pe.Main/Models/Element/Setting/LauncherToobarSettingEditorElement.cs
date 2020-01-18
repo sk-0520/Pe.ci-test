@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public AppDesktopToolbarPosition ToolbarPosition { get; set; }
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }
-        public TimeSpan AutoHideTimeout { get; set; }
+        public TimeSpan AutoHideTime { get; set; }
         public int TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ToolbarPosition = ToolbarPosition,
                 IconDirection = IconDirection,
                 IconBox = IconBox,
-                AutoHideTimeout = AutoHideTimeout,
+                AutoHideTime = AutoHideTime,
                 TextWidth = TextWidth,
                 IsVisible = IsVisible,
                 IsTopmost = IsTopmost,
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ToolbarPosition = data.ToolbarPosition;
             IconDirection = data.IconDirection;
             IconBox = data.IconBox;
-            AutoHideTimeout = data.AutoHideTimeout;
+            AutoHideTime = data.AutoHideTime;
             TextWidth = data.TextWidth;
             IsVisible = data.IsVisible;
             IsTopmost = data.IsTopmost;
