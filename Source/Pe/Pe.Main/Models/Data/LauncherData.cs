@@ -225,6 +225,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    internal class LauncherItemOldImportData: LauncherItemData
+    {
+        #region property
+
+        public long ExecuteCount { get; set; }
+        public DateTime LastExecuteTimestamp { get; set; }
+
+        #endregion
+    }
+
     public enum LauncherHistoryKind
     {
         Option,

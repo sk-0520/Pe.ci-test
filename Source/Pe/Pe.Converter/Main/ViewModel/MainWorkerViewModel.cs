@@ -742,10 +742,10 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         //}
 
         // NOTE: %appdata% を渡す
-        public CommonData LoadSetting(string settingRootPath)
+        public CommonData LoadSetting(VariableConstants variableConstants)
         {
             var commonData = new CommonData() {
-                VariableConstants = new VariableConstants(settingRootPath),
+                VariableConstants = variableConstants,
             };
             // 各種設定の読込
             var mainSettingPath = Environment.ExpandEnvironmentVariables(commonData.VariableConstants.UserSettingMainSettingFilePath);

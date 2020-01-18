@@ -145,6 +145,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        public bool InsertFileWithCustom(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
+        {
+            var encodingConverter = new EncodingConverter(LoggerFactory);
+
+            var statement = LoadStatement();
+            var param = commonStatus.CreateCommonDtoMapping();
+            param[Column.LauncherItemId] = launcherItemId;
+            param[Column.File] = pathParameter.Path;
+            param[Column.Option] = pathParameter.Option;
+            param[Column.WorkDirectory] = pathParameter.WorkDirectoryPath;
+            param[Column.IsEnabledCustomEnvVar] = customParameter.IsEnabledCustomEnvironmentVariable;
+            param[Column.IsEnabledStandardIo] = customParameter.IsEnabledStandardInputOutput;
+            param[Column.StandardIoEncoding] = encodingConverter.ToString(customParameter.StandardInputOutputEncoding);
+            param[Column.RunAdministrator] = customParameter.RunAdministrator;
+
+            return Commander.Execute(statement, param) == 1;
+        }
+
         public bool UpdateCustomizeLauncherFile(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
         {
             var encodingConverter = new EncodingConverter(LoggerFactory);

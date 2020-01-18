@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchAcceptSkip, hasValue: false);
 
+            commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyOldSettingRootDirectoryPath, hasValue: true);
+
             commandLine.Parse();
 
             return commandLine;
@@ -458,6 +460,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
+            if(IsFirstStartup || true) {
+                var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                var idFactory = new IdFactory(loggerFactory);
+                var oldVersionConverter = new OldVersionConverter(environmentParameters.OldSettingRootDirectoryPath, pack.accessor.Main, statementLoader, idFactory, loggerFactory);
+                if(oldVersionConverter.ExistisOldSetting()) {
+                    logger.LogInformation("旧設定ファイルは存在するため変換処理を実施");
+                    oldVersionConverter.Execute();
+                }
+            }
+
             var factory = pack.factory;
             pack.accessor.Dispose();
 
@@ -510,6 +522,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             return true;
         }
+
 
         #endregion
     }

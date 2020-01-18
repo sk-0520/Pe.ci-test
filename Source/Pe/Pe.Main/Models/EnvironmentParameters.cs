@@ -38,6 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
             UserRoamingDirectory = GetDirectory(commandLine, CommandLineKeyUserDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), projectName));
             MachineDirectory = GetDirectory(commandLine, CommandLineKeyMachineDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), projectName));
             TemporaryDirectory = GetDirectory(commandLine, CommandLineKeyTemporaryDirectory, Path.Combine(Path.GetTempPath(), projectName));
+
+            OldSettingRootDirectoryPath = commandLine.GetValue(CommandLineKeyOldSettingRootDirectoryPath, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
         }
 
         #region property
@@ -45,9 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public static string CommandLineKeyUserDirectory { get; } = "user-dir";
         public static string CommandLineKeyMachineDirectory { get; } = "machine-dir";
         public static string CommandLineKeyTemporaryDirectory { get; } = "temp-dir";
-
+        public static string CommandLineKeyOldSettingRootDirectoryPath { get; } = "old-setting-root";
         //CommandLine CommandLine { get; }
-
+        public string OldSettingRootDirectoryPath { get; }
         /// <summary>
         /// アプリケーションの最上位ディレクトリ。
         /// </summary>

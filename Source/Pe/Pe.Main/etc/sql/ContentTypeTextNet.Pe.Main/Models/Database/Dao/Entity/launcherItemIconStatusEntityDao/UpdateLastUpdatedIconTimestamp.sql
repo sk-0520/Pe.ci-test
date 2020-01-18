@@ -1,7 +1,7 @@
 update
 	LauncherItemIconStatus
 set
-	LastUpdatedTimestamp = @LastUpdatedTimestamp
+	LastUpdatedTimestamp = @LastUpdatedTimestamp,
 
 	UpdatedTimestamp = @UpdatedTimestamp,
 	UpdatedAccount = @UpdatedAccount,

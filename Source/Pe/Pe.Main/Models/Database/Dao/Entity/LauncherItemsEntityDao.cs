@@ -23,6 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         long IconIndex { get; }
         bool IsEnabledCommandLauncher { get; }
         long ExecuteCount { get; }
+        [Timestamp(DateTimeKind.Utc)]
+        DateTime LastExecuteTimestamp { get; }
         string Comment { get; }
 
         #endregion
@@ -41,6 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public long IconIndex { get; set; }
         public bool IsEnabledCommandLauncher { get; set; }
         public long ExecuteCount { get; set; }
+        [Timestamp(DateTimeKind.Utc)]
+        public DateTime LastExecuteTimestamp { get; set; }
         public string Comment { get; set; } = string.Empty;
 
         #endregion
@@ -139,6 +143,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
+            Commander.Execute(statement, dto);
+        }
+
+        internal void InsertOldLauncherItem(LauncherItemOldImportData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, commonStatus);
+            dto.ExecuteCount = data.ExecuteCount;
+            dto.LastExecuteTimestamp = data.LastExecuteTimestamp;
             Commander.Execute(statement, dto);
         }
 
