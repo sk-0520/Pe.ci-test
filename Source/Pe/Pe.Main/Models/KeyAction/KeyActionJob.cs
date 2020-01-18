@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 throw new ArgumentException("不正なキー設定(キー設定なし、修飾キーのみ): " + errors);
             }
 
-            ConveySystem = actionData.ConveySystem;
+            ThroughSystem = actionData.ThroughSystem;
         }
 
         #region property
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         /// <para>基本的には伝達しないが特別な状況でこれを認めたい場合に有効にする。 他の<see cref="KeyActionPressedJobBase"/>が伝達を抑制していても優先される。</para>
         /// <para>Pe の過去機能で ESC 2回押下でツールーバーを隠す処理を再現する場合など、一度目のキー入力は通常操作で使用する場合などが有効にしたい目的。</para>
         /// </summary>
-        public bool ConveySystem { get; private set; }
+        public bool ThroughSystem { get; private set; }
 
         #endregion
 

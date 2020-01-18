@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -14,6 +16,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Setting;
 using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.PeMain;
@@ -125,6 +128,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 fontsEntityDao.UpdateFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
             }
 
+        }
+
+        KeyMappingData ToMapping(HotKeyModel hotkey)
+        {
+            var mapping = new KeyMappingData() {
+                Key = hotkey.Key,
+            };
+
+            if(hotkey.ModifierKeys.HasFlag(ModifierKeys.Alt)) {
+                mapping.Alt = ModifierKey.Any;
+            }
+            if(hotkey.ModifierKeys.HasFlag(ModifierKeys.Shift)) {
+                mapping.Shift = ModifierKey.Any;
+            }
+            if(hotkey.ModifierKeys.HasFlag(ModifierKeys.Control)) {
+                mapping.Control = ModifierKey.Any;
+            }
+            if(hotkey.ModifierKeys.HasFlag(ModifierKeys.Windows)) {
+                mapping.Super = ModifierKey.Any;
+            }
+
+            return mapping;
         }
 
         private IReadOnlyCollection<Guid> ImportLauncherItems(LauncherItemSettingModel launcherItemSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -454,6 +479,146 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             UpdateFont(commandSetting.Font, setting.FontId, commander, implementation);
         }
 
+        private void ImportKeySetting(MainSettingModel mainSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            var keyMappingFactory = new KeyMappingFactory();
+
+            //F1抑制
+            if(mainSetting.SystemEnvironment.SuppressFunction1Key) {
+                var keyActionData = new KeyActionData() {
+                    KeyActionId = IdFactory.CreateKeyActionId(),
+                    KeyActionKind = KeyActionKind.Disable,
+                };
+
+                var disableOptionConverter = new DisableOptionConverter();
+                var options = new Dictionary<string, string>();
+                disableOptionConverter.SetForever(options, false);
+
+                var mapping = new KeyMappingData() {
+                    Key = Key.F1,
+                };
+
+                keyActionsEntityDao.InsertKeyAction(keyActionData, DatabaseCommonStatus.CreateCurrentAccount());
+                foreach(var option in options) {
+                    keyOptionsEntityDao.InsertOption(keyActionData.KeyActionId, option.Key, option.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+                keyMappingsEntityDao.InsertMapping(keyActionData.KeyActionId, mapping, 0, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+
+            //ESC二重押しでツールバーを隠す
+            if(true) { // 設定ないんよ
+                var launcherToolbarContentConverter = new LauncherToolbarContentConverter();
+                var keyActionData = new KeyActionData() {
+                    KeyActionId = IdFactory.CreateKeyActionId(),
+                    KeyActionKind = KeyActionKind.LauncherToolbar,
+                    KeyActionContent = launcherToolbarContentConverter.ToContent(KeyActionContentLauncherToolbar.AutoHiddenToHide),
+                };
+
+                var pressedOptionConverter = new PressedOptionConverter();
+                var options = new Dictionary<string, string>();
+                pressedOptionConverter.SetThroughSystem(options, true);
+
+                var mappings = new [] {
+                    new KeyMappingData() {
+                        Key = Key.Escape,
+                    },
+                    new KeyMappingData() {
+                        Key = Key.Escape,
+                    },
+                };
+
+                keyActionsEntityDao.InsertKeyAction(keyActionData, DatabaseCommonStatus.CreateCurrentAccount());
+                foreach(var option in options) {
+                    keyOptionsEntityDao.InsertOption(keyActionData.KeyActionId, option.Key, option.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+
+                foreach(var mapping in mappings.Counting()) {
+                    var seq = keyMappingFactory.MappingStep * mapping.Number;
+                    keyMappingsEntityDao.InsertMapping(keyActionData.KeyActionId, mapping.Value, seq, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+            }
+
+            // コマンド
+            if(mainSetting.Command.ShowHotkey.IsEnabled) {
+                var keyActionData = new KeyActionData() {
+                    KeyActionId = IdFactory.CreateKeyActionId(),
+                    KeyActionKind = KeyActionKind.Command,
+                };
+
+                var pressedOptionConverter = new PressedOptionConverter();
+                var options = new Dictionary<string, string>();
+                pressedOptionConverter.SetThroughSystem(options, false);
+
+
+                var mapping = ToMapping(mainSetting.Command.ShowHotkey);
+
+                keyActionsEntityDao.InsertKeyAction(keyActionData, DatabaseCommonStatus.CreateCurrentAccount());
+                foreach(var option in options) {
+                    keyOptionsEntityDao.InsertOption(keyActionData.KeyActionId, option.Key, option.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+                keyMappingsEntityDao.InsertMapping(keyActionData.KeyActionId, mapping, 0, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+
+            // ノート 新規作成
+            if(mainSetting.Note.CreateHotKey.IsEnabled) {
+                var noteContentConverter = new NoteContentConverter();
+                var keyActionData = new KeyActionData() {
+                    KeyActionId = IdFactory.CreateKeyActionId(),
+                    KeyActionKind = KeyActionKind.Note,
+                    KeyActionContent = noteContentConverter.ToContent(KeyActionContentNote.Create),
+                };
+
+                var pressedOptionConverter = new PressedOptionConverter();
+                var options = new Dictionary<string, string>();
+                pressedOptionConverter.SetThroughSystem(options, false);
+
+
+                var mapping = ToMapping(mainSetting.Note.CreateHotKey);
+
+                keyActionsEntityDao.InsertKeyAction(keyActionData, DatabaseCommonStatus.CreateCurrentAccount());
+                foreach(var option in options) {
+                    keyOptionsEntityDao.InsertOption(keyActionData.KeyActionId, option.Key, option.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+                keyMappingsEntityDao.InsertMapping(keyActionData.KeyActionId, mapping, 0, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+
+            // ノート 最前面
+            if(mainSetting.Note.ShowFrontHotKey.IsEnabled) {
+                var noteContentConverter = new NoteContentConverter();
+                var keyActionData = new KeyActionData() {
+                    KeyActionId = IdFactory.CreateKeyActionId(),
+                    KeyActionKind = KeyActionKind.Note,
+                    KeyActionContent = noteContentConverter.ToContent(KeyActionContentNote.ZOrderTop),
+                };
+
+                var pressedOptionConverter = new PressedOptionConverter();
+                var options = new Dictionary<string, string>();
+                pressedOptionConverter.SetThroughSystem(options, false);
+
+
+                var mapping = ToMapping(mainSetting.Note.ShowFrontHotKey);
+
+                keyActionsEntityDao.InsertKeyAction(keyActionData, DatabaseCommonStatus.CreateCurrentAccount());
+                foreach(var option in options) {
+                    keyOptionsEntityDao.InsertOption(keyActionData.KeyActionId, option.Key, option.Value, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+                keyMappingsEntityDao.InsertMapping(keyActionData.KeyActionId, mapping, 0, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+
+            if(mainSetting.Note.CompactHotKey.IsEnabled) {
+                Logger.LogWarning("[互換性破棄] ノート最小化");
+            }
+            if(mainSetting.Note.HideHotKey.IsEnabled) {
+                Logger.LogWarning("[互換性破棄] ノート破棄");
+            }
+
+        }
+
+
         public void Execute()
         {
             var old = new MainWorkerViewModel();
@@ -466,7 +631,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ImportNotes(setting.MainSetting.Note, setting.NoteIndexSetting, transaction, transaction.Implementation);
                 ImportStandardOutputInput(setting.MainSetting.Stream, transaction, transaction.Implementation);
                 ImportCommand(setting.MainSetting.Command, transaction, transaction.Implementation);
-                //transaction.Commit();
+                ImportKeySetting(setting.MainSetting, transaction, transaction.Implementation);
+
+                transaction.Commit();
             }
         }
 

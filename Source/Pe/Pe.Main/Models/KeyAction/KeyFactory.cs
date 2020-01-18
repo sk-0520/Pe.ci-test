@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
             var data = new KeyActionCommandData(item.Action.KeyActionId);
 
-            data.ConveySystem = pressedOptionConverter.ToConveySystem(item.Options);
+            data.ThroughSystem = pressedOptionConverter.ToThroughSystem(item.Options);
 
             return new KeyActionCommandJob(data, item.Mappings);
         }
@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 launcherItemOptionConverter.ToLauncherItemId(item.Options)
             );
 
-            data.ConveySystem = launcherItemOptionConverter.ToConveySystem(item.Options);
+            data.ThroughSystem = launcherItemOptionConverter.ToThroughSystem(item.Options);
 
             return new KeyActionLauncherItemJob(data, item.Mappings);
         }
@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 launcherToolbarContentConverter.ToKeyActionContentLauncherToolbar(item.Action.KeyActionContent)
             );
 
-            data.ConveySystem = pressedOptionConverter.ToConveySystem(item.Options);
+            data.ThroughSystem = pressedOptionConverter.ToThroughSystem(item.Options);
 
             return new KeyActionLauncherToolbarJob(data, item.Mappings);
         }
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 noteContentConverter.ToKeyActionContentNote(item.Action.KeyActionContent)
             );
 
-            data.ConveySystem = pressedOptionConverter.ToConveySystem(item.Options);
+            data.ThroughSystem = pressedOptionConverter.ToThroughSystem(item.Options);
 
             return new KeyActionNoteJob(data, item.Mappings);
         }

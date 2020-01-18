@@ -196,8 +196,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             base.InitializeImpl();
 
             var poc = new PressedOptionConverter();
-            if(!poc.TryGetConveySystem(Options, out _)) {
-                poc.SetConveySystem(Options, false);
+            if(!poc.TryGetThroughSystem(Options, out _)) {
+                poc.SetThroughSystem(Options, false);
             }
         }
         #endregion

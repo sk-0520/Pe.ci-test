@@ -460,13 +460,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
-            if(IsFirstStartup || true) {
+            if(IsFirstStartup) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
                 var idFactory = new IdFactory(loggerFactory);
                 var oldVersionConverter = new OldVersionConverter(environmentParameters.OldSettingRootDirectoryPath, pack.accessor.Main, statementLoader, idFactory, loggerFactory);
                 if(oldVersionConverter.ExistisOldSetting()) {
                     logger.LogInformation("旧設定ファイルは存在するため変換処理を実施");
+                    var sw = Stopwatch.StartNew();
                     oldVersionConverter.Execute();
+                    logger.LogInformation("旧設定ファイル変換所要時間: {0}", sw.Elapsed);
                 }
             }
 
