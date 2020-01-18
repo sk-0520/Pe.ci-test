@@ -383,10 +383,10 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Note_Format_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
                   <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding IsLink, Converter={StaticResource LogicalNotConverter}}">
-                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.Plain}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.Plain}}" />
-                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.RichText}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.RichText}}"  />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.Plain}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.Plain}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.RichText}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.RichText}}"  />
                   </StackPanel>
                 </Grid>
 
@@ -396,10 +396,10 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Note_Format_Layout_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Layout_A, Source={x:Static app_main:CultureService.Current}}" />
                   <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Absolute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
-                    <RadioButton Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Relative}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}"  />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Absolute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Relative}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}"  />
                   </StackPanel>
                 </Grid>
 
@@ -413,11 +413,11 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Row="0" Grid.Column="0" Content="{Binding Resources.String_Note_Format_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
                   <!--<xctk:ColorPicker Grid.Row="0" Grid.Column="1" SelectedColor="{Binding ForegroundColor}" />-->
                   <app_core_views:ColorCanvas Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding ForegroundColor, Mode=TwoWay}" />
 
-                  <Label Grid.Row="1" Grid.Column="0" Content="{Binding Resources.String_Note_Format_Background_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Background_A, Source={x:Static app_main:CultureService.Current}}" />
                   <!--<xctk:ColorPicker Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />-->
                   <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding BackgroundColor, Mode=TwoWay}" />
                 </Grid>
@@ -428,7 +428,7 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Note_Format_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Font_A, Source={x:Static app_main:CultureService.Current}}" />
                   <app_main_views:FontSelectControl
                     Grid.Column="1"
                     SelectedFontFamily="{Binding Font.FontFamily}"
@@ -463,13 +463,13 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Column="0" Content="{Binding Resources.String_Note_Status_Lock_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsLocked, Mode=OneWay}" Command="{Binding ToggleLockCommand}" />
-                  <CheckBox Grid.Column="1" Content="{Binding Resources.String_Note_Status_Compact_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsCompact, Mode=OneWay}" Command="{Binding ToggleCompactCommand}" />
-                  <CheckBox Grid.Column="2" Content="{Binding Resources.String_Note_Status_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
+                  <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Lock_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsLocked, Mode=OneWay}" Command="{Binding ToggleLockCommand}" />
+                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Compact_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsCompact, Mode=OneWay}" Command="{Binding ToggleCompactCommand}" />
+                  <CheckBox Grid.Column="2" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
                 </Grid>
-                <CheckBox Content="{Binding Resources.String_Note_Status_WordWrap_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding TextWrap, Mode=OneWay}" Command="{Binding ToggleTextWrapCommand}">
+                <CheckBox Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_WordWrap_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding TextWrap, Mode=OneWay}" Command="{Binding ToggleTextWrapCommand}">
                   <CheckBox.Style>
-                    <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource Vertical-CheckBox}">
                       <Style.Triggers>
                         <DataTrigger Binding="{Binding ContentKind}" Value="RichText">
                           <Setter Property="IsEnabled" Value="False" />
@@ -478,7 +478,7 @@
                     </Style>
                   </CheckBox.Style>
                 </CheckBox>
-                <Button Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding LinkChangeCommand}" />
+                <Button Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding LinkChangeCommand}" />
               </StackPanel>
             </GroupBox>
 
