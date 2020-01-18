@@ -225,6 +225,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    internal class LauncherItemOldImportData: LauncherItemData
+    {
+        #region property
+
+        public long ExecuteCount { get; set; }
+        public DateTime LastExecuteTimestamp { get; set; }
+
+        #endregion
+    }
+
     public enum LauncherHistoryKind
     {
         Option,
@@ -301,7 +311,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public LauncherToolbarIconDirection IconDirection { get; set; }
         public IconBox IconBox { get; set; }
         public Guid FontId { get; set; }
-        public TimeSpan AutoHideTimeout { get; set; }
+        public TimeSpan AutoHideTime { get; set; }
         public int TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }
@@ -316,6 +326,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
 
+    }
+
+    internal class LauncherToolbarsOldData: LauncherToolbarsDisplayData
+    {
+        public IScreen? Screen { get; set; }
     }
 
     internal class LauncherFileItemData

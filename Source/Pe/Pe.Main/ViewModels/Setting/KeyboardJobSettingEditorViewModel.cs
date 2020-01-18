@@ -209,12 +209,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
-        public bool ConveySystem
+        public bool ThroughSystem
         {
             get
             {
                 var poc = new PressedOptionConverter();
-                if(poc.TryGetConveySystem(Model.Options, out var result)) {
+                if(poc.TryGetThroughSystem(Model.Options, out var result)) {
                     return result;
                 }
 
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set
             {
                 var poc = new PressedOptionConverter();
-                poc.SetConveySystem(Model.Options, value);
+                poc.SetThroughSystem(Model.Options, value);
                 RaisePropertyChanged();
             }
         }

@@ -86,8 +86,8 @@ create table [AppNoteSetting] (
 	[FontId] text not null /* フォント  */,
 	[TitleKind] text not null /* タイトル設定  */,
 	[LayoutKind] text not null /* 位置種別  */,
-	[Foreground] text not null /* 前景色 #AARRGGBB */,
-	[Background] text not null /* 背景色 #AARRGGBB */,
+	[ForegroundColor] text not null /* 前景色 #AARRGGBB */,
+	[BackgroundColor] text not null /* 背景色 #AARRGGBB */,
 	[IsTopmost]  not null /* 最前面  */,
 	foreign key([FontId]) references [Fonts]([FontId])
 )
@@ -129,7 +129,7 @@ create table [AppLauncherToolbarSetting] (
 	[Direction] text not null /* 方向 アイコンの並びの基点 */,
 	[IconBox] text not null /* アイコンサイズ  */,
 	[FontId] text not null /* フォント  */,
-	[AutoHideTimeout] text not null /* 自動的に隠す時間  */,
+	[AutoHideTime] text not null /* 自動的に隠す時間  */,
 	[TextWidth] integer not null /* 文字幅  */,
 	[IsVisible] boolean not null /* 表示  */,
 	[IsTopmost] boolean not null /* 最前面  */,
@@ -381,7 +381,7 @@ create table [LauncherToolbars] (
 	[Direction] text not null /* 方向 アイコンの並びの基点 */,
 	[IconBox] text not null /* アイコンサイズ  */,
 	[FontId] text not null /* フォント  */,
-	[AutoHideTimeout] text not null /* 自動的に隠す時間  */,
+	[AutoHideTime] text not null /* 自動的に隠す時間  */,
 	[TextWidth] integer not null /* 文字幅  */,
 	[IsVisible] boolean not null /* 表示  */,
 	[IsTopmost] boolean not null /* 最前面  */,

@@ -104,25 +104,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     {
         #region function
 
-        public bool ToConveySystem(IReadOnlyDictionary<string, string> map)
+        public bool ToThroughSystem(IReadOnlyDictionary<string, string> map)
         {
-            var attribute = GetAttribute(KeyActionPresseOption.ConveySystem);
+            var attribute = GetAttribute(KeyActionPresseOption.ThroughSystem);
             return Convert(attribute, map, (a, s) => {
                 return System.Convert.ToBoolean(s);
             });
         }
 
-        public bool TryGetConveySystem(IReadOnlyDictionary<string, string> map, out bool result)
+        public bool TryGetThroughSystem(IReadOnlyDictionary<string, string> map, out bool result)
         {
-            var attribute = GetAttribute(KeyActionPresseOption.ConveySystem);
+            var attribute = GetAttribute(KeyActionPresseOption.ThroughSystem);
             return TryConvert(attribute, map, (a, s) => {
                 return System.Convert.ToBoolean(s);
             }, out result);
         }
 
-        public void SetConveySystem(IDictionary<string, string> map, bool conveySystem)
+        public void SetThroughSystem(IDictionary<string, string> map, bool conveySystem)
         {
-            var attribute = GetAttribute(KeyActionPresseOption.ConveySystem);
+            var attribute = GetAttribute(KeyActionPresseOption.ThroughSystem);
             map[attribute.OptionName] = conveySystem.ToString();
         }
 

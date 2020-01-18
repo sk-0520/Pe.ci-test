@@ -41,6 +41,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string UserId => "UserId";
             public static string SendUsageStatistics => "SendUsageStatistics";
 
+            public static string FirstVersion => "FirstVersion";
+            public static string FirstTimestamp => "FirstTimestamp";
+            public static string ExecuteCount => "ExecuteCount";
+
             #endregion
         }
 
@@ -76,6 +80,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.UserId] = userId;
             parameter[Column.SendUsageStatistics] = sendUsageStatistics;
+
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
+        internal bool UpdateOldExecuteSetting(Version version, DateTime timestamp, int executeCount, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.FirstVersion] = version;
+            parameter[Column.FirstTimestamp] = timestamp.ToUniversalTime();
+            parameter[Column.ExecuteCount] = executeCount;
 
             return Commander.Execute(statement, parameter) == 1;
         }

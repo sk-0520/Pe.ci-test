@@ -221,8 +221,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public enum KeyActionPresseOption
     {
-        [KeyActionOption(typeof(bool), nameof(ConveySystem))]
-        ConveySystem
+        [KeyActionOption(typeof(bool), nameof(ThroughSystem))]
+        ThroughSystem
     }
 
     public abstract class KeyActionPressedDataBase : KeyActionCommonData
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
-        public bool ConveySystem { get; set; }
+        public bool ThroughSystem { get; set; }
 
         #endregion
     }

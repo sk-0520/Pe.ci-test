@@ -2337,15 +2337,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   システムへ通知 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Setting_Keyboard_Pressed_ConveySystem_A {
-            get {
-                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_ConveySystem_A", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   永久 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Forever_A {
@@ -2387,6 +2378,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Keyboard_Pressed_Note_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Keyboard_Pressed_Note_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   システムへ通知 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Pressed_ThroughSystem_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Pressed_ThroughSystem_A", resourceCulture);
             }
         }
         

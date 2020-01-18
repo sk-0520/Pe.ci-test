@@ -185,7 +185,7 @@
               <Button Content="{Binding Resources.String_Setting_Keyboard_Pressed_Command_AddMapping, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
             </StackPanel>
             <StackPanel x:Key="Common" x:Shared="False">
-              <CheckBox Content="{Binding Resources.String_Setting_Keyboard_Pressed_ConveySystem_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ConveySystem}" />
+              <CheckBox Content="{Binding Resources.String_Setting_Keyboard_Pressed_ThroughSystem_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ThroughSystem}" />
               <TextBox Text="{Binding Comment}" />
               <Button Content="x" Command="{Binding Editor.RemovePressedJobCommand, ElementName=root}" CommandParameter="{Binding}" />
             </StackPanel>

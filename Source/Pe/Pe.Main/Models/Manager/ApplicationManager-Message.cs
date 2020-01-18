@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         /// <param name="jobs"></param>
         /// <returns></returns>
-        bool IsConveySystem(IReadOnlyCollection<KeyActionJobBase> jobs)
+        bool IsThroughSystem(IReadOnlyCollection<KeyActionJobBase> jobs)
         {
             Debug.Assert(0 < jobs.Count);
 
@@ -269,7 +269,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            return jobs.OfType<KeyActionPressedJobBase>().Any(i => i.ConveySystem);
+            return jobs.OfType<KeyActionPressedJobBase>().Any(i => i.ThroughSystem);
         }
 
         void CatchDeviceChanged(DeviceChangedData deviceChangedData)
@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, e.modifierKeyStatus, e.kbdll);
             if(0 < jobs.Count) {
-                e.Handled = !IsConveySystem(jobs);
+                e.Handled = !IsThroughSystem(jobs);
                 ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
             }
         }

@@ -1,11 +1,11 @@
-﻿select
+select
 	LauncherToolbars.LauncherToolbarId,
 	LauncherToolbars.LauncherGroupId,
 	LauncherToolbars.PositionKind,
 	LauncherToolbars.Direction,
 	LauncherToolbars.IconBox,
 	LauncherToolbars.FontId,
-	LauncherToolbars.AutoHideTimeout,
+	LauncherToolbars.AutoHideTime,
 	LauncherToolbars.TextWidth,
 	LauncherToolbars.IsVisible,
 	LauncherToolbars.IsTopmost,

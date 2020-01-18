@@ -45,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pe.Converter\Pe.Converter.csproj" />
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
     <ProjectReference Include="..\Pe.Plugins.DefaultTheme\Pe.Plugins.DefaultTheme.csproj" />
   </ItemGroup>

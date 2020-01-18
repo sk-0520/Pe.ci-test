@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public string Direction { get; set; } = string.Empty;
         public string IconBox { get; set; } = string.Empty;
         public Guid FontId { get; set; }
-        public TimeSpan AutoHideTimeout { get; set; }
+        public TimeSpan AutoHideTime { get; set; }
         public long TextWidth { get; set; }
         public bool IsVisible { get; set; }
         public bool IsTopmost { get; set; }
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconDirection = iconDirectionTransfer.ToEnum(dto.Direction),
                 IconBox = iconBoxTransfer.ToEnum(dto.IconBox),
                 FontId = dto.FontId,
-                AutoHideTimeout = dto.AutoHideTimeout,
+                AutoHideTime = dto.AutoHideTime,
                 TextWidth = ToInt(dto.TextWidth),
                 IsVisible = dto.IsVisible,
                 IsTopmost = dto.IsTopmost,
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Direction = iconDirectionTransfer.ToString(data.IconDirection),
                 IconBox = iconBoxTransfer.ToString(data.IconBox),
                 FontId = data.FontId,
-                AutoHideTimeout = data.AutoHideTimeout,
+                AutoHideTime = data.AutoHideTime,
                 TextWidth = data.TextWidth,
                 IsVisible = data.IsVisible,
                 IsTopmost = data.IsTopmost,
@@ -142,6 +142,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.ScreenName] = screenName ?? string.Empty;
 
             return Commander.Execute(statement, param) == 1;
+        }
+
+        internal bool InsertOldToolbar(LauncherToolbarsOldData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, commonStatus);
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            var props = dto.GetType().GetProperties();
+            foreach(var prop in props) {
+                parameter[prop.Name] = prop.GetValue(dto)!;
+            }
+            parameter[Column.ScreenName] = data.Screen!.DeviceName;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)

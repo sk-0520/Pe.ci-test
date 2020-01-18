@@ -147,6 +147,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        internal bool InsertOldNote(NoteData noteData, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var param = ConvertFromData(noteData, commonStatus);
+            return Commander.Execute(statement, param) == 1;
+        }
+
         public bool UpdateScreen(Guid noteId, string screenName, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();

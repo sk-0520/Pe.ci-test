@@ -660,7 +660,7 @@
     <value>ツールバー非表示追加</value>
     <comment>ツールバー処理増加に伴い内容変更の可能性あり</comment>
   </data>
-  <data name="String_Setting_Keyboard_Pressed_ConveySystem_A" xml:space="preserve">
+  <data name="String_Setting_Keyboard_Pressed_ThroughSystem_A" xml:space="preserve">
     <value>システムへ通知</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Forever_A" xml:space="preserve">

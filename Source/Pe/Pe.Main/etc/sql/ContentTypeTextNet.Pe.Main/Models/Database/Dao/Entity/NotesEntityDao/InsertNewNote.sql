@@ -46,8 +46,8 @@ insert into
 		end,
 /* LayoutKind            */ AppNoteSetting.LayoutKind,
 /* FontId                */ AppNoteSetting.FontId,
-/* ForegroundColor       */ AppNoteSetting.Foreground,
-/* BackgroundColor       */ AppNoteSetting.Background,
+/* ForegroundColor       */ AppNoteSetting.ForegroundColor,
+/* BackgroundColor       */ AppNoteSetting.BackgroundColor,
 /* IsTopmost             */ AppNoteSetting.IsTopmost,
 /*                       */
 /* CreatedTimestamp      */ @CreatedTimestamp,
