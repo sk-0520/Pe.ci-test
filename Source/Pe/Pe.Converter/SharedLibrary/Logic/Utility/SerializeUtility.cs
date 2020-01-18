@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -276,6 +276,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
             //var serializer = new DataContractJsonSerializer(typeof(T));
             //return (T)serializer.ReadObject(stream);
             using(var reader = new StreamReader(stream, DefaultEncoding, true, DefaultBufferSize, true)) {
+                //System.Text.Json.JsonSerializer.Deserialize<T>(reader.ReadToEnd());
                 var result = JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
                 result.Correction();
                 return result;

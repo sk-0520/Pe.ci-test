@@ -36,13 +36,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
         //const string _rootDirectoryName = Constants.applicationName;
 
-        static readonly string _baseDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        //static readonly string _baseDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         #endregion
 
         #region variable
 
-        string _settingRootDirectoryPath = _baseDirPath;
+        string _settingRootDirectoryPath;
         string _logRootDirectoryPath = string.Empty;
 
         string _mainSettingFileName = Constants.mainSettingFileName;
@@ -62,44 +62,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
         #endregion
 
-        public VariableConstants()
+
+        public VariableConstants(string settingRootpath)
         {
-            FileLogging = false;
-        }
-
-        public VariableConstants(CommandLine commandLine)
-            : this()
-        {
-            if(commandLine.HasOption("setting-root")) {
-                this._settingRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
-            }
-
-            this._logRootDirectoryPath = Path.Combine(UserDirectoryPath, Constants.logDirectoryName);
-            if(commandLine.HasOption("log")) {
-                if(commandLine.HasValue("log")) {
-                    this._logRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("log"));
-                }
-                FileLogging = true;
-            }
-
-            string mutexName = string.Empty;
-            if(commandLine.HasValue("mutex")) {
-                mutexName = commandLine.GetValue("mutex");
-            }
-            if(string.IsNullOrWhiteSpace(mutexName)) {
-//                mutexName = Constants.ApplicationName;
-//#if DEBUG
-//                mutexName += "_debug";
-//                //mutexName += new Random().Next().ToString();
-//#endif
-            }
-            MutexName = mutexName;
-
-            if(commandLine.HasOption("accept")) {
-                var acceptValue = commandLine.GetValue("accept").Trim();
-                ForceAccept = acceptValue == "force";
-            }
-
+            this._settingRootDirectoryPath = settingRootpath;
         }
 
         #region property

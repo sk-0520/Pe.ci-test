@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 
         [DataMember, IsDeepClone]
         public RunningInformationSettingModel RunningInformation { get; set; } = new RunningInformationSettingModel();
-        [DataMember, IsDeepClone]
+        [IgnoreDataMember, IsDeepClone]
         public LanguageSettingModel Language { get; set; } = new LanguageSettingModel();
         [DataMember, IsDeepClone]
         public LoggingSettingModel Logging { get; set; } = new LoggingSettingModel();

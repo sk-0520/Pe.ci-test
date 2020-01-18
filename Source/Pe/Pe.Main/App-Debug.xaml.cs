@@ -12,6 +12,8 @@ namespace ContentTypeTextNet.Pe.Main
 
         void DebugStartup()
         {
+            //var vm = new PeMain.ViewModel.MainWorkerViewModel();
+            //var common = vm.LoadSetting(@"X:\");
         }
 
         #endregion

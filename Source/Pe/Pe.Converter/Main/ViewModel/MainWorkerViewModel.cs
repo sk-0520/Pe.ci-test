@@ -740,9 +740,13 @@ namespace ContentTypeTextNet.Pe.PeMain.ViewModel
         //        return result;
         //    }
         //}
-        public CommonData LoadSetting()
+
+        // NOTE: %appdata% を渡す
+        public CommonData LoadSetting(string settingRootPath)
         {
-            var commonData = new CommonData();
+            var commonData = new CommonData() {
+                VariableConstants = new VariableConstants(settingRootPath),
+            };
             // 各種設定の読込
             var mainSettingPath = Environment.ExpandEnvironmentVariables(commonData.VariableConstants.UserSettingMainSettingFilePath);
             commonData.MainSetting = SerializeUtility.LoadSetting<MainSettingModel>(mainSettingPath, Constants.fileTypeMainSetting, commonData.Logger);

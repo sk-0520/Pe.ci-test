@@ -24,6 +24,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Converter;
+using Newtonsoft.Json;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
@@ -50,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// 前回終了時のバージョン。
         /// </summary>
         [DataMember, IsDeepClone]
+        [JsonConverter(typeof(JsonVersionConverter))]
         public Version LastExecuteVersion { get; set; }
         /// <summary>
         /// アップデートチェックを行うか。
@@ -65,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
         /// アップデートチェックで無視するバージョン。
         /// </summary>
         [DataMember, IsDeepClone]
+        [JsonConverter(typeof(JsonVersionConverter))]
         public Version IgnoreUpdateVersion { get; set; }
         /// <summary>
         /// プログラム実行回数。
