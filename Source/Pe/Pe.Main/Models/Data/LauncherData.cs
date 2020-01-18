@@ -328,6 +328,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     }
 
+    internal class LauncherToolbarsOldData: LauncherToolbarsDisplayData
+    {
+        public IScreen? Screen { get; set; }
+    }
+
     internal class LauncherFileItemData
     {
         public LauncherFileItemData(LauncherItemData item, LauncherFileData file)

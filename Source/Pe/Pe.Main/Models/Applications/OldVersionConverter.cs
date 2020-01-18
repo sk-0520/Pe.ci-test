@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
 using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
@@ -19,6 +23,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     public class OldVersionConverter
     {
+        #region define
+
+        class ScreenData : IScreenData
+        {
+            public ScreenData(string name)
+            {
+                ScreenName = name;
+            }
+            public string ScreenName { get; }
+
+            public long X => -1;
+
+            public long Y => -1;
+
+            public long Width => 0;
+
+            public long Height => 0;
+        }
+
+
+        #endregion
+
         public OldVersionConverter(string oldSettingRootDirectoryPath, IDatabaseAccessor mainDatabaseAccessor, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
@@ -37,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         ILogger Logger { get; }
         IIdFactory IdFactory { get; }
 
-            VariableConstants VariableConstants { get; }
+        VariableConstants VariableConstants { get; }
         IDatabaseAccessor MainDatabaseAccessor { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         #endregion
@@ -141,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return importedItems;
         }
 
-        private void ImportGroups(LauncherGroupSettingModel launcherGroupSetting, IReadOnlyCollection<Guid> importedItems, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        private IReadOnlyCollection<Guid> ImportGroups(LauncherGroupSettingModel launcherGroupSetting, IReadOnlyCollection<Guid> importedItems, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             Logger.LogInformation("グループ数: {0}", launcherGroupSetting.Groups);
 
@@ -149,6 +175,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             var launcherGroupItemsEntityDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            var importedGroups = new HashSet<Guid>(launcherGroupSetting.Groups.Count);
 
             foreach(var group in launcherGroupSetting.Groups) {
                 if(group.GroupKind != GroupKind.LauncherItems) {
@@ -193,8 +221,97 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     .ToList()
                 ;
                 launcherGroupItemsEntityDao.InsertNewItems(launcherGroupData.LauncherGroupId, launcherItemIds, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
+
+                importedGroups.Add(launcherGroupData.LauncherGroupId);
+            }
+
+            return importedGroups;
+        }
+
+        private void ImportToolbars(ToolbarSettingModel toolbarSetting, IReadOnlyCollection<Guid> importedGroups, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var screenChecker = new ScreenChecker();
+            var screens = Screen.AllScreens.ToHashSet();
+
+            var hitToolbars = new Dictionary<IScreen, ToolbarItemModel>();
+            foreach(var toolbar in toolbarSetting.Items) {
+                Screen? dockScreen = null;
+                foreach(var screen in screens) {
+                    if(screenChecker.FindMaybe(screen, new ScreenData(toolbar.Id))) {
+                        dockScreen = screen;
+                        break;
+                    }
+                }
+                if(dockScreen != null) {
+                    hitToolbars.Add(dockScreen, toolbar);
+                    screens.Remove(dockScreen);
+                } else {
+                    Logger.LogInformation("ツールバーの所属ディスプレイが不明のため設定引継ぎせず: {0}", toolbar.Id);
+                }
+            }
+
+            var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var fontEntityDao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var screensEntityDao = new ScreensEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            foreach(var (screen, toolbar) in hitToolbars) {
+                Logger.LogInformation("ツールバー取り込み: {0}", toolbar.Id);
+
+                var fontId = IdFactory.CreateFontId();
+                if(!string.IsNullOrWhiteSpace(toolbar.Font.Family)) {
+                    var fontData = new FontData() {
+                        FamilyName = toolbar.Font.Family,
+                        IsBold = toolbar.Font.Bold,
+                        IsItalic = toolbar.Font.Italic,
+                        Size = toolbar.Font.Size,
+                    };
+                    fontEntityDao.InsertFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
+                } else {
+                    Logger.LogInformation("フォント未設定のため標準フォントを使用");
+                    fontEntityDao.InsertCopyFont(appLauncherToolbarSettingEntityDao.SelectAppLauncherToolbarSettingFontId(), fontId, DatabaseCommonStatus.CreateCurrentAccount());
+                }
+
+                screensEntityDao.InsertScreen(screen, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var launcherToolbarsOldData = new LauncherToolbarsOldData() {
+                    LauncherToolbarId = IdFactory.CreateLauncherToolbarId(),
+                    LauncherGroupId = importedGroups.Contains(toolbar.DefaultGroupId) ? toolbar.DefaultGroupId : Guid.Empty,
+                    IconBox = (IconBox)toolbar.IconScale,
+                    FontId = fontId,
+                    Screen = screen,
+                    IsTopmost = toolbar.IsTopmost,
+                    AutoHideTimeout = toolbar.HideWaitTime,
+                    TextWidth = (int)toolbar.TextWidth,
+                    IsVisible = toolbar.IsVisible,
+                    IsAutoHide = toolbar.AutoHide,
+                    IsIconOnly = !toolbar.TextVisible,
+                };
+                var positions = new Dictionary<DockType, AppDesktopToolbarPosition>() {
+                    [DockType.Left] = AppDesktopToolbarPosition.Left,
+                    [DockType.Top] = AppDesktopToolbarPosition.Top,
+                    [DockType.Right] = AppDesktopToolbarPosition.Right,
+                    [DockType.Bottom] = AppDesktopToolbarPosition.Bottom,
+                };
+                if(positions.TryGetValue(toolbar.DockType, out var toolbarPosition)) {
+                    launcherToolbarsOldData.ToolbarPosition = toolbarPosition;
+                } else {
+                    Logger.LogInformation("[互換性破棄]　" + nameof(DockType) + ": {0}", toolbar.DockType);
+                    launcherToolbarsOldData.ToolbarPosition = AppDesktopToolbarPosition.Right;
+                }
+
+                var directions = new Dictionary<ToolbarButtonPosition, LauncherToolbarIconDirection>() {
+                    [ToolbarButtonPosition.Near] = LauncherToolbarIconDirection.LeftTop,
+                    [ToolbarButtonPosition.Center] = LauncherToolbarIconDirection.Center,
+                    [ToolbarButtonPosition.Far] = LauncherToolbarIconDirection.RightBottom,
+                };
+                launcherToolbarsOldData.IconDirection = directions[toolbar.ButtonPosition];
+
+
+                launcherToolbarsEntityDao.InsertOldToolbar(launcherToolbarsOldData, DatabaseCommonStatus.CreateCurrentAccount());
             }
         }
+
 
         public void Execute()
         {
@@ -203,9 +320,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             using(var transaction = MainDatabaseAccessor.BeginTransaction()) {
                 var importedItems = ImportLauncherItems(setting.LauncherItemSetting, transaction, transaction.Implementation);
-                ImportGroups(setting.LauncherGroupSetting, importedItems, transaction, transaction.Implementation);
+                var importedGroups = ImportGroups(setting.LauncherGroupSetting, importedItems, transaction, transaction.Implementation);
+                ImportToolbars(setting.MainSetting.Toolbar, importedGroups, transaction, transaction.Implementation);
 
-                //transaction.Commit();
+                transaction.Commit();
             }
         }
 

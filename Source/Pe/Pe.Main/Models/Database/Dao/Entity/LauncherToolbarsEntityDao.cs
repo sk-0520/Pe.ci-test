@@ -144,6 +144,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        internal bool InsertOldToolbar(LauncherToolbarsOldData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(data, commonStatus);
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            var props = dto.GetType().GetProperties();
+            foreach(var prop in props) {
+                parameter[prop.Name] = prop.GetValue(dto)!;
+            }
+            parameter[Column.ScreenName] = data.Screen!.DeviceName;
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
         public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
         {
             var toolbarPositionTransfer = new EnumTransfer<AppDesktopToolbarPosition>();
