@@ -122,8 +122,8 @@
                   <Label Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_IconSize_A, Source={x:Static app_main:CultureService.Current}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Small}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
-                    <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Normal}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
-                    <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Big}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Normal}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
+                    <RadioButton Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Big}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
                   </WrapPanel>
                 </Grid>
 
