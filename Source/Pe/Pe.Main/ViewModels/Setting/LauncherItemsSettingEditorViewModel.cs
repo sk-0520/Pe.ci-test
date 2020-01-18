@@ -66,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public IDragAndDrop DragAndDrop { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        [IgnoreValidation]
         public ICollectionView AllLauncherItemItems { get; }
 
         public bool IsPopupAddItemMenu
@@ -74,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetProperty(ref this._isPopupAddItemMenu, value);
         }
 
+        [IgnoreValidation]
         public LauncherItemSettingEditorViewModel? SelectedItem
         {
             get => this._selectedItem;
