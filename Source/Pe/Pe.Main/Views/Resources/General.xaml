@@ -191,12 +191,6 @@
 
   <!--#endregion-->
 
-  <DropShadowEffect x:Key="Effect-Strong"
-    Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
-    ShadowDepth="0"
-    BlurRadius="8"
-  />
-
   <ControlTemplate x:Key="Path-Small" TargetType="ContentControl">
     <Viewbox Width="{StaticResource Icon-Size-Small}" Height="{StaticResource Icon-Size-Small}">
       <Canvas Width="24" Height="24">
