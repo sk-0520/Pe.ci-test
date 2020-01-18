@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         private IReadOnlyCollection<Guid> ImportLauncherItems(LauncherItemSettingModel launcherItemSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
-            Logger.LogInformation("[互換性破棄] " + nameof(LauncherItemFileDropMode) + ": {0}", launcherItemSetting.FileDropMode);
+            Logger.LogWarning("[互換性破棄] " + nameof(LauncherItemFileDropMode) + ": {0}", launcherItemSetting.FileDropMode);
             Logger.LogInformation("ランチャーアイテム数: {0}", launcherItemSetting.Items.Count);
 
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             foreach(var item in launcherItemSetting.Items) {
                 Logger.LogInformation("アイテム取り込み: {0}, {1}", item.Name, item.Id);
                 if(item.LauncherKind != LauncherKind.File) {
-                    Logger.LogInformation("[互換性破棄]　" + nameof(LauncherKind) + ": {0}", item.LauncherKind);
+                    Logger.LogWarning("[互換性破棄]　" + nameof(LauncherKind) + ": {0}", item.LauncherKind);
                 }
                 if(string.IsNullOrWhiteSpace(item.Command)) {
                     Logger.LogInformation("コマンド未設定のため取り込み対象外");
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 if(images.TryGetValue(group.GroupIconType, out var value)) {
                     launcherGroupData.ImageName = value;
                 } else {
-                    Logger.LogInformation("[互換性破棄]　" + nameof(LauncherGroupIconType) + ": {0}", group.GroupIconType);
+                    Logger.LogWarning("[互換性破棄]　" + nameof(LauncherGroupIconType) + ": {0}", group.GroupIconType);
                     launcherGroupData.ImageName = LauncherGroupImageName.DirectoryNormal;
                 }
 
@@ -246,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     hitToolbars.Add(dockScreen, toolbar);
                     screens.Remove(dockScreen);
                 } else {
-                    Logger.LogInformation("ツールバーの所属ディスプレイが不明のため設定引継ぎせず: {0}", toolbar.Id);
+                    Logger.LogWarning("ツールバーの所属ディスプレイが不明のため設定引継ぎせず: {0}", toolbar.Id);
                 }
             }
 
@@ -296,7 +296,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 if(positions.TryGetValue(toolbar.DockType, out var toolbarPosition)) {
                     launcherToolbarsOldData.ToolbarPosition = toolbarPosition;
                 } else {
-                    Logger.LogInformation("[互換性破棄]　" + nameof(DockType) + ": {0}", toolbar.DockType);
+                    Logger.LogWarning("[互換性破棄]　" + nameof(DockType) + ": {0}", toolbar.DockType);
                     launcherToolbarsOldData.ToolbarPosition = AppDesktopToolbarPosition.Right;
                 }
 
