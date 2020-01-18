@@ -443,16 +443,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="archive"></param>
         /// <param name="appNonProcess"></param>
         /// <returns></returns>
-        internal static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
+        public static TIndexBody LoadBody<TIndexBody>(IndexKind indexKind, Guid guid, IndexBodyArchive archive, VariableConstants variableConstants)
             where TIndexBody : IndexBodyItemModelBase, new()
         {
-            var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
+            var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, variableConstants));
             TIndexBody result;
             //var isCreate = false;
             if(ExistisRealBodyFile(indexKind, guid, parentDir)) {
-                result = LoadRealBodyFile<TIndexBody>(indexKind, guid, parentDir, appNonProcess.Logger);
+                result = LoadRealBodyFile<TIndexBody>(indexKind, guid, parentDir, null);
             } else if(ExistisArchiveBodyFile(indexKind, guid, archive, parentDir)) {
-                result = LoadArchiveBodyFile<TIndexBody>(indexKind, guid, archive, appNonProcess.Logger);
+                result = LoadArchiveBodyFile<TIndexBody>(indexKind, guid, archive, null);
             } else {
                 // なんもない
                 result = new TIndexBody();

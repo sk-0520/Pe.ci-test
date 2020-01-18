@@ -25,6 +25,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
+using ContentTypeTextNet.Pe.PeMain.Converter;
+using Newtonsoft.Json;
 
 namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
@@ -58,6 +60,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Item
         /// 保存時のプログラムバージョン。
         /// </summary>
         [DataMember, IsDeepClone]
+        [JsonConverter(typeof(JsonVersionConverter))]
         public Version PreviousVersion { get; set; }
 
         #endregion

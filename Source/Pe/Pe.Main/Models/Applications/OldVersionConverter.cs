@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -15,7 +16,10 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.PeMain;
 using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using ContentTypeTextNet.Pe.PeMain.ViewModel;
 using Microsoft.Extensions.Logging;
 
@@ -54,6 +58,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             MainDatabaseAccessor = mainDatabaseAccessor;
             StatementLoader = statementLoader;
             IdFactory = idFactory;
+
+            IndexBodyCaching = new IndexBodyCaching(
+                -1,
+                -1,
+                VariableConstants
+            );
+
         }
 
 
@@ -66,6 +77,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         VariableConstants VariableConstants { get; }
         IDatabaseAccessor MainDatabaseAccessor { get; }
         IDatabaseStatementLoader StatementLoader { get; }
+
+        IndexBodyCaching IndexBodyCaching { get; set; }
+
         #endregion
 
         #region function
@@ -75,6 +89,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var oldSettingFilePath = Environment.ExpandEnvironmentVariables(VariableConstants.UserSettingMainSettingFilePath);
             Logger.LogInformation("旧設定ファイル: {0}", oldSettingFilePath);
             return !string.IsNullOrWhiteSpace(oldSettingFilePath) && File.Exists(oldSettingFilePath);
+        }
+
+        Guid GetOrCreateFont(FontModel font, Guid srcFontId, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var fontsEntityDao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            var fontId = IdFactory.CreateFontId();
+            if(!string.IsNullOrWhiteSpace(font.Family)) {
+                var fontData = new FontData() {
+                    FamilyName = font.Family,
+                    IsBold = font.Bold,
+                    IsItalic = font.Italic,
+                    Size = font.Size,
+                };
+                fontsEntityDao.InsertFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
+            } else {
+                Logger.LogInformation("フォント未設定のため標準フォントを使用");
+                fontsEntityDao.InsertCopyFont(srcFontId, fontId, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+
+            return fontId;
         }
 
         private IReadOnlyCollection<Guid> ImportLauncherItems(LauncherItemSettingModel launcherItemSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -252,25 +287,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
-            var fontEntityDao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             var screensEntityDao = new ScreensEntityDao(commander, StatementLoader, implementation, LoggerFactory);
 
             foreach(var (screen, toolbar) in hitToolbars) {
                 Logger.LogInformation("ツールバー取り込み: {0}", toolbar.Id);
 
-                var fontId = IdFactory.CreateFontId();
-                if(!string.IsNullOrWhiteSpace(toolbar.Font.Family)) {
-                    var fontData = new FontData() {
-                        FamilyName = toolbar.Font.Family,
-                        IsBold = toolbar.Font.Bold,
-                        IsItalic = toolbar.Font.Italic,
-                        Size = toolbar.Font.Size,
-                    };
-                    fontEntityDao.InsertFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
-                } else {
-                    Logger.LogInformation("フォント未設定のため標準フォントを使用");
-                    fontEntityDao.InsertCopyFont(appLauncherToolbarSettingEntityDao.SelectAppLauncherToolbarSettingFontId(), fontId, DatabaseCommonStatus.CreateCurrentAccount());
-                }
+                var fontId = GetOrCreateFont(toolbar.Font, appLauncherToolbarSettingEntityDao.SelectAppLauncherToolbarSettingFontId(), commander, implementation);
 
                 screensEntityDao.InsertScreen(screen, DatabaseCommonStatus.CreateCurrentAccount());
 
@@ -312,6 +334,67 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
+        private void ImportNotes(NoteIndexSettingModel noteIndexSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var primaryScreen = Screen.PrimaryScreen;
+
+            var appNoteSettingEntityDao = new AppNoteSettingEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var notesEntityDao = new NotesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var noteLayoutsEntityDao = new NoteLayoutsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var noteContentsEntityDao = new NoteContentsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            foreach(var note in noteIndexSetting.Items) {
+                Logger.LogInformation("ノート取り込み: {0}", note.Id);
+
+                var fontId = GetOrCreateFont(note.Font, appNoteSettingEntityDao.SelectAppNoteSettingFontId(), commander, implementation);
+
+                var noteData = new NoteData() {
+                    NoteId = note.Id,
+                    FontId = fontId,
+                    Title = note.Name,
+                    ContentKind = note.NoteKind switch
+                    {
+                        NoteKind.Text => NoteContentKind.Plain,
+                        NoteKind.Rtf => NoteContentKind.RichText,
+                        _ => NoteContentKind.Plain,
+                    },
+                    BackgroundColor = note.BackColor,
+                    ForegroundColor = note.ForeColor,
+                    IsCompact = note.IsCompacted,
+                    IsLocked = note.IsLocked,
+                    IsVisible = note.IsVisible,
+                    IsTopmost = note.IsTopmost,
+                    LayoutKind = NoteLayoutKind.Absolute,
+                    ScreenName = primaryScreen.DeviceName,
+                    TextWrap = note.AutoLineFeed,
+                };
+                notesEntityDao.InsertOldNote(noteData, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var noteLayoutData = new NoteLayoutData() {
+                    NoteId = note.Id,
+                    LayoutKind = NoteLayoutKind.Absolute,
+                    X = note.WindowLeft,
+                    Y = note.WindowTop,
+                    Width = note.WindowWidth,
+                    Height = note.WindowHeight,
+                };
+                noteLayoutsEntityDao.InsertLayout(noteLayoutData, DatabaseCommonStatus.CreateCurrentAccount());
+
+                var content = IndexItemUtility.LoadBody<NoteBodyItemModel>(IndexKind.Note, note.Id, IndexBodyCaching.NoteItems.Archive, VariableConstants);
+                var noteContentData = new NoteContentData() {
+                    NoteId = note.Id,
+                    Content = note.NoteKind switch
+                    {
+                        NoteKind.Text => content.Text,
+                        NoteKind.Rtf => content.Rtf,
+                        _ => content.Text,
+                    },
+                };
+                noteContentsEntityDao.InsertNewContent(noteContentData, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+        }
+
+
 
         public void Execute()
         {
@@ -322,8 +405,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 var importedItems = ImportLauncherItems(setting.LauncherItemSetting, transaction, transaction.Implementation);
                 var importedGroups = ImportGroups(setting.LauncherGroupSetting, importedItems, transaction, transaction.Implementation);
                 ImportToolbars(setting.MainSetting.Toolbar, importedGroups, transaction, transaction.Implementation);
+                ImportNotes(setting.NoteIndexSetting, transaction, transaction.Implementation);
 
-                transaction.Commit();
+                //transaction.Commit();
             }
         }
 
