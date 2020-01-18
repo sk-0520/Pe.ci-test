@@ -25,11 +25,11 @@
       <stop
          offset="0"
          id="backgroundLinearGradientStart"
-         style="stop-color:#ff8888;stop-opacity:1" />
+         style="stop-color:#8888ff;stop-opacity:1" />
       <stop
          offset="1"
          id="backgroundLinearGradientEnd"
-         style="stop-color:#ff8888;stop-opacity:0.25" />
+         style="stop-color:#8888ff;stop-opacity:0.25" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
