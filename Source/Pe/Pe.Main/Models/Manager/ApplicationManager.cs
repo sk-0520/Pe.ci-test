@@ -569,6 +569,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void ExecuteElements()
         {
+            var currentActiveWindowHandle = NativeMethods.GetActiveWindow();
+            if(currentActiveWindowHandle == IntPtr.Zero) {
+                currentActiveWindowHandle = NativeMethods.GetForegroundWindow();
+            }
+
             // グループ構築
             var launcherGroups = CreateLauncherGroupElements();
             LauncherGroupElements.AddRange(launcherGroups);
@@ -589,6 +594,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ;
             foreach(var viewShowStater in viewShowStaters) {
                 viewShowStater.StartView();
+            }
+
+            // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
+            if(currentActiveWindowHandle != IntPtr.Zero) {
+                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                    NativeMethods.SetActiveWindow(currentActiveWindowHandle);
+                    NativeMethods.SetForegroundWindow(currentActiveWindowHandle);
+                }, DispatcherPriority.ApplicationIdle);
             }
         }
 
