@@ -624,6 +624,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             appExecuteSettingEntityDao.UpdateOldExecuteSetting(runningInformation.FirstRunning.Version, runningInformation.FirstRunning.Timestamp, runningInformation.ExecuteCount + 1, DatabaseCommonStatus.CreateCurrentAccount());
         }
 
+        private void ReplaceStartup()
+        {
+            var oldStartupPath = Environment.ExpandEnvironmentVariables(Constants.StartupShortcutPath);
+            if(File.Exists(oldStartupPath)) {
+                Logger.LogInformation("スタートアップ再登録処理, 旧パス: {0}", oldStartupPath);
+                try {
+                    File.Delete(oldStartupPath);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+                var startupRegister = new StartupRegister(LoggerFactory);
+                startupRegister.Register(new StartupParameter());
+            }
+        }
+
         public void Execute()
         {
             var old = new MainWorkerViewModel();
@@ -641,6 +656,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 transaction.Commit();
             }
+
+            ReplaceStartup();
         }
 
 

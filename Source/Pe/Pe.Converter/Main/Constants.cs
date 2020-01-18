@@ -576,6 +576,13 @@ namespace ContentTypeTextNet.Pe.PeMain
             }
         }
 
+        public static String StartupShortcutPath
+        {
+            get
+            {
+                return startupShortcutPath;
+            }
+        }
 
     }
 
