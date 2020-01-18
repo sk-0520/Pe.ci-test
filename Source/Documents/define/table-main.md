@@ -132,8 +132,8 @@ ___
 |    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |           |
 |    | o  |              | タイトル設定             | TitleKind             | text         | System.String   |              |           |
 |    | o  |              | 位置種別                 | LayoutKind            | text         | System.String   |              |           |
-|    | o  |              | 前景色                   | Foreground            | text         | System.String   |              | #AARRGGBB |
-|    | o  |              | 背景色                   | Background            | text         | System.String   |              | #AARRGGBB |
+|    | o  |              | 前景色                   | ForegroundColor       | text         | System.String   |              | #AARRGGBB |
+|    | o  |              | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB |
 |    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |           |
 
 ### index
@@ -193,7 +193,7 @@ ___
 |    | o  |              | 方向                     | Direction             | text         | System.String   |              | アイコンの並びの基点 |
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                      |
 |    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                      |
-|    | o  |              | 自動的に隠す時間         | AutoHideTimeout       | text         | System.TimeSpan |              |                      |
+|    | o  |              | 自動的に隠す時間         | AutoHideTime          | text         | System.TimeSpan |              |                      |
 |    | o  |              | 文字幅                   | TextWidth             | integer      | System.Int64    |              |                      |
 |    | o  |              | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                      |
 |    | o  |              | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                      |
@@ -529,7 +529,7 @@ ___
 |    | o  |              | 方向                     | Direction             | text         | System.String   |              | アイコンの並びの基点                         |
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                                              |
 |    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                                              |
-|    | o  |              | 自動的に隠す時間         | AutoHideTimeout       | text         | System.TimeSpan |              |                                              |
+|    | o  |              | 自動的に隠す時間         | AutoHideTime          | text         | System.TimeSpan |              |                                              |
 |    | o  |              | 文字幅                   | TextWidth             | integer      | System.Int64    |              |                                              |
 |    | o  |              | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                              |
 |    | o  |              | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                                              |

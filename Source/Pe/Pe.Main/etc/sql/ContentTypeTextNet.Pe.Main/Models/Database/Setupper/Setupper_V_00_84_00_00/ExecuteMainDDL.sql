@@ -86,8 +86,8 @@ create table [AppNoteSetting] (
 	[FontId] text not null /* フォント  */,
 	[TitleKind] text not null /* タイトル設定  */,
 	[LayoutKind] text not null /* 位置種別  */,
-	[Foreground] text not null /* 前景色 #AARRGGBB */,
-	[Background] text not null /* 背景色 #AARRGGBB */,
+	[ForegroundColor] text not null /* 前景色 #AARRGGBB */,
+	[BackgroundColor] text not null /* 背景色 #AARRGGBB */,
 	[IsTopmost]  not null /* 最前面  */,
 	foreign key([FontId]) references [Fonts]([FontId])
 )

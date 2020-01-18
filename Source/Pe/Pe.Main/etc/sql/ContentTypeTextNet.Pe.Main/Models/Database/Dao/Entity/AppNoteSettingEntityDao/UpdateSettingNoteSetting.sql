@@ -4,8 +4,8 @@ set
 	FontId                = @FontId,
 	TitleKind             = @TitleKind,
 	LayoutKind            = @LayoutKind,
-	Foreground            = @ForegroundColor,
-	Background            = @BackgroundColor,
+	ForegroundColor       = @ForegroundColor,
+	BackgroundColor       = @BackgroundColor,
 	IsTopmost             = @IsTopmost,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,

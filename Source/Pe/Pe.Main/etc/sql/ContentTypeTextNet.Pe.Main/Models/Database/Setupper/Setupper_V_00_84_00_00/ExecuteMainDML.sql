@@ -340,8 +340,8 @@ insert into
 		FontId,
 		TitleKind,
 		LayoutKind,
-		Foreground,
-		Background,
+		ForegroundColor,
+		BackgroundColor,
 		IsTopmost,
 
 		CreatedTimestamp,
@@ -359,8 +359,8 @@ insert into
 /*  FontId               */ @NoteDefaultFontId,
 /*  TitleKind            */ 'timestamp',
 /*  LayoutKind           */ 'relative',
-/*  Foreground           */ '#ff000000',
-/*  Background           */ '#ffffffaa',
+/*  ForegroundColor      */ '#ff000000',
+/*  BackgroundColor      */ '#ffffffaa',
 /*  IsTopmost            */ false,
 
 /* CreatedTimestamp      */ @CreatedTimestamp,
