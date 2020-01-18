@@ -112,6 +112,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return fontId;
         }
 
+        void UpdateFont(FontModel font, Guid fontId, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            if(!string.IsNullOrWhiteSpace(font.Family)) {
+                var fontsEntityDao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+                var fontData = new FontData() {
+                    FamilyName = font.Family,
+                    IsBold = font.Bold,
+                    IsItalic = font.Italic,
+                    Size = font.Size,
+                };
+                fontsEntityDao.UpdateFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
+            }
+
+        }
+
         private IReadOnlyCollection<Guid> ImportLauncherItems(LauncherItemSettingModel launcherItemSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             Logger.LogWarning("[互換性破棄] " + nameof(LauncherItemFileDropMode) + ": {0}", launcherItemSetting.FileDropMode);
@@ -354,16 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 _ => NoteCreateTitleKind.Count,
             };
             appNoteSettingEntityDao.UpdateSettingNoteSetting(settingAppNoteSettingData, DatabaseCommonStatus.CreateCurrentAccount());
-            if(!string.IsNullOrWhiteSpace(noteSetting.Font.Family)) {
-                var fontsEntityDao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
-                var fontData = new FontData() {
-                    FamilyName = noteSetting.Font.Family,
-                    IsBold = noteSetting.Font.Bold,
-                    IsItalic = noteSetting.Font.Italic,
-                    Size = noteSetting.Font.Size,
-                };
-                fontsEntityDao.UpdateFont(settingAppNoteSettingData.FontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
-            }
+            UpdateFont(noteSetting.Font, settingAppNoteSettingData.FontId, commander, implementation);
 
             foreach(var note in noteIndexSetting.Items) {
                 Logger.LogInformation("ノート取り込み: {0}", note.Id);
@@ -416,7 +422,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
+        private void ImportStandardOutputInput(StreamSettingModel streamSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var setting = appStandardInputOutputSettingEntityDao.SelectSettingStandardInputOutputSetting();
 
+            setting.OutputBackgroundColor = streamSetting.OutputColor.BackColor;
+            setting.OutputForegroundColor = streamSetting.OutputColor.ForeColor;
+            setting.ErrorBackgroundColor = streamSetting.ErrorColor.BackColor;
+            setting.ErrorForegroundColor = streamSetting.ErrorColor.ForeColor;
+
+            appStandardInputOutputSettingEntityDao.UpdateSettingStandardInputOutputSetting(setting, DatabaseCommonStatus.CreateCurrentAccount());
+
+            UpdateFont(streamSetting.Font, setting.FontId, commander, implementation);
+        }
+
+        private void ImportCommand(CommandSettingModel commandSetting, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            Logger.LogWarning("[互換性破棄] " + nameof(commandSetting.FindFile) + ": {0}", commandSetting.FindFile);
+
+            var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
+
+            setting.FindTag = commandSetting.FindTag;
+            setting.HideWaitTime = commandSetting.HideTime;
+            setting.IconBox = (IconBox)commandSetting.IconScale;
+            setting.Width = commandSetting.WindowWidth;
+
+            appCommandSettingEntityDao.UpdateSettingCommandSetting(setting, DatabaseCommonStatus.CreateCurrentAccount());
+
+            UpdateFont(commandSetting.Font, setting.FontId, commander, implementation);
+        }
 
         public void Execute()
         {
@@ -428,10 +464,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 var importedGroups = ImportGroups(setting.LauncherGroupSetting, importedItems, transaction, transaction.Implementation);
                 ImportToolbars(setting.MainSetting.Toolbar, importedGroups, transaction, transaction.Implementation);
                 ImportNotes(setting.MainSetting.Note, setting.NoteIndexSetting, transaction, transaction.Implementation);
-
+                ImportStandardOutputInput(setting.MainSetting.Stream, transaction, transaction.Implementation);
+                ImportCommand(setting.MainSetting.Command, transaction, transaction.Implementation);
                 //transaction.Commit();
             }
         }
+
 
         #endregion
     }
