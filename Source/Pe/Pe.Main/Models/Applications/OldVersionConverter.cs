@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     continue;
                 }
 
-                var rawCode = launcherFactory.ToCode(item.Command);
+                var rawCode = launcherFactory.ToCode(Path.GetFileNameWithoutExtension(item.Command) ?? item.Command);
                 var singleCode = launcherFactory.GetUniqueCode(rawCode, codes);
                 codes.Add(singleCode);
 
