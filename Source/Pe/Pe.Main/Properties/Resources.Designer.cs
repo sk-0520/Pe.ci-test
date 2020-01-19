@@ -1004,6 +1004,789 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   Num + に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Add {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラウザー: 戻る に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_BrowserBack {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.BrowserBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラウザー: お気に入り に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_BrowserFavorites {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.BrowserFavorites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラウザー: 進む に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_BrowserForward {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.BrowserForward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラウザー: ホーム  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_BrowserHome {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.BrowserHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラウザー: 更新 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_BrowserRefresh {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.BrowserRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラウザー: 検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_BrowserSearch {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.BrowserSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラウザー: 中止 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_BrowserStop {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.BrowserStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Break に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Cancel {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   0 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D0 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   1 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D1 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   2 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D2 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   3 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D3 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   4 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D4 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   5 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D5 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   6 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D6 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   7 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D7 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   8 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D8 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   9 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_D9 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.D9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num Del に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Decimal {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Decimal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Delete に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Delete {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num / に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Divide {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Divide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ↓ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Down {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   End に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_End {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Esc に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Escape {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Escape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME ハングル モード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_HangulMode {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.HangulMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME Hanja モード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_HanjaMode {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.HanjaMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Home に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Home {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME Accept に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_ImeAccept {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.ImeAccept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   変換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_ImeConvert {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.ImeConvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME 変換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_ImeConvert1 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.ImeConvert1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME モード変更 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_ImeModeChange {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.ImeModeChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無変換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_ImeNonConvert {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.ImeNonConvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME 無変換 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_ImeNonConvert1 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.ImeNonConvert1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Insert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Insert {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Insert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME Junja モード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_JunjaMode {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.JunjaMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME かなモード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_KanaMode {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.KanaMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   IME 漢字モード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_KanjiMode {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.KanjiMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アプリケーション 1 の起動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_LaunchApplication1 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.LaunchApplication1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アプリケーション 2 の起動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_LaunchApplication2 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.LaunchApplication2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   メールの起動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_LaunchMail {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.LaunchMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ← に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Left {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左 Alt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_LeftAlt {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.LeftAlt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左 Ctrl に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_LeftCtrl {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.LeftCtrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左 Win に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_LWin {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.LWin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   次 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_MediaNextTrack {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.MediaNextTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   停止 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_MediaPlayPause {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.MediaPlayPause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   前 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_MediaPreviousTrack {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.MediaPreviousTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_MediaStop {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.MediaStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num * に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Multiply {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Multiply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PgDn に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Next {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_None {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 0 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad0 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 1 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad1 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 2 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad2 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 3 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad3 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 4 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad4 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 5 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad5 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 6 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad6 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 7 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad7 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 8 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad8 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num 9 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_NumPad9 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.NumPad9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   : に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Oem1 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Oem1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Oem3 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Oem3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ¥ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Oem5 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Oem5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ] に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Oem6 {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Oem6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   \ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemBackslash {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemBackslash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   , に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemComma {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemComma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   - に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemMinus {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemMinus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   [ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemOpenBrackets {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemOpenBrackets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   . に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemPeriod {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemPeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   : に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemPlus {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemPlus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   / に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemQuestion {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ^ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_OemQuotes {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.OemQuotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PgUp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_PageUp {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.PageUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pause に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Pause {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   → に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Right {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 Alt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_RightAlt {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.RightAlt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 Ctrl に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_RightCtrl {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.RightCtrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 Shift に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_RightShift {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.RightShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右 Win に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_RWin {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.RWin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ScrLk に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Scroll {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Scroll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Num - に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Subtract {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Subtract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ↑ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_Up {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.Up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ボリュームダウン に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_VolumeDown {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.VolumeDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ミュート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_VolumeMute {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.VolumeMute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ボリュームアップ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_Key_VolumeUp {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.Key.VolumeUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   変更 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_EnvironmentValieableEditor_Merge_A {

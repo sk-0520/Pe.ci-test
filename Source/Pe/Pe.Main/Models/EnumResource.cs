@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <typeparam name="TEnum"></typeparam>
         /// <param name="enumResources"></param>
         public EnumResourceManager Register<TEnum>(IReadOnlyList<EnumResource> enumResources)
-            where TEnum: Enum
+            where TEnum : Enum
         {
             var type = typeof(TEnum);
             Map.Add(type, new EnumResourceMapping(type, enumResources));
@@ -120,9 +120,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         string GetResourceName(EnumResourceMapping mapping, Type enumType, object enumValue)
         {
-            var baseName = mapping.Items.First(i => i.RawMember == (int)enumValue).ResourceName;
-            var name = NameHeader + Separator + baseName;
-            return name;
+            var item = mapping.Items.FirstOrDefault(i => i.RawMember == (int)enumValue);
+            if(item.ResourceName == string.Empty) {
+                return string.Empty;
+            }
+            return item.ResourceName;
         }
 
         string GetResourceName(Type enumType, object enumValue)
@@ -138,13 +140,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 ? enumType.FullName + "." + fieldInfo.Name
                 : attribute.ResourceBaseName
             ;
-            var name = NameHeader + Separator + baseName;
-            return name;
+            return baseName;
         }
 
-        public string GetString(object enumValue) => GetString(enumValue, ResourceNameKind.Normal);
+        public string GetString(object enumValue) => GetString(enumValue, ResourceNameKind.Normal, false);
 
-        public string GetString(object enumValue, ResourceNameKind resourceNameKind)
+        public string GetString(object enumValue, ResourceNameKind resourceNameKind, bool undefinedIsRaw)
         {
             var type = enumValue.GetType();
             if(type == typeof(string)) {
@@ -155,6 +156,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 ? GetResourceName(val, type, enumValue)
                 : GetResourceName(type, enumValue)
             ;
+            if(resourceBaseName == string.Empty) {
+                if(undefinedIsRaw) {
+                    return enumValue.ToString() ?? string.Empty;
+                }
+                return string.Empty;
+            }
 
             var resourceName = resourceNameKind switch
             {
@@ -163,8 +170,14 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 _ => throw new NotImplementedException()
             };
 
-            var result = Properties.Resources.ResourceManager.GetString(resourceName);
-            return result ?? string.Empty;
+            var result = Properties.Resources.ResourceManager.GetString(NameHeader + Separator + resourceName);
+            if(result != null) {
+                return result;
+            }
+            if(undefinedIsRaw) {
+                return enumValue.ToString() ?? string.Empty;
+            }
+            return string.Empty;
 
         }
 

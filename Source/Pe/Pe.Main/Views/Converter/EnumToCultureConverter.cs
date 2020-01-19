@@ -14,6 +14,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
 
         public CultureService CultureService { get; set; } = CultureService.Current;
 
+        public bool UndefinedIsRaw { get; set; }
+
         #endregion
 
         #region IValueConverter
@@ -32,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
                 }
             }
 
-            return CultureService.GetString(value, resourceNameKind);
+            return CultureService.GetString(value, resourceNameKind, UndefinedIsRaw);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

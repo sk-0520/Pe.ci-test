@@ -1012,4 +1012,265 @@
   <data name="String_NewEmptyGroupName" xml:space="preserve">
     <value>グループ</value>
   </data>
+  <data name="String:Enum-System.Windows.Input.Key.Add" xml:space="preserve">
+    <value>Num +</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Cancel" xml:space="preserve">
+    <value>Break</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D0" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D1" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D2" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D3" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D4" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D5" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D6" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D7" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D8" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.D9" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Decimal" xml:space="preserve">
+    <value>Num Del</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Divide" xml:space="preserve">
+    <value>Num /</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Down" xml:space="preserve">
+    <value>↓</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.End" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.ImeConvert" xml:space="preserve">
+    <value>変換</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.ImeNonConvert" xml:space="preserve">
+    <value>無変換</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Insert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Left" xml:space="preserve">
+    <value>←</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.LeftAlt" xml:space="preserve">
+    <value>左 Alt</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.LeftCtrl" xml:space="preserve">
+    <value>左 Ctrl</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.LWin" xml:space="preserve">
+    <value>左 Win</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.MediaNextTrack" xml:space="preserve">
+    <value>次</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.MediaPlayPause" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.MediaPreviousTrack" xml:space="preserve">
+    <value>前</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.MediaStop" xml:space="preserve">
+    <value>再生</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Multiply" xml:space="preserve">
+    <value>Num *</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Next" xml:space="preserve">
+    <value>PgDn</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.None" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad0" xml:space="preserve">
+    <value>Num 0</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad1" xml:space="preserve">
+    <value>Num 1</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad2" xml:space="preserve">
+    <value>Num 2</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad3" xml:space="preserve">
+    <value>Num 3</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad4" xml:space="preserve">
+    <value>Num 4</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad5" xml:space="preserve">
+    <value>Num 5</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad6" xml:space="preserve">
+    <value>Num 6</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad7" xml:space="preserve">
+    <value>Num 7</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad8" xml:space="preserve">
+    <value>Num 8</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.NumPad9" xml:space="preserve">
+    <value>Num 9</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Oem1" xml:space="preserve">
+    <value>:</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Oem3" xml:space="preserve">
+    <value>@</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Oem5" xml:space="preserve">
+    <value>¥</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Oem6" xml:space="preserve">
+    <value>]</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemBackslash" xml:space="preserve">
+    <value>\</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemComma" xml:space="preserve">
+    <value>,</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemMinus" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemOpenBrackets" xml:space="preserve">
+    <value>[</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemPeriod" xml:space="preserve">
+    <value>.</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemPlus" xml:space="preserve">
+    <value>:</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemQuestion" xml:space="preserve">
+    <value>/</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.OemQuotes" xml:space="preserve">
+    <value>^</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.PageUp" xml:space="preserve">
+    <value>PgUp</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Right" xml:space="preserve">
+    <value>→</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.RightAlt" xml:space="preserve">
+    <value>右 Alt</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.RightCtrl" xml:space="preserve">
+    <value>右 Ctrl</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.RightShift" xml:space="preserve">
+    <value>右 Shift</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.RWin" xml:space="preserve">
+    <value>右 Win</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Scroll" xml:space="preserve">
+    <value>ScrLk</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Subtract" xml:space="preserve">
+    <value>Num -</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Up" xml:space="preserve">
+    <value>↑</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.BrowserBack" xml:space="preserve">
+    <value>ブラウザー: 戻る</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.BrowserFavorites" xml:space="preserve">
+    <value>ブラウザー: お気に入り</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.BrowserForward" xml:space="preserve">
+    <value>ブラウザー: 進む</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.BrowserHome" xml:space="preserve">
+    <value>ブラウザー: ホーム </value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.BrowserRefresh" xml:space="preserve">
+    <value>ブラウザー: 更新</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.BrowserSearch" xml:space="preserve">
+    <value>ブラウザー: 検索</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.BrowserStop" xml:space="preserve">
+    <value>ブラウザー: 中止</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.Escape" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.HangulMode" xml:space="preserve">
+    <value>IME ハングル モード</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.HanjaMode" xml:space="preserve">
+    <value>IME Hanja モード</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.ImeAccept" xml:space="preserve">
+    <value>IME Accept</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.ImeConvert1" xml:space="preserve">
+    <value>IME 変換</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.ImeModeChange" xml:space="preserve">
+    <value>IME モード変更</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.ImeNonConvert1" xml:space="preserve">
+    <value>IME 無変換</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.JunjaMode" xml:space="preserve">
+    <value>IME Junja モード</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.KanaMode" xml:space="preserve">
+    <value>IME かなモード</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.KanjiMode" xml:space="preserve">
+    <value>IME 漢字モード</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.LaunchApplication1" xml:space="preserve">
+    <value>アプリケーション 1 の起動</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.LaunchApplication2" xml:space="preserve">
+    <value>アプリケーション 2 の起動</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.LaunchMail" xml:space="preserve">
+    <value>メールの起動</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.VolumeDown" xml:space="preserve">
+    <value>ボリュームダウン</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.VolumeMute" xml:space="preserve">
+    <value>ミュート</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.Key.VolumeUp" xml:space="preserve">
+    <value>ボリュームアップ</value>
+  </data>
 </root>

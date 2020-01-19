@@ -260,7 +260,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
             typeof(IEnumerable),
             typeof(KeyInputControl),
             new PropertyMetadata(
-                EnumUtility.GetMembers<Key>().OrderBy(i => i).ToList(),
+                EnumUtility.GetMembers<Key>()
+                    .Select(i => (int)i)
+                    .Distinct()
+                    .Select(i => (Key)i)
+                    .ToList()
+                ,
                 new PropertyChangedCallback(OnKeyItemsSourcePropertyChanged)
             )
         );

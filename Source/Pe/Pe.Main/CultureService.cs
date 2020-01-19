@@ -78,7 +78,11 @@ namespace ContentTypeTextNet.Pe.Main
 
         public string GetString(object enumValue, ResourceNameKind resourceNameKind)
         {
-            return EnumResourceManager.GetString(enumValue, resourceNameKind);
+            return EnumResourceManager.GetString(enumValue, resourceNameKind, false);
+        }
+        public string GetString(object enumValue, ResourceNameKind resourceNameKind, bool undefinedIsRaw)
+        {
+            return EnumResourceManager.GetString(enumValue, resourceNameKind, undefinedIsRaw);
         }
 
         internal static void Initialize(CultureService cultureService)

@@ -50,12 +50,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AllLauncherItemCollection = allLauncherItemCollection;
 
             var replaceKeyItems = EnumUtility.GetMembers<Key>()
-                .OrderBy(i => i)
+                .Select(i => (int)i)
+                .Distinct()
+                .Select(i => (Key)i)
             ;
             ReplaceKeyItems = new ObservableCollection<Key>(replaceKeyItems);
 
             var disableKeyItems = EnumUtility.GetMembers<Key>()
-                .OrderBy(i => i)
+                .Select(i => (int)i)
+                .Distinct()
+                .Select(i => (Key)i)
             ;
             DisableKeyItems = new ObservableCollection<Key>(disableKeyItems);
 
@@ -70,8 +74,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 Key.RWin,
             };
             var pressedKeyItems = EnumUtility.GetMembers<Key>()
+                .Select(i => (int)i)
+                .Distinct()
+                .Select(i => (Key)i)
                 .Where(i => !pressedIgnoreKeys.Any(ii => ii == i))
-                .OrderBy(i => i)
             ;
             PressedKeyItems = new ObservableCollection<Key>(pressedKeyItems);
 
@@ -100,7 +106,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         [IgnoreValidation]
         public ObservableCollection<Key> ReplaceKeyItems { get; }
+        [IgnoreValidation]
         public ObservableCollection<Key> DisableKeyItems { get; }
+        [IgnoreValidation]
         public ObservableCollection<Key> PressedKeyItems { get; }
 
         #endregion

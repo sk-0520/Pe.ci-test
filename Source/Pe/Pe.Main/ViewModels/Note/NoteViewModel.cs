@@ -349,7 +349,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 return TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_Note_KindChanging_Change,
                     new Dictionary<string, string>() {
-                        //TODO: ローカライズ
                         ["FROM-KIND"] = CultureService.Current.GetString(ContentKind, Models.ResourceNameKind.Normal),
                         ["TO-KIND"] = CultureService.Current.GetString(ChangingContentKind, Models.ResourceNameKind.Normal),
                     }
