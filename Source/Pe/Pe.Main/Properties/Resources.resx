@@ -624,7 +624,7 @@
     <value>アップデート方法</value>
   </data>
   <data name="String_Setting_Keyboard_Comment" xml:space="preserve">
-    <value>💩コメント</value>
+    <value>コメント</value>
   </data>
   <data name="String_Setting_Keyboard_Header" xml:space="preserve">
     <value>キーボード</value>
@@ -686,7 +686,7 @@
     <value>→</value>
   </data>
   <data name="String_Setting_Keyboard_Remove" xml:space="preserve">
-    <value>💩削除</value>
+    <value>削除</value>
   </data>
   <data name="String_Setting_LauncherGroups_Edit_Header" xml:space="preserve">
     <value>編集</value>
@@ -1284,5 +1284,8 @@
   </data>
   <data name="String_Setting_KeyInput_ModifierKey_Super_A" xml:space="preserve">
     <value>Win</value>
+  </data>
+  <data name="String_Setting_Keyboard_Mapping_Remove" xml:space="preserve">
+    <value>マッピング削除</value>
   </data>
 </root>

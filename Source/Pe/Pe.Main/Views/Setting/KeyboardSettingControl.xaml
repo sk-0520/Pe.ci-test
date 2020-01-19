@@ -25,6 +25,17 @@
       <Setter Property="HorizontalAlignment" Value="{Binding HorizontalAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}, Mode=OneWayToSource}" />
       <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
+
+    <Style x:Key="Comment" TargetType="TextBox" BasedOn="{StaticResource Vertical-TextBox}">
+      <Setter Property="ToolTip" Value="{Binding Resources.String_Setting_Keyboard_Comment, Source={x:Static app_main:CultureService.Current}}" />
+    </Style>
+
+    <Style x:Key="RemoveItem" TargetType="Button">
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="ToolTip" Value="{Binding Resources.String_Setting_Keyboard_Remove, Source={x:Static app_main:CultureService.Current}}" />
+      <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
+    </Style>
+
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -72,8 +83,10 @@
                   </Expander.Header>
                   <Expander.Content>
                     <StackPanel>
-                      <TextBox Text="{Binding Comment}" />
-                      <Button Content="x" Command="{Binding Editor.RemoveReplaceJobCommand, ElementName=root}" CommandParameter="{Binding}" />
+                      <TextBox Style="{StaticResource Comment}" Text="{Binding Comment}" />
+                      <Button Style="{StaticResource RemoveItem}" Command="{Binding Editor.RemoveReplaceJobCommand, ElementName=root}" CommandParameter="{Binding}">
+                        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                      </Button>
                     </StackPanel>
                   </Expander.Content>
                 </Expander>
@@ -113,9 +126,11 @@
                   </Expander.Header>
                   <Expander.Content>
                     <StackPanel>
-                      <CheckBox Grid.Column="1" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Forever_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding Forever}" />
-                      <TextBox Text="{Binding Comment}" />
-                      <Button Content="x" Command="{Binding Editor.RemoveDisableJobCommand, ElementName=root}" CommandParameter="{Binding}" />
+                      <CheckBox Grid.Column="1" Margin="{StaticResource HalfMargin}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Forever_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding Forever}" />
+                      <TextBox Style="{StaticResource Comment}" Text="{Binding Comment}" />
+                      <Button Style="{StaticResource RemoveItem}" Command="{Binding Editor.RemoveDisableJobCommand, ElementName=root}" CommandParameter="{Binding}">
+                        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                      </Button>
                     </StackPanel>
                   </Expander.Content>
                 </Expander>
@@ -159,7 +174,7 @@
               <ItemsControl ItemsSource="{Binding MappingItems}">
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
-                    <Grid>
+                    <Grid Margin="{StaticResource BottomMargin}">
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -172,9 +187,15 @@
                           <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Button Grid.Row="0" Content="up" Command="{Binding DataContext.UpMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
-                        <Button Grid.Row="1" Content="x" Command="{Binding DataContext.RemoveMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
-                        <Button Grid.Row="2" Content="down" Command="{Binding DataContext.DownMappingCommand, ElementName=item}" CommandParameter="{Binding}" />
+                        <Button Grid.Row="0" ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.UpMappingCommand, ElementName=item}" CommandParameter="{Binding}">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
+                        </Button>
+                        <Button Grid.Row="1" ToolTip="{Binding Resources.String_Setting_Keyboard_Mapping_Remove, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.RemoveMappingCommand, ElementName=item}" CommandParameter="{Binding}">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                        </Button>
+                        <Button Grid.Row="2" ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.DownMappingCommand, ElementName=item}" CommandParameter="{Binding}">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
+                        </Button>
                       </Grid>
 
                       <app_main_views_setting:KeyInputControl Grid.Column="1" KeyItemsSource="{Binding Editor.PressedKeyItems, ElementName=root}" Key="{Binding Key}" Shift="{Binding Shift}" Control="{Binding Control}" Alt="{Binding Alt}" Super="{Binding Super}" />
@@ -185,9 +206,11 @@
               <Button Content="{Binding Resources.String_Setting_Keyboard_Pressed_Command_AddMapping, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
             </StackPanel>
             <StackPanel x:Key="Common" x:Shared="False">
-              <CheckBox Content="{Binding Resources.String_Setting_Keyboard_Pressed_ThroughSystem_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ThroughSystem}" />
-              <TextBox Text="{Binding Comment}" />
-              <Button Content="x" Command="{Binding Editor.RemovePressedJobCommand, ElementName=root}" CommandParameter="{Binding}" />
+              <CheckBox Margin="{StaticResource HalfMargin}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_ThroughSystem_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ThroughSystem}" />
+              <TextBox Style="{StaticResource Comment}" Text="{Binding Comment}" />
+              <Button  Style="{StaticResource RemoveItem}"  Command="{Binding Editor.RemovePressedJobCommand, ElementName=root}" CommandParameter="{Binding}">
+                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+              </Button>
             </StackPanel>
 
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardCommandJobSettingEditorViewModel}">

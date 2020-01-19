@@ -26,6 +26,7 @@
   <sys:Double x:Key="NormalIndentWidth">20</sys:Double>
   <sys:Double x:Key="BigIndentWidth">40</sys:Double>
   <Thickness x:Key="BitMargin" Left="{StaticResource BitMarginWidth}" Top="{StaticResource BitMarginWidth}" Right="{StaticResource BitMarginWidth}" Bottom="{StaticResource BitMarginWidth}" />
+  <Thickness x:Key="HalfMargin" Left="{StaticResource HalfMarginWidth}" Top="{StaticResource HalfMarginWidth}" Right="{StaticResource HalfMarginWidth}" Bottom="{StaticResource HalfMarginWidth}" />
   <Thickness x:Key="LeftMargin" Left="{StaticResource BaseMarginWidth}" Top="0" Right="0" Bottom="0" />
   <Thickness x:Key="TopMargin" Left="0" Top="{StaticResource BaseMarginWidth}" Right="0" Bottom="0" />
   <Thickness x:Key="RightMargin" Left="0" Top="0" Right="{StaticResource BaseMarginWidth}" Bottom="0" />

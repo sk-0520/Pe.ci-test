@@ -3021,7 +3021,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   💩コメント に類似しているローカライズされた文字列を検索します。
+        ///   コメント に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Comment {
             get {
@@ -3053,6 +3053,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Keyboard_Ignore_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Keyboard_Ignore_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   マッピング削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Keyboard_Mapping_Remove {
+            get {
+                return ResourceManager.GetString("String_Setting_Keyboard_Mapping_Remove", resourceCulture);
             }
         }
         
@@ -3183,7 +3192,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   💩削除 に類似しているローカライズされた文字列を検索します。
+        ///   削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Remove {
             get {
