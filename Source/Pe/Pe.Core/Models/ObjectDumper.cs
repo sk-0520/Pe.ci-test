@@ -58,6 +58,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             throw new NotImplementedException();
         }
+
+        #region object
+
+        public override string ToString() => $"{ReflectedType} {Name}";
+
+        #endregion
     }
 
     public class ObjectDumper
