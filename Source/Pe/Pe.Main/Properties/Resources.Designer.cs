@@ -3219,6 +3219,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   Alt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_KeyInput_ModifierKey_Alt_A {
+            get {
+                return ResourceManager.GetString("String_Setting_KeyInput_ModifierKey_Alt_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ctrl に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_KeyInput_ModifierKey_Control_A {
+            get {
+                return ResourceManager.GetString("String_Setting_KeyInput_ModifierKey_Control_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shift に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_KeyInput_ModifierKey_Shift_A {
+            get {
+                return ResourceManager.GetString("String_Setting_KeyInput_ModifierKey_Shift_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Win に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_KeyInput_ModifierKey_Super_A {
+            get {
+                return ResourceManager.GetString("String_Setting_KeyInput_ModifierKey_Super_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   グループを追加 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherGroups_AddGroup {

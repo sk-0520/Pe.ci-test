@@ -1273,4 +1273,16 @@
   <data name="String:Enum-System.Windows.Input.Key.VolumeUp" xml:space="preserve">
     <value>ボリュームアップ</value>
   </data>
+  <data name="String_Setting_KeyInput_ModifierKey_Alt_A" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="String_Setting_KeyInput_ModifierKey_Control_A" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="String_Setting_KeyInput_ModifierKey_Shift_A" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="String_Setting_KeyInput_ModifierKey_Super_A" xml:space="preserve">
+    <value>Win</value>
+  </data>
 </root>
