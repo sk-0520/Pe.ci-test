@@ -79,8 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 FontId = data.FontId,
                 TitleKind = noteCreateTitleKindTransfer.ToString(data.TitleKind),
                 LayoutKind = noteLayoutKindTransfer.ToString(data.LayoutKind),
-                ForegroundColor = FromColor(data.BackgroundColor),
-                BackgroundColor = FromColor(data.ForegroundColor),
+                ForegroundColor = FromColor(data.ForegroundColor),
+                BackgroundColor = FromColor(data.BackgroundColor),
                 IsTopmost = data.IsTopmost,
             };
             commonStatus.WriteCommon(dto);
