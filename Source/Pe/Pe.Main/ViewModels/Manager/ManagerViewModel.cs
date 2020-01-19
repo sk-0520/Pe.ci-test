@@ -71,6 +71,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         }
 
+        public bool IsEnabledHook
+        {
+            get => ApplicationManager.IsEnabledHook;
+        }
 
         #endregion
 
@@ -123,6 +127,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 ApplicationManager.ShowStartupView();
             }
         ));
+
+        public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 ApplicationManager.ToggleHook();
+                 RaisePropertyChanged(nameof(IsEnabledHook));
+             }
+         ));
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

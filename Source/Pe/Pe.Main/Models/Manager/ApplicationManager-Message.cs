@@ -23,6 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
     partial class ApplicationManager
     {
+        #region property
+
+        public bool IsEnabledHook { get; private set; }
+
+        #endregion
+
         #region function
 
         private void MakeMessageWindow()
@@ -119,17 +125,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void StartHook()
         {
+            var hooked = false;
             if(KeyActionChecker.HasJob) {
                 KeyboradHooker.Register();
+                hooked = true;
             }
             //MouseHooker.Register();
+
+            IsEnabledHook = hooked;
         }
 
         void StopHook()
         {
             KeyboradHooker.Unregister();
             MouseHooker.Unregister();
+
+            IsEnabledHook = false;
         }
+
+        public void ToggleHook()
+        {
+            if(IsEnabledHook) {
+                StopHook();
+            } else {
+                StartHook();
+            }
+        }
+
 
         void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
         {

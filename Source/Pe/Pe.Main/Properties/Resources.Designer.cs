@@ -306,6 +306,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   システム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_System_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_System_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フック状態切り替え に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_System_Hook_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_System_Hook_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ツールバー(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_Toolbar_A {

@@ -1288,4 +1288,10 @@
   <data name="String_Setting_Keyboard_Mapping_Remove" xml:space="preserve">
     <value>マッピング削除</value>
   </data>
+  <data name="String_AppManager_System_A" xml:space="preserve">
+    <value>システム</value>
+  </data>
+  <data name="String_AppManager_System_Hook_A" xml:space="preserve">
+    <value>フック状態切り替え</value>
+  </data>
 </root>

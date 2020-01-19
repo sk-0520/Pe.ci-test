@@ -110,6 +110,12 @@
 
     <Separator />
 
+    <MenuItem Header="{Binding Resources.String_AppManager_System_A, Source={x:Static app_main:CultureService.Current}}">
+      <MenuItem Header="{Binding Resources.String_AppManager_System_Hook_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsEnabledHook, Mode=OneWay}" Command="{Binding ToggleHookCommand}" />
+    </MenuItem>
+
+    <Separator />
+
     <MenuItem Header="{Binding Resources.String_AppManager_About_A, Source={x:Static app_main:CultureService.Current}}">
       <MenuItem Header="{Binding Resources.String_AppManager_About_Help_A, Source={x:Static app_main:CultureService.Current}}">
         <MenuItem.Icon>
