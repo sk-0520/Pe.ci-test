@@ -9,6 +9,11 @@ echo.
 echo 各種データは %DATA_DIR% ディレクトリに保存されます。
 echo 実行後に不要であれば削除してください。
 echo.
+echo Pe 0.83.0.18060 からのデータを引き継ぐ際は Pe 0.83.0.18060 を停止してください
+echo → ファイルの場所を指定するにはオプション追加が必要です
+echo    --old-setting-root=%APPDATA%
+echo                       (設定ディレクトリの親ディレクトリ)
+echo.
 echo 実行しています...
 ..\Pe.exe --log .\%DATA_DIR%\logs --force-log --user-dir .\%DATA_DIR%\user --machine-dir .\%DATA_DIR%\machine --temp-dir .\%DATA_DIR%\temp
 
