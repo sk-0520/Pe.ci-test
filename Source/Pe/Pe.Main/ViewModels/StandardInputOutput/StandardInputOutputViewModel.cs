@@ -15,6 +15,8 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
+using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using ContentTypeTextNet.Pe.Main.Views.StandardInputOutput;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
@@ -27,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
     /// <summary>
     /// TODO: 標準出力中にまざる標準エラー処理がぐっだぐだ
     /// </summary>
-    public class StandardInputOutputViewModel : SingleModelViewModelBase<StandardInputOutputElement>, IViewLifecycleReceiver
+    public class StandardInputOutputViewModel : ElementViewModelBase<StandardInputOutputElement>, IViewLifecycleReceiver
     {
         #region define
 
@@ -42,10 +44,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #endregion
 
-        public StandardInputOutputViewModel(StandardInputOutputElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public StandardInputOutputViewModel(StandardInputOutputElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
-            DispatcherWrapper = dispatcherWrapper;
+            Font = new FontViewModel(model.Font!, DispatcherWrapper, LoggerFactory);
+
+            this._isTopmost = model.IsTopmost;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparatedReceive), AttachReceiver);
@@ -57,7 +61,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         #region property
 
-        IDispatcherWrapper DispatcherWrapper { get; }
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
         public TextDocument TextDocument { get; } = new TextDocument();
@@ -65,6 +68,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         TextEditor? Terminal { get; set; }
+
+        public FontViewModel Font { get; }
 
         public ObservableCollection<StandardInputOutputHistoryViewModel> InputedHistories { get; } = new ObservableCollection<StandardInputOutputHistoryViewModel>();
 
@@ -106,9 +111,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             set => SetProperty(ref this._inputValue, value);
         }
 
-        public Brush Background => new SolidColorBrush(Colors.Black);
-        public Brush StandardOutputForeground => new SolidColorBrush(Colors.White);
-        public Brush StandardErrorForegound => new SolidColorBrush(Colors.Red);
+        public Brush StandardOutputBackground => new SolidColorBrush(Model.OutputBackgroundColor);
+        public Brush StandardOutputForeground => new SolidColorBrush(Model.OutputForegroundColor);
+        public Brush StandardErrorForegound => new SolidColorBrush(Model.ErrorForegroundColor);
         StandardOutputColorizingTransformer? StandardOutputColorizingTransformer { get; set; }
 
         #endregion

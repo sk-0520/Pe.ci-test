@@ -5,8 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -25,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         #endregion
 
-        public StandardInputOutputElement(string captionName, Process process, IScreen screen, IOrderManager orderManager, ILoggerFactory loggerFactory)
+        public StandardInputOutputElement(string captionName, Process process, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             if(!process.EnableRaisingEvents) {
@@ -35,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             CaptionName = captionName;
             Process = process;
             Screen = screen;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            StatementLoader = statementLoader;
             OrderManager = orderManager;
 
             Process.Exited += Process_Exited;
@@ -45,6 +53,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         public string CaptionName { get; }
         public Process Process { get; }
         IScreen Screen { get; }
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
         IOrderManager OrderManager { get; }
 
         public StreamReceiver? OutputStreamReceiver { get; private set; }
@@ -72,6 +82,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             get => this._processExited;
             private set => SetProperty(ref this._processExited, value);
         }
+
+        public FontElement? Font { get; private set; }
+        public Color OutputForegroundColor { get; private set; }
+        public Color OutputBackgroundColor { get; private set; }
+        public Color ErrorForegroundColor { get; private set; }
+        public Color ErrorBackgroundColor { get; private set; }
+
+        public bool IsTopmost { get; set; }
 
         #endregion
 
@@ -133,6 +151,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         protected override void InitializeImpl()
         {
+            SettingAppStandardInputOutputSettingData setting;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                setting = appStandardInputOutputSettingEntityDao.SelectSettingStandardInputOutputSetting();
+            }
+
+            Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font.Initialize();
+
+            OutputForegroundColor = setting.OutputForegroundColor;
+            OutputBackgroundColor= setting.OutputBackgroundColor;
+            ErrorForegroundColor = setting.ErrorForegroundColor;
+            ErrorBackgroundColor = setting.ErrorBackgroundColor;
+
+            IsTopmost = setting.IsTopmost;
         }
 
         #endregion
