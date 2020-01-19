@@ -15,6 +15,7 @@
   Icon="/Resources/Icon/App.ico"
   Width="800"
   Height="450"
+  WindowStartupLocation="CenterScreen"
 
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
