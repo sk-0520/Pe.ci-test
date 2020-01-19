@@ -324,6 +324,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   システムアイドルを抑制 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_System_IsDisabledSystemIdle_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_System_IsDisabledSystemIdle_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ツールバー(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_Toolbar_A {

@@ -899,6 +899,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    HeartBeatSender?.Dispose();
+
                     CloseViews();
                     DisposeElements();
 

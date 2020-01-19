@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
@@ -26,6 +27,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region property
 
         public bool IsEnabledHook { get; private set; }
+
+        HeartBeatSender? HeartBeatSender { get; set; }
+        public bool IsDisabledSystemIdle => HeartBeatSender != null;
 
         #endregion
 
@@ -332,6 +336,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         ExecuteElements();
                     }, TaskScheduler.FromCurrentSynchronizationContext());
                 }
+            }
+        }
+
+        public void ToggleDisableSystemIdle()
+        {
+            if(HeartBeatSender != null) {
+                Logger.LogInformation("ロック抑制終了");
+                HeartBeatSender.Dispose();
+                HeartBeatSender = null;
+            } else {
+                Logger.LogInformation("ロック抑制開始");
+                HeartBeatSender = new HeartBeatSender(TimeSpan.FromSeconds(40), LoggerFactory);
+                HeartBeatSender.Start();
             }
         }
 

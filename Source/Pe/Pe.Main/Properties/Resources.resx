@@ -1294,4 +1294,7 @@
   <data name="String_AppManager_System_Hook_A" xml:space="preserve">
     <value>フック状態切り替え</value>
   </data>
+  <data name="String_AppManager_System_IsDisabledSystemIdle_A" xml:space="preserve">
+    <value>システムアイドルを抑制</value>
+  </data>
 </root>

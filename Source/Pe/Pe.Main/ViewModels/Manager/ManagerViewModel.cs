@@ -76,6 +76,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             get => ApplicationManager.IsEnabledHook;
         }
 
+        public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
+
         #endregion
 
         #region command
@@ -129,11 +131,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         ));
 
         public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
-             () => {
-                 ApplicationManager.ToggleHook();
-                 RaisePropertyChanged(nameof(IsEnabledHook));
-             }
-         ));
+           () => {
+             ApplicationManager.ToggleHook();
+                RaisePropertyChanged(nameof(IsEnabledHook));
+            }
+        ));
+        public ICommand ToggleDisabledSystemIdleCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.ToggleDisableSystemIdle();
+                RaisePropertyChanged(nameof(IsDisabledSystemIdle));
+            }
+        ));
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
