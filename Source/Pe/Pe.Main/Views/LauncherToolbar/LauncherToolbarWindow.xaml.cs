@@ -104,5 +104,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
         {
             e.Handled = true;
         }
+
+        private void scrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if(!ViewModel.IsVerticalLayout) {
+                this.scrollViewer.ScrollToHorizontalOffset(this.scrollViewer.HorizontalOffset + - e.Delta);
+                e.Handled = true;
+            }
+        }
     }
 }

@@ -453,7 +453,7 @@
       </Grid>
     </ToggleButton>
 
-    <ScrollViewer Grid.Row="2" Grid.Column="2" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+    <ScrollViewer x:Name="scrollViewer" Grid.Row="2" Grid.Column="2" PreviewMouseWheel="scrollViewer_PreviewMouseWheel" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
       <ScrollViewer.Style>
         <Style TargetType="ScrollViewer">
           <Style.Triggers>
