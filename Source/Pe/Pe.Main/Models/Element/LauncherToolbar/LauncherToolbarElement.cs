@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         bool _isOpendFileItemMenu;
         bool _isOpendStoreAppItemMenu;
 
+        bool _isHiding;
+
         #endregion
 
         public LauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILauncherToolbarTheme launcherToolbarTheme, IDiContainer diContainer, ILoggerFactory loggerFactory)
@@ -540,7 +542,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         /// <summary>
         /// 隠れているか。
         /// </summary>
-        public bool IsHiding { get; set; }
+        public bool IsHiding
+        {
+            get => this._isHiding;
+            set => SetProperty(ref this._isHiding, value);
+        }
+
         /// <summary>
         /// 自動的に隠れるまでの時間。
         /// </summary>

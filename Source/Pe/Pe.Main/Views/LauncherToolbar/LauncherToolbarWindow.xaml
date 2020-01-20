@@ -31,8 +31,6 @@
   AllowDrop="True"
   AllowsTransparency="True"
 
-  Topmost="{Binding IsTopmost}"
-
   Background="{Binding ToolbarBackground}"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -288,8 +286,15 @@
           <!-- Visibility 操作するともろもろの都合でウィンドウが閉じられるのだ！ -->
           <Setter Property="Opacity" Value="0" />
         </DataTrigger>
+        <DataTrigger Binding="{Binding IsHiding}" Value="True">
+          <Setter Property="Topmost" Value="True" />
+        </DataTrigger>
+        <!--<DataTrigger Binding="{Binding IsHiding}" Value="False">
+          <Setter Property="Topmost" Value="{Binding IsTopmost}" />
+        </DataTrigger>-->
       </Style.Triggers>
       <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+      <Setter Property="Topmost" Value="{Binding IsTopmost}" />
     </Style>
   </Window.Style>
 
