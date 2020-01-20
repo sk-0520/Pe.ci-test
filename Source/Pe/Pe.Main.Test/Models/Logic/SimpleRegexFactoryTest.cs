@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow(false, @"/", " ")]
         [DataRow(true, @"/^a", "a")]
         [DataRow(false, @"/^a", " a")]
-        public void CreateFilterRegex(bool result, string pattern, string input)
+        public void CreateFilterRegexTest(bool result, string pattern, string input)
         {
             var regex = new SimpleRegexFactory(Test.LoggerFactory).CreateFilterRegex(pattern);
             var actual = regex.IsMatch(input);
