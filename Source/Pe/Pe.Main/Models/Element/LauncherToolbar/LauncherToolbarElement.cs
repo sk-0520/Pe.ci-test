@@ -473,6 +473,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void StartView()
         {
+            IsHiding = false;
+
             var windowItem = OrderManager.CreateLauncherToolbarWindow(this);
             ViewCreated = true;
         }
