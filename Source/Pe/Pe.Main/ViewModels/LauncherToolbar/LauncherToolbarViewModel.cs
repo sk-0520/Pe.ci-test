@@ -213,10 +213,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public ICommand ChangeToolbarPositionCommand => GetOrCreateCommand(() => new DelegateCommand<AppDesktopToolbarPosition?>(
             o => {
                 if(o.HasValue) {
-                    DispatcherWrapper.Begin(() => {
-                        Model.ChangeToolbarPositionDelaySave(o.Value);
-                        RaisePropertyChanged(nameof(LauncherItems));
-                    }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                    Model.ChangeToolbarPositionDelaySave(o.Value);
+                    ChangeLauncherGroupCommand.ExecuteIfCanExecute(SelectedLauncherGroup);
                 } else {
                     Logger.LogTrace("こないはず");
                 }
