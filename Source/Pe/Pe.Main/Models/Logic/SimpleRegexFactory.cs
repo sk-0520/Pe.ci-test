@@ -87,7 +87,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
 
             // とりあえずの部分一致
-            return new Regex(Regex.Escape(pattern), RegexOptions.Singleline | (!IsCaseSensitivePattern(pattern) ? RegexOptions.IgnoreCase : RegexOptions.None));
+            var option = IsCaseSensitivePattern(pattern)
+                ? RegexOptions.None
+                : RegexOptions.IgnoreCase
+            ;
+            return new Regex(Regex.Escape(pattern), option);
         }
 
         #endregion
