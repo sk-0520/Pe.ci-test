@@ -747,7 +747,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             await Task.Delay(TimeSpan.FromSeconds(0));
             //await Task.Delay(TimeSpan.FromSeconds(10));
-            await CheckApplicationUpdateAsync();
+            var appVersion = await CheckApplicationUpdateAsync();
+            if(appVersion != null) {
+
+            }
         }
 
         async Task<UpdateItemData?> CheckApplicationUpdateAsync()
@@ -758,17 +761,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var uri = condig.General.UpdateCheckUri;
 
             var agent = factory.CreateAppUserAgent();
-            var response = await agent.GetAsync(uri, CancellationToken.None);
-            var content = await response.Content.ReadAsStringAsync();
-            //TODO: Serializer.cs に統合したい
-            var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
-            var result = updateData.Items
-                .Where(i => i.MinimumVersion <= BuildStatus.Version)
-                .OrderByDescending(i => i.Version)
-                .FirstOrDefault()
-            ;
+            try {
+                var response = await agent.GetAsync(uri, CancellationToken.None);
+                if(!response.IsSuccessStatusCode) {
+                    Logger.LogWarning("GetAsync: {0}, {1}", response.StatusCode, uri);
+                    return null;
+                }
+                var content = await response.Content.ReadAsStringAsync();
+                //TODO: Serializer.cs に統合したい
+                var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
+                var result = updateData.Items
+                    .Where(i => i.MinimumVersion <= BuildStatus.Version)
+                    .OrderByDescending(i => i.Version)
+                    .FirstOrDefault()
+                ;
 
-            return result;
+                return result;
+            } catch(Exception ex) {
+                Logger.LogWarning(ex, ex.Message);
+            }
+            return null;
         }
 
         #endregion
