@@ -421,6 +421,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //    return false;
             //}
             ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
+            ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
 
             //setting.UserId
 
