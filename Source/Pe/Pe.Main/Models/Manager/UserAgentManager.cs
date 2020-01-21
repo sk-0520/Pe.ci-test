@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class UserAgentManager : ManagerBase, IUserAgentManager, IUserAgentFactory
+    public class UserAgentManager : ManagerBase, IUserAgentManager, IUserAgentFactory, IApplicationUserAgentFactory
     {
         public UserAgentManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
@@ -42,6 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public IUserAgent CreateUserAgent() => UserAgentFactory.CreateUserAgent();
 
         public IUserAgent CreateUserAgent(string name) => UserAgentFactory.CreateUserAgent(name);
+
+        #endregion
+
+        #region IApplicationUserAgentFactory
+
+        public IUserAgent CreateAppUserAgent() => UserAgentFactory.CreateAppUserAgent();
 
         #endregion
 

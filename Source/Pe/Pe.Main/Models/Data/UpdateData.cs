@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -30,19 +31,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public static Uri IgnoreUri { get; } = new Uri("https://example.com/");
 
         [Timestamp(DateTimeKind.Utc)]
-        [DataMember(Name = "release")]
+        [DataMember]
+        [JsonPropertyName("release")]
         public DateTime Release { get; set; }
 
-        [DataMember(Name = "version")]
-        public Version Version { get; set; } = new Version();
+        [DataMember]
+        [JsonPropertyName("version")]
+        public string _Version { get; set; } = string.Empty;
+        [IgnoreDataMember, JsonIgnore]
+        public Version Version
+        {
+            get => Version.Parse(_Version);
+            set => _Version = value.ToString();
+        }
 
-        [DataMember(Name = "minimum_version")]
-        public Version MinimumVersion { get; set; } = new Version();
+        [DataMember]
+        [JsonPropertyName("minimum_version")]
+        public string _MinimumVersion { get; set; } = string.Empty;
+        [IgnoreDataMember, JsonIgnore]
+        public Version MinimumVersion
+        {
+            get => Version.Parse(_MinimumVersion);
+            set => _MinimumVersion = value.ToString();
+        }
 
-        [DataMember(Name = "note_uri")]
+        [DataMember]
+        [JsonPropertyName("note_uri")]
         public Uri NoteUri { get; set; } = IgnoreUri;
 
-        [DataMember(Name = "archive_uri")]
+        [DataMember]
+        [JsonPropertyName("archive_uri")]
         public Uri ArchiveUri { get; set; } = IgnoreUri;
 
         #endregion
@@ -53,7 +71,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        [DataMember(Name = "items")]
+        [DataMember]
+        [JsonPropertyName("items")]
         public UpdateItemData[] Items { get; set; } = new UpdateItemData[0];
 
         #endregion

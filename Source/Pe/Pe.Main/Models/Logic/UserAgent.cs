@@ -82,7 +82,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     }
 
-    internal class UserAgentFactory : IUserAgentFactory
+    internal interface IApplicationUserAgentFactory
+    {
+        #region function
+
+        IUserAgent CreateAppUserAgent();
+
+        #endregion
+    }
+
+    internal class UserAgentFactory : IUserAgentFactory, IApplicationUserAgentFactory
     {
         public UserAgentFactory(ILoggerFactory loggerFactory)
         {
@@ -97,6 +106,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         IDictionary<string, UserAgent> Pool { get; } = new Dictionary<string, UserAgent>();
 
         TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
+
+        string AppName { get; } = BuildStatus.Name;
 
         #endregion
 
@@ -127,11 +138,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
 
 
-        #region IUserAgentFactory
+        #region IUserAgentFactory2
 
         public IUserAgent CreateUserAgent() => CreateUserAgentCore(string.Empty);
 
-        public IUserAgent CreateUserAgent(string name) => CreateUserAgentCore(name);
+        public IUserAgent CreateUserAgent(string name)
+        {
+            if(name == AppName) {
+                throw new ArgumentException(nameof(name));
+            }
+            return CreateUserAgentCore(name);
+        }
+
+        #endregion
+
+        #region IApplicationUserAgentFactory
+
+        public IUserAgent CreateAppUserAgent() => CreateUserAgentCore(AppName);
 
         #endregion
     }

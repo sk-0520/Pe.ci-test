@@ -422,6 +422,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //}
             ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
             ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+            ApplicationDiContainer.Register<IApplicationUserAgentFactory, IApplicationUserAgentFactory>(UserAgentManager);
 
             //setting.UserId
 
@@ -442,13 +443,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ShowStartupView();
             }
 
-            return true;
-        }
-
-        public void Tune()
-        {
             var tuner = ApplicationDiContainer.Build<DatabaseTuner>();
             tuner.Tune();
+
+            return true;
         }
 
         public ManagerViewModel CreateViewModel()
@@ -743,6 +741,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeNoteElements();
 
             ExecuteElements();
+        }
+
+        public async Task DelayCheckUpdateAsync()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(0));
+            //await Task.Delay(TimeSpan.FromSeconds(10));
+            await CheckApplicationUpdateAsync();
+        }
+
+        async Task<UpdateItemData?> CheckApplicationUpdateAsync()
+        {
+
+            var factory = ApplicationDiContainer.Build<IApplicationUserAgentFactory>();
+            var condig = ApplicationDiContainer.Build<Configuration>();
+            var uri = condig.General.UpdateCheckUri;
+
+            var agent = factory.CreateAppUserAgent();
+            var response = await agent.GetAsync(uri, CancellationToken.None);
+            var content = await response.Content.ReadAsStringAsync();
+            //TODO: Serializer.cs に統合したい
+            var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
+            var result = updateData.Items
+                .Where(i => i.MinimumVersion <= BuildStatus.Version)
+                .OrderByDescending(i => i.Version)
+                .FirstOrDefault()
+            ;
+
+            return result;
         }
 
         #endregion

@@ -46,9 +46,6 @@ namespace ContentTypeTextNet.Pe.Main
                 return;
             }
 
-            ApplicationManager.Tune();
-
-
             var viewModel = ApplicationManager.CreateViewModel();
             //var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
             //notifyIcon.DataContext = viewModel;
@@ -61,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main
 
             Dispatcher.BeginInvoke(new Action(() => {
                 Logger.LogInformation("つかえるよ！");
+                ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
             }), System.Windows.Threading.DispatcherPriority.SystemIdle);
         }
 
