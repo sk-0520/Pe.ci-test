@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public NotifyManager? NotifyManager { get; private set; }
         public StatusManager? StatusManager { get; private set; }
         public ClipboardManager? ClipboardManager { get; private set; }
+        public UserAgentManager? UserAgentManager { get; private set; }
 
         #endregion
 
@@ -401,6 +402,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return manager;
         }
 
+        UserAgentManager SetupUserAgentManager(IDiRegisterContainer diContainer)
+        {
+            var manager = diContainer.Build<UserAgentManager>();
+
+            return manager;
+        }
+
 
         public bool Initialize(App app, StartupEventArgs e)
         {
@@ -479,6 +487,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             NotifyManager = SetupNotifyManager(DiContainer);
             StatusManager = SetupStatusManager(DiContainer);
             ClipboardManager = SetupClipboardManager(DiContainer);
+            UserAgentManager = SetupUserAgentManager(DiContainer);
 
             var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Current, WindowManager);
             cultureServiceChanger.ChangeCulture();

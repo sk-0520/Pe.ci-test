@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
             StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
+            UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
@@ -98,6 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         NotifyManager NotifyManager { get; set; }
         StatusManager StatusManager { get; set; }
         ClipboardManager ClipboardManager { get; set; }
+        UserAgentManager UserAgentManager { get; set; }
 
         ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
@@ -916,6 +918,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     WindowManager.Dispose();
                     StatusManager.Dispose();
                     ClipboardManager.Dispose();
+                    UserAgentManager.Dispose();
                 }
             }
 
