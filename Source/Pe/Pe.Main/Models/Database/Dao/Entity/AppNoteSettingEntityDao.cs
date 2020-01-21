@@ -62,8 +62,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 FontId = dto.FontId,
                 TitleKind = noteCreateTitleKindTransfer.ToEnum(dto.TitleKind),
                 LayoutKind = noteLayoutKindTransfer.ToEnum(dto.LayoutKind),
-                ForegroundColor = ToColor(dto.BackgroundColor),
-                BackgroundColor = ToColor(dto.ForegroundColor),
+                ForegroundColor = ToColor(dto.ForegroundColor),
+                BackgroundColor = ToColor(dto.BackgroundColor),
                 IsTopmost = dto.IsTopmost,
             };
             return data;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models
@@ -14,6 +15,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         protected static string GetString(IConfigurationSection section, string key) => section.GetValue<string>(key);
         protected static int GetInteger(IConfigurationSection section, string key) => section.GetValue<int>(key);
+
+        protected static Size GetSize(IConfigurationSection section, string key)
+        {
+            var size = section.GetSection(key);
+            return new Size(size.GetValue<double>("width"), size.GetValue<double>("height"));
+        }
 
         #endregion
     }
@@ -53,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class ApiConfiguration: ConfigurationBase
+    public class ApiConfiguration : ConfigurationBase
     {
         public ApiConfiguration(IConfigurationSection section)
             : base(section)
@@ -119,6 +126,47 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class LauncherToolbarConfiguration : ConfigurationBase
+    {
+        public LauncherToolbarConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+        }
+
+        #region property
+
+        #endregion
+    }
+
+    public class LauncherGroupConfiguration : ConfigurationBase
+    {
+        public LauncherGroupConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+        }
+
+        #region property
+
+        #endregion
+    }
+
+    public class NoteConfiguration : ConfigurationBase
+    {
+        public NoteConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            LayoutAbsoluteSize = GetSize(section, "layout_absolute_size");
+            LayoutRelativeSize = GetSize(section, "layout_relative_size");
+        }
+
+        #region property
+
+        public Size LayoutAbsoluteSize { get; }
+        public Size LayoutRelativeSize { get; }
+
+        #endregion
+    }
+
     public class Configuration
     {
         public Configuration(IConfigurationRoot configurationRoot)
@@ -128,6 +176,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
+            LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
+            LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
+            Note = new NoteConfiguration(configurationRoot.GetSection("note"));
         }
 
         #region property
@@ -137,6 +188,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public BackupConfiguration Backup { get; }
         public FileConfiguration File { get; }
         public DisplayConfiguration Display { get; }
+        public LauncherToolbarConfiguration LauncherToobar { get; }
+        public LauncherGroupConfiguration LauncherGroup { get; }
+        public NoteConfiguration Note { get; }
         #endregion
     }
 }

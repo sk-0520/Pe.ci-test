@@ -31,6 +31,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -55,12 +56,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, Configuration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
             GeneralTheme = generalTheme;
             PlatformTheme = platformTheme;
+            Configuration = configuration;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
             DispatcherWrapper = dispatcherWrapper;
@@ -116,6 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
         IDisposable? WindowHandleSource { get; set; }
 
+        Configuration Configuration { get; }
 
         public Guid NoteId => Model.NoteId;
         public bool IsLink => Model.ContentElement?.IsLink ?? false;
@@ -584,14 +587,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             if(startupPosition == NoteStartupPosition.CenterScreen) {
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
-                    layout.Width = 200;
-                    layout.Height = 200;
+                    layout.Width = Configuration.Note.LayoutAbsoluteSize.Width;
+                    layout.Height = Configuration.Note.LayoutAbsoluteSize.Height;
                     layout.X = (logicalScreenSize.Width / 2) - (layout.Width / 2);
                     layout.Y = (logicalScreenSize.Height / 2) - (layout.Height / 2);
                 } else {
                     Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
-                    layout.Width = 20;
-                    layout.Height = 20;
+                    layout.Width = Configuration.Note.LayoutRelativeSize.Width;
+                    layout.Height = Configuration.Note.LayoutRelativeSize.Height;
                     layout.X = 0;
                     layout.Y = 0;
                 }
@@ -610,8 +613,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutputor);
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
-                    layout.Width = 200;
-                    layout.Height = 200;
+                    layout.Width = Configuration.Note.LayoutAbsoluteSize.Width;
+                    layout.Height = Configuration.Note.LayoutAbsoluteSize.Height;
                     layout.X = logicalScreenCursorLocation.X;
                     layout.Y = logicalScreenCursorLocation.Y;
                 } else {
@@ -625,8 +628,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         deviceScreenBounds.Height / 2
                     );
 
-                    layout.Width = 20;
-                    layout.Height = 20;
+                    layout.Width = Configuration.Note.LayoutRelativeSize.Width;
+                    layout.Height = Configuration.Note.LayoutRelativeSize.Height;
 
                     var width = area.Width * layout.Width;
                     var height = area.Height * layout.Height;
