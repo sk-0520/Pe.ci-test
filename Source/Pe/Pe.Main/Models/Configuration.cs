@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             ProjectRepositoryUri = section.GetValue<Uri>("project-repository-uri");
             ProjectForumUri = section.GetValue<Uri>("project-forum-uri");
             ProjectWebSiteUri = section.GetValue<Uri>("project-website-uri");
+            UpdateCheckUri = section.GetValue<Uri>("version-check-uri");
         }
 
         #region property
@@ -47,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Uri ProjectRepositoryUri { get; }
         public Uri ProjectForumUri { get; }
         public Uri ProjectWebSiteUri { get; }
+        public Uri UpdateCheckUri { get; }
 
         #endregion
     }
