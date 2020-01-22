@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public Task<HttpResponseMessage> GetAsync(Uri requestUri, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
-            return HttpClient.GetAsync(requestUri, cancellationToken);
+            return HttpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         }
 
         public Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
-            return HttpClient.SendAsync(request, cancellationToken);
+            return HttpClient.SendAsync(request, , HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         }
 
         #endregion
