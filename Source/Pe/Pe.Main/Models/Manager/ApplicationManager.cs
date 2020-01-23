@@ -76,6 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
             ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManager);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
+            ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
@@ -423,8 +424,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //    return false;
             //}
             ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
-            //ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
-            //ApplicationDiContainer.Register<IApplicationUserAgentFactory, IApplicationUserAgentFactory>(UserAgentManager);
 
             //setting.UserId
 
