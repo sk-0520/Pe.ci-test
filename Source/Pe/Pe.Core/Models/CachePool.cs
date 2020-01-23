@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 
+// NOTE: いまいちなので破棄予定
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     public interface ICacheItem<TValue>

@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             Name = name;
             HttpClient = httpClient;
+            ReferenceCount = 1;
         }
 
         #region property
@@ -34,52 +35,115 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         public TimeSpan LastElapsed => Stopwatch.Elapsed;
 
+        public uint ReferenceCount { get; set; }
+
         #endregion
 
         #region function
 
-        #endregion
-
-        #region DisposerBase-IUserAgent
-
-
-
-        #endregion
-
-        #region IUserAgent
-
-        public Task<HttpResponseMessage> DeleteAsync(Uri requestUri, CancellationToken cancellationToken)
+        internal void ReleaseClient()
         {
-            Stopwatch.Restart();
-            return HttpClient.DeleteAsync(requestUri, cancellationToken);
+            if(!IsDisposed) {
+                HttpClient.Dispose();
+            }
         }
 
-        public Task<HttpResponseMessage> GetAsync(Uri requestUri, CancellationToken cancellationToken)
+        private Task<HttpResponseMessage> GetCoreAsync(Uri requestUri, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
             return HttpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         }
 
-        public Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
+        private Task<HttpResponseMessage> PostCoreAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
             return HttpClient.PostAsync(requestUri, content, cancellationToken);
         }
 
-        public Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
+        private Task<HttpResponseMessage> PutCoreAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
             return HttpClient.PutAsync(requestUri, content, cancellationToken);
         }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        private Task<HttpResponseMessage> DeleteCoreAsync(Uri requestUri, CancellationToken cancellationToken)
+        {
+            Stopwatch.Restart();
+            return HttpClient.DeleteAsync(requestUri, cancellationToken);
+        }
+
+        private Task<HttpResponseMessage> SendCoreAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
             return HttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         }
 
+
         #endregion
 
+        #region DisposerBase-IUserAgent
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(0 < ReferenceCount) {
+                    ReferenceCount -= 1;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region IUserAgent
+
+        public Task<HttpResponseMessage> GetAsync(Uri requestUri)
+        {
+            return GetCoreAsync(requestUri, CancellationToken.None);
+        }
+        public Task<HttpResponseMessage> GetAsync(Uri requestUri, CancellationToken cancellationToken)
+        {
+            return GetCoreAsync(requestUri, cancellationToken);
+        }
+
+        public Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content)
+        {
+            return PostCoreAsync(requestUri, content, CancellationToken.None);
+        }
+        public Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
+        {
+            return PostCoreAsync(requestUri, content, cancellationToken);
+        }
+
+        public Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content)
+        {
+            return PutCoreAsync(requestUri, content, CancellationToken.None);
+        }
+        public Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken)
+        {
+            return PutCoreAsync(requestUri, content, cancellationToken);
+        }
+
+        public Task<HttpResponseMessage> DeleteAsync(Uri requestUri)
+        {
+            return DeleteCoreAsync(requestUri, CancellationToken.None);
+        }
+        public Task<HttpResponseMessage> DeleteAsync(Uri requestUri, CancellationToken cancellationToken)
+        {
+            return DeleteCoreAsync(requestUri, cancellationToken);
+        }
+
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            return SendCoreAsync(request, CancellationToken.None);
+        }
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return SendCoreAsync(request, cancellationToken);
+        }
+
+        #endregion
     }
 
     internal interface IApplicationUserAgentFactory
@@ -119,6 +183,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             if(Pool.TryGetValue(name, out var ua)) {
                 if(ClearTime < ua.LastElapsed) {
+                    Logger.LogDebug("再生成: {0}", name);
+                    // 参照がなければ完全破棄、参照が残っていればGCに任せる
+                    if(ua.ReferenceCount == 0) {
+                        Logger.LogTrace("完全破棄", name);
+                        ua.ReleaseClient();
+                    }
                     ua.Dispose();
 
                     var httpClient = new HttpClient();
@@ -126,8 +196,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Pool[name] = newUserAgent;
                     return newUserAgent;
                 }
+                Logger.LogDebug("再使用: {0}", name);
                 return ua;
             } else {
+                Logger.LogDebug("初回: {0}", name);
                 var httpClient = new HttpClient();
                 var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
                 Pool.Add(name, newUserAgent);
