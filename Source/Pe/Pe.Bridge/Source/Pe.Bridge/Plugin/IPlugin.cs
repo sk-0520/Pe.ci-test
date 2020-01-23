@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグインの初期化。
         /// <para>この段階ではあんまり小難しいことをしないこと。</para>
         /// </summary>
-        void Initialize(IPluginContext pluginContext);
+        void Initialize(IPluginInitializeContext pluginContext);
 
         void Uninitialize();
 

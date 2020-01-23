@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(prev != null) {
                 prev.Unload(PluginKind.Theme);
             }
-            var pluginContext = pluginContextFactory.Create(CurrentTheme.PluginId);
+            var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginId);
             CurrentTheme.Load(PluginKind.Theme, pluginContext);
         }
 

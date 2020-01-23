@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         public bool IsInitialized { get; private set; }
 
-        public void Initialize(IPluginContext pluginContext)
+        public void Initialize(IPluginInitializeContext pluginInitializeContext)
         {
             IsInitialized = true;
         }

@@ -6,6 +6,24 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    public class PluginInitializeContext: IPluginInitializeContext
+    {
+        public PluginInitializeContext(in PluginId pluginId)
+        {
+            PluginId = pluginId;
+        }
+
+        #region property
+
+        public PluginId PluginId { get; }
+
+        #endregion
+
+        #region IPluginInitializeContext
+
+        #endregion
+    }
+
     public class PluginContext : IPluginContext
     {
         public PluginContext(in PluginId pluginId, PluginStorage storage)
@@ -48,7 +66,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginId.Id.ToString();
         }
 
-        public PluginContext Create(PluginId pluginId)
+        public PluginInitializeContext CreateInitializeContext(PluginId pluginId)
+        {
+            return new PluginInitializeContext(pluginId);
+        }
+
+        public PluginContext CreateContext(PluginId pluginId)
         {
             var dirName = ConvertDirectoryName(pluginId);
 

@@ -278,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
             foreach(var plugin in PluginContainer.GetPlugins()) {
-                plugin.Initialize(pluginContextFactory.Create(plugin.PluginId));
+                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginId));
                 PluginContainer.AddPlugin(plugin);
             }
             PluginContainer.Theme.SetCurrentTheme(DefaultTheme.Id, pluginContextFactory);
