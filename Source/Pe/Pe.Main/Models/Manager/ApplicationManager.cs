@@ -760,7 +760,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var condig = ApplicationDiContainer.Build<Configuration>();
             var uri = condig.General.UpdateCheckUri;
 
-            var agent = factory.CreateAppUserAgent();
+            using var agent = factory.CreateAppUserAgent();
             try {
                 var response = await agent.GetAsync(uri, CancellationToken.None);
                 if(!response.IsSuccessStatusCode) {

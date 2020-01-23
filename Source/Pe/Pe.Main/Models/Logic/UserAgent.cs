@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 Logger.LogDebug("再使用: {0}", name);
                 return ua;
             } else {
-                Logger.LogDebug("初回: {0}", name);
+                Logger.LogDebug("初回生成: {0}", name);
                 var httpClient = new HttpClient();
                 var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
                 Pool.Add(name, newUserAgent);
