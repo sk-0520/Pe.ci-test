@@ -13,13 +13,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     internal class UserAgent : DisposerBase, IUserAgent
     {
+        #region variable
+
+        int _referenceCount;
+
+        #endregion
         public UserAgent(string name, HttpClient httpClient, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
 
             Name = name;
             HttpClient = httpClient;
-            ReferenceCount = 1;
+            this._referenceCount = 1;
         }
 
         #region property
@@ -35,17 +40,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         public TimeSpan LastElapsed => Stopwatch.Elapsed;
 
-        public uint ReferenceCount { get; set; }
+        public int ReferenceCount => this._referenceCount;
 
         #endregion
 
         #region function
 
-        internal void ReleaseClient()
+        public void ReleaseClient()
         {
             if(!IsDisposed) {
                 HttpClient.Dispose();
             }
+        }
+
+        public void Lease()
+        {
+            Interlocked.Increment(ref this._referenceCount);
         }
 
         private Task<HttpResponseMessage> GetCoreAsync(Uri requestUri, CancellationToken cancellationToken)
@@ -86,8 +96,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                if(0 < ReferenceCount) {
-                    ReferenceCount -= 1;
+                if(0 < this._referenceCount) {
+                    Interlocked.Decrement(ref this._referenceCount);
                 }
             }
 
@@ -150,12 +160,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region function
 
-        IUserAgent CreateAppUserAgent();
+        UserAgent CreateAppUserAgent();
 
         #endregion
     }
 
-    internal class UserAgentFactory : IUserAgentFactory, IApplicationUserAgentFactory
+    internal class UserAgentFactory : IUserAgentFactory
     {
         public UserAgentFactory(ILoggerFactory loggerFactory)
         {
@@ -171,15 +181,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
 
-        string AppName { get; } = BuildStatus.Name;
-
         #endregion
 
         #region function
 
-        IUserAgent CreateUserAgentCore(string name)
+        UserAgent CreateUserAgentCore(string name)
         {
             Debug.Assert(name != null);
+
+            UserAgent Create(string name)
+            {
+                var httpClient = new HttpClient();
+                var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+
+                return newUserAgent;
+            }
 
             if(Pool.TryGetValue(name, out var ua)) {
                 if(ClearTime < ua.LastElapsed) {
@@ -191,17 +207,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     ua.Dispose();
 
-                    var httpClient = new HttpClient();
-                    var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                    var newUserAgent = Create(name);
                     Pool[name] = newUserAgent;
                     return newUserAgent;
                 }
                 Logger.LogDebug("再使用: {0}", name);
+                ua.Lease();
                 return ua;
             } else {
                 Logger.LogDebug("初回生成: {0}", name);
-                var httpClient = new HttpClient();
-                var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                var newUserAgent = Create(name);
                 Pool.Add(name, newUserAgent);
                 return newUserAgent;
             }
@@ -212,21 +227,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IUserAgentFactory2
 
-        public IUserAgent CreateUserAgent() => CreateUserAgentCore(string.Empty);
+        public UserAgent CreateUserAgent() => CreateUserAgentCore(string.Empty);
+        IUserAgent IUserAgentFactory.CreateUserAgent() => CreateUserAgent();
 
-        public IUserAgent CreateUserAgent(string name)
-        {
-            if(name == AppName) {
-                throw new ArgumentException(nameof(name));
-            }
-            return CreateUserAgentCore(name);
-        }
-
-        #endregion
-
-        #region IApplicationUserAgentFactory
-
-        public IUserAgent CreateAppUserAgent() => CreateUserAgentCore(AppName);
+        public UserAgent CreateUserAgent(string name) => CreateUserAgentCore(name);
+        IUserAgent IUserAgentFactory.CreateUserAgent(string name) => CreateUserAgent(name);
 
         #endregion
     }

@@ -27,6 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         UserAgentFactory UserAgentFactory { get; }
 
+        string AppName { get; } = BuildStatus.Name;
+
         #endregion
 
         #region function
@@ -39,7 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region IApplicationUserAgentFactory
 
-        public IUserAgent CreateAppUserAgent() => UserAgentFactory.CreateAppUserAgent();
+        internal UserAgent CreateAppUserAgent() => UserAgentFactory.CreateUserAgent(AppName);
+        UserAgent IApplicationUserAgentFactory.CreateAppUserAgent() => CreateAppUserAgent();
 
         #endregion
 
@@ -47,9 +50,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region IUserAgentFactory
 
-        public IUserAgent CreateUserAgent() => UserAgentFactory.CreateUserAgent();
+        internal UserAgent CreateUserAgent() => UserAgentFactory.CreateUserAgent();
+        IUserAgent IUserAgentFactory.CreateUserAgent() => CreateUserAgent();
 
-        public IUserAgent CreateUserAgent(string name) => UserAgentFactory.CreateUserAgent(name);
+        internal UserAgent CreateUserAgent(string name)
+        {
+            if(name == AppName) {
+                throw new ArgumentException(nameof(name));
+            }
+
+            return UserAgentFactory.CreateUserAgent(name);
+        }
+        IUserAgent IUserAgentFactory.CreateUserAgent(string name) => CreateUserAgent(name);
 
         #endregion
 

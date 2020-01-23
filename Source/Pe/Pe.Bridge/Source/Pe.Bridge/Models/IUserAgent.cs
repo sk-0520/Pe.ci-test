@@ -8,6 +8,30 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models
 {
+    public static class UserAgentName
+    {
+        #region define
+
+        public static class Special
+        {
+            #region property
+
+            public static string Separator => ":";
+            public static string Session => "session";
+
+            #endregion
+        }
+
+        #endregion
+
+        #region property
+
+        public static string SharedSession => Special.Separator + Special.Session;
+
+
+        #endregion
+    }
+
     /// <summary>
     /// <see cref="HttpClient"/>を意識せずに(寿命とか)に <see cref="IDisposable.Dispose"/> できる子。
     /// </summary>
