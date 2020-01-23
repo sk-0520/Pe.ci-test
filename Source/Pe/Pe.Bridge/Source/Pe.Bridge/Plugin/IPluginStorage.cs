@@ -4,6 +4,13 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    public enum PluginPersistentFormat
+    {
+        Json,
+        Xml,
+        DataXml,
+    }
+
     /// <summary>
     /// ファイル操作処理。
     /// <para>Pe の管理下で処理する。</para>

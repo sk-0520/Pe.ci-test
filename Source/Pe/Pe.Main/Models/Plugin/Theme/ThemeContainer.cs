@@ -52,7 +52,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             CurrentTheme = theme;
 
             if(prev != null) {
-                // アドオン持ちの可能性
                 prev.Unload(PluginKind.Theme);
             }
             var pluginContext = pluginContextFactory.Create(CurrentTheme.PluginId);
