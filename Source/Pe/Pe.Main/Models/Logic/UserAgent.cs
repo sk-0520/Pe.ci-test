@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Stopwatch.Restart();
-            return HttpClient.SendAsync(request, , HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+            return HttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         }
 
         #endregion
