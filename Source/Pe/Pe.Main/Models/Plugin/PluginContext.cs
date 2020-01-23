@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public class PluginInitializeContext: IPluginInitializeContext
     {
-        public PluginInitializeContext(in PluginId pluginId)
+        public PluginInitializeContext(in PluginId pluginId, PluginStorage storage)
         {
             PluginId = pluginId;
+            Storage = storage;
         }
 
         #region property
@@ -21,15 +23,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region IPluginInitializeContext
 
+        public PluginStorage Storage { get; }
+        IPluginStorage IPluginInitializeContext.Storage => Storage;
+
         #endregion
     }
 
     public class PluginContext : IPluginContext
     {
-        public PluginContext(in PluginId pluginId, PluginStorage storage)
+        public PluginContext(in PluginId pluginId, PluginStorage storage, IUserAgentFactory userAgentFactory)
         {
             PluginId = pluginId;
             Storage = storage;
+            UserAgentFactory = userAgentFactory;
         }
 
         #region property
@@ -43,20 +49,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public PluginStorage Storage { get; }
         IPluginStorage IPluginContext.Storage => Storage;
 
+        public IUserAgentFactory UserAgentFactory { get; }
+
         #endregion
     }
 
     public class PluginContextFactory
     {
-        public PluginContextFactory(EnvironmentParameters environmentParameters)
+        public PluginContextFactory(EnvironmentParameters environmentParameters, IUserAgentFactory userAgentFactory)
         {
             EnvironmentParameters = environmentParameters;
+            UserAgentFactory = userAgentFactory;
         }
 
         #region property
 
         EnvironmentParameters EnvironmentParameters { get; }
-
+        IUserAgentFactory UserAgentFactory { get; }
         #endregion
 
         #region function
@@ -66,12 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginId.Id.ToString();
         }
 
-        public PluginInitializeContext CreateInitializeContext(PluginId pluginId)
-        {
-            return new PluginInitializeContext(pluginId);
-        }
-
-        public PluginContext CreateContext(PluginId pluginId)
+        PluginFile CreatePluginFile(in PluginId pluginId)
         {
             var dirName = ConvertDirectoryName(pluginId);
 
@@ -81,6 +85,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.TemporaryPluginDirectory.FullName, dirName)))
             );
 
+            return pluginFile;
+        }
+
+        PluginPersistent CrteatePluginPersistent(in PluginId pluginId)
+        {
             // DB渡す？ バリア渡す？ 遅延渡す？
             var pluginPersistent = new PluginPersistent(
                 new PluginPersistentStorage(),
@@ -88,12 +97,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 new PluginPersistentStorage()
             );
 
+            return pluginPersistent;
+        }
+
+        PluginStorage CreatePluginStorage(in PluginId pluginId)
+        {
             var pluginStorage = new PluginStorage(
-                pluginFile,
-                pluginPersistent
+                CreatePluginFile(pluginId),
+                CrteatePluginPersistent(pluginId)
             );
 
-            return new PluginContext(pluginId, pluginStorage);
+            return pluginStorage;
+        }
+
+        public PluginInitializeContext CreateInitializeContext(PluginId pluginId)
+        {
+            var pluginStorage = CreatePluginStorage(pluginId);
+            return new PluginInitializeContext(pluginId, pluginStorage);
+        }
+
+        public PluginContext CreateContext(in PluginId pluginId)
+        {
+            var pluginStorage = CreatePluginStorage(pluginId);
+            return new PluginContext(pluginId, pluginStorage, UserAgentFactory);
         }
 
         #endregion
