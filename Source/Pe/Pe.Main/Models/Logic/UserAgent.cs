@@ -11,6 +11,15 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
+    public interface IApplicationUserAgentFactory
+    {
+        #region function
+
+        IUserAgent CreateAppUserAgent();
+
+        #endregion
+    }
+
     internal class UserAgent : DisposerBase, IUserAgent
     {
         #region variable
@@ -152,15 +161,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             return SendCoreAsync(request, cancellationToken);
         }
-
-        #endregion
-    }
-
-    internal interface IApplicationUserAgentFactory
-    {
-        #region function
-
-        UserAgent CreateAppUserAgent();
 
         #endregion
     }

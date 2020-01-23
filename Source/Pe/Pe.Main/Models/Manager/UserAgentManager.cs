@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public interface IUserAgentManager: IUserAgentFactory
+    public interface IUserAgentManager: IUserAgentFactory, IApplicationUserAgentFactory
     {
         #region function
 
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region IApplicationUserAgentFactory
 
         internal UserAgent CreateAppUserAgent() => UserAgentFactory.CreateUserAgent(AppName);
-        UserAgent IApplicationUserAgentFactory.CreateAppUserAgent() => CreateAppUserAgent();
+        IUserAgent IApplicationUserAgentFactory.CreateAppUserAgent() => CreateAppUserAgent();
 
         #endregion
 

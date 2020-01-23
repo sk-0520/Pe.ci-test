@@ -748,38 +748,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             await Task.Delay(TimeSpan.FromSeconds(0));
             //await Task.Delay(TimeSpan.FromSeconds(10));
-            var appVersion = await CheckApplicationUpdateAsync();
+            await CheckUpdateAsync();
+        }
+
+        async Task CheckUpdateAsync()
+        {
+            var updateChecker = ApplicationDiContainer.Build<UpdateChecker>();
+
+            var appVersion = await updateChecker.CheckApplicationUpdateAsync();
             if(appVersion != null) {
 
             }
-        }
 
-        async Task<UpdateItemData?> CheckApplicationUpdateAsync()
-        {
-            var condig = ApplicationDiContainer.Build<Configuration>();
-            var uri = condig.General.UpdateCheckUri;
-
-            using var agent = UserAgentManager.CreateAppUserAgent();
-            try {
-                var response = await agent.GetAsync(uri, CancellationToken.None);
-                if(!response.IsSuccessStatusCode) {
-                    Logger.LogWarning("GetAsync: {0}, {1}", response.StatusCode, uri);
-                    return null;
-                }
-                var content = await response.Content.ReadAsStringAsync();
-                //TODO: Serializer.cs に統合したい
-                var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
-                var result = updateData.Items
-                    .Where(i => i.MinimumVersion <= BuildStatus.Version)
-                    .OrderByDescending(i => i.Version)
-                    .FirstOrDefault()
-                ;
-
-                return result;
-            } catch(Exception ex) {
-                Logger.LogWarning(ex, ex.Message);
-            }
-            return null;
         }
 
         #endregion
