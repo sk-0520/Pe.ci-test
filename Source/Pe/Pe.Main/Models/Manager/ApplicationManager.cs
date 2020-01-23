@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
-            var settingDirectory = environmentParameters.SettingTemporaryDirectory;
+            var settingDirectory = environmentParameters.TemporarySettingDirectory;
             var directoryCleaner = new DirectoryCleaner(settingDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
             directoryCleaner.Clear(false);
 
@@ -276,10 +276,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
             PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
 
+            var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
             foreach(var plugin in PluginContainer.GetPlugins()) {
+                plugin.Initialize(pluginContextFactory.Create(plugin.PluginId));
                 PluginContainer.AddPlugin(plugin);
             }
-            PluginContainer.Theme.SetCurrentTheme(DefaultTheme.Id);
+            PluginContainer.Theme.SetCurrentTheme(DefaultTheme.Id, pluginContextFactory);
 
             ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
             ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
@@ -421,8 +423,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //    return false;
             //}
             ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
-            ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
-            ApplicationDiContainer.Register<IApplicationUserAgentFactory, IApplicationUserAgentFactory>(UserAgentManager);
+            //ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+            //ApplicationDiContainer.Register<IApplicationUserAgentFactory, IApplicationUserAgentFactory>(UserAgentManager);
 
             //setting.UserId
 
@@ -755,12 +757,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         async Task<UpdateItemData?> CheckApplicationUpdateAsync()
         {
-
-            var factory = ApplicationDiContainer.Build<IApplicationUserAgentFactory>();
             var condig = ApplicationDiContainer.Build<Configuration>();
             var uri = condig.General.UpdateCheckUri;
 
-            using var agent = factory.CreateAppUserAgent();
+            using var agent = UserAgentManager.CreateAppUserAgent();
             try {
                 var response = await agent.GetAsync(uri, CancellationToken.None);
                 if(!response.IsSuccessStatusCode) {

@@ -96,6 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// 設定ディレクトリ。
         /// </summary>
         public DirectoryInfo UserSettingDirectory => CombineDirectory(UserRoamingDirectory, "settings");
+        public DirectoryInfo UserPluginDirectory => CombineDirectory(UserSettingDirectory, "plugins");
 
         /// <summary>
         /// ユーザー端末配置ディレクトリ。
@@ -109,6 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アプリケーションアップデート用アーカイブ配置ディレクトリ。
         /// </summary>
         public DirectoryInfo MachineUpdateDirectory => CombineDirectory(MachineArchiveDirectory, "application");
+        public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
 
         /// <summary>
         /// 一時ディレクトリ。
@@ -118,7 +120,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 設定ファイル格納用一時ディレクトリ。
         /// </summary>
-        public DirectoryInfo SettingTemporaryDirectory => CombineDirectory(TemporaryDirectory, "setting");
+        public DirectoryInfo TemporarySettingDirectory => CombineDirectory(TemporaryDirectory, "setting");
+        public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(TemporaryDirectory, "plugins");
 
         /// <summary>
         /// 設定格納DBファイル。

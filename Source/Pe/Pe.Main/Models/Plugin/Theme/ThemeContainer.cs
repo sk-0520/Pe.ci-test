@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             Themes.Add(theme);
         }
 
-        public void SetCurrentTheme(in PluginId pluginId)
+        public void SetCurrentTheme(in PluginId pluginId, PluginContextFactory pluginContextFactory)
         {
             var id = pluginId.Id;
             var theme = Themes.FirstOrDefault(i => i.PluginId.Id == id);
@@ -53,11 +53,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
             if(prev != null) {
                 // アドオン持ちの可能性
-                //prev.Uninitialize();
+                prev.Unload(PluginKind.Theme);
             }
-            if(!CurrentTheme.IsInitialized) {
-                CurrentTheme.Initialize();
-            }
+            var pluginContext = pluginContextFactory.Create(CurrentTheme.PluginId);
+            CurrentTheme.Load(PluginKind.Theme, pluginContext);
         }
 
         public IGeneralTheme GetGeneralTheme()
