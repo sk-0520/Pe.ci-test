@@ -16,7 +16,10 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
             "platform": "x64",
             "minimum_version": "y.y.y"
             "note_uri": ""
-            "archive_uri": ""
+            "archive_uri": "",
+            "archive_size": ,
+            "archive_hash_kind": "",
+            "archive_hash_value": ""
         }
     ]
 }
@@ -62,6 +65,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         [DataMember]
         [JsonPropertyName("archive_uri")]
         public Uri ArchiveUri { get; set; } = IgnoreUri;
+        [DataMember]
+        [JsonPropertyName("archive_size")]
+        public long ArchiveSize { get; set; }
+        [DataMember]
+        [JsonPropertyName("archive_hash_kind")]
+        public string ArchiveHashKind { get; set; } = string.Empty;
+        [DataMember]
+        [JsonPropertyName("archive_hash_value")]
+        public string ArchiveHashValue { get; set; } = string.Empty;
 
         #endregion
     }
