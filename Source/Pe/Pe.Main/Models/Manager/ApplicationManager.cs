@@ -748,18 +748,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             await Task.Delay(TimeSpan.FromSeconds(0));
             //await Task.Delay(TimeSpan.FromSeconds(10));
-            await CheckUpdateAsync();
+            await CheckUpdateAsync(true/*TODO: 設定から*/);
         }
 
-        async Task CheckUpdateAsync()
+        public async Task CheckUpdateAsync(bool checkOnly)
         {
             var updateChecker = ApplicationDiContainer.Build<UpdateChecker>();
 
             var appVersion = await updateChecker.CheckApplicationUpdateAsync();
             if(appVersion != null) {
+                Logger.LogInformation("アップデートあり: {0}", appVersion.Version);
 
+                if(appVersion.MinimumVersion <= BuildStatus.Version) {
+                    Logger.LogInformation("アップデート可能");
+
+                    //ShowUpdateReleaseNote(!checkOnly);
+                    await GetUpdateArchiveAsync(appVersion);
+                } else {
+                    Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
+                }
             }
 
+        }
+
+        public Task<bool> GetUpdateArchiveAsync(UpdateItemData updateItemData)
+        {
+            return Task.FromResult(false);
         }
 
         #endregion
