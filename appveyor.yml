@@ -21,7 +21,7 @@ before_build:
   - cmd: git submodule init
   - cmd: git submodule update
 build_script:
-  - cmd: msbuild Source/Pe.Native/Pe.Native.sln                              /p:Configuration=Release                         /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%"
+  - cmd: msbuild Source/Pe.Boot/Pe.Boot.sln                                 /p:Configuration=Release                         /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%"
   - cmd: dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%"
   - cmd: dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --output Output/Release/%PLATFORM%/Pe/bin --self-contained true
   - cmd: robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/etc" "Output/Release/%PLATFORM%/Pe/etc" || exit 0
