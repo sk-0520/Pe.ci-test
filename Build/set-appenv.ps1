@@ -1,5 +1,7 @@
 
-.\set-appenv-appveyor.ps1
+function Get-BuildVariable {
+    return Get-BuildVariable_Appveyor
+}
 
 
 

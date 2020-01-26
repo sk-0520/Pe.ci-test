@@ -1,5 +1,9 @@
 # appveyor 用の変数設定
 
-$global:app['version'] = 'ver!'
-$global:app['revision'] = 'rev'
+function Get-BuildVariable_Appveyor {
+    return @{
+        'version' = '0.0.0'
+        'revision' = ''
+    }
+}
 
