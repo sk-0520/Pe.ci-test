@@ -1,5 +1,6 @@
 Param(
-    [parameter(mandatory=$true)][string] $platform
+    [parameter(mandatory=$true)][string] $platform,
+    [string] $buildType
 )
 $ErrorActionPreference = 'Stop'
 
@@ -30,8 +31,10 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 try {
     Push-Location $rootDirectory
 
-    msbuild Source/Pe.Boot/Pe.Boot.sln                                 /p:Configuration=Release                         /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%"
-
+    # ビルド開始
+    msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$platform /p:DefineConstants=$buildType
+    dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType
+    dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType --output Output/Release/$platform/Pe/bin --self-contained true
 } finally {
     Pop-Location
 }
