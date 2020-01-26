@@ -63,6 +63,11 @@ try {
     msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$platform /p:DefineConstants=$buildType
     dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType
     dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType --output Output/Release/$platform/Pe/bin --self-contained true
+
+    # 必要ファイルの移送
+    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/etc" "Output/Release/$platform/Pe/etc"
+    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/doc" "Output/Release/$platform/Pe/doc"
+    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/bat" "Output/Release/$platform/Pe/bat"
 } finally {
     git reset --hard
     Pop-Location
