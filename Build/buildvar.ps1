@@ -1,6 +1,8 @@
 
 function Get-BuildVariable {
-    return Get-BuildVariable_Appveyor
+    $result = Get-BuildVariable_Appveyor
+
+    return $result
 }
 
 
