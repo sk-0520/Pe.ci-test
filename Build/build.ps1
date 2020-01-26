@@ -32,16 +32,37 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 try {
     Push-Location $rootDirectory
 
-    $projectXml = [XML](Get-Content -Path Source/Pe/Pe.Main/Pe.Main.csproj)
+    $projectXml = [XML](Get-Content -Path Source/Pe/Pe.Main/Pe.Main.csproj -Encoding UTF8)
     $projectNav = $projectXml.CreateNavigator()
-    $vesion = $projectNav.Select('//PropertyGroup/Version').Value
+    $vesion = $projectNav.Select('/Project/PropertyGroup/Version').Value
     $revision = (git rev-parse HEAD)
 
+    function Update-Element([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
+        $element = $xml.SelectSingleNode($targetXpath);
+        if($null -eq $element) {
+            $propGroup = $xml.SelectSingleNode($parentXpath)
+            $element = $xml.CreateElement($elementName);
+            $propGroup.AppendChild($element);
+        }
+        $element.InnerText = $value
+
+    }
+
+    $projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
+    foreach($projectFile in $projectFiles) {
+        Write-Output $projectFile.Name
+        $xml = [XML](Get-Content $projectFile  -Encoding UTF8)
+
+        Update-Element $vesion $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
+        Update-Element $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+
+        $xml.Save($projectFile)
+    }
 
     # ビルド開始
-    # msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$platform /p:DefineConstants=$buildType
-    # dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType
-    # dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType --output Output/Release/$platform/Pe/bin --self-contained true
+    msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$platform /p:DefineConstants=$buildType
+    dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType
+    dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType --output Output/Release/$platform/Pe/bin --self-contained true
 } finally {
     git reset --hard
     Pop-Location
