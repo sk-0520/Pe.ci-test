@@ -364,6 +364,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             } else {
                 Logger.LogInformation("Explorer 横スクロールサポート開始");
                 ExplorerHorizontalScrollSupporter = new ExplorerHorizontalScrollSupporter(TimeSpan.FromMilliseconds(500), LoggerFactory);
+                ExplorerHorizontalScrollSupporter.Refresh();
                 ExplorerHorizontalScrollSupporter.Start();
             }
         }
