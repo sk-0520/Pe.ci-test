@@ -465,4 +465,38 @@ insert into
 /* UpdatedProgramVersion */ @UpdatedProgramVersion,
 /* UpdatedCount          */ 0
 	)
+;
 
+--// AppPlatformSetting
+insert into
+	AppPlatformSetting
+	(
+		SuppressSystemIdle,
+		SupportHorizontalScroll,
+
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
+	)
+	values
+	(
+/* Language                */ false,
+/* UserBackupDirectoryPath */ false,
+
+/* CreatedTimestamp      */ @CreatedTimestamp,
+/* CreatedAccount        */ @CreatedAccount,
+/* CreatedProgramName    */ @CreatedProgramName,
+/* CreatedProgramVersion */ @CreatedProgramVersion,
+/* UpdatedTimestamp      */ @UpdatedTimestamp,
+/* UpdatedAccount        */ @UpdatedAccount,
+/* UpdatedProgramName    */ @UpdatedProgramName,
+/* UpdatedProgramVersion */ @UpdatedProgramVersion,
+/* UpdatedCount          */ 0
+	)
+;
