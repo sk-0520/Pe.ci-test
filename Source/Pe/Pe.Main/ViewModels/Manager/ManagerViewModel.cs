@@ -77,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         }
 
         public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
+        public bool IsSupportedExplorerHorizontalScroll => ApplicationManager.IsSupportedExplorerHorizontalScroll;
 
         #endregion
 
@@ -142,6 +143,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 RaisePropertyChanged(nameof(IsDisabledSystemIdle));
             }
         ));
+
+        public ICommand ToggleExplorerHorizontalScrollCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.ToggleExplorerHorizontalScroll();
+                RaisePropertyChanged(nameof(IsSupportedExplorerHorizontalScroll));
+            }
+        ));
+
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

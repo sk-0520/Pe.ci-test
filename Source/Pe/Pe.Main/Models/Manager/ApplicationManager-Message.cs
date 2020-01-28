@@ -29,7 +29,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsEnabledHook { get; private set; }
 
         HeartBeatSender? HeartBeatSender { get; set; }
+        ExplorerHorizontalScrollSupporter? ExplorerHorizontalScrollSupporter { get; set; }
+
         public bool IsDisabledSystemIdle => HeartBeatSender != null;
+        public bool IsSupportedExplorerHorizontalScroll => ExplorerHorizontalScrollSupporter != null;
 
         #endregion
 
@@ -349,6 +352,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("ロック抑制開始");
                 HeartBeatSender = new HeartBeatSender(TimeSpan.FromSeconds(40), LoggerFactory);
                 HeartBeatSender.Start();
+            }
+        }
+
+        public void ToggleExplorerHorizontalScroll()
+        {
+            if(ExplorerHorizontalScrollSupporter != null) {
+                Logger.LogInformation("Explorer 横スクロールサポート終了");
+                ExplorerHorizontalScrollSupporter.Dispose();
+                ExplorerHorizontalScrollSupporter = null;
+            } else {
+                Logger.LogInformation("Explorer 横スクロールサポート開始");
+                ExplorerHorizontalScrollSupporter = new ExplorerHorizontalScrollSupporter(TimeSpan.FromMilliseconds(500), LoggerFactory);
+                ExplorerHorizontalScrollSupporter.Start();
             }
         }
 
