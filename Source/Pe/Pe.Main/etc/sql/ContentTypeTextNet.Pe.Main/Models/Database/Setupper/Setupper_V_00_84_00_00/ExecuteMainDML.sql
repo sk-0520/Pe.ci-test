@@ -465,4 +465,38 @@ insert into
 /* UpdatedProgramVersion */ @UpdatedProgramVersion,
 /* UpdatedCount          */ 0
 	)
+;
 
+--// AppPlatformSetting
+insert into
+	AppPlatformSetting
+	(
+		SuppressSystemIdle,
+		SupportExplorer,
+
+		CreatedTimestamp,
+		CreatedAccount,
+		CreatedProgramName,
+		CreatedProgramVersion,
+		UpdatedTimestamp,
+		UpdatedAccount,
+		UpdatedProgramName,
+		UpdatedProgramVersion,
+		UpdatedCount
+	)
+	values
+	(
+/* SuppressSystemIdle    */ false,
+/* SupportExplorer       */ false,
+
+/* CreatedTimestamp      */ @CreatedTimestamp,
+/* CreatedAccount        */ @CreatedAccount,
+/* CreatedProgramName    */ @CreatedProgramName,
+/* CreatedProgramVersion */ @CreatedProgramVersion,
+/* UpdatedTimestamp      */ @UpdatedTimestamp,
+/* UpdatedAccount        */ @UpdatedAccount,
+/* UpdatedProgramName    */ @UpdatedProgramName,
+/* UpdatedProgramVersion */ @UpdatedProgramVersion,
+/* UpdatedCount          */ 0
+	)
+;

@@ -126,6 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public void ShowSettingView()
         {
+            StopPlatform();
             StopHook();
             UninitializeSystem();
 
@@ -233,6 +234,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
             }
             StartHook();
+            StartPlatform();
             InitializeSystem();
 
             Logger.LogDebug("遅延書き込み処理再開");
@@ -616,6 +618,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             InitializeSystem();
             InitializeHook();
 
+            StartPlatform();
             StartHook();
 
             ExecuteElements();

@@ -1297,4 +1297,7 @@
   <data name="String_AppManager_System_IsDisabledSystemIdle_A" xml:space="preserve">
     <value>システムアイドルを抑制</value>
   </data>
+  <data name="String_AppManager_System_IsSupportedExplorer_A" xml:space="preserve">
+    <value>Explorer 補正</value>
+  </data>
 </root>

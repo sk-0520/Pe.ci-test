@@ -139,6 +139,22 @@ create table [AppLauncherToolbarSetting] (
 )
 ;
 
+--// table: AppPlatformSetting
+create table [AppPlatformSetting] (
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[SuppressSystemIdle] boolean not null /* アイドル抑制  */,
+	[SupportExplorer] boolean not null /* Explorerの補正 */
+)
+;
+
 --// table: LauncherItems
 create table [LauncherItems] (
 	[LauncherItemId] text not null /* ランチャーアイテムID  */,
@@ -560,6 +576,7 @@ create table [KeyMappings] (
 	foreign key([KeyActionId]) references [KeyActions]([KeyActionId])
 )
 ;
+
 
 
 

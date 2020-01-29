@@ -77,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         }
 
         public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
+        public bool IsSupportedExplorer => ApplicationManager.IsSupportedExplorer;
 
         #endregion
 
@@ -142,6 +143,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 RaisePropertyChanged(nameof(IsDisabledSystemIdle));
             }
         ));
+
+        public ICommand ToggleSupportExplorerCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.ToggleSupportExplorer();
+                RaisePropertyChanged(nameof(IsSupportedExplorer));
+            }
+        ));
+
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
