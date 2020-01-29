@@ -3,6 +3,13 @@ using System.Runtime.InteropServices;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    public enum TVS
+    {
+        TVS_NOHSCROLL = 0x8000,
+        TVS_EX_AUTOHSCROLL = 0x0020,
+        TVS_EX_FADEINOUTEXPANDOS = 0x0040,
+    }
+
     /// <summary>
     /// http://pinvoke.net/default.aspx/Structures/IMAGELISTDRAWPARAMS.html
     /// </summary>

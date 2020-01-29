@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         }
 
         #region property
+
         ILogger Logger { get; }
 
         Timer Timer { get; }
@@ -145,11 +146,53 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return result;
         }
 
-        public void Refresh()
+        private void SetHorizontalScrollbarForTreeView(IntPtr treeViewHandle, bool isSet)
+        {
+            var rawStyle = WindowsUtility.GetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE);
+            if(isSet) {
+                if(Environment.Is64BitProcess) {
+                    var style = rawStyle.ToInt64();
+                    if((style & (int)TVS.TVS_NOHSCROLL) == (int)TVS.TVS_NOHSCROLL) {
+                        style &= ~(int)TVS.TVS_NOHSCROLL;
+                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                    }
+                } else {
+                    var style = rawStyle.ToInt32();
+                    if((style & (int)TVS.TVS_NOHSCROLL) == (int)TVS.TVS_NOHSCROLL) {
+                        style &= ~(int)TVS.TVS_NOHSCROLL;
+                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                    }
+                }
+            } else {
+                if(Environment.Is64BitProcess) {
+                    var style = rawStyle.ToInt64();
+                    if((style & (int)TVS.TVS_NOHSCROLL) != (int)TVS.TVS_NOHSCROLL) {
+                        style |= (int)TVS.TVS_NOHSCROLL;
+                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                    }
+                } else {
+                    var style = rawStyle.ToInt32();
+                    if((style & (int)TVS.TVS_NOHSCROLL) != (int)TVS.TVS_NOHSCROLL) {
+                        style &= ~(int)TVS.TVS_NOHSCROLL;
+                        WindowsUtility.SetWindowLong(treeViewHandle, (int)GWL.GWL_STYLE, new IntPtr(style));
+                    }
+                }
+            }
+        }
+
+        private void SetHorizontalScrollbarForTreeViews(bool isSet)
         {
             var explorers = GetExplorerWindowHandles();
             var win10 = ChildClassNameTrees[Windows10ChildClass];
-            var treeViews = GetExplorerTreeViewHandles(explorers, win10);
+            var treeViewHandles = GetExplorerTreeViewHandles(explorers, win10);
+            foreach(var treeViewHandle in treeViewHandles) {
+                SetHorizontalScrollbarForTreeView(treeViewHandle, isSet);
+            }
+        }
+
+        public void Refresh()
+        {
+            SetHorizontalScrollbarForTreeViews(true);
         }
 
         #endregion
@@ -162,6 +205,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 Timer.Elapsed -= Timer_Elapsed;
                 if(disposing) {
                     Timer.Stop();
+                    SetHorizontalScrollbarForTreeViews(false);
                     Timer.Dispose();
                 }
             }
