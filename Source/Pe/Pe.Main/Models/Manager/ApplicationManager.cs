@@ -556,16 +556,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void MoveZOrderAllNotes(bool isTop)
         {
-            var noteItems = WindowManager.GetWindowItems(WindowKind.Note)
-                .Where(i => !i.Window.Topmost)
-                .Where(i => i.Window.IsVisible)
-                .ToList()
-            ;
-            foreach(var noteItem in noteItems) {
-                var hWnd = HandleUtility.GetWindowHandle(noteItem.Window);
-                if(isTop) {
-                    WindowsUtility.ShowNoActiveForeground(hWnd);
-                } else {
+            if(isTop) {
+                var noteElements = NoteElements
+                    .Where(i => i.IsVisible)
+                    .Where(i => !i.IsTopmost)
+                    .ToList()
+                ;
+                var dispatcherWrapper = ApplicationDiContainer.Get<IDispatcherWrapper>();
+                dispatcherWrapper.Begin(() => {
+                    foreach(var noteElement in noteElements) {
+                        noteElement.SetTopmost(true);
+                    }
+                }, DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
+                    foreach(var noteElement in noteElements) {
+                        noteElement.SetTopmost(false);
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+            } else {
+                var noteItems = WindowManager.GetWindowItems(WindowKind.Note)
+                    .Where(i => !i.Window.Topmost)
+                    .Where(i => i.Window.IsVisible)
+                    .ToList()
+                ;
+                foreach(var noteItem in noteItems) {
+                    var hWnd = HandleUtility.GetWindowHandle(noteItem.Window);
                     WindowsUtility.MoveZoderBttom(hWnd);
                 }
             }
@@ -605,7 +619,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                     NativeMethods.SetActiveWindow(currentActiveWindowHandle);
                     NativeMethods.SetForegroundWindow(currentActiveWindowHandle);
-                }, DispatcherPriority.ApplicationIdle);
+                    MoveZOrderAllNotes(false);
+                }, DispatcherPriority.SystemIdle);
             }
         }
 

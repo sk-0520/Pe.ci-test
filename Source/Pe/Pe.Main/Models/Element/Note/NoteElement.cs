@@ -332,6 +332,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
+        public void SetTopmost(bool isTopmost)
+        {
+            IsTopmost = isTopmost;
+        }
+
         public void ToggleLockDelaySave()
         {
             ThrowIfDisposed();
