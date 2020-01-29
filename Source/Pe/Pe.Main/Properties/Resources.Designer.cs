@@ -2670,6 +2670,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   Ver 0.83.0 からコンバート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_OldVersionConverter {
+            get {
+                return ResourceManager.GetString("String_OldVersionConverter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ディスプレイ識別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Screen_Caption {

@@ -492,6 +492,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 var keyActionData = new KeyActionData() {
                     KeyActionId = IdFactory.CreateKeyActionId(),
                     KeyActionKind = KeyActionKind.Disable,
+                    Comment = Properties.Resources.String_OldVersionConverter,
                 };
 
                 var disableOptionConverter = new DisableOptionConverter();
@@ -516,6 +517,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     KeyActionId = IdFactory.CreateKeyActionId(),
                     KeyActionKind = KeyActionKind.LauncherToolbar,
                     KeyActionContent = launcherToolbarContentConverter.ToContent(KeyActionContentLauncherToolbar.AutoHiddenToHide),
+                    Comment = Properties.Resources.String_OldVersionConverter,
                 };
 
                 var pressedOptionConverter = new PressedOptionConverter();
@@ -547,6 +549,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 var keyActionData = new KeyActionData() {
                     KeyActionId = IdFactory.CreateKeyActionId(),
                     KeyActionKind = KeyActionKind.Command,
+                    Comment = Properties.Resources.String_OldVersionConverter,
                 };
 
                 var pressedOptionConverter = new PressedOptionConverter();
@@ -570,6 +573,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     KeyActionId = IdFactory.CreateKeyActionId(),
                     KeyActionKind = KeyActionKind.Note,
                     KeyActionContent = noteContentConverter.ToContent(KeyActionContentNote.Create),
+                    Comment = Properties.Resources.String_OldVersionConverter,
                 };
 
                 var pressedOptionConverter = new PressedOptionConverter();
@@ -593,6 +597,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     KeyActionId = IdFactory.CreateKeyActionId(),
                     KeyActionKind = KeyActionKind.Note,
                     KeyActionContent = noteContentConverter.ToContent(KeyActionContentNote.ZOrderTop),
+                    Comment = Properties.Resources.String_OldVersionConverter,
                 };
 
                 var pressedOptionConverter = new PressedOptionConverter();

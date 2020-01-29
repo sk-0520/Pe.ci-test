@@ -1300,4 +1300,7 @@
   <data name="String_AppManager_System_IsSupportedExplorer_A" xml:space="preserve">
     <value>Explorer 補正</value>
   </data>
+  <data name="String_OldVersionConverter" xml:space="preserve">
+    <value>Ver 0.83.0 からコンバート</value>
+  </data>
 </root>
