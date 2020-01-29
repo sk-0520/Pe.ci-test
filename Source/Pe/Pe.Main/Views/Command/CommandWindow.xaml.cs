@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -79,7 +80,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             base.OnActivated(e);
 
             //this.popupItems.IsOpen = true;
-            this.inputCommand.Focus();
+            Dispatcher.BeginInvoke(new Action(() => {
+                NativeMethods.SetForegroundWindow(HandleUtility.GetWindowHandle(this));
+                this.inputCommand.Focus();
+            }), System.Windows.Threading.DispatcherPriority.SystemIdle);
         }
 
         /*
