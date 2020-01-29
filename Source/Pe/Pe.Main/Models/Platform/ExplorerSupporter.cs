@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,6 +16,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         #region define
 
         const string Windows10ChildClass = "win10";
+
+        class FixedQueue<T>: IEnumerable<T>
+        {
+            Queue<T> Queue { get; } =  new Queue<T>();
+
+            public int Limit { get; set; }
+            public void Enqueue(T obj)
+            {
+                Queue.Enqueue(obj);
+                while(Queue.Count > Limit && Queue.TryDequeue(out _)) { }
+            }
+
+            #region IEnumerable
+
+            public IEnumerator<T> GetEnumerator() => Queue.GetEnumerator();
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            #endregion
+        }
 
         #endregion
         public ExplorerSupporter(TimeSpan checkSpan, ILoggerFactory loggerFactory)
@@ -53,6 +74,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 "SysTreeView32",
             }
         };
+
+        //FixedQueue<IntPtr> SettedHorizontalScrollbarHandles { get; } = new FixedQueue<IntPtr>() {
+        //    Limit = 2,
+        //};
 
         #endregion
 
@@ -186,7 +211,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             var win10 = ChildClassNameTrees[Windows10ChildClass];
             var treeViewHandles = GetExplorerTreeViewHandles(explorers, win10);
             foreach(var treeViewHandle in treeViewHandles) {
+                //if(isSet) {
+                //    if(SettedHorizontalScrollbarHandles.Contains(treeViewHandle)) {
+                //        continue;
+                //    }
+                //}
+
                 SetHorizontalScrollbarForTreeView(treeViewHandle, isSet);
+
+                //if(isSet) {
+                //    SettedHorizontalScrollbarHandles.Enqueue(treeViewHandle);
+                //}
             }
         }
 
