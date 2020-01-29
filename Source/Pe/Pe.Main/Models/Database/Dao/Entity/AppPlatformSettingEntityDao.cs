@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
 
+            public static string SuppressSystemIdle => "SuppressSystemIdle";
+            public static string SupportExplorer => "SupportExplorer";
 
             #endregion
         }
@@ -57,6 +59,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;
+        }
+
+        public bool UpdateSuppressSystemIdle(bool isEnabled, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.SuppressSystemIdle] = isEnabled;
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
+        public bool UpdateSupportExplorer(bool isEnabled, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.SupportExplorer] = isEnabled;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
 

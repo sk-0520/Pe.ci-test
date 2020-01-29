@@ -117,6 +117,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         PluginContainer? PluginContainer { get; set; }
 
+        UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+
         #endregion
 
         #region function

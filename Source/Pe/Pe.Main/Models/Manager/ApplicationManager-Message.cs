@@ -384,13 +384,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ToggleDisableSystemIdle()
         {
+            bool flag;
             if(HeartBeatSender != null) {
                 Logger.LogInformation("ロック抑制終了");
                 StopDisableSystemIdle();
+                flag = false;
             } else {
                 Logger.LogInformation("ロック抑制開始");
                 StartDisableSystemIdle();
+                flag = true;
             }
+
+            var lazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
+            lazyWriter.Stock(c => {
+                var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(c, c.Implementation);
+                appPlatformSettingEntityDao.UpdateSuppressSystemIdle(flag, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
         }
 
         private void StartSupportExplorer()
@@ -410,13 +419,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ToggleSupportExplorer()
         {
+            bool flag;
             if(ExplorerSupporter != null) {
                 Logger.LogInformation("Explorer 補正終了");
                 StopSupportExplorer();
+                flag = false;
             } else {
                 Logger.LogInformation("Explorer 補正開始");
                 StartSupportExplorer();
+                flag = true;
             }
+
+            var lazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
+            lazyWriter.Stock(c => {
+                var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(c, c.Implementation);
+                appPlatformSettingEntityDao.UpdateSupportExplorer(flag, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
         }
 
         #endregion
