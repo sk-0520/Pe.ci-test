@@ -1,8 +1,8 @@
 update
 	AppPlatformSetting
 set
-	SuppressSystemIdle      = @SuppressSystemIdle,
-	SupportHorizontalScroll = @SupportHorizontalScroll,
+	SuppressSystemIdle    = @SuppressSystemIdle,
+	SupportExplorer       = @SupportExplorer,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

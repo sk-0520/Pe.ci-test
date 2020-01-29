@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public bool SuppressSystemIdle { get; set; }
-        public bool SupportHorizontalScroll { get; set; }
+        public bool SupportExplorer { get; set; }
 
         #endregion
     }

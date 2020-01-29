@@ -151,7 +151,7 @@ create table [AppPlatformSetting] (
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[SuppressSystemIdle] boolean not null /* アイドル抑制  */,
-	[SupportHorizontalScroll] boolean not null /* 横スクロール Explorerのツリービュー横スクロールを行うか */
+	[SupportExplorer] boolean not null /* Explorerの補正 */
 )
 ;
 

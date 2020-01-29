@@ -12,7 +12,9 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
@@ -342,30 +344,76 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        private void StartPlatform()
+        {
+            var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            SettingAppPlatformSettingData setting;
+            using(var commander = mainDatabaseBarrier.WaitRead()) {
+                var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(commander, commander.Implementation);
+                setting = appPlatformSettingEntityDao.SelectSettingPlatformSetting();
+            }
+            if(setting.SupportExplorer) {
+
+            }
+        }
+
+        private void StopPlatform()
+        {
+            if(HeartBeatSender != null) {
+                StopDisableSystemIdle();
+            }
+            if(ExplorerSupporter != null) {
+                StopSupportExplorer();
+            }
+        }
+
+        private void StartDisableSystemIdle()
+        {
+            HeartBeatSender = new HeartBeatSender(TimeSpan.FromSeconds(40), LoggerFactory);
+            HeartBeatSender.Start();
+        }
+        private void StopDisableSystemIdle()
+        {
+            Debug.Assert(HeartBeatSender != null);
+
+            HeartBeatSender.Dispose();
+            HeartBeatSender = null;
+        }
+
         public void ToggleDisableSystemIdle()
         {
             if(HeartBeatSender != null) {
                 Logger.LogInformation("ロック抑制終了");
-                HeartBeatSender.Dispose();
-                HeartBeatSender = null;
+                StopDisableSystemIdle();
             } else {
                 Logger.LogInformation("ロック抑制開始");
-                HeartBeatSender = new HeartBeatSender(TimeSpan.FromSeconds(40), LoggerFactory);
-                HeartBeatSender.Start();
+                StartDisableSystemIdle();
             }
+        }
+
+        private void StartSupportExplorer()
+        {
+            ExplorerSupporter = new ExplorerSupporter(TimeSpan.FromMilliseconds(800), LoggerFactory);
+            ExplorerSupporter.Refresh();
+            ExplorerSupporter.Start();
+        }
+
+        private void StopSupportExplorer()
+        {
+            Debug.Assert(ExplorerSupporter != null);
+
+            ExplorerSupporter.Dispose();
+            ExplorerSupporter = null;
         }
 
         public void ToggleSupportExplorer()
         {
             if(ExplorerSupporter != null) {
                 Logger.LogInformation("Explorer 補正終了");
-                ExplorerSupporter.Dispose();
-                ExplorerSupporter = null;
+                StopSupportExplorer();
             } else {
                 Logger.LogInformation("Explorer 補正開始");
-                ExplorerSupporter = new ExplorerSupporter(TimeSpan.FromMilliseconds(800), LoggerFactory);
-                ExplorerSupporter.Refresh();
-                ExplorerSupporter.Start();
+                StartSupportExplorer();
             }
         }
 

@@ -472,7 +472,7 @@ insert into
 	AppPlatformSetting
 	(
 		SuppressSystemIdle,
-		SupportHorizontalScroll,
+		SupportExplorer,
 
 		CreatedTimestamp,
 		CreatedAccount,
@@ -486,8 +486,8 @@ insert into
 	)
 	values
 	(
-/* Language                */ false,
-/* UserBackupDirectoryPath */ false,
+/* SuppressSystemIdle    */ false,
+/* SupportExplorer       */ false,
 
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,

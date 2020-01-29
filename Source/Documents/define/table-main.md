@@ -224,7 +224,7 @@ ___
 |    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion   | text         | System.Version  |              |                                            |
 |    | o  |    | 更新回数                 | UpdatedCount            | integer      | System.Int64    |              | 0始まり                                    |
 |    | o  |    | アイドル抑制             | SuppressSystemIdle      | boolean      | System.Boolean  |              |                                            |
-|    | o  |    | 横スクロール             | SupportHorizontalScroll | boolean      | System.Boolean  |              | Explorerのツリービュー横スクロールを行うか |
+|    | o  |    | Explorer補正             | SupportExplorer         | boolean      | System.Boolean  |              |                                            |
 
 ### index
 

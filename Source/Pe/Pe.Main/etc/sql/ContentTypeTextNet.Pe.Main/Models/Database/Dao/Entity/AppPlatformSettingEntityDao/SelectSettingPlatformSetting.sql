@@ -1,5 +1,5 @@
 select
 	AppPlatformSetting.SuppressSystemIdle,
-	AppPlatformSetting.SupportHorizontalScroll
+	AppPlatformSetting.SupportExplorer
 from
 	AppPlatformSetting

@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region property
 
         public bool SuppressSystemIdle { get; set; }
-        public bool SupportHorizontalScroll { get; set; }
+        public bool SupportExplorer { get; set; }
 
 
         #endregion
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var dto = Commander.QueryFirst<AppPlatformSettingEntityDto>(statement);
             var data = new SettingAppPlatformSettingData() {
-                SupportHorizontalScroll = dto.SupportHorizontalScroll,
+                SupportExplorer = dto.SupportExplorer,
                 SuppressSystemIdle =  dto.SuppressSystemIdle,
             };
             return data;
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = new AppPlatformSettingEntityDto() {
-                SupportHorizontalScroll = data.SupportHorizontalScroll,
+                SupportExplorer = data.SupportExplorer,
                 SuppressSystemIdle = data.SuppressSystemIdle,
             };
             commonStatus.WriteCommon(dto);
