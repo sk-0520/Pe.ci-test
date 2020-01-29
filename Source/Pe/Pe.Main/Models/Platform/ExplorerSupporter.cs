@@ -10,14 +10,14 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
-    public class ExplorerHorizontalScrollSupporter : DisposerBase
+    public class ExplorerSupporter : DisposerBase
     {
         #region define
 
         const string Windows10ChildClass = "win10";
 
         #endregion
-        public ExplorerHorizontalScrollSupporter(TimeSpan checkSpan, ILoggerFactory loggerFactory)
+        public ExplorerSupporter(TimeSpan checkSpan, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
 

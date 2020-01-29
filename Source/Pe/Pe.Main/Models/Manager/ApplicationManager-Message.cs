@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsEnabledHook { get; private set; }
 
         HeartBeatSender? HeartBeatSender { get; set; }
-        ExplorerHorizontalScrollSupporter? ExplorerHorizontalScrollSupporter { get; set; }
+        ExplorerSupporter? ExplorerHorizontalScrollSupporter { get; set; }
 
         public bool IsDisabledSystemIdle => HeartBeatSender != null;
         public bool IsSupportedExplorerHorizontalScroll => ExplorerHorizontalScrollSupporter != null;
@@ -363,7 +363,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ExplorerHorizontalScrollSupporter = null;
             } else {
                 Logger.LogInformation("Explorer 横スクロールサポート開始");
-                ExplorerHorizontalScrollSupporter = new ExplorerHorizontalScrollSupporter(TimeSpan.FromMilliseconds(500), LoggerFactory);
+                ExplorerHorizontalScrollSupporter = new ExplorerSupporter(TimeSpan.FromMilliseconds(500), LoggerFactory);
                 ExplorerHorizontalScrollSupporter.Refresh();
                 ExplorerHorizontalScrollSupporter.Start();
             }
