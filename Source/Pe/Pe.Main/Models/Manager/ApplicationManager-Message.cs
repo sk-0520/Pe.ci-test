@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -352,8 +351,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(commander, commander.Implementation);
                 setting = appPlatformSettingEntityDao.SelectSettingPlatformSetting();
             }
+            if(setting.SuppressSystemIdle) {
+                StartDisableSystemIdle();
+            }
             if(setting.SupportExplorer) {
-
+                StartSupportExplorer();
             }
         }
 
