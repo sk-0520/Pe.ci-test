@@ -333,11 +333,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   Explorer ツリー横スクロール に類似しているローカライズされた文字列を検索します。
+        ///   Explorer 補正 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_System_IsSupportedExplorerHorizontalScroll_A {
+        public static string String_AppManager_System_IsSupportedExplorer_A {
             get {
-                return ResourceManager.GetString("String_AppManager_System_IsSupportedExplorerHorizontalScroll_A", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_System_IsSupportedExplorer_A", resourceCulture);
             }
         }
         

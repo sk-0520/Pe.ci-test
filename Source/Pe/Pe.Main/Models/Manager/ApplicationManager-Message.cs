@@ -29,10 +29,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsEnabledHook { get; private set; }
 
         HeartBeatSender? HeartBeatSender { get; set; }
-        ExplorerSupporter? ExplorerHorizontalScrollSupporter { get; set; }
+        ExplorerSupporter? ExplorerSupporter { get; set; }
 
         public bool IsDisabledSystemIdle => HeartBeatSender != null;
-        public bool IsSupportedExplorerHorizontalScroll => ExplorerHorizontalScrollSupporter != null;
+        public bool IsSupportedExplorer => ExplorerSupporter != null;
 
         #endregion
 
@@ -355,17 +355,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        public void ToggleExplorerHorizontalScroll()
+        public void ToggleSupportExplorer()
         {
-            if(ExplorerHorizontalScrollSupporter != null) {
-                Logger.LogInformation("Explorer 横スクロールサポート終了");
-                ExplorerHorizontalScrollSupporter.Dispose();
-                ExplorerHorizontalScrollSupporter = null;
+            if(ExplorerSupporter != null) {
+                Logger.LogInformation("Explorer 補正終了");
+                ExplorerSupporter.Dispose();
+                ExplorerSupporter = null;
             } else {
-                Logger.LogInformation("Explorer 横スクロールサポート開始");
-                ExplorerHorizontalScrollSupporter = new ExplorerSupporter(TimeSpan.FromMilliseconds(500), LoggerFactory);
-                ExplorerHorizontalScrollSupporter.Refresh();
-                ExplorerHorizontalScrollSupporter.Start();
+                Logger.LogInformation("Explorer 補正開始");
+                ExplorerSupporter = new ExplorerSupporter(TimeSpan.FromMilliseconds(800), LoggerFactory);
+                ExplorerSupporter.Refresh();
+                ExplorerSupporter.Start();
             }
         }
 
