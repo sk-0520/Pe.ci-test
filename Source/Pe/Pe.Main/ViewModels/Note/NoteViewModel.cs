@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, Configuration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, CustomConfiguration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             NoteTheme = noteTheme;
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
         IDisposable? WindowHandleSource { get; set; }
 
-        Configuration Configuration { get; }
+        CustomConfiguration Configuration { get; }
 
         public Guid NoteId => Model.NoteId;
         public bool IsLink => Model.ContentElement?.IsLink ?? false;

@@ -15,14 +15,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
 {
     public class AcceptElement : ElementBase
     {
-        public AcceptElement(Configuration configuration, ILoggerFactory loggerFactory)
+        public AcceptElement(CustomConfiguration configuration, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Configuration = configuration;
         }
 
         #region property
-        Configuration Configuration { get; }
+        CustomConfiguration Configuration { get; }
         public bool Accepted { get; set; }
         public UpdateKind UpdateKind { get; set; } = UpdateKind.Auto;
         public bool SendUsageStatistics { get; set; } = true;

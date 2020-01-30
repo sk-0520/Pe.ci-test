@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 {
     public class CultureServiceChanger
     {
-        public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, Configuration configuration, ILoggerFactory loggerFactory)
+        public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, CustomConfiguration configuration, ILoggerFactory loggerFactory)
         {
             CultureService = cultureService;
             WindowManager = windowManager;
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         IWindowManager WindowManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
-        Configuration Configuration { get; }
+        CustomConfiguration Configuration { get; }
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 

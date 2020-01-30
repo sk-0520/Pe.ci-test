@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public class GeneralsSettingEditorViewModel : SettingEditorViewModelBase<GeneralsSettingEditorElement>
     {
-        public GeneralsSettingEditorViewModel(GeneralsSettingEditorElement model, Configuration configuration, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public GeneralsSettingEditorViewModel(GeneralsSettingEditorElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             AppExecuteSettingEditor = new AppExecuteSettingEditorViewModel(Model.AppExecuteSettingEditor, DispatcherWrapper, LoggerFactory);

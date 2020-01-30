@@ -167,9 +167,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class Configuration
+    public class CustomConfiguration
     {
-        public Configuration(IConfigurationRoot configurationRoot)
+        public CustomConfiguration(IConfigurationRoot configurationRoot)
         {
             General = new GeneralConfiguration(configurationRoot.GetSection("general"));
             Api = new ApiConfiguration(configurationRoot.GetSection("api"));

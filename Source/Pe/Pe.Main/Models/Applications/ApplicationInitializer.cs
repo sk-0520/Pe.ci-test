@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 diContainer
                     .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
                     .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
-                    .Register<Configuration, Configuration>(environmentParameters.Configuration)
+                    .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, CultureService.Current, diContainer.Get<ILoggerFactory>())) {
@@ -336,7 +336,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
                 .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
-                .Register<Configuration, Configuration>(environmentParameters.Configuration)
+                .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
                 /*

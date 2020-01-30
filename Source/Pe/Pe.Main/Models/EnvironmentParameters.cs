@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 .AddJsonFile("appsettings.user.json", true)
             ;
             var configurationRoot = configurationBuilder.Build();
-            Configuration = new Configuration(configurationRoot);
+            Configuration = new CustomConfiguration(configurationRoot);
 
             var projectName = Configuration.General.ProjectName;
             UserRoamingDirectory = GetDirectory(commandLine, CommandLineKeyUserDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), projectName));
@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public FileInfo FileFile => CombineFile(UserSettingDirectory, "file.sqlite3");
 
-        public Configuration Configuration { get; }
+        public CustomConfiguration Configuration { get; }
 
         #endregion
 

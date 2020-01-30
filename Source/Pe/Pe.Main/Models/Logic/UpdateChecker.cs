@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public class UpdateChecker
     {
-        public UpdateChecker(Configuration configuration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public UpdateChecker(CustomConfiguration configuration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             Configuration = configuration;
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         ILogger Logger { get; }
 
-        Configuration Configuration { get; }
+        CustomConfiguration Configuration { get; }
         IUserAgentManager UserAgentManager { get; }
 
         #endregion
