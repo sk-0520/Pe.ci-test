@@ -75,9 +75,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
         };
 
-        //FixedQueue<IntPtr> SettedHorizontalScrollbarHandles { get; } = new FixedQueue<IntPtr>() {
-        //    Limit = 2,
-        //};
+        FixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; } = new FixedQueue<IntPtr>() {
+            Limit = 2,
+        };
 
         #endregion
 
@@ -157,19 +157,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return result;
         }
 
-        private IReadOnlyList<IntPtr> GetExplorerTreeViewHandles(IEnumerable<IntPtr> hParentWnds, IReadOnlyList<string> classTrees)
-        {
-            var result = new List<IntPtr>();
+        //private IReadOnlyList<IntPtr> GetExplorerTreeViewHandles(IEnumerable<IntPtr> hParentWnds, IReadOnlyList<string> classTrees)
+        //{
+        //    var result = new List<IntPtr>();
 
-            foreach(var hParentWnd in hParentWnds) {
-                var hTreeView = GetExplorerTreeViewHandle(hParentWnd, classTrees);
-                if(hTreeView != IntPtr.Zero) {
-                    result.Add(hTreeView);
-                }
-            }
+        //    foreach(var hParentWnd in hParentWnds) {
+        //        var hTreeView = GetExplorerTreeViewHandle(hParentWnd, classTrees);
+        //        if(hTreeView != IntPtr.Zero) {
+        //            result.Add(hTreeView);
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         private void SetHorizontalScrollbarForTreeView(IntPtr treeViewHandle, bool isSet)
         {
@@ -205,23 +205,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
         }
 
-        private void SetHorizontalScrollbarForTreeViews(bool isSet)
+        private void SetHorizontalScrollbarForTreeViews(bool isEnable)
         {
-            var explorers = GetExplorerWindowHandles();
             var win10 = ChildClassNameTrees[Windows10ChildClass];
-            var treeViewHandles = GetExplorerTreeViewHandles(explorers, win10);
-            foreach(var treeViewHandle in treeViewHandles) {
-                //if(isSet) {
-                //    if(SettedHorizontalScrollbarHandles.Contains(treeViewHandle)) {
-                //        continue;
-                //    }
-                //}
 
-                SetHorizontalScrollbarForTreeView(treeViewHandle, isSet);
+            var hExplorers = GetExplorerWindowHandles();
+            foreach(var hExplorer in hExplorers) {
+                if(isEnable) {
+                    if(SettedHorizontalScrollbarExplorerHandles.Contains(hExplorer)) {
+                        continue;
+                    }
+                }
 
-                //if(isSet) {
-                //    SettedHorizontalScrollbarHandles.Enqueue(treeViewHandle);
-                //}
+                var hTreeView = GetExplorerTreeViewHandle(hExplorer, win10);
+                if(hTreeView != IntPtr.Zero) {
+                    SetHorizontalScrollbarForTreeView(hTreeView, isEnable);
+
+                    if(isEnable) {
+                        SettedHorizontalScrollbarExplorerHandles.Enqueue(hExplorer);
+                    }
+                }
             }
         }
 
