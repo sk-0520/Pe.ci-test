@@ -404,7 +404,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void StartSupportExplorer()
         {
-            ExplorerSupporter = new ExplorerSupporter(TimeSpan.FromMilliseconds(800), LoggerFactory);
+            var customConfiguration = ApplicationDiContainer.Build<CustomConfiguration>();
+            var platform = customConfiguration.Platform;
+
+            ExplorerSupporter = ApplicationDiContainer.Build<ExplorerSupporter>(platform.ExplorerSupporterRefreshTime, platform.ExplorerSupporterCacheSize);
             ExplorerSupporter.Refresh();
             ExplorerSupporter.Start();
         }

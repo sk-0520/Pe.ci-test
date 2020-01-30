@@ -167,6 +167,24 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class PlatformConfiguration : ConfigurationBase
+    {
+        public PlatformConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            ExplorerSupporterRefreshTime = section.GetValue<TimeSpan>("explorer-supporter-refresh-time");
+            ExplorerSupporterCacheSize = section.GetValue<int>("explorer-supporter-cache-size");
+        }
+
+        #region property
+
+        public TimeSpan ExplorerSupporterRefreshTime { get; }
+        public int ExplorerSupporterCacheSize { get; }
+
+        #endregion
+    }
+
+
     public class CustomConfiguration
     {
         public CustomConfiguration(IConfigurationRoot configurationRoot)
@@ -179,6 +197,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
+            Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
         }
 
         #region property
@@ -191,6 +210,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public LauncherToolbarConfiguration LauncherToobar { get; }
         public LauncherGroupConfiguration LauncherGroup { get; }
         public NoteConfiguration Note { get; }
+        public PlatformConfiguration Platform { get; }
         #endregion
     }
 }

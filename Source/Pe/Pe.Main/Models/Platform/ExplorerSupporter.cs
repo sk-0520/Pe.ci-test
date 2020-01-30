@@ -38,16 +38,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         }
 
         #endregion
-        public ExplorerSupporter(TimeSpan checkSpan, ILoggerFactory loggerFactory)
+        public ExplorerSupporter(TimeSpan checkSpan, int cacheSize, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
 
             CheckSpan = checkSpan;
-
             Timer = new Timer() {
                 Interval = CheckSpan.TotalMilliseconds,
             };
             Timer.Elapsed += Timer_Elapsed;
+
+            SettedHorizontalScrollbarExplorerHandles = new FixedQueue<IntPtr>() {
+                Limit = cacheSize,
+            };
         }
 
         #region property
@@ -75,9 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
         };
 
-        FixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; } = new FixedQueue<IntPtr>() {
-            Limit = 2,
-        };
+        FixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; }
 
         #endregion
 
