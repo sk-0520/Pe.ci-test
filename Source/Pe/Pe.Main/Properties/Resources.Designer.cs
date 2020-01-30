@@ -144,6 +144,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   バージョン情報 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_Caption {
+            get {
+                return ResourceManager.GetString("String_About_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   使用する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Accept_Affirmative {

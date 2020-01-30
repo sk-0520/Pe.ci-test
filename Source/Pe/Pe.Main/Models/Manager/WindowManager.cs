@@ -25,6 +25,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         Accept,
         /// <summary>
+        /// 情報。
+        /// </summary>
+        About,
+        /// <summary>
         /// スタートアップ。
         /// </summary>
         Startup,

@@ -259,6 +259,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ShowStartupView()
         {
+            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+
             using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModels.Startup.StartupViewModel, Views.Startup.StartupWindow>()
@@ -271,6 +273,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 view.ShowDialog();
             }
+
+            changing.SuccessValue?.Dispose();
+        }
+
+        public void ShowAboutView()
+        {
+            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+
+            using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
+                diContainer
+                    .RegisterMvvm<Element.About.AboutElement, ViewModels.About.AboutViewModel, Views.About.AboutWindow>()
+                ;
+                var model = diContainer.New<Element.About.AboutElement>();
+                var view = diContainer.Make<Views.About.AboutWindow>();
+
+                var windowManager = diContainer.Get<IWindowManager>();
+                windowManager.Register(new WindowItem(WindowKind.About, view));
+
+                view.ShowDialog();
+            }
+
+            changing.SuccessValue?.Dispose();
         }
 
 

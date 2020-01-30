@@ -130,6 +130,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 ApplicationManager.ShowStartupView();
             }
         ));
+        public ICommand OpenHelpCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Logger.LogDebug("TODO: help");
+            }
+        ));
+
+        public ICommand OpenAboutCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                // めんどいし直接ビュー開くよ
+                ApplicationManager.ShowAboutView();
+            }
+        ));
 
         public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
            () => {
