@@ -1,0 +1,98 @@
+{
+	"library": [
+		{
+			"name": ".NET Core 3.1",
+			"uri": "https://dotnet.microsoft.com/download/dotnet-core/3.1",
+			"license": {
+				"name": "MIT License",
+				"uri": "https://github.com/dotnet/core/blob/v3.1.0/LICENSE.TXT"
+			},
+			"comment": "Microsoft.Extension.*, MSTest.*, (MS)System.*　を含む"
+		},
+		{
+			"name": "AvalonEdit",
+			"uri": "http://avalonedit.net/",
+			"license": {
+				"name": "MIT License",
+				"uri": "https://github.com/icsharpcode/AvalonEdit/blob/master/LICENSE"
+			},
+			"comment": ""
+		},
+		{
+			"name": "Dapper",
+			"uri": "https://github.com/StackExchange/Dapper",
+			"license": {
+				"name": "Apache-2.0",
+				"uri": "http://www.apache.org/licenses/LICENSE-2.0"
+			},
+			"comment": ""
+		},
+		{
+			"name": "Newtonsoft.Json",
+			"uri": "https://www.newtonsoft.com/json",
+			"license": {
+				"name": "MIT License",
+				"uri": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md"
+			},
+			"comment": "Pe.Converter で使用"
+		},
+		{
+			"name": "NLog",
+			"uri": "https://nlog-project.org/",
+			"license": {
+				"name": "BSD 2-Clause \"Simplified\" License",
+				"uri": "https://github.com/NLog/NLog.Extensions.Logging/blob/master/LICENSE"
+			},
+			"comment": "NLog.Extensions.Logging"
+		},
+		{
+			"name": "Prism",
+			"uri": "https://github.com/PrismLibrary/Prism",
+			"license": {
+				"name": "MIT License",
+				"uri": "https://github.com/PrismLibrary/Prism/blob/v7.2.0.1422/LICENSE"
+			},
+			"comment": "Prism.Wpf"
+		},
+		{
+			"name": "System.Data.SQLite",
+			"uri": "https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki",
+			"license": {
+				"name": "Public Domain",
+				"uri": "https://www.sqlite.org/copyright.html"
+			},
+			"comment": "System.Data.SQLite.Core"
+		},
+		{
+			"name": "Hardcodet NotifyIcon for WPF",
+			"uri": "https://github.com/hardcodet/wpf-notifyicon",
+			"license": {
+				"name": "CPOL",
+				"uri": "https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE"
+			},
+			"comment": ".NET Core 用に独自修正"
+		}
+	],
+
+	"resource": [
+		{
+			"name": "Visual Studio 2017 Image Library",
+			"uri":  "",
+			"license": {
+				"name": "MICROSOFT SOFTWARE LICENSE TERMS",
+				"uri": "http://msdn.microsoft.com/ja-jp/library/ms246582.aspx"
+			},
+			"comment":  ""
+		},
+		{
+			"name": "Material Design Icons",
+			"uri": "https://materialdesignicons.com",
+			"license": {
+				"name": "",
+				"uri": ""
+			},
+			"comment": ""
+		}
+	]
+
+}
