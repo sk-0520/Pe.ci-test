@@ -288,6 +288,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var model = diContainer.New<Element.About.AboutElement>();
                 var view = diContainer.Make<Views.About.AboutWindow>();
 
+                model.Initialize();
+
                 var windowManager = diContainer.Get<IWindowManager>();
                 windowManager.Register(new WindowItem(WindowKind.About, view));
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.About;
 using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         { }
 
         #region property
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         #endregion
 

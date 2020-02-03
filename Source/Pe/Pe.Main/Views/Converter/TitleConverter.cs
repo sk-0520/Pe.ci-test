@@ -28,9 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
                 _ => " " + BuildStatus.Version + " <" + BuildStatus.Revision + ">",
             };
 
-            //TODO: 直書き
-            var appName = "Pe";
-            return header + caption + footer + " - " + appName;
+            return header + caption + footer + " - " + BuildStatus.Name;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

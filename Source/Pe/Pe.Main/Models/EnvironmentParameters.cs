@@ -83,6 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// 文書ディレクトリ。
         /// </summary>
         public DirectoryInfo DocumentDirectory => CombineDirectory(RootDirectory, "doc");
+        public DirectoryInfo LicenseDirectory => CombineDirectory(DocumentDirectory, "license");
+
+        public FileInfo ComponentsFile => CombineFile(LicenseDirectory, "components.json");
 
         /// <summary>
         /// ユーザーデータ配置ディレクトリ。

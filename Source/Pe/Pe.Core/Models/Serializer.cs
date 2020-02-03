@@ -1,9 +1,17 @@
+//#define ENABLED_NETCoreJSON
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
+using System.Runtime.Serialization.Json;
+
+#if ENABLED_NETCoreJSON
+using System.Text.Json;
+using System.Text.Json.Serialization;
+#endif
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -60,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
 #if ENABLED_JsonNet
-    public class JsonSerializer : SerializerBase
+    public class JsonNetSerializer : SerializerBase
     {
     #region SerializerBase
 
@@ -85,6 +93,69 @@ namespace ContentTypeTextNet.Pe.Core.Models
     #endregion
     }
 #endif
+
+#if ENABLED_NETCoreJSON
+
+    public class JsonNetCoreSerializer : SerializerBase
+    {
+        #region property
+
+        public JsonReaderOptions ReaderOptions { get; set; } = new JsonReaderOptions() {
+            AllowTrailingCommas = true,
+            CommentHandling = JsonCommentHandling.Skip,
+        };
+        public JsonWriterOptions WriterOptions { get; set; } = new JsonWriterOptions() {
+            Indented = true,
+        };
+
+        #endregion
+
+        #region SerializerBase
+
+        public override TResult Load<TResult>(Stream stream)
+        {
+            var buffer = new byte[stream.Length];
+            //var span = new Span<byte>();
+            stream.Read(buffer);
+            var reader = new Utf8JsonReader(buffer, ReaderOptions);
+            return System.Text.Json.JsonSerializer.Deserialize<TResult>(ref reader);
+        }
+
+        public override void Save(object value, Stream stream)
+        {
+            using(var writer = new Utf8JsonWriter(stream, WriterOptions)) {
+                System.Text.Json.JsonSerializer.Serialize(writer, value);
+            }
+        }
+
+        #endregion
+    }
+
+#endif
+
+    public class JsonDataSerializer : SerializerBase
+    {
+        #region SerializerBase
+
+        public override TResult Load<TResult>(Stream stream)
+        {
+            using(var reader = GetReader(stream)) {
+                var serializer = new DataContractJsonSerializer(typeof(TResult));
+                return (TResult)serializer.ReadObject(stream);
+            }
+        }
+
+        public override void Save(object value, Stream stream)
+        {
+            using(var writer = GetWriter(stream)) {
+                var serializer = new DataContractJsonSerializer(value.GetType());
+                serializer.WriteObject(stream, value);
+            }
+        }
+
+        #endregion
+    }
+
 
     public abstract class XmlSerializerBase : SerializerBase
     {
