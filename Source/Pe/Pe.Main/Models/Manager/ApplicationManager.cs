@@ -286,9 +286,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.About.AboutElement, ViewModels.About.AboutViewModel, Views.About.AboutWindow>()
                 ;
                 var model = diContainer.New<Element.About.AboutElement>();
-                var view = diContainer.Make<Views.About.AboutWindow>();
-
                 model.Initialize();
+
+                var view = diContainer.Make<Views.About.AboutWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
                 windowManager.Register(new WindowItem(WindowKind.About, view));
@@ -642,6 +642,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 viewShowStater.StartView();
             }
 
+#if DEBUG
+            if(IsDevDebug) {
+                return;
+            }
+#endif
             // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
             if(currentActiveWindowHandle != IntPtr.Zero) {
                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {

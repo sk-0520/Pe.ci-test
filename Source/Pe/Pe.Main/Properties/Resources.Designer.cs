@@ -602,6 +602,43 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   app に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Application {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Application" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   lib に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Library {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Library", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   res に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Resource {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Resource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   bin に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Software {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Software", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   通常実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_KeyActionContentLauncherItem_Execute {

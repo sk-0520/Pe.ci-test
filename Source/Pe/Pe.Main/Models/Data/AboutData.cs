@@ -19,10 +19,66 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Serializable, DataContract]
-    public class AboutComponentData:DataBase
+    public class AboutComponentData : DataBase
     {
         #region property
 
+        [DataMember(Name = "name")]
+        public string Name { get; set; } = string.Empty;
+
+        [DataMember(Name = "uri")]
+        public string Uri { get; set; } = string.Empty;
+
+        [DataMember(Name = "license")]
+        public AboutLicenseData License { get; set; } = new AboutLicenseData();
+
+        [DataMember(Name = "comment")]
+        public string Comment { get; set; } = string.Empty;
+        #endregion
+    }
+
+    [Serializable, DataContract]
+    public class AboutLicenseData : DataBase
+    {
+        #region property
+
+        [DataMember(Name = "name")]
+        public string Name { get; set; } = string.Empty;
+
+        [DataMember(Name = "uri")]
+        public string Uri { get; set; } = string.Empty;
+
+        #endregion
+    }
+
+    public enum AboutComponentKind
+    {
+        [EnumResource]
+        Application,
+        [EnumResource]
+        Library,
+        [EnumResource]
+        Software,
+        [EnumResource]
+        Resource,
+    }
+
+    public class AboutComponentItem
+    {
+        public AboutComponentItem(AboutComponentKind kind, AboutComponentData data, int sort)
+        {
+            Kind = kind;
+            Data = data;
+            Sort = sort;
+        }
+
+        #region property
+
+        public AboutComponentKind Kind { get; }
+
+        public AboutComponentData Data { get; }
+
+        public int Sort { get; }
         #endregion
     }
 }

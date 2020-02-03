@@ -29,17 +29,18 @@ namespace ContentTypeTextNet.Pe.Main.Models
     {
         public GeneralConfiguration(IConfigurationSection section) : base(section)
         {
-            ProjectName = section.GetValue<string>("project-name");
-            MutexName = section.GetValue<string>("mutex-name");
-            LoggingConfigFileName = section.GetValue<string>("log-conf-file-name");
-            SupportCultures = section.GetSection("support-cultures").Get<string[]>();
+            ProjectName = section.GetValue<string>("project_name");
+            MutexName = section.GetValue<string>("mutex_name");
+            LoggingConfigFileName = section.GetValue<string>("log_conf_file_name");
+            SupportCultures = section.GetSection("support_cultures").Get<string[]>();
 
-            LicenseName = section.GetValue<string>("license-name");
+            LicenseName = section.GetValue<string>("license_name");
+            LicenseUri = section.GetValue<Uri>("license_uri");
 
-            ProjectRepositoryUri = section.GetValue<Uri>("project-repository-uri");
-            ProjectForumUri = section.GetValue<Uri>("project-forum-uri");
-            ProjectWebSiteUri = section.GetValue<Uri>("project-website-uri");
-            UpdateCheckUri = section.GetValue<Uri>("version-check-uri");
+            ProjectRepositoryUri = section.GetValue<Uri>("project_repository_uri");
+            ProjectForumUri = section.GetValue<Uri>("project_forum_uri");
+            ProjectWebSiteUri = section.GetValue<Uri>("project_website_uri");
+            UpdateCheckUri = section.GetValue<Uri>("version_check_uri");
         }
 
         #region property
@@ -51,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public IReadOnlyList<string> SupportCultures { get; }
 
         public string LicenseName { get; }
+        public Uri LicenseUri { get; }
 
         public Uri ProjectRepositoryUri { get; }
         public Uri ProjectForumUri { get; }
@@ -65,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public ApiConfiguration(IConfigurationSection section)
             : base(section)
         {
-            AppCenter = section.GetValue<string>("app-center");
+            AppCenter = section.GetValue<string>("app_center");
         }
 
         #region property
@@ -80,8 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public BackupConfiguration(IConfigurationSection section)
             : base(section)
         {
-            SettingCount = section.GetValue<int>("setting-count");
-            ArchiveCount = section.GetValue<int>("archive-count");
+            SettingCount = section.GetValue<int>("setting_count");
+            ArchiveCount = section.GetValue<int>("archive_count");
         }
 
         #region property
@@ -97,8 +99,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public FileConfiguration(IConfigurationSection section)
             : base(section)
         {
-            DirectoryRemoveWaitCount = section.GetValue<int>("dir-remove-wait-count");
-            DirectoryRemoveWaitTime = section.GetValue<TimeSpan>("dir-remove-wait-time");
+            DirectoryRemoveWaitCount = section.GetValue<int>("dir_remove_wait_count");
+            DirectoryRemoveWaitTime = section.GetValue<TimeSpan>("dir_remove_wait_time");
         }
 
         #region property
@@ -114,8 +116,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DisplayConfiguration(IConfigurationSection section)
             : base(section)
         {
-            ChangedRetryCount = section.GetValue<int>("changed-retry-count");
-            ChangedRetryWaitTime = section.GetValue<TimeSpan>("changed-retry-wait");
+            ChangedRetryCount = section.GetValue<int>("changed_retry_count");
+            ChangedRetryWaitTime = section.GetValue<TimeSpan>("changed_retry_wait");
         }
 
         #region property
@@ -172,8 +174,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public PlatformConfiguration(IConfigurationSection section)
             : base(section)
         {
-            ExplorerSupporterRefreshTime = section.GetValue<TimeSpan>("explorer-supporter-refresh-time");
-            ExplorerSupporterCacheSize = section.GetValue<int>("explorer-supporter-cache-size");
+            ExplorerSupporterRefreshTime = section.GetValue<TimeSpan>("explorer_supporter_refresh_time");
+            ExplorerSupporterCacheSize = section.GetValue<int>("explorer_supporter_cache_size");
         }
 
         #region property

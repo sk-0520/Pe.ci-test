@@ -77,12 +77,12 @@
 	"resource": [
 		{
 			"name": "Visual Studio 2017 Image Library",
-			"uri":  "",
+			"uri": "https://docs.microsoft.com/ja-jp/visualstudio/designers/the-visual-studio-image-library",
 			"license": {
 				"name": "MICROSOFT SOFTWARE LICENSE TERMS",
 				"uri": "http://msdn.microsoft.com/ja-jp/library/ms246582.aspx"
 			},
-			"comment":  ""
+			"comment": ""
 		},
 		{
 			"name": "Material Design Icons",

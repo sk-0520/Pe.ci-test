@@ -1306,4 +1306,16 @@
   <data name="String_About_Caption" xml:space="preserve">
     <value>バージョン情報</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Application" xml:space="preserve">
+    <value>app</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Library" xml:space="preserve">
+    <value>lib</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Resource" xml:space="preserve">
+    <value>res</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Software" xml:space="preserve">
+    <value>bin</value>
+  </data>
 </root>

@@ -25,6 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
     partial class ApplicationManager
     {
+        #region property
+
+        bool IsDevDebug { get; } = true;
+
+        #endregion
+
+
         #region function
 
         void DebugExecuteBefore()
