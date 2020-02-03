@@ -51,7 +51,19 @@
       <Grid Grid.Column="0">
         <ScrollViewer>
           <StackPanel Margin="{StaticResource HalfMargin}">
+            <StackPanel.Resources>
+              <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Margin" Value="{StaticResource BasePadding}" />
+              </Style>
+            </StackPanel.Resources>
             <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-App-Main}" />
+
+            <Separator />
+
+            <Button Content="forum" Command="{Binding OpenForumUriCommand}" />
+            <Button Content="project" Command="{Binding OpenProjectUriCommand}"/>
+            <Button Content="short" Command="{Binding CopyShortInformationCommand}" />
+            <Button Content="long" Command="{Binding CopyLongInformationCommand}" />
           </StackPanel>
         </ScrollViewer>
       </Grid>

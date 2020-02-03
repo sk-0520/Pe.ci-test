@@ -47,6 +47,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                 Model.OpenUri(o.Uri);
             }
         ));
+        public ICommand OpenForumUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenForumUri();
+            }
+        ));
+        public ICommand OpenProjectUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenProjectUri();
+            }
+        ));
+        public ICommand CopyShortInformationCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.CopyShortInformation();
+            }
+        ));
+        public ICommand CopyLongInformationCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.CopyLongInformation();
+            }
+        ));
 
         #endregion
 

@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         private IEnumerable<AboutComponentItem> GetApplicationItems()
         {
-            var data = new [] {
+            var data = new[] {
                 new AboutComponentData() {
                     Name = BuildStatus.Name,
                     Uri = CustomConfiguration.General.ProjectWebSiteUri.ToString(),
@@ -71,6 +71,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             } catch(Exception ex) {
                 Logger.LogWarning(ex, ex.Message);
             }
+        }
+
+        public void OpenForumUri()
+        {
+            OpenUri(CustomConfiguration.General.ProjectForumUri);
+        }
+        public void OpenProjectUri()
+        {
+            OpenUri(CustomConfiguration.General.ProjectRepositoryUri);
+        }
+        public void CopyShortInformation()
+        {
+            Logger.LogWarning("TODO");
+        }
+        public void CopyLongInformation()
+        {
+            Logger.LogWarning("TODO");
         }
 
         #endregion
