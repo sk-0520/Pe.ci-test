@@ -42,6 +42,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             RunDLL("shell32.dll,Options_RunDLL 5");
         }
 
+        public void OpenUri(Uri uri)
+        {
+            var process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = uri.ToString();
+            process.Start();
+        }
+
+
         #endregion
     }
 

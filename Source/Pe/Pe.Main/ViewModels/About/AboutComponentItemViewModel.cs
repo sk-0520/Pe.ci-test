@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         public bool HasLicenseUri => !string.IsNullOrWhiteSpace(Item.Data.License.Uri);
 
         public string License => Item.Data.License.Name;
+        public Uri LicenseUri => new Uri(Item.Data.License.Uri);
 
         public bool HasComment => !string.IsNullOrWhiteSpace(Comment);
         public string Comment => Item.Data.Comment;

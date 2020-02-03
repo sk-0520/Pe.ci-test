@@ -5,6 +5,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.About
@@ -60,6 +61,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             };
 
             return ToItems(AboutComponentKind.Application, data);
+        }
+
+        public void OpenUri(Uri uri)
+        {
+            var systemExecutor = new SystemExecutor(LoggerFactory);
+            try {
+                systemExecutor.OpenUri(uri);
+            } catch(Exception ex) {
+                Logger.LogWarning(ex, ex.Message);
+            }
         }
 
         #endregion

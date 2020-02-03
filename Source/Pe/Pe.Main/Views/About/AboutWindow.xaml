@@ -88,13 +88,13 @@
                   <WrapPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock FontWeight="Bold" Text="{Binding Name, Mode=OneTime}" />
                     <TextBlock Margin="{StaticResource LeftMargin}" Visibility="{Binding HasLicenseUri, Converter={StaticResource BooleanToVisibilityConverter}}">
-                      <Hyperlink>
+                      <Hyperlink Command="{Binding DataContext.OpenLicenseCommand, ElementName=root}" CommandParameter="{Binding}">
                         <Run Text="{Binding License, Mode=OneTime}" />
                       </Hyperlink>
                     </TextBlock>
                   </WrapPanel>
                   <TextBlock Margin="{StaticResource LeftMargin}">
-                    <Hyperlink>
+                      <Hyperlink Command="{Binding DataContext.OpenUriCommand, ElementName=root}" CommandParameter="{Binding}">
                       <Run Text="{Binding Uri, Mode=OneTime}" />
                     </Hyperlink>
                   </TextBlock>

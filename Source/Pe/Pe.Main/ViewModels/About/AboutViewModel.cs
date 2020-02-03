@@ -5,11 +5,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Data;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.About;
 using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 {
@@ -33,6 +35,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         #endregion
 
         #region command
+
+        public ICommand OpenLicenseCommand => GetOrCreateCommand(() => new DelegateCommand<AboutComponentItemViewModel>(
+            o => {
+                Model.OpenUri(o.LicenseUri);
+            }
+        ));
+
+        public ICommand OpenUriCommand => GetOrCreateCommand(() => new DelegateCommand<AboutComponentItemViewModel>(
+            o => {
+                Model.OpenUri(o.Uri);
+            }
+        ));
 
         #endregion
 
