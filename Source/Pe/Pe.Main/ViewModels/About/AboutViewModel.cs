@@ -68,6 +68,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
             }
         ));
 
+        public ICommand OpenApplicationDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenApplicationDirectory();
+            }
+        ));
+        public ICommand OpenUserDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenUserDirectory();
+            }
+        ));
+        public ICommand OpenMachineDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenMachineDirectory();
+            }
+        ));
+        public ICommand OpenTemporaryDirectoryCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenTemporaryDirectory();
+            }
+        ));
+
         #endregion
 
         #region function

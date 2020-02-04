@@ -153,6 +153,78 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   長い情報をコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_CopyLongInformation_A {
+            get {
+                return ResourceManager.GetString("String_About_CopyLongInformation_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   短い情報をコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_CopyShortInformation_A {
+            get {
+                return ResourceManager.GetString("String_About_CopyShortInformation_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アプリケーション に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OpenApplicationDirectory_A {
+            get {
+                return ResourceManager.GetString("String_About_OpenApplicationDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フォーラム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OpenForumUri_A {
+            get {
+                return ResourceManager.GetString("String_About_OpenForumUri_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   端末データ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OpenMachineDirectory_A {
+            get {
+                return ResourceManager.GetString("String_About_OpenMachineDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プロジェクト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OpenProjectUri_A {
+            get {
+                return ResourceManager.GetString("String_About_OpenProjectUri_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   一時データ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OpenTemporaryDirectory_A {
+            get {
+                return ResourceManager.GetString("String_About_OpenTemporaryDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ユーザーデータ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OpenUserDirectory_A {
+            get {
+                return ResourceManager.GetString("String_About_OpenUserDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   使用する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Accept_Affirmative {

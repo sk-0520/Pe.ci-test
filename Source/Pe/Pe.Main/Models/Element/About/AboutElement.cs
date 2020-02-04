@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -81,6 +83,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         {
             OpenUri(CustomConfiguration.General.ProjectRepositoryUri);
         }
+
+        private void Copt(string s)
+        {
+
+        }
+
         public void CopyShortInformation()
         {
             Logger.LogWarning("TODO");
@@ -88,6 +96,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         public void CopyLongInformation()
         {
             Logger.LogWarning("TODO");
+        }
+
+        private void OpenDirectory(DirectoryInfo directory)
+        {
+            try {
+                var process = Process.Start(new ProcessStartInfo(directory.FullName) {
+                    UseShellExecute = true,
+                });
+            } catch(Exception ex) {
+                Logger.LogWarning(ex, ex.Message);
+            }
+        }
+
+        public void OpenApplicationDirectory()
+        {
+            OpenDirectory(EnvironmentParameters.RootDirectory);
+        }
+        public void OpenUserDirectory()
+        {
+            OpenDirectory(EnvironmentParameters.UserRoamingDirectory);
+        }
+        public void OpenMachineDirectory()
+        {
+            OpenDirectory(EnvironmentParameters.MachineDirectory);
+        }
+        public void OpenTemporaryDirectory()
+        {
+            OpenDirectory(EnvironmentParameters.TemporaryDirectory);
         }
 
         #endregion

@@ -1318,4 +1318,28 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Software" xml:space="preserve">
     <value>bin</value>
   </data>
+  <data name="String_About_CopyLongInformation_A" xml:space="preserve">
+    <value>長い情報をコピー</value>
+  </data>
+  <data name="String_About_CopyShortInformation_A" xml:space="preserve">
+    <value>短い情報をコピー</value>
+  </data>
+  <data name="String_About_OpenApplicationDirectory_A" xml:space="preserve">
+    <value>アプリケーション</value>
+  </data>
+  <data name="String_About_OpenForumUri_A" xml:space="preserve">
+    <value>フォーラム</value>
+  </data>
+  <data name="String_About_OpenMachineDirectory_A" xml:space="preserve">
+    <value>端末データ</value>
+  </data>
+  <data name="String_About_OpenProjectUri_A" xml:space="preserve">
+    <value>プロジェクト</value>
+  </data>
+  <data name="String_About_OpenTemporaryDirectory_A" xml:space="preserve">
+    <value>一時データ</value>
+  </data>
+  <data name="String_About_OpenUserDirectory_A" xml:space="preserve">
+    <value>ユーザーデータ</value>
+  </data>
 </root>
