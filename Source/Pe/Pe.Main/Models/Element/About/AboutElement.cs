@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
@@ -86,16 +87,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         private void Copt(string s)
         {
-
+            Logger.LogWarning("TODO");
         }
 
         public void CopyShortInformation()
         {
-            Logger.LogWarning("TODO");
+            var infoCollector = new ApplicationInformationCollector(EnvironmentParameters);
+            var s = infoCollector.GetShortInformation();
+            Copt(s);
         }
         public void CopyLongInformation()
         {
-            Logger.LogWarning("TODO");
+            var infoCollector = new ApplicationInformationCollector(EnvironmentParameters);
+            var s = infoCollector.GetLongInformation();
+            Copt(s);
         }
 
         private void OpenDirectory(DirectoryInfo directory)
