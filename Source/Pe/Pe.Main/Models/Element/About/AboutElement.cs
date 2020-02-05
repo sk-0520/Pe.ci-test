@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             OpenUri(CustomConfiguration.General.ProjectRepositoryUri);
         }
 
-        private void Copt(string s)
+        private void Copy(string s)
         {
             Logger.LogWarning("TODO");
         }
@@ -94,13 +94,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         {
             var infoCollector = new ApplicationInformationCollector(EnvironmentParameters);
             var s = infoCollector.GetShortInformation();
-            Copt(s);
+            Copy(s);
         }
         public void CopyLongInformation()
         {
             var infoCollector = new ApplicationInformationCollector(EnvironmentParameters);
             var s = infoCollector.GetLongInformation();
-            Copt(s);
+            Copy(s);
         }
 
         private void OpenDirectory(DirectoryInfo directory)

@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         #region property
 
-        bool IsDevDebug { get; } = !true;
+        bool IsDevDebug { get; } = true;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugKeyAction();
             //DebugSetting();
             //ShowCommandView();
-            //ShowAboutView();
+            ShowAboutView();
         }
 
         void DebugCustomize()

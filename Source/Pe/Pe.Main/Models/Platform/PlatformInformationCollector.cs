@@ -1,12 +1,31 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Reflection;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    public struct PlatformInformationItem
+    {
+        public PlatformInformationItem(string key, object? value)
+        {
+            Key = key;
+            Value = value;
+        }
+
+        #region property
+
+        public string Key { get; }
+        public object? Value { get; }
+
+        #endregion
+    }
+
     public class PlatformInformationCollector : DisposerBase
     {
         #region property
@@ -14,9 +33,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region function
 
-        protected Dictionary<string, object> GetInfo(ManagementClass managementClass)
+        protected List<PlatformInformationItem> GetInfo(ManagementClass managementClass)
         {
-            var result = new Dictionary<string, object>();
+            var result = new List<PlatformInformationItem> ();
 
             using(var mc = managementClass.GetInstances()) {
                 foreach(var mo in mc) {
@@ -24,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                         .OfType<PropertyData>()
                     ;
                     foreach(var property in collection) {
-                        result[property.Name] = property.Value;
+                        result.Add(new PlatformInformationItem(property.Name, property.Value));
                     }
                 }
             }
@@ -32,18 +51,66 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return result;
         }
 
-        public virtual IReadOnlyDictionary<string, object> GetCPU()
+        public virtual IList<PlatformInformationItem> GetCPU()
         {
             using(var managementCpu = new ManagementClass("Win32_Processor")) {
                 return GetInfo(managementCpu);
             }
         }
 
-        public virtual IReadOnlyDictionary<string, object> GetOS()
+        public virtual IList<PlatformInformationItem> GetOS()
         {
             using(var managementOs = new ManagementClass("Win32_OperatingSystem")) {
                 return GetInfo(managementOs);
             }
+        }
+
+        public virtual IList<PlatformInformationItem> GetEnvironment()
+        {
+            var type = typeof(Environment);
+            var props = type.GetProperties(BindingFlags.Static | BindingFlags.Public);
+
+            var result = new List<PlatformInformationItem>(props.Length);
+
+            foreach(var prop in props) {
+                var value = prop.GetValue(type, null);
+                result.Add(new PlatformInformationItem(prop.Name, value));
+            }
+
+            return result;
+        }
+
+        public virtual IList<PlatformInformationItem> GetEnvironmentVariables()
+        {
+            var envs = Environment.GetEnvironmentVariables();
+
+            var result = new List<PlatformInformationItem>(envs.Count);
+
+            foreach(var entry in envs.OfType<DictionaryEntry>()) {
+                result.Add(new PlatformInformationItem((string)entry.Key, entry.Value));
+            }
+
+            return result;
+        }
+
+        public virtual IList<PlatformInformationItem> GetScreen()
+        {
+            var screens = Screen.AllScreens;
+
+            var result = new List<PlatformInformationItem>(screens.Length * 5);
+            result.Add(new PlatformInformationItem("screen", screens.Length));
+
+            for(var i = 0; i < screens.Length; i++) {
+                var screen = screens[i];
+                var head = $"screen[i].";
+                result.Add(new PlatformInformationItem(head + nameof(screen.BitsPerPixel), screen.BitsPerPixel));
+                result.Add(new PlatformInformationItem(head + nameof(screen.Primary), screen.Primary));
+                result.Add(new PlatformInformationItem(head + nameof(screen.DeviceName), screen.DeviceName));
+                result.Add(new PlatformInformationItem(head + nameof(screen.DeviceBounds), screen.DeviceBounds));
+                result.Add(new PlatformInformationItem(head + nameof(screen.DeviceWorkingArea), screen.DeviceWorkingArea));
+            }
+
+            return result;
         }
 
         #endregion
