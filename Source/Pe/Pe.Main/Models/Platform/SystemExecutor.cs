@@ -50,6 +50,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             process.Start();
         }
 
+        public Process? OpenFileInDirectory(FileInfo file)
+        {
+            try {
+                var process = new Process();
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.FileName = "explorer.exe";
+                process.StartInfo.Arguments = $"/select,\"{file.FullName}\"";
+                if(process.Start()) {
+                    return process;
+                } else {
+                    Logger.LogWarning($"fail: {nameof(process)}.{process.Start()}");
+                }
+            } catch(Exception ex) {
+                Logger.LogWarning(ex, ex.Message);
+            }
+
+            return null;
+        }
 
         #endregion
     }
