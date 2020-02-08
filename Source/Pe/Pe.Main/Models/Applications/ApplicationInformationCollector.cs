@@ -19,9 +19,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         EnvironmentParameters EnvironmentParameters { get; }
 
-        string Header { get; } = "____________";
-        string SubjectFormat { get; } = "{0} =================";
-        string Indent { get; } = "    ";
+        public string Header { get; set; } = "____________" + Environment.NewLine;
+        public string SubjectFormat { get; set; } = "{0} =================";
+        public string Indent { get; set; } = "    ";
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             };
 
             var sb = new StringBuilder(255);
-            sb.AppendLine(Header);
+            sb.Append(Header);
             foreach(var item in items) {
                 sb.Append(Indent);
                 sb.Append(item.Key);

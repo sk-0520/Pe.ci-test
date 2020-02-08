@@ -163,6 +163,33 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
+        private IReadOnlyList<ObjectDumpItem> DumpArray(Array array, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>(array.Length);
+            var arrayType = array.GetType();
+            for(var i=0; i< array.Length; i++) {
+                var s = "[" + i.ToString() + "]";
+                var target = array.GetValue(i);
+
+                if(target == null) {
+                    var item = new ObjectDumpItem(new DummyInfo(s, arrayType, typeof(object)), null, EmptyChildren);
+                    result.Add(item);
+                } else {
+                    var targetType = target.GetType();
+                    if(IgnoreNestedMembers.Contains(targetType)) {
+                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
+                        result.Add(item);
+                    } else {
+                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), s, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        result.Add(item);
+                    }
+                }
+            }
+
+            return result;
+
+        }
+
         IReadOnlyList<ObjectDumpItem> DumpFileSystemInfo(FileSystemInfo fileSystemInfo, int nest, bool ignoreAutoMember)
         {
             var result = new List<ObjectDumpItem>() {
@@ -190,6 +217,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             switch(target) {
                 case IDictionary dic:
                     return DumpDictionary(dic, nest, ignoreAutoMember);
+
+                case Array array:
+                    return DumpArray(array, nest, ignoreAutoMember);
 
                 case FileSystemInfo fsi:
                     return DumpFileSystemInfo(fsi, nest, ignoreAutoMember);

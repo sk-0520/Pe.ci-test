@@ -116,7 +116,7 @@
 
       <Grid Grid.Column="1">
         <ScrollViewer>
-          <ItemsControl IsTabStop="False" ItemsSource="{Binding ComponentItems}">
+          <ItemsControl IsTabStop="False" ItemsSource="{Binding ComponentItems}" Padding="{StaticResource AllMargin}">
             <ItemsControl.GroupStyle>
               <GroupStyle>
                 <GroupStyle.HeaderTemplate>

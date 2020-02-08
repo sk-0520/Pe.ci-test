@@ -445,9 +445,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        private void LoggingInformation()
+        {
+            var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
+            infoCollector.Header = string.Empty;
+            infoCollector.Indent = string.Empty;
+
+            var s = infoCollector.GetLongInformation();
+            Logger.LogInformation("[Logging]" + Environment.NewLine + s);
+        }
+
         public bool Startup(App app, StartupEventArgs e)
         {
             StartupUsageStatistics();
+            LoggingInformation();
 
             //var initializer = new ApplicationInitializer();
             //if(!initializer.Initialize(e.Args)) {
