@@ -825,7 +825,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("アップデート可能");
 
                     //ShowUpdateReleaseNote(!checkOnly);
-                    await GetUpdateArchiveAsync(appVersion);
+                    var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+                    var path = Path.Combine(environmentParameters.MachineArchiveDirectory.FullName, appVersion.Version.ToString() + ".zip");
+                    var donwloadFile = new FileInfo(path);
+                    var successDownload = await GetUpdateArchiveAsync(appVersion, donwloadFile);
+                    if(successDownload) {
+
+                    }
                 } else {
                     Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
                 }
@@ -833,9 +839,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         }
 
-        public Task<bool> GetUpdateArchiveAsync(UpdateItemData updateItemData)
+        private async Task<bool> GetUpdateArchiveAsync(UpdateItemData updateItemData, FileInfo donwloadFile)
         {
-            return Task.FromResult(false);
+            using(var userAgent = UserAgentManager.CreateAppUserAgent()) {
+                var content = await userAgent.GetAsync(updateItemData.ArchiveUri);
+                if(!content.IsSuccessStatusCode) {
+                    // まぁ来ないと思うよ
+                    return false;
+                }
+
+                //TODO: ダウンロード進捗のあれこれ
+                using(var networkStream = await content.Content.ReadAsStreamAsync()) {
+                    using(var localStream = donwloadFile.Create()) {
+                        await networkStream.CopyToAsync(localStream);
+                    }
+                }
+            }
+
+            return true;
         }
 
         #endregion
