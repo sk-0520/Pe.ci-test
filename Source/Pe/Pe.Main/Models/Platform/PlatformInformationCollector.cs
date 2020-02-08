@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         protected List<PlatformInformationItem> GetInfo(ManagementClass managementClass)
         {
-            var result = new List<PlatformInformationItem> ();
+            var result = new List<PlatformInformationItem>();
 
             using(var mc = managementClass.GetInstances()) {
                 foreach(var mo in mc) {
@@ -72,9 +72,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             var result = new List<PlatformInformationItem>(props.Length);
 
+            var ignoreProperties = new HashSet<string>() {
+                nameof(Environment.StackTrace),
+            };
+
             foreach(var prop in props) {
+                if(ignoreProperties.Contains(prop.Name)) {
+                    continue;
+                }
                 var value = prop.GetValue(type, null);
-                result.Add(new PlatformInformationItem(prop.Name, value));
+                switch(prop.Name) {
+                    case nameof(Environment.NewLine):
+                        result.Add(new PlatformInformationItem(prop.Name, BitConverter.ToString(Encoding.UTF8.GetBytes((string)value!))));
+                        break;
+
+                    default:
+                        result.Add(new PlatformInformationItem(prop.Name, value));
+                        break;
+                }
             }
 
             return result;
@@ -102,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             for(var i = 0; i < screens.Length; i++) {
                 var screen = screens[i];
-                var head = $"screen[i].";
+                var head = $"screen[{i}].";
                 result.Add(new PlatformInformationItem(head + nameof(screen.BitsPerPixel), screen.BitsPerPixel));
                 result.Add(new PlatformInformationItem(head + nameof(screen.Primary), screen.Primary));
                 result.Add(new PlatformInformationItem(head + nameof(screen.DeviceName), screen.DeviceName));

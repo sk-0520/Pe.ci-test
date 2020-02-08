@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
@@ -15,16 +17,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 {
     public class AboutElement : ElementBase
     {
-        public AboutElement(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public AboutElement(EnvironmentParameters environmentParameters, IClipboardManager clipboardManager, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
             CustomConfiguration = EnvironmentParameters.Configuration;
+            ClipboardManager = clipboardManager;
         }
 
         #region property
 
         EnvironmentParameters EnvironmentParameters { get; }
         CustomConfiguration CustomConfiguration { get; }
+        IClipboardManager ClipboardManager { get; }
 
         private List<AboutComponentItem> ComponentsImpl { get; } = new List<AboutComponentItem>();
         public IReadOnlyList<AboutComponentItem> Components => ComponentsImpl;
@@ -87,7 +92,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         private void Copy(string s)
         {
-            Logger.LogWarning("TODO");
+            var data = new DataObject();
+            data.SetText(s, TextDataFormat.UnicodeText);
+            ClipboardManager.Set(data);
         }
 
         public void CopyShortInformation()

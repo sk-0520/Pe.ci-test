@@ -163,6 +163,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
+        IReadOnlyList<ObjectDumpItem> DumpFileSystemInfo(FileSystemInfo fileSystemInfo, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>() {
+                new ObjectDumpItem(new DummyInfo(string.Empty, typeof(FileSystemInfo), fileSystemInfo.GetType()), fileSystemInfo.ToString(), EmptyChildren),
+            };
+
+            return result;
+        }
+
+        IReadOnlyList<ObjectDumpItem> DumpUri(Uri uri, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>() {
+                new ObjectDumpItem(new DummyInfo(string.Empty, typeof(Uri), uri.GetType()), uri.ToString(), EmptyChildren),
+            };
+
+            return result;
+        }
+
         IReadOnlyList<ObjectDumpItem> DumpCore(object target, int nest, bool ignoreAutoMember)
         {
             if(nest == 0) {
@@ -172,6 +190,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             switch(target) {
                 case IDictionary dic:
                     return DumpDictionary(dic, nest, ignoreAutoMember);
+
+                case FileSystemInfo fsi:
+                    return DumpFileSystemInfo(fsi, nest, ignoreAutoMember);
+
+                case Uri uri:
+                    return DumpUri(uri, nest, ignoreAutoMember);
 
                 default:
                     break;
