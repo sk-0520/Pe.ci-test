@@ -143,6 +143,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         ));
 
+        public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 ApplicationManager.CheckUpdateAsync(true).ConfigureAwait(false);
+             }
+         ));
+
         public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
            () => {
              ApplicationManager.ToggleHook();

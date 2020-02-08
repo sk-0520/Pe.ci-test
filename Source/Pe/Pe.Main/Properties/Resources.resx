@@ -1342,4 +1342,7 @@
   <data name="String_About_OpenUserDirectory_A" xml:space="preserve">
     <value>ユーザーデータ</value>
   </data>
+  <data name="String_AppManager_About_Update_A" xml:space="preserve">
+    <value>update</value>
+  </data>
 </root>

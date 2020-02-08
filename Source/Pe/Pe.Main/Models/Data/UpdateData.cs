@@ -15,7 +15,8 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
             "version": "x.x.x",
             "platform": "x64",
             "minimum_version": "y.y.y"
-            "note_uri": ""
+            "note_kind": "",
+            "note_uri": "",
             "archive_uri": "",
             "archive_size": ,
             "archive_hash_kind": "",
@@ -57,6 +58,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             get => Version.Parse(_MinimumVersion);
             set => _MinimumVersion = value.ToString();
         }
+
+        [DataMember]
+        [JsonPropertyName("note_mime")]
+        public string NoteMime { get; set; } = string.Empty;
 
         [DataMember]
         [JsonPropertyName("note_uri")]
