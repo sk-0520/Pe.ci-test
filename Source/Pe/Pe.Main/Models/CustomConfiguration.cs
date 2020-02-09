@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             ProjectForumUri = section.GetValue<Uri>("project_forum_uri");
             ProjectWebSiteUri = section.GetValue<Uri>("project_website_uri");
             UpdateCheckUri = section.GetValue<Uri>("version_check_uri");
+            UpdateWait = section.GetValue<TimeSpan>("update_wait");
         }
 
         #region property
@@ -58,6 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Uri ProjectForumUri { get; }
         public Uri ProjectWebSiteUri { get; }
         public Uri UpdateCheckUri { get; }
+        public TimeSpan UpdateWait { get; }
 
         #endregion
     }

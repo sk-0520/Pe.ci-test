@@ -836,18 +836,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public async Task DelayCheckUpdateAsync()
         {
-            await Task.Delay(TimeSpan.FromSeconds(0));
-            //await Task.Delay(TimeSpan.FromSeconds(10));
-            await CheckUpdateAsync(true/*TODO: 設定から*/);
+            var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            UpdateKind updateKind;
+            using(var commander = mainDatabaseBarrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Build<AppUpdateSettingEntityDao>(commander, commander.Implementation);
+                updateKind = dao.SelectSettingUpdateSetting().UpdateKind;
+            }
+
+            if(updateKind == UpdateKind.None) {
+                return;
+            }
+
+            var updateWait = ApplicationDiContainer.Build<CustomConfiguration>().General.UpdateWait;
+            await Task.Delay(updateWait).ConfigureAwait(false);
+            await CheckUpdateAsync(updateKind == UpdateKind.Notify).ConfigureAwait(false);
         }
 
         public async Task CheckUpdateAsync(bool checkOnly)
         {
+            if(UpdateInfo.State != UpdateState.None) {
+                if(UpdateInfo.IsReady) {
+                    Logger.LogInformation("アップデート準備艦長");
+                } else {
+                    Logger.LogInformation("アップデート排他制御中");
+                }
+                return;
+            }
+
             var updateChecker = ApplicationDiContainer.Build<UpdateChecker>();
 
+            UpdateInfo.State = UpdateState.Checking;
             var appVersion = await updateChecker.CheckApplicationUpdateAsync().ConfigureAwait(false);
             if(appVersion == null) {
                 Logger.LogInformation("アップデートなし");
+                UpdateInfo.State = UpdateState.None;
                 return;
             }
 
@@ -855,35 +877,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(BuildStatus.Version < appVersion.MinimumVersion) {
                 Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
+                UpdateInfo.State = UpdateState.None;
                 return;
             }
 
             Logger.LogInformation("アップデート可能");
 
-            //ShowUpdateReleaseNote(!checkOnly);
+            //ShowUpdateReleaseNote();
+            if(checkOnly) {
+                return;
+            }
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var donwloadFilePath = Path.Combine(environmentParameters.MachineUpdateArchiveDirectory.FullName, appVersion.Version.ToString() + ".zip");
             var donwloadFile = new FileInfo(donwloadFilePath);
             var updateDownloader = ApplicationDiContainer.Build<UpdateDownloader>();
+            UpdateInfo.State = UpdateState.Downloading;
             var successDownload = await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile).ConfigureAwait(false);
-            if(successDownload) {
-                Logger.LogInformation("アップデートファイル展開");
-                try {
-                    var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
-                    directoryCleaner.Clear(false);
+            if(!successDownload) {
+                Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
+                UpdateInfo.State = UpdateState.None;
+                return;
+            }
 
-                    var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
-                    archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory);
+            Logger.LogInformation("アップデートファイル展開");
+            UpdateInfo.State = UpdateState.Extracting;
+            try {
+                var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
+                directoryCleaner.Clear(false);
 
-                    var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
-                    var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
-                    UpdateInfo.Path = exeutePathParameter;
-                    UpdateInfo.IsReady = true;
+                var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
+                archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory);
 
-                } catch(Exception ex) {
-                    Logger.LogError(ex, ex.Message);
-                }
+                var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
+                var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
+                UpdateInfo.Path = exeutePathParameter;
+                UpdateInfo.State = UpdateState.Ready;
+
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
+                UpdateInfo.State = UpdateState.None;
             }
 
         }

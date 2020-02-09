@@ -32,9 +32,13 @@ if ($ProcessId -ne 0 ) {
     }
 }
 
+Write-Output "$SourceDirectory -> $DestinationDirectory"
 Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
 
-Invoke-Expression "$UpdateScript"
+if( Test-Path -Path $UpdateScript ) {
+    Write-Output "execute script: $UpdateScript"
+    Invoke-Expression "$UpdateScript"
+}
 
 Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArguments
 

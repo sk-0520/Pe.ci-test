@@ -96,6 +96,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    internal enum UpdateState
+    {
+        /// <summary>
+        /// なにもしてない。
+        /// </summary>
+        None,
+        /// <summary>
+        /// チェック中。
+        /// </summary>
+        Checking,
+        /// <summary>
+        /// DL中。
+        /// </summary>
+        Downloading,
+        /// <summary>
+        /// 展開中。
+        /// </summary>
+        Extracting,
+        /// <summary>
+        /// 完了。
+        /// </summary>
+        Ready,
+    }
+
     internal class UpdateInfo
     {
         #region property
@@ -103,7 +127,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// アップデート準備完了。
         /// </summary>
-        public bool IsReady { get; set; }
+        public bool IsReady => State == UpdateState.Ready;
+        public UpdateState State { get; set; }
 
         /// <summary>
         /// アップデート処理実施ファイル（*.bat とか *.exe とか）。
