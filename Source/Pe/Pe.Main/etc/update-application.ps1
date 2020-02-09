@@ -9,7 +9,7 @@ Param(
     [parameter(mandatory=$true)][string[]] $ExecuteArguments
 
 )
-$OutputEncoding='utf-8'
+#$OutputEncoding='utf-8'
 $ErrorActionPreference = "Stop"
 
 Write-Output "ProcessId: $ProcessId"

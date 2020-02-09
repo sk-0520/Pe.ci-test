@@ -1,5 +1,3 @@
-
-
-
+Write-Output "UPDATED SCRIPT!"
 
 
