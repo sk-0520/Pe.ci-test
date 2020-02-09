@@ -9,6 +9,13 @@
 
   Height="450"
   Width="800"
+  WindowStartupLocation="CenterScreen"
+  ResizeMode="CanResizeWithGrip"
+
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -20,6 +27,18 @@
     <Binding Path="Resources.String_ReleaseNote_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
   <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0">
+
+    </Grid>
+
+    <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
+      <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
+    </UniformGrid>
 
   </Grid>
 </Window>
