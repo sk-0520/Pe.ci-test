@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// アプリケーションアップデート用アーカイブ配置ディレクトリ。
         /// </summary>
-        public DirectoryInfo MachineUpdateDirectory => CombineDirectory(MachineArchiveDirectory, "application");
+        public DirectoryInfo MachineUpdateArchiveDirectory => CombineDirectory(MachineArchiveDirectory, "application");
         public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
 
         /// <summary>
@@ -125,6 +125,15 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo TemporarySettingDirectory => CombineDirectory(TemporaryDirectory, "setting");
         public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(TemporaryDirectory, "plugins");
+
+        /// <summary>
+        /// アーカイブ展開ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryExtractDirectory => CombineDirectory(TemporaryDirectory, "extract");
+        /// <summary>
+        /// アプリケーション展開ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "application");
 
         /// <summary>
         /// 設定格納DBファイル。

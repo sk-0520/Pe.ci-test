@@ -50,6 +50,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
+using System.IO.Compression;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -817,46 +818,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var updateChecker = ApplicationDiContainer.Build<UpdateChecker>();
 
-            var appVersion = await updateChecker.CheckApplicationUpdateAsync();
-            if(appVersion != null) {
-                Logger.LogInformation("アップデートあり: {0}", appVersion.Version);
+            var appVersion = await updateChecker.CheckApplicationUpdateAsync().ConfigureAwait(false);
+            if(appVersion == null) {
+                Logger.LogInformation("アップデートなし");
+                return;
+            }
 
-                if(appVersion.MinimumVersion <= BuildStatus.Version) {
-                    Logger.LogInformation("アップデート可能");
+            Logger.LogInformation("アップデートあり: {0}", appVersion.Version);
 
-                    //ShowUpdateReleaseNote(!checkOnly);
-                    var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
-                    var path = Path.Combine(environmentParameters.MachineArchiveDirectory.FullName, appVersion.Version.ToString() + ".zip");
-                    var donwloadFile = new FileInfo(path);
-                    var successDownload = await GetUpdateArchiveAsync(appVersion, donwloadFile);
-                    if(successDownload) {
+            if(BuildStatus.Version < appVersion.MinimumVersion) {
+                Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
+                return;
+            }
 
-                    }
-                } else {
-                    Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
+            Logger.LogInformation("アップデート可能");
+
+            //ShowUpdateReleaseNote(!checkOnly);
+
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+            var donwloadFilePath = Path.Combine(environmentParameters.MachineUpdateArchiveDirectory.FullName, appVersion.Version.ToString() + ".zip");
+            var donwloadFile = new FileInfo(donwloadFilePath);
+            var updateDownloader = ApplicationDiContainer.Build<UpdateDownloader>();
+            var successDownload = await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile).ConfigureAwait(false);
+            if(successDownload) {
+                Logger.LogInformation("アップデートファイル展開");
+                try {
+                    var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
+                    directoryCleaner.Clear(false);
+
+                    var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
+                    archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory);
+
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
                 }
             }
 
-        }
-
-        private async Task<bool> GetUpdateArchiveAsync(UpdateItemData updateItemData, FileInfo donwloadFile)
-        {
-            using(var userAgent = UserAgentManager.CreateAppUserAgent()) {
-                var content = await userAgent.GetAsync(updateItemData.ArchiveUri);
-                if(!content.IsSuccessStatusCode) {
-                    // まぁ来ないと思うよ
-                    return false;
-                }
-
-                //TODO: ダウンロード進捗のあれこれ
-                using(var networkStream = await content.Content.ReadAsStreamAsync()) {
-                    using(var localStream = donwloadFile.Create()) {
-                        await networkStream.CopyToAsync(localStream);
-                    }
-                }
-            }
-
-            return true;
         }
 
         #endregion

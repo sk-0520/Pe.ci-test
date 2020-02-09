@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Configuration = configuration;
             UserAgentManager = userAgentManager;
         }
+
         #region property
 
         ILogger Logger { get; }

@@ -220,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.MachineDirectory,
                 environmentParameters.MachineArchiveDirectory,
-                environmentParameters.MachineUpdateDirectory,
+                environmentParameters.MachineUpdateArchiveDirectory,
                 environmentParameters.TemporaryDirectory,
             };
 
