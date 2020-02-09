@@ -51,6 +51,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using System.IO.Compression;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -119,6 +120,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         PluginContainer? PluginContainer { get; set; }
 
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
+
+        internal UpdateInfo UpdateInfo { get; } = new UpdateInfo();
 
         #endregion
 
@@ -733,9 +736,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeNoteElements();
         }
 
-        public void Exit()
+        public void Exit(bool ignoreUpdate)
         {
             Logger.LogInformation("おわる！");
+
+            if(!ignoreUpdate && UpdateInfo.IsReady) {
+                Debug.Assert(UpdateInfo.Path != null);
+
+                Logger.LogInformation("アップデート処理起動");
+
+                var process = new Process();
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.FileName = UpdateInfo.Path.Path;
+                process.StartInfo.Arguments = UpdateInfo.Path.Option;
+                process.StartInfo.WorkingDirectory = UpdateInfo.Path.WorkDirectoryPath;
+
+                Logger.LogInformation("path: {0}", process.StartInfo.FileName);
+                Logger.LogInformation("args: {0}", process.StartInfo.Arguments);
+
+                try {
+                    process.Start();
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+
 
             StopHook();
             DisposeHook();
@@ -748,6 +773,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Dispose();
 
             Logger.LogInformation("ばいばい");
+
+            NLog.LogManager.Shutdown();
             Application.Current.Shutdown();
         }
 
@@ -848,6 +875,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
                     archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory);
+
+                    var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
+                    var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
+                    UpdateInfo.Path = exeutePathParameter;
+                    UpdateInfo.IsReady = true;
 
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);

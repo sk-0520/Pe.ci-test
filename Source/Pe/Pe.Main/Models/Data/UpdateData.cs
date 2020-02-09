@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -91,6 +92,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         [DataMember]
         [JsonPropertyName("items")]
         public UpdateItemData[] Items { get; set; } = new UpdateItemData[0];
+
+        #endregion
+    }
+
+    internal class UpdateInfo
+    {
+        #region property
+
+        /// <summary>
+        /// アップデート準備完了。
+        /// </summary>
+        public bool IsReady { get; set; }
+
+        /// <summary>
+        /// アップデート処理実施ファイル（*.bat とか *.exe とか）。
+        /// <para>batかなぁ。</para>
+        /// </summary>
+        public ILauncherExecutePathParameter? Path { get; set; }
 
         #endregion
     }

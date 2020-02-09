@@ -55,6 +55,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo RootDirectory { get; }
 
+        public FileInfo RootApplication => CombineFile(RootDirectory, "Pe.exe");
+
         /// <summary>
         /// アプリケーションのディレクトリ。
         /// </summary>
@@ -71,6 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// etc ディレクトリ。
         /// </summary>
         public DirectoryInfo EtcDirectory => CombineDirectory(RootDirectory, "etc");
+        public FileInfo EtcUpdateScriptFile => CombineFile(EtcDirectory, "update-application.ps1");
         /// <summary>
         /// SQL ディレクトリ。
         /// </summary>

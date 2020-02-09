@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         public ICommand ExitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                ApplicationManager.Exit();
+                ApplicationManager.Exit(false);
             }
         ));
 
