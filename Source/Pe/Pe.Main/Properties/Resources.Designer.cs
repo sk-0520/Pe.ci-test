@@ -2806,6 +2806,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   release note に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ReleaseNote_Caption {
+            get {
+                return ResourceManager.GetString("String_ReleaseNote_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ディスプレイ識別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Screen_Caption {

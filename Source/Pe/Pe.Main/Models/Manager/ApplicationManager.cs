@@ -303,6 +303,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             changing.SuccessValue?.Dispose();
         }
 
+        private void ShowUpdateReleaseNote(UpdateItemData updateItem)
+        {
+            var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
+            if(windowItem.Any()) {
+                // 再表示
+                ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
+                    windowItem.First().Window.Activate();
+                }, DispatcherPriority.ApplicationIdle);
+                return;
+            }
+
+            ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
+                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(updateItem);
+                var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
+                view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
+                WindowManager.Register(new WindowItem(WindowKind.Release, view));
+                view.Show();
+            }, DispatcherPriority.ApplicationIdle);
+        }
 
         private void RegisterPlugins()
         {
@@ -883,7 +902,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             Logger.LogInformation("アップデート可能");
 
-            //ShowUpdateReleaseNote();
+            ShowUpdateReleaseNote(appVersion);
             if(checkOnly) {
                 return;
             }

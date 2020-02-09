@@ -29,6 +29,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         About,
         /// <summary>
+        /// リリース情報。
+        /// </summary>
+        Release,
+        /// <summary>
         /// スタートアップ。
         /// </summary>
         Startup,

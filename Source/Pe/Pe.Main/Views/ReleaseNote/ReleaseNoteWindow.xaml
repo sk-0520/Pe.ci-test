@@ -1,0 +1,25 @@
+<Window
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.ReleaseNote.ReleaseNoteWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+
+  Height="450"
+  Width="800"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+>
+  <Window.Resources>
+    <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+  </Window.Resources>
+  <Window.Title>
+    <Binding Path="Resources.String_ReleaseNote_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+  </Window.Title>
+  <Grid>
+
+  </Grid>
+</Window>

@@ -1345,4 +1345,7 @@
   <data name="String_AppManager_About_Update_A" xml:space="preserve">
     <value>update</value>
   </data>
+  <data name="String_ReleaseNote_Caption" xml:space="preserve">
+    <value>release note</value>
+  </data>
 </root>
