@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 "-Platform", Environment.Is64BitProcess ? "x64": "x32",
                 "-UpdateScript", CommandLine.Escape(Path.Combine(destinationDirectory.FullName, "etc", "updated.ps1")),
                 "-ExecuteCommand", CommandLine.Escape(EnvironmentParameters.RootApplication.FullName),
-                "-ExecuteArguments", CommandLine.Escape(string.Join(" ", Environment.GetCommandLineArgs().Skip(1).Select(i => CommandLine.Escape(i)))),
+                "-ExecuteArgument", CommandLine.Escape(string.Join(" ", Environment.GetCommandLineArgs().Skip(1).Select(i => CommandLine.Escape(i)))),
             };
             var psCommand = string.Join(" ", psCommands);
 
