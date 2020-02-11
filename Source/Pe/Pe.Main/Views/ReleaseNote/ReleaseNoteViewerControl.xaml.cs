@@ -17,9 +17,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
     /// <summary>
     /// ReleaseNoteViewer.xaml の相互作用ロジック
     /// </summary>
-    public partial class ReleaseNoteViewer : UserControl
+    public partial class ReleaseNoteViewerControl : UserControl
     {
-        public ReleaseNoteViewer()
+        public ReleaseNoteViewerControl()
         {
             InitializeComponent();
         }
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
         public static readonly DependencyProperty ItemProperty = DependencyProperty.Register(
             nameof(Item),
             typeof(ReleaseNoteItemData),
-            typeof(ReleaseNoteViewer),
+            typeof(ReleaseNoteViewerControl),
             new FrameworkPropertyMetadata(
                 default(ReleaseNoteItemData),
                 new PropertyChangedCallback(OnItemChanged)
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
 
         private static void OnItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if(d is ReleaseNoteViewer control) {
+            if(d is ReleaseNoteViewerControl control) {
             }
         }
 

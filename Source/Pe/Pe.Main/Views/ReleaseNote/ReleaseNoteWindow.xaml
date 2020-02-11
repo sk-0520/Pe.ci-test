@@ -34,7 +34,7 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <app_main_views_release_note:ReleaseNoteViewer Item="{Binding Item}" />
+      <app_main_views_release_note:ReleaseNoteViewerControl Item="{Binding Item}" />
     </Grid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
