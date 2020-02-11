@@ -51,6 +51,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         }
 
         [DataMember]
+        [JsonPropertyName("platform")]
+        public string Platform { get; set; } = string.Empty;
+
+        [DataMember]
         [JsonPropertyName("minimum_version")]
         public string _MinimumVersion { get; set; } = string.Empty;
         [IgnoreDataMember, JsonIgnore]
@@ -138,4 +142,135 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
+
+    public static class ReleaseNoteMime
+    {
+        #region property
+
+        public const string Json = "application/json";
+
+        #endregion
+    }
+
+    public enum ReleaseNoteContentKind
+    {
+        [DataMember(Name = "unknown")]
+        [EnumResource]
+        Unknown,
+        [DataMember(Name = "note")]
+        [EnumResource]
+        Note,
+        [DataMember(Name = "features")]
+        [EnumResource]
+        Features,
+        [DataMember(Name = "fixes")]
+        [EnumResource]
+        Fixes,
+        [DataMember(Name = "developer")]
+        [EnumResource]
+        Developer,
+    }
+
+    public enum ReleaseNoteLogKind
+    {
+        [DataMember(Name = "none")]
+        [EnumResource]
+        None,
+        [DataMember(Name = "package")]
+        [EnumResource]
+        Package,
+        [DataMember(Name = "compatibility")]
+        [EnumResource]
+        Compatibility,
+    }
+
+    [Serializable, DataContract]
+    public class ReleaseNoteLogItemData : DataBase
+    {
+        #region property
+
+        [DataMember(Name = "revision")]
+        [JsonPropertyName("revision")]
+        public string Revision { get; set; } = string.Empty;
+
+        [DataMember(Name = "kind")]
+        [JsonPropertyName("kind")]
+        public string _Kind { get; set; } = string.Empty;
+        [IgnoreDataMember, JsonIgnore]
+        public ReleaseNoteLogKind Kind
+        {
+            get => EnumUtility.TryParse(_Kind, out ReleaseNoteLogKind kind) ? kind : ReleaseNoteLogKind.None;
+            set => _Kind = value.ToString();
+        }
+
+        [DataMember(Name = "subject")]
+        [JsonPropertyName("subject")]
+        public string Subject { get; set; } = string.Empty;
+
+        [DataMember(Name = "comments")]
+        [JsonPropertyName("comments")]
+        public string[] Comments { get; set; } = new string[0];
+
+        #endregion
+    }
+
+    [Serializable, DataContract]
+    public class ReleaseNoteContentData : DataBase
+    {
+        #region property
+
+        [DataMember(Name = "kind")]
+        [JsonPropertyName("kind")]
+        public string _Kind { get; set; } = string.Empty;
+        [IgnoreDataMember, JsonIgnore]
+        public ReleaseNoteContentKind Kind
+        {
+            get => EnumUtility.TryParse(_Kind, out ReleaseNoteContentKind kind) ? kind : ReleaseNoteContentKind.Unknown;
+            set => _Kind = value.ToString();
+        }
+
+        [DataMember(Name = "logs")]
+        [JsonPropertyName("logs")]
+        public ReleaseNoteLogItemData[]? Logs { get; set; }
+
+        #endregion
+    }
+
+
+    [Serializable, DataContract]
+    public class ReleaseNoteItemData : DataBase
+    {
+        #region property
+
+        [DataMember(Name = "date")]
+        [JsonPropertyName("date")]
+        public string _Date { get; set; } = string.Empty;
+        [IgnoreDataMember, JsonIgnore]
+        [Timestamp(DateTimeKind.Utc)]
+        public DateTime Date
+        {
+            //get => DateTime.SpecifyKind(DateTime.Parse(_Date), DateTimeKind.Utc);
+            get => DateTime.Parse(_Date).ToUniversalTime();
+            set => _Date = value.ToString();
+        }
+
+        [DataMember(Name = "version")]
+        [JsonPropertyName("version")]
+        public string _Version { get; set; } = string.Empty;
+        [IgnoreDataMember, JsonIgnore]
+        public Version Version
+        {
+            get => Version.Parse(_Version);
+            set => _Version = value.ToString();
+        }
+
+        [DataMember(Name = "contents", IsRequired = true)]
+        [JsonPropertyName("contents")]
+        public ReleaseNoteContentData[] Contents { get; set; } = new ReleaseNoteContentData[0];
+
+        #endregion
+    }
+
+
 }
+

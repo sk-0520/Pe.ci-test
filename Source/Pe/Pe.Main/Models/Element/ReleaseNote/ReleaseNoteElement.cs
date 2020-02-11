@@ -8,16 +8,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 {
     public class ReleaseNoteElement : ElementBase
     {
-        public ReleaseNoteElement(UpdateItemData updateItem, ILoggerFactory loggerFactory)
+        public ReleaseNoteElement(UpdateItemData updateItem, ReleaseNoteItemData releaseNoteItem, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             UpdateItem = updateItem;
+            ReleaseNoteItem = releaseNoteItem;
         }
 
         #region property
 
         UpdateItemData UpdateItem { get; }
-
+        ReleaseNoteItemData ReleaseNoteItem { get; }
         #endregion
 
         #region function

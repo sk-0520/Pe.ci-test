@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             changing.SuccessValue?.Dispose();
         }
 
-        private void ShowUpdateReleaseNote(UpdateItemData updateItem)
+        private void ShowUpdateReleaseNote(UpdateItemData updateItem, ReleaseNoteItemData releaseNoteItem)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
@@ -315,7 +315,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
-                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(updateItem);
+                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(updateItem, releaseNoteItem);
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
                 WindowManager.Register(new WindowItem(WindowKind.Release, view));
@@ -894,27 +894,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             Logger.LogInformation("アップデートあり: {0}", appVersion.Version);
 
-            if(BuildStatus.Version < appVersion.MinimumVersion) {
-                Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
-                UpdateInfo.State = UpdateState.None;
-                return;
-            }
+            // CheckApplicationUpdateAsync で弾いてる
+            //if(BuildStatus.Version < appVersion.MinimumVersion) {
+            //    Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
+            //    UpdateInfo.State = UpdateState.None;
+            //    return;
+            //}
 
             Logger.LogInformation("アップデート可能");
 
-            ShowUpdateReleaseNote(appVersion);
-            if(checkOnly) {
+            var updateDownloader = ApplicationDiContainer.Build<UpdateDownloader>();
+
+            try {
+                var releaseNoteItem = await updateDownloader.DownloadReleaseNoteAsync(appVersion);
+                ShowUpdateReleaseNote(appVersion, releaseNoteItem);
+                if(checkOnly) {
+                    UpdateInfo.State = UpdateState.None;
+                    return;
+                }
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
+                UpdateInfo.State = UpdateState.None;
                 return;
             }
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var donwloadFilePath = Path.Combine(environmentParameters.MachineUpdateArchiveDirectory.FullName, appVersion.Version.ToString() + ".zip");
             var donwloadFile = new FileInfo(donwloadFilePath);
-            var updateDownloader = ApplicationDiContainer.Build<UpdateDownloader>();
             UpdateInfo.State = UpdateState.Downloading;
-            var successDownload = await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile).ConfigureAwait(false);
-            if(!successDownload) {
-                Logger.LogWarning("最低バージョン未満であるためバージョンアップ不可: 現在 = {0}, 要求 = {1}", BuildStatus.Version, appVersion.MinimumVersion);
+            try {
+                await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile).ConfigureAwait(false);
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
                 UpdateInfo.State = UpdateState.None;
                 return;
             }

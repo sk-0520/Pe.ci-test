@@ -42,9 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     return null;
                 }
                 var content = await response.Content.ReadAsStringAsync();
+
+                var platform = Environment.Is64BitProcess ? "x64" : "x86";
                 //TODO: Serializer.cs に統合したい
                 var updateData = System.Text.Json.JsonSerializer.Deserialize<UpdateData>(content);
                 var result = updateData.Items
+                    .Where(i => i.Platform == platform)
                     .Where(i => i.MinimumVersion <= BuildStatus.Version)
                     .OrderByDescending(i => i.Version)
                     .FirstOrDefault()
