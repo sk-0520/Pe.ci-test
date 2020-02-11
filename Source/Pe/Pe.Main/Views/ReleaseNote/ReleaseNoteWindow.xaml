@@ -6,6 +6,7 @@
 
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_views_release_note="clr-namespace:ContentTypeTextNet.Pe.Main.Views.ReleaseNote"
 
   Height="450"
   Width="800"
@@ -33,7 +34,7 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-
+      <app_main_views_release_note:ReleaseNoteViewer Item="{Binding Item}" />
     </Grid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">

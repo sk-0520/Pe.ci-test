@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(
              () => {
-                 ApplicationManager.CheckUpdateAsync(true).ConfigureAwait(false);
+                 ApplicationManager.ExecuteUpdateAsync(Models.Data.UpdateCheckKind.CheckOnly).ConfigureAwait(false);
              }
          ));
 

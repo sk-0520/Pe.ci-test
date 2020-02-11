@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
         {
             "release": "utc",
             "version": "x.x.x",
+            "revision": "commit",
             "platform": "x64",
             "minimum_version": "y.y.y"
             "note_kind": "",
@@ -28,21 +29,55 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
 */
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    public interface IReadOnlyUpdateItemData
+    {
+        #region property
+
+        public DateTime Release { get; }
+
+        public Version Version { get; }
+        public string Revision { get; }
+
+        public string Platform { get; }
+
+        public Version MinimumVersion { get; }
+
+        string NoteMime { get; }
+
+        Uri NoteUri { get; }
+
+        Uri ArchiveUri { get; }
+        long ArchiveSize { get; }
+        string ArchiveHashKind { get; }
+        string ArchiveHashValue { get; }
+
+        #endregion
+    }
+
     [Serializable, DataContract]
-    public class UpdateItemData : DataBase
+    public class UpdateItemData : DataBase, IReadOnlyUpdateItemData
     {
         #region property
 
         public static Uri IgnoreUri { get; } = new Uri("https://example.com/");
+
+        [DataMember]
+        [JsonPropertyName("version")]
+        public string _Version { get; set; } = string.Empty;
+
+        [DataMember]
+        [JsonPropertyName("minimum_version")]
+        public string _MinimumVersion { get; set; } = string.Empty;
+
+        #endregion
+
+        #region IReadOnlyUpdateItemData
 
         [Timestamp(DateTimeKind.Utc)]
         [DataMember]
         [JsonPropertyName("release")]
         public DateTime Release { get; set; }
 
-        [DataMember]
-        [JsonPropertyName("version")]
-        public string _Version { get; set; } = string.Empty;
         [IgnoreDataMember, JsonIgnore]
         public Version Version
         {
@@ -51,12 +86,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         }
 
         [DataMember]
+        [JsonPropertyName("revision")]
+        public string Revision { get; set; } = string.Empty;
+
+        [DataMember]
         [JsonPropertyName("platform")]
         public string Platform { get; set; } = string.Empty;
 
-        [DataMember]
-        [JsonPropertyName("minimum_version")]
-        public string _MinimumVersion { get; set; } = string.Empty;
         [IgnoreDataMember, JsonIgnore]
         public Version MinimumVersion
         {
@@ -100,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    internal enum UpdateState
+    public enum UpdateState
     {
         /// <summary>
         /// なにもしてない。
@@ -124,23 +160,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Ready,
     }
 
-    internal class UpdateInfo
+    /// <summary>
+    /// アップデートチェック方法。
+    /// </summary>
+    public enum UpdateCheckKind
     {
-        #region property
-
         /// <summary>
-        /// アップデート準備完了。
+        /// チェックのみ（更新履歴表示）
         /// </summary>
-        public bool IsReady => State == UpdateState.Ready;
-        public UpdateState State { get; set; }
-
+        CheckOnly,
         /// <summary>
-        /// アップデート処理実施ファイル（*.bat とか *.exe とか）。
-        /// <para>batかなぁ。</para>
+        /// アップデート（更新履歴表示）
         /// </summary>
-        public ILauncherExecutePathParameter? Path { get; set; }
-
-        #endregion
+        Update,
+        /// <summary>
+        /// アップデート（更新履歴非表示）
+        /// </summary>
+        ForceUpdate
     }
 
     public static class ReleaseNoteMime
@@ -235,7 +271,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
-
 
     [Serializable, DataContract]
     public class ReleaseNoteItemData : DataBase

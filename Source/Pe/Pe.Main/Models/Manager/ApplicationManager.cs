@@ -52,6 +52,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using System.IO.Compression;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -86,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
+            UpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
         }
 
         #region property
@@ -121,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        internal UpdateInfo UpdateInfo { get; } = new UpdateInfo();
+        public UpdateInfo UpdateInfo { get; }
 
         #endregion
 
@@ -315,7 +317,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
-                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(updateItem, releaseNoteItem);
+                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(UpdateInfo, updateItem, releaseNoteItem);
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
                 WindowManager.Register(new WindowItem(WindowKind.Release, view));
@@ -868,14 +870,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var updateWait = ApplicationDiContainer.Build<CustomConfiguration>().General.UpdateWait;
             await Task.Delay(updateWait).ConfigureAwait(false);
-            await CheckUpdateAsync(updateKind == UpdateKind.Notify).ConfigureAwait(false);
+            var updateCheckKind = updateKind switch
+            {
+                UpdateKind.Notify => UpdateCheckKind.CheckOnly,
+                _ => UpdateCheckKind.Update,
+            };
+            await ExecuteUpdateAsync(updateCheckKind).ConfigureAwait(false);
         }
 
-        public async Task CheckUpdateAsync(bool checkOnly)
+        public async Task ExecuteUpdateAsync(UpdateCheckKind updateCheckKind)
         {
             if(UpdateInfo.State != UpdateState.None) {
                 if(UpdateInfo.IsReady) {
-                    Logger.LogInformation("アップデート準備艦長");
+                    Logger.LogInformation("アップデート準備完了");
                 } else {
                     Logger.LogInformation("アップデート排他制御中");
                 }
@@ -905,15 +912,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var updateDownloader = ApplicationDiContainer.Build<UpdateDownloader>();
 
-            try {
-                var releaseNoteItem = await updateDownloader.DownloadReleaseNoteAsync(appVersion);
-                ShowUpdateReleaseNote(appVersion, releaseNoteItem);
-                if(checkOnly) {
+            if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
+                try {
+                    var releaseNoteItem = await updateDownloader.DownloadReleaseNoteAsync(appVersion);
+                    ShowUpdateReleaseNote(appVersion, releaseNoteItem);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
                     UpdateInfo.State = UpdateState.None;
                     return;
                 }
-            } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
+            }
+            if(updateCheckKind == UpdateCheckKind.CheckOnly) {
                 UpdateInfo.State = UpdateState.None;
                 return;
             }
