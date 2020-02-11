@@ -3,10 +3,10 @@ Param(
     [parameter(mandatory=$true)][int] $WaitSeconds,
     [parameter(mandatory=$true)][System.IO.DirectoryInfo] $SourceDirectory,
     [parameter(mandatory=$true)][System.IO.DirectoryInfo] $DestinationDirectory,
-    [parameter(mandatory=$true)][ValidateSet("32", "64")][string] $ProcessSize,
+    [parameter(mandatory=$true)][ValidateSet("x32", "x64")][string] $Platform,
     [parameter(mandatory=$true)][string] $UpdateScript,
     [parameter(mandatory=$true)][string] $ExecuteCommand,
-    [parameter(mandatory=$true)][string[]] $ExecuteArguments
+    [parameter(mandatory=$false)][string] $ExecuteArgument
 
 )
 #$OutputEncoding='utf-8'
@@ -16,10 +16,10 @@ Write-Output "ProcessId: $ProcessId"
 Write-Output "WaitSeconds: $WaitSeconds"
 Write-Output "SourceDirectory: $SourceDirectory"
 Write-Output "DestinationDirectory: $DestinationDirectory"
-Write-Output "ProcessSize: $ProcessSize"
+Write-Output "Platform: $Platform"
 Write-Output "UpdateScript: $UpdateScript"
 Write-Output "ExecuteCommand: $ExecuteCommand"
-Write-Output "ExecuteArguments: $ExecuteArguments"
+Write-Output "ExecuteArgument: $ExecuteArgument"
 
 if ($ProcessId -ne 0 ) {
     Write-Output "wait process: $ProcessId ..."
@@ -37,9 +37,9 @@ Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDire
 
 if( Test-Path -Path $UpdateScript ) {
     Write-Output "execute script: $UpdateScript"
-    Invoke-Expression "$UpdateScript"
+    Invoke-Expression "$UpdateScript -DestinationDirectory ""$DestinationDirectory"" -Platform $Platform "
 }
 
-Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArguments
+Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
 
 Read-Host "Enter ..."

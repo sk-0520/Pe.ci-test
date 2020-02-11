@@ -43,10 +43,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 "-WaitSeconds", TimeSpan.FromSeconds(5).TotalMilliseconds.ToString(),
                 "-SourceDirectory", CommandLine.Escape(sourceDirectory.FullName),
                 "-DestinationDirectory", CommandLine.Escape(destinationDirectory.FullName),
-                "-ProcessSize", Environment.Is64BitProcess ? "64": "32",
+                "-Platform", Environment.Is64BitProcess ? "x64": "x32",
                 "-UpdateScript", CommandLine.Escape(Path.Combine(destinationDirectory.FullName, "etc", "updated.ps1")),
                 "-ExecuteCommand", CommandLine.Escape(EnvironmentParameters.RootApplication.FullName),
-                "-ExecuteArguments", string.Join(",", Environment.GetCommandLineArgs().Skip(1).Select(i => CommandLine.Escape(i))),
+                "-ExecuteArguments", CommandLine.Escape(string.Join(" ", Environment.GetCommandLineArgs().Skip(1).Select(i => CommandLine.Escape(i)))),
             };
             var psCommand = string.Join(" ", psCommands);
 
