@@ -35,6 +35,6 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 ## 開発
 
-* `dotnet --version`: [3.0.100-rc1-014190](https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-rc1-windows-x64-installer)
+* `dotnet --version`: [3.1.101](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
 

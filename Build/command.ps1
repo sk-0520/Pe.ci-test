@@ -18,11 +18,11 @@ function Test-CommandExists {
     }
 }
 
-function Set-Command {
-    Param ($command, $envName, $defaultPath)
+function Set-Command($command, $envName, $defaultPath) {
 
     if ( ! ( Test-CommandExists $command )) {
-        $envValue = env:$envName
+        #$envValue = env:$envName
+        $envValue = Get-ChildItem env: | Where-Object {$_.Name -match $envName} | Select-Object -Property Value -First 1
         if ( $null -eq $envValue) {
             $env:Path += ";" + [Environment]::ExpandEnvironmentVariables($defaultPath)
         } else {
