@@ -17,6 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         public ReleaseNoteViewModel(ReleaseNoteElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
+            Item = new ReleaseNoteItemViewModel(Model.ReleaseNoteItem, LoggerFactory);
         }
 
         #region property
@@ -26,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         public Version Version => Model.UpdateItem.Version;
         public string Revision => Model.UpdateItem.Revision;
 
-        public ReleaseNoteItemData Item => Model.ReleaseNoteItem;
+        public ReleaseNoteItemViewModel Item { get; }
 
         #endregion
 

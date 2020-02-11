@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote;
 
 namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
 {
@@ -28,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
 
         public static readonly DependencyProperty ItemProperty = DependencyProperty.Register(
             nameof(Item),
-            typeof(ReleaseNoteItemData),
+            typeof(ReleaseNoteItemViewModel),
             typeof(ReleaseNoteViewerControl),
             new FrameworkPropertyMetadata(
                 default(ReleaseNoteItemData),
@@ -36,9 +37,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
             )
         );
 
-        public ReleaseNoteItemData Item
+        public ReleaseNoteItemViewModel Item
         {
-            get { return (ReleaseNoteItemData)GetValue(ItemProperty); }
+            get { return (ReleaseNoteItemViewModel)GetValue(ItemProperty); }
             set { SetValue(ItemProperty, value); }
         }
 

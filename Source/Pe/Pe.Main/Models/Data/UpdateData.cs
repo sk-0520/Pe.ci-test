@@ -220,6 +220,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Compatibility,
     }
 
+    public enum ReleaseNoteTextKind
+    {
+        Plain,
+        Uri,
+        Issue,
+        Revision,
+    }
+
+    public class ReleaseNoteText
+    {
+        public ReleaseNoteText(string value, ReleaseNoteTextKind kind)
+        {
+            Value = value;
+            Kind = kind;
+        }
+
+        #region property
+
+        public string Value { get; }
+        public ReleaseNoteTextKind Kind { get; }
+
+        #endregion
+    }
+
     [Serializable, DataContract]
     public class ReleaseNoteLogItemData : DataBase
     {
