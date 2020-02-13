@@ -235,6 +235,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
+        private void InitializeWebView()
+        {
+            var settings = new CefSharp.Wpf.CefSettings();
+            settings.Locale = CultureService.Current.Culture.Parent.ToString();
+            settings.AcceptLanguageList = CultureService.Current.Culture.Name;
+            CefSharp.Cef.Initialize(settings);
+        }
+
         ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
         {
             return new ApplicationDatabaseFactoryPack(
@@ -454,6 +462,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             if(IsFirstStartup) {
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
+
+            InitializeWebView();
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {

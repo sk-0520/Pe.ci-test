@@ -88,6 +88,18 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Update="CefSharp">
+      <Private>true</Private>
+    </Reference>
+    <Reference Update="CefSharp.Core">
+      <Private>true</Private>
+    </Reference>
+    <Reference Update="CefSharp.Wpf">
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="robocopy /MIR /PURGE /R:3 /S &quot;$(ProjectDir)etc&quot; &quot;$(OutDir)..\etc&quot;&#xD;&#xA;robocopy /MIR /PURGE /R:3 /S &quot;$(ProjectDir)doc&quot; &quot;$(OutDir)..\doc&quot;&#xD;&#xA;robocopy /MIR /PURGE /R:3 /S &quot;$(ProjectDir)bat&quot; &quot;$(OutDir)..\bat&quot;&#xD;&#xA;if %25ERRORLEVEL%25 lss 8 exit 0" />
   </Target>

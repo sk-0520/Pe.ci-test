@@ -179,15 +179,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         ForceUpdate
     }
 
-    public static class ReleaseNoteMime
-    {
-        #region property
-
-        public const string Json = "application/json";
-
-        #endregion
-    }
-
     public enum ReleaseNoteContentKind
     {
         [DataMember(Name = "unknown")]
