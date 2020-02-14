@@ -40,8 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         public async Task<string> LoadReleaseNoteDocumentAsync()
         {
             using(var userAgent = UserAgentManager.CreateAppUserAgent()) {
-                //return await userAgent.GetStringAsync(UpdateItem.NoteUri);
-                return await userAgent.GetStringAsync(new Uri("https://bitbucket.org/sk_0520/pe/downloads/update-release.html"));
+                return await userAgent.GetStringAsync(UpdateItem.NoteUri);
+                //return await userAgent.GetStringAsync(new Uri("https://bitbucket.org/sk_0520/pe/downloads/update-release.html"));
             }
         }
 

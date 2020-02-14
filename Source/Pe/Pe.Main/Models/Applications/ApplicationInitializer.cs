@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
@@ -233,21 +234,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     throw;
                 }
             }
-        }
-
-        private void InitializeWebView(EnvironmentParameters environmentParameters)
-        {
-            var settings = new CefSharp.Wpf.CefSettings();
-
-            settings.Locale = CultureService.Current.Culture.Parent.ToString();
-            settings.AcceptLanguageList = CultureService.Current.Culture.Name;
-
-            settings.CachePath= environmentParameters.TemporaryWebViewCacheDirectory.FullName;
-            settings.UserDataPath = environmentParameters.MachineWebViewUserDirectory.FullName;
-
-            settings.PersistSessionCookies = true;
-
-            CefSharp.Cef.Initialize(settings);
         }
 
         ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
@@ -470,7 +456,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
-            InitializeWebView(environmentParameters);
+            new WebViewinItializer().Initialize(environmentParameters);
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {

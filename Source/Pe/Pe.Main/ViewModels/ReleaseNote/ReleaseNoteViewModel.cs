@@ -47,12 +47,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         public void ReceiveViewLoaded(Window window)
         {
             var view = (ReleaseNoteWindow)window;
-            //view.wevView.Address = Model.UpdateItem.NoteUri.ToString();
-            //view.wevView.Address = "https://bitbucket.org/sk_0520/pe/downloads/update-release.html";
+
             Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
                     var htmlSource = t.Result;
                     view.wevView.LoadHtml(htmlSource, Model.UpdateItem.NoteUri.ToString());
+                } else {
+                    view.wevView.LoadHtml(Properties.Resources.File_ReleaseNote_ErrorReleaseNote, nameof(Properties.Resources.File_ReleaseNote_ErrorReleaseNote));
                 }
             });
         }
