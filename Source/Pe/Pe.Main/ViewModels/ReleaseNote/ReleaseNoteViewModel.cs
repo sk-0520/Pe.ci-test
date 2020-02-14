@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using ContentTypeTextNet.Pe.Main.Views.ReleaseNote;
 using Microsoft.Extensions.Logging;
 using CefSharp;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 {
@@ -47,13 +48,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         public void ReceiveViewLoaded(Window window)
         {
             var view = (ReleaseNoteWindow)window;
+            view.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
 
             Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
                     var htmlSource = t.Result;
-                    view.wevView.LoadHtml(htmlSource, Model.UpdateItem.NoteUri.ToString());
+                    view.webView.LoadHtml(htmlSource, Model.UpdateItem.NoteUri.ToString());
                 } else {
-                    view.wevView.LoadHtml(Properties.Resources.File_ReleaseNote_ErrorReleaseNote, nameof(Properties.Resources.File_ReleaseNote_ErrorReleaseNote));
+                    view.webView.LoadHtml(Properties.Resources.File_ReleaseNote_ErrorReleaseNote, nameof(Properties.Resources.File_ReleaseNote_ErrorReleaseNote));
                 }
             });
         }

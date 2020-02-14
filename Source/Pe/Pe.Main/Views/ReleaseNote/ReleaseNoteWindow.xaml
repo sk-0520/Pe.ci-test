@@ -37,7 +37,7 @@
 
     <Grid Grid.Row="0">
       <!--<app_main_views_release_note:ReleaseNoteViewerControl Item="{Binding Item}" />-->
-      <cef_sharp_wpf:ChromiumWebBrowser x:Name="wevView" />
+      <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" />
     </Grid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
