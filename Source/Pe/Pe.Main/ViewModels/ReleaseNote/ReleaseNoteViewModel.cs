@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using ContentTypeTextNet.Pe.Main.Views.ReleaseNote;
 using Microsoft.Extensions.Logging;
+using CefSharp;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 {
@@ -47,7 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         {
             var view = (ReleaseNoteWindow)window;
             //view.wevView.Address = Model.UpdateItem.NoteUri.ToString();
-            view.wevView.Address = "http://google.com";
+            //view.wevView.Address = "https://bitbucket.org/sk_0520/pe/downloads/update-release.html";
+            Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {
+                if(t.IsCompletedSuccessfully) {
+                    var htmlSource = t.Result;
+                    view.wevView.LoadHtml(htmlSource, Model.UpdateItem.NoteUri.ToString());
+                }
+            });
         }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
