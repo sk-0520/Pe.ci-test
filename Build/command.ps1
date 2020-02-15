@@ -30,3 +30,21 @@ function Set-Command($command, $envName, $defaultPath) {
         }
     }
 }
+
+function TestAliasExists([string] $alias) {
+    $oldPreference = $ErrorActionPreference
+
+    $ErrorActionPreference = 'stop'
+
+    try {
+        if (Get-Alias $alias) {
+            return $true
+        }
+    }
+    catch {
+        return $false
+    }
+    finally {
+        $ErrorActionPreference = $oldPreference
+    }
+}

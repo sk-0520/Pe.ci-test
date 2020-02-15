@@ -7,11 +7,22 @@ Param(
     [parameter(mandatory = $true)][string] $DeployPassword
 )
 $ErrorActionPreference = 'Stop'
+$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptFileNames = @(
+    'command.ps1'
+);
+foreach ($scriptFileName in $scriptFileNames) {
+    $scriptFilePath = Join-Path $currentDirPath $scriptFileName
+    . $scriptFilePath
+}
 
-$password = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
-$credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $password)
+
+# Invoke-RestMethod しんどい。。。
+if(TestAliasExists curl) {
+    Remove-Item curl
+}
 
 $archiveItems = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
 foreach($archiveItem in $archiveItems) {
-    Invoke-RestMethod -Method Post -InFile $archiveItem -Uri $DeployApiDownloadUrl  -Credential $credential
+    curl --user ${DeployAccount}:${DeployPassword} -X POST $DeployApiDownloadUrl -F files=@$archiveItem
 }
