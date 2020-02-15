@@ -548,6 +548,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   チェックサムで失敗 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Download_ChecksumError {
+            get {
+                return ResourceManager.GetString("String_Download_ChecksumError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   byte/秒 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Download_Seconds_Byte {
@@ -1279,6 +1288,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Downloading_A {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   異常あり に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Error {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   異常あり に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Error_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Error_A", resourceCulture);
             }
         }
         

@@ -1369,6 +1369,12 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading_A" xml:space="preserve">
     <value>ダウンロード中</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Error" xml:space="preserve">
+    <value>異常あり</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Error_A" xml:space="preserve">
+    <value>異常あり</value>
+  </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Extracting" xml:space="preserve">
     <value>展開中</value>
   </data>
@@ -1386,6 +1392,9 @@
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready_A" xml:space="preserve">
     <value>準備完了</value>
+  </data>
+  <data name="String_Download_ChecksumError" xml:space="preserve">
+    <value>チェックサムで失敗</value>
   </data>
   <data name="String_Download_Seconds_Byte" xml:space="preserve">
     <value>byte/秒</value>

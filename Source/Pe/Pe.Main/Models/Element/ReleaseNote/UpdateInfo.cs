@@ -118,6 +118,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
         #region function
 
+        public void Logging(string message)
+        {
+            ((IProgress<string>)CurrentLogProgress).Report(message);
+        }
+
+        public void SetError(string message)
+        {
+            State = UpdateState.Error;
+            Logging(message);
+        }
+
         #endregion
     }
 }

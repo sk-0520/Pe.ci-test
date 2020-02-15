@@ -161,6 +161,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// </summary>
         [EnumResource]
         Ready,
+        /// <summary>
+        /// 異常あり。
+        /// </summary>
+        [EnumResource]
+        Error,
     }
 
     /// <summary>

@@ -46,10 +46,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 
         public ICommand DownloadCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Model.StartDownload();
-                RaisePropertyChanged(nameof(IsCheckOnly));
-            },
-            () => IsCheckOnly
+                // CanExecute に対してどうこうする手間がしんどい
+                if(IsCheckOnly || UpdateInfo?.State == UpdateState.Error) {
+                    Model.StartDownload();
+                    RaisePropertyChanged(nameof(IsCheckOnly));
+                }
+            }
         ));
 
         public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(

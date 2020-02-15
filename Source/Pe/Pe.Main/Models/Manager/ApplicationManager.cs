@@ -886,10 +886,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public async Task ExecuteUpdateAsync(UpdateCheckKind updateCheckKind)
         {
-            if(ApplicationUpdateInfo.State != UpdateState.None) {
+            if(ApplicationUpdateInfo.State == UpdateState.None || ApplicationUpdateInfo.State == UpdateState.Error) {
+                if(ApplicationUpdateInfo.State == UpdateState.Error) {
+                    Logger.LogInformation("エラーありのため再実施");
+                }
+            } else {
                 if(ApplicationUpdateInfo.IsReady) {
                     Logger.LogInformation("アップデート準備完了");
-                } else {
+                } else  {
                     Logger.LogInformation("アップデート排他制御中");
                 }
                 return;
@@ -923,7 +927,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ShowUpdateReleaseNote(appVersion, updateCheckKind == UpdateCheckKind.CheckOnly);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
-                    ApplicationUpdateInfo.State = UpdateState.None;
+                    ApplicationUpdateInfo.SetError(ex.Message);
                     return;
                 }
             }
@@ -950,10 +954,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     donwloadFile.Delete(); // ゴミは消しとく
                     ApplicationUpdateInfo.State = UpdateState.Downloading;
                     await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
+
+                    ApplicationUpdateInfo.State = UpdateState.Checksumming;
+                    var checksumOk = await updateDownloader.ChecksumAsync(appVersion, donwloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                    if(!checksumOk) {
+                        Logger.LogError("チェックサム異常あり");
+                        ApplicationUpdateInfo.SetError(Properties.Resources.String_Download_ChecksumError);
+                        return;
+                    }
                 }
             } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
-                ApplicationUpdateInfo.State = UpdateState.None;
+                ApplicationUpdateInfo.SetError(ex.Message);
                 return;
             }
 
@@ -973,7 +984,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                ApplicationUpdateInfo.State = UpdateState.None;
+                ApplicationUpdateInfo.SetError(ex.Message);
             }
 
         }

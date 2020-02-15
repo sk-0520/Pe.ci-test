@@ -87,7 +87,21 @@
       </Grid>
 
       <UniformGrid Grid.Column="1" Style="{StaticResource DialogCommand}">
-        <Button Visibility="{Binding IsCheckOnly, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DownloadCommand}" Content="{Binding Resources.String_ReleaseNote_Download_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Button  Command="{Binding DownloadCommand}" Content="{Binding Resources.String_ReleaseNote_Download_A, Source={x:Static app_main:CultureService.Current}}">
+          <Button.Style>
+            <Style TargetType="Button" BasedOn="{StaticResource DialogCommandButton}">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsCheckOnly}" Value="True">
+                  <Setter Property="IsEnabled" Value="True" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding UpdateInfo.State}" Value="Error">
+                  <Setter Property="IsEnabled" Value="True" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="IsEnabled" Value="False" />
+            </Style>
+          </Button.Style>
+        </Button>
         <Button x:Name="commandClose" IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
       </UniformGrid>
 
