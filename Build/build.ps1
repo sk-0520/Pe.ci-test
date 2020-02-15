@@ -31,10 +31,10 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 try {
     Push-Location $rootDirectory
 
-    $vesion = GetAppVersion
+    $version = GetAppVersion
     $revision = (git rev-parse HEAD)
 
-    function Update-Element([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
+    function UpdateElement([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
         $element = $xml.SelectSingleNode($targetXpath);
         if($null -eq $element) {
             $propGroup = $xml.SelectSingleNode($parentXpath)
@@ -42,7 +42,17 @@ try {
             $propGroup.AppendChild($element);
         }
         $element.InnerText = $value
+    }
 
+    function ReplaceElement([hashtable] $map, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
+        $element = $xml.SelectSingleNode($targetXpath);
+        if($null -ne $element) {
+            $val = $element.InnerText
+            foreach($key in $map.keys) {
+                $val = $val.Replace($key, $map[$key])
+            }
+            $element.InnerText = $val
+        }
     }
 
     $projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
@@ -50,8 +60,9 @@ try {
         Write-Output $projectFile.Name
         $xml = [XML](Get-Content $projectFile  -Encoding UTF8)
 
-        Update-Element $vesion $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
-        Update-Element $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+        UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
+        UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+        ReplaceElement @{ 'YYYY' = '2020' } $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
 
         $xml.Save($projectFile)
     }
