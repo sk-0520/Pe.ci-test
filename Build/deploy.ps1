@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Stop'
 $password = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $password)
 
-$archiveItems = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object FullName
+$archiveItems = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
 foreach($archiveItem in $archiveItems) {
-    Invoke-RestMethod -Uri $DeployApiDownloadUrl -Method "POST" -InFile $archiveItem -Credential $credential
+    Invoke-RestMethod -Method Post -InFile $archiveItem -Uri $DeployApiDownloadUrl  -Credential $credential
 }
