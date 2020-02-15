@@ -6,9 +6,6 @@ environment:
   CI: HAGE
   BUILD_TYPE: BETA
   BUILD_OUTPUT: FULL
-platform:
-  - x64
-  - x86
 branches:
   only:
     - pipeline
@@ -21,16 +18,14 @@ before_build:
   - cmd: git submodule init
   - cmd: git submodule update
 build_script:
-  - ps: .\Build\build.ps1 -platform $env:PLATFORM -buildType $env:BUILD_TYPE
-  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\$env:PLATFORM\Pe -DestinationDirectory Output -Platform $env:PLATFORM
+  - ps: .\Build\build.ps1 -platform x64 -buildType ""
+  - ps: .\Build\build.ps1 -platform x86 -buildType ""
+  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x64\Pe -DestinationDirectory Output -Platform x64
+  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x86\Pe -DestinationDirectory Output -Platform x86
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
 test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
+  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 /p:Platform=x64 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
+  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x86 /p:Platform=x86 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
 artifacts:
 - path: Output\*.zip
-cache:
- - '%LOCALAPPDATA%\NuGet'
- - '%USERPROFILE%\.nuget'
- - C:\ProgramData\chocolatey\bin -> appveyor.yml
- - C:\ProgramData\chocolatey\lib -> appveyor.yml
