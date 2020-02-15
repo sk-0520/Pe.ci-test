@@ -19,7 +19,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 # Invoke-RestMethod しんどい。。。
 echo 1
-if(TestAliasExists curl) {
+if(TestAliasExists "curl") {
     echo 2
     Remove-Item curl
 }
