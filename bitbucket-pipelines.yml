@@ -5,3 +5,5 @@ pipelines:
       - step:
           script:
            - dotnet --version
+           - git submodule init
+           - git submodule update
