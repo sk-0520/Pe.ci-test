@@ -8,5 +8,4 @@ pipelines:
            - git submodule init
            - git submodule update
            - dotnet tool install --global PowerShell
-           - powershell -help
            - pwsh -help
