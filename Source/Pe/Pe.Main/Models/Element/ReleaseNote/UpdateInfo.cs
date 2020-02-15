@@ -17,11 +17,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         bool IsReady { get; }
         UpdateState State { get; }
 
+        IProgress<string> CurrentLogProgress { get; }
+        string CurrentLog { get; }
 
         IProgress<double> ChecksumProgress { get; }
         IProgress<double> DownloadProgress { get; }
         IProgress<double> ExtractProgress { get; }
 
+        double ChecksumValue { get; }
         double DownloadedValue { get; }
         double ExtractedValue { get; }
 
@@ -33,6 +36,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         #region variable
 
         UpdateState _state;
+
+        string _currentLog = string.Empty;
+
         double _checksumValue;
         double _downloadedValue;
         double _extractedValue;
@@ -41,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 
         public UpdateInfo(ILoggerFactory loggerFactory) : base(loggerFactory)
         {
+            CurrentLogProgress = new Progress<string>(v => CurrentLog = v);
             ChecksumProgress = new Progress<double>(v => ChecksumValue = v);
             DownloadProgress = new Progress<double>(v => DownloadedValue = v);
             ExtractProgress = new Progress<double>(v => ExtractedValue = v);
@@ -71,6 +78,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
                 RaisePropertyChanged(nameof(IsReady));
             }
         }
+
+        public Progress<string> CurrentLogProgress { get; }
+        IProgress<string> IReadOnlyUpdateInfo.CurrentLogProgress => CurrentLogProgress;
+        public string CurrentLog
+        {
+            get => this._currentLog;
+            private set => SetProperty(ref this._currentLog, value);
+        }
+
 
         public Progress<double> ChecksumProgress { get; }
         IProgress<double> IReadOnlyUpdateInfo.ChecksumProgress => ChecksumProgress;

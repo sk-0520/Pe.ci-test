@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
         #region function
 
-        public void Extract(FileInfo zipArchiveFile, DirectoryInfo extractDirectory, IProgress<double> progress)
+        public void Extract(FileInfo zipArchiveFile, DirectoryInfo extractDirectory, UserNotifyProgress userNotifyProgress)
         {
             var createdDirs = new HashSet<string>();
 
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             using(var zipArchive = ZipFile.OpenRead(zipArchiveFile.FullName)) {
                 var totalExtractItems = zipArchive.Entries.Count;
                 var extractedItemCount = 0;
-                progress.Report(0);
+                userNotifyProgress.Start();
                 foreach(var entry in zipArchive.Entries.Where(e => e.Name.Length > 0)) {
                     var expandPath = Path.Combine(extractDirectory.FullName, entry.FullName);
                     var dirPath = Path.GetDirectoryName(expandPath) ?? string.Empty;
@@ -42,9 +42,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogTrace("展開: {0}", expandPath);
                     entry.ExtractToFile(expandPath, true);
                     extractedItemCount += 1;
-                    progress.Report(extractedItemCount / (double)totalExtractItems);
+                    userNotifyProgress.Report(extractedItemCount / (double)totalExtractItems, entry.FullName);
                 }
-                progress.Report(1);
+
+                userNotifyProgress.End();
             }
         }
 

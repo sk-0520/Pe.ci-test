@@ -1387,6 +1387,22 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready_A" xml:space="preserve">
     <value>準備完了</value>
   </data>
+  <data name="String_Download_Seconds_Byte" xml:space="preserve">
+    <value>byte/秒</value>
+  </data>
+  <data name="String_Download_Seconds_Format" xml:space="preserve">
+    <value>{0:0.00} {1}</value>
+    <comment>0: サイズ, 1:単位</comment>
+  </data>
+  <data name="String_Download_Seconds_GB" xml:space="preserve">
+    <value>GB/秒</value>
+  </data>
+  <data name="String_Download_Seconds_KB" xml:space="preserve">
+    <value>KB/秒</value>
+  </data>
+  <data name="String_Download_Seconds_MB" xml:space="preserve">
+    <value>MB/秒</value>
+  </data>
   <data name="String_ReleaseNote_Download_A" xml:space="preserve">
     <value>ダウンロード開始(_D)</value>
   </data>

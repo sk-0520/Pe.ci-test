@@ -45,29 +45,46 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <StackPanel Grid.Column="0" Orientation="Horizontal">
-        <StackPanel.Resources>
-          <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
-            <Style.Triggers>
-              <Trigger Property="Value" Value="1">
-                <Setter Property="Opacity" Value="0.5" />
-              </Trigger>
-            </Style.Triggers>
-            <Setter Property="Margin" Value="{StaticResource AllMargin}" />
-            <Setter Property="Width" Value="150" />
-            <Setter Property="Height" Value="16" />
-            <Setter Property="Minimum" Value="0" />
-            <Setter Property="Maximum" Value="1" />
-          </Style>
-        </StackPanel.Resources>
 
-        <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding UpdateInfo.State, Converter={StaticResource EnumToCultureConverter}}"/>
+      <Grid Grid.Column="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <ProgressBar Value="{Binding UpdateInfo.ChecksumValue, Mode=OneWay}" />
-        <ProgressBar Value="{Binding UpdateInfo.DownloadedValue, Mode=OneWay}" />
-        <ProgressBar Value="{Binding UpdateInfo.ExtractedValue, Mode=OneWay}" />
+        <TextBlock Grid.Column="0" MinWidth="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding UpdateInfo.State, Converter={StaticResource EnumToCultureConverter}}"/>
 
-      </StackPanel>
+        <ProgressBar Grid.Column="1" Width="150" Height="16" Minimum="0" Maximum="1">
+          <ProgressBar.Style>
+            <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
+              <Style.Triggers>
+                <Trigger Property="Value" Value="1">
+                  <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+                <DataTrigger Binding="{Binding UpdateInfo.State}" Value="None">
+                  <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding UpdateInfo.State}" Value="Checking">
+                  <Setter Property="IsIndeterminate" Value="True" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding UpdateInfo.State}" Value="Downloading">
+                  <Setter Property="Value" Value="{Binding UpdateInfo.DownloadedValue, Mode=OneWay}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding UpdateInfo.State}" Value="Checksumming">
+                  <Setter Property="Value" Value="{Binding UpdateInfo.ChecksumValue, Mode=OneWay}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding UpdateInfo.State}" Value="Extracting">
+                  <Setter Property="Value" Value="{Binding UpdateInfo.ExtractedValue, Mode=OneWay}" />
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </ProgressBar.Style>
+        </ProgressBar>
+
+        <TextBlock Grid.Column="2" Margin="{StaticResource HorizonMargin}" VerticalAlignment="Center" TextAlignment="Left" TextTrimming="CharacterEllipsis" Text="{Binding UpdateInfo.CurrentLog, Mode=OneWay}" />
+
+      </Grid>
 
       <UniformGrid Grid.Column="1" Style="{StaticResource DialogCommand}">
         <Button Visibility="{Binding IsCheckOnly, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DownloadCommand}" Content="{Binding Resources.String_ReleaseNote_Download_A, Source={x:Static app_main:CultureService.Current}}" />

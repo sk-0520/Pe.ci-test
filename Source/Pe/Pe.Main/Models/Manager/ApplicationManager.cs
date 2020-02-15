@@ -940,16 +940,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 donwloadFile.Refresh();
                 if(donwloadFile.Exists) {
                     ApplicationUpdateInfo.State = UpdateState.Checksumming;
-                    skipDownload = await updateDownloader.ChecksumAsync(appVersion, donwloadFile, ApplicationUpdateInfo.ChecksumProgress);
+                    skipDownload = await updateDownloader.ChecksumAsync(appVersion, donwloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
                 }
                 if(skipDownload) {
                     Logger.LogInformation("チェックサムの結果ダウンロード不要");
                     IProgress<double> progress = ApplicationUpdateInfo.DownloadProgress;
                     progress.Report(1);
                 } else {
-                    donwloadFile.Delete();
+                    donwloadFile.Delete(); // ゴミは消しとく
                     ApplicationUpdateInfo.State = UpdateState.Downloading;
-                    await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile, ApplicationUpdateInfo.DownloadProgress).ConfigureAwait(false);
+                    await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
                 }
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
@@ -964,7 +964,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 directoryCleaner.Clear(false);
 
                 var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
-                archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.ExtractProgress);
+                archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
 
                 var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
                 var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);

@@ -548,6 +548,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   byte/秒 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Download_Seconds_Byte {
+            get {
+                return ResourceManager.GetString("String_Download_Seconds_Byte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0:0.00} {1} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Download_Seconds_Format {
+            get {
+                return ResourceManager.GetString("String_Download_Seconds_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   GB/秒 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Download_Seconds_GB {
+            get {
+                return ResourceManager.GetString("String_Download_Seconds_GB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   KB/秒 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Download_Seconds_KB {
+            get {
+                return ResourceManager.GetString("String_Download_Seconds_KB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   MB/秒 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Download_Seconds_MB {
+            get {
+                return ResourceManager.GetString("String_Download_Seconds_MB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   下 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_AppDesktopToolbarPosition_Bottom {
