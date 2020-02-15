@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             if(targetFile.Length != updateItem.ArchiveSize) {
                 Logger.LogWarning("ファイルサイズが異なる: ファイル {0}, 定義 {1}", targetFile.Length, updateItem.ArchiveSize);
-
+                return false;
             }
 
             Logger.LogInformation("ハッシュ: {0}, {1}", updateItem.ArchiveHashKind, updateItem.ArchiveHashValue);
@@ -94,8 +94,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var content = await userAgent.GetAsync(updateItem.ArchiveUri);
 
                 //NOTE: long が使えない！
-                int downloadedSize = 0;
-                int downloadChunkSize = 1024 * 4;
+                int totalDownloadedSize = 0;
+                const int downloadChunkSize = 1024 * 4;
                 var octetPerTime = new OctetPerTime(TimeSpan.FromSeconds(1));
 
                 octetPerTime.Start();
@@ -113,13 +113,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         };
                         var format = Properties.Resources.String_Download_Seconds_Format;
                         while(true) {
-                            var readSize = networkStream.Read(downloadChunk, 0, downloadChunk.Length);
-                            if(0 < readSize) {
-                                localStream.Write(downloadChunk, downloadedSize, readSize);
-                                downloadChunkSize += readSize;
-                                octetPerTime.Add(readSize);
+                            var donwloadSize = await networkStream.ReadAsync(downloadChunk, 0, downloadChunk.Length);
+                            if(0 < donwloadSize) {
+                                await localStream.WriteAsync(downloadChunk, 0, donwloadSize);
+                                totalDownloadedSize += donwloadSize;
+                                octetPerTime.Add(donwloadSize);
                                 var size = sizeConverter.ConvertHumanLikeByte(octetPerTime.Size, format, trems);
-                                userNotifyProgress.Report(downloadChunkSize / (double)updateItem.ArchiveSize, size);
+                                userNotifyProgress.Report(totalDownloadedSize / (double)updateItem.ArchiveSize, size);
                             } else {
                                 userNotifyProgress.End();
                                 break;
