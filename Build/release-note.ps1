@@ -49,7 +49,9 @@ foreach ($platform in $Platforms) {
 }
 
 $outputUpdateFile = Join-Path $OutputDirectory 'update.json'
-ConvertTo-Json -InputObject $updateJson | Out-File $outputUpdateFile -Encoding utf8 -Force
+ConvertTo-Json -InputObject $updateJson `
+    | ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
+    | Set-Content -Path $outputUpdateFile -Encoding Byte
 Get-Content $outputUpdateFile
 
 switch ($TargetRepository) {
