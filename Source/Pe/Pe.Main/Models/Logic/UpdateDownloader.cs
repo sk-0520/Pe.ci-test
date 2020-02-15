@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -31,10 +32,57 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public async Task<bool> ChecksumAsync(UpdateItemData updateItem, FileInfo targetFile, UserNotifyProgress userNotifyProgress)
+        string ToCompareValue(string s)
         {
-            await Task.Delay(1);
-            return false;
+            return s
+                .Trim()
+                .ToLowerInvariant()
+                .Replace("-", string.Empty)
+                .Replace("_", string.Empty)
+            ;
+        }
+
+        public async Task<bool> ChecksumAsync(IReadOnlyUpdateItemData updateItem, FileInfo targetFile, UserNotifyProgress userNotifyProgress)
+        {
+            await Task.Delay(0);
+            userNotifyProgress.Start();
+
+            if(!targetFile.Exists) {
+                Logger.LogWarning("検査ファイルが存在しない: {0}", targetFile);
+                return false;
+            }
+
+            if(targetFile.Length != updateItem.ArchiveSize) {
+                Logger.LogWarning("ファイルサイズが異なる: ファイル {0}, 定義 {1}", targetFile.Length, updateItem.ArchiveSize);
+
+            }
+
+            Logger.LogInformation("ハッシュ: {0}, {1}", updateItem.ArchiveHashKind, updateItem.ArchiveHashValue);
+            using(var hashAlgorithm = HashAlgorithm.Create(updateItem.ArchiveHashKind)) {
+                using var stream = targetFile.OpenRead();
+
+                var buffer = new byte[1024 * 4];
+                long totalReadSize = 0;
+                while(true) {
+                    var readSize = await stream.ReadAsync(buffer, 0, buffer.Length);
+                    if(readSize == 0) {
+                        break;
+                    }
+                    hashAlgorithm.TransformBlock(buffer, 0, readSize, buffer, 0);
+                    totalReadSize += readSize;
+                    userNotifyProgress.Report(totalReadSize / (double)updateItem.ArchiveSize, string.Empty);
+                }
+                hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
+                var hash = ToCompareValue(BitConverter.ToString(hashAlgorithm.Hash));
+
+                Logger.LogInformation("算出ハッシュ: {0}", hash);
+                userNotifyProgress.Report(1, hash);
+
+                userNotifyProgress.End();
+
+
+                return hash == ToCompareValue(updateItem.ArchiveHashValue);
+            }
         }
 
         public async Task DownloadApplicationArchiveAsync(UpdateItemData updateItem, FileInfo donwloadFile, UserNotifyProgress userNotifyProgress)

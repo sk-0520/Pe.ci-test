@@ -45,6 +45,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         Uri ArchiveUri { get; }
         long ArchiveSize { get; }
+
+        /// <summary>
+        /// <para>https://docs.microsoft.com/ja-jp/dotnet/api/system.security.cryptography.hashalgorithm.create?view=netframework-4.8#System_Security_Cryptography_HashAlgorithm_Create_System_String_</para>
+        /// </summary>
         string ArchiveHashKind { get; }
         string ArchiveHashValue { get; }
 
