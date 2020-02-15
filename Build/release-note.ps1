@@ -18,7 +18,7 @@ foreach ($scriptFileName in $scriptFileNames) {
     . $scriptFilePath
 }
 
-Set-Command 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
+SetCommand 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
 
 $version = GetAppVersion
 $hashAlgorithm = "SHA256"
@@ -48,7 +48,7 @@ foreach ($platform in $Platforms) {
     $updateJson.items += $item
 }
 
-$outputUpdateFile = Join-Path $OutputDirectory "update.json"
+$outputUpdateFile = Join-Path $OutputDirectory 'update.json'
 ConvertTo-Json -InputObject $updateJson | Out-File $outputUpdateFile -Encoding utf8 -Force
 Get-Content $outputUpdateFile
 
@@ -60,8 +60,9 @@ switch ($TargetRepository) {
                 hash = $revision
             }
         }
-        $bitbucketTagApiFile = Join-Path $OutputDirectory "bitbucket-tag.json"
-        ConvertTo-Json -InputObject $tagJson | Out-File $bitbucketTagApiFile -Encoding utf8 -Force
+        $bitbucketTagApiFile = Join-Path $OutputDirectory 'bitbucket-tag.json'
+        $utf8n = New-Object 'System.Text.UTF8Encoding' -ArgumentList @($false)
+        [System.IO.File]::WriteAllLines($bitbucketTagApiFile, @((ConvertTo-Json -InputObject $tagJson)), $utf8n)
         Get-Content $bitbucketTagApiFile
     }
 }

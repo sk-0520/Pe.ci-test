@@ -22,7 +22,19 @@ if(TestAliasExists curl) {
     Remove-Item curl
 }
 
-$archiveItems = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
-foreach($archiveItem in $archiveItems) {
-    curl --user ${DeployAccount}:${DeployPassword} -X POST $DeployApiDownloadUrl -F files=@$archiveItem
+$archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
+$updateFile = Join-Path $DeployRootDirectory 'update.json'
+
+switch ($TargetRepository) {
+    'bitbucket' {
+        foreach($archiveFile in $archiveFiles) {
+            curl --user ${DeployAccount}:${DeployPassword} -X POST $DeployApiDownloadUrl -F files=@$archiveFile
+        }
+        curl --user ${DeployAccount}:${DeployPassword} -X POST $DeployApiDownloadUrl -F files=@$updateFile
+
+        $bitbucketTagApiFile = Join-Path $DeployRootDirectory 'bitbucket-tag.json'
+        echo (Get-Content $bitbucketTagApiFile)
+        echo $DeployApiTagUrl
+        curl --user ${DeployAccount}:${DeployPassword} -H 'Content-Type: application/json' -X POST $DeployApiTagUrl -d @$bitbucketTagApiFile
+    }
 }

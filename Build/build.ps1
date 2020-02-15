@@ -13,9 +13,9 @@ foreach ($scriptFileName in $scriptFileNames) {
     . $scriptFilePath
 }
 
-Set-Command 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
-Set-Command 'msbuild' 'BUILD_MSBUILD_PATH' "%PROGRAMFILES(x86)%\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin"
-Set-Command 'dotnet' 'BUILD_DOTNET_PATH' "%PROGRAMFILES(x86)%\dotnet\"
+SetCommand 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
+SetCommand 'msbuild' 'BUILD_MSBUILD_PATH' "%PROGRAMFILES(x86)%\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin"
+SetCommand 'dotnet' 'BUILD_DOTNET_PATH' "%PROGRAMFILES(x86)%\dotnet\"
 
 Write-Output ("git: " + (git --version))
 Write-Output ("msbuild: " + (msbuild -version -noLogo))
