@@ -55,7 +55,7 @@ Get-Content $outputUpdateFile
 switch ($TargetRepository) {
     'bitbucket' {
         $tagJson = @{
-            name   = $version
+            name   = "ver_$version"
             target = @{
                 hash = $revision
             }

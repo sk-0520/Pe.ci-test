@@ -13,7 +13,6 @@ $credential = New-Object System.Management.Automation.PSCredential($DeployAccoun
 
 $archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
 $updateFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory 'update.json')
-echo $updateFile
 
 # https://stackoverflow.com/a/50255917
 function UploadFile([string] $filePath) {
@@ -30,6 +29,8 @@ function UploadFile([string] $filePath) {
         "--$boundary--$LF"
     ) -join $LF
 
+    Write-Output "Post: $DeployApiDownloadUrl"
+    Write-Output "File: $filePath"
     Invoke-RestMethod `
         -Credential $credential `
         -Method Post `
@@ -46,10 +47,8 @@ switch ($TargetRepository) {
         UploadFile $updateFile
 
         $bitbucketTagApiFile = Join-Path $DeployRootDirectory 'bitbucket-tag.json'
-        echo $bitbucketTagApiFile
-        echo (Get-Content $bitbucketTagApiFile)
-        echo $DeployApiTagUrl
-        #curl --user ${DeployAccount}:${DeployPassword} -H 'Content-Type: application/json' -X POST $DeployApiTagUrl -d @$bitbucketTagApiFile
+        Write-Output "Post: $DeployApiTagUrl"
+        Write-Output "File: $bitbucketTagApiFile"
 
         # 素直実装だと全然動かない悲しみ
         # Invoke-RestMethod `
