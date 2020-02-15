@@ -13,11 +13,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
 {
     public class ReleaseNoteElement : ElementBase
     {
-        public ReleaseNoteElement(UpdateInfo updateInfo, IReadOnlyUpdateItemData updateItem, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public ReleaseNoteElement(UpdateInfo updateInfo, IReadOnlyUpdateItemData updateItem, bool isCheckOnly, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             UpdateInfoImpl = updateInfo;
             UpdateItem = updateItem;
+
+            IsCheckOnly = isCheckOnly;
+
+            OrderManager = orderManager;
             UserAgentManager = userAgentManager;
         }
 
@@ -26,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         public IReadOnlyUpdateInfo UpdateInfo => UpdateInfoImpl;
 
         public IReadOnlyUpdateItemData UpdateItem { get; }
+        public bool IsCheckOnly { get; private set; }
+        IOrderManager OrderManager { get; }
         IUserAgentManager UserAgentManager { get; }
 
         #endregion
@@ -43,6 +49,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
                 return await userAgent.GetStringAsync(UpdateItem.NoteUri);
                 //return await userAgent.GetStringAsync(new Uri("https://bitbucket.org/sk_0520/pe/downloads/update-release.html"));
             }
+        }
+
+        public void StartDownload()
+        {
+            OrderManager.StartUpdate(UpdateTarget.Application, UpdateProcess.Download);
+            IsCheckOnly = false;
+        }
+
+        public void StartUpdate()
+        {
+            OrderManager.StartUpdate(UpdateTarget.Application, UpdateProcess.Update);
         }
 
         #endregion

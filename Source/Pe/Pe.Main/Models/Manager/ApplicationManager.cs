@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
-            UpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+            ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
         }
 
         #region property
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
-        public UpdateInfo UpdateInfo { get; }
+        public UpdateInfo ApplicationUpdateInfo { get; }
 
         #endregion
 
@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             changing.SuccessValue?.Dispose();
         }
 
-        private void ShowUpdateReleaseNote(UpdateItemData updateItem)
+        private void ShowUpdateReleaseNote(UpdateItemData updateItem, bool isCheckOnly)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
@@ -317,7 +317,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
-                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(UpdateInfo, updateItem);
+                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
                 WindowManager.Register(new WindowItem(WindowKind.Release, view));
@@ -766,16 +766,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("おわる！");
 
-            if(!ignoreUpdate && UpdateInfo.IsReady) {
-                Debug.Assert(UpdateInfo.Path != null);
+            if(!ignoreUpdate && ApplicationUpdateInfo.IsReady) {
+                Debug.Assert(ApplicationUpdateInfo.Path != null);
 
                 Logger.LogInformation("アップデート処理起動");
 
                 var process = new Process();
                 process.StartInfo.UseShellExecute = true;
-                process.StartInfo.FileName = UpdateInfo.Path.Path;
-                process.StartInfo.Arguments = UpdateInfo.Path.Option;
-                process.StartInfo.WorkingDirectory = UpdateInfo.Path.WorkDirectoryPath;
+                process.StartInfo.FileName = ApplicationUpdateInfo.Path.Path;
+                process.StartInfo.Arguments = ApplicationUpdateInfo.Path.Option;
+                process.StartInfo.WorkingDirectory = ApplicationUpdateInfo.Path.WorkDirectoryPath;
 
                 Logger.LogInformation("path: {0}", process.StartInfo.FileName);
                 Logger.LogInformation("args: {0}", process.StartInfo.Arguments);
@@ -886,8 +886,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public async Task ExecuteUpdateAsync(UpdateCheckKind updateCheckKind)
         {
-            if(UpdateInfo.State != UpdateState.None) {
-                if(UpdateInfo.IsReady) {
+            if(ApplicationUpdateInfo.State != UpdateState.None) {
+                if(ApplicationUpdateInfo.IsReady) {
                     Logger.LogInformation("アップデート準備完了");
                 } else {
                     Logger.LogInformation("アップデート排他制御中");
@@ -897,11 +897,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var updateChecker = ApplicationDiContainer.Build<UpdateChecker>();
 
-            UpdateInfo.State = UpdateState.Checking;
+            ApplicationUpdateInfo.State = UpdateState.Checking;
             var appVersion = await updateChecker.CheckApplicationUpdateAsync().ConfigureAwait(false);
             if(appVersion == null) {
                 Logger.LogInformation("アップデートなし");
-                UpdateInfo.State = UpdateState.None;
+                ApplicationUpdateInfo.State = UpdateState.None;
                 return;
             }
 
@@ -920,48 +920,60 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
                 try {
-                    //var releaseNoteItem = await updateDownloader.DownloadReleaseNoteAsync(appVersion);
-                    ShowUpdateReleaseNote(appVersion);
+                    ShowUpdateReleaseNote(appVersion, updateCheckKind == UpdateCheckKind.CheckOnly);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
-                    UpdateInfo.State = UpdateState.None;
+                    ApplicationUpdateInfo.State = UpdateState.None;
                     return;
                 }
             }
             if(updateCheckKind == UpdateCheckKind.CheckOnly) {
-                UpdateInfo.State = UpdateState.None;
+                ApplicationUpdateInfo.State = UpdateState.None;
                 return;
             }
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var donwloadFilePath = Path.Combine(environmentParameters.MachineUpdateArchiveDirectory.FullName, appVersion.Version.ToString() + ".zip");
             var donwloadFile = new FileInfo(donwloadFilePath);
-            UpdateInfo.State = UpdateState.Downloading;
             try {
-                await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile).ConfigureAwait(false);
+                var skipDownload = false;
+                donwloadFile.Refresh();
+                if(donwloadFile.Exists) {
+                    ApplicationUpdateInfo.State = UpdateState.Checksumming;
+                    skipDownload = await updateDownloader.ChecksumAsync(appVersion, donwloadFile, ApplicationUpdateInfo.ChecksumProgress);
+                }
+                if(skipDownload) {
+                    Logger.LogInformation("チェックサムの結果ダウンロード不要");
+                    IProgress<double> progress = ApplicationUpdateInfo.DownloadProgress;
+                    progress.Report(1);
+                } else {
+                    donwloadFile.Delete();
+                    ApplicationUpdateInfo.State = UpdateState.Downloading;
+                    await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile, ApplicationUpdateInfo.DownloadProgress).ConfigureAwait(false);
+                }
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                UpdateInfo.State = UpdateState.None;
+                ApplicationUpdateInfo.State = UpdateState.None;
                 return;
             }
 
             Logger.LogInformation("アップデートファイル展開");
-            UpdateInfo.State = UpdateState.Extracting;
+            ApplicationUpdateInfo.State = UpdateState.Extracting;
             try {
                 var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
                 directoryCleaner.Clear(false);
 
                 var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
-                archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory);
+                archiveExtractor.Extract(donwloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.ExtractProgress);
 
                 var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
                 var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
-                UpdateInfo.Path = exeutePathParameter;
-                UpdateInfo.State = UpdateState.Ready;
+                ApplicationUpdateInfo.Path = exeutePathParameter;
+                ApplicationUpdateInfo.State = UpdateState.Ready;
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                UpdateInfo.State = UpdateState.None;
+                ApplicationUpdateInfo.State = UpdateState.None;
             }
 
         }
@@ -969,6 +981,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
 
         #region IOrderManager
+
+        public void StartUpdate(UpdateTarget target, UpdateProcess process)
+        {
+            Debug.Assert(target == UpdateTarget.Application);
+
+            switch(process) {
+                case UpdateProcess.Download:
+                    ExecuteUpdateAsync(UpdateCheckKind.Update).ConfigureAwait(false);
+                    break;
+
+                case UpdateProcess.Update:
+                    Exit(false);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
         {

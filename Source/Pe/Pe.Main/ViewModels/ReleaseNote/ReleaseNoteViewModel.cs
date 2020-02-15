@@ -13,30 +13,61 @@ using ContentTypeTextNet.Pe.Main.Views.ReleaseNote;
 using Microsoft.Extensions.Logging;
 using CefSharp;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
+using System.Windows.Input;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 {
     public class ReleaseNoteViewModel : ElementViewModelBase<ReleaseNoteElement>, IViewLifecycleReceiver
     {
+
         public ReleaseNoteViewModel(ReleaseNoteElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
+            //PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+            //PropertyChangedHooker.AddHook(nameof(), nameof());
         }
 
         #region property
+
+        //PropertyChangedHooker PropertyChangedHooker { get; }
 
         [Timestamp(DateTimeKind.Utc)]
         public DateTime Release => Model?.UpdateItem.Release ?? DateTime.UtcNow;
         public Version Version => Model?.UpdateItem.Version ?? new Version();
         public string Revision => Model?.UpdateItem.Revision ?? string.Empty;
+        public bool IsCheckOnly => Model?.IsCheckOnly ?? true;
+
+        public IReadOnlyUpdateInfo? UpdateInfo => Model?.UpdateInfo;
 
         #endregion
 
         #region command
 
+        public ICommand DownloadCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.StartDownload();
+                RaisePropertyChanged(nameof(IsCheckOnly));
+            },
+            () => IsCheckOnly
+        ));
+
+        public ICommand UpdateCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                // CanExecute に対してどうこうする手間がしんどい
+                if(UpdateInfo?.IsReady ?? false) {
+                    Model.StartUpdate();
+                }
+            }
+        ));
+
         #endregion
 
         #region function
+
+        #endregion
+
+        #region ElementViewModelBase
 
         #endregion
 
@@ -77,5 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         { }
 
         #endregion
+
+
     }
 }

@@ -22,12 +22,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
         #region function
 
-        public void Extract(FileInfo zipArchiveFile, DirectoryInfo extractDirectory)
+        public void Extract(FileInfo zipArchiveFile, DirectoryInfo extractDirectory, IProgress<double> progress)
         {
             var createdDirs = new HashSet<string>();
 
             // 使い方間違えてんのか知らんけど ZipFile.ExtractToDirectory ってやたら例外吐かん？
             using(var zipArchive = ZipFile.OpenRead(zipArchiveFile.FullName)) {
+                var totalExtractItems = zipArchive.Entries.Count;
+                var extractedItemCount = 0;
+                progress.Report(0);
                 foreach(var entry in zipArchive.Entries.Where(e => e.Name.Length > 0)) {
                     var expandPath = Path.Combine(extractDirectory.FullName, entry.FullName);
                     var dirPath = Path.GetDirectoryName(expandPath) ?? string.Empty;
@@ -38,7 +41,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     Logger.LogTrace("展開: {0}", expandPath);
                     entry.ExtractToFile(expandPath, true);
+                    extractedItemCount += 1;
+                    progress.Report(extractedItemCount / (double)totalExtractItems);
                 }
+                progress.Report(1);
             }
         }
 

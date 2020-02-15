@@ -4,11 +4,10 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:cef_sharp_wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
-  xmlns:app_main_views_release_note="clr-namespace:ContentTypeTextNet.Pe.Main.Views.ReleaseNote"
-
-  xmlns:cef_sharp_wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
 
   Height="450"
   Width="800"
@@ -24,7 +23,9 @@
   mc:Ignorable="d"
 >
   <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </Window.Resources>
   <Window.Title>
     <Binding Path="Resources.String_ReleaseNote_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
@@ -36,18 +37,51 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <!--<app_main_views_release_note:ReleaseNoteViewerControl Item="{Binding Item}" />-->
       <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" />
     </Grid>
 
     <Grid Grid.Row="1">
-      <StackPanel Grid.Column="0">
-        <TextBlock Text="asd"/>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <StackPanel Grid.Column="0" Orientation="Horizontal">
+        <StackPanel.Resources>
+          <Style TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
+            <Style.Triggers>
+              <Trigger Property="Value" Value="1">
+                <Setter Property="Opacity" Value="0.5" />
+              </Trigger>
+            </Style.Triggers>
+            <Setter Property="Margin" Value="{StaticResource AllMargin}" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Minimum" Value="0" />
+            <Setter Property="Maximum" Value="1" />
+          </Style>
+        </StackPanel.Resources>
+
+        <TextBlock Width="100" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding UpdateInfo.State, Converter={StaticResource EnumToCultureConverter}}"/>
+
+        <ProgressBar Value="{Binding UpdateInfo.ChecksumValue, Mode=OneWay}" />
+        <ProgressBar Value="{Binding UpdateInfo.DownloadedValue, Mode=OneWay}" />
+        <ProgressBar Value="{Binding UpdateInfo.ExtractedValue, Mode=OneWay}" />
+
       </StackPanel>
 
       <UniformGrid Grid.Column="1" Style="{StaticResource DialogCommand}">
-        <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Button Visibility="{Binding IsCheckOnly, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DownloadCommand}" Content="{Binding Resources.String_ReleaseNote_Download_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Button x:Name="commandClose" IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
       </UniformGrid>
+
+      <Border d:IsHidden="True" Grid.Column="0" >
+        <Button
+          FontWeight="Bold"
+          Visibility="{Binding UpdateInfo.IsReady, Converter={StaticResource BooleanToVisibilityConverter}}"
+          Command="{Binding UpdateCommand}"
+          Content="{Binding Resources.String_ReleaseNote_Update_A, Source={x:Static app_main:CultureService.Current}}"
+        />
+      </Border>
     </Grid>
 
   </Grid>

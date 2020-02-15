@@ -59,12 +59,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
+    public enum UpdateTarget
+    {
+        Application,
+    }
+    public enum UpdateProcess
+    {
+        Download,
+        Update,
+    }
+
     /// <summary>
     /// アプリケーションに対して指示発行を受け付ける役所。
     /// </summary>
     public interface IOrderManager
     {
         #region function
+
+        void StartUpdate(UpdateTarget target, UpdateProcess process);
 
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
@@ -109,6 +121,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             #endregion
 
             #region IOrderManager
+
+            public void StartUpdate(UpdateTarget target, UpdateProcess process)
+            {
+                throw new NotSupportedException();
+            }
 
             public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
             {

@@ -1184,6 +1184,114 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   チェック中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Checking {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   チェック中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Checking_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checking_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   検証中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Checksumming {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checksumming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   検証中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Checksumming_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checksumming_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ダウンロード中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Downloading {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ダウンロード中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Downloading_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   展開中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Extracting {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Extracting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   展開中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Extracting_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Extracting_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_None {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_None_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.None_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   準備完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Ready {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   準備完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateState_Ready_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Num + に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_System_Windows_Input_Key_Add {
@@ -2828,6 +2936,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_ReleaseNote_Caption {
             get {
                 return ResourceManager.GetString("String_ReleaseNote_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ダウンロード開始(_D) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ReleaseNote_Download_A {
+            get {
+                return ResourceManager.GetString("String_ReleaseNote_Download_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   今すぐアップデートを開始(_U) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ReleaseNote_Update_A {
+            get {
+                return ResourceManager.GetString("String_ReleaseNote_Update_A", resourceCulture);
             }
         }
         

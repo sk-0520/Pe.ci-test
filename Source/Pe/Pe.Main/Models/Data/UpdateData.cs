@@ -17,7 +17,6 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
             "revision": "commit",
             "platform": "x64",
             "minimum_version": "y.y.y"
-            "note_kind": "",
             "note_uri": "",
             "archive_uri": "",
             "archive_size": ,
@@ -41,8 +40,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public string Platform { get; }
 
         public Version MinimumVersion { get; }
-
-        string NoteMime { get; }
 
         Uri NoteUri { get; }
 
@@ -101,10 +98,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         }
 
         [DataMember]
-        [JsonPropertyName("note_mime")]
-        public string NoteMime { get; set; } = string.Empty;
-
-        [DataMember]
         [JsonPropertyName("note_uri")]
         public Uri NoteUri { get; set; } = IgnoreUri;
 
@@ -141,22 +134,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// なにもしてない。
         /// </summary>
+        [EnumResource]
         None,
         /// <summary>
         /// チェック中。
         /// </summary>
+        [EnumResource]
         Checking,
         /// <summary>
         /// DL中。
         /// </summary>
+        [EnumResource]
         Downloading,
+        /// <summary>
+        /// 検査中。
+        /// </summary>
+        [EnumResource]
+        Checksumming,
         /// <summary>
         /// 展開中。
         /// </summary>
+        [EnumResource]
         Extracting,
         /// <summary>
         /// 完了。
         /// </summary>
+        [EnumResource]
         Ready,
     }
 
@@ -178,149 +181,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// </summary>
         ForceUpdate
     }
-
-    public enum ReleaseNoteContentKind
-    {
-        [DataMember(Name = "unknown")]
-        [EnumResource]
-        Unknown,
-        [DataMember(Name = "note")]
-        [EnumResource]
-        Note,
-        [DataMember(Name = "features")]
-        [EnumResource]
-        Features,
-        [DataMember(Name = "fixes")]
-        [EnumResource]
-        Fixes,
-        [DataMember(Name = "developer")]
-        [EnumResource]
-        Developer,
-    }
-
-    public enum ReleaseNoteLogKind
-    {
-        [DataMember(Name = "none")]
-        [EnumResource]
-        None,
-        [DataMember(Name = "package")]
-        [EnumResource]
-        Package,
-        [DataMember(Name = "compatibility")]
-        [EnumResource]
-        Compatibility,
-    }
-
-    public enum ReleaseNoteTextKind
-    {
-        Plain,
-        Uri,
-        Issue,
-        Revision,
-    }
-
-    public class ReleaseNoteText
-    {
-        public ReleaseNoteText(string value, ReleaseNoteTextKind kind)
-        {
-            Value = value;
-            Kind = kind;
-        }
-
-        #region property
-
-        public string Value { get; }
-        public ReleaseNoteTextKind Kind { get; }
-
-        #endregion
-    }
-
-    [Serializable, DataContract]
-    public class ReleaseNoteLogItemData : DataBase
-    {
-        #region property
-
-        [DataMember(Name = "revision")]
-        [JsonPropertyName("revision")]
-        public string Revision { get; set; } = string.Empty;
-
-        [DataMember(Name = "kind")]
-        [JsonPropertyName("kind")]
-        public string _Kind { get; set; } = string.Empty;
-        [IgnoreDataMember, JsonIgnore]
-        public ReleaseNoteLogKind Kind
-        {
-            get => EnumUtility.TryParse(_Kind, out ReleaseNoteLogKind kind) ? kind : ReleaseNoteLogKind.None;
-            set => _Kind = value.ToString();
-        }
-
-        [DataMember(Name = "subject")]
-        [JsonPropertyName("subject")]
-        public string Subject { get; set; } = string.Empty;
-
-        [DataMember(Name = "comments")]
-        [JsonPropertyName("comments")]
-        public string[] Comments { get; set; } = new string[0];
-
-        #endregion
-    }
-
-    [Serializable, DataContract]
-    public class ReleaseNoteContentData : DataBase
-    {
-        #region property
-
-        [DataMember(Name = "kind")]
-        [JsonPropertyName("kind")]
-        public string _Kind { get; set; } = string.Empty;
-        [IgnoreDataMember, JsonIgnore]
-        public ReleaseNoteContentKind Kind
-        {
-            get => EnumUtility.TryParse(_Kind, out ReleaseNoteContentKind kind) ? kind : ReleaseNoteContentKind.Unknown;
-            set => _Kind = value.ToString();
-        }
-
-        [DataMember(Name = "logs")]
-        [JsonPropertyName("logs")]
-        public ReleaseNoteLogItemData[]? Logs { get; set; }
-
-        #endregion
-    }
-
-    [Serializable, DataContract]
-    public class ReleaseNoteItemData : DataBase
-    {
-        #region property
-
-        [DataMember(Name = "date")]
-        [JsonPropertyName("date")]
-        public string _Date { get; set; } = string.Empty;
-        [IgnoreDataMember, JsonIgnore]
-        [Timestamp(DateTimeKind.Utc)]
-        public DateTime Date
-        {
-            //get => DateTime.SpecifyKind(DateTime.Parse(_Date), DateTimeKind.Utc);
-            get => DateTime.Parse(_Date).ToUniversalTime();
-            set => _Date = value.ToString();
-        }
-
-        [DataMember(Name = "version")]
-        [JsonPropertyName("version")]
-        public string _Version { get; set; } = string.Empty;
-        [IgnoreDataMember, JsonIgnore]
-        public Version Version
-        {
-            get => Version.Parse(_Version);
-            set => _Version = value.ToString();
-        }
-
-        [DataMember(Name = "contents", IsRequired = true)]
-        [JsonPropertyName("contents")]
-        public ReleaseNoteContentData[] Contents { get; set; } = new ReleaseNoteContentData[0];
-
-        #endregion
-    }
-
 
 }
 

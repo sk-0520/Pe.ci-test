@@ -1351,4 +1351,46 @@
   <data name="File_ReleaseNote_ErrorReleaseNote" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\releasenote\errorreleasenote.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checking" xml:space="preserve">
+    <value>チェック中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checking_A" xml:space="preserve">
+    <value>チェック中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checksumming" xml:space="preserve">
+    <value>検証中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Checksumming_A" xml:space="preserve">
+    <value>検証中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading" xml:space="preserve">
+    <value>ダウンロード中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Downloading_A" xml:space="preserve">
+    <value>ダウンロード中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Extracting" xml:space="preserve">
+    <value>展開中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Extracting_A" xml:space="preserve">
+    <value>展開中</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.None" xml:space="preserve">
+    <value>未実行</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.None_A" xml:space="preserve">
+    <value>未実行</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready" xml:space="preserve">
+    <value>準備完了</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.UpdateState.Ready_A" xml:space="preserve">
+    <value>準備完了</value>
+  </data>
+  <data name="String_ReleaseNote_Download_A" xml:space="preserve">
+    <value>ダウンロード開始(_D)</value>
+  </data>
+  <data name="String_ReleaseNote_Update_A" xml:space="preserve">
+    <value>今すぐアップデートを開始(_U)</value>
+  </data>
 </root>

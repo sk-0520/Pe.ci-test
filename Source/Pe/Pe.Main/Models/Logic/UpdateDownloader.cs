@@ -31,16 +31,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public async Task DownloadApplicationArchiveAsync(UpdateItemData updateItem, FileInfo donwloadFile)
+        public async Task<bool> ChecksumAsync(UpdateItemData updateItem, FileInfo targetFile, IProgress<double> progress)
+        {
+            await Task.Delay(1);
+            return false;
+        }
+
+        public async Task DownloadApplicationArchiveAsync(UpdateItemData updateItem, FileInfo donwloadFile, IProgress<double> progress)
         {
             Logger.LogInformation("アップデートファイルダウンロード: {0}, {1}", updateItem.ArchiveUri, donwloadFile);
+            progress.Report(0);
+
             using(var userAgent = UserAgentManager.CreateAppUserAgent()) {
                 var content = await userAgent.GetAsync(updateItem.ArchiveUri);
+
+                //NOTE: long が使えない！
+                int downloadedSize = 0;
+                int downloadChunkSize = 1024 * 4;
 
                 //TODO: ダウンロード進捗のあれこれ
                 using(var networkStream = await content.Content.ReadAsStreamAsync()) {
                     using(var localStream = donwloadFile.Create()) {
-                        await networkStream.CopyToAsync(localStream);
+                        var downloadChunk = new byte[downloadChunkSize];
+
+                        while(true) {
+                            var readSize = networkStream.Read(downloadChunk, 0, downloadChunk.Length);
+                            if(0 < readSize) {
+                                localStream.Write(downloadChunk, downloadedSize, readSize);
+                                downloadChunkSize += readSize;
+                                progress.Report(downloadChunkSize / (double)updateItem.ArchiveSize);
+                            } else {
+                                progress.Report(1);
+                                break;
+                            }
+                        }
                     }
                 }
             }

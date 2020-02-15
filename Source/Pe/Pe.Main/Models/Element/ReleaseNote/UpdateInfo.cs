@@ -17,6 +17,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         bool IsReady { get; }
         UpdateState State { get; }
 
+
+        IProgress<double> ChecksumProgress { get; }
+        IProgress<double> DownloadProgress { get; }
+        IProgress<double> ExtractProgress { get; }
+
+        double DownloadedValue { get; }
+        double ExtractedValue { get; }
+
         #endregion
     }
 
@@ -25,10 +33,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         #region variable
 
         UpdateState _state;
+        double _checksumValue;
+        double _downloadedValue;
+        double _extractedValue;
+
         #endregion
 
         public UpdateInfo(ILoggerFactory loggerFactory) : base(loggerFactory)
-        { }
+        {
+            ChecksumProgress = new Progress<double>(v => ChecksumValue = v);
+            DownloadProgress = new Progress<double>(v => DownloadedValue = v);
+            ExtractProgress = new Progress<double>(v => ExtractedValue = v);
+        }
 
         #region property
 
@@ -55,6 +71,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
                 RaisePropertyChanged(nameof(IsReady));
             }
         }
+
+        public Progress<double> ChecksumProgress { get; }
+        IProgress<double> IReadOnlyUpdateInfo.ChecksumProgress => ChecksumProgress;
+        public Progress<double> DownloadProgress { get; }
+        IProgress<double> IReadOnlyUpdateInfo.DownloadProgress => DownloadProgress;
+        public IProgress<double> ExtractProgress { get; }
+        IProgress<double> IReadOnlyUpdateInfo.ExtractProgress => ExtractProgress;
+
+
+        public double ChecksumValue
+        {
+            get => this._checksumValue;
+            private set => SetProperty(ref this._checksumValue, value);
+        }
+
+        public double DownloadedValue
+        {
+            get => this._downloadedValue;
+            private set => SetProperty(ref this._downloadedValue, value);
+        }
+
+        public double ExtractedValue
+        {
+            get => this._extractedValue;
+            private set => SetProperty(ref this._extractedValue, value);
+        }
+
+        #endregion
+
+        #region function
 
         #endregion
     }
