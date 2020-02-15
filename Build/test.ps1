@@ -9,9 +9,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 }
 
 echo 1
-if((TestAliasExists "curl")) {
+if(TestAliasExists curl) {
     echo 2
-    Remove-Item curl
+    Remove-Item "curl"
 }
 echo 3
 SetCommand 'curl' 'BUILD_CURL_PATH' "%WINDIR%\System32"
