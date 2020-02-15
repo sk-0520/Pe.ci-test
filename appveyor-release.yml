@@ -26,5 +26,5 @@ test_script:
 artifacts:
 - path: Output\*.zip
 deploy_script:
-  - cmd: for %%A in ( Output\Release\*.zip ) do curl --user %PE_RELEASE_USER%:%PE_RELEASE_PASSWORD% -X POST %PE_DEPLOY_URL% -F files=@%%A
+  - cmd: for %%A in ( Output\*.zip ) do curl --user %PE_RELEASE_USER%:%PE_RELEASE_PASSWORD% -X POST %PE_DEPLOY_DOWNLOAD_URL% -F files=@%%A
 
