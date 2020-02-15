@@ -19,9 +19,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 # Invoke-RestMethod しんどい。。。
 if(TestAliasExists curl) {
-    Remove-Item curl
+    Remove-Item alias:curl
 }
-SetCommand 'curl' 'BUILD_CURL_PATH' "%WINDIR%\System32"
+#SetCommand 'curl' 'BUILD_CURL_PATH' "%WINDIR%\System32"
 
 $archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
 $updateFile = Join-Path $DeployRootDirectory 'update.json'
