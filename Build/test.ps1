@@ -11,7 +11,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 echo 1
 if(TestAliasExists curl) {
     echo 2
-    Remove-Alias "curl"
+    Remove-Item  alias:curl
 }
 echo 3
 curl --help
