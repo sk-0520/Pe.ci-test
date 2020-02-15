@@ -31,7 +31,7 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 try {
     Push-Location $rootDirectory
 
-    $vesion = Get-AppVersion
+    $vesion = GetAppVersion
     $revision = (git rev-parse HEAD)
 
     function Update-Element([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {

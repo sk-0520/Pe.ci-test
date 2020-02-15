@@ -15,7 +15,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 }
 
 
-$vesion = Get-AppVersion
+$vesion = GetAppVersion
 
 $destinationPath = Join-Path $DestinationDirectory ("Pe_" + $vesion + "_" + $Platform + ".zip")
 

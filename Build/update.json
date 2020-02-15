@@ -1,18 +1,3 @@
 {
-    "items": [
-        {
-            "release": "2020-01-21T10:23:32Z",
-            "version": "1.0.0",
-            "revision": "x64x64x64x64x64",
-            "platform": "x64",
-            "minimum_version": "0.0.9",
-            "note_mime": "text/html"   ,
-            "note_uri": "http://localhost/pe/Pe_0_84_0.html",
-            "archive_uri": "http://localhost/pe/Pe_0.84.0_x64.zip",
-            "archive_size": 146823286,
-            "archive_hash_kind": "SHA-256",
-            "archive_hash_value": "B831847C267039301AD7F400DBF6BF51F39A500DCA26D178B1B1C77D6DAD7422"
-        }
-    ]
-
+    "items": [ ]
 }
