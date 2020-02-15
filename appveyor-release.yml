@@ -9,25 +9,25 @@ install:
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk --version 3.1.100
   #- cmd: dotnet --version
-  - cmd: set
-before_build:
-  - cmd: git submodule init
-  - cmd: git submodule update
+#  - cmd: set
+# before_build:
+#   - cmd: git submodule init
+#   - cmd: git submodule update
 build_script:
-#  - ps: .\Build\test.ps1
-  - ps: .\Build\build.ps1 -platform x64 -buildType ""
-  - ps: .\Build\build.ps1 -platform x86 -buildType ""
-  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x64\Pe -DestinationDirectory Output -Platform x64 -Diet
-  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x86\Pe -DestinationDirectory Output -Platform x86 -Diet
-  - ps: .\Build\release-note.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -OutputDirectory Output -ReleaseDirectory Output -Platforms x86,x64
-before_test:
-  - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
-test_script:
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 /p:Platform=x64 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
-  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x86 /p:Platform=x86 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
-artifacts:
-- path: Output\*.json
-- path: Output\*.html
-deploy_script:
+  - ps: .\Build\test.ps1
+#   - ps: .\Build\build.ps1 -platform x64 -buildType ""
+#   - ps: .\Build\build.ps1 -platform x86 -buildType ""
+#   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x64\Pe -DestinationDirectory Output -Platform x64 -Diet
+#   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x86\Pe -DestinationDirectory Output -Platform x86 -Diet
+#   - ps: .\Build\release-note.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -OutputDirectory Output -ReleaseDirectory Output -Platforms x86,x64
+# before_test:
+#   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
+# test_script:
+#   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 /p:Platform=x64 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
+#   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x86 /p:Platform=x86 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
+# artifacts:
+# - path: Output\*.json
+# - path: Output\*.html
+# deploy_script:
   #- cmd: for %%A in ( Output\*.zip ) do curl --user %PE_RELEASE_USER%:%PE_RELEASE_PASSWORD% -X POST %PE_DEPLOY_DOWNLOAD_URL% -F files=@%%A
-  - ps: .\Build\deploy.ps1 -TargetRepository bitbucket -DeployRootDirectory Output -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD
+#   - ps: .\Build\deploy.ps1 -TargetRepository bitbucket -DeployRootDirectory Output -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD

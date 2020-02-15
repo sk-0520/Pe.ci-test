@@ -7,7 +7,7 @@ foreach ($scriptFileName in $scriptFileNames) {
     $scriptFilePath = Join-Path $currentDirPath $scriptFileName
     . $scriptFilePath
 }
-
+Get-ChildItem env:
 echo 1
 if(TestAliasExists curl) {
     echo 2
