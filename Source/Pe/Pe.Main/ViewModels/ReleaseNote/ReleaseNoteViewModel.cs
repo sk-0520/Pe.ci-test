@@ -26,9 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         #region property
 
         [Timestamp(DateTimeKind.Utc)]
-        public DateTime Release => Model.UpdateItem.Release;
-        public Version Version => Model.UpdateItem.Version;
-        public string Revision => Model.UpdateItem.Revision;
+        public DateTime Release => Model?.UpdateItem.Release ?? DateTime.UtcNow;
+        public Version Version => Model?.UpdateItem.Version ?? new Version();
+        public string Revision => Model?.UpdateItem.Revision ?? string.Empty;
 
         #endregion
 
@@ -51,6 +51,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
             view.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
 
             Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {
+                if(IsDisposed) {
+                    Logger.LogTrace("close");
+                    return;
+                }
+
                 if(t.IsCompletedSuccessfully) {
                     var htmlSource = t.Result;
                     view.webView.LoadHtml(htmlSource, Model.UpdateItem.NoteUri.ToString());

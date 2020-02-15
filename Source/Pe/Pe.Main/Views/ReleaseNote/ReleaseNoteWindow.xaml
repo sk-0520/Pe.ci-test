@@ -40,9 +40,15 @@
       <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" />
     </Grid>
 
-    <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
-    </UniformGrid>
+    <Grid Grid.Row="1">
+      <StackPanel Grid.Column="0">
+        <TextBlock Text="asd"/>
+      </StackPanel>
+
+      <UniformGrid Grid.Column="1" Style="{StaticResource DialogCommand}">
+        <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
+      </UniformGrid>
+    </Grid>
 
   </Grid>
 </Window>
