@@ -7,35 +7,65 @@ Param(
     [parameter(mandatory = $true)][string] $DeployPassword
 )
 $ErrorActionPreference = 'Stop'
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$scriptFileNames = @(
-    'command.ps1'
-);
-foreach ($scriptFileName in $scriptFileNames) {
-    $scriptFilePath = Join-Path $currentDirPath $scriptFileName
-    . $scriptFilePath
-}
 
-
-# Invoke-RestMethod しんどい。。。
-if(TestAliasExists curl) {
-    Remove-Item alias:curl
-}
-#SetCommand 'curl' 'BUILD_CURL_PATH' "%WINDIR%\System32"
+$securePassword = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $securePassword)
 
 $archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
-$updateFile = Join-Path $DeployRootDirectory 'update.json'
+$updateFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory 'update.json')
+echo $updateFile
+
+# https://stackoverflow.com/a/50255917
+function UploadFile([string] $filePath) {
+    $fileName = [System.IO.Path]::GetFileName($filePath)
+    $fileBytes = [System.IO.File]::ReadAllBytes($filePath);
+    $fileEnc = [System.Text.Encoding]::GetEncoding('UTF-8').GetString($fileBytes);
+    $boundary = [System.Guid]::NewGuid().ToString();
+    $LF = "`r`n";
+    $bodyLines = (
+        "--$boundary",
+        "Content-Disposition: form-data; name=`"files`"; filename=`"$fileName`"",
+        "Content-Type: application/octet-stream$LF",
+        $fileEnc,
+        "--$boundary--$LF"
+    ) -join $LF
+
+    Invoke-RestMethod `
+        -Credential $credential `
+        -Method Post `
+        -Uri $DeployApiDownloadUrl `
+        -ContentType "multipart/form-data; boundary=`"$boundary`"" `
+        -Body $bodyLines
+}
 
 switch ($TargetRepository) {
     'bitbucket' {
         foreach($archiveFile in $archiveFiles) {
-            curl --user ${DeployAccount}:${DeployPassword} -X POST $DeployApiDownloadUrl -F files=@$archiveFile
+            UploadFile $archiveFile
         }
-        curl --user ${DeployAccount}:${DeployPassword} -X POST $DeployApiDownloadUrl -F files=@$updateFile
+        UploadFile $updateFile
 
         $bitbucketTagApiFile = Join-Path $DeployRootDirectory 'bitbucket-tag.json'
+        echo $bitbucketTagApiFile
         echo (Get-Content $bitbucketTagApiFile)
         echo $DeployApiTagUrl
-        curl --user ${DeployAccount}:${DeployPassword} -H 'Content-Type: application/json' -X POST $DeployApiTagUrl -d @$bitbucketTagApiFile
+        #curl --user ${DeployAccount}:${DeployPassword} -H 'Content-Type: application/json' -X POST $DeployApiTagUrl -d @$bitbucketTagApiFile
+
+        # 素直実装だと全然動かない悲しみ
+        # Invoke-RestMethod `
+        #     -Credential $credential `
+        #     -Method Post `
+        #     -Uri $DeployApiTagUrl `
+        #     -ContentType "Content-Type: application/json" `
+        #     -InFile $bitbucketTagApiFile
+        $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $DeployAccount, $DeployPassword)))
+        Invoke-RestMethod `
+            -Headers @{
+                Authorization=("Basic {0}" -f $base64AuthInfo)
+                "Content-type"="application/json"
+            }  `
+            -Method Post `
+            -Uri $DeployApiTagUrl `
+            -InFile $bitbucketTagApiFile
     }
 }
