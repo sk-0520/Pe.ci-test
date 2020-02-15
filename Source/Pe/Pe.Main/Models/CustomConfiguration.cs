@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models
@@ -75,6 +77,31 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #region property
 
         public string AppCenter { get; }
+
+        #endregion
+    }
+
+    public class WebConfiguration : ConfigurationBase
+    {
+        public WebConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            var map = new Dictionary<string, string>() {
+                ["APP-NAME"] = BuildStatus.Name,
+                ["APP-BUILD"] = BuildStatus.BuildType.ToString(),
+                ["APP-VER"] = BuildStatus.Version.ToString(),
+                ["APP-REVISION"] = BuildStatus.Revision,
+                ["LIB-NAME"] = "CefSharp",
+                ["LIB-VER"] = CefSharp.Cef.ChromiumVersion.ToString(),
+            };
+            ViewUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("view_useragent"), map);
+            ClientUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("client_useragent"), map);
+        }
+
+        #region property
+
+        public string ViewUserAgent { get; }
+        public string ClientUserAgent { get; }
 
         #endregion
     }
@@ -194,6 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public CustomConfiguration(IConfigurationRoot configurationRoot)
         {
             General = new GeneralConfiguration(configurationRoot.GetSection("general"));
+            Web = new WebConfiguration(configurationRoot.GetSection("web"));
             Api = new ApiConfiguration(configurationRoot.GetSection("api"));
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
@@ -207,6 +235,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #region property
 
         public GeneralConfiguration General { get; }
+        public WebConfiguration Web { get; }
         public ApiConfiguration Api { get; }
         public BackupConfiguration Backup { get; }
         public FileConfiguration File { get; }

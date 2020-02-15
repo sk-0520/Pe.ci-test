@@ -8,6 +8,8 @@
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main_views_release_note="clr-namespace:ContentTypeTextNet.Pe.Main.Views.ReleaseNote"
 
+  xmlns:cef_sharp_wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+
   Height="450"
   Width="800"
   WindowStartupLocation="CenterScreen"
@@ -34,12 +36,19 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <app_main_views_release_note:ReleaseNoteViewerControl Item="{Binding Item}" />
+      <!--<app_main_views_release_note:ReleaseNoteViewerControl Item="{Binding Item}" />-->
+      <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" />
     </Grid>
 
-    <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
-    </UniformGrid>
+    <Grid Grid.Row="1">
+      <StackPanel Grid.Column="0">
+        <TextBlock Text="asd"/>
+      </StackPanel>
+
+      <UniformGrid Grid.Column="1" Style="{StaticResource DialogCommand}">
+        <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
+      </UniformGrid>
+    </Grid>
 
   </Grid>
 </Window>

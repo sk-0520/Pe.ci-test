@@ -119,6 +119,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
 
         /// <summary>
+        /// WebViewの端末親ディレクトリ。
+        /// </summary>
+        public DirectoryInfo MachineWebViewDirectory => CombineDirectory(MachineDirectory, "web-view");
+        public DirectoryInfo MachineWebViewUserDirectory => CombineDirectory(MachineWebViewDirectory, "user");
+
+        /// <summary>
         /// 一時ディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryDirectory { get; set; }
@@ -127,6 +133,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// 設定ファイル格納用一時ディレクトリ。
         /// </summary>
         public DirectoryInfo TemporarySettingDirectory => CombineDirectory(TemporaryDirectory, "setting");
+        /// <summary>
+        /// WebViewのユーザーディレクトリ。
+        /// </summary>
         public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(TemporaryDirectory, "plugins");
 
         /// <summary>
@@ -137,6 +146,14 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アプリケーション展開ディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "application");
+        /// <summary>
+        /// WebViewの一時親ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryWebViewDirectory => CombineDirectory(TemporaryDirectory, "web-view");
+        /// <summary>
+        /// WebViewのキャッシュディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryWebViewCacheDirectory => CombineDirectory(TemporaryWebViewDirectory, "cache");
 
         /// <summary>
         /// 設定格納DBファイル。

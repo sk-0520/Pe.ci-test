@@ -144,6 +144,23 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///	&lt;title&gt;&lt;/title&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///	&lt;p&gt;error&lt;/p&gt;
+        ///&lt;/body&gt;
+        ///&lt;/html&gt;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string File_ReleaseNote_ErrorReleaseNote {
+            get {
+                return ResourceManager.GetString("File_ReleaseNote_ErrorReleaseNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   バージョン情報 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_About_Caption {

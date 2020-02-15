@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             changing.SuccessValue?.Dispose();
         }
 
-        private void ShowUpdateReleaseNote(UpdateItemData updateItem, ReleaseNoteItemData releaseNoteItem)
+        private void ShowUpdateReleaseNote(UpdateItemData updateItem)
         {
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
@@ -317,7 +317,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
-                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(UpdateInfo, updateItem, releaseNoteItem);
+                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(UpdateInfo, updateItem);
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
                 WindowManager.Register(new WindowItem(WindowKind.Release, view));
@@ -757,6 +757,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeNoteElements();
         }
 
+        private void DisposeWebView()
+        {
+            CefSharp.Cef.Shutdown();
+        }
+
         public void Exit(bool ignoreUpdate)
         {
             Logger.LogInformation("おわる！");
@@ -790,6 +795,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CloseViews();
             DisposeElements();
+            DisposeWebView();
 
             Dispose();
 
@@ -914,8 +920,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(updateCheckKind != UpdateCheckKind.ForceUpdate) {
                 try {
-                    var releaseNoteItem = await updateDownloader.DownloadReleaseNoteAsync(appVersion);
-                    ShowUpdateReleaseNote(appVersion, releaseNoteItem);
+                    //var releaseNoteItem = await updateDownloader.DownloadReleaseNoteAsync(appVersion);
+                    ShowUpdateReleaseNote(appVersion);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                     UpdateInfo.State = UpdateState.None;
@@ -1121,6 +1127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     CloseViews();
                     DisposeElements();
+                    DisposeWebView();
 
                     //MessageWindowDispatcherWapper?.Begin(() => {
                     //    MessageWindowHandleSource?.Dispose();

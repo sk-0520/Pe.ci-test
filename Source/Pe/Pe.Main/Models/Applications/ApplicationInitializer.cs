@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
@@ -454,6 +455,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             if(IsFirstStartup) {
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
+
+            new WebViewinItializer().Initialize(environmentParameters);
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {

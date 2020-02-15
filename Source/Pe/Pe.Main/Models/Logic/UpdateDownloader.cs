@@ -46,25 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        public async Task<ReleaseNoteItemData> DownloadReleaseNoteAsync(UpdateItemData updateItem)
-        {
-            Logger.LogInformation("リリースノートダウンロード: {0}, {1}", updateItem.NoteMime, updateItem.NoteUri);
-            using(var userAgent = UserAgentManager.CreateAppUserAgent()) {
-                using(var networkStream = await userAgent.GetStreamAsync(updateItem.NoteUri)) {
-                    //using var memoryStream = new MemoryStream();
-                    //await networkStream.CopyToAsync(memoryStream);
-                    SerializerBase serializer = updateItem.NoteMime switch
-                    {
-                        ReleaseNoteMime.Json => new JsonDataSerializer(),
-                        _ => throw new NotImplementedException()
-                    };
-                    //memoryStream.Position = 0;
-                    return serializer.Load<ReleaseNoteItemData>(networkStream);
-                }
-            }
-        }
-
         #endregion
 
-        }
+    }
 }

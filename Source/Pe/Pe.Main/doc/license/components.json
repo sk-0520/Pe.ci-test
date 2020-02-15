@@ -71,6 +71,15 @@
 				"uri": "https://github.com/hardcodet/wpf-notifyicon/blob/master/LICENSE"
 			},
 			"comment": ".NET Core 用に独自修正"
+		},
+		{
+			"name": "CefSharp",
+			"uri": "https://cefsharp.github.io/",
+			"license": {
+				"name": "BSD",
+				"uri": "https://github.com/cefsharp/CefSharp/blob/master/LICENSE"
+			},
+			"comment": "CefSharp.Wpf"
 		}
 	],
 

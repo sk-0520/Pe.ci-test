@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
+    <PackageReference Include="CefSharp.Wpf" Version="79.1.360" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.1" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1" />
@@ -85,6 +86,18 @@
     <Page Update="C:\Users\abcde\.nuget\packages\microsoft.ui.xaml\2.2.190917002\buildTransitive\DensityStyles\Compact.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Update="CefSharp">
+      <Private>true</Private>
+    </Reference>
+    <Reference Update="CefSharp.Core">
+      <Private>true</Private>
+    </Reference>
+    <Reference Update="CefSharp.Wpf">
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
