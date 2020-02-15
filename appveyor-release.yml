@@ -23,6 +23,9 @@ before_test:
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x64 /p:Platform=x64 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-x86 /p:Platform=x86 /p:DefineConstants="" --test-adapter-path:. --logger:Appveyor
+artifacts:
+- path: Output\*.json
+- path: Output\*.html
 deploy_script:
   - cmd: for %%A in ( Output\*.zip ) do curl --user %PE_RELEASE_USER%:%PE_RELEASE_PASSWORD% -X POST %PE_DEPLOY_DOWNLOAD_URL% -F files=@%%A
 
