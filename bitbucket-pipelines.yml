@@ -7,6 +7,6 @@ pipelines:
            - dotnet --version
            - git submodule init
            - git submodule update
-           - dotnet tool install PowerShell
+           - dotnet tool install --global PowerShell
            - powershell -help
            - pwsh -help
