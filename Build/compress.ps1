@@ -1,7 +1,8 @@
 Param(
     [parameter(mandatory=$true)][string] $SourceDirectory,
     [parameter(mandatory=$true)][string] $DestinationDirectory,
-    [parameter(mandatory=$true)][string] $Platform
+    [parameter(mandatory=$true)][string] $Platform,
+    [switch] $Diet
 )
 $ErrorActionPreference = 'Stop'
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
