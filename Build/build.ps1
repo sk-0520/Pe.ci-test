@@ -3,11 +3,10 @@ Param(
     [string] $buildType
 )
 $ErrorActionPreference = 'Stop'
-
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-
 $scriptFileNames = @(
-    'command.ps1'
+    'command.ps1',
+    'version.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
     $scriptFilePath = Join-Path $currentDirPath $scriptFileName
@@ -32,9 +31,7 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 try {
     Push-Location $rootDirectory
 
-    $projectXml = [XML](Get-Content -Path Source/Pe/Pe.Main/Pe.Main.csproj -Encoding UTF8)
-    $projectNav = $projectXml.CreateNavigator()
-    $vesion = $projectNav.Select('/Project/PropertyGroup/Version').Value
+    $vesion = Get-AppVersion
     $revision = (git rev-parse HEAD)
 
     function Update-Element([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
