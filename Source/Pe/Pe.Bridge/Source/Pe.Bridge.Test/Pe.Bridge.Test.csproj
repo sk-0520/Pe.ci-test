@@ -11,6 +11,7 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <RootNamespace>ContentTypeTextNet.Pe.Bridge.Test</RootNamespace>
+    <Copyright>Copyright © 2019-YYYY sk &lt;content-type-text.net&gt;</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@
     <RootNamespace>ContentTypeTextNet.Pe.Core.Test</RootNamespace>
 
     <IsPackable>false</IsPackable>
+    <Copyright>Copyright © 2015-YYYY sk &lt;content-type-text.net&gt;</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
