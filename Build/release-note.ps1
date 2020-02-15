@@ -61,8 +61,8 @@ switch ($TargetRepository) {
             }
         }
         $bitbucketTagApiFile = Join-Path $OutputDirectory 'bitbucket-tag.json'
-        $utf8n = New-Object 'System.Text.UTF8Encoding' -ArgumentList @($false)
-        [System.IO.File]::WriteAllLines($bitbucketTagApiFile, @((ConvertTo-Json -InputObject $tagJson)), $utf8n)
+        $utf8n = New-Object System.Text.UTF8Encoding $False
+        [System.IO.File]::WriteAllLines($bitbucketTagApiFile, (ConvertTo-Json -InputObject $tagJson), $utf8n)
         Get-Content $bitbucketTagApiFile
     }
 }
