@@ -14,6 +14,5 @@ if(TestAliasExists curl) {
     Remove-Item  alias:curl
 }
 echo 3
-curl --help
-SetCommand 'curl' 'BUILD_CURL_PATH' "%WINDIR%\System32"
+curl --version
 echo 4
