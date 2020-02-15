@@ -955,6 +955,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ApplicationUpdateInfo.State = UpdateState.Downloading;
                     await updateDownloader.DownloadApplicationArchiveAsync(appVersion, donwloadFile, new UserNotifyProgress(ApplicationUpdateInfo.DownloadProgress, ApplicationUpdateInfo.CurrentLogProgress)).ConfigureAwait(false);
 
+                    // ここで更新しないとチェックサムでファイ無し判定を食らう
+                    donwloadFile.Refresh();
+
                     ApplicationUpdateInfo.State = UpdateState.Checksumming;
                     var checksumOk = await updateDownloader.ChecksumAsync(appVersion, donwloadFile, new UserNotifyProgress(ApplicationUpdateInfo.ChecksumProgress, ApplicationUpdateInfo.CurrentLogProgress));
                     if(!checksumOk) {
