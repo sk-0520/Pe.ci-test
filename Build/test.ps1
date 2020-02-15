@@ -13,6 +13,8 @@ if(TestAliasExists curl) {
     echo 2
     Remove-Item  alias:curl
 }
+SetCommand 'curl' 'BUILD_CURL_PATH' "%WINDIR%\System32"
+
 echo 3
 curl --version
 echo 4
