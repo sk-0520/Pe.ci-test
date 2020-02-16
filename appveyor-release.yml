@@ -9,6 +9,9 @@ install:
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk --version 3.1.100
   #- cmd: dotnet --version
+  #- cmd: nvm install 12.14.1
+  #- cmd: npm -g install npm@6.13.4
+  #- cmd: npm -prefix ./Source/Documents install ./Source/Documents
   - cmd: set
 before_build:
   - cmd: git submodule init
