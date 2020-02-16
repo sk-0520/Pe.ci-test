@@ -9,38 +9,37 @@ Param(
 	[parameter(mandatory = $true)][string] $ExecuteCommand,
 	[parameter(mandatory = $false)][string] $ExecuteArgument
 )
-#$OutputEncoding='utf-8'
 $ErrorActionPreference = "Stop"
 
-Write-Output "ProcessId: $ProcessId"
-Write-Output "WaitSeconds: $WaitSeconds"
-Write-Output "SourceDirectory: $SourceDirectory"
-Write-Output "DestinationDirectory: $DestinationDirectory"
-Write-Output "Platform: $Platform"
-Write-Output "UpdateScript: $UpdateScript"
-Write-Output "ExecuteCommand: $ExecuteCommand"
-Write-Output "ExecuteArgument: $ExecuteArgument"
+Write-Host "ProcessId: $ProcessId"
+Write-Host "WaitSeconds: $WaitSeconds"
+Write-Host "SourceDirectory: $SourceDirectory"
+Write-Host "DestinationDirectory: $DestinationDirectory"
+Write-Host "Platform: $Platform"
+Write-Host "UpdateScript: $UpdateScript"
+Write-Host "ExecuteCommand: $ExecuteCommand"
+Write-Host "ExecuteArgument: $ExecuteArgument"
 
 if ($ProcessId -ne 0 ) {
-	Write-Output "wait process: $ProcessId ..."
+	Write-Output "プロセス終了待機: $ProcessId ..."
 	try {
 		Wait-Process -Id $ProcessId -Timeout $WaitSeconds
-		Write-Output "exited process: $ProcessId !"
+		Write-Host "プロセス終了: $ProcessId"
 	}
 	catch {
-		Write-Output $Error
-		Write-Output "ignore process"
+		Write-Host $Error
+		Write-Host "プロセス($ProcessId)が存在しなかったためプロセス終了を無視"
 	}
 }
 
-Write-Output "$SourceDirectory -> $DestinationDirectory"
+Write-Host "$SourceDirectory -> $DestinationDirectory"
 Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
 
 if ( Test-Path -Path $UpdateScript ) {
-	Write-Output "execute script: $UpdateScript"
+	Write-Host "最新アップデート後スクリプトの実施: $UpdateScript"
 	Invoke-Expression "$UpdateScript -DestinationDirectory ""$DestinationDirectory"" -Platform $Platform "
 }
 
 Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
 
-Read-Host "てすと ..."
+Read-Host "Enter キーを押すとコンソールが閉じます ..."
