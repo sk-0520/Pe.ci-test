@@ -17,9 +17,9 @@ build_script:
   #- ps: .\Build\test.ps1
   - ps: .\Build\build.ps1 -platform x64 -buildType ""
 #   - ps: .\Build\build.ps1 -platform x86 -buildType ""
-#   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x64\Pe -DestinationDirectory Output -Platform x64 -Diet
-  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x86\Pe -DestinationDirectory Output -Platform x86 -Diet
-#   - ps: .\Build\release-note.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -OutputDirectory Output -ReleaseDirectory Output -Platforms x86,x64
+  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x64\Pe -DestinationDirectory Output -Platform x64 -Diet
+#  - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x86\Pe -DestinationDirectory Output -Platform x86 -Diet
+  - ps: .\Build\release-note.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -OutputDirectory Output -ReleaseDirectory Output -Platforms x86,x64
 # before_test:
 #   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
 # test_script:
