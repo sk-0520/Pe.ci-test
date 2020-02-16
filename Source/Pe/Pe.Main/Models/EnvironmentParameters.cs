@@ -19,6 +19,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
             RootDirectory = rootDirectory;
 
+#if !PRODUCT
+            ApplicationBaseDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+#endif
+
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder
                 .SetBasePath(EtcDirectory.FullName)
@@ -50,10 +54,15 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public static string CommandLineKeyOldSettingRootDirectoryPath { get; } = "old-setting-root";
         //CommandLine CommandLine { get; }
         public string OldSettingRootDirectoryPath { get; }
+
         /// <summary>
         /// アプリケーションの最上位ディレクトリ。
         /// </summary>
         public DirectoryInfo RootDirectory { get; }
+
+#if !PRODUCT
+        DirectoryInfo ApplicationBaseDirectory { get; }
+#endif
 
         public FileInfo RootApplication => CombineFile(RootDirectory, "Pe.exe");
 
@@ -72,7 +81,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// etc ディレクトリ。
         /// </summary>
-        public DirectoryInfo EtcDirectory => CombineDirectory(RootDirectory, "etc");
+        public DirectoryInfo EtcDirectory =>
+#if PRODUCT
+            CombineDirectory(RootDirectory, "etc");
+#else
+            CombineDirectory(ApplicationBaseDirectory, "etc");
+#endif
         public FileInfo EtcUpdateScriptFile => CombineFile(EtcDirectory, "update-application.ps1");
         /// <summary>
         /// SQL ディレクトリ。
@@ -85,7 +99,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 文書ディレクトリ。
         /// </summary>
-        public DirectoryInfo DocumentDirectory => CombineDirectory(RootDirectory, "doc");
+        public DirectoryInfo DocumentDirectory =>
+#if PRODUCT
+            CombineDirectory(RootDirectory, "doc");
+#else
+            CombineDirectory(ApplicationBaseDirectory, "doc");
+#endif
+
         public DirectoryInfo LicenseDirectory => CombineDirectory(DocumentDirectory, "license");
 
         public FileInfo ComponentsFile => CombineFile(LicenseDirectory, "components.json");
@@ -166,9 +186,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         public CustomConfiguration Configuration { get; }
 
-        #endregion
+#endregion
 
-        #region function
+#region function
 
         private static DirectoryInfo GetDirectory(CommandLine commandLine, string key, string defaultValue)
         {
@@ -208,7 +228,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return new FileInfo(path);
         }
 
-        #endregion
+#endregion
 
 
     }

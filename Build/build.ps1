@@ -75,10 +75,22 @@ try {
     dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch
     dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch --output Output/Release/$Platform/Pe/bin --self-contained true
 
-    # 必要ファイルの移送
-    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/etc" "Output/Release/$Platform/Pe/etc"
-    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/doc" "Output/Release/$Platform/Pe/doc"
-    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/bat" "Output/Release/$Platform/Pe/bat"
+    if($ProductMode) {
+        $productTargets = @('etc', 'doc', 'bat')
+
+        # 本番用データ配置のため不要ファイル破棄
+        foreach($productTarget in $productTargets) {
+            $target = Join-Path "Output/Release/$Platform/Pe/bin" $productTarget
+            Remove-Item -Path $target -Recurse -Force
+        }
+
+        # 本番用データ配置のため必要ファイルの移送
+        foreach($productTarget in $productTargets) {
+            $src = Join-Path "Source/Pe/Pe.Main"           $productTarget
+            $dst = Join-Path "Output/Release/$Platform/Pe" $productTarget
+            robocopy /MIR /PURGE /R:3 /S "$src" "$dst"
+        }
+    }
 } finally {
     git reset --hard
     Pop-Location
