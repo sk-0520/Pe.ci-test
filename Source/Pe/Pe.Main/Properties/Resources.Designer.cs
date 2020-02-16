@@ -3003,6 +3003,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   バックグラウンドでアップデート中のためウィンドウを閉じても問題ありません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ReleaseNote_CanClose {
+            get {
+                return ResourceManager.GetString("String_ReleaseNote_CanClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   release note に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ReleaseNote_Caption {
@@ -3017,6 +3026,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_ReleaseNote_Download_A {
             get {
                 return ResourceManager.GetString("String_ReleaseNote_Download_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデートに失敗しました。再度アップデート処理を実施してみてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ReleaseNote_ErrorUpdate {
+            get {
+                return ResourceManager.GetString("String_ReleaseNote_ErrorUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデート準備が完了しました。今すぐ実施するか、終了することで最新モジュールを適用します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ReleaseNote_ReadyUpdate {
+            get {
+                return ResourceManager.GetString("String_ReleaseNote_ReadyUpdate", resourceCulture);
             }
         }
         

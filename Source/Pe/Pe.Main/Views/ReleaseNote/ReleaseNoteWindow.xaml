@@ -34,13 +34,34 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
       <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" />
     </Grid>
 
-    <Grid Grid.Row="1">
+    <TextBlock Grid.Row="1" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="{StaticResource AllMargin}">
+      <TextBlock.Style>
+        <Style TargetType="TextBlock">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding UpdateInfo.State}" Value="None">
+              <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding UpdateInfo.State}" Value="Ready">
+              <Setter Property="Text" Value="{Binding Resources.String_ReleaseNote_ReadyUpdate, Source={x:Static app_main:CultureService.Current}}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding UpdateInfo.State}" Value="Error">
+              <Setter Property="Text" Value="{Binding Resources.String_ReleaseNote_ErrorUpdate, Source={x:Static app_main:CultureService.Current}}" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Text" Value="{Binding Resources.String_ReleaseNote_CanClose, Source={x:Static app_main:CultureService.Current}}" />
+          <Setter Property="Visibility" Value="Visible" />
+        </Style>
+      </TextBlock.Style>
+    </TextBlock>
+
+    <Grid Grid.Row="2">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />

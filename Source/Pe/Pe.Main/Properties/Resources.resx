@@ -1418,4 +1418,13 @@
   <data name="String_ReleaseNote_Update_A" xml:space="preserve">
     <value>今すぐアップデートを開始(_U)</value>
   </data>
+  <data name="String_ReleaseNote_CanClose" xml:space="preserve">
+    <value>バックグラウンドでアップデート中のためウィンドウを閉じても問題ありません。</value>
+  </data>
+  <data name="String_ReleaseNote_ErrorUpdate" xml:space="preserve">
+    <value>アップデートに失敗しました。再度アップデート処理を実施してみてください。</value>
+  </data>
+  <data name="String_ReleaseNote_ReadyUpdate" xml:space="preserve">
+    <value>アップデート準備が完了しました。今すぐ実施するか、終了することで最新モジュールを適用します。</value>
+  </data>
 </root>
