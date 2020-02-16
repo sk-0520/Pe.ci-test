@@ -31,3 +31,4 @@ node_modules/
 */**/Properties/launchSettings.json
 /Resource/Icon/*.png
 /Resource/Icon/*.ico
+/Source/Pe/Pe.Main/etc/appsettings.debug.json
