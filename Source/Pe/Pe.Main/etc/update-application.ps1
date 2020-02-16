@@ -43,4 +43,4 @@ if ( Test-Path -Path $UpdateScript ) {
 
 Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
 
-Read-Host "Enter ..."
+Read-Host "てすと ..."
