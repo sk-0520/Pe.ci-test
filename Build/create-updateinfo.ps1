@@ -1,4 +1,4 @@
-Param(
+﻿Param(
     [parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
     [parameter(mandatory = $true)][version] $MinimumVersion,
     [parameter(mandatory = $true)][string] $ArchiveBaseUrl,
@@ -24,8 +24,6 @@ $version = GetAppVersion
 $hashAlgorithm = "SHA256"
 $releaseTimestamp = (Get-Date).ToUniversalTime()
 $revision = (git rev-parse HEAD)
-
-# リリースノートの作成
 
 # アップデート情報の作成
 $updateJson = Get-Content -Path (Join-Path $currentDirPath "update.json") | ConvertFrom-Json

@@ -1,4 +1,4 @@
-function TestCommandExists {
+﻿function TestCommandExists {
     Param ($command)
 
     $oldPreference = $ErrorActionPreference

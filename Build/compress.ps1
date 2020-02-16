@@ -1,4 +1,4 @@
-Param(
+﻿Param(
     [parameter(mandatory=$true)][string] $SourceDirectory,
     [parameter(mandatory=$true)][string] $DestinationDirectory,
     [parameter(mandatory=$true)][string] $Platform,

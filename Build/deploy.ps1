@@ -1,4 +1,4 @@
-Param(
+﻿Param(
     [parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
     [parameter(mandatory = $true)][string] $DeployRootDirectory,
     [parameter(mandatory = $true)][string] $DeployApiDownloadUrl,

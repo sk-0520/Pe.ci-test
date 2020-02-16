@@ -1,4 +1,4 @@
-Param(
+﻿Param(
     [parameter(mandatory=$true)][string] $platform,
     [string] $buildType
 )
