@@ -5,7 +5,8 @@ Param(
 )
 $ErrorActionPreference = "Stop"
 
+Write-Host "最新アップデート後スクリプト実施!!"
+
 Write-Host "DestinationDirectory: $DestinationDirectory"
 Write-Host "Platform: $Platform"
 
-Write-Host "最新アップデート後スクリプト実施!!"
