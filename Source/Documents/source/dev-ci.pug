@@ -1,0 +1,103 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = 'CI・リリース'
+
+block BLOCK_LAYOUT_CONTENT
+	p リリース処理等は CI 環境にて実施する。
+	p
+		| 現状
+		a(href="https://bitbucket.org") Bitbucket
+		| と
+		a(href="https://ci.appveyor.com") AppVeyor
+		| による処理のみを想定している。
+	p 独立環境で CI 及びリリース環境を整えるには以下の手順が必要になる
+
+	section
+		h2 Bitbucket/AppVeyor
+		section
+			h3 Bitbucket
+			ol
+				li アカウント設定
+				li アプリパスワード
+				li
+					strong アプリ パスワードの作成
+				li
+					strong 詳細
+					| の label に適当な名称を設定
+				li
+					strong 権限
+					| の リポジトリ の以下をチェックする
+					ul
+						li 読み込み(書き込みを設定した時点で自動チェック)
+						li
+							strong 書き込み
+				li
+					strong 作成
+				li 表示されるパスワードをメモ(A)
+		section
+			h3 AppVeyor
+			ul
+				li
+					| Projects ページから
+					strong New project
+					| を洗濯
+				li 左メニューから Bitbucket を選択
+				li 対象リポジトリを選択
+				li
+					strong Settings
+				li
+					strong General
+					ul
+						li
+							strong Custom configuration .yml file name
+							| に
+							code appveyor-release.yml
+							| を入力
+				li
+					strong Environment
+					ul
+						li
+							strong Environment variables
+							| に以下の設定を追加
+							table
+								tr
+									th キー
+									th 値
+								tr
+									td
+										code PE_RELEASE_ACCOUNT
+									td Bitbucket アカウント
+								tr
+									td
+										code PE_RELEASE_PASSWORD
+									td アプリパスワードで作成したパスワード(A)
+								tr
+									td
+										code PE_API_DOWNLOAD_URL
+									td
+										a(href="https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Bworkspace%7D/%7Brepo_slug%7D/downloads#post")
+											code /2.0/repositories/{workspace}/{repo_slug}/downloads
+								tr
+									td
+										code PE_API_TAG_URL
+									td
+										a(href="https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Bworkspace%7D/%7Brepo_slug%7D/refs/tags")
+											code /2.0/repositories/{workspace}/{repo_slug}/refs/tags
+								tr
+									td
+										code PE_RELEASE_ARCHIVE_BASE_URL
+									td
+										code https://bitbucket.org/&lt;Bitbucketアカウント&gt;/&lt;リポジトリ&gt;/downloads/@ARCHIVEAME@
+								tr
+									td
+										code PE_RELEASE_NOTE_BASE_URL
+									td
+										code https://bitbucket.org/&lt;Bitbucketアカウント&gt;/&lt;リポジトリ&gt;/downloads/@NOTENAME@
+
+
+
+
+
+
+
