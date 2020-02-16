@@ -305,7 +305,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   update に類似しているローカライズされた文字列を検索します。
+        ///   アップデート確認(_U) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_About_Update_A {
             get {

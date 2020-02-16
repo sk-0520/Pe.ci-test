@@ -17,6 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         bool IsReady { get; }
         UpdateState State { get; }
 
+        IReadOnlyUpdateItemData? UpdateItem { get; }
+
         IProgress<string> CurrentLogProgress { get; }
         string CurrentLog { get; }
 
@@ -78,6 +80,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
                 RaisePropertyChanged(nameof(IsReady));
             }
         }
+
+        public UpdateItemData? UpdateItem { get; set; }
+        IReadOnlyUpdateItemData? IReadOnlyUpdateInfo.UpdateItem => UpdateItem;
 
         public Progress<string> CurrentLogProgress { get; }
         IProgress<string> IReadOnlyUpdateInfo.CurrentLogProgress => CurrentLogProgress;
