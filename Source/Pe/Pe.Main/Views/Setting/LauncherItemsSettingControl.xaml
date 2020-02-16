@@ -110,7 +110,7 @@
     <GridSplitter Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
     <Grid Grid.Column="2">
-      <ScrollViewer x:Name="customize">
+      <ScrollViewer x:Name="customize" Padding="{StaticResource AllMargin}">
         <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor.SelectedItem, ElementName=root}" />
       </ScrollViewer>
     </Grid>
