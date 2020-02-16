@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var result = updateData.Items
                     .Where(i => i.Platform == platform)
                     .Where(i => i.MinimumVersion <= BuildStatus.Version)
+                    .Where(i => BuildStatus.Version < i.Version)
                     .OrderByDescending(i => i.Version)
                     .FirstOrDefault()
                 ;
