@@ -20,7 +20,7 @@ function UploadFile([string] $filePath) {
     $fileBytes = [System.IO.File]::ReadAllBytes($filePath);
     $fileEnc = [System.Text.Encoding]::GetEncoding('UTF-8').GetString($fileBytes);
     $boundary = [System.Guid]::NewGuid().ToString();
-    $LF = "`r`n";
+    $CRLF = "`r`n";
     $bodyLines = (
         "--$boundary",
         "Content-Disposition: form-data; name=`"files`"; filename=`"$fileName`"",
@@ -29,6 +29,28 @@ function UploadFile([string] $filePath) {
         "--$boundary--$LF"
     ) -join $LF
 
+    $httpPath = $filePath + '.http'
+    $fileStream = New-Object System.IO.FileStream($httpPath), Create
+    $binaryWriter = New-Object System.IO.BinaryWriter($fileStream)
+
+    $binaryWriter.Write("--$boundary")
+    $binaryWriter.Write($CRLF)
+    $binaryWriter.Write("Content-Disposition: form-data; name=`"files`"; filename=`"$fileName`"")
+    $binaryWriter.Write($CRLF)
+    $binaryWriter.Write("Content-Type: application/octet-stream")
+    $binaryWriter.Write($CRLF)
+    $binaryWriter.Write($CRLF)
+
+    $binaryWriter.Write($fileBytes)
+    $binaryWriter.Write($CRLF)
+
+    $binaryWriter.Write("--$boundary--")
+    $binaryWriter.Write($CRLF)
+    $binaryWriter.Write($CRLF)
+
+    $binaryWriter.Dispose()
+    $fileStream.Dispose()
+
     Write-Output "Post: $DeployApiDownloadUrl"
     Write-Output "File: $filePath"
     Invoke-RestMethod `
@@ -36,7 +58,7 @@ function UploadFile([string] $filePath) {
         -Method Post `
         -Uri $DeployApiDownloadUrl `
         -ContentType "multipart/form-data; boundary=`"$boundary`"" `
-        -Body $bodyLines
+        -InFile $httpPath
 }
 
 switch ($TargetRepository) {
