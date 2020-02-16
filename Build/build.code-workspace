@@ -3,6 +3,10 @@
         {
             "name": "BUILD",
             "path": "."
+        },
+        {
+            "name": "ROOT",
+            "path": "../"
         }
     ]
 }

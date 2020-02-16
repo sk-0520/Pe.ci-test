@@ -1,22 +1,21 @@
-Param(
+﻿Param(
     [parameter(mandatory=$true)][string] $platform,
     [string] $buildType
 )
 $ErrorActionPreference = 'Stop'
-
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-
 $scriptFileNames = @(
-    'command.ps1'
+    'command.ps1',
+    'version.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
     $scriptFilePath = Join-Path $currentDirPath $scriptFileName
     . $scriptFilePath
 }
 
-Set-Command 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
-Set-Command 'msbuild' 'BUILD_MSBUILD_PATH' "%PROGRAMFILES(x86)%\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin"
-Set-Command 'dotnet' 'BUILD_DOTNET_PATH' "%PROGRAMFILES(x86)%\dotnet\"
+SetCommand 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
+SetCommand 'msbuild' 'BUILD_MSBUILD_PATH' "%PROGRAMFILES(x86)%\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin"
+SetCommand 'dotnet' 'BUILD_DOTNET_PATH' "%PROGRAMFILES(x86)%\dotnet\"
 
 Write-Output ("git: " + (git --version))
 Write-Output ("msbuild: " + (msbuild -version -noLogo))
@@ -32,12 +31,10 @@ $rootDirectory = Split-Path -Path $currentDirPath -Parent
 try {
     Push-Location $rootDirectory
 
-    $projectXml = [XML](Get-Content -Path Source/Pe/Pe.Main/Pe.Main.csproj -Encoding UTF8)
-    $projectNav = $projectXml.CreateNavigator()
-    $vesion = $projectNav.Select('/Project/PropertyGroup/Version').Value
+    $version = GetAppVersion
     $revision = (git rev-parse HEAD)
 
-    function Update-Element([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
+    function UpdateElement([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
         $element = $xml.SelectSingleNode($targetXpath);
         if($null -eq $element) {
             $propGroup = $xml.SelectSingleNode($parentXpath)
@@ -45,7 +42,17 @@ try {
             $propGroup.AppendChild($element);
         }
         $element.InnerText = $value
+    }
 
+    function ReplaceElement([hashtable] $map, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
+        $element = $xml.SelectSingleNode($targetXpath);
+        if($null -ne $element) {
+            $val = $element.InnerText
+            foreach($key in $map.keys) {
+                $val = $val.Replace($key, $map[$key])
+            }
+            $element.InnerText = $val
+        }
     }
 
     $projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
@@ -53,8 +60,9 @@ try {
         Write-Output $projectFile.Name
         $xml = [XML](Get-Content $projectFile  -Encoding UTF8)
 
-        Update-Element $vesion $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
-        Update-Element $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+        UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
+        UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+        ReplaceElement @{ 'YYYY' = '2020' } $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
 
         $xml.Save($projectFile)
     }

@@ -1,7 +1,0 @@
-image: microsoft/dotnet:sdk
-pipelines:
-  branches:
-    '#484-net-core':
-      - step:
-        script:
-          - dotnet --version

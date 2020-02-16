@@ -1,4 +1,4 @@
-function Test-CommandExists {
+﻿function TestCommandExists {
     Param ($command)
 
     $oldPreference = $ErrorActionPreference
@@ -18,15 +18,33 @@ function Test-CommandExists {
     }
 }
 
-function Set-Command($command, $envName, $defaultPath) {
+function SetCommand($command, $envName, $defaultPath) {
 
-    if ( ! ( Test-CommandExists $command )) {
+    if ( ! ( TestCommandExists $command )) {
         #$envValue = env:$envName
         $envValue = Get-ChildItem env: | Where-Object {$_.Name -match $envName} | Select-Object -Property Value -First 1
         if ( $null -eq $envValue) {
-            $env:Path += ";" + [Environment]::ExpandEnvironmentVariables($defaultPath)
+            $env:Path = [Environment]::ExpandEnvironmentVariables($defaultPath) + ';' + $env:Path
         } else {
-            $envPath += ";" + [Environment]::ExpandEnvironmentVariables($envValue)
+            $env:Path = [Environment]::ExpandEnvironmentVariables($envValue) + ';' + $env:Path
         }
+    }
+}
+
+function TestAliasExists([string] $alias) {
+    $oldPreference = $ErrorActionPreference
+
+    $ErrorActionPreference = 'stop'
+
+    try {
+        if (Get-Alias $alias) {
+            return $true
+        }
+    }
+    catch {
+        return $false
+    }
+    finally {
+        $ErrorActionPreference = $oldPreference
     }
 }
