@@ -1,6 +1,7 @@
 ﻿Param(
-    [parameter(mandatory=$true)][string] $platform,
-    [string] $buildType
+    [switch] $ProductMode,
+    [parameter(mandatory=$true)][string] $Platform,
+    [string] $BuildType
 )
 $ErrorActionPreference = 'Stop'
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -68,14 +69,16 @@ try {
     }
 
     # ビルド開始
-    msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$platform /p:DefineConstants=$buildType
-    dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType
-    dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$platform  /p:Platform=$platform /p:DefineConstants=$buildType --output Output/Release/$platform/Pe/bin --self-contained true
+    $productSwitch = if ( $ProductMode ) { '/p:DefineConstants=PRODUCT' } else { '' }
+
+    msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch
+    dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch
+    dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch --output Output/Release/$Platform/Pe/bin --self-contained true
 
     # 必要ファイルの移送
-    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/etc" "Output/Release/$platform/Pe/etc"
-    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/doc" "Output/Release/$platform/Pe/doc"
-    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/bat" "Output/Release/$platform/Pe/bat"
+    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/etc" "Output/Release/$Platform/Pe/etc"
+    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/doc" "Output/Release/$Platform/Pe/doc"
+    robocopy /MIR /PURGE /R:3 /S "Source/Pe/Pe.Main/bat" "Output/Release/$Platform/Pe/bat"
 } finally {
     git reset --hard
     Pop-Location
