@@ -470,14 +470,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             Logger.LogInformation("セッション変更検知: Reason = {0}", e.Reason);
+            // そろそろ switch すべきちゃうんかと
 
             if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
                 ResetScreenViewElements();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     // アップデート処理とかとか
+                    DelayCheckUpdateAsync().ConfigureAwait(false);
                 }
             } else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
                 BackupSettingsDefault();
+            } else if(e.Reason == SessionSwitchReason.SessionLock) {
+                // アップデート処理実施
+                if(ApplicationUpdateInfo.IsReady) {
+                    StartUpdate(UpdateTarget.Application, UpdateProcess.Update);
+                }
             }
         }
 
