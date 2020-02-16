@@ -13,8 +13,8 @@ $credential = New-Object System.Management.Automation.PSCredential($DeployAccoun
 
 $archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
 $updateFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory 'update.json')
+$updateFile = Join-Path (Get-Location) (Join-Path (Get-ChildItem -Path $DeployRootDirectory 'Pe_*.html' | Select-Object -First))
 
-# https://stackoverflow.com/a/50255917
 function UploadFile([string] $filePath) {
     $fileName = [System.IO.Path]::GetFileName($filePath)
     $fileBytes = [System.IO.File]::ReadAllBytes($filePath);
@@ -61,6 +61,7 @@ switch ($TargetRepository) {
         foreach($archiveFile in $archiveFiles) {
             UploadFile $archiveFile
         }
+        UploadFile $updateFile
         UploadFile $updateFile
 
         $bitbucketTagApiFile = Join-Path $DeployRootDirectory 'bitbucket-tag.json'

@@ -1,9 +1,15 @@
 ﻿Param(
-    [parameter(mandatory = $true)][version] $Version,
     [parameter(mandatory = $true)][string] $OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptFileNames = @(
+    'version.ps1'
+);
+foreach ($scriptFileName in $scriptFileNames) {
+    $scriptFilePath = Join-Path $currentDirPath $scriptFileName
+    . $scriptFilePath
+}
 $rootDirPath = Split-Path -Parent $currentDirPath
 
 $rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/source/script/changelogs.ts"
@@ -140,4 +146,5 @@ foreach($content in $currentVersion.contents) {
 $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
 $htmlContent = $htmlContent.Replace('<body></body>', $body.ToHtml())
 
-Set-Content (Join-Path $OutputDirectory "Pe_$Version.html") -Value $htmlContent -Encoding UTF8
+$version = GetAppVersion
+Set-Content (Join-Path $OutputDirectory "Pe_$version.html") -Value $htmlContent -Encoding UTF8
