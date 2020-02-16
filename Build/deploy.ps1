@@ -18,36 +18,29 @@ $updateFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory 'update.j
 function UploadFile([string] $filePath) {
     $fileName = [System.IO.Path]::GetFileName($filePath)
     $fileBytes = [System.IO.File]::ReadAllBytes($filePath);
-    $fileEnc = [System.Text.Encoding]::GetEncoding('UTF-8').GetString($fileBytes);
+
     $boundary = [System.Guid]::NewGuid().ToString();
-    $CRLF = "`r`n";
-    $bodyLines = (
-        "--$boundary",
-        "Content-Disposition: form-data; name=`"files`"; filename=`"$fileName`"",
-        "Content-Type: application/octet-stream$LF",
-        $fileEnc,
-        "--$boundary--$LF"
-    ) -join $LF
+    $CRLF = [byte[]]@(0x0d, 0x0a);
 
     $httpPath = $filePath + '.http'
     $fileStream = New-Object System.IO.FileStream($httpPath), Create
     $binaryWriter = New-Object System.IO.BinaryWriter($fileStream)
 
-    $binaryWriter.Write("--$boundary")
-    $binaryWriter.Write($CRLF)
+    function WriteHttp([string] $value) {
+        $binaryWriter.Write([Text.Encoding]::UTF8.GetBytes($value))
+        $binaryWriter.Write($CRLF)
+    }
 
-    $binaryWriter.Write("Content-Disposition: form-data; name=`"files`"; filename=`"$fileName`"")
-    $binaryWriter.Write($CRLF)
+    WriteHttp("--$boundary");
+    WriteHttp("Content-Disposition: form-data; name=`"files`"; filename=`"$fileName`"")
 
-    $binaryWriter.Write("Content-Type: application/octet-stream")
-    $binaryWriter.Write($CRLF)
+    WriteHttp("Content-Type: application/octet-stream")
     $binaryWriter.Write($CRLF)
 
     $binaryWriter.Write($fileBytes)
     $binaryWriter.Write($CRLF)
 
-    $binaryWriter.Write("--$boundary--")
-    $binaryWriter.Write($CRLF)
+    WriteHttp("--$boundary");
     $binaryWriter.Write($CRLF)
 
     $binaryWriter.Dispose()

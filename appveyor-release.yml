@@ -28,7 +28,6 @@ build_script:
 artifacts:
   - path: Output\*.json
   - path: Output\*.html
-  - path: Output\*.http
 deploy_script:
   #- cmd: for %%A in ( Output\*.zip ) do curl --user %PE_RELEASE_USER%:%PE_RELEASE_PASSWORD% -X POST %PE_DEPLOY_DOWNLOAD_URL% -F files=@%%A
   - ps: .\Build\deploy.ps1 -TargetRepository bitbucket -DeployRootDirectory Output -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD
