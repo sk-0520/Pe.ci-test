@@ -96,15 +96,27 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "根っこからめっちゃくちゃ実装を変えました",
+						"comments": [
+							".NET Framework から .NET Core に移行したので環境依存に関する制限がある程度なくなりました(によってサイズ増加)",
+							"内蔵ブラウザを .NET Core(Forms, WPF) のシステム依存から Chromium 実装の CefSharp に切り替え(によってサイズ増加)"
+						]
 					},
 					{
 						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "実装変更に伴い互換性が結構なくなります",
+						"comments": [
+							"Windows 10 を主軸にしたことで隠しファイル・拡張子切り替え機能の廃止(Explorerですぐに実施できるため)",
+							"グループ選択とランチャーアイテムコンテキストメニューを統合(ここに至るまで色々あった)",
+							"コマンドラインオプションの互換性を破棄",
+							"実行形式の配置場所・名称等の関係の互換性を破棄(bin ディレクトリを見たら理由が分かるよ)",
+							"テンプレート機能を廃止",
+							"Windows がクリップボード頑張っているのでクリップボード機能を廃止",
+							"ランチャーウィンドウのフロート表示を破棄",
+							"ログウィンドウを破棄",
+							"ヘルプドキュメントは中途半端な状態になった",
+						]
 					}
 				]
 			},
@@ -113,11 +125,11 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#459: アップデート処理の実装周りを整理"
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#485: 高 DPI 対応"
 					},
 					{
 						"revision": "",
@@ -128,6 +140,57 @@ const changelogs = [
 			{
 				"type": "fixes",
 				"logs": [
+					{
+						"revision": "",
+						"subject": "#472: ノートの斜め方向リサイズ領域を広げる"
+					},
+					{
+						"revision": "",
+						"subject": "#469: 自動的に隠す状態のツールバーが云々"
+					},
+					{
+						"revision": "",
+						"subject": "#452: ツールバーが自動的に隠れる設定でアイコンが非表示になる"
+					},
+					{
+						"revision": "",
+						"subject": "#439: グループ名変更時に変更用入力UIの位置が変"
+					},
+					{
+						"revision": "",
+						"subject": "#425: 一意に識別される設定項目はその一意な値を表示する"
+					},
+					{
+						"revision": "",
+						"subject": "#417: 列挙体の保存値を数値から名称にする"
+					},
+					{
+						"revision": "",
+						"subject": "#380: ランチャーアイテムがネットワーク越しのファイルだとアホみたいに遅い"
+					},
+					{
+						"revision": "",
+						"subject": " #369: ノートのタイトルバーについてるボタンをもうちょっと見栄え良くする"
+					},
+					{
+						"revision": "",
+						"subject": "#313: 四辺に配置したツールバーをシステムメニューから移動すると大変なことになる"
+					},
+					{
+						"revision": "",
+						"subject": "#300: メッセージボックスがダサい"
+					},
+					{
+						"revision": "",
+						"subject": "#112: HTMLレンダリングコンポーネントを変えたい",
+						"comments": [
+							"CefSharp に全権委任"
+						]
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
 					{
 						"revision": "",
 						"subject": ""
@@ -155,128 +218,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"class": "nuget",
-						"subject": "Newtonsoft.Json: 10.0.2 -> 10.0.3"
-					},
-					{
-						"revision": "",
-						"subject": "AvalonEdit: 5.0.3 -> 5.0.4"
-					},
-					{
-						"revision": "",
 						"subject": ""
 					}
 				]
 			}
-			
-			
-
-
-
-			,{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "938d3a6a63b0825b1200ead75097be3b07c35d2d",
-						"subject": "#448: ノートに書式を持たせる",
-						"comments": [
-							"RichTextそのままだと直感的でなくなるためワードパッドとは扱いが若干異なります",
-							"主に段落関連を除外しています",
-							"あと書式付きの場合は背景色を細かく設定しないほうがいいです"
-						]
-					},
-					{
-						"revision": "11bc0bfe11a97edbd8187760c1bdcef90516dd57",
-						"subject": "#413: ヘルプファイルに更新履歴を表示する",
-						"comments": [
-							"今バージョンから更新履歴を確認するにはヘルプ(通知領域メニュー→情報→ヘルプ→更新履歴)から確認してください",
-							"情報→更新履歴は廃止です",
-							"IE依存してたしアップデート用の出力処理と確認用の表示処理が二重で地味に負担だったのですよ"
-						]
-					},
-					{
-						"revision": "f667c0d30400278b9539180badf86cf83234d32c",
-						"subject": "#440: クリップボード・テンプレートのリストダブルクリック操作"
-					},
-					{
-						"revision": "f85ff85c9426d058572cffbedf050611aa416860",
-						"subject": "#470: 設定のバックアップにバージョン情報を付与する"
-					},
-					{
-						"revision": "70d8b04addf6e9a8fa89eac3960a28e01e5d8340",
-						"subject": "#465: ウィンドウを強制的に隠す操作にマウスも追加する",
-						"comments": [
-							"ツールバーの設定[自動的に隠す]が有効な場合にツールバーの空いている領域をダブルクリックするとツールバーを隠れた状態にします",
-							"ボタン上でも出来ちゃうけどそこはまぁ運用回避で"
-						]
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "b6ded0bf968b8f02ac0244d89cfd351521cae3e0",
-						"subject": "#461: Windows8, 8.1, 10 でのツールバーがきもい",
-						"comments": [
-							"妥協の産物"
-						]
-					},
-					{
-						"revision": "c52547879b58eb7aaa8bee0c674dd75191970d35",
-						"subject": "#462: GridHelpersのリンク先が間違っている",
-						"comments": [
-							"修正はしたんだけど別ライブラリに移動させたので記述から消えた"
-						]
-					},
-					{
-						"revision": "e1eabcb733eba9a79f50b541fcafcf2544d0f78e",
-						"subject": "#458: クリップボード取り込み待機時間の設定UIが直感的でない"
-					},
-					{
-						"revision": "b09ce6688e129db95d41b752f1f259858609f361",
-						"subject": "#451: 設定項目のUIが直観的ない部分を調整する"
-					},
-					{
-						"revision": "450e1c5d1aa119e3234c1122e5965fae7405d0de",
-						"subject": "#471: 構成ファイル backup-archive が使用されていない"
-					},
-					{
-						"revision": "4c74f93ef4e7ff4cc311f34df67ab3c114796cca",
-						"subject": "#468: ノート最前面表示をホットキーから実施するとできたりできなかったりする",
-						"comments": [
-							"非アクティブ縛りで変に泥臭いことになってしまったけど多分動くよ"
-						]
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "8c5ba7fa84f50a3e9f69b4a8a4c9e26b5e491e4b",
-						"class": "nuget",
-						"subject": "ICSharpCode.AvalonEdit を 5.0.3 に更新"
-					},
-					{
-						"revision": "016e48184a6f3e3bd872bc18aa79f7deb2c13578",
-						"subject": "データ補正処理を統一"
-					},
-					{
-						"revision": "11bc0bfe11a97edbd8187760c1bdcef90516dd57",
-						"subject": "#284: 更新履歴の空白データ要素を表示しない",
-						"comments": [
-							"#413実装時に同時解消"
-						]
-					},
-					{
-						"revision": "400b969282d589e992a512eed6c0ec10ff469085",
-						"subject": "XAMLの名前空間を整備"
-					}
-				]
-			}
-
-			
 		]
 	},
 	{
