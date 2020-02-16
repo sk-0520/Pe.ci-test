@@ -110,5 +110,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             ((ListBoxItem)sender).IsSelected = true;
             this.inputCommand.Focus();
         }
+
+        private void root_Activated(object sender, EventArgs e)
+        {
+            WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
+        }
     }
 }
