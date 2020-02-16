@@ -7,13 +7,22 @@
     [parameter(mandatory = $true)][string] $DeployPassword
 )
 $ErrorActionPreference = 'Stop'
+$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptFileNames = @(
+    'version.ps1'
+);
+foreach ($scriptFileName in $scriptFileNames) {
+    $scriptFilePath = Join-Path $currentDirPath $scriptFileName
+    . $scriptFilePath
+}
 
 $securePassword = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $securePassword)
 
 $archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
 $updateFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory 'update.json')
-$updateFile = Join-Path (Get-Location) (Join-Path (Get-ChildItem -Path $DeployRootDirectory 'Pe_*.html' | Select-Object -First))
+$version = GetAppVersion
+$releaseNoteFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory "Pe_${version}.html")
 
 function UploadFile([string] $filePath) {
     $fileName = [System.IO.Path]::GetFileName($filePath)
@@ -61,7 +70,7 @@ switch ($TargetRepository) {
         foreach($archiveFile in $archiveFiles) {
             UploadFile $archiveFile
         }
-        UploadFile $updateFile
+        UploadFile $releaseNoteFile
         UploadFile $updateFile
 
         $bitbucketTagApiFile = Join-Path $DeployRootDirectory 'bitbucket-tag.json'
