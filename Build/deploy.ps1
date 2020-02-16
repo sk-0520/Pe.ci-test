@@ -84,14 +84,14 @@ switch ($TargetRepository) {
         #     -Uri $DeployApiTagUrl `
         #     -ContentType "Content-Type: application/json" `
         #     -InFile $bitbucketTagApiFile
-        #$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $DeployAccount, $DeployPassword)))
-        # Invoke-RestMethod `
-        #     -Headers @{
-        #         Authorization=("Basic {0}" -f $base64AuthInfo)
-        #         "Content-type"="application/json"
-        #     }  `
-        #     -Method Post `
-        #     -Uri $DeployApiTagUrl `
-        #     -InFile $bitbucketTagApiFile
+        $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $DeployAccount, $DeployPassword)))
+        Invoke-RestMethod `
+            -Headers @{
+                Authorization=("Basic {0}" -f $base64AuthInfo)
+                "Content-type"="application/json"
+            }  `
+            -Method Post `
+            -Uri $DeployApiTagUrl `
+            -InFile $bitbucketTagApiFile
     }
 }
