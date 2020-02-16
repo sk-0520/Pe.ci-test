@@ -216,6 +216,12 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             NativeMethods.SetForegroundWindow(hWnd);
         }
 
+        public static void ShowActiveForeground(IntPtr hWnd)
+        {
+            ShowActive(hWnd);
+            NativeMethods.SetForegroundWindow(hWnd);
+        }
+
         public static void MoveZoderBttom(IntPtr hWnd)
         {
             NativeMethods.SetWindowPos(

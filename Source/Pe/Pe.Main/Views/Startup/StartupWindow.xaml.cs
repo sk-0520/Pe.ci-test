@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -41,5 +43,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
         ));
         #endregion
 
+        private void root_Activated(object sender, EventArgs e)
+        {
+            WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
+        }
     }
 }
