@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         ));
         public ICommand OpenHelpCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                Logger.LogDebug("TODO: help");
+                ApplicationManager.ShowHelp();
             }
         ));
 

@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 

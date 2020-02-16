@@ -305,6 +305,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             changing.SuccessValue?.Dispose();
         }
 
+        public void ShowHelp()
+        {
+            try {
+                var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+                var systemExecutor = ApplicationDiContainer.Build<SystemExecutor>();
+                systemExecutor.ExecuteFile(environmentParameters.HelpFile);
+            } catch(Exception ex) {
+                Logger.LogWarning(ex, ex.Message);
+            }
+        }
+
         private void ShowUpdateReleaseNote(UpdateItemData updateItem, bool isCheckOnly)
         {
             void Show()
