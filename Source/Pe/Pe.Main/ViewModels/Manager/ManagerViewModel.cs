@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
+using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
@@ -79,6 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
         public bool IsSupportedExplorer => ApplicationManager.IsSupportedExplorer;
 
+        public IReadOnlyUpdateInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
         #endregion
 
         #region command

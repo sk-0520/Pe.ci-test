@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -15,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         /// アップデート準備完了。
         /// </summary>
         bool IsReady { get; }
+        bool Updating { get; }
         UpdateState State { get; }
 
         IReadOnlyUpdateItemData? UpdateItem { get; }
@@ -71,6 +73,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
         /// アップデート準備完了。
         /// </summary>
         public bool IsReady => State == UpdateState.Ready;
+        public bool Updating
+        {
+            get
+            {
+                var updtings = new[] {
+                    UpdateState.Checking,
+                    UpdateState.Downloading,
+                    UpdateState.Checksumming,
+                    UpdateState.Extracting,
+                };
+                return updtings.Any(i => i == State);
+            }
+        }
+
         public UpdateState State
         {
             get => this._state;
@@ -78,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote
             {
                 SetProperty(ref this._state, value);
                 RaisePropertyChanged(nameof(IsReady));
+                RaisePropertyChanged(nameof(Updating));
             }
         }
 
