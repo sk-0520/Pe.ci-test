@@ -1,50 +1,51 @@
 ﻿function TestCommandExists {
-    Param ($command)
+	Param ($command)
 
-    $oldPreference = $ErrorActionPreference
+	$oldPreference = $ErrorActionPreference
 
-    $ErrorActionPreference = 'stop'
+	$ErrorActionPreference = 'stop'
 
-    try {
-        if (Get-Command $command) {
-            return $true
-        }
-    }
-    catch {
-        return $false
-    }
-    finally {
-        $ErrorActionPreference = $oldPreference
-    }
+	try {
+		if (Get-Command $command) {
+			return $true
+		}
+	}
+	catch {
+		return $false
+	}
+	finally {
+		$ErrorActionPreference = $oldPreference
+	}
 }
 
 function SetCommand($command, $envName, $defaultPath) {
 
-    if ( ! ( TestCommandExists $command )) {
-        #$envValue = env:$envName
-        $envValue = Get-ChildItem env: | Where-Object {$_.Name -match $envName} | Select-Object -Property Value -First 1
-        if ( $null -eq $envValue) {
-            $env:Path = [Environment]::ExpandEnvironmentVariables($defaultPath) + ';' + $env:Path
-        } else {
-            $env:Path = [Environment]::ExpandEnvironmentVariables($envValue) + ';' + $env:Path
-        }
-    }
+	if ( ! ( TestCommandExists $command )) {
+		#$envValue = env:$envName
+		$envValue = Get-ChildItem env: | Where-Object { $_.Name -match $envName } | Select-Object -Property Value -First 1
+		if ( $null -eq $envValue) {
+			$env:Path = [Environment]::ExpandEnvironmentVariables($defaultPath) + ';' + $env:Path
+		}
+		else {
+			$env:Path = [Environment]::ExpandEnvironmentVariables($envValue) + ';' + $env:Path
+		}
+	}
 }
 
 function TestAliasExists([string] $alias) {
-    $oldPreference = $ErrorActionPreference
+	$oldPreference = $ErrorActionPreference
 
-    $ErrorActionPreference = 'stop'
+	$ErrorActionPreference = 'stop'
 
-    try {
-        if (Get-Alias $alias) {
-            return $true
-        }
-    }
-    catch {
-        return $false
-    }
-    finally {
-        $ErrorActionPreference = $oldPreference
-    }
+	try {
+		if (Get-Alias $alias) {
+			return $true
+		}
+	}
+	catch {
+		return $false
+	}
+	finally {
+		$ErrorActionPreference = $oldPreference
+	}
 }

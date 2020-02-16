@@ -1,18 +1,18 @@
 ﻿Param(
-    [parameter(mandatory=$true)][string] $SourceDirectory,
-    [parameter(mandatory=$true)][string] $DestinationDirectory,
-    [parameter(mandatory=$true)][string] $Platform,
-    [switch] $Diet
+	[parameter(mandatory = $true)][string] $SourceDirectory,
+	[parameter(mandatory = $true)][string] $DestinationDirectory,
+	[parameter(mandatory = $true)][string] $Platform,
+	[switch] $Diet
 )
 $ErrorActionPreference = 'Stop'
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
-    'command.ps1',
-    'version.ps1'
+	'command.ps1',
+	'version.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
-    $scriptFilePath = Join-Path $currentDirPath $scriptFileName
-    . $scriptFilePath
+	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
+	. $scriptFilePath
 }
 
 
