@@ -35,8 +35,10 @@ function UploadFile([string] $filePath) {
 
     $binaryWriter.Write("--$boundary")
     $binaryWriter.Write($CRLF)
+
     $binaryWriter.Write("Content-Disposition: form-data; name=`"files`"; filename=`"$fileName`"")
     $binaryWriter.Write($CRLF)
+
     $binaryWriter.Write("Content-Type: application/octet-stream")
     $binaryWriter.Write($CRLF)
     $binaryWriter.Write($CRLF)
