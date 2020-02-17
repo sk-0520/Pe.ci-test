@@ -1,6 +1,6 @@
 ﻿Param(
 	[parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
-	[parameter(mandatory = $true)][string] $DeployRootDirectory,
+	[parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
 	[parameter(mandatory = $true)][string] $DeployApiDownloadUrl,
 	[parameter(mandatory = $true)][string] $DeployApiTagUrl,
 	[parameter(mandatory = $true)][string] $DeployAccount,
@@ -16,14 +16,16 @@ foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
 	. $scriptFilePath
 }
+$rootDirPath = Split-Path -Parent $currentDirPath
+$outputDirectory = Join-Path $rootDirPath 'Output'
 
 $securePassword = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $securePassword)
 
-$archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
-$updateFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory 'update.json')
+$archiveFiles = Get-ChildItem -Path $outputDirectory -Filter "*.$Archive" | Select-Object -Expand FullName
+$updateFile = Join-Path (Get-Location) (Join-Path $outputDirectory 'update.json')
 $version = GetAppVersion
-$releaseNoteFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory (ConvertReleaseNoteFileName $version))
+$releaseNoteFile = Join-Path (Get-Location) (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version))
 
 function UploadFile([string] $filePath) {
 	$fileName = [System.IO.Path]::GetFileName($filePath)
@@ -74,7 +76,7 @@ switch ($TargetRepository) {
 		UploadFile $releaseNoteFile
 		UploadFile $updateFile
 
-		$bitbucketTagApiFile = Join-Path $DeployRootDirectory 'bitbucket-tag.json'
+		$bitbucketTagApiFile = Join-Path $outputDirectory 'bitbucket-tag.json'
 		Write-Output "Post: $DeployApiTagUrl"
 		Write-Output "File: $bitbucketTagApiFile"
 
@@ -90,10 +92,10 @@ switch ($TargetRepository) {
 			Authorization  = ("Basic {0}" -f $base64AuthInfo)
 			"Content-type" = "application/json"
 		}
-		Invoke-RestMethod `
-			-Headers $headers `
-			-Method Post `
-			-Uri $DeployApiTagUrl `
-			-InFile $bitbucketTagApiFile
+		# Invoke-RestMethod `
+		# 	-Headers $headers `
+		# 	-Method Post `
+		# 	-Uri $DeployApiTagUrl `
+		# 	-InFile $bitbucketTagApiFile
 	}
 }
