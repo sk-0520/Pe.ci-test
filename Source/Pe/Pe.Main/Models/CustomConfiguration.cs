@@ -86,10 +86,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public WebConfiguration(IConfigurationSection section)
             : base(section)
         {
+            var versionConverter = new VersionConverter();
+
             var map = new Dictionary<string, string>() {
                 ["APP-NAME"] = BuildStatus.Name,
                 ["APP-BUILD"] = BuildStatus.BuildType.ToString(),
-                ["APP-VER"] = BuildStatus.Version.ToString(),
+                ["APP-VER"] = versionConverter.ConvertNormalVersion(BuildStatus.Version),
                 ["APP-REVISION"] = BuildStatus.Revision,
                 ["LIB-NAME"] = "CefSharp",
                 ["LIB-VER"] = CefSharp.Cef.ChromiumVersion.ToString(),

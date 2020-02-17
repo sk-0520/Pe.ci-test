@@ -29,10 +29,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public virtual IList<PlatformInformationItem> GetApplication()
         {
+            var versionConverter = new VersionConverter();
             return new[] {
                 new PlatformInformationItem(nameof(BuildStatus.Name), BuildStatus.Name),
                 new PlatformInformationItem(nameof(BuildStatus.BuildType), BuildStatus.BuildType),
-                new PlatformInformationItem(nameof(BuildStatus.Version), BuildStatus.Version),
+                new PlatformInformationItem(nameof(BuildStatus.Version), versionConverter.ConvertNormalVersion(BuildStatus.Version)),
                 new PlatformInformationItem(nameof(BuildStatus.Revision), BuildStatus.Revision),
                 new PlatformInformationItem(nameof(BuildStatus.Copyright), BuildStatus.Copyright),
             }.ToList();
@@ -63,9 +64,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public string GetShortInformation()
         {
+            var versionConverter = new VersionConverter();
+
             var items = new[] {
                 new PlatformInformationItem("Software", BuildStatus.Name),
-                new PlatformInformationItem("Version", BuildStatus.Version + "-" + BuildStatus.Revision),
+                new PlatformInformationItem("Version", versionConverter.ConvertNormalVersion(BuildStatus.Version) + "-" + BuildStatus.Revision),
                 new PlatformInformationItem("BuildType", BuildStatus.BuildType),
                 new PlatformInformationItem("Process", Environment.Is64BitProcess ? "64" : "32"),
                 new PlatformInformationItem("Platform", Environment.Is64BitOperatingSystem ? "64" : "32"),

@@ -56,6 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         private IEnumerable<AboutComponentItem> GetApplicationItems()
         {
+            var versionConverter = new VersionConverter();
+
             var data = new[] {
                 new AboutComponentData() {
                     Name = BuildStatus.Name,
@@ -64,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
                         Name = CustomConfiguration.General.LicenseName,
                         Uri = CustomConfiguration.General.LicenseUri.ToString(),
                     },
-                    Comment = $"{BuildStatus.BuildType}: {BuildStatus.Version} - {BuildStatus.Revision}"
+                    Comment = $"{BuildStatus.BuildType}: {versionConverter.ConvertNormalVersion(BuildStatus.Version)} - {BuildStatus.Revision}"
                 },
             };
 

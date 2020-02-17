@@ -11,19 +11,24 @@ function GetAppVersion {
 	return $vesion
 }
 
-function ConvertFileName([string] $header, [version] $version, [string] $tail, [string] $extension) {
-	if( ! $header ) {
-		throw "empty header";
+function ConvertVersion([version] $version, [string] $separator) {
+	$values = @(
+		"{0}"     -f $version.Major
+		"{0:00}"  -f $version.Minor
+		"{0:000}" -f $version.Build
+	)
+	return $values -join $separator
+}
+
+function ConvertFileName([string] $head, [version] $version, [string] $tail, [string] $extension) {
+	if( ! $head ) {
+		throw "empty head";
 	}
 
 	$nameBuffer = @(
-		$header,
+		$head,
 		"_"
-		"{0}"    -f $version.Major
-		"-"
-		"{0:00}" -f $version.Minor
-		"-"
-		"{0:00}" -f $version.Build
+		(ConvertVersion $version '-')
 	)
 	if( $tail ) {
 		$nameBuffer += '_'
