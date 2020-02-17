@@ -20,6 +20,7 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
             "note_uri": "",
             "archive_uri": "",
             "archive_size": ,
+            "archive_kind": ,
             "archive_hash_kind": "",
             "archive_hash_value": ""
         }
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         Uri ArchiveUri { get; }
         long ArchiveSize { get; }
+        string ArchiveKind { get; }
 
         /// <summary>
         /// <para>https://docs.microsoft.com/ja-jp/dotnet/api/system.security.cryptography.hashalgorithm.create?view=netframework-4.8#System_Security_Cryptography_HashAlgorithm_Create_System_String_</para>
@@ -111,6 +113,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         [DataMember]
         [JsonPropertyName("archive_size")]
         public long ArchiveSize { get; set; }
+        [DataMember]
+        [JsonPropertyName("archive_kind")]
+        public string ArchiveKind { get; set; } = string.Empty;
         [DataMember]
         [JsonPropertyName("archive_hash_kind")]
         public string ArchiveHashKind { get; set; } = string.Empty;
