@@ -109,7 +109,7 @@ $headline.CreateText($currentVersion.date);
 $contents = $body.CreateChild('div');
 $contents.attributes['id'] = 'content'
 foreach ($content in $currentVersion.contents) {
-	if (!($content.logs)) {
+	if (!($content.PSObject.Properties.Match('logs').Count)) {
 		continue;
 	}
 
@@ -119,7 +119,7 @@ foreach ($content in $currentVersion.contents) {
 	$logs = $section.CreateChild('ul')
 	foreach ($log in $content.logs) {
 		$logItem = $logs.CreateChild('li')
-		if ($log.class) {
+		if ($log.PSObject.Properties.Match('class').Count) {
 			$logItem.attributes['class'] = $log.class
 		}
 
@@ -134,7 +134,7 @@ foreach ($content in $currentVersion.contents) {
 		$logRevision.CreateText($log.revision)
 		$logRevision.attributes['class'] = 'revision'
 
-		if ($log.comments) {
+		if ($log.PSObject.Properties.Match('comments').Count) {
 			$logComments = $logItem.CreateChild('ul')
 			$logComments.attributes['class'] = 'comments'
 
