@@ -34,7 +34,7 @@ foreach ($platform in $Platforms) {
 
 	$item = @{
 		release            = $releaseTimestamp.ToString("s")
-		version            = (GetAppVersion)
+		version            = $version
 		revision           = $revision
 		platform           = $platform
 		minimum_version    = $MinimumVersion
@@ -56,7 +56,7 @@ Get-Content $outputUpdateFile
 switch ($TargetRepository) {
 	'bitbucket' {
 		$tagJson = @{
-			name   = $version.ToString(3)
+			name   = $version
 			target = @{
 				hash = $revision
 			}

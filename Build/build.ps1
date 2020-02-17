@@ -75,11 +75,18 @@ try {
 	}
 
 	# ビルド開始
-	$productSwitch = if ( $ProductMode ) { '/p:DefineConstants=PRODUCT' } else { '' }
+	$defines = @()
+	if ( $BuildType ) {
+		$defines += $BuildType
+	}
+	if( $ProductMode ) {
+		$defines += 'PRODUCT'
+	}
+	$define = $ProductMode -join ';'
 
-	msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch
-	dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch
-	dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch --output Output/Release/$Platform/Pe/bin --self-contained true
+	msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$define
+	dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define
+	dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define --output Output/Release/$Platform/Pe/bin --self-contained true
 
 	if ($ProductMode) {
 		$productTargets = @('etc', 'doc', 'bat')
