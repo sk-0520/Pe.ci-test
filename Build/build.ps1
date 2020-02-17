@@ -82,7 +82,8 @@ try {
 	if( $ProductMode ) {
 		$defines += 'PRODUCT'
 	}
-	$define = $defines -join ';'
+	# ; を扱う https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild-special-characters?view=vs-2015&redirectedfrom=MSDN
+	$define = $defines -join '%3B'
 
 	msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$define
 	dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define
