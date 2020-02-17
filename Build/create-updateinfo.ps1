@@ -38,8 +38,8 @@ foreach ($platform in $Platforms) {
 		revision           = $revision
 		platform           = $platform
 		minimum_version    = $MinimumVersion
-		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", "Pe_${version}.html")
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", "Pe_${version}_${platform}.zip")
+		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", (ConvertReleaseNoteFileName $version))
+		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", (ConvertAppArchiveFileName $version $platform))
 		archive_size       = (Get-Item -Path $targetPath).Length
 		archive_hash_kind  = $hashAlgorithm
 		archive_hash_value = (Get-FileHash -Path $targetPath -Algorithm $hashAlgorithm).Hash
