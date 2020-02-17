@@ -2,6 +2,7 @@
 	[parameter(mandatory = $true)][string] $SourceDirectory,
 	[parameter(mandatory = $true)][string] $DestinationDirectory,
 	[parameter(mandatory = $true)][string] $Platform,
+	[parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
 	[switch] $Diet
 )
 $ErrorActionPreference = 'Stop'
@@ -19,7 +20,15 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 $version = GetAppVersion
 
-$destinationPath = Join-Path $DestinationDirectory (ConvertAppArchiveFileName $version $Platform)
+$destinationPath = Join-Path $DestinationDirectory (ConvertAppArchiveFileName $version $Platform $Archive)
 
-Compress-Archive -Force -Path (Join-Path $SourceDirectory "*") -DestinationPath $destinationPath
+switch ($Archive) {
+	'zip' {
+		Compress-Archive -Force -Path (Join-Path $SourceDirectory "*") -DestinationPath $destinationPath
+	}
+	'7z' {
+		7z a "$destinationPath" (Join-Path $SourceDirectory "*")
+	}
+}
+
 

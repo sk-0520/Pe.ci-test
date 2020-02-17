@@ -4,6 +4,7 @@
 	[parameter(mandatory = $true)][string] $ArchiveBaseUrl,
 	[parameter(mandatory = $true)][string] $NoteBaseUrl,
 	[parameter(mandatory = $true)][string] $ReleaseDirectory,
+	[parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
 	[parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
@@ -28,7 +29,8 @@ $revision = (git rev-parse HEAD)
 # アップデート情報の作成
 $updateJson = Get-Content -Path (Join-Path $currentDirPath "update.json") | ConvertFrom-Json
 foreach ($platform in $Platforms) {
-	$targetPath = Join-Path $ReleaseDirectory (ConvertAppArchiveFileName $version $platform)
+	$targetName = ConvertAppArchiveFileName $version $platform $Archive
+	$targetPath = Join-Path $ReleaseDirectory $targetName
 
 	$item = @{
 		release            = $releaseTimestamp.ToString("s")
@@ -37,7 +39,7 @@ foreach ($platform in $Platforms) {
 		platform           = $platform
 		minimum_version    = $MinimumVersion
 		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", (ConvertReleaseNoteFileName $version))
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", (ConvertAppArchiveFileName $version $platform))
+		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", $targetName)
 		archive_size       = (Get-Item -Path $targetPath).Length
 		archive_hash_kind  = $hashAlgorithm
 		archive_hash_value = (Get-FileHash -Path $targetPath -Algorithm $hashAlgorithm).Hash
