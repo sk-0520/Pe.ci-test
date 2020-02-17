@@ -81,9 +81,9 @@ try {
 	# ; を扱う https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild-special-characters?view=vs-2015&redirectedfrom=MSDN
 	$define = $defines -join '%3B'
 
-	msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$define
-	dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define
-	dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define --output Output/Release/$Platform/Pe/bin --self-contained true
+	msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$Platform /p:DefineConstants=$define
+	dotnet build   Source/Pe/Pe.sln                 /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win-$Platform
+	dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win-$Platform --output Output/Release/$Platform/Pe/bin --self-contained true
 
 	if ($ProductMode) {
 		$productTargets = @('etc', 'doc', 'bat')
