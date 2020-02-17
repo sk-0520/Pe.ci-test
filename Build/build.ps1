@@ -82,7 +82,7 @@ try {
 	if( $ProductMode ) {
 		$defines += 'PRODUCT'
 	}
-	$define = $ProductMode -join ';'
+	$define = $defines -join ';'
 
 	msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$define
 	dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define
