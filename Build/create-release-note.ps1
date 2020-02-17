@@ -1,5 +1,4 @@
 ﻿Param(
-	[parameter(mandatory = $true)][string] $OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -11,6 +10,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 $rootDirPath = Split-Path -Parent $currentDirPath
+$outputDirectory = Join-Path $rootDirPath 'Output'
 
 $rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/source/script/changelogs.ts"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
@@ -150,4 +150,4 @@ $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
 $htmlContent = $htmlContent.Replace('<body></body>', $body.ToHtml())
 
 $version = GetAppVersion
-Set-Content (Join-Path $OutputDirectory "Pe_$version.html") -Value $htmlContent -Encoding UTF8
+Set-Content (Join-Path $outputDirectory "Pe_$version.html") -Value $htmlContent -Encoding UTF8

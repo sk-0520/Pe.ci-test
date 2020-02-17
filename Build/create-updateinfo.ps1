@@ -3,7 +3,6 @@
 	[parameter(mandatory = $true)][version] $MinimumVersion,
 	[parameter(mandatory = $true)][string] $ArchiveBaseUrl,
 	[parameter(mandatory = $true)][string] $NoteBaseUrl,
-	[parameter(mandatory = $true)][string] $OutputDirectory,
 	[parameter(mandatory = $true)][string] $ReleaseDirectory,
 	[parameter(mandatory = $true)][string[]] $Platforms
 )
@@ -17,6 +16,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
 	. $scriptFilePath
 }
+$rootDirPath = Split-Path -Parent $currentDirPath
+$outputDirectory = Join-Path $rootDirPath 'Output'
 
 SetCommand 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
 
@@ -45,8 +46,7 @@ foreach ($platform in $Platforms) {
 
 	$updateJson.items += $item
 }
-
-$outputUpdateFile = Join-Path $OutputDirectory 'update.json'
+$outputUpdateFile = Join-Path $outputDirectory 'update.json'
 ConvertTo-Json -InputObject $updateJson `
 | ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
 | Set-Content -Path $outputUpdateFile -Encoding Byte
@@ -60,7 +60,7 @@ switch ($TargetRepository) {
 				hash = $revision
 			}
 		}
-		$bitbucketTagApiFile = Join-Path $OutputDirectory "bitbucket-tag.json"
+		$bitbucketTagApiFile = Join-Path $outputDirectory "bitbucket-tag.json"
 		ConvertTo-Json -InputObject $tagJson `
 		| ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
 		| Set-Content -Path $bitbucketTagApiFile -Encoding Byte
