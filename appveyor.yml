@@ -37,4 +37,4 @@ cache:
   - '%USERPROFILE%\.nuget'
   - C:\ProgramData\chocolatey\bin -> appveyor.yml
   - C:\ProgramData\chocolatey\lib -> appveyor.yml
-  - Source\Documents\node_modules
+  - 'Source\Documents\node_modules'

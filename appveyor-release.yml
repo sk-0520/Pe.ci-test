@@ -37,4 +37,4 @@ build_script:
 # deploy_script:
 #   - ps: .\Build\deploy.ps1 -TargetRepository bitbucket -DeployRootDirectory Output -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD
 cache:
-  - Source\Documents\node_modules
+  - 'Source\Documents\node_modules'
