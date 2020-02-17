@@ -30,8 +30,10 @@ switch ($Archive) {
 	'7z' {
 		try {
 			Push-Location $SourceDirectory
+			Get-ChildItem
 			7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on "$archiveFileName" * -r
 			Move-Item -Path $archiveFileName -Destination $DestinationDirectory
+			Get-ChildItem $DestinationDirectory
 		} finally {
 			Pop-Location
 		}
