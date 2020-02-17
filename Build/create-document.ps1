@@ -1,6 +1,5 @@
 Param(
-	[parameter(mandatory = $true)][string] $Platform,
-	[parameter(mandatory = $true)][string] $OutputDirectory
+	[parameter(mandatory = $true)][string] $Platform
 )
 $ErrorActionPreference = 'Stop'
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
