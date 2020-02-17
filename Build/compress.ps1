@@ -27,7 +27,12 @@ switch ($Archive) {
 		Compress-Archive -Force -Path (Join-Path $SourceDirectory "*") -DestinationPath $destinationPath
 	}
 	'7z' {
-		7z a "$destinationPath" (Join-Path $SourceDirectory "*")
+		try {
+			Push-Location $SourceDirectory
+			7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on "$destinationPath" * -r
+		} finally {
+			Pop-Location
+		}
 	}
 }
 
