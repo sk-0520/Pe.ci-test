@@ -13,13 +13,13 @@ foreach ($scriptFileName in $scriptFileNames) {
 }
 $rootDirectoryPath = Split-Path -Parent $currentDirPath
 
-$documentDirectoryPath = Join-Path @($rootDirectoryPath, 'Source', 'Documents')
+$documentDirectoryPath = Join-Path $rootDirectoryPath 'Source\Documents'
 $outputDirectoryPath = Join-Path $documentDirectoryPath 'build'
 
 try{
-	Set-Location $documentDirectoryPath
+	Push-Location $documentDirectoryPath
 	npm install
-	npm build
+	npm run build
 } finally {
-	Set-Location $currentDirPath
+	Pop-Location
 }

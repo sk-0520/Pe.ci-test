@@ -27,6 +27,7 @@ Thumbs.db
 *.lnk
 node_modules/
 /Source/Documents/dist
+/Source/Documents/build
 .vscode/
 */**/Properties/launchSettings.json
 /Resource/Icon/*.png
