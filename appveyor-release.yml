@@ -21,6 +21,7 @@ build_script:
   - ps: .\Build\build.ps1 -ProductMode -Platform x64 -BuildType ""
   - ps: .\Build\build.ps1 -ProductMode -Platform x86 -BuildType ""
   - ps: .\Build\create-document.ps1 -Platform x64
+  - ps: .\Build\create-document.ps1 -Platform x86
   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x64\Pe -DestinationDirectory Output -Platform x64 -Diet
   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x86\Pe -DestinationDirectory Output -Platform x86 -Diet
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -ReleaseDirectory Output -Platforms x64,x86
