@@ -13,14 +13,15 @@ foreach ($scriptFileName in $scriptFileNames) {
 $rootDirectoryPath = Split-Path -Parent $currentDirPath
 
 $documentDirectoryPath = Join-Path $rootDirectoryPath 'Source\Documents'
-$outputDirectoryPath = Join-Path $documentDirectoryPath 'build'
+$buildOutputDirectoryPath = Join-Path $documentDirectoryPath 'build'
+$outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$Platform\Pe\doc\help"
 
 try{
 	Push-Location $documentDirectoryPath
 	npm install
 	npm run build
 
-	robocopy /MIR /PURGE /R:3 /S "$outputDirectoryPath" "Output\Release\$Platform\Pe\doc\help"
+	robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
 
 } finally {
 	Pop-Location
