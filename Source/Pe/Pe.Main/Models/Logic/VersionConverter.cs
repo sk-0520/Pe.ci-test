@@ -29,11 +29,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             };
             if(!string.IsNullOrWhiteSpace(tail)) {
                 values.Add(tail);
+                values.Add("_");
             }
             values.Add(".");
             values.Add(extension);
 
-            return string.Join("_", values);
+            return string.Join(string.Empty, values);
         }
 
         #endregion

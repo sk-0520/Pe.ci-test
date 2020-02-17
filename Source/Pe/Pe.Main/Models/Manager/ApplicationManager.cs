@@ -965,7 +965,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             var versionConverter = new VersionConverter();
-            var downloadFileName = versionConverter.ConvertFileName(BuildStatus.Name, ApplicationUpdateInfo.UpdateItem.Version, ApplicationUpdateInfo.UpdateItem.Platform, "zip");
+            var downloadFileName = versionConverter.ConvertFileName(BuildStatus.Name, ApplicationUpdateInfo.UpdateItem.Version, ApplicationUpdateInfo.UpdateItem.Platform, ApplicationUpdateInfo.UpdateItem.ArchiveKind);
             var downloadFilePath = Path.Combine(environmentParameters.MachineUpdateArchiveDirectory.FullName, downloadFileName);
             var downloadFile = new FileInfo(downloadFilePath);
             try {
