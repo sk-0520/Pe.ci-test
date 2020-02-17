@@ -19,7 +19,7 @@ $outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$Platform\Pe
 try{
 	Push-Location $documentDirectoryPath
 	Write-Output install
-	npm install --no-optional --no-shrinkwrap --no-package-lock
+	npm install --loglevel=error
 	Write-Output build
 	npm run build
 
