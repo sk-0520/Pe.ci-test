@@ -1,7 +1,7 @@
 {
   "name": "pe-documents",
   "version": "1.0.0",
-  "description": "",
+  "description": "Pe documents",
   "main": "index.pug",
   "scripts": {
     "watch": "parcel watch --no-autoinstall --public-url . ./source/index.pug",
