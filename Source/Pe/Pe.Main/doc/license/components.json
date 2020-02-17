@@ -80,6 +80,15 @@
 				"uri": "https://github.com/cefsharp/CefSharp/blob/master/LICENSE"
 			},
 			"comment": "CefSharp.Wpf"
+		},
+		{
+			"name": "SharpZipLib",
+			"uri": "https://github.com/icsharpcode/SharpZipLib",
+			"license": {
+				"name": "MIT",
+				"uri": "https://github.com/icsharpcode/SharpZipLib/blob/master/LICENSE.txt"
+			},
+			"comment": "SharpZipLib"
 		}
 	],
 
