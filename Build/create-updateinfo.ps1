@@ -41,6 +41,7 @@ foreach ($platform in $Platforms) {
 		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", (ConvertReleaseNoteFileName $version))
 		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", $targetName)
 		archive_size       = (Get-Item -Path $targetPath).Length
+		archive_kind       = $Archive
 		archive_hash_kind  = $hashAlgorithm
 		archive_hash_value = (Get-FileHash -Path $targetPath -Algorithm $hashAlgorithm).Hash
 	}
