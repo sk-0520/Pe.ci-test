@@ -18,7 +18,9 @@ $outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$Platform\Pe
 
 try{
 	Push-Location $documentDirectoryPath
-	npm install --no-optional
+	Write-Output install
+	npm install --no-optional --no-shrinkwrap --no-package-lock
+	Write-Output build
 	npm run build
 
 	robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
