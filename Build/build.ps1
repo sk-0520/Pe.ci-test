@@ -4,6 +4,7 @@
 	[string] $BuildType
 )
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'command.ps1',
@@ -63,17 +64,29 @@ try {
 
 		UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
 		UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
-		ReplaceElement @{ 'YYYY' = '2020' } $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
+		$repMap = @{
+			'@YYYY@' = '2020'
+			'@NAME@' = 'sk'
+			'@SITE@' = 'content-type-text.net'
+		}
+		ReplaceElement $repMap $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
 
 		$xml.Save($projectFile)
 	}
 
 	# ビルド開始
-	$productSwitch = if ( $ProductMode ) { '/p:DefineConstants=PRODUCT' } else { '' }
+	$defines = @()
+	if ( $BuildType ) {
+		$defines += $BuildType
+	}
+	if( $ProductMode ) {
+		$defines += 'PRODUCT'
+	}
+	$define = $defines -join ';'
 
-	msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch
-	dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch
-	dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$BuildType $productSwitch --output Output/Release/$Platform/Pe/bin --self-contained true
+	msbuild        Source/Pe.Boot/Pe.Boot.sln                          /p:Configuration=Release                          /p:Platform=$Platform /p:DefineConstants=$define
+	dotnet build   Source/Pe/Pe.sln                  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define
+	dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj  --verbosity normal --configuration Release --runtime win-$Platform  /p:Platform=$Platform /p:DefineConstants=$define --output Output/Release/$Platform/Pe/bin --self-contained true
 
 	if ($ProductMode) {
 		$productTargets = @('etc', 'doc', 'bat')

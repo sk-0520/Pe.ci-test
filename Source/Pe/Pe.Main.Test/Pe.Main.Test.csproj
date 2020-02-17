@@ -11,7 +11,7 @@
     <RootNamespace>ContentTypeTextNet.Pe.Main.Test</RootNamespace>
 
     <IsPackable>false</IsPackable>
-    <Copyright>Copyright © 2014-YYYY sk &lt;content-type-text.net&gt;</Copyright>
+    <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

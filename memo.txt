@@ -27,3 +27,5 @@ Documents: 各種文書
 	npm:6.13.4
 
 
+ブランチ: ci-test は CI 専用
+

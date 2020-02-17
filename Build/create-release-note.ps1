@@ -1,7 +1,7 @@
 ﻿Param(
-	[parameter(mandatory = $true)][string] $OutputDirectory
 )
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'version.ps1'
@@ -11,6 +11,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 $rootDirPath = Split-Path -Parent $currentDirPath
+$outputDirectory = Join-Path $rootDirPath 'Output'
 
 $rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/source/script/changelogs.ts"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
@@ -108,7 +109,7 @@ $headline.CreateText($currentVersion.date);
 $contents = $body.CreateChild('div');
 $contents.attributes['id'] = 'content'
 foreach ($content in $currentVersion.contents) {
-	if (!($content.logs)) {
+	if (!($content.PSObject.Properties.Match('logs').Count)) {
 		continue;
 	}
 
@@ -118,7 +119,7 @@ foreach ($content in $currentVersion.contents) {
 	$logs = $section.CreateChild('ul')
 	foreach ($log in $content.logs) {
 		$logItem = $logs.CreateChild('li')
-		if ($log.class) {
+		if ($log.PSObject.Properties.Match('class').Count) {
 			$logItem.attributes['class'] = $log.class
 		}
 
@@ -133,7 +134,7 @@ foreach ($content in $currentVersion.contents) {
 		$logRevision.CreateText($log.revision)
 		$logRevision.attributes['class'] = 'revision'
 
-		if ($log.comments) {
+		if ($log.PSObject.Properties.Match('comments').Count) {
 			$logComments = $logItem.CreateChild('ul')
 			$logComments.attributes['class'] = 'comments'
 
@@ -150,4 +151,4 @@ $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
 $htmlContent = $htmlContent.Replace('<body></body>', $body.ToHtml())
 
 $version = GetAppVersion
-Set-Content (Join-Path $OutputDirectory "Pe_$version.html") -Value $htmlContent -Encoding UTF8
+Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)) -Value $htmlContent -Encoding UTF8

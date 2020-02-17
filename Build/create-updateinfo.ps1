@@ -3,11 +3,11 @@
 	[parameter(mandatory = $true)][version] $MinimumVersion,
 	[parameter(mandatory = $true)][string] $ArchiveBaseUrl,
 	[parameter(mandatory = $true)][string] $NoteBaseUrl,
-	[parameter(mandatory = $true)][string] $OutputDirectory,
 	[parameter(mandatory = $true)][string] $ReleaseDirectory,
 	[parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'command.ps1',
@@ -17,6 +17,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
 	. $scriptFilePath
 }
+$rootDirPath = Split-Path -Parent $currentDirPath
+$outputDirectory = Join-Path $rootDirPath 'Output'
 
 SetCommand 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
 
@@ -28,16 +30,16 @@ $revision = (git rev-parse HEAD)
 # アップデート情報の作成
 $updateJson = Get-Content -Path (Join-Path $currentDirPath "update.json") | ConvertFrom-Json
 foreach ($platform in $Platforms) {
-	$targetPath = Join-Path $ReleaseDirectory ("Pe_" + $version + "_" + $platform + ".zip")
+	$targetPath = Join-Path $ReleaseDirectory (ConvertAppArchiveFileName $version $platform)
 
 	$item = @{
 		release            = $releaseTimestamp.ToString("s")
-		version            = (GetAppVersion)
+		version            = $version
 		revision           = $revision
 		platform           = $platform
 		minimum_version    = $MinimumVersion
-		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", "Pe_${version}.html")
-		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", "Pe_${version}_${platform}.zip")
+		note_uri           = $NoteBaseUrl.Replace("@NOTENAME@", (ConvertReleaseNoteFileName $version))
+		archive_uri        = $ArchiveBaseUrl.Replace("@ARCHIVEAME@", (ConvertAppArchiveFileName $version $platform))
 		archive_size       = (Get-Item -Path $targetPath).Length
 		archive_hash_kind  = $hashAlgorithm
 		archive_hash_value = (Get-FileHash -Path $targetPath -Algorithm $hashAlgorithm).Hash
@@ -45,8 +47,7 @@ foreach ($platform in $Platforms) {
 
 	$updateJson.items += $item
 }
-
-$outputUpdateFile = Join-Path $OutputDirectory 'update.json'
+$outputUpdateFile = Join-Path $outputDirectory 'update.json'
 ConvertTo-Json -InputObject $updateJson `
 | ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
 | Set-Content -Path $outputUpdateFile -Encoding Byte
@@ -55,12 +56,12 @@ Get-Content $outputUpdateFile
 switch ($TargetRepository) {
 	'bitbucket' {
 		$tagJson = @{
-			name   = "ver_$version"
+			name   = $version
 			target = @{
 				hash = $revision
 			}
 		}
-		$bitbucketTagApiFile = Join-Path $OutputDirectory "bitbucket-tag.json"
+		$bitbucketTagApiFile = Join-Path $outputDirectory "bitbucket-tag.json"
 		ConvertTo-Json -InputObject $tagJson `
 		| ForEach-Object { [Text.Encoding]::UTF8.GetBytes($_) } `
 		| Set-Content -Path $bitbucketTagApiFile -Encoding Byte
