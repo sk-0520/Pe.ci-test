@@ -20,8 +20,6 @@ foreach ($scriptFileName in $scriptFileNames) {
 $rootDirPath = Split-Path -Parent $currentDirPath
 $outputDirectory = Join-Path $rootDirPath 'Output'
 
-SetCommand 'git' 'BUILD_GIT_PATH' "%PROGRAMFILES%\git\bin"
-
 $version = GetAppVersion
 $hashAlgorithm = "SHA256"
 $releaseTimestamp = (Get-Date).ToUniversalTime()
