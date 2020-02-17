@@ -32,3 +32,4 @@ node_modules/
 /Resource/Icon/*.png
 /Resource/Icon/*.ico
 /Source/Pe/Pe.Main/etc/appsettings.debug.json
+/Source/Pe/Pe.Main/doc/help/
