@@ -23,11 +23,12 @@ $securePassword = ConvertTo-SecureString $DeployPassword -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($DeployAccount, $securePassword)
 
 $archiveFiles = Get-ChildItem -Path $outputDirectory -Filter "*.$Archive" | Select-Object -Expand FullName
-$updateFile = Join-Path (Get-Location) (Join-Path $outputDirectory 'update.json')
+$updateFile = Join-Path $outputDirectory 'update.json'
 $version = GetAppVersion
-$releaseNoteFile = Join-Path (Get-Location) (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version))
+$releaseNoteFile = Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)
 
 function UploadFile([string] $filePath) {
+
 	$fileName = [System.IO.Path]::GetFileName($filePath)
 	$fileBytes = [System.IO.File]::ReadAllBytes($filePath);
 
