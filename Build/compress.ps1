@@ -30,6 +30,7 @@ switch ($Archive) {
 		try {
 			Push-Location $SourceDirectory
 			7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on "$destinationPath" * -r
+			Get-ChildItem -Path $destinationPath
 		} finally {
 			Pop-Location
 		}
