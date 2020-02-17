@@ -20,6 +20,9 @@ try{
 	Push-Location $documentDirectoryPath
 	npm install
 	npm run build
+
+	robocopy /MIR /PURGE /R:3 /S "$outputDirectoryPath" "Output\Release\$Platform\Pe\doc\help"
+
 } finally {
 	Pop-Location
 }
