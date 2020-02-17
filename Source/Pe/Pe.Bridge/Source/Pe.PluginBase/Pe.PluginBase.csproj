@@ -9,7 +9,7 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <RootNamespace>ContentTypeTextNet.Pe.PluginBase</RootNamespace>
-    <Copyright>Copyright © 2019-YYYY sk &lt;content-type-text.net&gt;</Copyright>
+    <Copyright>Copyright © 2019-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

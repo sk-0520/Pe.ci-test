@@ -17,7 +17,7 @@
     <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <Product>Pe</Product>
-    <Copyright>Copyright © 2014-YYYY sk &lt;content-type-text.net&gt;</Copyright>
+    <Copyright>Copyright © 2014-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
