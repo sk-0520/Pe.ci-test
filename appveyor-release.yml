@@ -10,9 +10,8 @@ install:
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk --version 3.1.100
   #- cmd: dotnet --version
-  #- cmd: nvm install 12.14.1
-  #- cmd: npm -g install npm@6.13.4
-  #- cmd: npm -prefix ./Source/Documents install ./Source/Documents
+  - cmd: nvm install 12.14.1
+  - cmd: npm -g install npm@6.13.4
   - cmd: set
 before_build:
   - cmd: git submodule init
@@ -21,6 +20,7 @@ build_script:
   #- ps: .\Build\test.ps1
   - ps: .\Build\build.ps1 -ProductMode -Platform x64 -BuildType ""
   - ps: .\Build\build.ps1 -ProductMode -Platform x86 -BuildType ""
+  - ps: .\Build\create-document.ps -Platform x64 -OutputDirectory Output\Release\x64\Pe\doc\help
   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x64\Pe -DestinationDirectory Output -Platform x64 -Diet
   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\x86\Pe -DestinationDirectory Output -Platform x86 -Diet
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -OutputDirectory Output -ReleaseDirectory Output -Platforms x64,x86
