@@ -9,3 +9,36 @@ function GetAppVersion {
 
 	return $vesion
 }
+
+function ConvertFileName([string] $header, [version] $version, [string] $tail, [string] $extension) {
+	if( ! $header ) {
+		throw "empty header";
+	}
+
+	$nameBuffer = @(
+		$header,
+		"_"
+		"{0}"    -f $version.Major
+		"-"
+		"{0:00}" -f $version.Minor
+		"-"
+		"{0:00}" -f $version.Build
+	)
+	if( $tail ) {
+		$nameBuffer += '_'
+		$nameBuffer += $tail
+	}
+
+	$nameBuffer += '.'
+	$nameBuffer += $extension
+
+	return $nameBuffer -join ''
+}
+
+function ConvertAppArchiveFileName([version] $version, [string] $platform) {
+	return ConvertFileName 'Pe' $version $platform 'zip'
+}
+
+function ConvertReleaseNoteFileName([version] $version) {
+	return ConvertFileName 'Pe' $version '' 'html'
+}

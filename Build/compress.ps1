@@ -16,9 +16,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 }
 
 
-$vesion = GetAppVersion
+$version = GetAppVersion
 
-$destinationPath = Join-Path $DestinationDirectory ("Pe_" + $vesion + "_" + $Platform + ".zip")
+$destinationPath = Join-Path $DestinationDirectory (ConvertAppArchiveFileName $version $Platform)
 
 Compress-Archive -Force -Path (Join-Path $SourceDirectory "*") -DestinationPath $destinationPath
 

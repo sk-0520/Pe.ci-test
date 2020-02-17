@@ -22,7 +22,7 @@ $credential = New-Object System.Management.Automation.PSCredential($DeployAccoun
 $archiveFiles = Get-ChildItem -Path $DeployRootDirectory -Filter "*.zip" | Select-Object -Expand FullName
 $updateFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory 'update.json')
 $version = GetAppVersion
-$releaseNoteFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory "Pe_${version}.html")
+$releaseNoteFile = Join-Path (Get-Location) (Join-Path $DeployRootDirectory (ConvertReleaseNoteFileName $version))
 
 function UploadFile([string] $filePath) {
 	$fileName = [System.IO.Path]::GetFileName($filePath)
@@ -85,11 +85,12 @@ switch ($TargetRepository) {
 		#     -ContentType "Content-Type: application/json" `
 		#     -InFile $bitbucketTagApiFile
 		$base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $DeployAccount, $DeployPassword)))
-		Invoke-RestMethod `
-			-Headers @{
+		$headers = @{
 			Authorization  = ("Basic {0}" -f $base64AuthInfo)
 			"Content-type" = "application/json"
-		}  `
+		}
+		Invoke-RestMethod `
+			-Headers $headers `
 			-Method Post `
 			-Uri $DeployApiTagUrl `
 			-InFile $bitbucketTagApiFile

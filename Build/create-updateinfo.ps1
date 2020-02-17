@@ -29,7 +29,7 @@ $revision = (git rev-parse HEAD)
 # アップデート情報の作成
 $updateJson = Get-Content -Path (Join-Path $currentDirPath "update.json") | ConvertFrom-Json
 foreach ($platform in $Platforms) {
-	$targetPath = Join-Path $ReleaseDirectory ("Pe_" + $version + "_" + $platform + ".zip")
+	$targetPath = Join-Path $ReleaseDirectory (ConvertAppArchiveFileName $version $platform)
 
 	$item = @{
 		release            = $releaseTimestamp.ToString("s")
@@ -55,7 +55,7 @@ Get-Content $outputUpdateFile
 switch ($TargetRepository) {
 	'bitbucket' {
 		$tagJson = @{
-			name   = "ver_$version"
+			name   = $version.ToString(3)
 			target = @{
 				hash = $revision
 			}

@@ -150,4 +150,4 @@ $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
 $htmlContent = $htmlContent.Replace('<body></body>', $body.ToHtml())
 
 $version = GetAppVersion
-Set-Content (Join-Path $outputDirectory "Pe_$version.html") -Value $htmlContent -Encoding UTF8
+Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)) -Value $htmlContent -Encoding UTF8
