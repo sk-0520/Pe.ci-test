@@ -55,5 +55,7 @@ function TestAliasExists([string] $alias) {
 
 SetCommand 'git'     'BUILD_GIT_PATH'     "%PROGRAMFILES%\git\bin"
 SetCommand 'msbuild' 'BUILD_MSBUILD_PATH' "%PROGRAMFILES(x86)%\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin"
-SetCommand 'dotnet'  'BUILD_DOTNET_PATH'  "%PROGRAMFILES(x86)%\dotnet\"
+SetCommand 'dotnet'  'BUILD_DOTNET_PATH'  "%PROGRAMFILES(x86)%\dotnet"
+SetCommand 'node'    'BUILD_NODE_PATH'    "%PROGRAMFILES%\nodejs"
+SetCommand 'npm'     'BUILD_NPM_PATH'     "%PROGRAMFILES%\nodejs"
 
