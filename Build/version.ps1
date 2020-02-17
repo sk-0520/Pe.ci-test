@@ -1,4 +1,5 @@
 ﻿$ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 
 $projectFile = Join-Path (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)) "Source/Pe/Pe.Main/Pe.Main.csproj"
 

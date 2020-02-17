@@ -2,6 +2,7 @@ Param(
 	[parameter(mandatory = $true)][string] $Platform
 )
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'command.ps1'

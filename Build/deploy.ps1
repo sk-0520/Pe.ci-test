@@ -7,6 +7,7 @@
 	[parameter(mandatory = $true)][string] $DeployPassword
 )
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
 	'version.ps1'

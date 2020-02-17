@@ -1,4 +1,7 @@
-﻿function TestCommandExists {
+﻿$ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
+
+function TestCommandExists {
 	Param ($command)
 
 	$oldPreference = $ErrorActionPreference
