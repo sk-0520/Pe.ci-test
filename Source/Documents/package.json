@@ -9,7 +9,7 @@
     "build:output": "parcel build --no-autoinstall --no-source-maps --out-dir ./build/ --no-content-hash --public-url . ./source/index.pug",
     "build": "npm run build:clean & npm run build:output"
   },
-  "author": "",
+  "author": "sk",
   "license": "GPLv3",
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
