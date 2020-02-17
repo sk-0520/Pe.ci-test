@@ -20,17 +20,18 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 $version = GetAppVersion
 
-$destinationPath = Join-Path $DestinationDirectory (ConvertAppArchiveFileName $version $Platform $Archive)
+$archiveFileName = (ConvertAppArchiveFileName $version $Platform $Archive)
 
 switch ($Archive) {
 	'zip' {
+		$destinationPath = Join-Path $DestinationDirectory $archiveFileName
 		Compress-Archive -Force -Path (Join-Path $SourceDirectory "*") -DestinationPath $destinationPath
 	}
 	'7z' {
 		try {
 			Push-Location $SourceDirectory
-			7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on "$destinationPath" * -r
-			Move-Item -Path $destinationPath -Destination 'Output'
+			7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on "$archiveFileName" * -r
+			Move-Item -Path $archiveFileName -Destination $DestinationDirectory
 		} finally {
 			Pop-Location
 		}
