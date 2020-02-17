@@ -17,6 +17,8 @@ install:
   - cmd: dotnet --version
   #- cmd: choco install dotnetcore-sdk --version 3.1.100
   #- cmd: dotnet --version
+  - ps: Install-Product node 12.14.1
+  - cmd: npm --version
   - cmd: set
 before_build:
   - cmd: git submodule init
@@ -29,9 +31,10 @@ before_test:
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
 artifacts:
-- path: Output\*.zip
+  - path: Output\*.zip
 cache:
- - '%LOCALAPPDATA%\NuGet'
- - '%USERPROFILE%\.nuget'
- - C:\ProgramData\chocolatey\bin -> appveyor.yml
- - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - '%LOCALAPPDATA%\NuGet'
+  - '%USERPROFILE%\.nuget'
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  - Source\Documents\node_modules
