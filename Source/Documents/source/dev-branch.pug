@@ -1,0 +1,23 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = 'ブランチ'
+
+block BLOCK_LAYOUT_CONTENT
+	p 以下のブランチを用いて開発を行う。
+
+	dl
+		dt master
+		dd リリース時にマージする。 基本的に CI リリース処理は本ブランチを使用する。
+
+		dt development
+		dd 開発主軸ブランチ。 基本的にここから rc ブランチを生やす。
+
+		dt rc-X.X.X
+		dd 次期バージョン開発ブランチ。
+
+		dt #xxx
+		dd 課題ブランチ
+
+		dt ci-test
+		dd CI 用のテスト処理実施ブランチ。 CI テスト用リポジトリと組み合わせて一時的に使用する。
