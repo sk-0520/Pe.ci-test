@@ -82,13 +82,13 @@
 			"comment": "CefSharp.Wpf"
 		},
 		{
-			"name": "SharpZipLib",
-			"uri": "https://github.com/icsharpcode/SharpZipLib",
+			"name": "SevenZipExtractor",
+			"uri": "https://github.com/adoconnection/SevenZipExtractor",
 			"license": {
 				"name": "MIT",
-				"uri": "https://github.com/icsharpcode/SharpZipLib/blob/master/LICENSE.txt"
+				"uri": "https://github.com/adoconnection/SevenZipExtractor/blob/master/LICENSE"
 			},
-			"comment": "SharpZipLib"
+			"comment": "7z"
 		}
 	],
 
