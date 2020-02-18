@@ -11,9 +11,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
     /// <summary>
     /// マイグレーションの最後に実行される。
     /// </summary>
-    public class Setupper_V_99_99_99_99 : SetupperBase
+    public class Setupper_V_99_99_999 : SetupperBase
     {
-        public Setupper_V_99_99_99_99(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Setupper_V_99_99_999(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(idFactory, statementLoader, loggerFactory)
         { }
 
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         /// <summary>
         /// ここまでこない :-)
         /// </summary>
-        public override Version Version { get; } = new Version(99, 99, 99, 99);
+        public override Version Version { get; } = new Version(99, 99, 99);
 
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         { }

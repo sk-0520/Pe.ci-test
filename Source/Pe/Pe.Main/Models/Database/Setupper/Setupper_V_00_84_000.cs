@@ -13,15 +13,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
     /// <summary>
     /// 誰が何と言おうと新生初期バージョン。
     /// </summary>
-    public class Setupper_V_00_84_00_00 : SetupperBase
+    public class Setupper_V_00_84_000 : SetupperBase
     {
-        public Setupper_V_00_84_00_00(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Setupper_V_00_84_000(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(idFactory, statementLoader, loggerFactory)
         { }
 
         #region SetupBase
 
-        public override Version Version { get; } = new Version(0, 84, 0, 0);
+        public override Version Version { get; } = new Version(0, 84, 0);
 
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {

@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             Logger.LogInformation("init");
 
             var dto = CreateSetupDto(new Version(0, 0, 0, 0));
-            var setup = new Setupper_V_00_84_00_00(IdFactory, StatementLoader, LoggerFactory);
+            var setup = new Setupper_V_00_84_000(IdFactory, StatementLoader, LoggerFactory);
 
             Execute(accessorPack, dto, setup);
         }
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             var setuppers = new SetupperBase[] {
                 // これ最後
-                new Setupper_V_99_99_99_99(IdFactory, StatementLoader, LoggerFactory),
+                new Setupper_V_99_99_999(IdFactory, StatementLoader, LoggerFactory),
             };
 
             foreach(var setupper in setuppers) {
