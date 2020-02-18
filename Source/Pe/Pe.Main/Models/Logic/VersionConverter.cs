@@ -25,14 +25,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
             var values = new List<string>() {
                 head,
+                "_",
                 ConvertDisplayVersion(version, "-")
             };
             if(!string.IsNullOrWhiteSpace(tail)) {
-                values.Add(tail);
                 values.Add("_");
+                values.Add(tail);
             }
-            values.Add(".");
-            values.Add(extension);
+            if(!string.IsNullOrEmpty(extension)) {
+                values.Add(".");
+                values.Add(extension);
+            }
 
             return string.Join(string.Empty, values);
         }
