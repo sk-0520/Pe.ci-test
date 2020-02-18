@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using SevenZipExtractor;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             // 使い方間違えてんのか知らんけど ZipFile.ExtractToDirectory ってやたら例外吐かん？
             using(var zipArchive = ZipFile.OpenRead(archiveFile.FullName)) {
-                var totalExtractItems = zipArchive.Entries.Count;
+                var totalExtractItemCount = zipArchive.Entries.Count;
                 var extractedItemCount = 0;
                 userNotifyProgress.Start();
                 foreach(var entry in zipArchive.Entries.Where(e => e.Name.Length > 0)) {
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogTrace("展開: {0}", expandPath);
                     entry.ExtractToFile(expandPath, true);
                     extractedItemCount += 1;
-                    userNotifyProgress.Report(extractedItemCount / (double)totalExtractItems, entry.FullName);
+                    userNotifyProgress.Report(extractedItemCount / (double)totalExtractItemCount, entry.FullName);
                 }
 
                 userNotifyProgress.End();
@@ -52,6 +53,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         private void Extract7z(FileInfo archiveFile, DirectoryInfo extractDirectory, UserNotifyProgress userNotifyProgress)
         {
+            using(var archive = new ArchiveFile(archiveFile.FullName)) {
+                var totalExtractItemCount = archive.Entries.Count;
+                var extractedItemCount = 0;
+                archive.Extract(e => {
+                    var expandPath = Path.Combine(extractDirectory.FullName, e.FileName);
+
+                    Logger.LogTrace("展開: {0}", expandPath);
+                    extractedItemCount += 1;
+                    userNotifyProgress.Report(extractedItemCount / (double)totalExtractItemCount, expandPath);
+
+                    return expandPath;
+                });
+            }
+
         }
 
         public void Extract(FileInfo archiveFile, DirectoryInfo extractDirectory, string archive, UserNotifyProgress userNotifyProgress)
