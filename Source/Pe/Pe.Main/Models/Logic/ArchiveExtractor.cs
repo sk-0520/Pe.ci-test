@@ -54,24 +54,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
         }
 
-        public void Extract(FileInfo archiveFile, DirectoryInfo extractDirectory, UserNotifyProgress userNotifyProgress)
+        public void Extract(FileInfo archiveFile, DirectoryInfo extractDirectory, string archive, UserNotifyProgress userNotifyProgress)
         {
-            var dotExt = Path.GetExtension(archiveFile.Name);
-            if(string.IsNullOrEmpty(dotExt) || dotExt.Length < 2) {
-                throw new Exception("not found extension: " + archiveFile);
+            void Extract(string archiveKind)
+            {
+                switch(archiveKind) {
+                    case "zip":
+                        ExtractZip(archiveFile, extractDirectory, userNotifyProgress);
+                        break;
+
+                    case "7z":
+                        Extract7z(archiveFile, extractDirectory, userNotifyProgress);
+                        break;
+
+                    default:
+                        throw new NotSupportedException($"kind: {archiveKind}");
+                }
             }
 
-            switch(dotExt.Substring(1).ToLowerInvariant()) {
-                case "zip":
-                    ExtractZip(archiveFile, extractDirectory, userNotifyProgress);
-                    break;
-
-                case "7z":
-                    Extract7z(archiveFile, extractDirectory, userNotifyProgress);
-                    break;
-
-                default:
-                    throw new NotSupportedException($"extension: {dotExt}");
+            if(!string.IsNullOrWhiteSpace(archive)) {
+                Extract(archive);
+            } else {
+                var dotExt = Path.GetExtension(archiveFile.Name);
+                if(string.IsNullOrEmpty(dotExt) || dotExt.Length < 2) {
+                    throw new Exception("not found extension: " + archiveFile);
+                }
+                Extract(dotExt.Substring(1).ToLowerInvariant());
             }
         }
 

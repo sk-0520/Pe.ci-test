@@ -1007,7 +1007,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 directoryCleaner.Clear(false);
 
                 var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
-                archiveExtractor.Extract(downloadFile, environmentParameters.TemporaryApplicationExtractDirectory, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
+                archiveExtractor.Extract(downloadFile, environmentParameters.TemporaryApplicationExtractDirectory, ApplicationUpdateInfo.UpdateItem.ArchiveKind, new UserNotifyProgress(ApplicationUpdateInfo.ExtractProgress, ApplicationUpdateInfo.CurrentLogProgress));
 
                 var scriptFactory = ApplicationDiContainer.Build<ApplicationUpdateScriptFactory>();
                 var exeutePathParameter = scriptFactory.CreateUpdateExecutePathParameter(environmentParameters.EtcUpdateScriptFile, environmentParameters.TemporaryDirectory, environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.RootDirectory);
