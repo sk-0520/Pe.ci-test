@@ -87,7 +87,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
 #else
             CombineDirectory(ApplicationBaseDirectory, "etc");
 #endif
-        public FileInfo EtcUpdateScriptFile => CombineFile(EtcDirectory, "update-application.ps1");
+        public DirectoryInfo EtcScriptDirectory => CombineDirectory(EtcDirectory, "script");
+        public DirectoryInfo EtcUpdateDirectory => CombineDirectory(EtcScriptDirectory, "update");
+
+        /// <summary>
+        /// アップデート時のローカル処理。
+        /// </summary>
+        public FileInfo EtcUpdateScriptFile => CombineFile(EtcUpdateDirectory, "update-application.ps1");
         /// <summary>
         /// SQL ディレクトリ。
         /// </summary>

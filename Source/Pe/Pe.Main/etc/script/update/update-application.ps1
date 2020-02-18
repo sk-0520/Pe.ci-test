@@ -4,8 +4,10 @@ Param(
 	[parameter(mandatory = $true)][int] $WaitSeconds,
 	[parameter(mandatory = $true)][System.IO.DirectoryInfo] $SourceDirectory,
 	[parameter(mandatory = $true)][System.IO.DirectoryInfo] $DestinationDirectory,
+	[parameter(mandatory = $true)][version] $CurrentVersion,
 	[parameter(mandatory = $true)][ValidateSet("x32", "x64")][string] $Platform,
-	[parameter(mandatory = $true)][string] $UpdateScript,
+	[parameter(mandatory = $true)][string] $UpdateBeforeScript,
+	[parameter(mandatory = $true)][string] $UpdateAfterScript,
 	[parameter(mandatory = $true)][string] $ExecuteCommand,
 	[parameter(mandatory = $false)][string] $ExecuteArgument
 )
@@ -32,12 +34,18 @@ if ($ProcessId -ne 0 ) {
 	}
 }
 
+if ( Test-Path -Path $UpdateBeforeScript ) {
+	Write-Host "最新アップデート前スクリプトの実施: $UpdateBeforeScript"
+	Invoke-Expression "$UpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
+}
+
+Write-Host "アップデート処理実施"
 Write-Host "$SourceDirectory -> $DestinationDirectory"
 Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
 
-if ( Test-Path -Path $UpdateScript ) {
-	Write-Host "最新アップデート後スクリプトの実施: $UpdateScript"
-	Invoke-Expression "$UpdateScript -DestinationDirectory ""$DestinationDirectory"" -Platform $Platform "
+if ( Test-Path -Path $UpdateAfterScript ) {
+	Write-Host "最新アップデート後スクリプトの実施: $UpdateAfterScript"
+	Invoke-Expression "$UpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
 }
 
 Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
