@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo LicenseDirectory => CombineDirectory(DocumentDirectory, "license");
 
         public FileInfo ComponentsFile => CombineFile(LicenseDirectory, "components.json");
-        public FileInfo HelpFile => CombineFile(DocumentDirectory, "help", "index.html");
+        public FileInfo HelpFile => CombineFile(DocumentDirectory, "help.html");
 
         /// <summary>
         /// ユーザーデータ配置ディレクトリ。
