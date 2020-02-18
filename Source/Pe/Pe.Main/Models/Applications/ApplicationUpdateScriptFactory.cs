@@ -30,16 +30,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public ILauncherExecutePathParameter CreateUpdateExecutePathParameter(FileInfo scriptSourceFIle, DirectoryInfo scriptDirectory, DirectoryInfo sourceDirectory, DirectoryInfo destinationDirectory)
         {
-            var scriptFilePath = Path.Combine(scriptDirectory.FullName, scriptSourceFIle.Name);
-
-            scriptSourceFIle.CopyTo(scriptFilePath, true);
-
-
             var ps = "powershell";
             var psCommands = new[] {
                 "-NoProfile",
                 "-ExecutionPolicy", "Unrestricted",
-                "-File", CommandLine.Escape(scriptFilePath),
+                "-File", CommandLine.Escape(scriptSourceFIle.FullName),
                 "-ProcessId", Process.GetCurrentProcess().Id.ToString(),
                 "-WaitSeconds", TimeSpan.FromSeconds(5).TotalMilliseconds.ToString(),
                 "-SourceDirectory", CommandLine.Escape(sourceDirectory.FullName),
