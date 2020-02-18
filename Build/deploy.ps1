@@ -93,10 +93,10 @@ switch ($TargetRepository) {
 			Authorization  = ("Basic {0}" -f $base64AuthInfo)
 			"Content-type" = "application/json"
 		}
-		# Invoke-RestMethod `
-		# 	-Headers $headers `
-		# 	-Method Post `
-		# 	-Uri $DeployApiTagUrl `
-		# 	-InFile $bitbucketTagApiFile
+		Invoke-RestMethod `
+			-Headers $headers `
+			-Method Post `
+			-Uri $DeployApiTagUrl `
+			-InFile $bitbucketTagApiFile
 	}
 }
