@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public string ConvertDisplayVersion(Version version, string separator)
         {
-            return $"{version.Major}{separator}{version.Minor:00}{separator}{version.Revision:000}";
+            return $"{version.Major}{separator}{version.Minor:00}{separator}{version.Build:000}";
         }
 
         public string ConvertNormalVersion(Version version)
