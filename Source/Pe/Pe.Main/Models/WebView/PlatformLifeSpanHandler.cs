@@ -28,9 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         }
 
         public void OnAfterCreated(IWebBrowser chromiumWebBrowser, IBrowser browser)
-        {
-            throw new NotSupportedException();
-        }
+        { }
 
         public void OnBeforeClose(IWebBrowser chromiumWebBrowser, IBrowser browser)
         {
