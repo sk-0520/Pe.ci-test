@@ -23,6 +23,9 @@ Write-Host "UpdateScript: $UpdateScript"
 Write-Host "ExecuteCommand: $ExecuteCommand"
 Write-Host "ExecuteArgument: $ExecuteArgument"
 
+$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+
+
 if ($ProcessId -ne 0 ) {
 	Write-Output "プロセス終了待機: $ProcessId ..."
 	try {
@@ -42,7 +45,9 @@ if ( Test-Path -Path $UpdateBeforeScript ) {
 
 Write-Host "アップデート処理実施"
 Write-Host "$SourceDirectory -> $DestinationDirectory"
-Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
+$customCopyItem = Join-Path $currentDirPath 'custom-copy-item.ps1'
+#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
+Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'animation'"
 
 if ( Test-Path -Path $UpdateAfterScript ) {
 	Write-Host "最新アップデート後スクリプトの実施: $UpdateAfterScript"
