@@ -47,7 +47,7 @@ Write-Host "アップデート処理実施"
 Write-Host "$SourceDirectory -> $DestinationDirectory"
 $customCopyItem = Join-Path $currentDirPath 'custom-copy-item.ps1'
 #Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
-Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'animation'"
+Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
 
 if ( Test-Path -Path $UpdateAfterScript ) {
 	Write-Host "最新アップデート後スクリプトの実施: $UpdateAfterScript"

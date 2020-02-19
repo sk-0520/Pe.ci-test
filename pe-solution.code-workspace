@@ -1,0 +1,39 @@
+{
+    "folders": [
+        {
+            "name": "BUILD",
+            "path": "./Build"
+        },
+        {
+            "name": "BUILD",
+            "path": "./Build"
+        },
+        {
+            "name": "DOCUMENTS",
+            "path": "./Source/Documents"
+        },
+        {
+            "name": "ROOT",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "**/.*": true,
+            "**/bin": true,
+            "**/obj": true,
+            "**/node_modules": true,
+            "build/": true,
+            "dist/": true,
+            "Output": true,
+        },
+        "files.watcherExclude": {
+            "**/.git/objects/**": true,
+            "**/.git/subtree-cache/**": true,
+            "**/node_modules/*/**": true,
+            "**/dist/**": true,
+            "**/bin/**": true,
+            "**/obj/**": true,
+        }
+    }
+}
