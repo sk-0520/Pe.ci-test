@@ -1,5 +1,5 @@
 Param(
-	[parameter(mandatory = $true)][string] $Platform
+	[parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -15,7 +15,7 @@ $rootDirectoryPath = Split-Path -Parent $currentDirPath
 
 $documentDirectoryPath = Join-Path $rootDirectoryPath 'Source\Documents'
 $buildOutputDirectoryPath = Join-Path $documentDirectoryPath 'build'
-$outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$Platform\Pe\doc\help"
+
 
 try{
 	Push-Location $documentDirectoryPath
@@ -24,8 +24,10 @@ try{
 	Write-Output build
 	npm run build
 
-	robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
-
+	foreach($platform in $Platforms) {
+		$outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$platform\Pe\doc\help"
+		robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
+	}
 } finally {
 	Pop-Location
 }
