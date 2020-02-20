@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1342,7 +1342,7 @@
   <data name="String_About_OpenUserDirectory_A" xml:space="preserve">
     <value>ユーザーデータ</value>
   </data>
-  <data name="String_AppManager_About_Update_A" xml:space="preserve">
+  <data name="String_AppManager_About_Update_Check_A" xml:space="preserve">
     <value>アップデート確認(_U)</value>
   </data>
   <data name="String_ReleaseNote_Caption" xml:space="preserve">
@@ -1426,6 +1426,15 @@
   </data>
   <data name="String_ReleaseNote_ReadyUpdate" xml:space="preserve">
     <value>アップデート準備が完了しました。今すぐ実施するか、終了することで最新モジュールを適用します。</value>
+  </data>
+  <data name="String_AppManager_About_Update_Checking_A" xml:space="preserve">
+    <value>アップデート確認中(_U)</value>
+  </data>
+  <data name="String_AppManager_Exit_NoUpdate_A" xml:space="preserve">
+    <value>アップデートせずに終了(_X)</value>
+  </data>
+  <data name="String_AppManager_Reboot_Update_A" xml:space="preserve">
+    <value>アップデートして再起動(_R)</value>
   </data>
   <data name="String_Unknown_BetaVersion_Caption" xml:space="preserve">
     <value>β版直接実行注意</value>

@@ -178,6 +178,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         ));
 
+        public ICommand NoUpdateExitCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.Exit(true);
+            }
+        ));
+
+
+
         #endregion
 
         #region function

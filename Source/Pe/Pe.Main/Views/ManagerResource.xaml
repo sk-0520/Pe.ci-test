@@ -12,6 +12,8 @@
 >
   <ContextMenu x:Key="ContextMenu">
     <ContextMenu.Resources>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
       <app_core_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
       <app_core_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
 
@@ -120,7 +122,17 @@
     <Separator />
 
     <MenuItem Header="{Binding Resources.String_AppManager_About_A, Source={x:Static app_main:CultureService.Current}}">
-      <MenuItem Header="{Binding Resources.String_AppManager_About_Update_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding UpdateCommand}" >
+      <MenuItem Command="{Binding UpdateCommand}" >
+        <MenuItem.Style>
+          <Style TargetType="MenuItem">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding UpdateInfo.Updating}" Value="True">
+                <Setter Property="Header" Value="{Binding Resources.String_AppManager_About_Update_Checking_A, Source={x:Static app_main:CultureService.Current}}" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Header" Value="{Binding Resources.String_AppManager_About_Update_Check_A, Source={x:Static app_main:CultureService.Current}}" />
+          </Style>
+        </MenuItem.Style>
         <MenuItem.Icon>
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-About-Update}" />
         </MenuItem.Icon>
@@ -136,7 +148,20 @@
         </MenuItem.Icon>
       </MenuItem>
     </MenuItem>
-    <MenuItem Header="{Binding Resources.String_AppManager_Exit_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ExitCommand}">
+    <MenuItem Header="{Binding Resources.String_AppManager_Exit_NoUpdate_A, Source={x:Static app_main:CultureService.Current}}" Visibility="{Binding UpdateInfo.IsReady, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding NoUpdateExitCommand}">
+    </MenuItem>
+    <MenuItem Command="{Binding ExitCommand}">
+      <MenuItem.Style>
+        <Style TargetType="MenuItem">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding UpdateInfo.IsReady}" Value="True">
+              <Setter Property="Header" Value="{Binding Resources.String_AppManager_Reboot_Update_A, Source={x:Static app_main:CultureService.Current}}" />
+              <Setter Property="FontWeight" Value="Bold" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Header" Value="{Binding Resources.String_AppManager_Exit_A, Source={x:Static app_main:CultureService.Current}}" />
+        </Style>
+      </MenuItem.Style>
       <MenuItem.Icon>
         <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Exit}" />
       </MenuItem.Icon>

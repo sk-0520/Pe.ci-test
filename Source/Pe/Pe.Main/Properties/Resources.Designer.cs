@@ -307,9 +307,18 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   アップデート確認(_U) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_AppManager_About_Update_A {
+        public static string String_AppManager_About_Update_Check_A {
             get {
-                return ResourceManager.GetString("String_AppManager_About_Update_A", resourceCulture);
+                return ResourceManager.GetString("String_AppManager_About_Update_Check_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデート確認中(_U) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_About_Update_Checking_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_About_Update_Checking_A", resourceCulture);
             }
         }
         
@@ -337,6 +346,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_AppManager_Exit_A {
             get {
                 return ResourceManager.GetString("String_AppManager_Exit_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデートせずに終了(_X) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Exit_NoUpdate_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_Exit_NoUpdate_A", resourceCulture);
             }
         }
         
@@ -400,6 +418,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_AppManager_Note_Visible_A {
             get {
                 return ResourceManager.GetString("String_AppManager_Note_Visible_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アップデートして再起動(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Reboot_Update_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_Reboot_Update_A", resourceCulture);
             }
         }
         
