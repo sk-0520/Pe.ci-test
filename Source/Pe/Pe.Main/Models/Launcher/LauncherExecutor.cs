@@ -183,11 +183,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var path = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
-            var parentDirPath = Path.GetDirectoryName(path);
             try {
-                var process = Process.Start(new ProcessStartInfo(parentDirPath) {
-                    UseShellExecute = true,
-                });
+                var systemExecutor = new SystemExecutor();
+                var process = systemExecutor.OpenDirectoryWithFileSelect(path);
                 var result = new LauncherExecuteResult() {
                     Kind = kind,
                     Process = process,
@@ -208,7 +206,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             var path = Environment.ExpandEnvironmentVariables(pathParameter.WorkDirectoryPath ?? string.Empty);
             try {
-                var process = Process.Start(path);
+                var systemExecutor = new SystemExecutor();
+                var process = systemExecutor.ExecuteFile(path!);
                 var result = new LauncherExecuteResult() {
                     Kind = kind,
                     Process = process,
@@ -228,7 +227,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var path = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
-            NativeMethods.SHObjectProperties(IntPtr.Zero, SHOP.SHOP_FILEPATH, path, string.Empty);
+            var systemExecutor = new SystemExecutor();
+            systemExecutor.ShowProperty(path);
         }
 
         #endregion

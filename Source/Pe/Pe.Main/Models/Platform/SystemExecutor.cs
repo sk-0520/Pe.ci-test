@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
@@ -13,15 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     public class SystemExecutor
     {
-        public SystemExecutor(ILoggerFactory loggerFactory)
-        {
-            Logger = loggerFactory.CreateLogger(GetType());
-        }
-
         #region property
-
-        ILogger Logger { get; }
-
         #endregion
 
         #region function
@@ -51,32 +44,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             process.Start();
         }
 
-        public Process? OpenFileInDirectory(FileInfo file)
+        public Process OpenDirectoryWithFileSelect(string filePath)
         {
-            try {
-                var process = new Process();
-                process.StartInfo.UseShellExecute = true;
-                process.StartInfo.FileName = "explorer.exe";
-                process.StartInfo.Arguments = $"/select,\"{file.FullName}\"";
-                if(process.Start()) {
-                    return process;
-                } else {
-                    Logger.LogWarning($"fail: {nameof(process)}.{process.Start()}");
-                }
-            } catch(Exception ex) {
-                Logger.LogWarning(ex, ex.Message);
-            }
-
-            return null;
+            var process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = "explorer.exe";
+            process.StartInfo.Arguments = $"/select,{CommandLine.Escape(filePath)}";
+            process.Start();
+            return process;
         }
 
-        public Process ExecuteFile(FileSystemInfo fileSystemInfo)
+        public Process ExecuteFile(string filePath)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
 
             // 実行パス
-            startInfo.FileName = fileSystemInfo.FullName;
+            startInfo.FileName = filePath;
             startInfo.UseShellExecute = true;
 
             process.Start();
@@ -84,9 +68,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return process;
         }
 
-        public void ShowProperty(FileSystemInfo fileSystemInfo)
+        public void ShowProperty(string filePath)
         {
-            NativeMethods.SHObjectProperties(IntPtr.Zero, SHOP.SHOP_FILEPATH, fileSystemInfo.FullName, string.Empty);
+            NativeMethods.SHObjectProperties(IntPtr.Zero, SHOP.SHOP_FILEPATH, filePath, string.Empty);
         }
 
         #endregion

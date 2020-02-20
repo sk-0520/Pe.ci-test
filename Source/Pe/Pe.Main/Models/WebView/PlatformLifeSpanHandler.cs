@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         public bool OnBeforePopup(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser)
         {
             try {
-                var systemExecutor = new SystemExecutor(LoggerFactory);
+                var systemExecutor = new SystemExecutor();
                 systemExecutor.OpenUri(new Uri(targetUrl));
             } catch(Exception ex) {
                 Logger.LogWarning(ex, ex.Message);

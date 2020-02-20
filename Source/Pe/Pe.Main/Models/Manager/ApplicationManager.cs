@@ -310,7 +310,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             try {
                 var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
                 var systemExecutor = ApplicationDiContainer.Build<SystemExecutor>();
-                systemExecutor.ExecuteFile(environmentParameters.HelpFile);
+                systemExecutor.ExecuteFile(environmentParameters.HelpFile.FullName);
             } catch(Exception ex) {
                 Logger.LogWarning(ex, ex.Message);
             }

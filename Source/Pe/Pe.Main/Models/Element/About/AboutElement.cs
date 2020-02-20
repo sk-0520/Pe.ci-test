@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         public void OpenUri(Uri uri)
         {
-            var systemExecutor = new SystemExecutor(LoggerFactory);
+            var systemExecutor = new SystemExecutor();
             try {
                 systemExecutor.OpenUri(uri);
             } catch(Exception ex) {
@@ -115,9 +115,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         private void OpenDirectory(DirectoryInfo directory)
         {
             try {
-                var process = Process.Start(new ProcessStartInfo(directory.FullName) {
-                    UseShellExecute = true,
-                });
+                var systemExecutor = new SystemExecutor();
+                systemExecutor.ExecuteFile(directory.FullName);
             } catch(Exception ex) {
                 Logger.LogWarning(ex, ex.Message);
             }

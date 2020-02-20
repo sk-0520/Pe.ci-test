@@ -32,6 +32,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -516,9 +517,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 }
 
                 try {
-                    var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
-                    var parameter = new LauncherExecutePathParameter(LinkPath, string.Empty, string.Empty);
-                    var result = launcherExecutor.OpenParentDirectory(LauncherItemKind.File, parameter);
+                    var systemExecutor = new SystemExecutor();
+                    systemExecutor.OpenDirectoryWithFileSelect(Environment.ExpandEnvironmentVariables(LinkPath));
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                 }

@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 
         public ICommand ShowNotificationAreaCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                var systemExecutor = new SystemExecutor(LoggerFactory);
+                var systemExecutor = new SystemExecutor();
                 systemExecutor.OpenNotificationAreaHistory();
             }
         ));
