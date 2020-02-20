@@ -1427,4 +1427,16 @@
   <data name="String_ReleaseNote_ReadyUpdate" xml:space="preserve">
     <value>アップデート準備が完了しました。今すぐ実施するか、終了することで最新モジュールを適用します。</value>
   </data>
+  <data name="String_Unknown_BetaVersion_Caption" xml:space="preserve">
+    <value>β版直接実行注意</value>
+  </data>
+  <data name="String_Unknown_BetaVersion_Message" xml:space="preserve">
+    <value>本バージョンはβ版です。
+不具合修正確確認や動作確認のために使用されます。
+
+このメッセージはβ版 Pe を直接実行した場合に表示されます。
+このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
+
+β版 Pe をこのまま実行してよろしいですか。</value>
+  </data>
 </root>

@@ -4054,5 +4054,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
                 return ResourceManager.GetString("String_Startup_RegisterStartup_A", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   β版直接実行注意 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Unknown_BetaVersion_Caption {
+            get {
+                return ResourceManager.GetString("String_Unknown_BetaVersion_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   本バージョンはβ版です。
+        ///不具合修正確確認や動作確認のために使用されます。
+        ///
+        ///このメッセージはβ版 Pe を直接実行した場合に表示されます。
+        ///このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
+        ///
+        ///β版 Pe をこのまま実行してよろしいですか。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Unknown_BetaVersion_Message {
+            get {
+                return ResourceManager.GetString("String_Unknown_BetaVersion_Message", resourceCulture);
+            }
+        }
     }
 }

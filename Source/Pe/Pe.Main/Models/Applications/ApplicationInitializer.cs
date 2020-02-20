@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CommandLineSwitchForceLog { get; } = "force-log";
 
         string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
+        string CommandLineSwitchBetaVersion { get; } = "beta-version";
 
         public bool IsFirstStartup { get; private set; }
 
@@ -67,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: CommandLineKeyWithLog, hasValue: true);
             commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchAcceptSkip, hasValue: false);
+            commandLine.Add(longKey: CommandLineSwitchBetaVersion, hasValue: false);
 
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyOldSettingRootDirectoryPath, hasValue: true);
 
@@ -74,6 +76,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             return commandLine;
         }
+
+#if BETA
+        bool ShowCommandLineMessageIfUnspecified(CommandLine commandLine)
+        {
+            var knownBetaVersion = commandLine.ExistsSwitch(CommandLineSwitchBetaVersion);
+            if(knownBetaVersion) {
+                return true;
+            }
+
+            var result = MessageBox.Show(
+                Properties.Resources.String_Unknown_BetaVersion_Message,
+                Properties.Resources.String_Unknown_BetaVersion_Caption,
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Warning,
+                MessageBoxResult.Cancel
+            );
+
+            return result == MessageBoxResult.OK;
+        }
+#endif
 
         EnvironmentParameters InitializeEnvironment(CommandLine commandLine)
         {
@@ -417,6 +439,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             InitializeClr();
 
             var commandLine = CreateCommandLine(e.Args);
+#if BETA
+            if(!ShowCommandLineMessageIfUnspecified(commandLine)) {
+                return false;
+            }
+#endif
             var environmentParameters = InitializeEnvironment(commandLine);
 
             var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
@@ -535,6 +562,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
 
-        #endregion
+#endregion
     }
 }
