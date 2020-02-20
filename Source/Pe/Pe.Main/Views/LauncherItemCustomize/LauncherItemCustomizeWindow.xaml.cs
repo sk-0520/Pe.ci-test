@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
         public LauncherItemCustomizeWindow()
         {
             InitializeComponent();
-            ScrollTuner = new ScrollTuner(this, true);
+            ScrollTuner = new ScrollTuner(this);
         }
 
         #region property

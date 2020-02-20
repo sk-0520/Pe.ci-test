@@ -20,28 +20,14 @@ namespace ContentTypeTextNet.Pe.Main.Views
         ///
         /// </summary>
         /// <param name="view">親ウィンドウ。</param>
-        /// <param name="attachOnLoaded">ロード時に存在するコントロール全てを対象にするか。</param>
-        public ScrollTuner(Window view, bool attachOnLoaded)
+        public ScrollTuner(Window view)
         {
             View = view;
-
-            AttachOnLoaded = attachOnLoaded;
-
-            if(AttachOnLoaded) {
-                if(View.IsLoaded) {
-                    AttachView();
-                } else {
-                    View.Loaded += View_Loaded;
-                }
-            }
+            View.PreviewMouseWheel += View_PreviewMouseWheel;
         }
 
         #region property
-
-        bool AttachOnLoaded { get; }
         Window View { get; }
-
-        IList<UIElement> Elements { get; } = new List<UIElement>();
 
         public int ScrollNotch { get; set; } = 120;
         public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
@@ -50,76 +36,10 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #region function
 
-        void AttachView()
+        private void DetachView()
         {
-            View.Closed += View_Closed;
-
-            // TextEditor に対する特殊処理を追加する
-            var avalonEditors = UIUtility.FindVisualChildren<TextEditor>(View);
-            foreach(var avalonEditor in avalonEditors) {
-                AddCore(avalonEditor);
-            }
-        }
-
-        void DetachView()
-        {
-            View.Loaded -= View_Loaded;
+            View.PreviewMouseWheel -= View_PreviewMouseWheel;
             View.Closed -= View_Closed;
-
-            foreach(var element in Elements.ToList()) {
-                RemoveCore(element);
-            }
-        }
-
-        void AttachAvalonEditor(TextEditor textEditor)
-        {
-            textEditor.PreviewMouseWheel += TextEditor_PreviewMouseWheel;
-        }
-
-        void DetachAvalonEditor(TextEditor textEditor)
-        {
-            textEditor.PreviewMouseWheel -= TextEditor_PreviewMouseWheel;
-        }
-
-        void AddCore(UIElement element)
-        {
-            Elements.Add(element);
-            switch(element) {
-                case TextEditor textEditor:
-                    AttachAvalonEditor(textEditor);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        bool RemoveCore(UIElement element)
-        {
-            if(!Elements.Remove(element)) {
-                return false;
-            }
-
-            switch(element) {
-                case TextEditor textEditor:
-                    DetachAvalonEditor(textEditor);
-                    break;
-
-                default:
-                    break;
-            }
-
-            return true;
-        }
-
-        public void Add(UIElement element)
-        {
-            AddCore(element);
-        }
-
-        public bool Remove(UIElement element)
-        {
-            return RemoveCore(element);
         }
 
         #endregion
@@ -137,50 +57,51 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #endregion
 
-        private void View_Loaded(object? sender, EventArgs e)
-        {
-            View.Loaded -= View_Loaded;
-            AttachView();
-        }
         private void View_Closed(object? sender, EventArgs e)
         {
-            View.Closed -= View_Closed;
             DetachView();
         }
 
-
-        private void TextEditor_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        private void View_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
-            var textEditor = (TextEditor)sender;
-
-            var parentScrollViewer = UIUtility.GetVisualClosest<ScrollViewer>(textEditor);
-            if(parentScrollViewer == null) {
+            var element = (DependencyObject)e.OriginalSource;
+            if(element == null) {
                 return;
             }
 
-            var childScrollViewer = UIUtility.FindVisualChildren<ScrollViewer>(textEditor).FirstOrDefault();
-            if(childScrollViewer == null) {
-                return;
+            var textEditor = UIUtility.GetVisualClosest<TextEditor>(element);
+            if(textEditor != null) {
+                var parentScrollViewer = UIUtility.GetVisualClosest<ScrollViewer>(textEditor);
+                if(parentScrollViewer == null) {
+                    return;
+                }
+
+                var childScrollViewer = UIUtility.FindVisualChildren<ScrollViewer>(textEditor).FirstOrDefault();
+                if(childScrollViewer == null) {
+                    return;
+                }
+
+                var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * ScrollLines;
+                if(e.Delta > 0) { // ↑
+                    if(textEditor.VerticalOffset == 0) {
+                        // 一番上なので親側をスクロールさせる
+                        foreach(var counter in new Counter(scrollLineCount)) {
+                            parentScrollViewer.LineUp();
+                        }
+                        e.Handled = true;
+                    }
+                } else if(e.Delta < 0) { // ↓
+                    if(childScrollViewer.VerticalOffset == childScrollViewer.ScrollableHeight) {
+                        // 一番下なので親側をスクロールさせる
+                        foreach(var counter in new Counter(scrollLineCount)) {
+                            parentScrollViewer.LineDown();
+                        }
+                        e.Handled = true;
+                    }
+                }
             }
 
-            var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * ScrollLines;
-            if(e.Delta > 0) { // ↑
-                if(textEditor.VerticalOffset == 0) {
-                    // 一番上なので親側をスクロールさせる
-                    foreach(var counter in new Counter(scrollLineCount)) {
-                        parentScrollViewer.LineUp();
-                    }
-                    e.Handled = true;
-                }
-            } else if(e.Delta < 0) { // ↓
-                if(childScrollViewer.VerticalOffset == childScrollViewer.ScrollableHeight) {
-                    // 一番下なので親側をスクロールさせる
-                    foreach(var counter in new Counter(scrollLineCount)) {
-                        parentScrollViewer.LineDown();
-                    }
-                    e.Handled = true;
-                }
-            }
         }
+
     }
 }
