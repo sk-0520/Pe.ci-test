@@ -100,7 +100,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 octetPerTime.Start();
 
-                //TODO: ダウンロード進捗のあれこれ
                 using(var networkStream = await content.Content.ReadAsStreamAsync()) {
                     using(var localStream = donwloadFile.Create()) {
                         var downloadChunk = new byte[downloadChunkSize];

@@ -2300,6 +2300,27 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ショートカットファイル登録確認 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherFileItemDragAndDrop_Shortcut_Caption {
+            get {
+                return ResourceManager.GetString("String_LauncherFileItemDragAndDrop_Shortcut_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   D&amp;D されたファイルはショートカットです。
+        ///ショートカットのリンク先を登録してよろしいですか。
+        ///
+        ///※「いいえ」を選択するとショートカット自体を登録します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherFileItemDragAndDrop_Shortcut_Message {
+            get {
+                return ResourceManager.GetString("String_LauncherFileItemDragAndDrop_Shortcut_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動設定グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherGroup_ImportItem_Name {

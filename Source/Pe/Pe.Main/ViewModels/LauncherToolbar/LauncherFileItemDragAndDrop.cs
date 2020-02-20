@@ -52,15 +52,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             if(PathUtility.IsShortcut(path)) {
                 var request = new CommonMessageDialogRequestParameter() {
-                    Message = "d&d file is lnk",
-                    Caption = "reg type",
+                    Message = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Message,
+                    Caption = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Caption,
                     Button = MessageBoxButton.YesNoCancel,
                     DefaultResult = MessageBoxResult.Yes,
                     Icon = MessageBoxImage.Question,
                 };
                 requestSender.Send<YesNoResponse>(request, r => {
                     if(r.ResponseIsCancel) {
-                        Logger.LogTrace("cancel");
+                        Logger.LogTrace("ショートカット登録取り消し");
                         return;
                     }
                     register(path, r.ResponseIsYes);

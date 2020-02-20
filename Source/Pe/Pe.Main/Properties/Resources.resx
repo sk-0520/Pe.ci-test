@@ -1448,4 +1448,13 @@
 
 β版 Pe をこのまま実行してよろしいですか。</value>
   </data>
+  <data name="String_LauncherFileItemDragAndDrop_Shortcut_Caption" xml:space="preserve">
+    <value>ショートカットファイル登録確認</value>
+  </data>
+  <data name="String_LauncherFileItemDragAndDrop_Shortcut_Message" xml:space="preserve">
+    <value>D&amp;D されたファイルはショートカットです。
+ショートカットのリンク先を登録してよろしいですか。
+
+※「いいえ」を選択するとショートカット自体を登録します。</value>
+  </data>
 </root>
