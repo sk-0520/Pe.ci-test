@@ -25,13 +25,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         public SettingWindow()
         {
             InitializeComponent();
+            ScrollTuner = new ScrollTuner(this);
         }
 
         #region property
 
         [Injection]
         ILogger? Logger { get; set; }
-
+        ScrollTuner ScrollTuner { get; }
         CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion

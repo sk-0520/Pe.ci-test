@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Core.Views
 {
@@ -29,6 +30,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         Regex IntegerRegex { get; } = new Regex(@"[\+\-,0-9]");
         Regex DecimalRegex { get; } = new Regex(@"[\+\-,0-9\.]");
+
+        public int ScrollNotch { get; set; } = 120;
+        public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
 
         #endregion
 
@@ -240,6 +244,43 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 Value -= Increment;
             } else {
                 Value = Minimum;
+            }
+        }
+
+        #endregion
+
+        #region UserControl
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnPreviewMouseWheel(e);
+
+            var parentScrollViewer = UIUtility.GetVisualClosest<ScrollViewer>(this);
+            if(parentScrollViewer == null) {
+                return;
+            }
+
+            var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * ScrollLines;
+            if(e.Delta > 0) { // ↑
+                if(Value == Maximum) {
+                    // 一番上なので親側をスクロールさせる
+                    foreach(var counter in new Counter(scrollLineCount)) {
+                        parentScrollViewer.LineUp();
+                    }
+                } else {
+                    UpValue();
+                }
+                e.Handled = true;
+            } else if(e.Delta < 0) { // ↓
+                if(Value == Minimum) {
+                    // 一番下なので親側をスクロールさせる
+                    foreach(var counter in new Counter(scrollLineCount)) {
+                        parentScrollViewer.LineDown();
+                    }
+                } else {
+                    DownValue();
+                }
+                e.Handled = true;
             }
         }
 
