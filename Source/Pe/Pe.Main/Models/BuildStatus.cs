@@ -8,10 +8,22 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
+    /// <summary>
+    /// ビルド種別
+    /// </summary>
     public enum BuildType
     {
+        /// <summary>
+        /// デバッグ版。
+        /// </summary>
         Debug,
+        /// <summary>
+        /// β版。
+        /// </summary>
         Beta,
+        /// <summary>
+        /// リリース版。
+        /// </summary>
         Release,
     }
 
@@ -31,7 +43,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
     {
         #region property
 
-
+        /// <summary>
+        /// ビルド種別。
+        /// </summary>
         public static BuildType BuildType
         {
             get
@@ -45,11 +59,32 @@ namespace ContentTypeTextNet.Pe.Main.Models
 #endif
             }
         }
+
+        public static bool IsProduct { get; } =
+#if PRODUCT
+            true
+#else
+            false
+#endif
+        ;
+
+        /// <summary>
+        /// バージョン。
+        /// </summary>
         public static Version Version { get; } = Assembly.GetExecutingAssembly()!.GetName()!.Version!;
+        /// <summary>
+        /// リビジョン。
+        /// </summary>
         public static string Revision { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
 
+        /// <summary>
+        /// アプリケーション名。
+        /// </summary>
         public static string Name { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyProductAttribute>()!.Product;
-        public static string Copyright { get; }= Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyCopyrightAttribute>()!.Copyright;
+        /// <summary>
+        /// 著作権。
+        /// </summary>
+        public static string Copyright { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyCopyrightAttribute>()!.Copyright;
 
         #endregion
     }

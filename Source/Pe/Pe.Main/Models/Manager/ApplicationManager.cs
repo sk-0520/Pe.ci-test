@@ -73,6 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
+            ApplicationMutex = initializer.Mutex ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Mutex));
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
@@ -105,6 +106,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         StatusManager StatusManager { get; set; }
         ClipboardManager ClipboardManager { get; set; }
         UserAgentManager UserAgentManager { get; set; }
+
+        Mutex ApplicationMutex { get; }
 
         ObservableCollection<LauncherGroupElement> LauncherGroupElements { get; } = new ObservableCollection<LauncherGroupElement>();
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
@@ -914,7 +917,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             } else {
                 if(ApplicationUpdateInfo.IsReady) {
                     Logger.LogInformation("アップデート準備完了");
-                } else  {
+                } else {
                     Logger.LogInformation("アップデート排他制御中");
                 }
 
@@ -1199,6 +1202,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(!IsDisposed) {
                 if(disposing) {
                     HeartBeatSender?.Dispose();
+
+                    ApplicationMutex.ReleaseMutex();
+                    ApplicationMutex.Dispose();
 
                     CloseViews();
                     DisposeElements();

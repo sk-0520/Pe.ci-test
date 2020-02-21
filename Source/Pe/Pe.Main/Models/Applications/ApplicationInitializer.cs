@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -42,6 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public StatusManager? StatusManager { get; private set; }
         public ClipboardManager? ClipboardManager { get; private set; }
         public UserAgentManager? UserAgentManager { get; private set; }
+
+        public Mutex? Mutex { get; private set; }
 
         #endregion
 
@@ -454,6 +457,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 commandLine.ExistsSwitch(CommandLineSwitchForceLog)
             );
             var logger = loggerFactory.CreateLogger(GetType());
+
+            var mutexName = environmentParameters.Configuration.General.MutexName;
+            logger.LogInformation("mutext: {0}", mutexName);
+            var mutex = new Mutex(true, mutexName, out var createdNew);
+            if(!createdNew) {
+                //NOTE: 起動中プロセスになんかするならここかなぁ
+                logger.LogWarning("二重起動: {0}", mutexName);
+                mutex.Dispose();
+                return false;
+            }
+            Mutex = mutex;
 
             var cultureService = new CultureService(EnumResourceManagerFactory.Create());
             CultureService.Initialize(cultureService);
