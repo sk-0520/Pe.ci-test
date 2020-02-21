@@ -7,6 +7,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
@@ -16,12 +17,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public ApplicationUpdateScriptFactory(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
         EnvironmentParameters EnvironmentParameters { get; }
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
         #endregion
@@ -30,7 +33,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public ILauncherExecutePathParameter CreateUpdateExecutePathParameter(FileInfo scriptSourceFIle, DirectoryInfo scriptDirectory, DirectoryInfo sourceDirectory, DirectoryInfo destinationDirectory)
         {
-            var ps = "powershell";
+            var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
+            var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
+            var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
+            var powershell = environmentExecuteFile.Get("powershell", executeFiles);
+
+            if(pwsh == null && powershell == null) {
+                Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
+                throw new Exception("[pwsh] and [powershell] is null");
+            }
+
+            var scriptDirPath = Path.Combine(destinationDirectory.FullName, "etc", "script", "update");
+
+            var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
             var psCommands = new[] {
                 "-NoProfile",
                 "-ExecutionPolicy", "Unrestricted",
@@ -41,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 "-DestinationDirectory", CommandLine.Escape(destinationDirectory.FullName),
                 "-CurrentVersion", BuildStatus.Version.ToString(),
                 "-Platform", Environment.Is64BitProcess ? "x64": "x32",
-                "-UpdateBeforeScript", CommandLine.Escape(Path.Combine(destinationDirectory.FullName, "etc", "script", "update", "update-new-before.ps1")),
-                "-UpdateAfterScript", CommandLine.Escape(Path.Combine(destinationDirectory.FullName, "etc", "script", "update", "update-new-after.ps1")),
+                "-UpdateBeforeScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-before.ps1")),
+                "-UpdateAfterScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-after.ps1")),
                 "-ExecuteCommand", CommandLine.Escape(EnvironmentParameters.RootApplication.FullName),
                 "-ExecuteArgument", CommandLine.Escape(string.Join(" ", Environment.GetCommandLineArgs().Skip(1).Select(i => CommandLine.Escape(i)))),
             };

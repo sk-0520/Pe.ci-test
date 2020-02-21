@@ -79,14 +79,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             ;
 
             var extRegex = new Regex(@".*\." + string.Join("|", rawExts) + "$");
-            var dirPaths = path.Split(';');
+            var dirPaths = path
+                .Split(';')
+                .Where(i => !string.IsNullOrWhiteSpace(i))
+            ;
             var result = new List<EnvironmentPathExecuteItem>();
             foreach(var dirPath in dirPaths) {
                 try {
                     var dir = new DirectoryInfo(dirPath);
                     dir.Refresh();
                     if(!dir.Exists) {
-                        Logger.LogInformation("skip dir: {0}", dir.FullName);
+                        Logger.LogInformation("存在しない PATH は無視: {0}", dir.FullName);
                         continue;
                     }
                     IEnumerable<FileInfo> files = dir.EnumerateFiles("*", SearchOption.TopDirectoryOnly);
@@ -110,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <param name="fileName"></param>
         /// <param name="items"></param>
         /// <returns></returns>
-        public EnvironmentPathExecuteItem? Get(string? fileName, IReadOnlyCollection<EnvironmentPathExecuteItem> items)
+        public EnvironmentPathExecuteItem? Get(string fileName, IReadOnlyCollection<EnvironmentPathExecuteItem> items)
         {
             if(string.IsNullOrWhiteSpace(fileName)) {
                 return null;

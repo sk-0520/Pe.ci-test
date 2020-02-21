@@ -54,6 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //DebugSetting();
             //ShowCommandView();
             //ShowAboutView();
+            //DebugEnvironmentExecuteFile();
         }
 
         void DebugCustomize()
@@ -201,6 +202,17 @@ echo end
                 view.ShowDialog();
             }
         }
+
+        void DebugEnvironmentExecuteFile()
+        {
+            var eef = ApplicationDiContainer.Build<Platform.EnvironmentExecuteFile>();
+            var pef = eef.GetPathExecuteFiles();
+
+            var cmd = eef.Get("cmd", pef);
+            var powershell = eef.Get("powershell", pef);
+            var pwsh = eef.Get("pwsh", pef);
+        }
+
         #endregion
     }
 #endif
