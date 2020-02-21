@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using System.Windows.Data;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Converter
@@ -25,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
             var footer = BuildStatus.BuildType switch
             {
                 BuildType.Release => string.Empty,
-                _ => " " + new VersionConverter().ConvertNormalVersion(BuildStatus.Version) + " <" + BuildStatus.Revision + ">",
+                _ => " " + new VersionConverter().ConvertNormalVersion(BuildStatus.Version) + ProcessArchitecture.ApplicationArchitecture + "/" + ProcessArchitecture.PlatformArchitecture + " <" + BuildStatus.Revision + ">",
             };
 
             return header + caption + footer + " - " + BuildStatus.Name;

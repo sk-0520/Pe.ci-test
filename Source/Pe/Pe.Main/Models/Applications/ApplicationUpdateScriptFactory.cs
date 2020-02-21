@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 "-SourceDirectory", CommandLine.Escape(sourceDirectory.FullName),
                 "-DestinationDirectory", CommandLine.Escape(destinationDirectory.FullName),
                 "-CurrentVersion", BuildStatus.Version.ToString(),
-                "-Platform", Environment.Is64BitProcess ? "x64": "x32",
+                "-Platform", ProcessArchitecture.ApplicationArchitecture,
                 "-UpdateBeforeScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-before.ps1")),
                 "-UpdateAfterScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-after.ps1")),
                 "-ExecuteCommand", CommandLine.Escape(EnvironmentParameters.RootApplication.FullName),

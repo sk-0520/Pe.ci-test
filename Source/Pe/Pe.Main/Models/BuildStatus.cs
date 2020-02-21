@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Logic
+namespace ContentTypeTextNet.Pe.Main.Models
 {
     public enum BuildType
     {
@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public static string Name { get; } = Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyProductAttribute>()!.Product;
         public static string Copyright { get; }= Assembly.GetExecutingAssembly()!.GetCustomAttribute<AssemblyCopyrightAttribute>()!.Copyright;
+
         #endregion
     }
 
