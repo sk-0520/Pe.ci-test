@@ -138,6 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 KeyboradHooker.Register();
                 hooked = true;
             }
+            //TODO: キー入力待ちでクリックされたら入力待ち解除したい
             //MouseHooker.Register();
 
             IsEnabledHook = hooked;

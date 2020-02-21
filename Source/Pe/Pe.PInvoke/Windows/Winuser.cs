@@ -2248,6 +2248,12 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         [FieldOffset(0)] public HARDWAREINPUT hi;
     };
 
+    public enum HC
+    {
+        HC_ACTION = 0,
+        HC_NOREMOVE = 3,
+    }
+
     /// <summary>
     /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mouse_event
     /// http://tokovalue.jp/function/MapVirtualKey.htm
