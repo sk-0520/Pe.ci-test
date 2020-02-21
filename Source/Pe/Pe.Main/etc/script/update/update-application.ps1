@@ -15,6 +15,27 @@ Param(
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
+$appIcon = @(
+	0,0,0,0,0,0,0,0,0,-1
+	0,0,0,0,0,0,0,0,0,-1
+	0,1,1,1,0,0,0,0,0,-1
+	0,1,0,1,0,0,0,0,0,-1
+	0,1,0,1,0,1,1,1,0,-1
+	0,1,1,1,0,1,0,1,0,-1
+	0,1,0,0,0,1,1,1,0,-1
+	0,1,0,0,0,1,0,0,0,-1
+	0,1,0,0,0,1,1,1,0,-1
+	0,0,0,0,0,0,0,0,0,-1
+	0,0,0,0,0,0,0,0,0,-1
+)
+foreach($dot in $appIcon) {
+	switch($dot) {
+		0 { Write-Host '   ' -ForegroundColor White -BackgroundColor White -NoNewline }
+		1 { Write-Host '|||' -ForegroundColor Black -BackgroundColor Black -NoNewline }
+		-1 { Write-Host '' }
+	}
+}
+
 Start-TranScript -Path $LogPath -Force
 try {
 	Write-Host "ProcessId: $ProcessId"
@@ -28,7 +49,6 @@ try {
 
 	$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-
 	if ($ProcessId -ne 0 ) {
 		Write-Output "プロセス終了待機: $ProcessId ..."
 		try {
@@ -36,10 +56,12 @@ try {
 			Write-Host "プロセス終了: $ProcessId"
 		}
 		catch {
-			Write-Host $Error
-			Write-Host "プロセス($ProcessId)が存在しなかったためプロセス終了を無視"
+			Write-Host $Error -ForegroundColor Yellow -BackgroundColor Black
+			Write-Host "プロセス終了を無視"
 		}
 	}
+
+	Write-Host "アップデート処理を実施します"
 
 	if ( Test-Path -Path $UpdateBeforeScript ) {
 		Write-Host "最新アップデート前スクリプトの実施: $UpdateBeforeScript"
