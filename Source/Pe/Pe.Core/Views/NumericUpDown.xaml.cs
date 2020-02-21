@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         Regex DecimalRegex { get; } = new Regex(@"[\+\-,0-9\.]");
 
         public int ScrollNotch { get; set; } = 120;
-        public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
+        //public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
 
         #endregion
 
@@ -260,7 +260,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
                 return;
             }
 
-            var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * ScrollLines;
+            var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * SystemParameters.WheelScrollLines;
             if(e.Delta > 0) { // ↑
                 if(Value == Maximum) {
                     // 一番上なので親側をスクロールさせる

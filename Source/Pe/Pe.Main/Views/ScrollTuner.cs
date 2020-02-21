@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
         Window View { get; }
 
         public int ScrollNotch { get; set; } = 120;
-        public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
+        //public int ScrollLines { get; set; } = SystemParameters.WheelScrollLines;
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
                     return;
                 }
 
-                var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * ScrollLines;
+                var scrollLineCount = (Math.Abs(e.Delta) / ScrollNotch) * SystemParameters.WheelScrollLines;
                 if(e.Delta > 0) { // ↑
                     if(textEditor.VerticalOffset == 0) {
                         // 一番上なので親側をスクロールさせる
