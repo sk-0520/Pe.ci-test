@@ -5,8 +5,8 @@
             "path": "./Build"
         },
         {
-            "name": "BUILD",
-            "path": "./Build"
+            "name": "UPDATE-SCRIPT",
+            "path": "./Source/Pe/Pe.Main/etc/script/update"
         },
         {
             "name": "DOCUMENTS",

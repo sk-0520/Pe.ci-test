@@ -36,14 +36,16 @@ $progress = switch($ProgressType) {
 
 
 foreach($srcDir in $srcDirs) {
-    $processCount += 1
+	$processCount += 1
+	$percent = ($processCount / $totalProcessCount) * 100
     $destPath = $srcDir.FullName.Replace($SourceDirectoryPath, $destRootDirPath)
 	switch ($progress) {
         $progressAnimation {
-            Write-Progress -Activity "COPY" -CurrentOperation "mkdir $destPath" -PercentComplete (($processCount / $totalProcessCount) * 100)
+            Write-Progress -Activity "COPY" -CurrentOperation "mkdir $destPath" -PercentComplete $percent
         }
         $progressOutput {
-            Write-Host "mkdir $destPath"
+            #Write-Host "[$percent%] mkdir $destPath"
+            Write-Host "[$('{0,6:##0.00}' -f $percent)%] mkdir $destPath"
         }
     }
 
@@ -51,15 +53,20 @@ foreach($srcDir in $srcDirs) {
 }
 foreach($srcFile in $srcFiles) {
     $processCount += 1
+	$percent = ($processCount / $totalProcessCount) * 100
     $destPath = $srcFile.FullName.Replace($SourceDirectoryPath, $destRootDirPath)
     switch ($progress) {
         $progressAnimation {
-            Write-Progress -Activity "COPY" -CurrentOperation "$srcFile -> $destPath" -PercentComplete (($processCount / $totalProcessCount) * 100)
+            Write-Progress -Activity "COPY" -CurrentOperation "$srcFile -> $destPath" -PercentComplete $percent
         }
         $progressOutput {
-            Write-Host "$srcFile -> $destPath"
+            Write-Host "[$('{0,6:##0.00}' -f $percent)%] $srcFile -> $destPath"
         }
     }
 
     Copy-Item -Path $srcFile.FullName -Destination $destPath -Force | Out-Null
+}
+
+if($progress -eq $progressAnimation) {
+	Write-Progress -Activity "COPY" -Completed
 }
