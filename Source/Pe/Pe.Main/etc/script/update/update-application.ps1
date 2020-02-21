@@ -1,5 +1,6 @@
 ﻿# アップデート時に実施される処理
 Param(
+	[parameter(mandatory = $true)][string] $LogPath,
 	[parameter(mandatory = $true)][int] $ProcessId,
 	[parameter(mandatory = $true)][int] $WaitSeconds,
 	[parameter(mandatory = $true)][System.IO.DirectoryInfo] $SourceDirectory,
@@ -12,48 +13,52 @@ Param(
 	[parameter(mandatory = $false)][string] $ExecuteArgument
 )
 $ErrorActionPreference = "Stop"
+Set-StrictMode -Version Latest
 
-Write-Host "ProcessId: $ProcessId"
-Write-Host "WaitSeconds: $WaitSeconds"
-Write-Host "SourceDirectory: $SourceDirectory"
-Write-Host "DestinationDirectory: $DestinationDirectory"
-Write-Host "CurrentVersion: $CurrentVersion"
-Write-Host "Platform: $Platform"
-Write-Host "UpdateScript: $UpdateScript"
-Write-Host "ExecuteCommand: $ExecuteCommand"
-Write-Host "ExecuteArgument: $ExecuteArgument"
+Start-TranScript -Path $LogPath -Force
+try {
+	Write-Host "ProcessId: $ProcessId"
+	Write-Host "WaitSeconds: $WaitSeconds"
+	Write-Host "SourceDirectory: $SourceDirectory"
+	Write-Host "DestinationDirectory: $DestinationDirectory"
+	Write-Host "CurrentVersion: $CurrentVersion"
+	Write-Host "Platform: $Platform"
+	Write-Host "ExecuteCommand: $ExecuteCommand"
+	Write-Host "ExecuteArgument: $ExecuteArgument"
 
-$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+	$currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 
-if ($ProcessId -ne 0 ) {
-	Write-Output "プロセス終了待機: $ProcessId ..."
-	try {
-		Wait-Process -Id $ProcessId -Timeout $WaitSeconds
-		Write-Host "プロセス終了: $ProcessId"
+	if ($ProcessId -ne 0 ) {
+		Write-Output "プロセス終了待機: $ProcessId ..."
+		try {
+			Wait-Process -Id $ProcessId -Timeout $WaitSeconds
+			Write-Host "プロセス終了: $ProcessId"
+		}
+		catch {
+			Write-Host $Error
+			Write-Host "プロセス($ProcessId)が存在しなかったためプロセス終了を無視"
+		}
 	}
-	catch {
-		Write-Host $Error
-		Write-Host "プロセス($ProcessId)が存在しなかったためプロセス終了を無視"
+
+	if ( Test-Path -Path $UpdateBeforeScript ) {
+		Write-Host "最新アップデート前スクリプトの実施: $UpdateBeforeScript"
+		Invoke-Expression "$UpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
 	}
+
+	Write-Host "アップデート処理実施"
+	Write-Host "$SourceDirectory -> $DestinationDirectory"
+	$customCopyItem = Join-Path $currentDirPath 'custom-copy-item.ps1'
+	#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
+	Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
+
+	if ( Test-Path -Path $UpdateAfterScript ) {
+		Write-Host "最新アップデート後スクリプトの実施: $UpdateAfterScript"
+		Invoke-Expression "$UpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
+	}
+
+	Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
+} finally {
+	Stop-TranScript
 }
-
-if ( Test-Path -Path $UpdateBeforeScript ) {
-	Write-Host "最新アップデート前スクリプトの実施: $UpdateBeforeScript"
-	Invoke-Expression "$UpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
-}
-
-Write-Host "アップデート処理実施"
-Write-Host "$SourceDirectory -> $DestinationDirectory"
-$customCopyItem = Join-Path $currentDirPath 'custom-copy-item.ps1'
-#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
-Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
-
-if ( Test-Path -Path $UpdateAfterScript ) {
-	Write-Host "最新アップデート後スクリプトの実施: $UpdateAfterScript"
-	Invoke-Expression "$UpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
-}
-
-Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
-
 Read-Host "Enter キーを押すとコンソールが閉じます ..."

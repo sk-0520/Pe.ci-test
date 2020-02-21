@@ -50,6 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 "-NoProfile",
                 "-ExecutionPolicy", "Unrestricted",
                 "-File", CommandLine.Escape(scriptSourceFIle.FullName),
+                "-LogPath", CommandLine.Escape(EnvironmentParameters.TemporaryUpdateLogFile.FullName),
                 "-ProcessId", Process.GetCurrentProcess().Id.ToString(),
                 "-WaitSeconds", TimeSpan.FromSeconds(5).TotalMilliseconds.ToString(),
                 "-SourceDirectory", CommandLine.Escape(sourceDirectory.FullName),

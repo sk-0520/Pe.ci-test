@@ -181,6 +181,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// WebViewのキャッシュディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryWebViewCacheDirectory => CombineDirectory(TemporaryWebViewDirectory, "cache");
+        /// <summary>
+        /// アップデート時ログファイル。
+        /// </summary>
+        public FileInfo TemporaryUpdateLogFile => CombineFile(TemporaryDirectory, "update.log");
 
         /// <summary>
         /// 設定格納DBファイル。
