@@ -61,26 +61,46 @@ try {
 		}
 	}
 
+	Write-Host ""
 	Write-Host "アップデート処理を実施します"
+	Write-Host ""
 
+	Write-Host ""
+	Write-Host "最新アップデート前スクリプト"
 	if ( Test-Path -Path $UpdateBeforeScript ) {
-		Write-Host "最新アップデート前スクリプトの実施: $UpdateBeforeScript"
-		Invoke-Expression "$UpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
+		Write-Host "実施: $UpdateBeforeScript" -BackgroundColor Gray
+		Invoke-Expression "$UpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform"
+		Write-Host "---------------------------" -BackgroundColor Gray
+	} else {
+		Write-Host "スクリプトなし" -BackgroundColor Gray
 	}
+	Write-Host ""
 
-	Write-Host "アップデート処理実施"
+	Write-Host "本体アップデート処理実施"
 	Write-Host "$SourceDirectory -> $DestinationDirectory"
 	$customCopyItem = Join-Path $currentDirPath 'custom-copy-item.ps1'
 	#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
 	Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
 
+	Write-Host ""
+	Write-Host "最新アップデート後スクリプト"
 	if ( Test-Path -Path $UpdateAfterScript ) {
-		Write-Host "最新アップデート後スクリプトの実施: $UpdateAfterScript"
+		Write-Host "実施: $UpdateAfterScript" -BackgroundColor Gray
 		Invoke-Expression "$UpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
+		Write-Host "---------------------------" -BackgroundColor Gray
+	} else {
+		Write-Host "スクリプトなし" -BackgroundColor Gray
 	}
 
-	Start-Process -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
+	Write-Host ""
+	Write-Host "Pe を起動しています..."
+	$process = Start-Process -PassThru -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
+	$process.WaitForInputIdle() | Out-Null
+} catch {
+	Write-Host $error -ForegroundColor Red -BackgroundColor Black
+
+	Read-Host "エラーが発生しました。`r`nログファイル: $LogPath を参照してください。`r`nEnter で終了します"
 } finally {
 	Stop-TranScript
 }
-Read-Host "Enter キーを押すとコンソールが閉じます ..."
+
