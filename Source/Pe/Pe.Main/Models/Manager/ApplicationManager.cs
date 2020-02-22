@@ -53,6 +53,7 @@ using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
 using System.IO.Compression;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
+using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -704,14 +705,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
 #if DEBUG
             if(IsDevDebug) {
+                Logger.LogWarning($"{nameof(IsDevDebug)}が有効");
                 return;
             }
 #endif
             // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
             if(currentActiveWindowHandle != IntPtr.Zero) {
                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
-                    NativeMethods.SetActiveWindow(currentActiveWindowHandle);
-                    NativeMethods.SetForegroundWindow(currentActiveWindowHandle);
+                    WindowsUtility.ShowActiveForeground(currentActiveWindowHandle);
                     MoveZOrderAllNotes(false);
                 }, DispatcherPriority.SystemIdle);
             }

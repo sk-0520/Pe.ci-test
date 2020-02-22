@@ -79,7 +79,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         {
             base.OnActivated(e);
 
-
             //this.popupItems.IsOpen = true;
             Dispatcher.BeginInvoke(new Action(() => {
                 WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
@@ -111,9 +110,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             this.inputCommand.Focus();
         }
 
-        private void root_Activated(object sender, EventArgs e)
+        private void root_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
+            if(IsVisible) {
+                WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
+                this.inputCommand.Focus();
+            }
         }
     }
 }

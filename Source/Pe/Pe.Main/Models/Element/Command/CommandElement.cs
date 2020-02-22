@@ -329,22 +329,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 }
             }
 
+            WindowItem windowItem;
             if(!ViewCreated) {
-                var windowItem = OrderManager.CreateCommandWindow(this);
+                windowItem = OrderManager.CreateCommandWindow(this);
                 windowItem.Window.Show();
                 MoveCursorPosition(windowItem);
                 ViewCreated = true;
             } else {
                 StopIconClear();
-
-                var windowItem = WindowManager.GetWindowItems(WindowKind.Command).First();
-                MoveCursorPosition(windowItem);
+                windowItem = WindowManager.GetWindowItems(WindowKind.Command).First();
                 if(windowItem.Window.IsVisible) {
+                    MoveCursorPosition(windowItem);
                     windowItem.Window.Activate();
                 } else {
+                    MoveCursorPosition(windowItem);
                     windowItem.Window.Show();
                 }
             }
+
+            windowItem.Window.Activate();
         }
 
         #endregion

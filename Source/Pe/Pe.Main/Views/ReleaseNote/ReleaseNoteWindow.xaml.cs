@@ -38,10 +38,5 @@ namespace ContentTypeTextNet.Pe.Main.Views.ReleaseNote
             () => Close()
         ));
         #endregion
-
-        private void root_Activated(object sender, EventArgs e)
-        {
-            WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
-        }
     }
 }

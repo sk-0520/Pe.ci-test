@@ -218,8 +218,11 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         public static void ShowActiveForeground(IntPtr hWnd)
         {
-            ShowActive(hWnd);
+            var foregroundID = NativeMethods.GetWindowThreadProcessId(NativeMethods.GetForegroundWindow(), out var processId);
+            var targetID = NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
+            NativeMethods.AttachThreadInput(targetID, foregroundID, true);
             NativeMethods.SetForegroundWindow(hWnd);
+            ShowActive(hWnd);
         }
 
         public static void MoveZoderBttom(IntPtr hWnd)
