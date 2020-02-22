@@ -1,6 +1,6 @@
 ﻿Param(
 	[string] $FirstInput = '',
-	[switch] $OneLife = ''
+	[switch] $BatchMode
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -92,7 +92,8 @@ function PackIcon([string] $directoryPath, [string] $pngPattern, [string] $outpu
 	Write-Host "$directoryPath $pngPattern"
 	$inputFiles = (
 		Get-ChildItem -Path $directoryPath -Filter $pngPattern -File `
-		| Select-Object -ExpandProperty FullName
+		| Select-Object -ExpandProperty FullName `
+		| Sort-Object { [regex]::Replace($_, '\d+', { $args[0].Value.PadLeft(20) }) }
 	)
 	Write-Host $inputFiles
 	& $exeImageMagic $inputFiles $outputPath
@@ -144,7 +145,7 @@ while ($true) {
 		Write-Host $Error[0] -ForegroundColor Red -BackgroundColor Black
 	}
 	Write-Host ''
-	if ($OneLife) {
+	if ($BatchMode) {
 		exit 0
 	}
 }
