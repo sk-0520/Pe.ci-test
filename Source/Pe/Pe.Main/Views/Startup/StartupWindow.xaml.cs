@@ -42,5 +42,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
             () => Close()
         ));
         #endregion
+
+        private void root_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            IsVisibleChanged -= root_IsVisibleChanged;
+
+            Dispatcher.BeginInvoke(new Action(() => {
+                Activate();
+            }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+        }
     }
 }
