@@ -709,6 +709,55 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   アイテム に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_CommandItemKind_LauncherItem {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItem" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コード:  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_CommandItemKind_LauncherItemCode {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItem" +
+                        "Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテム名 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_CommandItemKind_LauncherItemName {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItem" +
+                        "Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タグ:  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_CommandItemKind_LauncherItemTag {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItem" +
+                        "Tag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグイン:  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_CommandItemKind_Plugin {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.Plugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   大 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_IconBox_Big {

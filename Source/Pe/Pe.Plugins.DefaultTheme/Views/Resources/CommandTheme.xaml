@@ -102,8 +102,4 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="ICommandTheme-ExecuteButton-Sall" TargetType="Button">
-  </ControlTemplate>
-
-
 </ResourceDictionary>

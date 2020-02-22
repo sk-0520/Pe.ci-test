@@ -1457,4 +1457,19 @@
 
 ※「いいえ」を選択するとショートカット自体を登録します。</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItem" xml:space="preserve">
+    <value>アイテム</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItemCode" xml:space="preserve">
+    <value>コード: </value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItemName" xml:space="preserve">
+    <value>アイテム名</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.LauncherItemTag" xml:space="preserve">
+    <value>タグ: </value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.CommandItemKind.Plugin" xml:space="preserve">
+    <value>プラグイン: </value>
+  </data>
 </root>

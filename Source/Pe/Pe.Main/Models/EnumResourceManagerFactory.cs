@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             enumResourceManager
                 .Register<Bridge.Models.Data.AppDesktopToolbarPosition>()
                 .Register<Bridge.Models.Data.IconBox>()
+                .Register<Bridge.Models.Data.CommandItemKind>()
                 .Register<Key>()
                 //.Register<Key>(GetKeys())
             ;

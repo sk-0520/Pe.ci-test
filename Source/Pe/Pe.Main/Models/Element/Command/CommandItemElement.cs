@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public abstract string Description { get; }
 
-        public abstract string Kind { get; }
+        public abstract CommandItemKind Kind { get; }
 
         public IReadOnlyList<Range> HeaderMatches => EditableHeaderMatchers;
 
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         LauncherItemElement LauncherItemElement { get; }
         public string EditableDescription { get; set; } = string.Empty;
-        public string EditableKind { get; set; } = CommandItemKind.LauncherItem;
+        public CommandItemKind EditableKind { get; set; } = CommandItemKind.LauncherItem;
         public double EditableScore { get; set; }
         #endregion
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public override string Description => EditableDescription;
 
-        public override string Kind => EditableKind;
+        public override CommandItemKind Kind => EditableKind;
         public override double Score => EditableScore;
 
         public override object GetIcon(IconBox iconBox)

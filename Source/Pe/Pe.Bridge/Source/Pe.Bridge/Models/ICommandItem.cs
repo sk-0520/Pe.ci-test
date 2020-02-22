@@ -6,33 +6,34 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
-    public static class CommandItemKind
+    public enum CommandItemKind
     {
         #region property
 
         /// <summary>
         /// コマンドはランチャーアイテム。
         /// </summary>
-        public static string LauncherItem { get; } = "ITEM";
+        LauncherItem,
         /// <summary>
         /// ランチャーアイテムの名前に一致。
         /// </summary>
-        public static string LauncherItemName { get; } = "NAME";
+        LauncherItemName,
         /// <summary>
         /// ランチャーアイテムのコードに一致。
         /// </summary>
-        public static string LauncherItemCode { get; } = "CODE";
+        LauncherItemCode,
         /// <summary>
         /// ランチャーアイテムのタグに一致。
         /// </summary>
-        public static string LauncherItemTag { get; } = "TAG";
+        LauncherItemTag,
         /// <summary>
         /// プラグイン処理により生成。
         /// </summary>
-        public static string Plugin { get; } = "PLUGIN";
+        Plugin,
 
         #endregion
     }
+
     public interface ICommandItem
     {
         #region property
@@ -48,10 +49,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// 小さく表示する種別文言。
         /// </summary>
-        string Kind { get; }
+        CommandItemKind Kind { get; }
 
         IReadOnlyList<Range> HeaderMatches { get; }
         IReadOnlyList<Range> DescriptionMatches { get; }
+
 
         double Score { get; }
 

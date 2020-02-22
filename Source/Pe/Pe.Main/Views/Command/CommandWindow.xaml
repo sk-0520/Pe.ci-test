@@ -40,10 +40,42 @@
     <app_core_views_converter:IconBoxToWidthConverter x:Key="IconBoxToWidthConverter" />
     <app_core_views_converter:IconBoxToHeightConverter x:Key="IconBoxToHeightConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
     <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconViewerViewModel}">
       <app_main_views:ImageViewerControl IconViewer="{Binding }" />
     </DataTemplate>
+
+    <Style x:Key="HitValues" TargetType="ItemsControl">
+      <Setter Property="ItemsPanel">
+        <Setter.Value>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" />
+          </ItemsPanelTemplate>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="ItemTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <Border BorderThickness="1" CornerRadius="2">
+              <Border.Style>
+                <Style TargetType="Border">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsHit}" Value="True">
+                      <Setter Property="BorderBrush" Value="{DynamicResource PlatformTheme-AccentColors-HighlightBrush}" />
+                      <Setter Property="Background" Value="{DynamicResource PlatformTheme-AccentColors-ActiveBrush}" />
+                      <Setter Property="TextElement.Foreground" Value="{DynamicResource PlatformTheme-AccentTextColors-HighlightBrush}" />
+                      <Setter Property="TextElement.FontWeight" Value="Bold" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Border.Style>
+              <TextBlock Text="{Binding Value}" />
+            </Border>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
 
   </Window.Resources>
   <Window.Style>
@@ -204,6 +236,7 @@
           <ListBox
             x:Name="listItems"
             ScrollViewer.CanContentScroll="True"
+            Grid.IsSharedSizeScope="True"
             SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding CommandItems}"
             Focusable="False"
             IsTabStop="False"
@@ -227,15 +260,28 @@
                   </Grid.ColumnDefinitions>
 
                   <ContentControl Focusable="False" IsTabStop="False" Grid.Row="0" Grid.Column="0" Content="{Binding Icon}" />
-                  <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Header}" />
+                  <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding HeaderValues}" Style="{StaticResource HitValues}" />
 
-                  <Grid Grid.Row="1" Grid.Column="1">
+                  <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" SharedSizeGroup="Kind" />
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Kind}" />
-                    <TextBlock Grid.Column="1" Text="{Binding Description}" />
+
+                    <TextBlock Grid.Column="0" Text="{Binding Kind, Converter={StaticResource EnumToCultureConverter}}">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowDescription}" Value="False">
+                              <Setter Property="Grid.ColumnSpan" Value="2" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </TextBlock.Style>
+                    </TextBlock>
+
+                    <ItemsControl Grid.Column="1" ItemsSource="{Binding DescriptionValues}" Style="{StaticResource HitValues}" />
+
                   </Grid>
                 </Grid>
               </DataTemplate>
@@ -259,13 +305,13 @@
         ToolTip="{Binding Resources.String_Command_Execute, Source={x:Static app_main:CultureService.Current}}"
       >
         <Button
-        Focusable="False"
-        IsTabStop="False"
-        Command="{Binding ExecuteCommand}"
-        Width="{Binding IconBox, Converter={StaticResource IconBoxToWidthConverter}}"
-        Height="{Binding IconBox, Converter={StaticResource IconBoxToHeightConverter}}"
-        Template="{Binding ExecuteButtonControlTemplate}"
-      />
+          Focusable="False"
+          IsTabStop="False"
+          Command="{Binding ExecuteCommand}"
+          Width="{Binding IconBox, Converter={StaticResource IconBoxToWidthConverter}}"
+          Height="{Binding IconBox, Converter={StaticResource IconBoxToHeightConverter}}"
+          Template="{Binding ExecuteButtonControlTemplate}"
+        />
 
       </Border>
 
