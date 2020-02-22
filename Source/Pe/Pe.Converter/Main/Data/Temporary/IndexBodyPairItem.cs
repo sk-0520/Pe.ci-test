@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of Pe.
 
 Pe is free software: you can redistribute it and/or modify
@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
 
         #region property
 
-        public Guid Id { get; private set; }
-        public TIndexBody Body { get; private set; }
+        internal Guid Id { get; private set; }
+        internal TIndexBody Body { get; private set; }
 
         #endregion
 

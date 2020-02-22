@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
         #region property
 
-        public string MutexName { get; private set; }
+        internal string MutexName { get; private set; }
 
         /// <summary>
         /// ユーザールートディレクトリ。
@@ -84,15 +84,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         /// <summary>
         /// ログ保存ディレクトリ。
         /// </summary>
-        public string LogDirectoryPath { get { return this._logRootDirectoryPath; } }
+        internal string LogDirectoryPath { get { return this._logRootDirectoryPath; } }
         /// <summary>
         /// バックアップディレクトリパス。
         /// </summary>
-        public string UserBackupDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.backupDirectoryName); } }
+        internal string UserBackupDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.backupDirectoryName); } }
         /// <summary>
         /// アーカイブディレクトリ。
         /// </summary>
-        public string UserArchiveDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.archiveDirectoryName); } }
+        internal string UserArchiveDirectoryPath { get { return Path.Combine(UserDirectoryPath, Constants.archiveDirectoryName); } }
 
         public string UserSettingMainSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
 
@@ -100,23 +100,23 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         public string UserSettingLauncherGroupItemSettingFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
 
         public string UserSettingNoteDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._noteDirectoryFileName); } }
-        public string UserSettingNoteBodyArchivePath { get { return Path.Combine(UserSettingNoteDirectoryPath, Constants.BodyArchiveFileName); } }
+        internal string UserSettingNoteBodyArchivePath { get { return Path.Combine(UserSettingNoteDirectoryPath, Constants.BodyArchiveFileName); } }
         public string UserSettingNoteIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._noteIndexFileName); } }
 
         public string UserSettingClipboardDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._clipboardDirectoryFileName); } }
-        public string UserSettingClipboardBodyArchivePath { get { return Path.Combine(UserSettingClipboardDirectoryPath, Constants.BodyArchiveFileName); } }
+        internal string UserSettingClipboardBodyArchivePath { get { return Path.Combine(UserSettingClipboardDirectoryPath, Constants.BodyArchiveFileName); } }
         public string UserSettingClipboardIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._clipboardIndexFileName); } }
 
         public string UserSettingTemplateDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._templateDirectoryFileName); } }
-        public string UserSettingTemplateBodyArchivePath { get { return Path.Combine(UserSettingTemplateDirectoryPath, Constants.BodyArchiveFileName); } }
+        internal string UserSettingTemplateBodyArchivePath { get { return Path.Combine(UserSettingTemplateDirectoryPath, Constants.BodyArchiveFileName); } }
         public string UserSettingTemplateIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._templateIndexFileName); } }
 
-        public string LanguageCode { get { return this._languageCode; } }
+        internal string LanguageCode { get { return this._languageCode; } }
 
-        public bool FileLogging { get; private set; }
+        internal bool FileLogging { get; private set; }
         public bool ForceAccept { get; private set; }
 
-        public bool IsQuickExecute
+        internal bool IsQuickExecute
         {
             get
             {

@@ -55,9 +55,9 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
         [DataMember, IsDeepClone]
         public CommandSettingModel Command { get; set; } = new CommandSettingModel();
         [DataMember, IsDeepClone]
-        public ClipboardSettingModel Clipboard { get; set; } = new ClipboardSettingModel();
+        internal ClipboardSettingModel Clipboard { get; set; } = new ClipboardSettingModel();
         [DataMember, IsDeepClone]
-        public TemplateSettingModel Template { get; set; } = new TemplateSettingModel();
+        internal TemplateSettingModel Template { get; set; } = new TemplateSettingModel();
         [DataMember, IsDeepClone]
         public NoteSettingModel Note { get; set; } = new NoteSettingModel();
         [DataMember, IsDeepClone]

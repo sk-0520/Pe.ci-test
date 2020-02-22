@@ -27,7 +27,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 {
     [DataContract, Serializable]
-    public class ClipboardIndexSettingModel: IndexSettingModelBase<ClipboardIndexItemCollectionModel, ClipboardIndexItemModel>
+    internal class ClipboardIndexSettingModel: IndexSettingModelBase<ClipboardIndexItemCollectionModel, ClipboardIndexItemModel>
     {
         public ClipboardIndexSettingModel()
             : base()

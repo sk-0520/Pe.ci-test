@@ -24,7 +24,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
-    public interface IAppNonProcess : INonProcess
+    internal interface IAppNonProcess : INonProcess
     {
         VariableConstants VariableConstants { get; }
         //LauncherIconCaching LauncherIconCaching { get; }

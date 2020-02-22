@@ -242,7 +242,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.Utility
         /// <param name="archive"></param>
         /// <param name="appNonProcess"></param>
         /// <returns></returns>
-        public static bool RemoveBody(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
+        internal static bool RemoveBody(IndexKind indexKind, Guid guid, IndexBodyArchive archive, IAppNonProcess appNonProcess)
         {
             var parentDir = Environment.ExpandEnvironmentVariables(GetBodyFileParentDirectory(indexKind, appNonProcess.VariableConstants));
             if(ExistisRealBodyFile(indexKind, guid, parentDir)) {

@@ -27,7 +27,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 {
     [DataContract, Serializable]
-    public class TemplateIndexSettingModel: IndexSettingModelBase<TemplateIndexItemCollectionModel, TemplateIndexItemModel>
+    internal class TemplateIndexSettingModel: IndexSettingModelBase<TemplateIndexItemCollectionModel, TemplateIndexItemModel>
     {
         public TemplateIndexSettingModel()
             : base()
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Library.PeData.Setting
         //    return result;
         //}
 
-        
+
 
         #endregion
 

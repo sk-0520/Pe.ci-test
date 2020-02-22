@@ -63,13 +63,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
         public LauncherItemSettingModel LauncherItemSetting { get; set; }
         public LauncherGroupSettingModel LauncherGroupSetting { get; set; }
         public NoteIndexSettingModel NoteIndexSetting { get; set; }
-        public ClipboardIndexSettingModel ClipboardIndexSetting { get; set; }
-        public TemplateIndexSettingModel TemplateIndexSetting { get; set; }
+        internal ClipboardIndexSettingModel ClipboardIndexSetting { get; set; }
+        internal TemplateIndexSettingModel TemplateIndexSetting { get; set; }
 
         //#region IAppNonProcess
 
         //public AppLanguageManager Language { get; set; }
-        public ILogger Logger { get; set; }
+        internal ILogger Logger { get; set; }
         //public IAppSender AppSender { get; set; }
         //public IClipboardWatcher ClipboardWatcher { get; set; }
         //public LauncherIconCaching LauncherIconCaching { get; set; }

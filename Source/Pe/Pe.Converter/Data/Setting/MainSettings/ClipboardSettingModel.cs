@@ -33,7 +33,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
     [DataContract, Serializable]
-    public class ClipboardSettingModel: SettingModelBase, IWindowStatus
+    internal class ClipboardSettingModel: SettingModelBase, IWindowStatus
     {
         public ClipboardSettingModel()
             : base()
