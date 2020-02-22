@@ -1,5 +1,6 @@
 ﻿Param(
 	[switch] $ProductMode,
+	[switch] $IgnoreChanged,
 	[parameter(mandatory = $true)][string] $Platform,
 	[string] $BuildType
 )
@@ -19,9 +20,11 @@ Write-Output ("git: " + (git --version))
 Write-Output ("msbuild: " + (msbuild -version -noLogo))
 Write-Output ("dotnet: " + (dotnet --version))
 
-# SCM 的に現行状態に未コミットがあれば死ぬ
-if ((git status -s | Measure-Object).Count -ne 0) {
-	throw "変更あり"
+if($IgnoreChanged) {
+	# SCM 的に現行状態に未コミットがあれば死ぬ
+	if ((git status -s | Measure-Object).Count -ne 0) {
+		throw "変更あり"
+	}
 }
 
 
@@ -37,7 +40,7 @@ try {
 		if ($null -eq $element) {
 			$propGroup = $xml.SelectSingleNode($parentXpath)
 			$element = $xml.CreateElement($elementName);
-			$propGroup.AppendChild($element);
+			$propGroup.AppendChild($element) | Out-Null;
 		}
 		$element.InnerText = $value
 	}
@@ -54,6 +57,12 @@ try {
 	}
 
 	$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
+	if(!$IgnoreChanged) {
+		Write-Output "changed..."
+		foreach($projectFile in $projectFiles) {
+			Write-Output "        -> $projectFile"
+		}
+	}
 	foreach ($projectFile in $projectFiles) {
 		Write-Output $projectFile.Name
 		$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
@@ -103,6 +112,8 @@ try {
 	}
 }
 finally {
-	git reset --hard
+	if($IgnoreChanged) {
+		git reset --hard
+	}
 	Pop-Location
 }
