@@ -43,11 +43,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public IEnumerable<string> SelectTags(Guid launcherItemId)
         {
-            var builder = CreateSelectBuilder();
-            builder.AddSelect(Column.TagName);
-            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Query<string>(statement, parameter);
+        }
 
-            return Select<string>(builder);
+        public IEnumerable<string> SelectUniqueTags(Guid launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Query<string>(statement, parameter);
         }
 
         public void InsertTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)

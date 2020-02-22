@@ -218,9 +218,9 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         public static void ShowActiveForeground(IntPtr hWnd)
         {
-            var foregroundID = NativeMethods.GetWindowThreadProcessId(NativeMethods.GetForegroundWindow(), out var processId);
-            var targetID = NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
-            NativeMethods.AttachThreadInput(targetID, foregroundID, true);
+            var foregroundId = NativeMethods.GetWindowThreadProcessId(NativeMethods.GetForegroundWindow(), out var processId);
+            var targetId = NativeMethods.GetWindowThreadProcessId(hWnd, out _);
+            NativeMethods.AttachThreadInput(targetId, foregroundId, true);
             NativeMethods.SetForegroundWindow(hWnd);
             ShowActive(hWnd);
         }

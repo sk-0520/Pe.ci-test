@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -38,9 +39,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             WindowManager = windowManager;
             NotifyManager = notifyManager;
 
-            NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
-            NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
-
             IconClearTimer = new Timer() {
                 Interval = TimeSpan.FromSeconds(10).TotalMilliseconds,
             };
@@ -50,6 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 Interval = TimeSpan.FromSeconds(10).TotalMilliseconds,
             };
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
+
+            LauncherItemCommandFinder = new LauncherItemCommandFinder(MainDatabaseBarrier, StatementLoader, OrderManager, NotifyManager, LoggerFactory);
+
+            var commandFinders = new List<ICommandFinder>() {
+                LauncherItemCommandFinder
+            };
+            CommandFinders = commandFinders;
         }
 
         #region property
@@ -65,8 +70,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
 
-        IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
-
         public ObservableCollection<WrapModel<ICommandItem>> CommandItems { get; } = new ObservableCollection<WrapModel<ICommandItem>>();
 
         public bool FindTag { get; private set; }
@@ -74,8 +77,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public TimeSpan HideWaitTime { get; private set; }
         public IconBox IconBox { get; private set; }
 
-        Timer IconClearTimer { get; }
         Timer ViewCloseTimer { get; }
+        Timer IconClearTimer { get; }
+
+        LauncherItemCommandFinder LauncherItemCommandFinder { get; }
+        IReadOnlyCollection<ICommandFinder> CommandFinders { get; }
 
         #endregion
 
@@ -101,6 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             IconClearTimer.Stop();
             IconClearTimer.Start();
         }
+
         private void StopIconClear()
         {
             StopViewClose();
@@ -109,12 +116,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
             IconClearTimer.Stop();
         }
+
         private void ClearIcon()
         {
             Logger.LogDebug("アイコンキャッシュ破棄開始");
-            foreach(var element in LauncherItemElements) {
-                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
-            }
+
+            LauncherItemCommandFinder.ClearIcon();
+
             StopIconClear();
             Logger.LogDebug("アイコンキャッシュ破棄終了");
         }
@@ -161,83 +169,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             FindTag = setting.FindTag;
         }
 
-        private void RefreshLauncherItems()
-        {
-            IReadOnlyList<Guid> ids;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                ids = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
-            }
-
-            var launcherItemElements = ids
-                .Select(i => OrderManager.GetOrCreateLauncherItemElement(i))
-                .Where(i => i.IsEnabledCommandLauncher)
-                .ToList();
-            ;
-            LauncherItemElements.SetRange(launcherItemElements);
-        }
-
         public void Refresh()
         {
             // アイテム一覧とったりなんかしたりあれこれしたり
             RefreshSetting();
-            RefreshLauncherItems();
+
+            // 諦め
+            LauncherItemCommandFinder.FindTag = FindTag;
+            LauncherItemCommandFinder.IconBox = IconBox;
+
+            foreach(var commandFinder in CommandFinders) {
+                commandFinder.Refresh();
+            }
         }
 
         IEnumerable<ICommandItem> ListupCommandItems(string inputValue, CancellationToken cancellationToken)
         {
-            foreach(var item in ListupLauncherItemsElements(inputValue, cancellationToken)) {
-                yield return item;
-            }
-        }
-
-
-        IEnumerable<LauncherCommandItemElement> ListupLauncherItemsElements(string inputValue, CancellationToken cancellationToken)
-        {
             var simpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(inputValue);
 
-            static IReadOnlyList<Match> Matches(Regex reg, string input) => reg.Matches(input).Cast<Match>().ToList();
-            static void SetMatches(IList<Range> buffer, IEnumerable<Match> matches)
-            {
-                foreach(var match in matches) {
-                    buffer.Add(new Range(match.Index, match.Index + match.Length));
-                }
-            }
-
-            foreach(var element in LauncherItemElements) {
-                cancellationToken.ThrowIfCancellationRequested();
-
-                var nameMatches = Matches(regex, element.Name);
-                if(nameMatches.Any()) {
-                    Logger.LogTrace("ランチャー: 名前一致, {0}, {1}", element.Name, element.LauncherItemId);
-                    var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                        EditableKind = "item name",
-                    };
-                    result.Initialize();
-                    SetMatches(result.EditableHeaderMatchers, nameMatches);
-                    yield return result;
-                    continue;
-                }
-
-                var codeMatches = regex.Matches(element.Code).Cast<Match>().ToList();
-                if(codeMatches.Any()) {
-                    Logger.LogTrace("ランチャー: コード一致, {0}, {1}", element.Code, element.LauncherItemId);
-                    var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                        EditableDescription = element.Code,
-                        EditableKind = "item code",
-                    };
-                    result.Initialize();
-                    SetMatches(result.EditableDescriptionMatchers, codeMatches);
-                    yield return result;
-                    continue;
-                }
-
-                if(FindTag) {
-                    cancellationToken.ThrowIfCancellationRequested();
+            foreach(var commandFinder in CommandFinders) {
+                var items = commandFinder.ListupCommandItems(inputValue, regex, cancellationToken);
+                foreach(var item in items) {
+                    yield return item;
                 }
             }
         }
+
+
 
         public Task UpdateCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
         {
@@ -246,15 +205,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 var stopwatch = Stopwatch.StartNew();
 
                 var commandItems = new List<ICommandItem>();
-                if(string.IsNullOrWhiteSpace(inputValue)) {
-                    var items = LauncherItemElements
-                        .Select(i => new LauncherCommandItemElement(i, LoggerFactory))
-                    ;
-                    commandItems.AddRange(items);
-                } else {
-                    foreach(var item in ListupCommandItems(inputValue, cancellationToken)) {
-                        commandItems.Add(item);
-                    }
+                foreach(var item in ListupCommandItems(inputValue, cancellationToken)) {
+                    commandItems.Add(item);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -297,6 +249,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             if(!IsDisposed) {
                 Flush();
+                foreach(var commandFinder in CommandFinders) {
+                    commandFinder.Dispose();
+                }
             }
 
             base.Dispose(disposing);
@@ -391,26 +346,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             CloseView();
         }
 
-        private void NotifyManager_LauncherItemChanged(object? sender, LauncherItemChangedEventArgs e)
-        {
-            var element = LauncherItemElements.FirstOrDefault(i => i.LauncherItemId == e.LauncherItemId);
-            if(element != null) {
-                element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
-                if(element.IsEnabledCommandLauncher) {
-                    Logger.LogInformation("コマンドランチャーから既存ランチャーアイテムの除外: {0}", element.LauncherItemId);
-                    LauncherItemElements.Remove(element);
-                }
-            }
-        }
 
-        private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
-        {
-            var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
-            if(element.IsEnabledCommandLauncher) {
-                Logger.LogInformation("コマンドランチャーへ新規ランチャーアイテムの追加: {0}", element.LauncherItemId);
-                LauncherItemElements.Add(element);
-            }
-        }
 
     }
 }

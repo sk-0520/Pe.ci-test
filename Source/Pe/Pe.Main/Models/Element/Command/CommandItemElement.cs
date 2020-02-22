@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         LauncherItemElement LauncherItemElement { get; }
         public string EditableDescription { get; set; } = string.Empty;
-        public string EditableKind { get; set; } = "launcher item";
+        public string EditableKind { get; set; } = CommandItemKind.LauncherItem;
         public double EditableScore { get; set; }
         #endregion
 
