@@ -9,6 +9,10 @@
             "path": "./Source/Pe/Pe.Main/etc/script/update"
         },
         {
+            "name": "RESOURCE",
+            "path": "./Resource"
+        },
+        {
             "name": "DOCUMENTS",
             "path": "./Source/Documents"
         },
