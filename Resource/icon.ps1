@@ -5,6 +5,7 @@
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+$rootDirPath = Split-Path -Parent $currentDirPath
 $iconDirPath = Join-Path $currentDirPath 'Icon'
 $workDirPath = Join-Path $iconDirPath '@work'
 
@@ -13,19 +14,26 @@ $exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::
 
 $appIcons = @(
 	@{
-		name  = 'app-release'
+		name  = 'App'
 		color = '#ffffff'
 	}
 	@{
-		name  = 'app-debug'
-		color = '#8888ff'
-	}
-	@{
-		name  = 'app-beta'
+		name  = 'App-debug'
 		color = '#ff8888'
 	}
+	@{
+		name  = 'App-beta'
+		color = '#8888ff'
+	}
 )
-$iconSize = @(16, 32)
+$iconSize = @(
+	16, 18, 20, 24, 28
+	32, 40
+	48, 56, 60, 64
+	72, 80, 84, 96, 112, 128, 160
+	192, 224
+	256, 320, 384, 448, 512
+)
 
 
 
@@ -60,7 +68,7 @@ function ConvertAppSvgToPng() {
 function PackAppIcon {
 	foreach ($appIcon in $appIcons) {
 		$pattern = "$($appIcon.name)_*.png"
-		$outputPath = Join-Path $workDirPath "$($appIcon.name).ico"
+		$outputPath = Join-Path $currentDirPath "$($appIcon.name).ico"
 		PackIcon $workDirPath $pattern $outputPath
 	}
 }
@@ -90,11 +98,21 @@ function PackIcon([string] $directoryPath, [string] $pngPattern, [string] $outpu
 	& $exeImageMagic $inputFiles $outputPath
 }
 
+function MoveAppIcon {
+	$mainDir = Join-Path $rootDirPath 'Source\Pe\Pe.Main\Resources\Icon'
+	foreach ($appIcon in $appIcons) {
+		$srcPath = Join-Path $currentDirPath "$($appIcon.name).ico"
+		$dstPath = Join-Path $mainDir "$($appIcon.name).ico"
+		Write-Host "[COPY] $srcPath -> $dstPath"
+		Copy-Item -Path $srcPath -Destination $dstPath
+	}
 
+}
 
 while ($true) {
-	Write-Host "0: Pe: SVG -> PNG"
-	Write-Host "1: Pe: PNG -> ICO"
+	Write-Host "1: Pe: SVG -> PNG"
+	Write-Host "2: Pe: PNG -> ICO"
+	Write-Host "3: Pe: アイコン反映"
 	Write-Host "x: 終了"
 	if ($FirstInput) {
 		$inputValue = $FirstInput
@@ -110,6 +128,9 @@ while ($true) {
 			}
 			'2' {
 				PackAppIcon
+			}
+			'3' {
+				MoveAppIcon
 			}
 			'x' {
 				exit 0;

@@ -15,6 +15,7 @@
   Width="800"
   ResizeMode="NoResize"
   WindowStartupLocation="CenterScreen"
+  Icon="/Resources/Icon/App.ico"
 
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
@@ -58,7 +59,7 @@
                 <Setter Property="Padding" Value="{StaticResource BasePadding}" />
               </Style>
             </StackPanel.Resources>
-            <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-App-Main}" />
+            <Image Source="/Resources/Icon/App.ico" Width="128" Height="128" />
 
             <Button Command="{Binding OpenForumUriCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">

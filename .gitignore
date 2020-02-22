@@ -30,7 +30,6 @@ node_modules/
 /Source/Documents/build
 .vscode/
 */**/Properties/launchSettings.json
-/Resource/Icon/*.png
-/Resource/Icon/*.ico
+/Resource/*.ico
 /Source/Pe/Pe.Main/etc/appsettings.debug.json
 /Source/Pe/Pe.Main/doc/help/
