@@ -1,8 +1,8 @@
 ﻿Param(
 	[switch] $ProductMode,
 	[switch] $IgnoreChanged,
-	[parameter(mandatory = $true)][string] $Platform,
-	[string] $BuildType
+	[string] $BuildType,
+	[parameter(mandatory = $true)][string[]] $Platform
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -18,8 +18,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 
 Write-Output "ProductMode = $ProductMode"
 Write-Output "IgnoreChanged = $IgnoreChanged"
-Write-Output "Platform = $Platform"
 Write-Output "BuildType = $BuildType"
+Write-Output "Platforms = $Platforms"
 Write-Output ""
 
 
@@ -97,24 +97,26 @@ try {
 	# ; を扱う https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild-special-characters?view=vs-2015&redirectedfrom=MSDN
 	$define = $defines -join '%3B'
 
-	msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$Platform /p:DefineConstants=$define
-	dotnet build   Source/Pe/Pe.sln                 /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win-$Platform
-	dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$Platform /p:DefineConstants=$define --runtime win-$Platform --output Output/Release/$Platform/Pe/bin --self-contained true
+	foreach($platform in $Platforms) {
+		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define
+		dotnet build   Source/Pe/Pe.sln                 /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
+		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
 
-	if ($ProductMode) {
-		$productTargets = @('etc', 'doc', 'bat')
+		if ($ProductMode) {
+			$productTargets = @('etc', 'doc', 'bat')
 
-		# 本番用データ配置のため不要ファイル破棄
-		foreach ($productTarget in $productTargets) {
-			$target = Join-Path "Output/Release/$Platform/Pe/bin" $productTarget
-			Remove-Item -Path $target -Recurse -Force
-		}
+			# 本番用データ配置のため不要ファイル破棄
+			foreach ($productTarget in $productTargets) {
+				$target = Join-Path "Output/Release/$platform/Pe/bin" $productTarget
+				Remove-Item -Path $target -Recurse -Force
+			}
 
-		# 本番用データ配置のため必要ファイルの移送
-		foreach ($productTarget in $productTargets) {
-			$src = Join-Path "Source/Pe/Pe.Main"           $productTarget
-			$dst = Join-Path "Output/Release/$Platform/Pe" $productTarget
-			robocopy /MIR /PURGE /R:3 /S "$src" "$dst"
+			# 本番用データ配置のため必要ファイルの移送
+			foreach ($productTarget in $productTargets) {
+				$src = Join-Path "Source/Pe/Pe.Main"           $productTarget
+				$dst = Join-Path "Output/Release/$platform/Pe" $productTarget
+				robocopy /MIR /PURGE /R:3 /S "$src" "$dst"
+			}
 		}
 	}
 }
