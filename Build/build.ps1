@@ -16,6 +16,13 @@ foreach ($scriptFileName in $scriptFileNames) {
 	. $scriptFilePath
 }
 
+Write-Output "ProductMode = $ProductMode"
+Write-Output "IgnoreChanged = $IgnoreChanged"
+Write-Output "Platform = $Platform"
+Write-Output "BuildType = $BuildType"
+Write-Output ""
+
+
 Write-Output ("git: " + (git --version))
 Write-Output ("msbuild: " + (msbuild -version -noLogo))
 Write-Output ("dotnet: " + (dotnet --version))

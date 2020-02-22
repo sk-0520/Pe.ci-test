@@ -22,7 +22,7 @@ before_build:
   - cmd: git submodule init
   - cmd: git submodule update
 build_script:
-  - ps: .\Build\build.ps1 -ProductMode -$IgnoreChanged -Platform $env:PLATFORM -BuildType $env:BUILD_TYPE
+  - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -Platform $env:PLATFORM -BuildType $env:BUILD_TYPE
   - ps: .\Build\create-document.ps1 -Platforms $env:PLATFORM
   - ps: .\Build\compress.ps1 -SourceDirectory Output\Release\$env:PLATFORM\Pe -DestinationDirectory Output -Platform $env:PLATFORM -Archive $env:ARCHIVE
 before_test:
