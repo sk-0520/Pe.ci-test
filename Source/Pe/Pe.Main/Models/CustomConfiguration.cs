@@ -200,6 +200,23 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class CommandConfiguration : ConfigurationBase
+    {
+        public CommandConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            IconClearWaitTime = section.GetValue<TimeSpan>("icon_clear_wait_time");
+            ViewCloseWaitTime = section.GetValue<TimeSpan>("view_close_wait_time");
+        }
+
+        #region property
+
+        public TimeSpan IconClearWaitTime { get; }
+        public TimeSpan ViewCloseWaitTime { get; }
+
+        #endregion
+    }
+
     public class PlatformConfiguration : ConfigurationBase
     {
         public PlatformConfiguration(IConfigurationSection section)
@@ -231,6 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
+            Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
         }
 
@@ -245,6 +263,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public LauncherToolbarConfiguration LauncherToobar { get; }
         public LauncherGroupConfiguration LauncherGroup { get; }
         public NoteConfiguration Note { get; }
+        public CommandConfiguration Command { get; }
         public PlatformConfiguration Platform { get; }
         #endregion
     }

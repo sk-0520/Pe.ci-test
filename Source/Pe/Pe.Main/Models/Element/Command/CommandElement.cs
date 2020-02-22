@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement : ElementBase, IViewShowStarter, IFlushable
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -40,12 +40,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             NotifyManager = notifyManager;
 
             IconClearTimer = new Timer() {
-                Interval = TimeSpan.FromSeconds(10).TotalMilliseconds,
+                Interval = customConfiguration.Command.IconClearWaitTime.TotalMilliseconds,
             };
             IconClearTimer.Elapsed += IconClearTimerr_Elapsed;
 
             ViewCloseTimer = new Timer() {
-                Interval = TimeSpan.FromSeconds(10).TotalMilliseconds,
+                Interval = customConfiguration.Command.ViewCloseWaitTime.TotalMilliseconds,
             };
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
 
@@ -249,6 +249,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             if(!IsDisposed) {
                 Flush();
+                IconClearTimer.Elapsed -= IconClearTimerr_Elapsed;
+                ViewCloseTimer.Elapsed -= ViewCloseTimer_Elapsed;
+
+                IconClearTimer.Dispose();
+                ViewCloseTimer.Dispose();
+
                 foreach(var commandFinder in CommandFinders) {
                     commandFinder.Dispose();
                 }
