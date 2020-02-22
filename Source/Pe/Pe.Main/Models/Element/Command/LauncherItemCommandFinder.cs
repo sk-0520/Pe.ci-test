@@ -96,8 +96,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 using(var commander = MainDatabaseBarrier.WaitRead()) {
                     var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                     foreach(var id in ids) {
-                        var tags = launcherTagsEntityDao.SelectUniqueTags(id);
-                        tagItems.Add(id, tags.ToHashSet());
+                        var tags = launcherTagsEntityDao.SelectUniqueTags(id).ToHashSet();
+                        if(tags.Count != 0) {
+                            tagItems.Add(id, tags);
+                        }
                     }
                 }
                 LauncherTags.Clear();
@@ -150,21 +152,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 }
 
                 if(FindTag) {
-                    var tags = LauncherTags[element.LauncherItemId];
-                    if(tags.Count == 0) {
-                        continue;
-                    }
-                    foreach(var tag in tags) {
-                        var tagMatches = Matches(inputRegex, tag);
-                        if(tagMatches.Any()) {
-                            Logger.LogTrace("ランチャー: タグ, {0}, {1}", tag, element.LauncherItemId);
-                            var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                                EditableDescription = tag,
-                                EditableKind = CommandItemKind.LauncherItemTag,
-                            };
-                            result.Initialize();
-                            SetMatches(result.EditableDescriptionMatchers, tagMatches);
-                            yield return result;
+                    if(LauncherTags.TryGetValue(element.LauncherItemId, out var tags)) {
+                        foreach(var tag in tags) {
+                            var tagMatches = Matches(inputRegex, tag);
+                            if(tagMatches.Any()) {
+                                Logger.LogTrace("ランチャー: タグ, {0}, {1}", tag, element.LauncherItemId);
+                                var result = new LauncherCommandItemElement(element, LoggerFactory) {
+                                    EditableDescription = tag,
+                                    EditableKind = CommandItemKind.LauncherItemTag,
+                                };
+                                result.Initialize();
+                                SetMatches(result.EditableDescriptionMatchers, tagMatches);
+                                yield return result;
+                            }
                         }
                     }
                 }
