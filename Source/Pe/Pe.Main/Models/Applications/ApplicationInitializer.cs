@@ -518,6 +518,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     var sw = Stopwatch.StartNew();
                     oldVersionConverter.Execute();
                     logger.LogInformation("旧設定ファイル変換所要時間: {0}", sw.Elapsed);
+                    // 旧設定ファイルがあれば初回実行じゃない
+                    IsFirstStartup = false;
                 }
             }
 
