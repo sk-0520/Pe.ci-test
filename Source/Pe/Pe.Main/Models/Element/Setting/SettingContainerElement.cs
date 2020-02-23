@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>();
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>(AllLauncherItems);
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
-            LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>();
+            LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
 
             Editors = new SettingEditorElementBase[] {

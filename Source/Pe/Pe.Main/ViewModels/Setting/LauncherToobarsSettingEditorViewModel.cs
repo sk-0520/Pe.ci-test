@@ -20,12 +20,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         LauncherToobarSettingEditorViewModel? _selectedToolbar;
 
         #endregion
-        public LauncherToobarsSettingEditorViewModel(LauncherToobarsSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToobarsSettingEditorViewModel(LauncherToobarsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
+            AllLauncherGroupCollection = allLauncherGroupCollection;
+            AllLauncherGroupItems = AllLauncherGroupCollection.CreateView();
             GeneralTheme = generalTheme;
             ToolbarCollection = new ActionModelViewModelObservableCollectionManager<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel>(Model.Toolbars) {
-                ToViewModel = m => new LauncherToobarSettingEditorViewModel(m, GeneralTheme, DispatcherWrapper, LoggerFactory),
+                ToViewModel = m => new LauncherToobarSettingEditorViewModel(m, AllLauncherGroupCollection, GeneralTheme, DispatcherWrapper, LoggerFactory),
             };
             ToolbarItems = ToolbarCollection.GetDefaultView();
         }
@@ -33,6 +35,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
         IGeneralTheme GeneralTheme { get; }
         public RequestSender ShowAllScreensRequest { get; } = new RequestSender();
+
+        ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
+        public ICollectionView AllLauncherGroupItems { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel> ToolbarCollection { get; }
         public ICollectionView ToolbarItems { get; }

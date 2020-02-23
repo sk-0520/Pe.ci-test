@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, configuration, generalTheme, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, AllLauncherGroupCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
-            LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
+            LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, AllLauncherGroupCollection, generalTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new List<ISettingEditorViewModel>() {

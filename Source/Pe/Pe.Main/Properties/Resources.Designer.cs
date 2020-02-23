@@ -3928,6 +3928,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   指定する(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_ChangeDefaultGroup_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_ChangeDefaultGroup_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   初期グループ(_G) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_DefaultGroup_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_DefaultGroup_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   未選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherToolbars_DefaultGroup_None {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherToolbars_DefaultGroup_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ツールバー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherToolbars_Header {
