@@ -62,6 +62,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
         }
 
+        private ICommandItem? GetHitItem(CommandItemKind kind, LauncherItemElement element, string targetValue, string targetLogName, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        {
+            var nameMatches = hitValuesCreator.GetMatches(inputRegex, targetValue);
+            if(nameMatches.Any()) {
+                Logger.LogTrace("ランチャー: {0}, {1}, {2}", targetLogName, targetValue, element.LauncherItemId);
+                var result = new LauncherCommandItemElement(element, LoggerFactory) {
+                    EditableKind = kind,
+                };
+                result.Initialize();
+                var ranges = hitValuesCreator.ConvertRanges(nameMatches);
+                var hitValue = hitValuesCreator.ConvertHitValues(targetValue, ranges);
+                if(kind == CommandItemKind.LauncherItemName) {
+                    result.EditableHeaderValues.SetRange(hitValue);
+                } else {
+                    result.EditableDescriptionValues.SetRange(hitValue);
+                }
+                return result;
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region ICommandFinder
@@ -119,53 +141,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             foreach(var element in LauncherItemElements) {
                 cancellationToken.ThrowIfCancellationRequested();
-
-                var nameMatches = hitValuesCreator.GetMatches(inputRegex, element.Name);
-                if(nameMatches.Any()) {
-                    Logger.LogTrace("ランチャー: 名前一致, {0}, {1}", element.Name, element.LauncherItemId);
-                    var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                        EditableKind = CommandItemKind.LauncherItemName,
-                    };
-                    result.Initialize();
-                    var ranges = hitValuesCreator.ConvertRanges(nameMatches);
-                    var hitValue = hitValuesCreator.ConvertHitValues(element.Name, ranges);
-                    result.EditableHeaderValues.SetRange(hitValue);
-                    yield return result;
+                var nameItem = GetHitItem(CommandItemKind.LauncherItemName, element, element.Name, "名前一致", inputRegex, hitValuesCreator, cancellationToken);
+                if(nameItem != null) {
+                    yield return nameItem;
                     continue;
                 }
 
-                var codeMatches = hitValuesCreator.GetMatches(inputRegex, element.Code);
-                if(codeMatches.Any()) {
-                    Logger.LogTrace("ランチャー: コード一致, {0}, {1}", element.Code, element.LauncherItemId);
-                    var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                        EditableKind = CommandItemKind.LauncherItemCode,
-                    };
-                    result.Initialize();
-
-                    var ranges = hitValuesCreator.ConvertRanges(codeMatches);
-                    var hitValue = hitValuesCreator.ConvertHitValues(element.Code, ranges);
-                    result.EditableDescriptionValues.SetRange(hitValue);
-                    yield return result;
+                var codeItem = GetHitItem(CommandItemKind.LauncherItemCode, element, element.Code, "コード一致", inputRegex, hitValuesCreator, cancellationToken);
+                if(codeItem != null) {
+                    yield return codeItem;
                     continue;
                 }
 
-                if(FindTag) {
-                    if(LauncherTags.TryGetValue(element.LauncherItemId, out var tags)) {
-                        foreach(var tag in tags) {
-                            var tagMatches = hitValuesCreator.GetMatches(inputRegex, tag);
-                            if(tagMatches.Any()) {
-                                Logger.LogTrace("ランチャー: タグ, {0}, {1}", tag, element.LauncherItemId);
-                                var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                                    EditableKind = CommandItemKind.LauncherItemTag,
-                                };
-                                result.Initialize();
+                if(!FindTag) {
+                    continue;
+                }
 
-                                var ranges = hitValuesCreator.ConvertRanges(tagMatches);
-                                var hitValue = hitValuesCreator.ConvertHitValues(tag, ranges);
-                                result.EditableDescriptionValues.SetRange(hitValue);
-
-                                yield return result;
-                            }
+                if(LauncherTags.TryGetValue(element.LauncherItemId, out var tags)) {
+                    foreach(var tag in tags) {
+                        var tagItem = GetHitItem(CommandItemKind.LauncherItemTag, element, tag, "タグ", inputRegex, hitValuesCreator, cancellationToken);
+                        if(tagItem != null) {
+                            yield return tagItem;
+                            continue;
                         }
                     }
                 }
