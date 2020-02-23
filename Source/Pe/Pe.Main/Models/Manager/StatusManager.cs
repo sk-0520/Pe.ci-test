@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }));
         }
 
-        public bool CanCallNotifyAreaMenu { get; private set; }
+        public bool CanCallNotifyAreaMenu { get; private set; } = true;
 
 
         #endregion

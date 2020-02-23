@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
-            StatusManager = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
+            StatusManagerImpl = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
             ApplicationMutex = initializer.Mutex ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Mutex));
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
             ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
-            ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManager);
+            ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManagerImpl);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
 
@@ -104,7 +104,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         WindowManager WindowManager { get; set; }
         OrderManagerImpl OrderManager { get; set; }
         NotifyManager NotifyManager { get; set; }
-        StatusManager StatusManager { get; set; }
+        StatusManager StatusManagerImpl { get; set; }
+        internal IStatusManager StatusManager => StatusManagerImpl;
         ClipboardManager ClipboardManager { get; set; }
         UserAgentManager UserAgentManager { get; set; }
 
@@ -129,6 +130,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public UpdateInfo ApplicationUpdateInfo { get; }
 
+        public bool CanCallNotifyAreaMenu { get; private set; }
+
         #endregion
 
         #region function
@@ -146,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 CommandElement.HideView(true);
             }
 
-            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+            var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
             Logger.LogDebug("遅延書き込み処理停止");
             var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
@@ -269,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ShowStartupView()
         {
-            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+            var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
             using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer
@@ -289,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ShowAboutView()
         {
-            var changing = StatusManager.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+            var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
             using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer
@@ -1225,7 +1228,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     OrderManager.Dispose();
 
                     WindowManager.Dispose();
-                    StatusManager.Dispose();
+                    StatusManagerImpl.Dispose();
                     ClipboardManager.Dispose();
                     UserAgentManager.Dispose();
                 }
@@ -1242,6 +1245,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 SetDynamicPlatformTheme();
             }, DispatcherPriority.ApplicationIdle);
         }
+
 
 
     }

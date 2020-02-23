@@ -27,9 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 {
     public class ManagerViewModel : ViewModelBase, IBuildStatus
     {
-        #region property
+        #region variable
 
         bool _isOpenNoteMenu;
+        bool _isEnabledManager = true;
 
         #endregion
 
@@ -47,6 +48,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             NoteHiddenItems = NoteCollection.CreateView();
             NoteVisibleItems.Filter = o => ((NoteNotifyAreaViewModel)o).IsVisible;
             NoteHiddenItems.Filter = o => !((NoteNotifyAreaViewModel)o).IsVisible;
+
+            ApplicationManager.StatusManager.StatusChanged += StatusManager_StatusChanged;
+
         }
 
         #region property
@@ -86,6 +90,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
         public bool IsSupportedExplorer => ApplicationManager.IsSupportedExplorer;
+
+        public bool IsEnabledManager
+        {
+            get => this._isEnabledManager;
+            set => SetProperty(ref this._isEnabledManager, value);
+        }
 
         public IReadOnlyUpdateInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
         #endregion
@@ -160,9 +170,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
            () => {
-             ApplicationManager.ToggleHook();
-                RaisePropertyChanged(nameof(IsEnabledHook));
-            }
+               ApplicationManager.ToggleHook();
+               RaisePropertyChanged(nameof(IsEnabledHook));
+           }
         ));
         public ICommand ToggleDisabledSystemIdleCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -206,5 +216,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public string Revision => BuildStatus.Revision;
 
         #endregion
+
+        private void StatusManager_StatusChanged(object? sender, StatusChangedEventArgs e)
+        {
+            if(e.StatusProperty == StatusProperty.CanCallNotifyAreaMenu) {
+                IsEnabledManager = (bool)e.NewValue!;
+            }
+        }
+
     }
 }

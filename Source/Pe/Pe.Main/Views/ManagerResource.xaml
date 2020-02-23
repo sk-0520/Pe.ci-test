@@ -198,12 +198,14 @@
   <Taskbar:TaskbarIcon
     x:Key="root"
     Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
-    ContextMenu="{StaticResource ContextMenu}"
-    DoubleClickCommand="{Binding OpenStartupCommand}"
   >
     <Taskbar:TaskbarIcon.Style>
       <Style TargetType="Taskbar:TaskbarIcon">
         <Style.Triggers>
+          <DataTrigger Binding="{Binding IsEnabledManager}" Value="False">
+            <Setter Property="ContextMenu" Value="{x:Null}" />
+            <Setter Property="DoubleClickCommand" Value="{x:Null}" />
+          </DataTrigger>
           <DataTrigger Binding="{Binding BuildType}" Value="Debug">
             <Setter Property="IconSource" Value="/Resources/Icon/App-debug.ico" />
           </DataTrigger>
@@ -214,6 +216,8 @@
             <Setter Property="IconSource" Value="/Resources/Icon/App.ico" />
           </DataTrigger>
         </Style.Triggers>
+        <Setter Property="ContextMenu" Value="{StaticResource ContextMenu}" />
+        <Setter Property="DoubleClickCommand" Value="{Binding OpenStartupCommand}" />
       </Style>
     </Taskbar:TaskbarIcon.Style>
   </Taskbar:TaskbarIcon>
