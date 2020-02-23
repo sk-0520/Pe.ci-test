@@ -42,7 +42,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public bool IsChangeDefaultGroup
         {
             get => this._isChangeDefaultGroup;
-            set => SetProperty(ref this._isChangeDefaultGroup, value);
+            set
+            {
+                SetProperty(ref this._isChangeDefaultGroup, value);
+                if(!IsChangeDefaultGroup) {
+                    LauncherGroupId = Guid.Empty;
+                }
+            }
         }
 
         public Guid LauncherGroupId
