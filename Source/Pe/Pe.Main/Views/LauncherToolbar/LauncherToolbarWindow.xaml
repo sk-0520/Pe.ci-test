@@ -123,6 +123,7 @@
           <Setter Property="Placement" Value="Top" />
         </DataTrigger>
       </Style.Triggers>
+      <Setter Property="MaxWidth" Value="300" />
     </Style>
 
     <!--#region ランチャーアイテム-->
@@ -180,9 +181,9 @@
             <StackPanel>
               <StackPanel Orientation="Horizontal">
                 <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Big}" />
-                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
-              <TextBlock Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
+              <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </StackPanel>
           </ToolTip>
         </Button.ToolTip>
