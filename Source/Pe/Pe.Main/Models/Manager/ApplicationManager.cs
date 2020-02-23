@@ -804,6 +804,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("おわる！");
 
+            BackupSettingsDefault();
+
             if(!ignoreUpdate && ApplicationUpdateInfo.IsReady) {
                 Debug.Assert(ApplicationUpdateInfo.Path != null);
 
