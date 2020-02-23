@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
+namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
     public class LauncherItemCommandFinder : DisposerBase, ICommandFinder
     {
@@ -45,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         internal IconBox IconBox { get; set; }
 
         IList<LauncherItemElement> LauncherItemElements { get; } = new List<LauncherItemElement>();
-        IDictionary<Guid, LauncherItemElement> LauncherItemElementMap { get; }= new Dictionary<Guid, LauncherItemElement>();
+        IDictionary<Guid, LauncherItemElement> LauncherItemElementMap { get; } = new Dictionary<Guid, LauncherItemElement>();
         IDictionary<Guid, IReadOnlyCollection<string>> LauncherTags { get; } = new Dictionary<Guid, IReadOnlyCollection<string>>();
 
 
@@ -57,14 +59,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             foreach(var element in LauncherItemElements) {
                 element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
-            }
-        }
-
-        IReadOnlyList<Match> Matches(Regex reg, string input) => reg.Matches(input).Cast<Match>().ToList();
-        void SetMatches(IList<Range> buffer, IEnumerable<Match> matches)
-        {
-            foreach(var match in matches) {
-                buffer.Add(new Range(match.Index, match.Index + match.Length));
             }
         }
 
@@ -111,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
         }
 
-        public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, CancellationToken cancellationToken)
+        public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 var items = LauncherItemElements
@@ -126,27 +120,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             foreach(var element in LauncherItemElements) {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var nameMatches = Matches(inputRegex, element.Name);
+                var nameMatches = hitValuesCreator.GetMatches(inputRegex, element.Name);
                 if(nameMatches.Any()) {
                     Logger.LogTrace("ランチャー: 名前一致, {0}, {1}", element.Name, element.LauncherItemId);
                     var result = new LauncherCommandItemElement(element, LoggerFactory) {
                         EditableKind = CommandItemKind.LauncherItemName,
                     };
                     result.Initialize();
-                    SetMatches(result.EditableHeaderMatchers, nameMatches);
+                    var ranges = hitValuesCreator.ConvertRanges(nameMatches);
+                    var hitValue = hitValuesCreator.ConvertHitValueItems(element.Name, ranges);
+                    result.EditableHeaderMatchers.SetRange(hitValue);
                     yield return result;
                     continue;
                 }
 
-                var codeMatches = Matches(inputRegex, element.Code);
+                var codeMatches = hitValuesCreator.GetMatches(inputRegex, element.Code);
                 if(codeMatches.Any()) {
                     Logger.LogTrace("ランチャー: コード一致, {0}, {1}", element.Code, element.LauncherItemId);
                     var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                        EditableDescription = element.Code,
                         EditableKind = CommandItemKind.LauncherItemCode,
                     };
                     result.Initialize();
-                    SetMatches(result.EditableDescriptionMatchers, codeMatches);
+
+                    var ranges = hitValuesCreator.ConvertRanges(codeMatches);
+                    var hitValue = hitValuesCreator.ConvertHitValueItems(element.Code, ranges);
+                    result.EditableDescriptionMatchers.SetRange(hitValue);
                     yield return result;
                     continue;
                 }
@@ -154,15 +152,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 if(FindTag) {
                     if(LauncherTags.TryGetValue(element.LauncherItemId, out var tags)) {
                         foreach(var tag in tags) {
-                            var tagMatches = Matches(inputRegex, tag);
+                            var tagMatches = hitValuesCreator.GetMatches(inputRegex, tag);
                             if(tagMatches.Any()) {
                                 Logger.LogTrace("ランチャー: タグ, {0}, {1}", tag, element.LauncherItemId);
                                 var result = new LauncherCommandItemElement(element, LoggerFactory) {
-                                    EditableDescription = tag,
                                     EditableKind = CommandItemKind.LauncherItemTag,
                                 };
                                 result.Initialize();
-                                SetMatches(result.EditableDescriptionMatchers, tagMatches);
+
+                                var ranges = hitValuesCreator.ConvertRanges(tagMatches);
+                                var hitValue = hitValuesCreator.ConvertHitValueItems(tag, ranges);
+                                result.EditableDescriptionMatchers.SetRange(hitValue);
+
                                 yield return result;
                             }
                         }

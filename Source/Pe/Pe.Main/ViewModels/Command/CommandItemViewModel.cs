@@ -26,8 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             IconBox = iconBox;
             DispatcherWrapper = dispatcherWrapper;
 
-            HeaderValues = ConvertHitValueItems(Item.Header, Item.HeaderMatches, LoggerFactory);
-            DescriptionValues = ConvertHitValueItems(Item.Description, Item.DescriptionMatches, LoggerFactory);
+            HeaderValues = Item.HeaderMatches.Select(i => new HitValueItem(i, LoggerFactory)).ToList();
+            DescriptionValues = Item.DescriptionMatches.Select(i => new HitValueItem(i, LoggerFactory)).ToList();
         }
 
         #region property
@@ -35,8 +35,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         ICommandItem Item { get; }
         IconBox IconBox { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
-        public string Header => Item.Header;
-        public string Description => Item.Description;
         public CommandItemKind Kind => Item.Kind;
         public double Score => Item.Score;
 
@@ -72,6 +70,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             }
         }
 
+        public string Header => string.Join(string.Empty, HeaderValues.Select(i => i.Value));
+
         #endregion
 
         #region function
@@ -82,43 +82,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             Item.Execute(screen, isExtend);
         }
 
-        //TODO: ViewModel の層から外したい
-        private static List<HitValueItem> ConvertHitValueItems(string source, IReadOnlyList<Range> matches, ILoggerFactory loggerFactory)
-        {
-            if(matches.Count == 0) {
-                return new List<HitValueItem>() {
-                    new HitValueItem(source, false, loggerFactory),
-                };
-            }
-
-            var result = new List<HitValueItem>();
-
-            var workMatches = matches.ToDictionary(i => i.Start.Value, i => i.End.Value - i.Start.Value);
-            var i = 0;
-            while(true) {
-                if(workMatches.TryGetValue(i, out var hitLength)) {
-                    var value = source.Substring(i, hitLength);
-                    var item = new HitValueItem(value, true, loggerFactory);
-                    result.Add(item);
-                    workMatches.Remove(i);
-                    i = i + hitLength;
-                    if(workMatches.Count == 0) {
-                        if(i <= source.Length) {
-                            result.Add(new HitValueItem(source.Substring(i), false, loggerFactory));
-                        }
-                        break;
-                    }
-                } else {
-                    var minIndex = workMatches.Keys.Min();
-                    var value = source.Substring(i, minIndex - i);
-                    var item = new HitValueItem(value, false, loggerFactory);
-                    result.Add(item);
-                    i = minIndex;
-                }
-            }
-
-            return result;
-        }
 
         #endregion
     }

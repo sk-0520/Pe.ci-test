@@ -19,23 +19,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region property
 
-        public List<Range> EditableHeaderMatchers { get; } = new List<Range>();
-        public List<Range> EditableDescriptionMatchers { get; } = new List<Range>();
+        public List<HitValue> EditableHeaderMatchers { get; } = new List<HitValue>();
+        public List<HitValue> EditableDescriptionMatchers { get; } = new List<HitValue>();
         public Action? ExecuteAction { get; set; }
 
         #endregion
 
         #region IReadOnlyCommandItem
 
-        public abstract string Header { get; }
-
-        public abstract string Description { get; }
-
         public abstract CommandItemKind Kind { get; }
 
-        public IReadOnlyList<Range> HeaderMatches => EditableHeaderMatchers;
+        public IReadOnlyList<HitValue> HeaderMatches => EditableHeaderMatchers;
 
-        public IReadOnlyList<Range> DescriptionMatches => EditableDescriptionMatchers;
+        public IReadOnlyList<HitValue> DescriptionMatches => EditableDescriptionMatchers;
         public abstract double Score { get; }
 
         public abstract object GetIcon(IconBox iconBox);
@@ -50,21 +46,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public LauncherCommandItemElement(LauncherItemElement launcherItemElement, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             LauncherItemElement = launcherItemElement;
+            EditableHeaderMatchers.AddRange(new[] { new HitValue(LauncherItemElement.Name, false) });
         }
 
         #region property
 
         LauncherItemElement LauncherItemElement { get; }
-        public string EditableDescription { get; set; } = string.Empty;
         public CommandItemKind EditableKind { get; set; } = CommandItemKind.LauncherItem;
         public double EditableScore { get; set; }
         #endregion
 
         #region CommandItemElementBase
-
-        public override string Header => LauncherItemElement.Name;
-
-        public override string Description => EditableDescription;
 
         public override CommandItemKind Kind => EditableKind;
         public override double Score => EditableScore;

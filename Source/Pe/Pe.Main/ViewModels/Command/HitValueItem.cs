@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -8,11 +9,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
     public class HitValueItem : ViewModelBase
     {
-        public HitValueItem(string value, bool isHit, ILoggerFactory loggerFactory)
+        public HitValueItem(HitValue hitValue, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            Value = value;
-            IsHit = isHit;
+            Value = hitValue.Value;
+            IsHit = hitValue.IsHit;
         }
 
         #region MyRegion

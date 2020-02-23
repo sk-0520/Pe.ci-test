@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
@@ -16,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         void Refresh();
 
-        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, CancellationToken cancellationToken);
+        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken);
 
         #endregion
     }

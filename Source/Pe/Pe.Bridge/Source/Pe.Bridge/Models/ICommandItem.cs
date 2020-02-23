@@ -39,20 +39,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region property
 
         /// <summary>
-        /// メイン表示文字列。
-        /// </summary>
-        string Header { get; }
-        /// <summary>
-        /// 追記文言。
-        /// </summary>
-        string Description { get; }
-        /// <summary>
         /// 小さく表示する種別文言。
         /// </summary>
         CommandItemKind Kind { get; }
 
-        IReadOnlyList<Range> HeaderMatches { get; }
-        IReadOnlyList<Range> DescriptionMatches { get; }
+        /// <summary>
+        /// メイン表示文字列。
+        /// </summary>
+        IReadOnlyList<HitValue> HeaderMatches { get; }
+        /// <summary>
+        /// 追記文言。
+        /// </summary>
+        IReadOnlyList<HitValue> DescriptionMatches { get; }
 
 
         double Score { get; }

@@ -8,12 +8,14 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
@@ -183,13 +185,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
         }
 
-        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, CancellationToken cancellationToken)
+        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             var simpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(inputValue);
 
             foreach(var commandFinder in CommandFinders) {
-                var items = commandFinder.ListupCommandItems(inputValue, regex, cancellationToken);
+                var items = commandFinder.ListupCommandItems(inputValue, regex, hitValuesCreator, cancellationToken);
                 foreach(var item in items) {
                     yield return item;
                 }
@@ -204,11 +206,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 Logger.LogTrace("検索開始");
                 var stopwatch = Stopwatch.StartNew();
 
+                var hitValuesCreator = new HitValuesCreator(LoggerFactory);
+
                 var commandItems = new List<ICommandItem>();
-                foreach(var item in ListupCommandItems(inputValue, cancellationToken)) {
+                foreach(var item in ListupCommandItems(inputValue, hitValuesCreator, cancellationToken)) {
                     commandItems.Add(item);
+                    Logger.LogDebug(string.Join(" - ", item.HeaderMatches.Select(i => i.Value)));
                 }
                 cancellationToken.ThrowIfCancellationRequested();
+
 
                 Logger.LogTrace("検索終了: {0}", stopwatch.Elapsed);
 
