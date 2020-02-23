@@ -317,24 +317,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             Flush();
+
             var parameter = GetLinkParameter();
-            var content = LoadLinkContent();
+            if(parameter == null || parameter.File == null) {
+                DisposeLinkWatcher();
+                Logger.LogWarning("リンク状態が不正: {0}", NoteId);
+                return;
+            }
             DisposeLinkWatcher();
+            parameter.File.Refresh();
+            if(parameter.File.Exists) {
+                var content = LoadLinkContent();
+
+                switch(ContentKind) {
+                    case NoteContentKind.Plain:
+                        ChangePlainContent(content);
+                        break;
+
+                    case NoteContentKind.RichText:
+                        ChangeRichTextContent(content);
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            } else {
+                Logger.LogWarning("リンク先が存在しない: {0}, {1}", parameter.File.FullName, NoteId);
+            }
 
             IsLink = false;
-
-            switch(ContentKind) {
-                case NoteContentKind.Plain:
-                    ChangePlainContent(content);
-                    break;
-
-                case NoteContentKind.RichText:
-                    ChangeRichTextContent(content);
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -344,14 +355,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             if(isRemove) {
-                if(parameter != null) {
+                if(parameter.File.Exists) {
                     try {
                         parameter.File!.Delete();
                     } catch(Exception ex) {
                         Logger.LogError(ex, ex.Message);
                     }
-                } else {
-                    Logger.LogWarning("リンク情報へん: {0}", NoteId);
                 }
             }
         }
