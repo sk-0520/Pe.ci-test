@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         private void OnThemeChanged()
         {
-            Logger.LogTrace("changed theme");
+            Logger.LogTrace("テーマ変更");
             Changed?.Invoke(this, EventArgs.Empty);
         }
 

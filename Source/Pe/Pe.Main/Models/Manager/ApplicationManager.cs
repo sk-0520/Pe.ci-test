@@ -453,6 +453,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             foreach(var name in names) {
                 ApplyAccentBrush(name);
             }
+
+            if(Logger.IsEnabled(LogLevel.Debug)) {
+                Logger.LogDebug(ObjectDumper.GetDumpString(accent));
+            }
         }
 
         (bool sendUsageStatistics, string userId) GetUsageStatistics()
