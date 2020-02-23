@@ -103,6 +103,17 @@
                         <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                         </Style>
                       </ComboBox.Style>
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                          <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                              <ContentControl Content="{Binding GroupIcon}" />
+                              <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                          </StackPanel>
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+
                     </ComboBox>
                   </Grid>
                 </Grid>

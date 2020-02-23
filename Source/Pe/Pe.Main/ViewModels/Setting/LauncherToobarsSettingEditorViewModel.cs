@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AllLauncherGroupItems = AllLauncherGroupCollection.CreateView();
             GeneralTheme = generalTheme;
             ToolbarCollection = new ActionModelViewModelObservableCollectionManager<LauncherToobarSettingEditorElement, LauncherToobarSettingEditorViewModel>(Model.Toolbars) {
-                ToViewModel = m => new LauncherToobarSettingEditorViewModel(m, AllLauncherGroupCollection, GeneralTheme, DispatcherWrapper, LoggerFactory),
+                ToViewModel = m => new LauncherToobarSettingEditorViewModel(m, AllLauncherGroupCollection, () => IsSelected, GeneralTheme, DispatcherWrapper, LoggerFactory),
             };
             ToolbarItems = ToolbarCollection.GetDefaultView();
         }
@@ -77,6 +77,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             base.Load();
             SelectedToolbar = ToolbarCollection.ViewModels.First();
+        }
+
+        public override void Refresh()
+        {
+            SelectedToolbar?.Refresh();
         }
 
         #endregion
