@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>();
             LauncherItemsSettingEditor = ServiceLocator.Build<LauncherItemsSettingEditorElement>(AllLauncherItems);
-            LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>();
+            LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
             LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>();
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
 
@@ -51,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         ///<para>みんなで共有する。</para>
         /// </summary>
         public ObservableCollection<LauncherItemSettingEditorElement> AllLauncherItems { get; } = new ObservableCollection<LauncherItemSettingEditorElement>();
+        public ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; } = new ObservableCollection<LauncherGroupSettingEditorElement>();
 
         public bool IsVisible
         {
@@ -112,22 +113,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void InitializeImpl()
         {
             IReadOnlyList<Guid> launcherItemIds;
+            IReadOnlyList<Guid> groupIds;
             using(var commander = ServiceLocator.Get<IMainDatabaseBarrier>().WaitRead()) {
                 var launcherItemsEntityDao = ServiceLocator.Build<LauncherItemsEntityDao>(commander, commander.Implementation);
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
+
+                var launcherGroupsEntityDao = ServiceLocator.Build<LauncherGroupsEntityDao>(commander, commander.Implementation);
+                groupIds = launcherGroupsEntityDao.SelectAllLauncherGroupIds().ToList();
             }
-            var elements = new List<LauncherItemSettingEditorElement>(launcherItemIds.Count);
+
+
+            var launcherItemElements = new List<LauncherItemSettingEditorElement>(launcherItemIds.Count);
             foreach(var launcherItemId in launcherItemIds) {
                 var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, ServiceLocator.Get<IMainDatabaseBarrier>(), ServiceLocator.Get<IFileDatabaseBarrier>(), ServiceLocator.Get<IDatabaseStatementLoader>(), ServiceLocator.Get<IDispatcherWrapper>(), LoggerFactory);
                 var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
                 launcherIconElement.Initialize();
                 var element = ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement);
-                elements.Add(element);
+                launcherItemElements.Add(element);
             }
-            foreach(var element in elements) {
+            foreach(var element in launcherItemElements) {
                 element.Initialize();
             }
-            AllLauncherItems.SetRange(elements);
+            AllLauncherItems.SetRange(launcherItemElements);
+
+            var launcherGroupElements = new List<LauncherGroupSettingEditorElement>(groupIds.Count);
+            foreach(var groupId in groupIds) {
+                var element = ServiceLocator.Build<LauncherGroupSettingEditorElement>(groupId);
+                launcherGroupElements.Add(element);
+            }
+            foreach(var element in launcherGroupElements) {
+                element.Initialize();
+            }
+            AllLauncherGroups.SetRange(launcherGroupElements);
 
             foreach(var editor in Editors) {
                 editor.Initialize();

@@ -21,9 +21,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherGroupsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherGroupsSettingEditorElement(INotifyManager notifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, INotifyManager notifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
+            GroupItems = allLauncherGroups;
             NotifyManager = notifyManager;
         }
 
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         INotifyManager NotifyManager { get; }
 
-        public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; } = new ObservableCollection<LauncherGroupSettingEditorElement>();
+        public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; }
         public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
 
         #endregion
@@ -102,23 +103,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ThrowIfDisposed();
 
             IReadOnlyList<Guid> launcherItemIds;
-            IReadOnlyList<Guid> groupIds;
+            //IReadOnlyList<Guid> groupIds;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
 
-                var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                groupIds = launcherGroupsEntityDao.SelectAllLauncherGroupIds().ToList();
+                //var launcherGroupsEntityDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                //groupIds = launcherGroupsEntityDao.SelectAllLauncherGroupIds().ToList();
             }
 
             LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
 
-            GroupItems.Clear();
-            foreach(var groupId in groupIds) {
-                var element = new LauncherGroupSettingEditorElement(groupId, MainDatabaseBarrier, StatementLoader, IdFactory, LoggerFactory);
-                element.Initialize();
-                GroupItems.Add(element);
-            }
+            //GroupItems.Clear();
+            //foreach(var groupId in groupIds) {
+            //    var element = new LauncherGroupSettingEditorElement(groupId, MainDatabaseBarrier, StatementLoader, IdFactory, LoggerFactory);
+            //    element.Initialize();
+            //    GroupItems.Add(element);
+            //}
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
