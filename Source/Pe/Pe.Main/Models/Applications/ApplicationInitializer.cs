@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     return new AcceptResult(
                         acceptModel.Accepted,
                         acceptModel.UpdateKind,
-                        acceptModel.SendUsageStatistics
+                        acceptModel.IsEnabledTelemetry
                     );
                 }
             }
@@ -540,13 +540,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 Debug.Assert(IsFirstStartup);
                 var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
                 var userIdManager = DiContainer.Build<UserIdManager>();
-                var userId = acceptResult.SendUsageStatistics
+                var userId = acceptResult.IsEnabledTelemetry
                     ? userIdManager.CreateFromEnvironment()
                     : string.Empty
                 ;
                 using(var commander = mainDatabaseBarrier.WaitWrite()) {
                     var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
-                    appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.SendUsageStatistics, DatabaseCommonStatus.CreateCurrentAccount());
+                    appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userId, acceptResult.IsEnabledTelemetry, DatabaseCommonStatus.CreateCurrentAccount());
 
                     var appUpdateSettingEntityDao = DiContainer.Build<AppUpdateSettingEntityDao>(commander, commander.Implementation);
                     appUpdateSettingEntityDao.UpdateReleaseVersion(acceptResult.UpdateKind, DatabaseCommonStatus.CreateCurrentAccount());
@@ -559,7 +559,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     var appExecuteSettingEntityDao = DiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
                     var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
 
-                    if(setting.SendUsageStatistics) {
+                    if(setting.IsEnabledTelemetry) {
                         var userIdManager = DiContainer.Build<UserIdManager>();
                         if(!userIdManager.IsValidUserId(setting.UserId)) {
                             logger.LogInformation("統計情報送信は有効だがユーザーIDが不正のため無効化: {0}", setting.UserId);

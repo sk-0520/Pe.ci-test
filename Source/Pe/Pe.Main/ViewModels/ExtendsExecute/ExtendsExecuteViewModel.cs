@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -16,13 +17,14 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {
-    public class ExtendsExecuteViewModel : SingleModelViewModelBase<ExtendsExecuteElement>, IViewLifecycleReceiver
+    public class ExtendsExecuteViewModel : ElementViewModelBase<ExtendsExecuteElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -38,8 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         bool _runAdministrator;
         #endregion
 
-        public ExtendsExecuteViewModel(ExtendsExecuteElement model, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public ExtendsExecuteViewModel(ExtendsExecuteElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             this._option = Model.LauncherFileData.Option;
             this._workDirectoryPath = Model.LauncherFileData.WorkDirectoryPath;

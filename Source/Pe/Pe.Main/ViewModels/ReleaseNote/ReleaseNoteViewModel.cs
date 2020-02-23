@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
-using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Views.ReleaseNote;
 using Microsoft.Extensions.Logging;
 using CefSharp;

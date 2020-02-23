@@ -11,7 +11,7 @@ using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Core.Views;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Startup;
-using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;

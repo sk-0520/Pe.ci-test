@@ -3282,9 +3282,9 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   使用統計情報の送信を許可する に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Generals_Execute_SendUsageStatistics_A {
+        public static string String_Setting_Generals_Execute_IsEnabledTelemetry_A {
             get {
-                return ResourceManager.GetString("String_Setting_Generals_Execute_SendUsageStatistics_A", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Generals_Execute_IsEnabledTelemetry_A", resourceCulture);
             }
         }
         

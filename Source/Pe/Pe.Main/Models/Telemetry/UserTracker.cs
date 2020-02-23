@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.UsageStatistics
+namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
     public interface IUserTracker
     {
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.UsageStatistics
         #endregion
     }
 
-    internal class UserTracker : UsageStatisticsBase, IUserTracker
+    internal class UserTracker : TelemeterBase, IUserTracker
     {
         public UserTracker(ILoggerFactory loggerFactory)
             : base(loggerFactory)

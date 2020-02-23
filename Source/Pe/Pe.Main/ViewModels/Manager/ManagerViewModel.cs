@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModels.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
@@ -32,10 +33,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #endregion
 
-        public ManagerViewModel(ApplicationManager applicationManager, ILoggerFactory loggerFactory)
+        public ManagerViewModel(ApplicationManager applicationManager, IUserTracker userTracker, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             ApplicationManager = applicationManager;
+            UserTracker = userTracker;
 
             LauncherToolbarCollection = ApplicationManager.GetLauncherNotifyCollection();
             LauncherToolbarItems = LauncherToolbarCollection.ViewModels;
@@ -53,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public bool ShowOldVersion => DateTime.Now.Day == 1;
 
         ApplicationManager ApplicationManager { get; }
+        IUserTracker UserTracker { get; }
 
         ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
         public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }

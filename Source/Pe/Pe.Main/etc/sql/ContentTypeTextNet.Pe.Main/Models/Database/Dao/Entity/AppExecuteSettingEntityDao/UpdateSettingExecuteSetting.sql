@@ -2,7 +2,7 @@ update
 	AppExecuteSetting
 set
 	UserId                = @UserId,
-	SendUsageStatistics   = @SendUsageStatistics,
+	IsEnabledTelemetry   = @IsEnabledTelemetry,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

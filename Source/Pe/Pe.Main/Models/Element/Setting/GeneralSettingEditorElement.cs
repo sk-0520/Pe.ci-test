@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         public string UserId { get; set; } = string.Empty;
-        public bool SendUsageStatistics { get; set; }
+        public bool IsEnabledTelemetry { get; set; }
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             UserId = setting.UserId;
-            SendUsageStatistics = setting.SendUsageStatistics;
+            IsEnabledTelemetry = setting.IsEnabledTelemetry;
 
             var userIdManager = new UserIdManager(LoggerFactory);
             if(!userIdManager.IsValidUserId(UserId)) {
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppExecuteSettingData() {
-                SendUsageStatistics = SendUsageStatistics,
+                IsEnabledTelemetry = IsEnabledTelemetry,
                 UserId = UserId,
             };
             appExecuteSettingEntityDao.UpdateSettingExecuteSetting(data, commandPack.CommonStatus);

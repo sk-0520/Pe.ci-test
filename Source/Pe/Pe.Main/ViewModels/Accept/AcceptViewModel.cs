@@ -34,9 +34,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         //public InteractionRequest<Notification> CloseRequest { get; } = new InteractionRequest<Notification>();
         public RequestSender CloseRequest { get; } = new RequestSender();
 
-        public bool SendUsageStatistics
+        public bool IsEnabledTelemetry
         {
-            get => Model.SendUsageStatistics;
+            get => Model.IsEnabledTelemetry;
             set => SetModelValue(value);
         }
 

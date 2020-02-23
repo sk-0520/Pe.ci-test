@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
         CustomConfiguration Configuration { get; }
         public bool Accepted { get; set; }
         public UpdateKind UpdateKind { get; set; } = UpdateKind.Auto;
-        public bool SendUsageStatistics { get; set; } = true;
+        public bool IsEnabledTelemetry { get; set; } = true;
 
         #endregion
 

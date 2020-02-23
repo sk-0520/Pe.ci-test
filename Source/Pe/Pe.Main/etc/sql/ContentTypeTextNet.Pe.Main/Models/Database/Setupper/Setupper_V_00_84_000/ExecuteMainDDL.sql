@@ -16,7 +16,7 @@ create table [AppExecuteSetting] (
 	[LastTimestamp] datetime not null /* 最終実行日時 UTC */,
 	[ExecuteCount] integer not null /* 実行回数 0始まり */,
 	[UserId] text not null /* ユーザー識別子  */,
-	[SendUsageStatistics] boolean not null /* 使用統計情報送信  */
+	[IsEnabledTelemetry] boolean not null /* 使用統計情報送信  */
 )
 ;
 

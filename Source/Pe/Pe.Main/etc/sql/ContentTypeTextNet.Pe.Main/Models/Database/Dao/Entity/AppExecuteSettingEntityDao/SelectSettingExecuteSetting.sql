@@ -1,5 +1,5 @@
 select
 	AppExecuteSetting.UserId,
-	AppExecuteSetting.SendUsageStatistics
+	AppExecuteSetting.IsEnabledTelemetry
 from
 	AppExecuteSetting

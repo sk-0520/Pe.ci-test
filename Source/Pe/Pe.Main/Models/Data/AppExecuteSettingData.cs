@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region property
 
         public string UserId { get; set; } = string.Empty;
-        public bool SendUsageStatistics { get; set; }
+        public bool IsEnabledTelemetry { get; set; }
 
         #endregion
     }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.UsageStatistics
+namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
-    public abstract class UsageStatisticsBase
+    public abstract class TelemeterBase
     {
-        public UsageStatisticsBase(ILoggerFactory loggerFactory)
+        public TelemeterBase(ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());

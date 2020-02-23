@@ -186,7 +186,7 @@ insert into
 		LastTimestamp,
 		ExecuteCount,
 		UserId,
-		SendUsageStatistics,
+		IsEnabledTelemetry,
 
 		CreatedTimestamp,
 		CreatedAccount,
@@ -207,7 +207,7 @@ insert into
 /* LastTimestamp         */ @CreatedTimestamp,
 /* ExecuteCount          */ 1,
 /* UserId                */ '',
-/* SendUsageStatistics   */ false,
+/* IsEnabledTelemetry    */ false,
 
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,

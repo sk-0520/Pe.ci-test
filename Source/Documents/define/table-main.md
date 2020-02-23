@@ -23,7 +23,7 @@ ___
 |    | o  |    | 最終実行日時             | LastTimestamp         | datetime     | System.DateTime |              | UTC      |
 |    | o  |    | 実行回数                 | ExecuteCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  |    | ユーザー識別子           | UserId                | text         | System.String   |              |          |
-|    | o  |    | 使用統計情報送信         | SendUsageStatistics   | boolean      | System.Boolean  |              |          |
+|    | o  |    | 使用統計情報送信         | IsEnabledTelemetry    | boolean      | System.Boolean  |              |          |
 
 ### index
 

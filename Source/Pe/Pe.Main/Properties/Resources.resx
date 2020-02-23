@@ -536,7 +536,7 @@
   <data name="String_Setting_Generals_Execute_Header" xml:space="preserve">
     <value>実行環境</value>
   </data>
-  <data name="String_Setting_Generals_Execute_SendUsageStatistics_A" xml:space="preserve">
+  <data name="String_Setting_Generals_Execute_IsEnabledTelemetry_A" xml:space="preserve">
     <value>使用統計情報の送信を許可する</value>
   </data>
   <data name="String_Setting_Generals_Execute_UserId_A" xml:space="preserve">

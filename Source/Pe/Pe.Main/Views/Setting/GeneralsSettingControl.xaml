@@ -73,7 +73,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Column="1" Margin="{StaticResource BasePadding}" Style="{StaticResource Vertical-CheckBox}" IsChecked="{Binding SendUsageStatistics}" Content="{Binding Resources.String_Setting_Generals_Execute_SendUsageStatistics_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <CheckBox Grid.Column="1" Margin="{StaticResource BasePadding}" Style="{StaticResource Vertical-CheckBox}" IsChecked="{Binding IsEnabledTelemetry}" Content="{Binding Resources.String_Setting_Generals_Execute_IsEnabledTelemetry_A, Source={x:Static app_main:CultureService.Current}}" />
                 </Grid>
 
                 <Grid>

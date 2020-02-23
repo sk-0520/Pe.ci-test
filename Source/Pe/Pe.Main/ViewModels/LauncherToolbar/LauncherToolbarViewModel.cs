@@ -34,10 +34,11 @@ using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using System.Diagnostics;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
-    public class LauncherToolbarViewModel : SingleModelViewModelBase<LauncherToolbarElement>, IReadOnlyAppDesktopToolbarExtendData, IViewLifecycleReceiver
+    public class LauncherToolbarViewModel : ElementViewModelBase<LauncherToolbarElement>, IReadOnlyAppDesktopToolbarExtendData, IViewLifecycleReceiver
     {
         #region variable
 
@@ -45,11 +46,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, ILauncherGroupTheme launcherGroupTheme, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, ILauncherGroupTheme launcherGroupTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             PlatformThemeLoader = platformThemeLoader;
-            DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
             LauncherGroupTheme = launcherGroupTheme;
             GeneralTheme = generalTheme;
@@ -104,7 +104,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
         IPlatformTheme PlatformThemeLoader { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
         IGeneralTheme GeneralTheme { get; }

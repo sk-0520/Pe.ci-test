@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.Main.Models.UsageStatistics
+namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
     public class TrackProperties : IDictionary<string, string>, IReadOnlyDictionary<string, string>
     {

@@ -33,10 +33,11 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteViewModel : SingleModelViewModelBase<NoteElement>, IViewLifecycleReceiver, IFlushable
+    public class NoteViewModel : ElementViewModelBase<NoteElement>, IViewLifecycleReceiver, IFlushable
     {
         #region variable
 
@@ -57,8 +58,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, CustomConfiguration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, CustomConfiguration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             NoteTheme = noteTheme;
             GeneralTheme = generalTheme;
@@ -66,7 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Configuration = configuration;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
-            DispatcherWrapper = dispatcherWrapper;
 
             PlatformTheme.Changed += PlatformTheme_Changed;
 
@@ -114,7 +114,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         IPlatformTheme PlatformTheme { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();

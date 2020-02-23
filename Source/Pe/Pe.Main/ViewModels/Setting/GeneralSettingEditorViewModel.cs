@@ -79,9 +79,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => Model.UserId;
             private set => SetModelValue(value);
         }
-        public bool SendUsageStatistics
+        public bool IsEnabledTelemetry
         {
-            get => Model.SendUsageStatistics;
+            get => Model.IsEnabledTelemetry;
             set => SetModelValue(value);
         }
 

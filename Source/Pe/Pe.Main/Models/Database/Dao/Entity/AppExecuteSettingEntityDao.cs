@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public DateTime LastTimestamp { get; set; }
         public long ExecuteCount { get; set; }
         public string UserId { get; set; } = string.Empty;
-        public bool SendUsageStatistics { get; set; }
+        public bool IsEnabledTelemetry { get; set; }
         #endregion
     }
 
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             #region property
             public static string UserId => "UserId";
-            public static string SendUsageStatistics => "SendUsageStatistics";
+            public static string IsEnabledTelemetry => "IsEnabledTelemetry";
 
             public static string FirstVersion => "FirstVersion";
             public static string FirstTimestamp => "FirstTimestamp";
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var dto = Commander.QueryFirst<AppExecuteSettingEntityDto>(statement);
             var result = new SettingAppExecuteSettingData() {
-                SendUsageStatistics = dto.SendUsageStatistics,
+                IsEnabledTelemetry = dto.IsEnabledTelemetry,
                 UserId = dto.UserId,
             };
             return result;
@@ -67,19 +67,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = new AppExecuteSettingEntityDto() {
-                SendUsageStatistics = data.SendUsageStatistics,
+                IsEnabledTelemetry = data.IsEnabledTelemetry,
                 UserId = data.UserId,
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;
         }
 
-        public bool UpdateExecuteSettingAcceptInput(string userId, bool sendUsageStatistics, IDatabaseCommonStatus commonStatus)
+        public bool UpdateExecuteSettingAcceptInput(string userId, bool isEnabledTelemetry, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.UserId] = userId;
-            parameter[Column.SendUsageStatistics] = sendUsageStatistics;
+            parameter[Column.IsEnabledTelemetry] = isEnabledTelemetry;
 
             return Commander.Execute(statement, parameter) == 1;
         }

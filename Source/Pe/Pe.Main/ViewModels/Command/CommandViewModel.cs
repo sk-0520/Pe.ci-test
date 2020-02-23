@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using ContentTypeTextNet.Pe.Main.Views.Command;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
-    public class CommandViewModel : SingleModelViewModelBase<CommandElement>, IViewLifecycleReceiver
+    public class CommandViewModel : ElementViewModelBase<CommandElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -37,13 +38,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #endregion
 
-        public CommandViewModel(CommandElement model, IGeneralTheme generalTheme, ICommandTheme commandTheme, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public CommandViewModel(CommandElement model, IGeneralTheme generalTheme, ICommandTheme commandTheme, IPlatformTheme platformTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             GeneralTheme = generalTheme;
             CommandTheme = commandTheme;
             PlatformTheme = platformTheme;
-            DispatcherWrapper = dispatcherWrapper;
 
             ThemeProperties = new ThemeProperties(this);
 
@@ -71,7 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         IGeneralTheme GeneralTheme { get; }
         ICommandTheme CommandTheme { get; }
         IPlatformTheme PlatformTheme { get; }
-        IDispatcherWrapper DispatcherWrapper { get; }
 
         DispatcherTimer HideWaitTimer { get; }
 

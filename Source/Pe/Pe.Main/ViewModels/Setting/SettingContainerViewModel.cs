@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
@@ -17,7 +18,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class SettingContainerViewModel : SingleModelViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
+    public class SettingContainerViewModel : ElementViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -25,11 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public SettingContainerViewModel(SettingContainerElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, loggerFactory)
+        public SettingContainerViewModel(SettingContainerElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, ILauncherGroupTheme launcherGroupTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
-            DispatcherWrapper = dispatcherWrapper;
-
             AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
             };
@@ -52,8 +51,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #region property
-
-        IDispatcherWrapper DispatcherWrapper { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();
 

@@ -52,7 +52,7 @@
       </ListItem>
       <ListItem>
         <Paragraph>
-          <CheckBox IsChecked="{Binding SendUsageStatistics}">使用統計情報の送信を許可する</CheckBox>
+          <CheckBox IsChecked="{Binding IsEnabledTelemetry}">使用統計情報の送信を許可する</CheckBox>
           <LineBreak />
           <Run>${APP}では不具合検知・機能改善のため各種使用統計を収集します。</Run>
           <LineBreak />

@@ -49,7 +49,7 @@ using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.UsageStatistics;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using System.IO.Compression;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
@@ -459,7 +459,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        (bool sendUsageStatistics, string userId) GetUsageStatistics()
+        (bool isEnabledTelemetry, string userId) GetTelemetry()
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             SettingAppExecuteSettingData setting;
@@ -468,7 +468,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 setting = dao.SelectSettingExecuteSetting();
             }
 
-            if(!setting.SendUsageStatistics) {
+            if(!setting.IsEnabledTelemetry) {
                 Logger.LogInformation("統計情報送信: 無効");
                 return (false, string.Empty);
             }
@@ -479,7 +479,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return (false, string.Empty);
             }
 
-            return (setting.SendUsageStatistics, setting.UserId);
+            return (setting.IsEnabledTelemetry, setting.UserId);
         }
 
         void StartupUsageStatistics()
@@ -488,8 +488,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IUserTracker, UserTracker>(userTracker);
 
             //var configuration = ApplicationDiContainer.Build<Configuration>();
-            var setting = GetUsageStatistics();
-            if(setting.sendUsageStatistics) {
+            var setting = GetTelemetry();
+            if(setting.isEnabledTelemetry) {
                 //AppCenter.Start(
                 //    configuration.Api.AppCenter,
                 //    typeof(Crashes),
@@ -547,7 +547,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public ManagerViewModel CreateViewModel()
         {
-            var viewModel = new ManagerViewModel(this, LoggerFactory);
+            var viewModel = new ManagerViewModel(this, ApplicationDiContainer.Build<IUserTracker>(), LoggerFactory);
             return viewModel;
         }
 
