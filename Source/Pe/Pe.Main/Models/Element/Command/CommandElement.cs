@@ -218,7 +218,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
                 Logger.LogTrace("検索終了: {0}", stopwatch.Elapsed);
 
-                return commandItems.Select(i => WrapModel.Create(i, LoggerFactory)).ToList();
+                return commandItems
+                    .OrderByDescending(i => i.Score)
+                    .Select(i => WrapModel.Create(i, LoggerFactory))
+                    .ToList()
+                ;
             }, cancellationToken).ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
                     var commandItems = t.Result;

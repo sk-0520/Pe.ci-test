@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     workMatches.Remove(i);
                     i = i + hitLength;
                     if(workMatches.Count == 0) {
-                        if(i <= source.Length) {
+                        if(i < source.Length) {
                             result.Add(new HitValue(source.Substring(i), false));
                         }
                         break;
@@ -75,7 +75,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public int CalcScore(string source, IReadOnlyList<HitValue> hitValues)
         {
-            return 0;
+            Logger.LogDebug(">> {0}, {1}", source, string.Join(",", hitValues.Select(i => $"{(i.IsHit ? 'O' : 'X')}:{i.Value}")));
+            if(hitValues.Count == 1 && hitValues.All(i => i.IsHit)) {
+                // 完全一致
+                Logger.LogInformation(source);
+                return MaximumScore;
+            }
+            var scrore = InitialScore;
+            var first = hitValues.First();
+            if(first.IsHit) {
+                if(source.StartsWith(first.Value)) {
+                    scrore += GoodScore * 2;
+                } else if(source.StartsWith(first.Value, StringComparison.CurrentCultureIgnoreCase)) {
+                    scrore += GoodScore;
+                }
+            }
+
+            return scrore;
         }
 
 

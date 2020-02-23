@@ -75,8 +75,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 var hitValue = hitValuesCreator.ConvertHitValues(targetValue, ranges);
                 if(kind == CommandItemKind.LauncherItemName) {
                     result.EditableHeaderValues.SetRange(hitValue);
+                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableHeaderValues);
                 } else {
                     result.EditableDescriptionValues.SetRange(hitValue);
+                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableDescriptionValues);
                 }
                 return result;
             }
