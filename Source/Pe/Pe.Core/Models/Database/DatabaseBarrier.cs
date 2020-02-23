@@ -134,6 +134,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    public static class IDatabaseBarrierExtensions
+    {
+        #region function
+
+        public static TResult ReadData<TResult>(this IDatabaseBarrier @this, Func<IDatabaseTransaction, TResult> func)
+        {
+            using var commander = @this.WaitRead();
+            return func(commander);
+        }
+
+        #endregion
+    }
+
     public class DatabaseBarrier : IDatabaseBarrier
     {
         public DatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)

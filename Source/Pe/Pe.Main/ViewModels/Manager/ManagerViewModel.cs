@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand OpenStartupCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 // めんどいし直接ビュー開くよ
-                ApplicationManager.ShowStartupView();
+                ApplicationManager.ShowStartupView(false);
             }
         ));
         public ICommand OpenHelpCommand => GetOrCreateCommand(() => new DelegateCommand(

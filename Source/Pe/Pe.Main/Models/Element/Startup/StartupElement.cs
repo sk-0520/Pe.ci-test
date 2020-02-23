@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         #region property
 
         IWindowManager WindowManager { get; }
+        public bool IsRegisteredLauncher { get; private set; }
 
         #endregion
 
@@ -60,6 +61,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, view));
 
                 view.ShowDialog();
+                if(importProgramsModel.IsRegisteredLauncher) {
+                    IsRegisteredLauncher = true;
+                }
             }
         }
 

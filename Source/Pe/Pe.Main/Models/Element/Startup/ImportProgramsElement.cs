@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         public ObservableCollection<ProgramElement> ProgramItems { get; } = new ObservableCollection<ProgramElement>();
 
+        public bool IsRegisteredLauncher { get; private set; }
         #endregion
 
         #region function
@@ -116,12 +117,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 .ToList()
             ;
 
-            var group = launcherFactory.CreateGroupData(Properties.Resources.String_LauncherGroup_ImportItem_Name, LauncherGroupKind.Normal);
+            var groupNames = DatabaseBarrier.ReadData(c => {
+                var launcherGroupsDao = new LauncherGroupsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                return launcherGroupsDao.SelectAllLauncherGroupNames().ToList();
+            });
+            var groupName = TextUtility.ToUniqueDefault(Properties.Resources.String_LauncherGroup_ImportItem_Name, groupNames, StringComparison.CurrentCultureIgnoreCase);
+            var group = launcherFactory.CreateGroupData(groupName, LauncherGroupKind.Normal);
 
-            using(var transaction = DatabaseBarrier.WaitWrite()) {
-                var launcherItemsDao = new LauncherItemsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
-                var launcherTagsDao = new LauncherTagsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
-                var launcherFilesDao = new LauncherFilesEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
+            using(var commander = DatabaseBarrier.WaitWrite()) {
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherTagsDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 //TODO: db 今現在グループが一つでランチャーアイテムが登録されていなければ消してしまって
 
@@ -147,17 +153,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 }
 
                 // db グループ作る
-                var launcherGroupsDao = new LauncherGroupsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
+                var launcherGroupsDao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var groupStep = launcherFactory.GroupItemStep;
                 group.Sequence = launcherGroupsDao.SelectMaxSequence() + groupStep;
                 launcherGroupsDao.InsertNewGroup(group, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(transaction, StatementLoader, transaction.Implementation, LoggerFactory);
+                var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(group.LauncherGroupId);
                 launcherGroupItemsDao.InsertNewItems(group.LauncherGroupId, importItems.Select(i => i.Data.Item.LauncherItemId), currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
 
-                transaction.Commit();
+                commander.Commit();
             }
+            IsRegisteredLauncher = true;
         }
 
         public Task ImportAsync()

@@ -270,7 +270,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             container.Dispose();
         }
 
-        public void ShowStartupView()
+        public void ShowStartupView(bool isFirstSetup)
         {
             var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
@@ -285,6 +285,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 windowManager.Register(new WindowItem(WindowKind.Startup, view));
 
                 view.ShowDialog();
+
+                if(!isFirstSetup) {
+                    if(startupModel.IsRegisteredLauncher) {
+                        ResetScreenViewElements();
+                    }
+                }
             }
 
             changing.SuccessValue?.Dispose();
@@ -539,7 +545,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(IsFirstStartup) {
                 // 初期登録の画面を表示
-                ShowStartupView();
+                ShowStartupView(true);
             }
 
             var tuner = ApplicationDiContainer.Build<DatabaseTuner>();

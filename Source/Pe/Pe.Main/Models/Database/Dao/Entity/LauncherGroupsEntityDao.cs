@@ -101,6 +101,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Query<Guid>(statement);
         }
 
+        public IEnumerable<string> SelectAllLauncherGroupNames()
+        {
+            var statement = LoadStatement();
+            return Commander.Query<string>(statement);
+        }
+
+
         public LauncherGroupData SelectLauncherGroup(Guid launcherGroupId)
         {
             var statement = LoadStatement();
