@@ -47,9 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             GroupItems.RemoveAt(startIndex);
             GroupItems.Insert(insertIndex, item);
 
-            foreach(var group in GroupItems.Counting()) {
-                group.Value.Sequence = group.Number * launcherFactory.GroupItemStep;
-            }
+            //foreach(var group in GroupItems.Counting()) {
+            //    group.Value.Sequence = group.Number * launcherFactory.GroupItemStep;
+            //}
         }
 
         public void RemoveGroup(Guid launcherGroupId)
@@ -124,6 +124,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
+            var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
+            foreach(var group in GroupItems.Counting()) {
+                group.Value.Sequence = group.Number * launcherFactory.GroupItemStep;
+            }
+
             foreach(var group in GroupItems) {
                 group.Save(commandPack);
             }

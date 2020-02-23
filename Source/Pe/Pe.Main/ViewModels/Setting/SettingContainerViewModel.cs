@@ -29,13 +29,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public SettingContainerViewModel(SettingContainerElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, ILauncherGroupTheme launcherGroupTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
+            GeneralTheme = generalTheme;
+            LauncherGroupTheme = launcherGroupTheme;
+
             AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
+            };
+            AllLauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.AllLauncherGroups) {
+                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, LauncherGroupTheme, DispatcherWrapper, LoggerFactory),
             };
 
             GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, configuration, generalTheme, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
-            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
+            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, AllLauncherGroupCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
             LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
 
@@ -52,10 +58,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        IGeneralTheme GeneralTheme { get; }
+        ILauncherGroupTheme LauncherGroupTheme { get; }
+
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         [IgnoreValidation]
         public ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
+        [IgnoreValidation]
+        public ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroupCollection { get; }
 
         [IgnoreValidation]
         public IReadOnlyList<ISettingEditorViewModel> EditorItems { get; }

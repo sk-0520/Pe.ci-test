@@ -108,15 +108,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        public long Sequence
-        {
-            get => Model.Sequence;
-            set
-            {
-                SetModelValue(value);
-                ReloadGroupIcon();
-            }
-        }
+        //public long Sequence
+        //{
+        //    get => Model.Sequence;
+        //    set
+        //    {
+        //        SetModelValue(value);
+        //        ReloadGroupIcon();
+        //    }
+        //}
 
         public LauncherGroupKind Kind => Model.Kind;
 
