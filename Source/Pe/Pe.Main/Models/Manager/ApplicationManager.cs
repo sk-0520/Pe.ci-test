@@ -698,8 +698,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             NoteElements.AddRange(notes);
 
             var viewShowStaters = Enumerable.Empty<IViewShowStarter>()
-                .Concat(launcherToolbars)
                 .Concat(notes)
+                .Concat(launcherToolbars)
                 .Where(i => i.CanStartShowView)
                 .ToList()
             ;
