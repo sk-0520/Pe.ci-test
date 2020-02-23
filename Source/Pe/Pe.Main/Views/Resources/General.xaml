@@ -2,6 +2,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
 >
   <sys:Double x:Key="GridSplitterLength">4</sys:Double>
   <Thickness x:Key="TextBoxPadding">2</Thickness>
@@ -395,6 +397,20 @@
         </Control.Template>
       </Control>
       <TextBlock Text="{Binding Name}" />
+    </StackPanel>
+  </DataTemplate>
+
+
+  <DataTemplate x:Key="Setting-LauncherItems" >
+    <StackPanel Style="{StaticResource ImageLabel-Small}">
+      <Control>
+        <Control.Template>
+          <ControlTemplate>
+            <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
+          </ControlTemplate>
+        </Control.Template>
+      </Control>
+      <TextBlock Text="{Binding Common.Name}" />
     </StackPanel>
   </DataTemplate>
 

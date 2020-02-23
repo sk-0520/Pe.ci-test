@@ -235,7 +235,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" Text="{Binding Resources.String_Setting_Keyboard_Pressed_LauncherItem_Header, Source={x:Static app_main:CultureService.Current}}" />
-                    <ComboBox Grid.Column="1" ItemsSource="{Binding AllLauncherItems}" SelectedItem="{Binding LauncherItem}">
+                    <ComboBox Grid.Column="1" ItemTemplate="{StaticResource Setting-LauncherItems}" ItemsSource="{Binding AllLauncherItems}" SelectedItem="{Binding LauncherItem}">
                       <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                           <VirtualizingStackPanel
@@ -244,14 +244,14 @@
                           />
                         </ItemsPanelTemplate>
                       </ComboBox.ItemsPanel>
-                      <ComboBox.ItemTemplate>
+                      <!--<ComboBox.ItemTemplate>
                         <DataTemplate>
                           <StackPanel Orientation="Horizontal">
                             <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
                             <TextBlock Text="{Binding Common.Name}" />
                           </StackPanel>
                         </DataTemplate>
-                      </ComboBox.ItemTemplate>
+                      </ComboBox.ItemTemplate>-->
                     </ComboBox>
                   </Grid>
                 </Expander.Header>
