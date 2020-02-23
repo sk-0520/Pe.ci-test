@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherToobarSettingEditorElement : ElementBase, ILauncherToolbarId
     {
-        public LauncherToobarSettingEditorElement(Guid launcherToolbarId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public LauncherToobarSettingEditorElement(Guid launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             LauncherToolbarId = launcherToolbarId;
+            AllLauncherGroups = allLauncherGroups;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
@@ -28,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         #region property
-
+        ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }

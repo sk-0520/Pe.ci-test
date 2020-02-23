@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -16,16 +17,51 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
     public class LauncherToobarSettingEditorViewModel : SettingItemViewModelBase<LauncherToobarSettingEditorElement>
     {
-        public LauncherToobarSettingEditorViewModel(LauncherToobarSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        #region variable
+
+        bool _isChangeDefaultGroup;
+
+        #endregion
+
+        public LauncherToobarSettingEditorViewModel(LauncherToobarSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroups, Func<bool> isSelectedGetter, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
+            AllLauncherGroups = allLauncherGroups;
             GeneralTheme = generalTheme;
+            IsSelectedGetter = isSelectedGetter;
+            Refresh();
         }
 
         #region property
+
+        Func<bool> IsSelectedGetter { get; }
+        ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> AllLauncherGroups { get; }
         IGeneralTheme GeneralTheme { get; }
         public FontViewModel? Font { get; private set; }
-        public Guid LauncherGroupId { get; private set; }
+
+        public bool IsChangeDefaultGroup
+        {
+            get => this._isChangeDefaultGroup;
+            set
+            {
+                SetProperty(ref this._isChangeDefaultGroup, value);
+                if(!IsChangeDefaultGroup) {
+                    LauncherGroupId = Guid.Empty;
+                }
+            }
+        }
+
+        public Guid LauncherGroupId
+        {
+            get => Model.LauncherGroupId;
+            set
+            {
+                if(IsSelectedGetter()) {
+                    SetModelValue(value);
+                }
+            }
+        }
+
         public AppDesktopToolbarPosition ToolbarPosition
         {
             get => Model.ToolbarPosition;
@@ -108,6 +144,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region function
+
+        public void Refresh()
+        {
+            //RaisePropertyChanged(nameof(IsChangeDefaultGroup));
+            //RaisePropertyChanged(nameof(LauncherGroupId));
+
+            if(LauncherGroupId != Guid.Empty && 0 < AllLauncherGroups.Count) {
+                if(AllLauncherGroups.ViewModels.Any(i => i.LauncherGroupId == LauncherGroupId)) {
+                    RaisePropertyChanged(nameof(LauncherGroupId));
+                    IsChangeDefaultGroup = true;
+                } else {
+                    LauncherGroupId = Guid.Empty;
+                    IsChangeDefaultGroup = false;
+                }
+            } else {
+                LauncherGroupId = Guid.Empty;
+                IsChangeDefaultGroup = false;
+            }
+
+        }
 
         #endregion
 

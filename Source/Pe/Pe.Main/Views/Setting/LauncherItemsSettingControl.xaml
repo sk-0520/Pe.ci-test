@@ -84,7 +84,7 @@
 
       </ToolBar>
 
-      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, ElementName=root}">
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, ElementName=root}">
         <i:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>
@@ -96,14 +96,14 @@
             />
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
-        <ListBox.ItemTemplate>
+        <!--<ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
               <TextBlock Text="{Binding Common.Name}" />
             </StackPanel>
           </DataTemplate>
-        </ListBox.ItemTemplate>
+        </ListBox.ItemTemplate>-->
       </ListBox>
     </Grid>
 

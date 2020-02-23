@@ -1,4 +1,4 @@
-﻿
+
 select
 	LauncherItems.LauncherItemId,
 	LauncherItems.Name,

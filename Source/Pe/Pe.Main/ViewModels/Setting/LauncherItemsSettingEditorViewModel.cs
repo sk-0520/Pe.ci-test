@@ -211,6 +211,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        public override void Refresh()
+        { }
+
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {

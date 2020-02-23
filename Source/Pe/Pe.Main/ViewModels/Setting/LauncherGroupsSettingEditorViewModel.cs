@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             LauncherGroupTheme = launcherGroupTheme;
@@ -49,9 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AllLauncherItems = AllLauncherItemCollection.CreateView();
             AllLauncherItems.Filter = FilterAllLauncherItems;
 
-            GroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.GroupItems) {
-                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, LauncherGroupTheme, DispatcherWrapper, LoggerFactory)
-            };
+            GroupCollection = allLauncherGroupCollection;
             GroupItems = GroupCollection.GetDefaultView();
 
             var groupImageItems = EnumUtility.GetMembers<LauncherGroupImageName>()
@@ -535,9 +533,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public override string Header => Properties.Resources.String_Setting_LauncherGroups_Header;
 
         public override void Flush()
-        {
+        { }
 
-        }
+        public override void Refresh()
+        { }
+
 
         protected override void Dispose(bool disposing)
         {

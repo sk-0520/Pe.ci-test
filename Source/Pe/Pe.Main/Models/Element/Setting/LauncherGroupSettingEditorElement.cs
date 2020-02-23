@@ -79,7 +79,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ImageColor = ImageColor,
                 Sequence = Sequence
             };
-            var launcherItemIds = LauncherItems.Select(i => i.Data).ToList();
+            // 存在しないランチャーアイテムは保存対象外とする
+            var launcherItemsEntityDao = new LauncherItemsEntityDao(pack.Main.Commander, StatementLoader, pack.Main.Implementation, LoggerFactory);
+            var launcherItemIds = LauncherItems
+                .Select(i => i.Data)
+                // こんなとこでSQL発行するとか業務じゃむり
+                .Where(i => launcherItemsEntityDao.SelectExistsLauncherLauncherItem(i))
+                .ToList()
+            ;
 
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
 
@@ -88,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(pack.Main.Commander, StatementLoader, pack.Main.Implementation, LoggerFactory);
             launcherGroupItemsDao.DeleteGroupItemsByLauncherGroupId(LauncherGroupId);
+
             var currentMaxSequence = launcherGroupItemsDao.SelectMaxSequence(LauncherGroupId);
             launcherGroupItemsDao.InsertNewItems(LauncherGroupId, launcherItemIds, currentMaxSequence + launcherFactory.GroupItemsStep, launcherFactory.GroupItemsStep, DatabaseCommonStatus.CreateCurrentAccount());
         }

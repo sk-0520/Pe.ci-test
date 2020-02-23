@@ -14,12 +14,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         string Header { get; }
+        bool IsSelected { get; set; }
 
         #endregion
 
         #region function
 
         void Load();
+        void Refresh();
 
         #endregion
     }
@@ -27,6 +29,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     public abstract class SettingEditorViewModelBase<TSettingEditorElement> : SingleModelViewModelBase<TSettingEditorElement>, ISettingEditorViewModel
         where TSettingEditorElement : SettingEditorElementBase
     {
+        #region variable
+
+        bool _isSelected;
+
+        #endregion
+
         public SettingEditorViewModelBase(TSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
@@ -52,16 +60,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region ISettingEditorViewModel
 
         public abstract string Header { get; }
+        public bool IsSelected
+        {
+            get => this._isSelected;
+            set => SetProperty(ref this._isSelected, value);
+        }
 
         public virtual void Load()
         {
             if(Model.IsLoaded) {
+                Refresh();
                 return;
             }
             Model.Load();
         }
 
         public abstract void Flush();
+
+        public abstract void Refresh();
 
         #endregion
 

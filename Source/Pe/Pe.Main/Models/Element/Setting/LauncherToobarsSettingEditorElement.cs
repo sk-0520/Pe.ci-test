@@ -17,12 +17,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherToobarsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherToobarsSettingEditorElement(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToobarsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            AllLauncherGroups = allLauncherGroups;
+        }
 
         #region property
 
+        public ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; }
         public ObservableCollection<LauncherToobarSettingEditorElement> Toolbars { get; } = new ObservableCollection<LauncherToobarSettingEditorElement>();
 
         #endregion
@@ -43,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var toolbars = new List<LauncherToobarSettingEditorElement>();
             foreach(var launcherToolbarId in launcherToolbarIds) {
-                var element = new LauncherToobarSettingEditorElement(launcherToolbarId, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+                var element = new LauncherToobarSettingEditorElement(launcherToolbarId, AllLauncherGroups, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
                 toolbars.Add(element);
             }
 
