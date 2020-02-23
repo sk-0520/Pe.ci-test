@@ -461,6 +461,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 Model.Unlink(false);
                 RaisePropertyChanged(nameof(IsLink));
                 RaisePropertyChanged(nameof(LinkPath));
+                ShowLinkChangeConfim = false;
             },
             () => IsLink
         ).ObservesProperty(() => IsLink));
@@ -470,6 +471,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 Model.Unlink(true);
                 RaisePropertyChanged(nameof(IsLink));
                 RaisePropertyChanged(nameof(LinkPath));
+                ShowLinkChangeConfim = false;
             },
             () => IsLink
         ).ObservesProperty(() => IsLink));
@@ -489,6 +491,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         RaisePropertyChanged(nameof(LinkPath));
                     }
                 });
+                ShowLinkChangeConfim = false;
             },
             () => !IsLink
         ).ObservesProperty(() => IsLink));
@@ -506,6 +509,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         RaisePropertyChanged(nameof(LinkPath));
                     }
                 });
+                ShowLinkChangeConfim = false;
             },
             () => !IsLink
         ).ObservesProperty(() => IsLink));
@@ -523,6 +527,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
                 }
+                ShowLinkChangeConfim = false;
             }
         ));
 

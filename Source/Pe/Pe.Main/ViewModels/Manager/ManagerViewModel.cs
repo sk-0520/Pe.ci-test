@@ -49,6 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #region property
 
+        // 月初だけ windows アイコンを古くする(理由はない)
+        public bool ShowOldVersion => DateTime.Now.Day == 1;
+
         ApplicationManager ApplicationManager { get; }
 
         ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
