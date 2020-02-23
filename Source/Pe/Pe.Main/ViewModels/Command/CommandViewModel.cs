@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                     if(t.IsCanceled) {
                         Logger.LogTrace("cancel!");
                     } else if(t.IsCompletedSuccessfully) {
-                        InputCancellationTokenSource.Dispose();
+                        InputCancellationTokenSource?.Dispose();
                         InputCancellationTokenSource = null;
 
                         SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
