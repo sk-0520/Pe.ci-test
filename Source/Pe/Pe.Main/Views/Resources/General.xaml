@@ -385,4 +385,17 @@
     <Setter Property="Orientation" Value="Horizontal" />
   </Style>
 
+  <DataTemplate x:Key="Setting-LauncherGroups">
+    <StackPanel Style="{StaticResource ImageLabel-Small}">
+      <Control>
+        <Control.Template>
+          <ControlTemplate>
+            <ContentControl Content="{Binding GroupIcon}" />
+          </ControlTemplate>
+        </Control.Template>
+      </Control>
+      <TextBlock Text="{Binding Name}" />
+    </StackPanel>
+  </DataTemplate>
+
 </ResourceDictionary>

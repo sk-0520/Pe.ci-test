@@ -73,11 +73,11 @@
         </RepeatButton>
       </ToolBar>
 
-      <ListBox Grid.Row="1" AllowDrop="True" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
+      <ListBox Grid.Row="1" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherGroups}" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
         <i:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, ElementName=root}" />
         </i:Interaction.Behaviors>
-        <ListBox.ItemTemplate>
+        <!--<ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
               <StackPanel Orientation="Horizontal">
@@ -86,7 +86,7 @@
               </StackPanel>
             </StackPanel>
           </DataTemplate>
-        </ListBox.ItemTemplate>
+        </ListBox.ItemTemplate>-->
       </ListBox>
 
       <GridSplitter Grid.Row="2" Style="{StaticResource Horizon-GridSplitter}" />

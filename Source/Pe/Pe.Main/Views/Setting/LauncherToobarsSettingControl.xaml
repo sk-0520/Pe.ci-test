@@ -98,12 +98,12 @@
                     </Grid.ColumnDefinitions>
 
                     <CheckBox Grid.Column="0" IsChecked="{Binding IsChangeDefaultGroup}" Content="{Binding Resources.String_Setting_LauncherToolbars_ChangeDefaultGroup_A, Source={x:Static app_main:CultureService.Current}}" />
-                    <ComboBox Grid.Column="1" IsEnabled="{Binding IsChangeDefaultGroup}" SelectedValuePath="LauncherGroupId" SelectedValue="{Binding LauncherGroupId}" ItemsSource="{Binding Editor.AllLauncherGroupItems, Source={x:Reference root}}">
+                    <ComboBox Grid.Column="1" ItemTemplate="{StaticResource Setting-LauncherGroups}" IsEnabled="{Binding IsChangeDefaultGroup}" SelectedValuePath="LauncherGroupId" SelectedValue="{Binding LauncherGroupId}" ItemsSource="{Binding Editor.AllLauncherGroupItems, Source={x:Reference root}}">
                       <ComboBox.Style>
                         <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                         </Style>
                       </ComboBox.Style>
-                      <ComboBox.ItemTemplate>
+                      <!--<ComboBox.ItemTemplate>
                         <DataTemplate>
                           <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Horizontal">
@@ -112,7 +112,7 @@
                             </StackPanel>
                           </StackPanel>
                         </DataTemplate>
-                      </ComboBox.ItemTemplate>
+                      </ComboBox.ItemTemplate>-->
 
                     </ComboBox>
                   </Grid>
