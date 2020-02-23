@@ -139,6 +139,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
+        public bool SelectExistsLauncherLauncherItem(Guid launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.QueryFirst<bool>(statement, parameter);
+        }
+
         public void InsertLauncherItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();

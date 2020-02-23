@@ -1,6 +1,6 @@
-﻿
+
 select
-	COUNT(*) = 1
+	COUNT(1) = 1
 from
 	Screens
 where

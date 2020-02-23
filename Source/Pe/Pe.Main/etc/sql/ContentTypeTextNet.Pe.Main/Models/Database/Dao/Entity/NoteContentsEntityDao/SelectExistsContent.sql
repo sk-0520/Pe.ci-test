@@ -1,5 +1,5 @@
-﻿select
-	count(*) = 1
+select
+	COUNT(*) = 1
 from
 	NoteContents
 where
