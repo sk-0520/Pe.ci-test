@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
+namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
     internal class HitValuesCreator : IHitValuesCreator
     {
