@@ -130,6 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo UserSettingDirectory => CombineDirectory(UserRoamingDirectory, "settings");
         public DirectoryInfo UserPluginDirectory => CombineDirectory(UserSettingDirectory, "plugins");
+        public DirectoryInfo UserPluginDataDirectory => CombineDirectory(UserPluginDirectory, "data");
 
         /// <summary>
         /// ユーザー端末配置ディレクトリ。
@@ -144,6 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo MachineUpdateArchiveDirectory => CombineDirectory(MachineArchiveDirectory, "application");
         public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
+        public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(MachinePluginDirectory, "data");
 
         /// <summary>
         /// WebViewの端末親ディレクトリ。
@@ -164,6 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// WebViewのユーザーディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(TemporaryDirectory, "plugins");
+        public DirectoryInfo TemporaryPluginDataDirectory => CombineDirectory(TemporaryPluginDirectory, "data");
 
         /// <summary>
         /// アーカイブ展開ディレクトリ。
@@ -197,9 +200,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         public CustomConfiguration Configuration { get; }
 
-#endregion
+        #endregion
 
-#region function
+        #region function
 
         private static DirectoryInfo GetDirectory(CommandLine commandLine, string key, string defaultValue)
         {
@@ -239,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return new FileInfo(path);
         }
 
-#endregion
+        #endregion
 
 
     }
