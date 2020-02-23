@@ -211,7 +211,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 var commandItems = new List<ICommandItem>();
                 foreach(var item in ListupCommandItems(inputValue, hitValuesCreator, cancellationToken)) {
                     commandItems.Add(item);
-                    Logger.LogDebug(string.Join(" - ", item.HeaderMatches.Select(i => i.Value)));
+                    Logger.LogDebug(string.Join(" - ", item.HeaderValues.Select(i => i.Value)));
                 }
                 cancellationToken.ThrowIfCancellationRequested();
 

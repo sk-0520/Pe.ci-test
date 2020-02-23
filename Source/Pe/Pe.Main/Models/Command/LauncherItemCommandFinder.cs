@@ -128,8 +128,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     };
                     result.Initialize();
                     var ranges = hitValuesCreator.ConvertRanges(nameMatches);
-                    var hitValue = hitValuesCreator.ConvertHitValueItems(element.Name, ranges);
-                    result.EditableHeaderMatchers.SetRange(hitValue);
+                    var hitValue = hitValuesCreator.ConvertHitValues(element.Name, ranges);
+                    result.EditableHeaderValues.SetRange(hitValue);
                     yield return result;
                     continue;
                 }
@@ -143,8 +143,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     result.Initialize();
 
                     var ranges = hitValuesCreator.ConvertRanges(codeMatches);
-                    var hitValue = hitValuesCreator.ConvertHitValueItems(element.Code, ranges);
-                    result.EditableDescriptionMatchers.SetRange(hitValue);
+                    var hitValue = hitValuesCreator.ConvertHitValues(element.Code, ranges);
+                    result.EditableDescriptionValues.SetRange(hitValue);
                     yield return result;
                     continue;
                 }
@@ -161,8 +161,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                                 result.Initialize();
 
                                 var ranges = hitValuesCreator.ConvertRanges(tagMatches);
-                                var hitValue = hitValuesCreator.ConvertHitValueItems(tag, ranges);
-                                result.EditableDescriptionMatchers.SetRange(hitValue);
+                                var hitValue = hitValuesCreator.ConvertHitValues(tag, ranges);
+                                result.EditableDescriptionValues.SetRange(hitValue);
 
                                 yield return result;
                             }

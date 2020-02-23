@@ -19,8 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region property
 
-        public List<HitValue> EditableHeaderMatchers { get; } = new List<HitValue>();
-        public List<HitValue> EditableDescriptionMatchers { get; } = new List<HitValue>();
+        public List<HitValue> EditableHeaderValues { get; } = new List<HitValue>();
+        public List<HitValue> EditableDescriptionValues { get; } = new List<HitValue>();
         public Action? ExecuteAction { get; set; }
 
         #endregion
@@ -29,10 +29,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public abstract CommandItemKind Kind { get; }
 
-        public IReadOnlyList<HitValue> HeaderMatches => EditableHeaderMatchers;
+        public IReadOnlyList<HitValue> HeaderValues => EditableHeaderValues;
 
-        public IReadOnlyList<HitValue> DescriptionMatches => EditableDescriptionMatchers;
-        public abstract double Score { get; }
+        public IReadOnlyList<HitValue> DescriptionValues => EditableDescriptionValues;
+        public abstract int Score { get; }
 
         public abstract object GetIcon(IconBox iconBox);
         public abstract void Execute(IScreen screen, bool isExtend);
@@ -46,20 +46,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public LauncherCommandItemElement(LauncherItemElement launcherItemElement, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             LauncherItemElement = launcherItemElement;
-            EditableHeaderMatchers.AddRange(new[] { new HitValue(LauncherItemElement.Name, false) });
+            EditableHeaderValues.AddRange(new[] { new HitValue(LauncherItemElement.Name, false) });
         }
 
         #region property
 
         LauncherItemElement LauncherItemElement { get; }
         public CommandItemKind EditableKind { get; set; } = CommandItemKind.LauncherItem;
-        public double EditableScore { get; set; }
+        public int EditableScore { get; set; }
         #endregion
 
         #region CommandItemElementBase
 
         public override CommandItemKind Kind => EditableKind;
-        public override double Score => EditableScore;
+        public override int Score => EditableScore;
 
         public override object GetIcon(IconBox iconBox)
         {

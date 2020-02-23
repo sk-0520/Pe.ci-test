@@ -46,14 +46,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// メイン表示文字列。
         /// </summary>
-        IReadOnlyList<HitValue> HeaderMatches { get; }
+        IReadOnlyList<HitValue> HeaderValues { get; }
         /// <summary>
         /// 追記文言。
         /// </summary>
-        IReadOnlyList<HitValue> DescriptionMatches { get; }
+        IReadOnlyList<HitValue> DescriptionValues { get; }
 
 
-        double Score { get; }
+        int Score { get; }
 
         #endregion
 

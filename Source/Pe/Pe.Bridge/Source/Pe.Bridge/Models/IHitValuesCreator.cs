@@ -8,6 +8,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     public interface IHitValuesCreator
     {
+        #region property
+
+        int InitialScore { get; }
+        int MaximumScore { get; }
+        int MinimumScore { get; }
+        int GoodScore { get; }
+        int BadScore { get; }
+        int SeparatorScore { get; }
+
+        #endregion
+
         #region function
 
         /// <summary>
@@ -20,7 +31,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         IReadOnlyList<Range> ConvertRanges(IEnumerable<Match> matches);
 
-        List<HitValue> ConvertHitValueItems(string source, IReadOnlyList<Range> hitRanges);
+        List<HitValue> ConvertHitValues(string source, IReadOnlyList<Range> hitRanges);
+
+        int CalcScore(string source, IReadOnlyList<HitValue> hitValues);
 
         #endregion
     }

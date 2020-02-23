@@ -24,11 +24,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region IHitValuesCreator
 
+        public int InitialScore { get; } = 0;
+        public int MaximumScore { get; } = 100;
+        public int MinimumScore { get; } = -100;
+        public int GoodScore { get; } = 10;
+        public int BadScore { get; } = -5;
+        public int SeparatorScore { get; } = 5;
+
+
         public IReadOnlyList<Match> GetMatches(Regex regex, string input) => regex.Matches(input).Cast<Match>().ToList();
 
         public IReadOnlyList<Range> ConvertRanges(IEnumerable<Match> matches) => matches.Select(i => new Range(i.Index, i.Index + i.Length)).ToList();
 
-        public List<HitValue> ConvertHitValueItems(string source, IReadOnlyList<Range> hitRanges)
+        public List<HitValue> ConvertHitValues(string source, IReadOnlyList<Range> hitRanges)
         {
             if(hitRanges.Count == 0) {
                 return new List<HitValue>() {
@@ -64,6 +72,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             return result;
         }
+
+        public int CalcScore(string source, IReadOnlyList<HitValue> hitValues)
+        {
+            return 0;
+        }
+
 
 
         #endregion

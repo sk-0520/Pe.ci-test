@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
-    public class HitValueItem : ViewModelBase
+    public class HitValueItemViewModel : ViewModelBase
     {
-        public HitValueItem(HitValue hitValue, ILoggerFactory loggerFactory)
+        public HitValueItemViewModel(HitValue hitValue, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Value = hitValue.Value;

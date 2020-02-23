@@ -26,8 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             IconBox = iconBox;
             DispatcherWrapper = dispatcherWrapper;
 
-            HeaderValues = Item.HeaderMatches.Select(i => new HitValueItem(i, LoggerFactory)).ToList();
-            DescriptionValues = Item.DescriptionMatches.Select(i => new HitValueItem(i, LoggerFactory)).ToList();
+            HeaderValues = Item.HeaderValues.Select(i => new HitValueItemViewModel(i, LoggerFactory)).ToList();
+            DescriptionValues = Item.DescriptionValues.Select(i => new HitValueItemViewModel(i, LoggerFactory)).ToList();
         }
 
         #region property
@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public CommandItemKind Kind => Item.Kind;
         public double Score => Item.Score;
 
-        public IReadOnlyList<HitValueItem> HeaderValues { get; }
-        public IReadOnlyList<HitValueItem> DescriptionValues { get; }
+        public IReadOnlyList<HitValueItemViewModel> HeaderValues { get; }
+        public IReadOnlyList<HitValueItemViewModel> DescriptionValues { get; }
 
         public bool ShowDescription
         {
