@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
             //this.popupItems.IsOpen = true;
             Dispatcher.BeginInvoke(new Action(() => {
-                WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
+                //WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
                 this.inputCommand.Focus();
             }), System.Windows.Threading.DispatcherPriority.SystemIdle);
         }

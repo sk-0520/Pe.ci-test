@@ -84,9 +84,9 @@
     <app_core_view:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
       <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>
-    <app_core_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
+    <!--<app_core_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
       <prism:InvokeCommandAction Command="{Binding UnlinkCommand ,ElementName=root}" />
-    </app_core_view:RequestTrigger>
+    </app_core_view:RequestTrigger>-->
     <app_core_view:RequestTrigger SourceObject="{Binding LinkChangeRequest}">
       <prism:InvokeCommandAction Command="{Binding LinkChangeCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>

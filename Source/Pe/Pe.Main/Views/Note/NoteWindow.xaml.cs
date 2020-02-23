@@ -98,12 +98,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
-        [Obsolete]
-        public ICommand UnlinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
-            o => {
-                throw new NotImplementedException("Obsolete");
-            }
-        ));
+        //[Obsolete]
+        //public ICommand UnlinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+        //    o => {
+        //        throw new NotImplementedException("Obsolete");
+        //    }
+        //));
 
         public ICommand LinkChangeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {

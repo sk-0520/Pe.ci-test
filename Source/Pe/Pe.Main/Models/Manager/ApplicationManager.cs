@@ -681,9 +681,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void ExecuteElements()
         {
             var currentActiveWindowHandle = NativeMethods.GetActiveWindow();
-            if(currentActiveWindowHandle == IntPtr.Zero) {
-                currentActiveWindowHandle = NativeMethods.GetForegroundWindow();
-            }
+            //if(currentActiveWindowHandle == IntPtr.Zero) {
+            //    currentActiveWindowHandle = NativeMethods.GetForegroundWindow();
+            //}
 
             // グループ構築
             var launcherGroups = CreateLauncherGroupElements();
@@ -713,13 +713,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return;
             }
 #endif
-            // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
-            if(currentActiveWindowHandle != IntPtr.Zero) {
-                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
-                    WindowsUtility.ShowActiveForeground(currentActiveWindowHandle);
-                    MoveZOrderAllNotes(false);
-                }, DispatcherPriority.SystemIdle);
-            }
+            ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
+                if(currentActiveWindowHandle != IntPtr.Zero) {
+                    WindowsUtility.ShowActive(currentActiveWindowHandle);
+                }
+                MoveZOrderAllNotes(false);
+            }, DispatcherPriority.SystemIdle);
         }
 
         public void Execute()
