@@ -464,7 +464,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CloseViews();
             DisposeElements();
-            BackupSettingsDefault();
+            BackupSettingsDefault(ApplicationDiContainer);
         }
 
 
@@ -480,7 +480,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     DelayCheckUpdateAsync().ConfigureAwait(false);
                 }
             } else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
-                BackupSettingsDefault();
+                BackupSettingsDefault(ApplicationDiContainer);
             } else if(e.Reason == SessionSwitchReason.SessionLock) {
                 // アップデート処理実施
                 if(ApplicationUpdateInfo.IsReady) {

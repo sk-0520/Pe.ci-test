@@ -209,22 +209,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ;
 
                 // バックアップ処理開始
-                string userBackupDirectoryPath;
-                using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
-                    var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
-                    userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
-                }
-                try {
-                    BackupSettings(
-                        environmentParameters.UserSettingDirectory,
-                        environmentParameters.UserBackupDirectory,
-                        DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
-                        environmentParameters.Configuration.Backup.SettingCount,
-                        userBackupDirectoryPath
-                    );
-                } catch(Exception ex) {
-                    Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
-                }
+                //string userBackupDirectoryPath;
+                //using(var commander = container.Get<IMainDatabaseBarrier>().WaitRead()) {
+                //    var appGeneralSettingEntityDao = container.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+                //    userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
+                //}
+                //try {
+                //    BackupSettingsCore(
+                //        environmentParameters.UserSettingDirectory,
+                //        environmentParameters.UserBackupDirectory,
+                //        DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
+                //        environmentParameters.Configuration.Backup.SettingCount,
+                //        userBackupDirectoryPath
+                //    );
+                //} catch(Exception ex) {
+                //    Logger.LogError(ex, "バックアップ処理失敗: {0}", ex.Message);
+                //}
+                BackupSettingsDefault(container);
 
                 var accessorPack = container.Get<IDatabaseAccessorPack>();
                 var databaseSetupper = container.Build<DatabaseSetupper>();
@@ -804,7 +805,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("おわる！");
 
-            BackupSettingsDefault();
+            BackupSettingsDefault(ApplicationDiContainer);
 
             if(!ignoreUpdate && ApplicationUpdateInfo.IsReady) {
                 Debug.Assert(ApplicationUpdateInfo.Path != null);
@@ -857,29 +858,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount, string userBackupDirectoryPath)
         {
-            // アプリケーション側バックアップ
-            var settingBackupper = new SettingBackupper(LoggerFactory);
-            settingBackupper.BackupUserSetting(sourceDirectory, targetDirectory, backupFileBaseName, enabledCount);
+            try {
+                // アプリケーション側バックアップ
+                var settingBackupper = new SettingBackupper(LoggerFactory);
+                settingBackupper.BackupUserSetting(sourceDirectory, targetDirectory, backupFileBaseName, enabledCount);
 
-            // ユーザー設定側バックアップ
-            var expandeduserBackupDirectoryPath = Environment.ExpandEnvironmentVariables(userBackupDirectoryPath ?? string.Empty);
-            if(!string.IsNullOrWhiteSpace(expandeduserBackupDirectoryPath)) {
-                var dir = new DirectoryInfo(expandeduserBackupDirectoryPath);
-                settingBackupper.BackupUserSettingToCustomDirectory(sourceDirectory, dir);
+                // ユーザー設定側バックアップ
+                var expandeduserBackupDirectoryPath = Environment.ExpandEnvironmentVariables(userBackupDirectoryPath ?? string.Empty);
+                if(!string.IsNullOrWhiteSpace(expandeduserBackupDirectoryPath)) {
+                    var dir = new DirectoryInfo(expandeduserBackupDirectoryPath);
+                    settingBackupper.BackupUserSettingToCustomDirectory(sourceDirectory, dir);
+                }
+            } catch(Exception ex) {
+                Logger.LogError(ex, "バックアップ失敗");
             }
         }
 
-        void BackupSettingsDefault()
+        void BackupSettingsDefault(IDiContainer diContainer)
         {
-            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var environmentParameters = diContainer.Get<EnvironmentParameters>();
 
             // バックアップ処理開始
             string userBackupDirectoryPath;
-            using(var commander = ApplicationDiContainer.Get<IMainDatabaseBarrier>().WaitRead()) {
-                var appGeneralSettingEntityDao = ApplicationDiContainer.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+            using(var commander = diContainer.Get<IMainDatabaseBarrier>().WaitRead()) {
+                var appGeneralSettingEntityDao = diContainer.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
                 userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
             }
-
             BackupSettings(
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.UserBackupDirectory,
