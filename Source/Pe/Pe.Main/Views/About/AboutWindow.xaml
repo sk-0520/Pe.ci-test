@@ -50,7 +50,7 @@
       </Grid.ColumnDefinitions>
 
       <Grid Grid.Column="0">
-        <ScrollViewer>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
           <StackPanel Margin="{StaticResource HalfMargin}">
             <StackPanel.Resources>
               <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
