@@ -137,8 +137,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 // ドライブ名
                 var drive = DriveInfo.GetDrives().FirstOrDefault(d => d.Name == path);
                 if(drive != null) {
-                    //TODO: 光学ドライブ(多分マウントしていないドライブ)は落ちる
-                    return drive.VolumeLabel;
+                    if(drive.DriveType == DriveType.CDRom || drive.DriveType == DriveType.Removable) {
+                        return drive.Name;
+                    } else {
+                        return drive.VolumeLabel;
+                    }
                 }
             }
 
