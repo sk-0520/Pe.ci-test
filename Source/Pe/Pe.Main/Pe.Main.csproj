@@ -25,6 +25,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="etc\script\UpdaterScript.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="nlog.config" />
     <None Remove="Resources\Icon\App-beta.ico" />
     <None Remove="Resources\Icon\App-debug.ico" />
@@ -33,6 +37,12 @@
 
   <ItemGroup>
     <Page Remove="Resources\File\Accept\AcceptDocument.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="etc\script\UpdaterScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
