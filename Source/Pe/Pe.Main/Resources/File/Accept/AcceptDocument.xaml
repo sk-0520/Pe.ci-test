@@ -1,0 +1,98 @@
+<FlowDocument
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <FlowDocument.Resources>
+    <Style x:Key="Header" TargetType="Paragraph">
+      <Setter Property="Margin" Value="0, 20, 0, 10" />
+      <Setter Property="FontSize" Value="16pt" />
+      <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+  </FlowDocument.Resources>
+
+  <Paragraph
+    FontSize="20pt"
+    FontWeight="Bold"
+    TextDecorations="Underline"
+    TextAlignment="Center"
+  >
+    ソフトウェア使用許諾
+  </Paragraph>
+
+  <Section>
+    <Paragraph>
+      <Run>本文書を確認したうえで本ソフトウェア(以下、${APP})を使用する場合は「${ACCEPT-AFFIRMATIVE}」、使用しない場合は「${ACCEPT-NEGATIVE}」を押下してください。</Run>
+      <LineBreak />
+      <Run>このダイアログは初回起動やバージョンアップで大きな変更があった場合などに表示されます。</Run>
+    </Paragraph>
+    <Paragraph>
+      <Run>${APP} は ${LICENSE-NAME} でライセンスされています。</Run>
+      <Run>実行前にソースを取得・確認するには以下のリンクを参照してください。</Run>
+      <LineBreak />
+      <Run>付属するサードパーティ製のソフトウェアなどに関してはそれぞれの適用しているライセンスとなります。</Run>
+    </Paragraph>
+    <Paragraph>
+      <Run>本使用許諾はバージョンアップ等で断りなく変更され、その際は許諾されたものとします。</Run>
+      <LineBreak />
+      <Run>現在の使用許諾がどのようなものかはヘルプにて確認してください。</Run>
+    </Paragraph>
+  </Section>
+
+  <Section>
+    <Paragraph Style="{StaticResource Header}">確認事項</Paragraph>
+    <List>
+      <ListItem>
+        <Paragraph>
+          <CheckBox IsChecked="{Binding UpdateKindIsAuto}">自動的にアップデートする</CheckBox>
+          <LineBreak />
+          <Run>常に最新を使用する前提で実装しています。</Run>
+          <LineBreak />
+          <Run>本機能は設定にて切り替え可能です。</Run>
+        </Paragraph>
+      </ListItem>
+      <ListItem>
+        <Paragraph>
+          <CheckBox IsChecked="{Binding IsEnabledTelemetry}">使用統計情報の送信を許可する</CheckBox>
+          <LineBreak />
+          <Run>${APP}では不具合検知・機能改善のため各種使用統計を収集します。</Run>
+          <LineBreak />
+          <Run>本機能は設定にて切り替え可能です。</Run>
+        </Paragraph>
+      </ListItem>
+    </List>
+  </Section>
+
+  <Section>
+    <Paragraph Style="{StaticResource Header}">各種情報</Paragraph>
+    <List>
+      <ListItem>
+        <Paragraph>
+          <TextBlock>プロジェクトページ</TextBlock>
+          <LineBreak />
+          <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="${PROJECT-URI}">
+            <Run>${PROJECT-URI}</Run>
+          </Hyperlink>
+        </Paragraph>
+      </ListItem>
+      <ListItem>
+        <Paragraph>
+          <TextBlock>フォーラム</TextBlock>
+          <LineBreak />
+          <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="${FORUM-URI}">
+            <Run>${FORUM-URI}</Run>
+          </Hyperlink>
+        </Paragraph>
+      </ListItem>
+      <ListItem>
+        <Paragraph>
+          <TextBlock>Webサイト</TextBlock>
+          <LineBreak />
+          <Hyperlink Command="{Binding OpenUriCommand}" CommandParameter="${WEBSITE-URI}">
+            <Run>${WEBSITE-URI}</Run>
+          </Hyperlink>
+        </Paragraph>
+      </ListItem>
+    </List>
+  </Section>
+
+</FlowDocument>

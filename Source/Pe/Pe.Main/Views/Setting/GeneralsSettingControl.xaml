@@ -1,0 +1,508 @@
+<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.GeneralsSettingControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+
+  xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_viewmodels_font="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Font"
+  xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+>
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+    <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+
+  </UserControl.Resources>
+
+
+  <Grid>
+    <ScrollViewer>
+      <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.EditorItems, ElementName=root}">
+        <ItemsControl.Resources>
+
+          <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
+            <Setter Property="Width" Value="Auto" />
+            <Setter Property="SharedSizeGroup" Value="CustomizeLauncherItemHeader" />
+          </Style>
+          <Style x:Key="ContentDefinition" TargetType="ColumnDefinition">
+            <Setter Property="Width" Value="*" />
+          </Style>
+
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppExecuteSettingEditorViewModel}">
+            <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Execute_UserId_A, Source={x:Static app_main:CultureService.Current}}"></Label>
+                  <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Horizontal-TextBox}" Text="{Binding UserId, Mode=OneWay}" />
+                    <Button Grid.Column="2" Content="{Binding Resources.String_Setting_Generals_Execute_CreateUserIdFromRandom_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CreateUserIdFromRandomCommand}" />
+                    <Button Grid.Column="3" Content="{Binding Resources.String_Setting_Generals_Execute_CreateUserIdFromEnvironment_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CreateUserIdFromEnvironmentCommand}" />
+                  </Grid>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <CheckBox Grid.Column="1" Margin="{StaticResource BasePadding}" Style="{StaticResource Vertical-CheckBox}" IsChecked="{Binding IsEnabledTelemetry}" Content="{Binding Resources.String_Setting_Generals_Execute_IsEnabledTelemetry_A, Source={x:Static app_main:CultureService.Current}}" />
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock Grid.Column="1">
+                    <Hyperlink>
+                      <Run Text="{Binding Resources.String_Setting_Generals_Execute_UserIdDescription, Source={x:Static app_main:CultureService.Current}, Mode=OneWay}" />
+                    </Hyperlink>
+                  </TextBlock>
+                </Grid>
+              </StackPanel>
+            </GroupBox>
+          </DataTemplate>
+
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppGeneralSettingEditorViewModel}">
+            <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
+              <i:Interaction.Triggers>
+                <app_core_views:RequestTrigger SourceObject="{Binding UserBackupDirectorySelecteRequest}">
+                  <prism:InvokeCommandAction Command="{Binding FileSelectCommand, ElementName=root}" />
+                </app_core_views:RequestTrigger>
+              </i:Interaction.Triggers>
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_Language_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <ComboBox Grid.Column="1" Style="{StaticResource Vertical-ComboBox}" ItemsSource="{Binding CultureInfoItems}" SelectedItem="{Binding SelectedCultureInfo}">
+                    <ComboBox.ItemsPanel>
+                      <ItemsPanelTemplate>
+                        <VirtualizingStackPanel ScrollUnit="Item" />
+                      </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <TextBlock>
+                          <Run Text="{Binding DisplayName, Mode=OneTime}" />
+                          <Run Text=" (" />
+                          <Run Text="{Binding Name, Mode=OneTime}" />
+                          <Run Text=")" />
+                        </TextBlock>
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_Starup_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_General_Starup_Register_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsRegisterStartup}" />
+                    <CheckBox x:Name="startWaitTime" Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}"  Content="{Binding Resources.String_Setting_Generals_General_Starup_WaitTime_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding DelayStartup}" />
+                    <app_core_views:NumericUpDown
+                      Grid.Column="2"
+                      HorizontalAlignment="Left"
+                      Width="{Binding ActualWidth, ElementName=startWaitTime}"
+                      Minimum="{Binding MinimumStartupWaitTimeSeconds}"
+                      Maximum="{Binding MaximumStartupWaitTimeSeconds}"
+                      Value="{Binding StartupWaitTimeSeconds}"
+                    />
+                  </Grid>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_UserBackupDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Style="{StaticResource Horizontal-TextBox}" Text="{Binding UserBackupDirectoryPath}" />
+                    <Button Grid.Column="1" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}" Command="{Binding UserBackupDirectorySelectCommand}">
+                      <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </StackPanel>
+            </GroupBox>
+          </DataTemplate>
+
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppUpdateSettingEditorViewModel}">
+            <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Update_UpdateKind_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:UpdateKind.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.None}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:UpdateKind.Notify}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Notify}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:UpdateKind.Auto}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Auto}}" />
+                  </WrapPanel>
+                </Grid>
+
+
+              </StackPanel>
+            </GroupBox>
+          </DataTemplate>
+
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppCommandSettingEditorViewModel}">
+            <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <!-- バインドできない問題 -->
+                  <ContentControl Grid.Column="1">
+                    <ContentControl.Style>
+                      <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsInitialized}" Value="True">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <app_main_views:FontSelectControl
+                                  SelectedFontFamily="{Binding  Font.FontFamily}"
+                                  IsBold="{Binding Font.IsBold}"
+                                  IsItalic="{Binding Font.IsItalic}"
+                                  Size="{Binding Font.Size}"
+                                  SizeMinimum="{Binding Font.MinimumSize}"
+                                  SizeMaximum="{Binding Font.MaximumSize}"
+                                />
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </ContentControl.Style>
+                  </ContentControl>
+
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label x:Name="commandViewWidth" Style="{StaticResource HeaderLabel}" Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Command_Width_A, Source={x:Static app_main:CultureService.Current}}"></Label>
+                  <app_core_views:NumericUpDown
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Increment="1"
+                    Width="{Binding ActualWidth, ElementName=commandViewWidth}"
+                    Value="{Binding Width}"
+                    Minimum="{Binding MinimumWidth}"
+                    Maximum="{Binding MaximumWidth}"
+                  />
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label x:Name="commandWaitTime" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Wait_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <app_core_views:NumericUpDown
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Increment="0.5"
+                    Width="{Binding ActualWidth, ElementName=commandWaitTime}"
+                    Value="{Binding HideWaitMilliseconds}"
+                    Minimum="{Binding MinimumHideWaitSeconds}"
+                    Maximum="{Binding MaximumHideWaitSeconds}"
+                  />
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0"  Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Icon_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Small}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Normal}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Big}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Big}}" />
+                  </WrapPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0"  Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Find_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_Command_Find_Tag_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding FindTag}" />
+                  </WrapPanel>
+                </Grid>
+
+              </StackPanel>
+            </GroupBox>
+          </DataTemplate>
+
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppNoteSettingEditorViewModel}">
+            <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <ContentControl Grid.Column="1">
+                    <ContentControl.Style>
+                      <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsInitialized}" Value="True">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <app_main_views:FontSelectControl
+                                  SelectedFontFamily="{Binding  Font.FontFamily}"
+                                  IsBold="{Binding Font.IsBold}"
+                                  IsItalic="{Binding Font.IsItalic}"
+                                  Size="{Binding Font.Size}"
+                                  SizeMinimum="{Binding Font.MinimumSize}"
+                                  SizeMaximum="{Binding Font.MaximumSize}"
+                                />
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </ContentControl.Style>
+                  </ContentControl>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Title_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteCreateTitleKind.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Count}}" />
+                  </WrapPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Layout_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Absolute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Relative}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}" />
+                  </WrapPanel>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Note_Color_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ForegroundColor}" />
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Background_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />
+                  </Grid>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_Note_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost}" />
+                </Grid>
+
+              </StackPanel>
+            </GroupBox>
+          </DataTemplate>
+
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppStandardInputOutputSettingEditorViewModel}">
+            <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <ContentControl Grid.Column="1">
+                    <ContentControl.Style>
+                      <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding IsInitialized}" Value="True">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <app_main_views:FontSelectControl
+                                  SelectedFontFamily="{Binding  Font.FontFamily}"
+                                  IsBold="{Binding Font.IsBold}"
+                                  IsItalic="{Binding Font.IsItalic}"
+                                  Size="{Binding Font.Size}"
+                                  SizeMinimum="{Binding Font.MinimumSize}"
+                                  SizeMaximum="{Binding Font.MaximumSize}"
+                                />
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </ContentControl.Style>
+                  </ContentControl>
+                </Grid>
+
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding OutputForegroundColor}" />
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Background_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding OutputBackgroundColor}" />
+                  </Grid>
+                </Grid>
+
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition />
+                      <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ErrorForegroundColor}" />
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Background_A, Source={x:Static app_main:CultureService.Current}}"></Label>
+                    <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding ErrorBackgroundColor}" />
+
+                  </Grid>
+                </Grid>
+
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost}" />
+                </Grid>
+              </StackPanel>
+            </GroupBox>
+          </DataTemplate>
+
+        </ItemsControl.Resources>
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Margin="{StaticResource AllMargin}" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

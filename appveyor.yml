@@ -1,0 +1,40 @@
+version: '{build}'
+image: Visual Studio 2019
+skip_tags: true
+clone_depth: 1
+environment:
+  BUILD_TYPE: BETA
+  ARCHIVE: 7z
+platform:
+  - x64
+  - x86
+branches:
+  except:
+    - master
+    - ci-test
+install:
+  - cmd: dotnet --version
+  #- cmd: choco install dotnetcore-sdk --version 3.1.100
+  #- cmd: dotnet --version
+  - ps: Install-Product node 12.14.1
+  - cmd: npm --version
+before_build:
+  - cmd: git submodule init
+  - cmd: git submodule update
+build_script:
+  - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
+  - ps: .\Build\create-document.ps1 -Platforms $env:PLATFORM
+  - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
+before_test:
+  - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
+test_script:
+  - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
+artifacts:
+  - path: Output\*.zip
+  - path: Output\*.7z
+cache:
+  - '%LOCALAPPDATA%\NuGet'
+  - '%USERPROFILE%\.nuget'
+  - 'Source\Documents\node_modules'
+  - C:\ProgramData\chocolatey\bin -> appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> appveyor.yml
