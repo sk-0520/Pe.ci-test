@@ -640,7 +640,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     Logger.LogError(ex, ex.Message);
                 }
                 var startupRegister = new StartupRegister(LoggerFactory);
-                startupRegister.Register(new StartupParameter());
+                startupRegister.Register(new StartupParameter() {
+                    DelayStartup = true,
+                    StartupWaitTime = TimeSpan.FromSeconds(7),
+                });
             }
         }
 
