@@ -2,87 +2,87 @@ declare function makeChangelogLink(): void;
 
 const changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget'
-						'comments': [
-							''
+						"class": "compatibility" "notice" "nuget" "myget"
+						"comments": [
+							""
 						]
 	---------------------------------------------
 	*/
 	/*
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.xx.1',
-		'contents': [
+		"date": "YYYY/MM/DD",
+		"version": "0.xx.1",
+		"contents": [
 			{
-				'type': 'note',
-				'logs': [
+				"type": "note",
+				"logs": [
 					{
-						'revision': '',
-						'class': ''
-						'subject': ''
+						"revision": "",
+						"class": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
 			{
-				'type': 'features',
-				'logs': [
+				"type": "features",
+				"logs": [
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
 			{
-				'type': 'fixes',
-				'logs': [
+				"type": "fixes",
+				"logs": [
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
 			{
-				'type': 'developer',
-				'logs': [
+				"type": "developer",
+				"logs": [
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			}
@@ -90,6 +90,84 @@ const changelogs = [
 	},
 	*/
 	/*--------RELEASE HEAD--------*/
+	{
+		"date": "YYYY/MM/DD",
+		"version": "0.xx.1",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
 	{
 		"date": "2020/02/24",
 		"version": "0.84.0",
