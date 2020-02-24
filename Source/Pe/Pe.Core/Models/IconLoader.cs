@@ -27,6 +27,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         TValue Large { get; }
 
         #endregion
+
+        #region function
+
+        IReadOnlyDictionary<IconBox, TValue> IconItems { get; }
+
+        #endregion
     }
 
 
@@ -72,16 +78,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public BitmapSource? GetThumbnailImage(string iconPath, IconSize iconSize)
         {
             try {
-#pragma warning disable CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-                IShellItem iShellItem = null;
-#pragma warning restore CS8600 // Null リテラルまたは Null の可能性がある値を Null 非許容型に変換しています。
-                NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
-
+                NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out var iShellItem);
+                using var shellItem = ComWrapper.Create(iShellItem);
                 var size = iconSize.ToSize();
                 var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
                 var hResultBitmap = IntPtr.Zero;
-                using(var shellItem = new ComWrapper<IShellItem>(iShellItem)) {
-                    ((IShellItemImageFactory)shellItem.Com).GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
+                using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
+                    imageFactory.Com.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
                 }
                 using(var hBitmap = new BitmapHandleWrapper(hResultBitmap)) {
                     var result = hBitmap.MakeBitmapSource();
@@ -213,18 +216,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         BitmapSource? LoadNormalIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
         {
-            Debug.Assert(new[] { IconBasicSize.Small, IconBasicSize.Normal }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
+            Debug.Assert(new[] { IconBox.Small, IconBox.Normal }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             // 16, 32 px
             if(hasIcon) {
                 var iconHandle = new IntPtr[1];
-                if(iconSize.Width == (int)IconBasicSize.Small) {
+                if(iconSize.Width == (int)IconBox.Small) {
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
                     _ = NativeMethods.ExtractIconEx(iconPath, iconIndex, null, iconHandle, 1);
 #pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 } else {
-                    Debug.Assert(iconSize.Width == (int)IconBasicSize.Normal);
+                    Debug.Assert(iconSize.Width == (int)IconBox.Normal);
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
                     NativeMethods.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
 #pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
@@ -236,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
             }
 
-            if(iconSize.Width == (int)IconBasicSize.Normal) {
+            if(iconSize.Width == (int)IconBox.Normal) {
                 try {
                     var thumbnailImage = GetThumbnailImage(iconPath, iconSize);
                     if(thumbnailImage != null) {
@@ -249,10 +252,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var fileInfo = new SHFILEINFO();
             SHGFI flag = SHGFI.SHGFI_ICON;
-            if(iconSize.Width == (int)IconBasicSize.Small) {
+            if(iconSize.Width == (int)IconBox.Small) {
                 flag |= SHGFI.SHGFI_SMALLICON;
             } else {
-                Debug.Assert(iconSize.Width == (int)IconBasicSize.Normal);
+                Debug.Assert(iconSize.Width == (int)IconBox.Normal);
                 flag |= SHGFI.SHGFI_LARGEICON;
             }
             var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
@@ -277,7 +280,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         BitmapSource? LoadLargeIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
         {
             //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-            Debug.Assert(new[] { (int)IconBasicSize.Big, (int)IconBasicSize.Large }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
+            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             if(hasIcon) {
@@ -299,7 +302,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return thumbnailImage;
             }
 
-            var shellImageList = iconSize.Width == (int)IconBasicSize.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
+            var shellImageList = iconSize.Width == (int)IconBox.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
             var fileInfo = new SHFILEINFO() {
                 iIcon = iconIndex,
             };
@@ -311,7 +314,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             try {
                 var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out resultImageList);
 
-                if(getImageListResult == ComResult.S_OK) {
+                if(getImageListResult == HRESULT.S_OK) {
                     Debug.Assert(resultImageList != null);
                     using(var imageList = new ComWrapper<IImageList>(resultImageList)) {
                         int n = 0;
@@ -348,7 +351,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var useIconIndex = Math.Abs(iconIndex);
 
             BitmapSource result;
-            if(iconSize.Width == (int)IconBasicSize.Small || iconSize.Width == (int)IconBasicSize.Normal) {
+            if(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal) {
                 result = LoadNormalIcon(iconPath, iconSize, useIconIndex, hasIcon)!;
             } else {
                 result = LoadLargeIcon(iconPath, iconSize, useIconIndex, hasIcon)!;

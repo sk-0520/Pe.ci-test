@@ -58,6 +58,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             throw new NotImplementedException();
         }
+
+        #region object
+
+        public override string ToString() => $"{ReflectedType} {Name}";
+
+        #endregion
     }
 
     public class ObjectDumper
@@ -157,6 +163,51 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
+        private IReadOnlyList<ObjectDumpItem> DumpArray(Array array, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>(array.Length);
+            var arrayType = array.GetType();
+            for(var i=0; i< array.Length; i++) {
+                var s = "[" + i.ToString() + "]";
+                var target = array.GetValue(i);
+
+                if(target == null) {
+                    var item = new ObjectDumpItem(new DummyInfo(s, arrayType, typeof(object)), null, EmptyChildren);
+                    result.Add(item);
+                } else {
+                    var targetType = target.GetType();
+                    if(IgnoreNestedMembers.Contains(targetType)) {
+                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
+                        result.Add(item);
+                    } else {
+                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), s, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        result.Add(item);
+                    }
+                }
+            }
+
+            return result;
+
+        }
+
+        IReadOnlyList<ObjectDumpItem> DumpFileSystemInfo(FileSystemInfo fileSystemInfo, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>() {
+                new ObjectDumpItem(new DummyInfo(string.Empty, typeof(FileSystemInfo), fileSystemInfo.GetType()), fileSystemInfo.ToString(), EmptyChildren),
+            };
+
+            return result;
+        }
+
+        IReadOnlyList<ObjectDumpItem> DumpUri(Uri uri, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>() {
+                new ObjectDumpItem(new DummyInfo(string.Empty, typeof(Uri), uri.GetType()), uri.ToString(), EmptyChildren),
+            };
+
+            return result;
+        }
+
         IReadOnlyList<ObjectDumpItem> DumpCore(object target, int nest, bool ignoreAutoMember)
         {
             if(nest == 0) {
@@ -166,6 +217,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
             switch(target) {
                 case IDictionary dic:
                     return DumpDictionary(dic, nest, ignoreAutoMember);
+
+                case Array array:
+                    return DumpArray(array, nest, ignoreAutoMember);
+
+                case FileSystemInfo fsi:
+                    return DumpFileSystemInfo(fsi, nest, ignoreAutoMember);
+
+                case Uri uri:
+                    return DumpUri(uri, nest, ignoreAutoMember);
 
                 default:
                     break;

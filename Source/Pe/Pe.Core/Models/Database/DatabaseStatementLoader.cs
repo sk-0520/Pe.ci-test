@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
@@ -16,16 +17,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region function
 
         /// <summary>
-        /// キーから文を取得。
+        /// キーからデータベース実行文を取得。
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
         string LoadStatement(string key);
         /// <summary>
-        /// 呼び出しクラス情報から文を取得する。
+        /// 呼び出しクラス情報からデータベース実行文を取得する。
         /// </summary>
         /// <returns></returns>
-        string LoadStatementByCurrent();
+        string LoadStatementByCurrent(Type caller, [CallerMemberName] string callerMemberName = "");
 
         #endregion
     }
@@ -49,20 +50,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
 
         #region function
-
-        protected MethodBase GetCurrentMember(int skipFrames = 1)
-        {
-            var stackFrame = new StackFrame(skipFrames + 1);
-            return stackFrame.GetMethod()!;
-        }
-
         #endregion
 
         #region IDatabaseStatementLoader
 
         public abstract string LoadStatement(string key);
 
-        public abstract string LoadStatementByCurrent();
+        public virtual string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "")
+        {
+            var key = callerType.FullName + "." + callerMemberName;
+            return LoadStatement(key);
+        }
 
         #endregion
     }

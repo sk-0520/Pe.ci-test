@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     }
 
     /// <summary>
-    /// Model と ViewModel の一元的管理。
+    /// <typeparamref name="TModel"/> と <typeparamref name="TViewModel"/> の一元的管理。
     /// <para>対になっている部分は内部で対応するがその前後処理までは面倒見ない。</para>
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
@@ -35,25 +35,38 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection)
+            : base(collection)
         {
-            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
+            EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
-        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection)
+            : base(collection)
         {
-            ViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
+            EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
         #region property
 
-        public ObservableCollection<TViewModel> ViewModels { get; private set; }
-        public ReadOnlyObservableCollection<TViewModel> ReadOnlyViewModels
+        /// <summary>
+        /// 内部使用する<typeparamref name="TViewModel"/>のコレクション。
+        /// </summary>
+        protected ObservableCollection<TViewModel> EditableViewModels { get; private set; }
+        /// <summary>
+        /// 外部使用する<typeparamref name="TViewModel"/>のコレクション。
+        /// </summary>
+        public ReadOnlyObservableCollection<TViewModel> ViewModels
         {
-            get => this._readOnlyViewModels ?? (this._readOnlyViewModels = new ReadOnlyObservableCollection<TViewModel>(ViewModels));
+            get => this._readOnlyViewModels ??= new ReadOnlyObservableCollection<TViewModel>(EditableViewModels);
         }
+
+        /// <summary>
+        /// アイテム削除時に対象 ViewModel の <see cref="TViewModel.Dispose"/> を呼び出すか。
+        /// </summary>
+        public bool RemoveViewModelToDispose { get; set; } = true;
+
+        public int Count => EditableViewModels.Count;
 
         #endregion
 
@@ -62,25 +75,29 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected abstract TViewModel? ToViewModelImpl(TModel model);
 
         protected abstract void AddItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TViewModel> newViewModels);
-        protected abstract void RemoveItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> oldItems, int oldStartingIndex, IReadOnlyList<TViewModel> oldViewModels);
+        protected abstract void InsertItemsKindImpl(ObservableCollectionKind kind, int insertIndex, IReadOnlyList<TModel> newModels);
+        protected abstract void RemoveItemsKindImpl(ObservableCollectionKind kind, int oldStartingIndex, IReadOnlyList<TModel> oldItems, IReadOnlyList<TViewModel> oldViewModels);
         protected abstract void ReplaceItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TModel> oldModels, IReadOnlyList<TViewModel> newViewModels, IReadOnlyList<TViewModel> oldViewModels);
         protected abstract void MoveItemsKindImpl(ObservableCollectionKind kind, int newStartingIndex, int oldStartingIndex);
         protected abstract void ResetItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TViewModel> oldViewModels);
 
-        public ICollectionView GetCollectionView()
+        public ICollectionView GetDefaultView()
         {
-            return CollectionViewSource.GetDefaultView(ViewModels);
+            return CollectionViewSource.GetDefaultView(EditableViewModels);
         }
 
-        public ICollectionView CreateCollectionView()
+        public ICollectionView CreateView()
         {
-            return new CollectionViewSource() {
-                Source = ViewModels
-            }.View;
+            return new ListCollectionView(EditableViewModels);
         }
 
-        public int IndexOf(TViewModel viewModel) => ViewModels.IndexOf(viewModel);
+        public int IndexOf(TViewModel viewModel) => EditableViewModels.IndexOf(viewModel);
 
+        /// <summary>
+        /// 対になる<typeparamref name="TModel"/>を取得。
+        /// </summary>
+        /// <param name="viewModel">対になっている<typeparamref name="TViewModel"/>。</param>
+        /// <returns>見つからない場合は <typeparamref name="TModel"/> の初期値。</returns>
         public TModel? GetModel(TViewModel viewModel)
         {
             var index = IndexOf(viewModel);
@@ -92,6 +109,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             return Collection[index];
         }
 
+
+        /// <summary>
+        /// 対になる<typeparamref name="TViewModel"/>を取得。
+        /// </summary>
+        /// <param name="model">対になっている<typeparamref name="TModel"/>。</param>
+        /// <returns>見つからない場合は <typeparamref name="TViewModel"/> の初期値。</returns>
         public TViewModel? GetViewModel(TModel model)
         {
             var index = IndexOf(model);
@@ -100,14 +123,14 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return default(TViewModel);
             }
 
-            return ViewModels[index];
+            return EditableViewModels[index];
         }
 
         #endregion
 
         #region ObservableManager
 
-        protected override void AddItemsImple(IReadOnlyList<TModel> newItems)
+        protected override void AddItemsImpl(IReadOnlyList<TModel> newItems)
         {
             var newViewModels = newItems
                 .Cast<TModel>()
@@ -117,29 +140,50 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             AddItemsKindImpl(ObservableCollectionKind.Before, newItems, newViewModels);
 
-            ViewModels.AddRange(newViewModels);
+            EditableViewModels.AddRange(newViewModels);
 
             AddItemsKindImpl(ObservableCollectionKind.After, newItems, newViewModels);
         }
 
-        protected override void RemoveItemsImpl(IReadOnlyList<TModel> oldItems, int oldStartingIndex)
+        protected override void InsertItemsImpl(int insertIndex, IReadOnlyList<TModel> newItems)
         {
-            var oldViewModels = ViewModels
+            var newViewModels = newItems
+                .Cast<TModel>()
+                .Select(m => ToViewModelImpl(m)!)
+                .Counting(insertIndex)
+                .ToList()
+            ;
+
+            InsertItemsKindImpl(ObservableCollectionKind.Before, insertIndex, newItems);
+
+            foreach(var item in newViewModels) {
+                EditableViewModels.Insert(item.Number, item.Value);
+            }
+
+            InsertItemsKindImpl(ObservableCollectionKind.After, insertIndex, newItems);
+        }
+
+
+        protected override void RemoveItemsImpl(int oldStartingIndex, IReadOnlyList<TModel> oldItems)
+        {
+            var oldViewModels = EditableViewModels
                 .Skip(oldStartingIndex)
                 .Take(oldItems.Count)
                 .ToList()
             ;
 
-            RemoveItemsKindImpl(ObservableCollectionKind.Before, oldItems, oldStartingIndex, oldViewModels);
+            RemoveItemsKindImpl(ObservableCollectionKind.Before, oldStartingIndex, oldItems, oldViewModels);
 
             foreach(var counter in new Counter(oldViewModels.Count)) {
-                ViewModels.RemoveAt(oldStartingIndex);
+                EditableViewModels.RemoveAt(oldStartingIndex);
             }
-            foreach(var oldViewModel in oldViewModels) {
-                oldViewModel.Dispose();
+            if(RemoveViewModelToDispose) {
+                foreach(var oldViewModel in oldViewModels) {
+                    oldViewModel.Dispose();
+                }
             }
 
-            RemoveItemsKindImpl(ObservableCollectionKind.After, oldItems, oldStartingIndex, oldViewModels);
+            RemoveItemsKindImpl(ObservableCollectionKind.After, oldStartingIndex, oldItems, oldViewModels);
         }
 
         protected override void ReplaceItemsImpl(IReadOnlyList<TModel> newItems, IReadOnlyList<TModel> oldItems)
@@ -157,18 +201,18 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         {
             MoveItemsKindImpl(ObservableCollectionKind.Before, newStartingIndex, oldStartingIndex);
 
-            ViewModels.Move(oldStartingIndex, newStartingIndex);
+            EditableViewModels.Move(oldStartingIndex, newStartingIndex);
 
             MoveItemsKindImpl(ObservableCollectionKind.After, newStartingIndex, oldStartingIndex);
         }
 
         protected override void ResetItemsImpl()
         {
-            var oldViewModels = ViewModels;
+            var oldViewModels = EditableViewModels;
 
             ResetItemsKindImpl(ObservableCollectionKind.Before, oldViewModels);
 
-            ViewModels.Clear();
+            EditableViewModels.Clear();
             foreach(var viewModel in oldViewModels) {
                 viewModel.Dispose();
             }
@@ -193,7 +237,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         public delegate TViewModel ToViewModelDelegate(TModel model);
         public delegate void AddItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TViewModel> newViewModels);
-        public delegate void RemoveItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TModel> oldItems, int oldStartingIndex, IReadOnlyList<TViewModel> oldViewModels);
+        public delegate void InsertItemsKindDelegate(ObservableCollectionKind kind, int insertIndex, IReadOnlyList<TModel> newModels);
+        public delegate void RemoveItemsKindDelegate(ObservableCollectionKind kind, int oldStartingIndex, IReadOnlyList<TModel> oldItems, IReadOnlyList<TViewModel> oldViewModels);
         public delegate void ReplaceItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TModel> oldModels, IReadOnlyList<TViewModel> newViewModels, IReadOnlyList<TViewModel> oldViewModels);
         public delegate void MoveItemsKindDelegate(ObservableCollectionKind kind, int newStartingIndex, int oldStartingIndex);
         public delegate void ResetItemsKindDelegate(ObservableCollectionKind kind, IReadOnlyList<TViewModel> oldViewModels);
@@ -206,37 +251,41 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ActionModelViewModelObservableCollectionManager(ReadOnlyObservableCollection<TModel> collection)
+            : base(collection)
         { }
 
-        public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection, ILoggerFactory loggerFactory)
-            : base(collection, loggerFactory)
+        public ActionModelViewModelObservableCollectionManager(ObservableCollection<TModel> collection)
+            : base(collection)
         { }
 
         #region property
 
-        IList<TModel> StockModels { get; set; } = new List<TModel>();
+        IList<TModel>? StockModels { get; set; } = new List<TModel>();
 
+        /// <summary>
+        /// <typeparamref name="TModel"/>から<typeparamref name="TViewModel"/>への変換処理。
+        /// <para>NOTE: 未設定の場合、内部的にストックされ、設定後一気に処理が走る。コンストラクタ対策。</para>
+        /// </summary>
         public ToViewModelDelegate? ToViewModel
         {
             get => this._toViewModel;
             set
             {
                 this._toViewModel = value;
-                if(this._toViewModel != null && StockModels.Count != 0) {
-                    Debug.Assert(ViewModels.Count == StockModels.Count);
+                if(this._toViewModel != null && StockModels != null && StockModels.Count != 0) {
+                    Debug.Assert(EditableViewModels.Count == StockModels.Count);
                     for(var i = 0; i < StockModels.Count; i++) {
-                        ViewModels[i] = this._toViewModel(StockModels[i]);
+                        EditableViewModels[i] = this._toViewModel(StockModels[i]);
                     }
+
                     StockModels.Clear();
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
                     StockModels = null;
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
                 }
             }
         }
         public AddItemsKindDelegate? AddItems { get; set; }
+        public InsertItemsKindDelegate? InsertItems { get; set; }
         public RemoveItemsKindDelegate? RemoveItems { get; set; }
         public ReplaceItemsKindDelegate? ReplaceItems { get; set; }
         public MoveItemsKindDelegate? MoveItems { get; set; }
@@ -252,6 +301,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 return ToViewModel(model);
             }
 
+            Debug.Assert(StockModels != null);
             StockModels.Add(model);
             return default(TViewModel);
         }
@@ -261,9 +311,15 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             AddItems?.Invoke(kind, newModels, newViewModels);
         }
 
-        protected override void RemoveItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> oldItems, int oldStartingIndex, IReadOnlyList<TViewModel> oldViewModels)
+        protected override void InsertItemsKindImpl(ObservableCollectionKind kind, int insertIndex, IReadOnlyList<TModel> newModels)
         {
-            RemoveItems?.Invoke(kind, oldItems, oldStartingIndex, oldViewModels);
+            InsertItems?.Invoke(kind, insertIndex, newModels);
+        }
+
+
+        protected override void RemoveItemsKindImpl(ObservableCollectionKind kind, int oldStartingIndex, IReadOnlyList<TModel> oldItems, IReadOnlyList<TViewModel> oldViewModels)
+        {
+            RemoveItems?.Invoke(kind, oldStartingIndex, oldItems, oldViewModels);
         }
 
         protected override void ReplaceItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TModel> oldModels, IReadOnlyList<TViewModel> newViewModels, IReadOnlyList<TViewModel> oldViewModels)

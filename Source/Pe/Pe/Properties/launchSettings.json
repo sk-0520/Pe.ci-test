@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Pe": {
-      "commandName": "Project",
-      "commandLineArgs": "--log=X:\\pe\\log --force-log --user-dir=X:\\pe\\user --machine-dir=X:\\pe\\machine --temp-dir=X:\\pe\\temp"
-    }
-  }
-}

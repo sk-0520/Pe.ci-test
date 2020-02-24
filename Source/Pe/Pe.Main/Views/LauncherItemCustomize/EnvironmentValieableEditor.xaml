@@ -1,0 +1,51 @@
+<UserControl
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize.EnvironmentValieableEditor"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+>
+  <UserControl.Resources>
+    <!-- avalonedit の検証処理が分からん -->
+    <Style x:Key="ErrorMessages" TargetType="ItemsControl">
+      <Setter Property="ItemTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <TextBlock Text="{Binding}" />
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Resources.String_EnvironmentValieableEditor_Merge_A, Source={x:Static app_main:CultureService.Current}}"  />
+    <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="0" x:Name="envMergeEditor" Style="{StaticResource SettingEditor}" Document="{Binding MergeTextDocument, ElementName=root}" Loaded="EnvMergeEditor_Loaded" />
+    <ItemsControl Grid.Row="2" Grid.Column="0" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding MergeErrorItemsSource, ElementName=root}" />
+
+    <Separator Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource Normal-Indent}" />
+
+    <Label Grid.Row="0" Grid.Column="2" Content="{Binding Resources.String_EnvironmentValieableEditor_Remove_A, Source={x:Static app_main:CultureService.Current}}" />
+    <sharpdevelop_avalonedit:TextEditor x:Name="envRemoveEditor" Grid.Row="1" Grid.Column="2" Style="{StaticResource SettingEditor}" Document="{Binding RemoveTextDocument, ElementName=root}" Loaded="EnvRemoveEditor_Loaded" />
+    <ItemsControl Grid.Row="2" Grid.Column="2" Style="{StaticResource ErrorMessages}" ItemsSource="{Binding RemoveErrorItemsSource, ElementName=root}" />
+  </Grid>
+</UserControl>

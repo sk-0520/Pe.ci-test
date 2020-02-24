@@ -411,6 +411,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ;
         }
 
+        public static string Escape(string input)
+        {
+            if(string.IsNullOrWhiteSpace(input)) {
+                return string.Empty;
+            }
+
+            var s = input.Trim();
+            var result = s.Replace("\"", "\"\"");
+            if(s.IndexOf(' ') == -1) {
+                return result;
+            } else {
+                return "\"" + result + "\"";
+            }
+        }
         #endregion
     }
 

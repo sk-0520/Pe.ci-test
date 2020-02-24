@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>x64;x86</Platforms>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ContentTypeTextNet.Pe.Plugins.DefaultTheme</RootNamespace>
+    <Copyright>Copyright © 2020-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\Resources\ImageResource.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj">
+      <Private>false</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Resources\ImageResource.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+
+</Project>

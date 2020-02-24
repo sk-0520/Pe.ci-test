@@ -13,6 +13,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         void Append(char c);
         void Append(string s);
+        void AppendFormat(string format, object? arg);
+        void AppendFormat(string format, object? arg1, params object[]? args);
 
         #endregion
     }
@@ -42,8 +44,31 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Buffer.Append(s);
             IsAppend = true;
         }
+
+        public void AppendFormat(string format, object? arg)
+        {
+            Buffer.AppendFormat(format, arg);
+            IsAppend = true;
+        }
+        public void AppendFormat(string format, object? arg1, params object[]? args)
+        {
+            Buffer.AppendFormat(format, arg1, args);
+            IsAppend = true;
+        }
+
         #endregion
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="characterBlocks">入力文字列全体の文字単位分割。</param>
+    /// <param name="currentIndex">今処理すべき <seealso cref="characterBlocks"/>のインデックス。</param>
+    /// <param name="isLastIndex">現在処理は最終インデックスか</param>
+    /// <param name="currentText">今処理する文字列。<seealso cref="characterBlocks"/>[<seealso cref="currentIndex"/>]と同じ</param>
+    /// <param name="resultBuffer">変換後文字列。格納された場合はそのまま、格納しない場合は<param name="resultBuffer" />に書き込んだ場合にのみ使用される。<seealso cref="currentText"/>が格納される。</param>
+    /// <returns>次回読み飛ばし数。0で次文字列へ進んでいく。</returns>
+    public delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer);
 
     /// <summary>
     ///
@@ -51,21 +76,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <remarks>http://www.unicode.org/Public/UNIDATA/Blocks.txt</remarks>
     public class TextConverter
     {
-        #region define
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="characterBlocks"></param>
-        /// <param name="currentIndex"></param>
-        /// <param name="isLastIndex"></param>
-        /// <param name="currentText"></param>
-        /// <param name="resultBuffer"></param>
-        /// <returns>次回読み飛ばし数。<param name="resultBuffer" />に書き込んだ場合にのみ使用される。</returns>
-        protected delegate int TextConvertDelegate(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer);
-
-        #endregion
-
         #region variable
 
         Dictionary<char, char>? _halfwidthKatakanaDakutenMap;
@@ -73,6 +83,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IDictionary<char, char>? _katakanaHalfToFullMap;
         IDictionary<char, char>? _katakanaFullToHalfMap;
         IDictionary<char, string>? _dakutenKatakanaFullToHalfMap;
+
+        IDictionary<char, string>? _hiraganaToRomeMap;
+        IDictionary<string, string>? _hiraganaExToRomeMap;
         #endregion
 
         #region property
@@ -80,16 +93,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 3040..309F; Hiragana
         /// </summary>
-        HeadAndTail<char> HiraganaRange { get; } = HeadAndTail.Create('\u3040', '\u309F');
+        MinMax<char> HiraganaRange { get; } = MinMax.Create('\u3040', '\u309F');
         /// <summary>
         /// 30A0..30FF; Katakana
         /// </summary>
-        HeadAndTail<char> KatakanaRange { get; } = HeadAndTail.Create('\u30A0', '\u30FF');
+        MinMax<char> KatakanaRange { get; } = MinMax.Create('\u30A0', '\u30FF');
         /// <summary>
         /// 半角カナ
         /// </summary>
-        HeadAndTail<char> HalfwidthKatakanaRange { get; } = HeadAndTail.Create('\uFF60', '\uFF9D');
-        HeadAndTail<char> HalfwidthKatakanaDakutenRange { get; } = HeadAndTail.Create('ﾞ', 'ﾟ');
+        MinMax<char> HalfwidthKatakanaRange { get; } = MinMax.Create('\uFF60', '\uFF9D');
+        MinMax<char> HalfwidthKatakanaDakutenRange { get; } = MinMax.Create('ﾞ', 'ﾟ');
 
         protected virtual IDictionary<char, char> HalfwidthKatakanaDakutenMap
         {
@@ -320,6 +333,132 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return this._dakutenKatakanaFullToHalfMap;
             }
         }
+
+        protected virtual IDictionary<char, string> HiraganaToRomeMap => this._hiraganaToRomeMap ??= new Dictionary<char, string>() {
+            ['あ'] = "a",
+            ['い'] = "i",
+            ['う'] = "u",
+            ['え'] = "e",
+            ['お'] = "o",
+            ['か'] = "ka",
+            ['き'] = "ki",
+            ['く'] = "ku",
+            ['け'] = "ke",
+            ['こ'] = "ko",
+            ['さ'] = "sa",
+            ['し'] = "shi",
+            ['す'] = "su",
+            ['せ'] = "se",
+            ['そ'] = "so",
+            ['た'] = "ta",
+            ['ち'] = "chi",
+            ['つ'] = "tsu",
+            ['て'] = "te",
+            ['と'] = "to",
+            ['な'] = "na",
+            ['に'] = "ni",
+            ['ぬ'] = "nu",
+            ['ね'] = "ne",
+            ['の'] = "no",
+            ['は'] = "ha",
+            ['ひ'] = "hi",
+            ['ふ'] = "fu",
+            ['へ'] = "he",
+            ['ほ'] = "ho",
+            ['ま'] = "ma",
+            ['み'] = "mi",
+            ['む'] = "mu",
+            ['め'] = "me",
+            ['も'] = "mo",
+            ['や'] = "ya",
+            //['ゐ'] = "",
+            ['ゆ'] = "yu",
+            //['ゑ'] = "",
+            ['よ'] = "yo",
+            ['ら'] = "ra",
+            ['り'] = "ri",
+            ['る'] = "ru",
+            ['れ'] = "re",
+            ['ろ'] = "ro",
+            ['わ'] = "wa",
+            ['を'] = "wo",
+            ['ん'] = "n",
+            ['ぁ'] = "xa",
+            ['ぃ'] = "xi",
+            ['ぅ'] = "xu",
+            ['ぇ'] = "xe",
+            ['ぉ'] = "xo",
+            ['っ'] = "xtu",
+            ['ゃ'] = "xya",
+            ['ゅ'] = "xyu",
+            ['ょ'] = "xyo",
+            ['が'] = "ga",
+            ['ぎ'] = "gi",
+            ['ぐ'] = "gu",
+            ['げ'] = "ge",
+            ['ご'] = "go",
+            ['ざ'] = "za",
+            ['じ'] = "ji",
+            ['ず'] = "zu",
+            ['ぜ'] = "ze",
+            ['ぞ'] = "zo",
+            ['だ'] = "da",
+            ['ぢ'] = "di",
+            ['づ'] = "zu",
+            ['で'] = "de",
+            ['ど'] = "do",
+            ['ば'] = "ba",
+            ['び'] = "bi",
+            ['ぶ'] = "bu",
+            ['べ'] = "be",
+            ['ぼ'] = "bo",
+            ['ぱ'] = "pa",
+            ['ぴ'] = "pi",
+            ['ぷ'] = "pu",
+            ['ぺ'] = "pe",
+            ['ぽ'] = "po",
+        };
+
+        protected virtual IDictionary<string, string> HiraganaExToRomeMap => this._hiraganaExToRomeMap ??= new Dictionary<string, string>() {
+            ["いぇ"] = "ye",
+            ["うぃ"] = "wi",
+            ["うぇ"] = "we",
+            //["うぉ"] = "wo",
+            ["きゃ"] = "kya",
+            ["きゅ"] = "kyu",
+            ["きょ"] = "kyo",
+            ["ぎゃ"] = "gya",
+            ["ぎゅ"] = "gyu",
+            ["ぎょ"] = "gyo",
+            ["しゃ"] = "sha",
+            ["しゅ"] = "shu",
+            ["しょ"] = "sho",
+            ["じゃ"] = "ja",
+            ["じゅ"] = "ju",
+            ["じょ"] = "jo",
+            ["ちゃ"] = "cha",
+            ["ちゅ"] = "chu",
+            ["ちょ"] = "cho",
+            ["にゃ"] = "nya",
+            ["にゅ"] = "nyu",
+            ["にょ"] = "nyo",
+            ["ひゃ"] = "hya",
+            ["ひゅ"] = "hyu",
+            ["ひょ"] = "hyo",
+            ["びゃ"] = "bya",
+            ["びゅ"] = "byu",
+            ["びょ"] = "byo",
+            ["ぴゃ"] = "pya",
+            ["ぴゅ"] = "pyu",
+            ["ぴょ"] = "pyo",
+            ["みゃ"] = "mya",
+            ["みゅ"] = "myu",
+            ["みょ"] = "myo",
+            ["りゃ"] = "rya",
+            ["りゅ"] = "ryu",
+            ["りょ"] = "ryo",
+        };
+
         #endregion
 
         #region function
@@ -340,7 +479,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected virtual bool IsAsciiDigit(char c) => ('0' <= c && c <= '9');
         protected virtual bool IsFullDigit(char c) => ('０' <= c && c <= '９');
 
-        string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
+        protected string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
         {
             var sb = new StringBuilder(input.Length);
             var chars = TextUtility.GetCharacters(input).ToArray();
@@ -654,6 +793,63 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return ConvertCore(input, new TextConvertDelegate[] {
                 ConvertZenkakuDigitToAsciiDigitCore
+            });
+        }
+
+        int ConvertHiraganaToAsciiRomeCore(IReadOnlyList<string> characterBlocks, int currentIndex, bool isLastIndex, string currentText, IResultBuffer resultBuffer)
+        {
+            if(currentText.Length != 1) {
+                return 0;
+            }
+
+            var c = currentText[0];
+            if(!IsHiragana(c)) {
+                return 0;
+            }
+
+            if(HiraganaToRomeMap.TryGetValue(c, out var s)) {
+                if(!isLastIndex) {
+                    var next = characterBlocks[currentIndex + 1];
+                    if(next.Length == 1 && IsHiragana(next[0])) {
+                        var exKey = new string(new[] { c, next[0] });
+                        if(HiraganaExToRomeMap.TryGetValue(exKey, out var exString)) {
+                            resultBuffer.Append(exString);
+                            return 1;
+                        }
+                    }
+                }
+                resultBuffer.Append(s);
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// 平仮名をローマ字(半角アルファベット)に変換。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public string ConvertHiraganaToAsciiRome(string input)
+        {
+            if(input == null) {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            return ConvertCore(input, new TextConvertDelegate[] {
+                ConvertHiraganaToAsciiRomeCore
+            });
+        }
+
+        /// <summary>
+        /// もう好きにせぇや。
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="converter"></param>
+        /// <returns></returns>
+        public string ConvertToCustom(string input, TextConvertDelegate converter)
+        {
+            return ConvertCore(input, new TextConvertDelegate[] {
+                converter
             });
         }
 

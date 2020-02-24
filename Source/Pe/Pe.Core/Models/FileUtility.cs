@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="enableCount">リストアップしたファイル群の上位から残すファイル数。</param>
         /// <param name="catchException">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
         /// <returns>削除ファイル数。baseDirPathが存在しない場合は -1。</returns>
+        [Obsolete]
         public static int RotateFiles(string baseDirectoryPath, string targetWildcard, int enableCount, Func<Exception, bool> catchException)
         {
             if(Directory.Exists(baseDirectoryPath)) {
@@ -136,6 +137,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 // ドライブ名
                 var drive = DriveInfo.GetDrives().FirstOrDefault(d => d.Name == path);
                 if(drive != null) {
+                    //TODO: 光学ドライブ(多分マウントしていないドライブ)は落ちる
                     return drive.VolumeLabel;
                 }
             }

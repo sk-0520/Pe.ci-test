@@ -1,0 +1,95 @@
+<Window
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.Setting.SettingWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_main_views_setting="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Setting"
+  xmlns:app_main_viewmodels_setting="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Setting"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+
+  Icon="/Resources/Icon/App.ico"
+  Width="800"
+  Height="450"
+  WindowStartupLocation="CenterScreen"
+  ResizeMode="CanResizeWithGrip"
+
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+>
+  <Window.Resources>
+    <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+  </Window.Resources>
+  <Window.Title>
+    <Binding Path="Resources.String_Setting_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+  </Window.Title>
+  <i:Interaction.Triggers>
+    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+      <prism:InvokeCommandAction Command="{Binding CloseCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
+  </i:Interaction.Triggers>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <TabControl Grid.Row="0" SelectedValue="{Binding SelectedEditor}" SelectedValuePath="Tag" TabStripPlacement="Left">
+      <!--
+      <TabControl.Resources>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:GeneralsSettingEditorViewModel}">
+          <app_main_views_setting:GeneralsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherItemsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherGroupsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherGroupsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherToobarsSettingEditorViewModel}">
+          <app_main_views_setting:LauncherToobarsSettingControl Editor="{Binding}" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardSettingEditorViewModel}">
+          <app_main_views_setting:KeyboardSettingControl Editor="{Binding}" />
+        </DataTemplate>
+      </TabControl.Resources>
+      -->
+      <!--<TabControl.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding Header}" />
+        </DataTemplate>
+      </TabControl.ItemTemplate>-->
+
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding GeneralSettingEditor}">
+        <app_main_views_setting:GeneralsSettingControl Editor="{Binding GeneralSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherItemsSettingEditor}">
+        <app_main_views_setting:LauncherItemsSettingControl Editor="{Binding LauncherItemsSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherGroupsSettingEditor}">
+        <app_main_views_setting:LauncherGroupsSettingControl Editor="{Binding LauncherGroupsSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding LauncherToobarsSettingEditor}">
+        <app_main_views_setting:LauncherToobarsSettingControl Editor="{Binding LauncherToobarsSettingEditor}" />
+      </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding KeyboardSettingEditor}">
+        <app_main_views_setting:KeyboardSettingControl Editor="{Binding KeyboardSettingEditor}" />
+      </TabItem>
+    </TabControl>
+
+    <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
+      <Button IsDefault="True" Content="{Binding Resources.String_Common_Ok_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SubmitCommand}" />
+      <Button IsCancel="True" Content="{Binding Resources.String_Common_Cancel_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}" />
+    </UniformGrid>
+  </Grid>
+</Window>

@@ -17,6 +17,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
+        #region property
+        #endregion
+
         /// <summary>
         /// パスに拡張子を追加する。
         /// </summary>
@@ -52,13 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return ToSafeName(name, c => "_");
         }
 
-        [Obsolete("use: " + nameof(HasExtensions))]
-        public static bool HasExtension(string path, params string[] extList)
-        {
-            return HasExtensions(path, extList);
-        }
-
-        public static bool HasExtensions(string path, params string[] extList)
+        public static bool HasExtensions(string path, IEnumerable<string> extList)
         {
             var dotExt = Path.GetExtension(path);
             if(string.IsNullOrEmpty(dotExt)) {
@@ -79,13 +76,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool HasIconPath(string path)
         {
-            return HasExtensions(path, "exe", "dll");
+            return HasExtensions(path, new[] { "exe", "dll" });
         }
-        [Obsolete("use:" + nameof(HasIconPath))]
-        public static bool IsIconPath(string path)
-        {
-            return HasIconPath(path);
-        }
+
 
         /// <summary>
         /// ショートカットか。
@@ -94,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool IsShortcut(string path)
         {
-            return HasExtensions(path, "lnk");
+            return HasExtensions(path, new[] { "lnk" });
         }
 
         /// <summary>
@@ -104,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static bool IsProgram(string path)
         {
-            return HasExtensions(path, "exe", "dll");
+            return HasExtensions(path, new[] { "exe", "dll" });
         }
 
         public static string GetTimestampFileName(DateTime dateTime)
@@ -163,11 +156,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static string CreateFileName(string name, string extension)
         {
             return CreateFileNameCore(name, null, extension);
-        }
-
-        public static string ExpandFilePath(string path)
-        {
-            return Environment.ExpandEnvironmentVariables(path ?? string.Empty);
         }
     }
 }

@@ -18,6 +18,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         From,
         As,
+        Order,
+        OrderAsc,
+        OrderDesc,
     }
     public enum DatabaseInsertStatementKeyword
     {
@@ -70,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        bool IsNull(object value);
+        bool IsNull(object? value);
         /// <summary>
         /// データベース実装における null 判定実施。
         /// <para><see cref="IsNull(object)"/>のラッパー。</para>
@@ -119,9 +122,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 throw new ArgumentNullException(nameof(@this));
             }
 
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             if(@this.IsNull(value)) {
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 return @this.GetNullValue<TValue>();
             }
 
@@ -161,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
         }
 
-        public virtual bool IsNull(object value)
+        public virtual bool IsNull(object? value)
         {
             return value == null;
         }
@@ -209,6 +210,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
                 case DatabaseSelectStatementKeyword.As:
                     return "as";
+
+                case DatabaseSelectStatementKeyword.Order:
+                    return "order by";
+
+                case DatabaseSelectStatementKeyword.OrderAsc:
+                    return "asc";
+
+                case DatabaseSelectStatementKeyword.OrderDesc:
+                    return "desc";
 
                 default:
                     throw new NotImplementedException();

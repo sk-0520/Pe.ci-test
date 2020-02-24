@@ -18,6 +18,25 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public interface IDragAndDrop
     {
+        #region property
+
+        /// <summary>
+        /// ドラッグ開始とみなす距離。
+        /// </summary>
+        [PixelKind(Px.Device)]
+        Size DragStartSize { get; set; }
+
+        /// <summary>
+        ///<see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用する。
+        ///<para>基本的には false で <see cref="UIElement.MouseMove"/> を使用する。 なんにせよ<see cref="UIElement.PreviewMouseDown"/> は強制される。</para>
+        /// </summary>
+        bool UsingPreviewEvent { get; }
+
+        #endregion
+
+        #region function
+
+        #endregion
         void MouseDown(UIElement sender, MouseButtonEventArgs e);
         void MouseMove(UIElement sender, MouseEventArgs e);
         void DragEnter(UIElement sender, DragEventArgs e);
@@ -29,11 +48,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class DragParameter
     {
+        public DragParameter(UIElement element, DragDropEffects effects, DataObject data)
+        {
+            Element = element;
+            Effects = effects;
+            Data = data;
+        }
+
         #region property
 
-        public UIElement? Element { get; set; }
-        public DataObject? Data { get; set; }
+        public UIElement Element { get; set; }
         public DragDropEffects Effects { get; set; }
+        public DataObject Data { get; set; }
 
         #endregion
     }
@@ -41,12 +67,42 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public abstract class DragAndDropBase : IDragAndDrop
     {
+        /// <summary>
+        /// <see cref="UsingPreviewEvent"/> は false を使用する。
+        /// </summary>
+        /// <param name="logger"></param>
         public DragAndDropBase(ILogger logger)
         {
+            UsingPreviewEvent = false;
             Logger = logger;
         }
+        /// <summary>
+        /// <see cref="UsingPreviewEvent"/> は false を使用する。
+        /// </summary>
+        /// <param name="loggerFactory"></param>
         public DragAndDropBase(ILoggerFactory loggerFactory)
         {
+            UsingPreviewEvent = false;
+            Logger = loggerFactory.CreateLogger(GetType());
+        }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="usingPreviewEvent"><see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用するか。</param>
+        /// <param name="logger"></param>
+        public DragAndDropBase(bool usingPreviewEvent, ILogger logger)
+        {
+            UsingPreviewEvent = usingPreviewEvent;
+            Logger = logger;
+        }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="usingPreviewEvent"><see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用するか。</param>
+        /// <param name="loggerFactory"></param>
+        public DragAndDropBase(bool usingPreviewEvent, ILoggerFactory loggerFactory)
+        {
+            UsingPreviewEvent = usingPreviewEvent;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
@@ -70,6 +126,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         protected abstract bool CanDragStartImpl(UIElement sender, MouseEventArgs e);
+        /// <summary>
+        /// ドラッグした<see cref="DragParameter"/>の取得。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
         protected abstract IResultSuccessValue<DragParameter> GetDragParameterImpl(UIElement sender, MouseEventArgs e);
 
         void MouseDownCore(UIElement sender, MouseEventArgs e)
@@ -87,11 +149,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var parameterResult = GetDragParameterImpl(sender, e);
                 if(parameterResult.Success) {
                     var parameter = parameterResult.SuccessValue;
-                    IsDragging = true;
-#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                    DragDrop.DoDragDrop(parameter.Element, parameter.Data, parameter.Effects);
-#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
-                    IsDragging = false;
+                    if(parameter == null) {
+                        Logger.LogWarning(nameof(parameter) + " is null, 後続D&D処理スキップ");
+                    } else {
+                        IsDragging = true;
+                        try {
+                            DragDrop.DoDragDrop(parameter.Element, parameter.Data, parameter.Effects);
+                        } finally {
+                            IsDragging = false;
+                        }
+                    }
                 }
             }
         }
@@ -99,6 +166,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
 
         #region IDragAndDrop
+
+        /// <summary>
+        /// <see cref="IDragAndDrop.UsingPreviewEvent"/>
+        /// </summary>
+        public bool UsingPreviewEvent { get; }
 
         public void MouseDown(UIElement sender, MouseButtonEventArgs e)
         {
@@ -147,6 +219,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         { }
         public DelegateDragAndDrop(ILoggerFactory loggerFactory)
             : base(loggerFactory)
+        { }
+
+        public DelegateDragAndDrop(bool usingPreviewEvent, ILogger logger)
+            : base(usingPreviewEvent, logger)
+        { }
+        public DelegateDragAndDrop(bool usingPreviewEvent, ILoggerFactory loggerFactory)
+            : base(usingPreviewEvent, loggerFactory)
         { }
 
         #region property

@@ -29,19 +29,46 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public interface IDatabaseLazyWriter: IFlushable
+    /// <summary>
+    /// データベースへの遅延書き込み。
+    /// </summary>
+    public interface IDatabaseLazyWriter: IFlushable, IDisposedChackable
     {
         #region property
 
+        /// <summary>
+        /// 停止中か。
+        /// </summary>
         bool IsPausing { get; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 周期処理を一時停止。
+        /// </summary>
+        /// <returns></returns>
         IDisposer Pause();
+        /// <summary>
+        /// DB処理を遅延実行。
+        /// </summary>
+        /// <param name="action">DB処理本体。</param>
         void Stock(Action<IDatabaseTransaction> action);
+        /// <summary>
+        /// DB処理を遅延実行。
+        /// <para><paramref name="uniqueKey"/>でグルーピングし、一番若い処理が実行される。</para>
+        /// <para><see cref="UniqueKeyPool"/>を用いる前提。</para>
+        /// </summary>
+        /// <param name="action">DB処理本体。</param>
+        /// <param name="uniqueKey">一意オブジェクト。</param>
         void Stock(Action<IDatabaseTransaction> action, object uniqueKey);
+
+        /// <summary>
+        /// ため込んでいるDB処理をなかったことにする。
+        /// <para>特定の状況でしか使い道がないので使用には注意すること。</para>
+        /// </summary>
+        void ClearStock();
 
         #endregion
     }
@@ -54,36 +81,30 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #endregion
 
-        public DatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan waitTime, ILoggerFactory loggerFactory)
-            : this(databaseBarrier, waitTime, TimeSpan.FromSeconds(1), loggerFactory)
-        { }
 
-        public DatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan waitTime, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
+        public DatabaseLazyWriter(IDatabaseBarrier databaseBarrier, TimeSpan pauseRetryTime, ILoggerFactory loggerFactory)
         {
             if(databaseBarrier == null) {
                 throw new ArgumentNullException(nameof(databaseBarrier));
-            }
-            if(waitTime == Timeout.InfiniteTimeSpan) {
-                throw new ArgumentException(nameof(waitTime));
             }
             if(loggerFactory == null) {
                 throw new ArgumentNullException(nameof(loggerFactory));
             }
 
             DatabaseBarrier = databaseBarrier;
-            WaitTime = waitTime;
             PauseRetryTime = pauseRetryTime;
             Logger = loggerFactory.CreateLogger(GetType());
 
-#pragma warning disable CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
-            LazyTimer = new Timer(LazyCallback);
-#pragma warning restore CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
+            LazyTimer = new Timer(LazyCallback!);
         }
 
         #region property
 
         IDatabaseBarrier DatabaseBarrier { get; }
-        TimeSpan WaitTime { get; }
+
+        /// <summary>
+        /// リトライ間隔。
+        /// </summary>
         TimeSpan PauseRetryTime { get; }
         ILogger Logger { get; }
 
@@ -104,7 +125,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
         void StartTimer()
         {
-            LazyTimer.Change(WaitTime, PauseRetryTime);
+            ThrowIfDisposed();
+
+            LazyTimer.Change(PauseRetryTime, PauseRetryTime);
         }
 
         void StockCore(Action<IDatabaseTransaction> action, object? uniqueKey)
@@ -153,6 +176,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             StockCore(action, null);
         }
 
+        public void ClearStock()
+        {
+            ThrowIfDisposed();
+
+            lock(this._timerLocker) {
+                StopTimer();
+
+                StockItems.Clear();
+
+                StartTimer();
+            }
+        }
+
         void LazyCallback(object state)
         {
             if(IsPausing) {
@@ -173,6 +209,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public IDisposer Pause()
         {
+            ThrowIfDisposed();
+
             IsPausing = true;
             return new ActionDisposer(() => {
                 IsPausing = false;

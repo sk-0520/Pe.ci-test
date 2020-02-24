@@ -4,6 +4,8 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.PInvoke.Windows
 {
+    public delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
+
     public enum WM : uint
     {
         WM_DESTROY = 0x0002,
@@ -48,12 +50,13 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         WM_NCMBUTTONUP = 0x00a8,
         WM_NCMBUTTONDBLCLK = 0x00a9,
         WM_SYSKEYDOWN = 0x0104,
+        WM_SYSKEYUP = 0x0105,
         WM_XBUTTONUP = 0x020C,
         WM_RBUTTONDOWN = 0x0204,
         WM_RBUTTONUP = 0x0205,
         WM_MOUSEMOVE = 0x0200,
-
-
+        WM_KEYDOWN = 0x0100,
+        WM_KEYUP = 0x0101,
 
     }
 
@@ -1767,6 +1770,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     [Flags]
     public enum KEYEVENTF : uint
     {
+        KEYEVENTF_KEYDOWN = 0x0000,
         KEYEVENTF_EXTENDEDKEY = 0x0001,
         KEYEVENTF_KEYUP = 0x0002,
     }
@@ -1927,6 +1931,24 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         XBUTTON2 = 0x0002
     }
 
+    public enum WH
+    {
+        WH_CALLWNDPROC = 4,
+        WH_CALLWNDPROCRET = 12,
+        WH_CBT = 5,
+        WH_DEBUG = 9,
+        WH_FOREGROUNDIDLE = 11,
+        WH_GETMESSAGE = 3,
+        WH_JOURNALPLAYBACK = 1,
+        WH_JOURNALRECORD = 0,
+        WH_KEYBOARD = 2,
+        WH_KEYBOARD_LL = 13,
+        WH_MOUSE = 7,
+        WH_MOUSE_LL = 14,
+        WH_MSGFILTER = -1,
+        WH_SHELL = 10,
+        WH_SYSMSGFILTER = 6,
+    }
 
     /// <summary>
     /// http://pinvoke.net/default.aspx/Structures.WINDOWPOS
@@ -2009,7 +2031,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         GA_ROOTOWNER = 3
     }
 
-    public enum OBJID:uint
+    public enum OBJID : uint
     {
         OBJID_HSCROLL = 0xFFFFFFFA,
         OBJID_VSCROLL = 0xFFFFFFFB,
@@ -2064,7 +2086,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum SW_scroll: uint
+    public enum SW_scroll : uint
     {
         /// <summary>
         /// SW_INVALIDATE フラグと共にこのフラグを指定すると、スクロール後、WM_ERASEBKGND メッセージをウィンドウへ送信し、新たに無効になったリージョンを消去します。
@@ -2084,6 +2106,177 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         SW_SMOOTHSCROLL = 0x0010,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct FLASHWINFO
+    {
+        public UInt32 cbSize;
+        public IntPtr hwnd;
+        public FLASHW dwFlags;
+        public UInt32 uCount;
+        public UInt32 dwTimeout;
+    }
+    public enum FLASHW : uint
+    {
+        /// <summary>
+        /// Stop flashing. The system restores the window to its original state.
+        /// </summary>
+        FLASHW_STOP = 0,
+
+        /// <summary>
+        /// Flash the window caption
+        /// </summary>
+        FLASHW_CAPTION = 1,
+
+        /// <summary>
+        /// Flash the taskbar button.
+        /// </summary>
+        FLASHW_TRAY = 2,
+
+        /// <summary>
+        /// Flash both the window caption and taskbar button.
+        /// This is equivalent to setting the FLASHW_CAPTION | FLASHW_TRAY flags.
+        /// </summary>
+        FLASHW_ALL = 3,
+
+        /// <summary>
+        /// Flash continuously, until the FLASHW_STOP flag is set.
+        /// </summary>
+        FLASHW_TIMER = 4,
+
+        /// <summary>
+        /// Flash continuously until the window comes to the foreground.
+        /// </summary>
+        FLASHW_TIMERNOFG = 12
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public class KBDLLHOOKSTRUCT
+    {
+        public uint vkCode;
+        public uint scanCode;
+        public LLKHF flags;
+        public uint time;
+        public UIntPtr dwExtraInfo;
+    }
+
+    [Flags]
+    public enum LLKHF : uint
+    {
+        LLKHF_EXTENDED = 0x01,
+        LLKHF_INJECTED = 0x10,
+        LLKHF_ALTDOWN = 0x20,
+        LLKHF_UP = 0x80,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MSLLHOOKSTRUCT
+    {
+        public POINT pt;
+        public int mouseData; // be careful, this must be ints, not uints (was wrong before I changed it...). regards, cmew.
+        public int flags;
+        public int time;
+        public UIntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KEYBDINPUT
+    {
+        public ushort wVk;
+        public ushort wScan;
+        public KEYEVENTF dwFlags;
+        public int time;
+        public UIntPtr dwExtraInfo;
+    }
+
+    [Flags]
+    public enum MOUSEEVENTF : uint
+    {
+        MOUSEEVENTF_ABSOLUTE = 0x8000,
+        MOUSEEVENTF_HWHEEL = 0x01000,
+        MOUSEEVENTF_MOVE = 0x0001,
+        MOUSEEVENTF_MOVE_NOCOALESCE = 0x2000,
+        MOUSEEVENTF_LEFTDOWN = 0x0002,
+        MOUSEEVENTF_LEFTUP = 0x0004,
+        MOUSEEVENTF_RIGHTDOWN = 0x0008,
+        MOUSEEVENTF_RIGHTUP = 0x0010,
+        MOUSEEVENTF_MIDDLEDOWN = 0x0020,
+        MOUSEEVENTF_MIDDLEUP = 0x0040,
+        MOUSEEVENTF_VIRTUALDESK = 0x4000,
+        MOUSEEVENTF_WHEEL = 0x0800,
+        MOUSEEVENTF_XDOWN = 0x0080,
+        MOUSEEVENTF_XUP = 0x0100
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MOUSEINPUT
+    {
+        public int dx;
+        public int dy;
+        public int mouseData;
+        public MOUSEEVENTF dwFlags;
+        public uint time;
+        public UIntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HARDWAREINPUT
+    {
+        public int uMsg;
+        public short wParamL;
+        public short wParamH;
+    }
+
+    public enum INPUT_type : int
+    {
+        INPUT_MOUSE = 0,
+        INPUT_KEYBOARD = 1,
+        INPUT_HARDWARE = 2,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct INPUT
+    {
+        public INPUT_type type;
+        public INPUT_data data;
+    };
+
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct INPUT_data
+    {
+        [FieldOffset(0)] public MOUSEINPUT mi;
+        [FieldOffset(0)] public KEYBDINPUT ki;
+        [FieldOffset(0)] public HARDWAREINPUT hi;
+    };
+
+    public enum HC
+    {
+        HC_ACTION = 0,
+        HC_NOREMOVE = 3,
+    }
+
+    /// <summary>
+    /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-mouse_event
+    /// http://tokovalue.jp/function/MapVirtualKey.htm
+    /// </summary>
+    public enum MAPVK:uint
+    {
+        /// <summary>
+        /// uCode は仮想キーコードであり、スキャンコードへ変換される。左右のキーを区別しない仮想キーコードのときは、関数は左側のスキャンコードを返す。スキャンコードに変換されないときは、関数は 0 を返す。
+        /// </summary>
+        MAPVK_VK_TO_VSC = 0,
+        /// <summary>
+        /// uCode はスキャンコードであり、仮想キーコードへ変換される。この仮想キーコードは、左右のキーを区別する。変換されないときは、関数は 0 を返する。
+        /// </summary>
+        MAPVK_VSC_TO_VK = 1,
+        /// <summary>
+        /// uCode は仮想キーコードであり、戻り値の下位ワードにシフトなしの ASCII 値が格納される。デッドキー（ 分音符号）は、戻り値の上位ビットをセットすることにより明示される。変換されないときは、関数は 0 を返す。
+        /// </summary>
+        MAPVK_VK_TO_CHAR = 2,
+        /// <summary>
+        /// Windows NT/2000：uCode はスキャンコードであり、左右のキーを区別する仮想キーコードへ変換される。変換されないときは、関数は 0 を返す。
+        /// </summary>
+        MAPVK_VSC_TO_VK_EX = 3,
+    }
     partial class NativeMethods
     {
         /// <summary>
@@ -2424,7 +2617,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern int SetScrollPos(IntPtr hWnd, SB nBar, int nPos, bool bRedraw);
 
         [DllImport("user32.dll")]
-        public static extern bool GetScrollRange(IntPtr hWnd, SB nBar, out int lpMinPos,out int lpMaxPos);
+        public static extern bool GetScrollRange(IntPtr hWnd, SB nBar, out int lpMinPos, out int lpMaxPos);
         [DllImport("user32.dll")]
         public static extern bool SetScrollRange(IntPtr hWnd, SB nBar, int nMinPos, int nMaxPos, bool bRedraw);
 
@@ -2435,7 +2628,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern int SetScrollInfo(IntPtr hwnd, SB fnBar, [In] ref SCROLLINFO lpsi, bool fRedraw);
 
 
-        [DllImport( "user32.dll", SetLastError= true, EntryPoint= "GetScrollBarInfo")]
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetScrollBarInfo")]
         public static extern int GetScrollBarInfo(IntPtr hWnd, OBJID idObject, ref SCROLLBARINFO psbi);
 
 
@@ -2455,7 +2648,75 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
 
         // TODO: GetDpiForMonitor, windows7が死滅するか動的にとるか後で考える
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(WH hookType, HookProc lpfn, IntPtr hMod, uint dwThreadId);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        // <summary>
+        ///     Passes the hook information to the next hook procedure in the current hook chain. A hook procedure can call this
+        ///     function either before or after processing the hook information.
+        ///     <para>
+        ///     See [ https://msdn.microsoft.com/en-us/library/windows/desktop/ms644974%28v=vs.85%29.aspx ] for more
+        ///     information.
+        ///     </para>
+        /// </summary>
+        /// <param name="hhk">C++ ( hhk [in, optional]. Type: HHOOK )<br />This parameter is ignored. </param>
+        /// <param name="nCode">
+        ///     C++ ( nCode [in]. Type: int )<br />The hook code passed to the current hook procedure. The next
+        ///     hook procedure uses this code to determine how to process the hook information.
+        /// </param>
+        /// <param name="wParam">
+        ///     C++ ( wParam [in]. Type: WPARAM )<br />The wParam value passed to the current hook procedure. The
+        ///     meaning of this parameter depends on the type of hook associated with the current hook chain.
+        /// </param>
+        /// <param name="lParam">
+        ///     C++ ( lParam [in]. Type: LPARAM )<br />The lParam value passed to the current hook procedure. The
+        ///     meaning of this parameter depends on the type of hook associated with the current hook chain.
+        /// </param>
+        /// <returns>
+        ///     C++ ( Type: LRESULT )<br />This value is returned by the next hook procedure in the chain. The current hook
+        ///     procedure must also return this value. The meaning of the return value depends on the hook type. For more
+        ///     information, see the descriptions of the individual hook procedures.
+        /// </returns>
+        /// <remarks>
+        ///     <para>
+        ///     Hook procedures are installed in chains for particular hook types. <see cref="CallNextHookEx" /> calls the
+        ///     next hook in the chain.
+        ///     </para>
+        ///     <para>
+        ///     Calling CallNextHookEx is optional, but it is highly recommended; otherwise, other applications that have
+        ///     installed hooks will not receive hook notifications and may behave incorrectly as a result. You should call
+        ///     <see cref="CallNextHookEx" /> unless you absolutely need to prevent the notification from being seen by other
+        ///     applications.
+        ///     </para>
+        /// </remarks>
+        [DllImport("user32.dll")]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        // overload for use with LowLevelKeyboardProc
+        [DllImport("user32.dll")]
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In]KBDLLHOOKSTRUCT lParam);
+
+        // overload for use with LowLevelMouseProc
+        [DllImport("user32.dll")]
+        static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, WM wParam, [In]MSLLHOOKSTRUCT lParam);
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetKeyboardState(byte[] lpKeyState);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
+
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
+        [DllImport("user32.dll")]
+        public static extern uint MapVirtualKey(uint uCode, MAPVK uMapType);
     }
 
 

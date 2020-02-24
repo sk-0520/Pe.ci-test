@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>Pe: Help Document</title>
+	<script>
+		var langMap = {
+			'ja': 'JP'
+		};
+
+		var langs = [
+			navigator.userLanguage,
+			navigator.browserLanguage,
+			navigator.language
+		];
+		var langCode = null;
+		for (var i = 0; i < langs.length; i++) {
+			var lang = langs[i];
+			if (lang) {
+				var index = lang.indexOf('-');
+				if (index != -1) {
+					langCode = lang;
+				} else {
+					if (langMap[lang]) {
+						langCode = lang + '-' + langMap[lang];
+					}
+				}
+				break;
+			}
+		}
+		if (!langCode) {
+			langCode = 'ja-JP';
+		}
+
+		window.location.href = 'help/index.html?lang=' + langCode;
+	</script>
+</head>
+<body>
+	<h1>Pe: Help Document</h1>
+	<noscript>
+		<p>
+			本ヘルプファイルの表示には JavaScript を有効にしてください。
+		</p>
+	</noscript>
+	<p>
+		ヘルプドキュメントを読み込み中です。
+	</p>
+	<p>
+		読み込めない場合は下記から移動してください。
+	</p>
+	<ul>
+		<li><a href="help/index.html?lang=ja-JP">ヘルプ: ja-JP</a></li>
+	</ul>
+</body>
+</html>

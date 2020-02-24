@@ -1,0 +1,9 @@
+select
+	AppNoteSetting.FontId,
+	AppNoteSetting.TitleKind,
+	AppNoteSetting.LayoutKind,
+	AppNoteSetting.ForegroundColor,
+	AppNoteSetting.BackgroundColor,
+	AppNoteSetting.IsTopmost
+from
+	AppNoteSetting

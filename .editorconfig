@@ -55,7 +55,6 @@ end_of_line = lf
 
 [*.sql]
 indent_style = tab
-charset = utf-16le
 
 [*.{ts,js}]
 indent_style = tab
@@ -88,4 +87,16 @@ charset = shift-jis
 [*.pug]
 indent_style = tab
 indent_size = 4
+
+[*.{c,h}]
+charset = utf-8-bom
+
+[*.ps1]
+charset = utf-8-bom
+indent_style = tab
+indent_size = 4
+
+[*.yml]
+indent_style = space
+indent_size = 2
 

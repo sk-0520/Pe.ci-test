@@ -1,0 +1,11 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = '更新履歴'
+
+block BLOCK_LAYOUT_CONTENT
+	div#changelogs
+
+block BLOCK_LAYOUT_TAIL_SCRIPT
+	script(src="script/changelog-link.js")
+	script(src="script/changelogs.ts")

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 #if ENABLED_PRISM7
@@ -42,7 +43,29 @@ namespace ContentTypeTextNet.Pe.Core.Models
     { }
 
     /// <summary>
-    /// パラメータに型判別できない(default(Object)とか)を無理やり認識させるしゃあなし対応。
+    /// DI処理でわっけ分からんことになったら投げられる例外。
+    /// <para><see cref="ArgumentException"/>等の分かっているのはその例外を投げるのでこの例外だけ受ければ良いという話ではない。</para>
+    /// </summary>
+    public class DiException : ApplicationException
+    {
+        public DiException()
+        { }
+
+        public DiException(string? message)
+            : base(message)
+        { }
+
+        public DiException(string? message, Exception? innerException)
+            : base(message, innerException)
+        { }
+
+        protected DiException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        { }
+    }
+
+    /// <summary>
+    /// パラメータに型判別できない(default(T)とか)を無理やり認識させるしゃあなし対応。
     /// </summary>
     public struct DiDefaultParameter
     {
@@ -89,6 +112,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IScopeDiContainer Scope();
     }
 
+    /// <summary>
+    /// 取得可能コンテナ。
+    /// </summary>
     public interface IDiContainer : IDiScopeContainerFactory
 #if ENABLED_PRISM7
         , IContainerProvider
@@ -175,6 +201,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         ;
     }
 
+    /// <summary>
+    ///登録可能コンテナ。
+    /// </summary>
     public interface IDiRegisterContainer : IDiContainer
 #if ENABLED_PRISM7
         , IContainerRegistry
@@ -225,6 +254,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="objectType"></param>
         IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
         IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
+
+        /// <summary>
+        /// 登録解除。
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <returns></returns>
+        bool Unregister<TInterface>();
     }
 
     /// <summary>
@@ -310,7 +346,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// コンストラクタ情報キャッシュ。
     /// </summary>
-    public sealed class DiConstructorCache
+    public sealed partial class DiConstructorCache
     {
         public DiConstructorCache(ConstructorInfo constructorInfo, IReadOnlyList<ParameterInfo> parameterInfos)
         {
@@ -372,67 +408,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     var lambda = Expression.Lambda<Func<object>>(newExp);
                     var creator = lambda.Compile();
                     Creator = p => creator();
-                } else if(ParameterInfos.Count < 10) {
-
-                    switch(ParameterInfos.Count) {
-                        case 1: {
-                                var creator = CreateFunction<Func<object, object>>();
-                                Creator = p => creator(p[0]);
-                            }
-                            break;
-
-                        case 2: {
-                                var creator = CreateFunction<Func<object, object, object>>();
-                                Creator = p => creator(p[0], p[1]);
-                            }
-                            break;
-
-                        case 3: {
-                                var creator = CreateFunction<Func<object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2]);
-                            }
-                            break;
-
-                        case 4: {
-                                var creator = CreateFunction<Func<object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3]);
-                            }
-                            break;
-
-                        case 5: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4]);
-                            }
-                            break;
-
-                        case 6: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5]);
-                            }
-                            break;
-
-                        case 7: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6]);
-                            }
-                            break;
-
-                        case 8: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7]);
-                            }
-                            break;
-
-                        case 9: {
-                                var creator = CreateFunction<Func<object, object, object, object, object, object, object, object, object, object>>();
-                                Creator = p => creator(p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8]);
-                            }
-                            break;
-                    }
-                }
-
-                if(Creator == null) {
-                    Creator = ConstructorInfo.Invoke;
+                } else {
+                    Creator = CreateCore(parameters);
                 }
             }
 
@@ -465,13 +442,35 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class DiContainer : DisposerBase, IDiRegisterContainer
     {
+        /// <summary>
+        /// プールしているオブジェクトはコンテナに任せる。
+        /// </summary>
+        public DiContainer()
+            : this(true)
+        { }
+
+        /// <summary>
+        /// プールしているオブジェクトをコンテナに任せるか選択。
+        /// </summary>
+        /// <param name="isDisposeObjectPool">解放処理をコンテナに任せるか</param>
+        public DiContainer(bool isDisposeObjectPool)
+        {
+            IsDisposeObjectPool = isDisposeObjectPool;
+        }
+
         #region property
 
         /// <summary>
         /// シングルトンなDIコンテナ。
         /// <para><see cref="Initialize"/>にて初期化が必要。</para>
         /// </summary>
+        [Obsolete]
         public static IDiContainer? Instance { get; private set; }
+
+        /// <summary>
+        /// 解放処理をコンテナに任せるか。
+        /// </summary>
+        protected bool IsDisposeObjectPool { get; }
 
         /// <summary>
         /// IF → 実体 のマッピング。
@@ -496,6 +495,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="Instance"/> を使用するための準備処理。
         /// </summary>
         /// <param name="creator"></param>
+        [Obsolete]
         public static void Initialize(Func<IDiContainer> creator)
         {
             if(Instance != null) {
@@ -541,6 +541,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        bool Unregister(Type interfaceType)
+        {
+            if(Factory.TryGetValue(interfaceType, out var factory)) {
+                Mapping.Remove(interfaceType);
+                Factory.Remove(interfaceType);
+                Constructors.Remove(interfaceType);
+                if(factory .Lifecycle == DiLifecycle.Singleton) {
+                    ObjectPool.Remove(interfaceType);
+                    factory.Dispose();
+                }
+                return true;
+            }
+
+            return false;
         }
 
         Type GetMappingType(Type type)
@@ -683,7 +699,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return raw;
             }
 
-            throw new Exception($"{type}: create rror");
+            throw new DiException($"{type}: create rror");
         }
 
         bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
@@ -724,7 +740,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var fieldValue)) {
                         fieldInfo.SetValue(target, fieldValue);
                     } else {
-                        throw new Exception($"{fieldInfo}: create fail");
+                        throw new DiException($"{fieldInfo}: create fail");
                     }
                     break;
 
@@ -733,7 +749,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var propertyValue)) {
                         propertyInfo.SetValue(target, propertyValue);
                     } else {
-                        throw new Exception($"{propertyInfo}: create fail");
+                        throw new DiException($"{propertyInfo}: create fail");
                     }
                     break;
 
@@ -862,7 +878,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public virtual IScopeDiContainer Scope()
         {
-            var cloneContainer = new ScopeDiContainer();
+            var cloneContainer = new ScopeDiContainer(IsDisposeObjectPool);
             foreach(var pair in Mapping) {
                 cloneContainer.Mapping.Add(pair.Key, pair.Value);
             }
@@ -944,6 +960,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return this;
         }
 
+        public bool Unregister<TInterface>()
+        {
+            return Unregister(typeof(TInterface));
+        }
+
 #if ENABLED_PRISM7
         public bool IsRegistered(Type type) => Mapping.ContainsKey(type);
         public bool IsRegistered(Type type, string name) => throw new NotSupportedException();
@@ -978,6 +999,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     foreach(var factory in Factory.Values) {
                         factory.Dispose();
                     }
+                    if(IsDisposeObjectPool) {
+                        foreach(var pair in ObjectPool) {
+                            // 自分自身が処理中なので無視
+                            if(pair.Value == this) {
+                                continue;
+                            }
+                            if(pair.Value is IDisposable disposer) {
+                                disposer.Dispose();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -987,8 +1019,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    class ScopeDiContainer : DiContainer, IScopeDiContainer
+    internal class ScopeDiContainer : DiContainer, IScopeDiContainer
     {
+        public ScopeDiContainer(bool isDisposeObjectPool)
+            :base(isDisposeObjectPool)
+        {}
+
         #region property
 
         HashSet<Type> RegisteredTypeSet { get; } = new HashSet<Type>();
@@ -1040,20 +1076,41 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        // 自動生成にしても日本語がすごい
         #region IDisposable
 
         protected override void Dispose(bool disposing)
         {
-            if(IsDisposed) {
+            if(!IsDisposed) {
                 if(disposing) {
                     foreach(var type in RegisteredTypeSet) {
-                        Factory[type].Dispose();
+                        if(Factory.TryGetValue(type, out var value)) {
+                            value.Dispose();
+                        }
+
+                        if(IsDisposeObjectPool) {
+                            if(ObjectPool.TryGetValue(type, out var poolObject)) {
+                                if(poolObject != this && poolObject is IDisposable disposer) {
+                                    disposer.Dispose();
+                                }
+                            }
+                        }
+
                     }
+
                 }
             }
 
-            base.Dispose(disposing);
+            if(IsDisposed) {
+                return;
+            }
+
+            OnDisposing();
+
+            if(disposing) {
+                GC.SuppressFinalize(this);
+            }
+
+            IsDisposed = true;
         }
 
         #endregion

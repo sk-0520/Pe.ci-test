@@ -8,21 +8,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     public abstract class DatabaseStatementBuilderBase
     {
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
-        private DatabaseStatementBuilderBase(IDatabaseImplementation implementation)
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DatabaseStatementBuilderBase(IDatabaseImplementation implementation, ILogger logger)
         {
             Implementation = implementation;
-        }
-
-        public DatabaseStatementBuilderBase(IDatabaseImplementation implementation, ILogger logger)
-            : this(implementation)
-        {
             Logger = logger;
         }
         public DatabaseStatementBuilderBase(IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : this(implementation)
         {
+            Implementation = implementation;
             Logger = loggerFactory.CreateLogger(GetType());
         }
 
@@ -45,6 +38,27 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    public enum DatabaseOrder
+    {
+        Asc,
+        Desc,
+    }
+
+    public class DatabaseOrderItem
+    {
+        public DatabaseOrderItem(DatabaseOrder order, string columnName)
+        {
+            Order = order;
+            ColumnName = columnName;
+        }
+
+        #region property
+
+        public DatabaseOrder Order { get; }
+        public string ColumnName { get; }
+        #endregion
+    }
+
     public class DatabaseSelectStatementBuilder : DatabaseStatementBuilderBase
     {
         public DatabaseSelectStatementBuilder(IDatabaseImplementation implementation, ILogger logger)
@@ -61,6 +75,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public string TableName { get; private set; } = string.Empty;
         ISet<string> PlainValues { get; } = new HashSet<string>();
+
+        IList<DatabaseOrderItem> Orders { get; } = new List<DatabaseOrderItem>();
 
         #endregion
 
@@ -96,17 +112,24 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return this;
         }
 
-        public DatabaseSelectStatementBuilder AddValue(string column, object value)
+        public DatabaseSelectStatementBuilder AddValueParameter(string column, object value)
         {
             ParametersImpl.Add(column, value);
 
             return this;
         }
 
-        public DatabaseSelectStatementBuilder AddPlain(string column, string value)
+        public DatabaseSelectStatementBuilder AddPlainParameter(string column, string value)
         {
             ParametersImpl.Add(column, value);
             PlainValues.Add(column);
+
+            return this;
+        }
+
+        public DatabaseSelectStatementBuilder AddOrder(string column, DatabaseOrder order)
+        {
+            Orders.Add(new DatabaseOrderItem(order, column));
 
             return this;
         }
@@ -122,15 +145,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var parameterIndex = 0;
 
-            foreach(var columnItem in ColumnNames.Select((n, i) => (index: i, name: n))) {
+            foreach(var columnItem in ColumnNames.Counting()) {
                 sb.Append('\t');
-                sb.Append(Implementation.ToStatementColumnName(columnItem.name));
-                if(AliasNames.TryGetValue(columnItem.name, out var aliasName)) {
+                sb.Append(Implementation.ToStatementColumnName(columnItem.Value));
+                if(AliasNames.TryGetValue(columnItem.Value, out var aliasName)) {
                     sb.Append(' ');
                     sb.Append(Implementation.GetSelectStatementKeyword(DatabaseSelectStatementKeyword.As));
                     sb.Append(' ');
                 }
-                if(columnItem.index + 1 != ColumnNames.Count) {
+                if(columnItem.Number + 1 != ColumnNames.Count) {
                     sb.Append(',');
                 }
                 sb.AppendLine();
@@ -159,6 +182,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
                 if(i + 1 != parameterKeys.Length) {
                     sb.AppendLine("\tand");
+                }
+            }
+
+            if(Orders.Any()) {
+                sb.AppendLine(Implementation.GetSelectStatementKeyword(DatabaseSelectStatementKeyword.Order));
+                for(var i = 0; i < Orders.Count; i++) {
+                    var order = Orders[i];
+                    sb.Append("\t");
+                    sb.Append(Implementation.ToStatementColumnName(order.ColumnName));
+                    var orderKey = order.Order switch
+                    {
+                        DatabaseOrder.Asc => DatabaseSelectStatementKeyword.OrderAsc,
+                        DatabaseOrder.Desc => DatabaseSelectStatementKeyword.OrderDesc,
+                        _ => throw new NotImplementedException()
+                    };
+                    sb.Append(Implementation.GetSelectStatementKeyword(orderKey));
+                    if(i + 1 != Orders.Count) {
+                        sb.AppendLine(",");
+                    }
                 }
             }
 
@@ -204,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return this;
         }
-        public DatabaseUpdateStatementBuilder AddValue(string column, object value)
+        public DatabaseUpdateStatementBuilder AddValueParameter(string column, object value)
         {
             UpdateColumns.Add(column);
             ParametersImpl.Add(column, value);
@@ -212,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return this;
         }
 
-        public DatabaseUpdateStatementBuilder AddPlain(string column, string value)
+        public DatabaseUpdateStatementBuilder AddPlainParameter(string column, string value)
         {
             UpdateColumns.Add(column);
             ParametersImpl.Add(column, value);
@@ -243,16 +285,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             var parameterIndex = 0;
             sb.AppendLine("set");
-            foreach(var item in ParametersImpl.Keys.Select((k, i) => (index: i, key: k))) {
+            foreach(var item in UpdateColumns.Counting()) {
                 sb.Append('\t');
-                sb.Append(Implementation.ToStatementColumnName(item.key));
+                sb.Append(Implementation.ToStatementColumnName(item.Value));
                 sb.Append('=');
-                if(PlainValues.Contains(item.key)) {
-                    sb.Append(Parameters[item.key]);
+                if(PlainValues.Contains(item.Value)) {
+                    sb.Append(Parameters[item.Value]);
                 } else {
-                    sb.Append(Implementation.ToStatementParameterName(item.key, parameterIndex++));
+                    sb.Append(Implementation.ToStatementParameterName(item.Value, parameterIndex++));
                 }
-                if(item.index + 1 != ParametersImpl.Count) {
+                if(item.Number + 1 != UpdateColumns.Count) {
                     sb.Append(',');
                 }
                 sb.AppendLine();
@@ -261,8 +303,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             sb.AppendLine("where");
             var enabledWhereItems = ParametersImpl.Keys.Except(IgnoreWhereParameters).ToList();
             var keyItems = enabledWhereItems.Intersect(KeyColumns).Select(i => (column: i, equal: true));
-            var paramItems = enabledWhereItems.Except(KeyColumns).Select(i => (column: i, equal: false));
-            var whereItems = keyItems.Concat(paramItems).ToArray();
+            //var paramItems = enabledWhereItems.Except(KeyColumns).Select(i => (column: i, equal: false));
+            //var whereItems = keyItems.Concat(paramItems).ToArray();
+            var whereItems = keyItems.ToArray();
             for(var i = 0; i < whereItems.Length; i++) {
                 var whereItem = whereItems[i];
                 sb.Append('\t');
@@ -298,8 +341,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region proeprty
         public string TableName { get; private set; } = string.Empty;
-        ISet<string> UpdateColumns { get; } = new HashSet<string>();
-        ISet<string> PlainValues { get; } = new HashSet<string>();
+        ISet<string> DeleteColumns { get; } = new HashSet<string>();
 
         #endregion
 
@@ -311,19 +353,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return this;
         }
-        public DatabaseDeleteStatementBuilder AddValue(string column, object value)
+        public DatabaseDeleteStatementBuilder AddKey(string column, object value)
         {
-            UpdateColumns.Add(column);
+            DeleteColumns.Add(column);
             ParametersImpl.Add(column, value);
-
-            return this;
-        }
-
-        public DatabaseDeleteStatementBuilder AddPlain(string column, string value)
-        {
-            UpdateColumns.Add(column);
-            ParametersImpl.Add(column, value);
-            PlainValues.Add(column);
 
             return this;
         }

@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        public static TResult GetCastWPFValue<TResult>(object value, TResult failReturnValue, ILogger logger = null!)
+        public static TResult GetCastWPFValue<TResult>(object value, TResult failReturnValue, ILogger? logger = null!)
         {
             if(value == DependencyProperty.UnsetValue) {
                 return failReturnValue;

@@ -16,21 +16,29 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 指定データを集合の中から単一である値に変換する。
         /// </summary>
         /// <param name="target"></param>
-        /// <param name="list"></param>
-        /// <param name="comparisonType">比較</param>
-        /// <param name="dg">nullの場合はデフォルト動作</param>
+        /// <param name="seq">集合</param>
+        /// <param name="comparisonType">比較処理。</param>
+        /// <param name="converter"></param>
         /// <returns></returns>
-        public static string ToUnique(string target, IEnumerable<string> list, StringComparison comparisonType, Func<string, int, string> dg)
+        public static string ToUnique(string target, IReadOnlyCollection<string> seq, StringComparison comparisonType, Func<string, int, string> converter)
         {
-            Debug.Assert(dg != null);
+            if(target == null) {
+                throw new ArgumentNullException(nameof(target));
+            }
+            if(seq == null) {
+                throw new ArgumentNullException(nameof(seq));
+            }
+            if(converter == null) {
+                throw new ArgumentNullException(nameof(converter));
+            }
 
             var changeName = target;
 
             int n = 1;
             RETRY:
-            foreach(var value in list) {
+            foreach(var value in seq) {
                 if(string.Equals(value, changeName, comparisonType)) {
-                    changeName = dg(target, ++n);
+                    changeName = converter(target, ++n);
                     goto RETRY;
                 }
             }
@@ -42,12 +50,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 指定データを集合の中から単一である値に変換する。
         /// </summary>
         /// <param name="target"></param>
-        /// <param name="list"></param>
+        /// <param name="seq"></param>
         /// <param name="comparisonType"></param>
-        /// <returns>集合の中に同じものがなければtarget, 存在すればtarget(n)。</returns>
-        public static string ToUniqueDefault(string target, IEnumerable<string> list, StringComparison comparisonType)
+        /// <returns>集合の中に同じものがなければtarget, 存在すれば<paramref name="target"/>(n)。</returns>
+        public static string ToUniqueDefault(string target, IReadOnlyCollection<string> seq, StringComparison comparisonType)
         {
-            return ToUnique(target, list, comparisonType, (string source, int index) => string.Format("{0}({1})", source, index));
+            return ToUnique(target, seq, comparisonType, (string source, int index) => string.Format("{0}({1})", source, index));
         }
 
 #if false
@@ -146,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        public static string SafeTrim(string s)
+        public static string SafeTrim(string? s)
         {
             if(s == null) {
                 return string.Empty;

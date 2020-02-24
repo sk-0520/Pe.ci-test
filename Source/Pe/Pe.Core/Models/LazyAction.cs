@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 遅延処理。
+    /// </summary>
     public class LazyAction : DisposerBase, IFlushable
     {
         #region variable
@@ -39,6 +42,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void DelayAction(Action action)
         {
+            ThrowIfDisposed();
+
             lock(this._timerLocker) {
                 if(Timer.Enabled) {
                     Timer.Stop();
@@ -52,6 +57,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         void DoAction(bool disposing)
         {
+            ThrowIfDisposed();
+
             lock(this._timerLocker) {
                 if(disposing) {
                     Timer.Stop();

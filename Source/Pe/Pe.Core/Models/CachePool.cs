@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 
+// NOTE: いまいちなので破棄予定
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     public interface ICacheItem<TValue>
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Value = value;
             IsManaged = isManaged;
             LifeTime = lifeTime;
-            CreatedTimestamp = DateTime.Now;
+            CreatedTimestamp = DateTime.UtcNow;
         }
 
         #region ICacheItem
@@ -99,6 +100,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     ///
     /// <para>MemoryCacheで生成処理を受け取れんだろうか</para>
+    /// <para>TODO: 時間単位でちゃんと見るべきちゃうんかなぁ</para>
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
@@ -130,20 +132,26 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         protected CacheItem<TValue> CreateCacheItem(TValue value, bool isManaged, TimeSpan lifeTime)
         {
+            ThrowIfDisposed();
+
             var item = new CacheItem<TValue>(value, isManaged, lifeTime);
             return item;
         }
 
         void UpdateItemState(IWraitableCacheItem item)
         {
+            ThrowIfDisposed();
+
             lock(item) {
-                item.AccessTimestamp = DateTime.Now;
+                item.AccessTimestamp = DateTime.UtcNow;
                 item.AccessCount += 1;
             }
         }
 
         void DisposeItem(ICacheItem<TValue> item)
         {
+            ThrowIfDisposed();
+
             if(item.IsManaged) {
                 if(item is IDisposable diposer) {
                     diposer.Dispose();
@@ -167,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var item = Store.GetOrAdd(key, k => CreateCacheItem(valueFactory(k), isManaged, lifeTime));
 
-            if(!item.CheckEnabled(DateTime.Now)) {
+            if(!item.CheckEnabled(DateTime.UtcNow)) {
                 DisposeItem(item);
                 // スレッドとか難しいことは考えないでござる
                 Store[key] = CreateCacheItem(valueFactory(key), isManaged, lifeTime);
@@ -192,8 +200,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ThrowIfDisposed();
 
             if(Store.TryGetValue(key, out var item)) {
-                if(item.CheckEnabled(DateTime.Now)) {
-                    if(item.CheckEnabled(DateTime.Now)) {
+                if(item.CheckEnabled(DateTime.UtcNow)) {
+                    if(item.CheckEnabled(DateTime.UtcNow)) {
                         UpdateItemState(item);
                         value = item.Value;
                         return true;
@@ -240,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             ThrowIfDisposed();
 
-            var timestamp = DateTime.Now;
+            var timestamp = DateTime.UtcNow;
             var pairs = Store
                 .ToList()
                 .Where(p => p.Value.CheckEnabled(timestamp))

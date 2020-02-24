@@ -30,5 +30,11 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 ## Build
 
-* current: [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-4vo6i)
+* current: [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-beta)
 * master: [![Build status](https://ci.appveyor.com/api/projects/status/nrtepybkoj577bo6/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe2/branch/master)
+
+## 開発
+
+* `dotnet --version`: [3.1.101](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+
+

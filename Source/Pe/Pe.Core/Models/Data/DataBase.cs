@@ -12,6 +12,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     public interface IData : IReadOnlyData
     { }
 
+    /// <summary>
+    /// なんかしらのデータ永続化用オブジェクト。
+    /// <para>コンストラクタのみで永続化できないかもしれんけどもうええんちゃう？</para>
+    /// </summary>
     [Serializable, DataContract]
     public abstract class DataBase : IData
     { }
@@ -38,8 +42,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
 
     public class RawModel : DisposerBase, IRawModel
     {
-        public RawModel(object rawObject)
+        public RawModel(object? rawObject)
         {
+            if(rawObject == null) {
+                throw new ArgumentNullException(nameof(rawObject));
+            }
+
             BaseRawObject = rawObject;
         }
 
@@ -53,9 +61,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
     public class RawModel<T> : RawModel, IRawModel<T>
     {
         public RawModel(T rawObject)
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
             : base(rawObject)
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
         {
             Raw = rawObject;
         }

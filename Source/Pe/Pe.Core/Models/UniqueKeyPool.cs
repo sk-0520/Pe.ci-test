@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public object Get([CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
         {
-            var sb = new StringBuilder(callerMemberName.Length + 1 + callerLineNumber);
+            var sb = new StringBuilder(callerMemberName.Length + 1 + "2147483647".Length);
             sb.Append(callerMemberName);
             sb.Append('.');
             sb.Append(callerLineNumber);

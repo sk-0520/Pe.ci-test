@@ -7,6 +7,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 {
     /// <summary>
     /// 非マネージドオブジェクトをマネージドオブジェクトとして扱う。
+    /// <para>CLIでこういうクラスあったよなぁ。</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class UnmanagedModelBase<T> : RawModel<T>
