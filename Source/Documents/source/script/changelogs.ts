@@ -5306,3 +5306,58 @@ const changelogs = [
 	}
 ];/*--------RELEASE TAIL--------*/
 
+window.addEventListener('load', () => {
+	const changelogTypeMap: { [key: string]: string; } = {
+		'features': '機能',
+		'fixes': '修正',
+		'developer': '開発',
+		'note': 'メモ'
+	};
+
+	const root = document.getElementById('changelogs')!;
+	for (const changelog of changelogs) {
+		const versionSection = document.createElement('section');
+
+		const versionHeader = document.createElement('h2');
+		versionHeader.textContent = `${changelog['date']}, ${changelog['version']}`;
+		versionSection.appendChild(versionHeader);
+
+		for (const content of changelog['contents']) {
+			const contentSection = document.createElement('section');
+
+			const contentHeader = document.createElement('h3');
+			contentHeader.className = content['type'];
+			contentHeader.textContent = changelogTypeMap[content['type']];
+
+			contentSection.appendChild(contentHeader);
+
+			const logs = document.createElement('ul');
+			for (const log of content['logs']) {
+				const item = document.createElement('li');
+				const subject = document.createElement('span');
+				subject.textContent = log['subject'];
+				if ('class' in log) {
+					subject.className = log['class']!;
+				}
+				item.appendChild(subject);
+
+				if ('comments' in log) {
+					const comments = document.createElement('ul');
+					for (const comment of log['comments']!) {
+						const li = document.createElement('li');
+						li.textContent = comment;
+						comments.appendChild(li);
+					}
+					item.appendChild(comments);
+				}
+
+				logs.appendChild(item);
+			}
+			contentSection.appendChild(logs);
+
+			versionSection.appendChild(contentSection);
+		}
+
+		root.appendChild(versionSection);
+	}
+});

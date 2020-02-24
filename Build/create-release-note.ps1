@@ -108,7 +108,7 @@ $currentVersion = $json[0]
 
 # 速度とかどうでもいい
 $body = New-Object Element 'body'
-$headline = $body.CreateChild('h1')
+$headline = $body.CreateChild('h2') # changelogs.ts のスタイル流用のため
 $headline.CreateText($currentVersion.version);
 $headline.CreateText(': ');
 $headline.CreateText($currentVersion.date);
@@ -120,7 +120,7 @@ foreach ($content in $currentVersion.contents) {
 	}
 
 	$section = $contents.CreateChild('section')
-	$sectionHeader = $section.CreateChild('h2')
+	$sectionHeader = $section.CreateChild('h3') # changelogs.ts のスタイル流用のため
 	$sectionHeader.CreateText($contentMap[$content.type])
 	$sectionHeader.attributes['class'] = $content.type
 	$logs = $section.CreateChild('ul')
