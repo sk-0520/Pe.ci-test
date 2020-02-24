@@ -22,7 +22,7 @@ before_build:
 build_script:
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms x64,x86
   - ps: .\Build\create-document.ps1 -Platforms x64,x86
-  - ps: .\Build\compress.ps1 -Diet -Archive $env:ARCHIVE -SourceDirectory Output\Release\x86\Pe -Platforms x64,x86
+  - ps: .\Build\compress.ps1 -Diet -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-release-note.ps1
 before_test:
