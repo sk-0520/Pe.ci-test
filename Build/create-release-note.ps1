@@ -93,10 +93,16 @@ $contentMap = @{
 
 # 無理やりjsonにする
 $rawChangelogsContent = Get-Content $rawChangelogsFile -Raw -Encoding UTF8
-$headerMark = '--------RELEASE HEAD--------'
-$prevHeaderIndex = $rawChangelogsContent.IndexOf($headerMark)
-$prevHeaderContent = $rawChangelogsContent.Substring($prevHeaderIndex + $headerMark.Length)
-$json = '[' + $prevHeaderContent.Substring($prevHeaderContent.IndexOf('{')) | ConvertFrom-Json
+$headMark = '/*--------RELEASE HEAD--------*/'
+$tailMark = '/*--------RELEASE TAIL--------*/'
+$prevHeaderIndex = $rawChangelogsContent.IndexOf($headMark)
+$prevHeaderContent = $rawChangelogsContent.Substring($prevHeaderIndex + $headMark.Length)
+
+$tailIndex = $prevHeaderContent.IndexOf($tailMark);
+$prevContent = $prevHeaderContent.Substring(0, $tailIndex)
+$prevContent = $prevContent.Substring(0, $prevContent.LastIndexOf(';'))
+
+$json = '[' + $prevContent.Substring($prevContent.IndexOf('{')) | ConvertFrom-Json
 
 $currentVersion = $json[0]
 
@@ -116,6 +122,7 @@ foreach ($content in $currentVersion.contents) {
 	$section = $contents.CreateChild('section')
 	$sectionHeader = $section.CreateChild('h2')
 	$sectionHeader.CreateText($contentMap[$content.type])
+	$sectionHeader.attributes['class'] = $content.type
 	$logs = $section.CreateChild('ul')
 	foreach ($log in $content.logs) {
 		$logItem = $logs.CreateChild('li')

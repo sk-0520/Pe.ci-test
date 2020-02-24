@@ -86,7 +86,8 @@ const changelogs = [
 			}
 		]
 	},
-	--------RELEASE HEAD--------*/
+	*/
+	/*--------RELEASE HEAD--------*/
 	{
 		"date": "YYYY/MM/DD",
 		"version": "0.83.1",
@@ -5303,4 +5304,5 @@ const changelogs = [
 			}
 		]
 	}
-]
+];/*--------RELEASE TAIL--------*/
+
