@@ -1,0 +1,54 @@
+doctype html
+html(lang='ja')
+	head
+		block BLOCK_LAYOUT_VAR
+
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		- var TITLE = 'Pe Help'
+		if(VAR_LAYOUT_TITLE)
+			title #{VAR_LAYOUT_TITLE} - #{TITLE}
+		else
+			title #{TITLE}
+
+		link(rel='stylesheet' type='text/css' href='style/style.scss')
+
+		block BLOCK_LAYOUT_HEAD
+		block BLOCK_LAYOUT_STYLE
+		block BLOCK_LAYOUT_HEAD_SCRIPT
+	body
+		div#root
+			if(VAR_LAYOUT_TITLE)
+				h1 #{VAR_LAYOUT_TITLE}
+			else
+				h1 #{TITLE}
+			div#content
+				block BLOCK_LAYOUT_CONTENT
+
+			header#menu
+				nav
+					ul
+						li
+							a(href="./index.pug") TOP
+						li
+							a(href="./changelogs.pug") 更新履歴
+						li DEV
+							ul
+								li
+									a(href="./dev-build.pug") ビルド
+								li
+									a(href="./dev-branch.pug") ブランチ
+								li
+									a(href="./dev-ci.pug") CI・リリース
+								li
+									a(href="./dev-table.main.pug") テーブル:Main
+								li
+									a(href="./dev-table.file.pug") テーブル:File
+
+			footer#footer
+				div footer
+
+		block BLOCK_LAYOUT_TAIL_SCRIPT
+

@@ -1,0 +1,225 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:Taskbar="clr-namespace:Hardcodet.Wpf.TaskbarNotification"
+
+
+  xmlns:app_core_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+
+  xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Manager"
+>
+  <ContextMenu x:Key="ContextMenu">
+    <ContextMenu.Resources>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+      <app_core_view_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
+      <app_core_view_converter:IsNotEmptyCollectionConverter x:Key="IsNotEmptyCollectionConverter" />
+
+      <Style x:Key="INotifyAreaMenuItem" TargetType="MenuItem" >
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding MenuHeaderHasAccessKey}" Value="False">
+            <Setter Property="Header" Value="{Binding MenuHeader, Converter={StaticResource EscapeAccessKeyConverter}}" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding MenuHasIcon}" Value="True">
+            <Setter Property="Icon" Value="{Binding MenuIcon}" />
+            <Setter Property="IsCheckable" Value="False" />
+            <Setter Property="IsChecked" Value="False" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding MenuHasIcon}" Value="False">
+            <Setter Property="IsCheckable" Value="True" />
+            <Setter Property="IsChecked" Value="{Binding MenuIsChecked, Mode=OneWay}" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding MenuIsChecked}" Value="True">
+            <Setter Property="FontWeight" Value="Bold" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="Header" Value="{Binding MenuHeader}" />
+        <Setter Property="Command" Value="{Binding MenuCommand}" />
+        <Setter Property="CommandParameter" Value="{Binding}" />
+      </Style>
+    </ContextMenu.Resources>
+
+    <MenuItem Header="{Binding Resources.String_AppManager_Setting_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenSettingCommand}">
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Setting}" />
+      </MenuItem.Icon>
+    </MenuItem>
+    <Separator />
+
+    <MenuItem Header="{Binding Resources.String_AppManager_Toolbar_A, Source={x:Static app_main:CultureService.Current}}" ItemsSource="{Binding LauncherToolbarItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}">
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Toolbar}" />
+      </MenuItem.Icon>
+      <!--<MenuItem.ItemContainerStyle>
+        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsVisible}" Value="True">
+              <Setter Property="FontWeight" Value="Bold" />
+              <Setter Property="Effect" Value="{StaticResource Effect-Strong}" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Icon" Value="{Binding ToolbarIcon}" />
+          <Setter Property="Header" Value="{Binding DisplayName}" />
+          <Setter Property="Command" Value="{Binding SwitchToolbarCommand}" />
+          <Setter Property="CommandParameter" Value="{Binding}" />
+        </Style>
+      </MenuItem.ItemContainerStyle>-->
+    </MenuItem>
+    <MenuItem Header="{Binding Resources.String_AppManager_Note_A, Source={x:Static app_main:CultureService.Current}}" IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}">
+      <MenuItem.Resources>
+        <Style x:Key="NoteItemsMenu" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding ItemsSource.Count, RelativeSource={RelativeSource Mode=Self}}" Value="0">
+              <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </MenuItem.Resources>
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note}" />
+      </MenuItem.Icon>
+
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Create_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CreateNoteCommand}">
+        <MenuItem.Icon>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note-Create}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <Separator />
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Compact_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CompactAllNotesCommand}" />
+      <Separator />
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Topmost_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding MoveZOrderTopAllNotesCommand}">
+        <MenuItem.Icon>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note-Topmost}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Bottom_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding MoveZOrderBottomAllNotesCommand}">
+        <MenuItem.Icon>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Note-Bottom}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <Separator />
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Visible_A, Source={x:Static app_main:CultureService.Current}}" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Hidden_A, Source={x:Static app_main:CultureService.Current}}" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
+    </MenuItem>
+
+    <MenuItem Header="{Binding Resources.String_AppManager_Command_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ShowCommandViewCommand}">
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Command}" />
+      </MenuItem.Icon>
+    </MenuItem>
+
+    <Separator />
+
+    <MenuItem Header="{Binding Resources.String_AppManager_System_A, Source={x:Static app_main:CultureService.Current}}">
+      <MenuItem.Style>
+        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding ShowOldVersion, Mode=OneTime}" Value="True">
+              <Setter Property="Icon">
+                <Setter.Value>
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Windows-2}" />
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Icon">
+            <Setter.Value>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Windows}" />
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </MenuItem.Style>
+      <MenuItem Header="{Binding Resources.String_AppManager_System_Hook_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsEnabledHook, Mode=OneWay}" Command="{Binding ToggleHookCommand}" />
+      <MenuItem Header="{Binding Resources.String_AppManager_System_IsDisabledSystemIdle_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsDisabledSystemIdle, Mode=OneWay}" Command="{Binding ToggleDisabledSystemIdleCommand}" />
+      <MenuItem Header="{Binding Resources.String_AppManager_System_IsSupportedExplorer_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsSupportedExplorer, Mode=OneWay}" Command="{Binding ToggleSupportExplorerCommand}" />
+    </MenuItem>
+
+    <Separator />
+
+    <MenuItem Header="{Binding Resources.String_AppManager_About_A, Source={x:Static app_main:CultureService.Current}}">
+      <MenuItem Command="{Binding UpdateCommand}" >
+        <MenuItem.Style>
+          <Style TargetType="MenuItem">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding UpdateInfo.Updating}" Value="True">
+                <Setter Property="Header" Value="{Binding Resources.String_AppManager_About_Update_Checking_A, Source={x:Static app_main:CultureService.Current}}" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Header" Value="{Binding Resources.String_AppManager_About_Update_Check_A, Source={x:Static app_main:CultureService.Current}}" />
+          </Style>
+        </MenuItem.Style>
+        <MenuItem.Icon>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-About-Update}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="{Binding Resources.String_AppManager_About_Help_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenHelpCommand}">
+        <MenuItem.Icon>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-About-Help}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="{Binding Resources.String_AppManager_About_Version_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenAboutCommand}">
+        <MenuItem.Icon>
+          <Image Source="/Resources/Icon/App.ico" Width="16" Height="16" />
+        </MenuItem.Icon>
+      </MenuItem>
+    </MenuItem>
+    <MenuItem Header="{Binding Resources.String_AppManager_Exit_NoUpdate_A, Source={x:Static app_main:CultureService.Current}}" Visibility="{Binding UpdateInfo.IsReady, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding NoUpdateExitCommand}">
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Exit-NoUpdate}" />
+      </MenuItem.Icon>
+    </MenuItem>
+    <MenuItem Command="{Binding ExitCommand}">
+      <MenuItem.Style>
+        <Style TargetType="MenuItem">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding UpdateInfo.IsReady}" Value="True">
+              <Setter Property="Header" Value="{Binding Resources.String_AppManager_Reboot_Update_A, Source={x:Static app_main:CultureService.Current}}" />
+              <Setter Property="FontWeight" Value="Bold" />
+              <Setter Property="Icon">
+                <Setter.Value>
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Reboot-Update}" />
+                </Setter.Value>
+              </Setter>
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Header" Value="{Binding Resources.String_AppManager_Exit_A, Source={x:Static app_main:CultureService.Current}}" />
+          <Setter Property="Icon">
+            <Setter.Value>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Exit}" />
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </MenuItem.Style>
+    </MenuItem>
+  </ContextMenu>
+
+  <Taskbar:TaskbarIcon
+    x:Key="root"
+    Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
+  >
+    <Taskbar:TaskbarIcon.Style>
+      <Style TargetType="Taskbar:TaskbarIcon">
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding IsEnabledManager}" Value="False">
+            <Setter Property="ContextMenu" Value="{x:Null}" />
+            <Setter Property="DoubleClickCommand" Value="{x:Null}" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding BuildType}" Value="Debug">
+            <Setter Property="IconSource" Value="/Resources/Icon/App-debug.ico" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding BuildType}" Value="Beta">
+            <Setter Property="IconSource" Value="/Resources/Icon/App-beta.ico" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding BuildType}" Value="Release">
+            <Setter Property="IconSource" Value="/Resources/Icon/App.ico" />
+          </DataTrigger>
+        </Style.Triggers>
+        <Setter Property="ContextMenu" Value="{StaticResource ContextMenu}" />
+        <Setter Property="DoubleClickCommand" Value="{Binding OpenStartupCommand}" />
+      </Style>
+    </Taskbar:TaskbarIcon.Style>
+  </Taskbar:TaskbarIcon>
+
+</ResourceDictionary>

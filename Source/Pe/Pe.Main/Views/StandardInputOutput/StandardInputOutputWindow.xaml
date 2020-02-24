@@ -1,0 +1,208 @@
+<Window
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.StandardInputOutput.StandardInputOutputWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:prism="http://prismlibrary.com/"
+
+  xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+
+  Icon="/Resources/Icon/App.ico"
+  Width="800"
+  Height="450"
+  WindowStartupLocation="CenterScreen"
+  ResizeMode="CanResizeWithGrip"
+
+  Topmost="{Binding IsTopmost}"
+  Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+  BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+>
+  <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+  </Window.Resources>
+  <Window.Title>
+    <Binding Path="Title" Converter="{StaticResource TitleConverter}" />
+  </Window.Title>
+  <Window.Visibility>
+    <Binding Path="IsVisible" Converter="{StaticResource BooleanToVisibilityConverter}"/>
+  </Window.Visibility>
+  <i:Interaction.Triggers>
+    <app_core_views:RequestTrigger SourceObject="{Binding FileSelectRequest}">
+      <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
+    </app_core_views:RequestTrigger>
+  </i:Interaction.Triggers>
+  <DockPanel>
+    <ToolBar DockPanel.Dock="Top" Style="{StaticResource Horizontal-Toolbar}">
+      <ToggleButton IsChecked="{Binding IsTopmost}">
+        <StackPanel Style="{StaticResource ImageLabel-Small}">
+          <Control Template="{StaticResource App-Image-Topmost}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Topmost_A, Source={x:Static app_main:CultureService.Current}}" />
+        </StackPanel>
+      </ToggleButton>
+      <ToggleButton IsChecked="{Binding AutoScroll}" >
+        <StackPanel Style="{StaticResource ImageLabel-Small}">
+          <Control Template="{StaticResource App-Image-AutoScroll}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_AutoScroll_A, Source={x:Static app_main:CultureService.Current}}" />
+        </StackPanel>
+      </ToggleButton>
+      <ToggleButton IsChecked="{Binding WordWrap}">
+        <StackPanel Style="{StaticResource ImageLabel-Small}">
+          <Control Template="{StaticResource App-Image-WordWrap}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_WordWrap_A, Source={x:Static app_main:CultureService.Current}}" />
+        </StackPanel>
+      </ToggleButton>
+
+      <Separator />
+
+      <Button Command="{Binding SaveCommand}">
+        <StackPanel Style="{StaticResource ImageLabel-Small}">
+          <Control Template="{StaticResource App-Image-SaveAs}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Save_A, Source={x:Static app_main:CultureService.Current}}" />
+        </StackPanel>
+      </Button>
+      <Button Command="{Binding ClearOutputCommand}">
+        <StackPanel Style="{StaticResource ImageLabel-Small}">
+          <Control Template="{StaticResource App-Image-Clear}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Clear_A, Source={x:Static app_main:CultureService.Current}}" />
+        </StackPanel>
+      </Button>
+
+      <Separator />
+
+      <Button Command="{Binding KillOutputCommand}">
+        <StackPanel Style="{StaticResource ImageLabel-Small}">
+          <Control Template="{StaticResource App-Image-StandardInputOutput-Kill}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Kill_A, Source={x:Static app_main:CultureService.Current}}" />
+        </StackPanel>
+      </Button>
+
+    </ToolBar>
+
+    <StatusBar DockPanel.Dock="Bottom">
+      <Label>
+        <Label.Style>
+          <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ProcessExited}" Value="True">
+                <Setter Property="Content">
+                  <Setter.Value>
+                    <TextBlock>
+                      <Run Text="{Binding Resources.String_StandardInputOutput_ExitCode, Source={x:Static app_main:CultureService.Current}, Mode=OneTime}" />
+                      <Run Text="{Binding ExitCode, Mode=OneTime}" />
+                    </TextBlock>
+                  </Setter.Value>
+                </Setter>
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Content" Value="{Binding Resources.String_StandardInputOutput_Running, Source={x:Static app_main:CultureService.Current}}" />
+          </Style>
+        </Label.Style>
+      </Label>
+    </StatusBar>
+
+    <TabControl>
+      <TabItem Header="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Header, Source={x:Static app_main:CultureService.Current}}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+
+          <sharpdevelop_avalonedit:TextEditor
+            x:Name="terminal"
+            Grid.Row="0"
+            IsReadOnly="True"
+            WordWrap="{Binding WordWrap}"
+            Document="{Binding TextDocument}"
+            HorizontalScrollBarVisibility="Auto"
+            Foreground="{Binding StandardOutputForeground}"
+            Background="{Binding StandardOutputBackground}"
+            FontFamily="{Binding Font.FontFamily}"
+            FontSize="{Binding Font.FontSize}"
+            FontStyle="{Binding Font.FontStyle}"
+            FontWeight="{Binding Font.FontWeight}"
+          >
+            <sharpdevelop_avalonedit:TextEditor.Options>
+              <sharpdevelop_avalonedit:TextEditorOptions/>
+            </sharpdevelop_avalonedit:TextEditor.Options>
+          </sharpdevelop_avalonedit:TextEditor>
+
+          <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox
+              Grid.Column="0"
+              IsEditable="True"
+              IsReadOnly="{Binding ProcessExited}"
+              Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}"
+              ItemsSource="{Binding InputedHistories}"
+            >
+              <ComboBox.InputBindings>
+                <KeyBinding Key="Return" Command="{Binding SendInputCommand}" />
+                <KeyBinding Key="Esc" Command="{Binding ClearInputCommand}" />
+              </ComboBox.InputBindings>
+              <ComboBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <VirtualizingStackPanel
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.VirtualizationMode="Recycling"
+                      />
+                </ItemsPanelTemplate>
+              </ComboBox.ItemsPanel>
+              <ComboBox.ItemTemplateSelector>
+                <app_core_views_selector:ComboBoxItemTemplateSelector>
+                  <app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding Value, Mode=OneTime}"/>
+                    </DataTemplate>
+                  </app_core_views_selector:ComboBoxItemTemplateSelector.SelectedTemplate>
+
+                  <app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                    <DataTemplate>
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Value, Mode=OneTime}" />
+
+                        <TextBlock Grid.Column="1">
+                          <Run Text=" (" />
+                          <Run Text="{Binding Timestamp, Mode=OneTime}"/>
+                          <Run Text=" )" />
+                        </TextBlock>
+
+                      </Grid>
+                    </DataTemplate>
+                  </app_core_views_selector:ComboBoxItemTemplateSelector.DropDownTemplate>
+                </app_core_views_selector:ComboBoxItemTemplateSelector>
+              </ComboBox.ItemTemplateSelector>
+            </ComboBox>
+            <Button
+              Grid.Column="1"
+              Content="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Send_A, Source={x:Static app_main:CultureService.Current}}"
+              Command="{Binding SendInputCommand}"
+            />
+          </Grid>
+
+        </Grid>
+      </TabItem>
+    </TabControl>
+  </DockPanel>
+</Window>

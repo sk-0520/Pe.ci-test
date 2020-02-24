@@ -1,0 +1,21 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = 'テーブル図: メイン'
+
+block BLOCK_LAYOUT_HEAD
+	include template/_dev-table.pug
+
+block BLOCK_LAYOUT_HEAD_SCRIPT
+		link(rel='stylesheet' type='text/css' href='style/dev-table.scss')
+
+block BLOCK_LAYOUT_CONTENT
+	div#filter-main.filter
+	div#view-main.view
+	div#command-main.command
+	textarea#define-main.define
+		include ../define/table-main.md
+	textarea#sql-main.sql
+
+block BLOCK_LAYOUT_TAIL_SCRIPT
+	script(src="script/dev-table.ts")

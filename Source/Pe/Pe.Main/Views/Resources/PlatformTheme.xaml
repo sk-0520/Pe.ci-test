@@ -1,0 +1,96 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <!-- みんなが使える領域 -->
+
+  <!--#region PlatformThemeColors-->
+  <!--#region dynamic-->
+  <Color x:Key="PlatformTheme-ThemeColors-BackgroundColor" />
+  <Color x:Key="PlatformTheme-ThemeColors-ForegroundColor" />
+  <Color x:Key="PlatformTheme-ThemeColors-ControlColor" />
+  <Color x:Key="PlatformTheme-ThemeColors-BorderColor" />
+  <!--#endregion-->
+  <!--#region dynamic2-->
+  <Color x:Key="PlatformTheme-ThemeColors2-BackgroundColor" />
+  <Color x:Key="PlatformTheme-ThemeColors2-ForegroundColor" />
+  <Color x:Key="PlatformTheme-ThemeColors2-ControlColor" />
+  <Color x:Key="PlatformTheme-ThemeColors2-BorderColor" />
+  <!--#endregion-->
+
+  <!--#region dark-->
+  <Color x:Key="PlatformTheme-DarkThemeColors-BackgroundColor" />
+  <Color x:Key="PlatformTheme-DarkThemeColors-ForegroundColor" />
+  <Color x:Key="PlatformTheme-DarkThemeColors-ControlColor" />
+  <Color x:Key="PlatformTheme-DarkThemeColors-BorderColor" />
+  <!--#endregion-->
+  <!--#region light-->
+  <Color x:Key="PlatformTheme-LightThemeColors-BackgroundColor" />
+  <Color x:Key="PlatformTheme-LightThemeColors-ForegroundColor" />
+  <Color x:Key="PlatformTheme-LightThemeColors-ControlColor" />
+  <Color x:Key="PlatformTheme-LightThemeColors-BorderColor" />
+  <!--#endregion-->
+  <!--#endregion-->
+
+  <!--#region PlatformAccentColors-->
+  <Color x:Key="PlatformTheme-AccentColors-AccentColor" />
+  <Color x:Key="PlatformTheme-AccentColors-BaseColor" />
+  <Color x:Key="PlatformTheme-AccentColors-HighlightColor" />
+  <Color x:Key="PlatformTheme-AccentColors-ActiveColor" />
+  <Color x:Key="PlatformTheme-AccentColors-DisableColor" />
+
+  <Color x:Key="PlatformTheme-AccentTextColors-AccentColor" />
+  <Color x:Key="PlatformTheme-AccentTextColors-BaseColor" />
+  <Color x:Key="PlatformTheme-AccentTextColors-HighlightColor" />
+  <Color x:Key="PlatformTheme-AccentTextColors-ActiveColor" />
+  <Color x:Key="PlatformTheme-AccentTextColors-DisableColor" />
+  <!--#endregion-->
+
+  <!-- ****************************** -->
+
+  <!--#region brush-->
+  <!--#region PlatformThemeColors-->
+  <!--#region dynamic-->
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors-BackgroundBrush" Color="{DynamicResource PlatformTheme-ThemeColors-BackgroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors-ForegroundBrush" Color="{DynamicResource PlatformTheme-ThemeColors-ForegroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors-ControlBrush" Color="{DynamicResource PlatformTheme-ThemeColors-ControlColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors-BorderBrush" Color="{DynamicResource PlatformTheme-ThemeColors-BorderColor}" />
+  <!--#endregion-->
+  <!--#region dynamic2-->
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors2-BackgroundBrush" Color="{DynamicResource PlatformTheme-ThemeColors2-BackgroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors2-ForegroundBrush" Color="{DynamicResource PlatformTheme-ThemeColors2-ForegroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors2-ControlBrush" Color="{DynamicResource PlatformTheme-ThemeColors2-ControlColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-ThemeColors2-BorderBrush" Color="{DynamicResource PlatformTheme-ThemeColors2-BorderColor}" />
+  <!--#endregion-->
+
+  <!--#region dark-->
+  <SolidColorBrush x:Key="PlatformTheme-DarkThemeColors-BackgroundBrush" Color="{StaticResource PlatformTheme-DarkThemeColors-BackgroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-DarkThemeColors-ForegroundBrush" Color="{StaticResource PlatformTheme-DarkThemeColors-ForegroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-DarkThemeColors-ControlBrush" Color="{StaticResource PlatformTheme-DarkThemeColors-ControlColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-DarkThemeColors-BorderBrush" Color="{StaticResource PlatformTheme-DarkThemeColors-BorderColor}" />
+  <!--#endregion-->
+  <!--#region light-->
+  <SolidColorBrush x:Key="PlatformTheme-LightThemeColors-BackgroundBrush" Color="{StaticResource PlatformTheme-LightThemeColors-BackgroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-LightThemeColors-ForegroundBrush" Color="{StaticResource PlatformTheme-LightThemeColors-ForegroundColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-LightThemeColors-ControlBrush" Color="{StaticResource PlatformTheme-LightThemeColors-ControlColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-LightThemeColors-BorderBrush" Color="{StaticResource PlatformTheme-LightThemeColors-BorderColor}" />
+  <!--#endregion-->
+  <!--#endregion-->
+
+  <!--#region PlatformAccentColors-->
+  <SolidColorBrush x:Key="PlatformTheme-AccentColors-AccentBrush" Color="{DynamicResource PlatformTheme-AccentColors-AccentColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentColors-BaseBrush" Color="{DynamicResource PlatformTheme-AccentColors-BaseColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentColors-HighlightBrush" Color="{DynamicResource PlatformTheme-AccentColors-HighlightColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentColors-ActiveBrush" Color="{DynamicResource PlatformTheme-AccentColors-ActiveColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentColors-DisableBrush" Color="{DynamicResource PlatformTheme-AccentColors-DisableColor}" />
+
+  <SolidColorBrush x:Key="PlatformTheme-AccentTextColors-AccentBrush" Color="{DynamicResource PlatformTheme-AccentTextColors-AccentColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentTextColors-BaseBrush" Color="{DynamicResource PlatformTheme-AccentTextColors-BaseColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentTextColors-HighlightBrush" Color="{DynamicResource PlatformTheme-AccentTextColors-HighlightColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentTextColors-ActiveBrush" Color="{DynamicResource PlatformTheme-AccentTextColors-ActiveColor}" />
+  <SolidColorBrush x:Key="PlatformTheme-AccentTextColors-DisableBrush" Color="{DynamicResource PlatformTheme-AccentTextColors-DisableColor}" />
+  <!--#endregion-->
+  <!--#endregion-->
+
+
+</ResourceDictionary>
