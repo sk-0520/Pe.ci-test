@@ -27,7 +27,7 @@ Write-Output ("git: " + (git --version))
 Write-Output ("msbuild: " + (msbuild -version -noLogo))
 Write-Output ("dotnet: " + (dotnet --version))
 
-if($IgnoreChanged) {
+if(!$IgnoreChanged) {
 	# SCM 的に現行状態に未コミットがあれば死ぬ
 	if ((git status -s | Measure-Object).Count -ne 0) {
 		throw "変更あり"
@@ -124,7 +124,7 @@ try {
 	}
 }
 finally {
-	if($IgnoreChanged) {
+	if(!$IgnoreChanged) {
 		git reset --hard
 	}
 	Pop-Location
