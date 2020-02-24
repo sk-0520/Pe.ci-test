@@ -99,6 +99,12 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
+						"subject":"#484: 設計練り直して作り直し",
+						"comments": [
+							"今回の主要アップデートで他のは付随してきただけの課題です"
+						]
+					},
+					{
 						"subject": "根っこからめっちゃくちゃ実装を変えました",
 						"comments": [
 							".NET Framework から .NET Core に移行したので環境依存に関する制限がある程度なくなりました",
@@ -107,7 +113,6 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
 						"class": "compatibility",
 						"subject": "実装変更に伴い互換性が結構なくなります",
 						"comments": [
@@ -123,10 +128,8 @@ const changelogs = [
 							"ログウィンドウを破棄",
 							"ヘルプドキュメントは作ってる途中です"
 						]
-					}
-					,
+					},
 					{
-						"revision": "",
 						"class": "compatibility",
 						"subject": "0.83.4 からライセンスを GPL 3 から WTFPL 2 に変更します",
 						"comments": [
@@ -139,16 +142,10 @@ const changelogs = [
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
 						"subject": "#459: アップデート処理の実装周りを整理"
 					},
 					{
-						"revision": "",
 						"subject": "#485: 高 DPI 対応"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -162,47 +159,34 @@ const changelogs = [
 						"subject": "#469: 自動的に隠す状態のツールバーが云々"
 					},
 					{
-						"revision": "",
 						"subject": "#452: ツールバーが自動的に隠れる設定でアイコンが非表示になる"
 					},
 					{
-						"revision": "",
 						"subject": "#439: グループ名変更時に変更用入力UIの位置が変"
 					},
 					{
-						"revision": "",
 						"subject": "#425: 一意に識別される設定項目はその一意な値を表示する"
 					},
 					{
-						"revision": "",
 						"subject": "#417: 列挙体の保存値を数値から名称にする"
 					},
 					{
-						"revision": "",
 						"subject": "#380: ランチャーアイテムがネットワーク越しのファイルだとアホみたいに遅い"
 					},
 					{
-						"revision": "",
 						"subject": "#369: ノートのタイトルバーについてるボタンをもうちょっと見栄え良くする"
 					},
 					{
-						"revision": "",
 						"subject": "#313: 四辺に配置したツールバーをシステムメニューから移動すると大変なことになる"
 					},
 					{
-						"revision": "",
 						"subject": "#300: メッセージボックスがダサい"
 					},
 					{
-						"revision": "",
 						"subject": "#112: HTMLレンダリングコンポーネントを変えたい",
 						"comments": [
 							"CefSharp に全権委任"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					},
 					{
 						"revision": "",
