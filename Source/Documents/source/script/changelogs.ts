@@ -91,14 +91,14 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.83.1",
+		"date": "2020/02/24",
+		"version": "0.84.0",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "78ce8c309c5efc1e586fc209560063734094b792",
 						"subject":"#484: 設計練り直して作り直し",
 						"comments": [
 							"今回の主要アップデートで他のは付随してきただけの課題です",
@@ -191,22 +191,6 @@ const changelogs = [
 						"comments": [
 							"CefSharp に全権委任"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -219,10 +203,6 @@ const changelogs = [
 						"comments": [
 							"更新履歴には一応乗せるけど完全に死に項目"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}

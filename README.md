@@ -26,12 +26,12 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 * 0.9.0以前(正しいコミットだと6bcf1830cc3aa5392200bb285888ead7516f2a65くらい)は必要DLLを削除したため基本的に戻し不可。
 * 開発環境以外での動作は未確認。
-
+* 0.84.0 から基盤ソフトウェアを .NET Framework を .NET Core に変更したのでファイルサイズが激増しています。
 
 ## Build
 
-* current: [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-beta)
-* master: [![Build status](https://ci.appveyor.com/api/projects/status/nrtepybkoj577bo6/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe2/branch/master)
+* current: [![Build status](https://ci.appveyor.com/api/projects/status/05wsegjflhnlle5n/branch/ci-test?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-dev/branch/ci-test)
+* master: [![Build status](https://ci.appveyor.com/api/projects/status/ghry8e2sjjococ0d/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-release/branch/master)
 
 ## 開発
 
