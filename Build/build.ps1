@@ -117,6 +117,9 @@ try {
 				$dst = Join-Path "Output/Release/$platform/Pe" $productTarget
 				robocopy /MIR /PURGE /R:3 /S "$src" "$dst"
 			}
+
+			# 0.83.0 以下のショートカットファイルが PeMain.exe を参照しているため救済処置
+			Copy-Item "Output\Release\$platform\Pe\Pe.exe" "Output\Release\$platform\Pe\PeMain.exe"
 		}
 	}
 }
