@@ -10,7 +10,7 @@
 		"build": "npm run build:clean & npm run build:output"
 	},
 	"author": "sk",
-	"license": "GPL-3.0-or-later",
+	"license": "WTFPL",
 	"repository": {
 		"type": "git",
 		"url": "git@bitbucket.org:sk_0520/pe.git"

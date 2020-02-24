@@ -32,6 +32,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #region property
 
         public static string Unknown => "unknown";
+
+        public static string DoWhatTheF_ckYouWantToPublicLicense1 => "WTFPLv1";
+        public static string DoWhatTheF_ckYouWantToPublicLicense2 => "WTFPLv2";
         public static string GnuGeneralPublicLicense1 => "GPLv1";
         public static string GnuGeneralPublicLicense2 => "GPLv2";
         public static string GnuGeneralPublicLicense3 => "GPLv3";

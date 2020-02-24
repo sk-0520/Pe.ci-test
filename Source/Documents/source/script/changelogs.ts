@@ -124,6 +124,15 @@ const changelogs = [
 							"ヘルプドキュメントは作ってる途中です"
 						]
 					}
+					,
+					{
+						"revision": "",
+						"class": "compatibility",
+						"subject": "0.83.4 からライセンスを GPL 3 から WTFPL 2 に変更します",
+						"comments": [
+							"0.83.0 以下は GPL 3 扱いでリポジトリから取得可能です"
+						]
+					}
 				]
 			},
 			{
