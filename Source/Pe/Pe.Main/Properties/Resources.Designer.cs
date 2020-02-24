@@ -88,13 +88,19 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Update&quot;&gt;
         ///	&lt;!--TODO:キーと値で分離--&gt;
+        ///
+        ///	&lt;!--
         ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
         ///	&lt;Color name=&quot;Variable&quot; foreground=&quot;Maroon&quot; /&gt;
+        ///	--&gt;
+        ///	&lt;Color name=&quot;Key&quot; /&gt;
+        ///	&lt;Color name=&quot;Variable&quot; /&gt;
         ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
         ///		&lt;Rule color=&quot;Key&quot;&gt;
         ///			\w+
         ///		&lt;/Rule&gt;
         ///	&lt;/RuleSet&gt;
+        ///
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -108,7 +114,8 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Remove&quot;&gt;
         ///	&lt;!--TODO:キーに限定--&gt;
-        ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
+        ///	&lt;!--&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;--&gt;
+        ///	&lt;Color name=&quot;Key&quot;  /&gt;
         ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
         ///		&lt;Rule color=&quot;Key&quot;&gt;
         ///			\w+
@@ -133,7 +140,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         ///			\w+
         ///		&lt;/Rule&gt;
         ///	&lt;/RuleSet&gt;
-        ///
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -830,7 +836,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   app に類似しているローカライズされた文字列を検索します。
+        ///   アプリケーション に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Application {
             get {
@@ -840,7 +846,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   lib に類似しているローカライズされた文字列を検索します。
+        ///   ライブラリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Library {
             get {
@@ -849,7 +855,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   res に類似しているローカライズされた文字列を検索します。
+        ///   リソース に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Resource {
             get {
@@ -858,7 +864,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   bin に類似しているローカライズされた文字列を検索します。
+        ///   ソフトウェア に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Software {
             get {
@@ -3109,7 +3115,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   release note に類似しているローカライズされた文字列を検索します。
+        ///   リリースノート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ReleaseNote_Caption {
             get {

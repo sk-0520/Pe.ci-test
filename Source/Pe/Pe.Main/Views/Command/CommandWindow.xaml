@@ -39,6 +39,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_core_views_converter:IconBoxToWidthConverter x:Key="IconBoxToWidthConverter" />
     <app_core_views_converter:IconBoxToHeightConverter x:Key="IconBoxToHeightConverter" />
+    <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
@@ -50,7 +51,7 @@
       <Setter Property="ItemsPanel">
         <Setter.Value>
           <ItemsPanelTemplate>
-            <StackPanel Orientation="Horizontal" />
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" />
           </ItemsPanelTemplate>
         </Setter.Value>
       </Setter>
@@ -268,7 +269,7 @@
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="{Binding Kind, Converter={StaticResource EnumToCultureConverter}}">
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="{Binding FontSize, ElementName=root, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=0.85}" Text="{Binding Kind, Converter={StaticResource EnumToCultureConverter}}">
                       <TextBlock.Style>
                         <Style TargetType="TextBlock">
                           <Style.Triggers>

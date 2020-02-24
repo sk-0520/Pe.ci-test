@@ -1307,16 +1307,16 @@
     <value>バージョン情報</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Application" xml:space="preserve">
-    <value>app</value>
+    <value>アプリケーション</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Library" xml:space="preserve">
-    <value>lib</value>
+    <value>ライブラリ</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Resource" xml:space="preserve">
-    <value>res</value>
+    <value>リソース</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Software" xml:space="preserve">
-    <value>bin</value>
+    <value>ソフトウェア</value>
   </data>
   <data name="String_About_CopyLongInformation_A" xml:space="preserve">
     <value>長い情報をコピー</value>
@@ -1346,7 +1346,7 @@
     <value>アップデート確認(_U)</value>
   </data>
   <data name="String_ReleaseNote_Caption" xml:space="preserve">
-    <value>release note</value>
+    <value>リリースノート</value>
   </data>
   <data name="File_ReleaseNote_ErrorReleaseNote" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\file\releasenote\errorreleasenote.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
