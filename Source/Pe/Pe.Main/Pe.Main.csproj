@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="etc\script\UpdaterScript.cs">
+    <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
