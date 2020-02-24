@@ -13,3 +13,10 @@ set
 	UpdatedProgramName    = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
 	UpdatedCount          = UpdatedCount + 1
+where
+	AppStandardInputOutputSetting.Generation = (
+		select
+			MAX(AppStandardInputOutputSetting.Generation)
+		from
+			AppStandardInputOutputSetting
+	)

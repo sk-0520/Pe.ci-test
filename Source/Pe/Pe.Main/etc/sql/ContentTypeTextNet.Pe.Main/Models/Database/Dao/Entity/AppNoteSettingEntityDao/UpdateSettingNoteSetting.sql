@@ -13,3 +13,10 @@ set
 	UpdatedProgramName    = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
 	UpdatedCount          = UpdatedCount + 1
+where
+	AppNoteSetting.Generation = (
+		select
+			MAX(AppNoteSetting.Generation)
+		from
+			AppNoteSetting
+	)

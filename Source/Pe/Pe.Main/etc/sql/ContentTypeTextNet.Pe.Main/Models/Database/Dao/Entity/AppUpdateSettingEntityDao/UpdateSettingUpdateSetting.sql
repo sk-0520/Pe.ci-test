@@ -8,3 +8,10 @@ set
 	UpdatedProgramName    = @UpdatedProgramName,
 	UpdatedProgramVersion = @UpdatedProgramVersion,
 	UpdatedCount          = UpdatedCount + 1
+where
+	AppUpdateSetting.Generation = (
+		select
+			MAX(AppUpdateSetting.Generation)
+		from
+			AppUpdateSetting
+	)

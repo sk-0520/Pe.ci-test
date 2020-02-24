@@ -7,3 +7,10 @@ select
 	AppStandardInputOutputSetting.IsTopmost
 from
 	AppStandardInputOutputSetting
+where
+	AppStandardInputOutputSetting.Generation = (
+		select
+			MAX(AppStandardInputOutputSetting.Generation)
+		from
+			AppStandardInputOutputSetting
+	)

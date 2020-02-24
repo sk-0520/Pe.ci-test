@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Minimum),
             typeof(decimal),
             typeof(NumericUpDown),
-            new PropertyMetadata(-100m, OnMinimumPropertyChanged)
+            new PropertyMetadata(decimal.MinValue, OnMinimumPropertyChanged)
         );
 
         public decimal Minimum
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             nameof(Maximum),
             typeof(decimal),
             typeof(NumericUpDown),
-            new PropertyMetadata(100m, OnMaximumPropertyChanged)
+            new PropertyMetadata(decimal.MaxValue, OnMaximumPropertyChanged)
         );
 
         public decimal Maximum

@@ -6,3 +6,11 @@ select
 	AppCommandSetting.FindTag
 from
 	AppCommandSetting
+where
+	AppCommandSetting.Generation = (
+		select
+			MAX(AppCommandSetting.Generation)
+		from
+			AppCommandSetting
+	)
+
