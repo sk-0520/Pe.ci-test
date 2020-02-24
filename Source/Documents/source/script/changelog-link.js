@@ -2,11 +2,16 @@ var targetName = 'PE_BROWSER';
 var issueLink = 'https://bitbucket.org/sk_0520/pe/issue/';
 var revisionLink = 'https://bitbucket.org/sk_0520/pe/commits/';
 
+// 0.84.0 以降はもうちっとまともにする
+
+
 function makeChangelogLink()
 {
 	makeAutoLink();
 	makeIssueLink();
 }
+// import 周りを理解していないマン参上！
+window.makeChangelogLink = makeChangelogLink;
 
 function makeAutoLink()
 {
@@ -24,7 +29,7 @@ function makeIssueLink()
 		var li = itemList[i];
 
 		var linkElements = li.getElementsByTagName('a');
-		if (linkElements.length == 1 && linkElements[0].className == 'rev') {
+		if (linkElements.length == 1 && linkElements[0].className == 'revision') {
 			var linkElement = linkElements[0];
 			var rev = linkElement.innerHTML;
 			var link = revisionLink + rev;
@@ -37,4 +42,5 @@ function makeIssueLink()
 		li.innerHTML = text;
 	}
 }
+
 

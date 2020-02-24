@@ -1,3 +1,5 @@
+declare function makeChangelogLink(): void;
+
 const changelogs = [
 	/*
 						'class': 'compatibility' 'notice' 'nuget' 'myget'
@@ -99,8 +101,9 @@ const changelogs = [
 						"revision": "",
 						"subject": "根っこからめっちゃくちゃ実装を変えました",
 						"comments": [
-							".NET Framework から .NET Core に移行したので環境依存に関する制限がある程度なくなりました(によってサイズ増加)",
-							"内蔵ブラウザを .NET Core(Forms, WPF) のシステム依存から Chromium 実装の CefSharp に切り替え(によってサイズ増加)"
+							".NET Framework から .NET Core に移行したので環境依存に関する制限がある程度なくなりました",
+							"内蔵ブラウザを .NET Core(Forms, WPF) のシステム依存から Chromium 実装の CefSharp に切り替えました",
+							"ただしこれらの対応によりファイルサイズがすっごい大きくなっています(100MB超)"
 						]
 					},
 					{
@@ -109,14 +112,16 @@ const changelogs = [
 						"subject": "実装変更に伴い互換性が結構なくなります",
 						"comments": [
 							"Windows 10 を主軸にしたことで隠しファイル・拡張子切り替え機能の廃止(Explorerですぐに実施できるため)",
-							"グループ選択とランチャーアイテムコンテキストメニューを統合(ここに至るまで色々あった)",
-							"コマンドラインオプションの互換性を破棄",
-							"実行形式の配置場所・名称等の関係の互換性を破棄(bin ディレクトリを見たら理由が分かるよ)",
-							"テンプレート機能を廃止",
-							"Windows がクリップボード頑張っているのでクリップボード機能を廃止",
+							"-> Windows7 では動きません(CefSharp が死ぬ)",
+							"グループ選択とランチャーアイテムコンテキストメニューを統合(ここに至るまで色々あったが全部忘れたものとする)",
+							"コマンドラインオプションの互換性を破棄しました",
+							"ランチャーアイテムの種別 コマンド を破棄しました",
+							"実行形式の配置場所・名称等の関係の互換性を破棄(.NET Core 移行に伴う bin ディレクトリのわちゃわちゃ感)",
+							"テンプレート機能を廃止しました",
+							"Windows がクリップボード頑張っているのでクリップボード機能を廃止しました",
 							"ランチャーウィンドウのフロート表示を破棄",
 							"ログウィンドウを破棄",
-							"ヘルプドキュメントは中途半端な状態になった"
+							"ヘルプドキュメントは作ってる途中です"
 						]
 					}
 				]
@@ -142,11 +147,9 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
 						"subject": "#472: ノートの斜め方向リサイズ領域を広げる"
 					},
 					{
-						"revision": "",
 						"subject": "#469: 自動的に隠す状態のツールバーが云々"
 					},
 					{
@@ -171,7 +174,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": " #369: ノートのタイトルバーについてるボタンをもうちょっと見栄え良くする"
+						"subject": "#369: ノートのタイトルバーについてるボタンをもうちょっと見栄え良くする"
 					},
 					{
 						"revision": "",
@@ -214,8 +217,11 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
-						"subject": "#480: myget: SharedLibrary から Pe 限定の処理を抜き出し "
+						"revision": "dfed410e2ec4a9bcc637bdefa5f4cf94ba482287",
+						"subject": "#480: myget: SharedLibrary から Pe 限定の処理を抜き出し ",
+						"comments": [
+							"更新履歴には一応乗せるけど完全に死に項目"
+						]
 					},
 					{
 						"revision": "",
@@ -5334,12 +5340,27 @@ window.addEventListener('load', () => {
 			const logs = document.createElement('ul');
 			for (const log of content['logs']) {
 				const item = document.createElement('li');
+				if ('class' in log) {
+					item.className = log['class']!;
+				}
+
+				const header = document.createElement('span');
+				header.className = 'header';
+
 				const subject = document.createElement('span');
 				subject.textContent = log['subject'];
-				if ('class' in log) {
-					subject.className = log['class']!;
+				header.appendChild(subject);
+
+
+				if ('revision' in log) {
+					const revision = document.createElement('a');
+					revision.className = 'revision';
+					revision.textContent = log['revision']!;
+					header.appendChild(revision);
 				}
-				item.appendChild(subject);
+
+
+				item.appendChild(header)
 
 				if ('comments' in log) {
 					const comments = document.createElement('ul');
@@ -5360,4 +5381,6 @@ window.addEventListener('load', () => {
 
 		root.appendChild(versionSection);
 	}
+
+	makeChangelogLink();
 });
