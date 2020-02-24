@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public async Task<UpdateItemData?> CheckApplicationUpdateAsync()
         {
-            var uri = Configuration.General.UpdateCheckUri;
+
+            var uri = new Uri(
+                TextUtility.ReplaceFromDictionary(
+                    Configuration.General.UpdateCheckUri.OriginalString,
+                    new Dictionary<string, string>() {
+                        ["CACHE-CLEAR"] = DateTime.UtcNow.ToBinary().ToString()
+                    }
+                )
+            );
 
             using var agent = UserAgentManager.CreateUserAgent();
             try {
