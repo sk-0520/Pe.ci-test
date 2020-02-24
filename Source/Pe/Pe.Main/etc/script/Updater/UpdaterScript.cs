@@ -23,11 +23,9 @@ public class UpdaterScript
         var platformDir = platform + @"\";
         var notPlatformDir = string.Compare(platform, "x86", true) == 0 ? @"x64\" : @"x86\";
         var targets = new[] {
-            // WPF
             @"bat\log.bat",
             @"bat\accept.bat",
             @"lib\",
-            @"sbin\",
             @"etc\style\",
             @"etc\script\autosize.js",
             @"etc\script\changelog.js",
