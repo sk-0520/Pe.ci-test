@@ -53,7 +53,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             //ZipFile.CreateFromDirectory(userDirectory.FullName, backupFilePath);
             Logger.LogDebug("バックアップ処理 終了: {0}", backupFilePath);
 
-            FileUtility.RotateFiles(targetDirectory.FullName, "*.zip", enabledCount, ex => {
+            //FileUtility.RotateFiles(targetDirectory.FullName, "*.zip", enabledCount, ex => {
+            //    Logger.LogWarning(ex, ex.Message);
+            //    return true;
+            //});
+            var fileRotation = new FileRotation();
+            fileRotation.ExecuteWildcard(targetDirectory, "*.zip", enabledCount, ex => {
                 Logger.LogWarning(ex, ex.Message);
                 return true;
             });

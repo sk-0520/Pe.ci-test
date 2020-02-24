@@ -1037,6 +1037,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ApplicationUpdateInfo.Path = exeutePathParameter;
                 ApplicationUpdateInfo.State = UpdateState.Ready;
 
+                // アップデートアーカイブのローテート
+                var fileRotation = new FileRotation();
+                fileRotation.ExecuteExtensions(
+                    environmentParameters.MachineUpdateArchiveDirectory,
+                    new[] { "zip", "7z" },
+                    environmentParameters.Configuration.Backup.ArchiveCount,
+                    ex => {
+                        Logger.LogWarning(ex, ex.Message);
+                        return true;
+                    }
+                );
+
+                // リリースノート再表示
                 ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
 
             } catch(Exception ex) {
