@@ -18,6 +18,49 @@ public class UpdaterScript
         Console.BackgroundColor = tempBack;
     }
 
+    void RemoveFiles(string baseDirectoryPath, string platform)
+    {
+        var platformDir = platform + @"\";
+        var notPlatformDir = string.Compare(platform, "x86", true) == 0 ? @"x64\" : @"x86\";
+        var targets = new[] {
+            // WPF
+            @"bat\log.bat",
+            @"bat\accept.bat",
+            @"lib\",
+            @"sbin\",
+            @"etc\style\",
+            @"etc\script\autosize.js",
+            @"etc\script\changelog.js",
+            @"etc\script\changelog-core.js",
+            @"etc\script\jquery.js",
+            @"etc\lang\",
+            @"etc\image\",
+            @"etc\html\",
+            @"doc\components.xml",
+            @"doc\model-changelogs.js",
+            @"PeMain.exe.config",
+        };
+        var tagetPathList = targets.Select(s => Path.Combine(baseDirectoryPath, s));
+        foreach(var targetPath in tagetPathList) {
+            var found = false;
+            var isDir = targetPath.Last() == Path.DirectorySeparatorChar;
+            var fileOrDir = isDir ? 'D' : 'F';
+            try {
+                if(isDir) {
+                    if(Directory.Exists(targetPath)) {
+                        found = true;
+                        Directory.Delete(targetPath, true);
+                    }
+                } else if(File.Exists(targetPath)) {
+                    found = true;
+                    File.Delete(targetPath);
+                }
+                Console.WriteLine("DEL:{0}: {1}, FOUND = {2}", fileOrDir, targetPath, found);
+            } catch(Exception ex) {
+                Console.WriteLine("ERR:{0}: {1}, {2}", fileOrDir, targetPath, ex);
+            }
+        }
+    }
     public void Main(string[] args)
     {
         var prevFore = Console.ForegroundColor;
@@ -38,6 +81,7 @@ public class UpdaterScript
             Console.WriteLine("P: {0}", platform);
 
             Console.WriteLine("0.83.0 互換性 スクリプト");
+            RemoveFiles(baseDirectoryPath, platform);
 
         } catch(Exception ex) {
             ChangeTemporaryColor("<UpdaterScript: ERROR>", ConsoleColor.Magenta, prevBack);
