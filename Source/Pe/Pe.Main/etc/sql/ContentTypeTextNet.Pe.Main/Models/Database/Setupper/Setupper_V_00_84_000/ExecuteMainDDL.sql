@@ -1,5 +1,6 @@
 --// table: AppExecuteSetting
 create table [AppExecuteSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -16,12 +17,16 @@ create table [AppExecuteSetting] (
 	[LastTimestamp] datetime not null /* 最終実行日時 UTC */,
 	[ExecuteCount] integer not null /* 実行回数 0始まり */,
 	[UserId] text not null /* ユーザー識別子  */,
-	[IsEnabledTelemetry] boolean not null /* 使用統計情報送信  */
+	[IsEnabledTelemetry] boolean not null /* 使用統計情報送信  */,
+	primary key(
+		[Generation]
+	)
 )
 ;
 
 --// table: AppGeneralSetting
 create table [AppGeneralSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -32,12 +37,16 @@ create table [AppGeneralSetting] (
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[Language] text not null /* 使用言語  */,
-	[UserBackupDirectoryPath] text not null /* 明示的バックアップディレクトリ  */
+	[UserBackupDirectoryPath] text not null /* 明示的バックアップディレクトリ  */,
+	primary key(
+		[Generation]
+	)
 )
 ;
 
 --// table: AppUpdateSetting
 create table [AppUpdateSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -48,12 +57,16 @@ create table [AppUpdateSetting] (
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[UpdateKind] text not null /* アップデート方法  */,
-	[IgnoreVersion] text not null /* 無視するバージョン このバージョン以下を無視する */
+	[IgnoreVersion] text not null /* 無視するバージョン このバージョン以下を無視する */,
+	primary key(
+		[Generation]
+	)
 )
 ;
 
 --// table: AppCommandSetting
 create table [AppCommandSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -68,12 +81,16 @@ create table [AppCommandSetting] (
 	[Width] real not null /* 横幅  */,
 	[HideWaitTime] text not null /* 非表示待機時間  */,
 	[FindTag]  not null /* タグ検索  */,
+	primary key(
+		[Generation]
+	),
 	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;
 
 --// table: AppNoteSetting
 create table [AppNoteSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -89,12 +106,16 @@ create table [AppNoteSetting] (
 	[ForegroundColor] text not null /* 前景色 #AARRGGBB */,
 	[BackgroundColor] text not null /* 背景色 #AARRGGBB */,
 	[IsTopmost]  not null /* 最前面  */,
+	primary key(
+		[Generation]
+	),
 	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;
 
 --// table: AppStandardInputOutputSetting
 create table [AppStandardInputOutputSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -110,12 +131,16 @@ create table [AppStandardInputOutputSetting] (
 	[ErrorForeground] text not null /* エラー前景色 #AARRGGBB */,
 	[ErrorBackground] text not null /* エラー背景色 #AARRGGBB */,
 	[IsTopmost]  not null /* 最前面  */,
+	primary key(
+		[Generation]
+	),
 	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;
 
 --// table: AppLauncherToolbarSetting
 create table [AppLauncherToolbarSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -135,12 +160,16 @@ create table [AppLauncherToolbarSetting] (
 	[IsTopmost] boolean not null /* 最前面  */,
 	[IsAutoHide] boolean not null /* 自動的に隠す  */,
 	[IsIconOnly] boolean not null /* アイコンのみ  */,
+	primary key(
+		[Generation]
+	),
 	foreign key([FontId]) references [Fonts]([FontId])
 )
 ;
 
 --// table: AppPlatformSetting
 create table [AppPlatformSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -151,7 +180,10 @@ create table [AppPlatformSetting] (
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[SuppressSystemIdle] boolean not null /* アイドル抑制  */,
-	[SupportExplorer] boolean not null /* Explorerの補正 */
+	[SupportExplorer] boolean not null /* Explorer補正  */,
+	primary key(
+		[Generation]
+	)
 )
 ;
 

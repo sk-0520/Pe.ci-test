@@ -5,25 +5,26 @@ ___
 
 ### layout
 
-| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
-|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
-|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    | 使用許諾                 | Accepted              | boolean      | System.Boolean  |              |          |
-|    | o  |    | 初回実行バージョン       | FirstVersion          | text         | System.Version  |              |          |
-|    | o  |    | 初回実行日時             | FirstTimestamp        | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 最終実行バージョン       | LastVersion           | text         | System.Version  |              |          |
-|    | o  |    | 最終実行日時             | LastTimestamp         | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 実行回数                 | ExecuteCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    | ユーザー識別子           | UserId                | text         | System.String   |              |          |
-|    | o  |    | 使用統計情報送信         | IsEnabledTelemetry    | boolean      | System.Boolean  |              |          |
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |    | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | 使用許諾                 | Accepted              | boolean      | System.Boolean  |              |                      |
+|    | o  |    | 初回実行バージョン       | FirstVersion          | text         | System.Version  |              |                      |
+|    | o  |    | 初回実行日時             | FirstTimestamp        | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 最終実行バージョン       | LastVersion           | text         | System.Version  |              |                      |
+|    | o  |    | 最終実行日時             | LastTimestamp         | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 実行回数                 | ExecuteCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | ユーザー識別子           | UserId                | text         | System.String   |              |                      |
+|    | o  |    | 使用統計情報送信         | IsEnabledTelemetry    | boolean      | System.Boolean  |              |                      |
 
 ### index
 
@@ -37,19 +38,20 @@ ___
 
 ### layout
 
-| PK | NN | FK | 論理カラム名                   | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント |
-|:--:|:--:|:---|:-------------------------------|:------------------------|:-------------|:----------------|:-------------|:---------|
-|    | o  |    | 作成タイムスタンプ             | CreatedTimestamp        | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 作成ユーザー名                 | CreatedAccount          | text         | System.String   |              |          |
-|    | o  |    | 作成プログラム名               | CreatedProgramName      | text         | System.String   |              |          |
-|    | o  |    | 作成プログラムバージョン       | CreatedProgramVersion   | text         | System.Version  |              |          |
-|    | o  |    | 更新タイムスタンプ             | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC      |
-|    | o  |    | 更新ユーザー名                 | UpdatedAccount          | text         | System.String   |              |          |
-|    | o  |    | 更新プログラム名               | UpdatedProgramName      | text         | System.String   |              |          |
-|    | o  |    | 更新プログラムバージョン       | UpdatedProgramVersion   | text         | System.Version  |              |          |
-|    | o  |    | 更新回数                       | UpdatedCount            | integer      | System.Int64    |              | 0始まり  |
-|    | o  |    | 使用言語                       | Language                | text         | System.String   |              |          |
-|    | o  |    | 明示的バックアップディレクトリ | UserBackupDirectoryPath | text         | System.String   |              |          |
+| PK | NN | FK | 論理カラム名                   | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:---|:-------------------------------|:------------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |    | 世代                           | Generation              | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |    | 作成タイムスタンプ             | CreatedTimestamp        | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 作成ユーザー名                 | CreatedAccount          | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラム名               | CreatedProgramName      | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラムバージョン       | CreatedProgramVersion   | text         | System.Version  |              |                      |
+|    | o  |    | 更新タイムスタンプ             | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 更新ユーザー名                 | UpdatedAccount          | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラム名               | UpdatedProgramName      | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラムバージョン       | UpdatedProgramVersion   | text         | System.Version  |              |                      |
+|    | o  |    | 更新回数                       | UpdatedCount            | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | 使用言語                       | Language                | text         | System.String   |              |                      |
+|    | o  |    | 明示的バックアップディレクトリ | UserBackupDirectoryPath | text         | System.String   |              |                      |
 
 ### index
 
@@ -65,6 +67,7 @@ ___
 
 | PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                     |
 |:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-----------------------------|
+| o  | o  |    | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する         |
 |    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                          |
 |    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                              |
 |    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                              |
@@ -89,22 +92,23 @@ ___
 
 ### layout
 
-| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
-|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
-|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |          |
-|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |          |
-|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
-|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |          |
-|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |          |
-|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |          |
-|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |          |
-|    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |          |
-|    | o  |              | 横幅                     | Width                 | real         | System.Double   |              |          |
-|    | o  |              | 非表示待機時間           | HideWaitTime          | text         | System.TimeSpan |              |          |
-|    | o  |              | タグ検索                 | FindTag               |              | System.Boolean  |              |          |
+| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |              | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                      |
+|    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                      |
+|    | o  |              | 横幅                     | Width                 | real         | System.Double   |              |                      |
+|    | o  |              | 非表示待機時間           | HideWaitTime          | text         | System.TimeSpan |              |                      |
+|    | o  |              | タグ検索                 | FindTag               |              | System.Boolean  |              |                      |
 
 ### index
 
@@ -118,23 +122,24 @@ ___
 
 ### layout
 
-| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント  |
-|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:----------|
-|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC       |
-|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |           |
-|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |           |
-|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |           |
-|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC       |
-|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |           |
-|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |           |
-|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |           |
-|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり   |
-|    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |           |
-|    | o  |              | タイトル設定             | TitleKind             | text         | System.String   |              |           |
-|    | o  |              | 位置種別                 | LayoutKind            | text         | System.String   |              |           |
-|    | o  |              | 前景色                   | ForegroundColor       | text         | System.String   |              | #AARRGGBB |
-|    | o  |              | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB |
-|    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |           |
+| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |              | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                      |
+|    | o  |              | タイトル設定             | TitleKind             | text         | System.String   |              |                      |
+|    | o  |              | 位置種別                 | LayoutKind            | text         | System.String   |              |                      |
+|    | o  |              | 前景色                   | ForegroundColor       | text         | System.String   |              | #AARRGGBB            |
+|    | o  |              | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB            |
+|    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |                      |
 
 ### index
 
@@ -148,23 +153,24 @@ ___
 
 ### layout
 
-| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント  |
-|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:----------|
-|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC       |
-|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |           |
-|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |           |
-|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |           |
-|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC       |
-|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |           |
-|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |           |
-|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |           |
-|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり   |
-|    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |           |
-|    | o  |              | 標準出力前景色           | OutputForeground      | text         | System.String   |              | #AARRGGBB |
-|    | o  |              | 標準出力背景色           | OutputBackground      | text         | System.String   |              | #AARRGGBB |
-|    | o  |              | エラー前景色             | ErrorForeground       | text         | System.String   |              | #AARRGGBB |
-|    | o  |              | エラー背景色             | ErrorBackground       | text         | System.String   |              | #AARRGGBB |
-|    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |           |
+| PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |              | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |              | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |              | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |              | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |              | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |              | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |              | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  | Fonts.FontId | フォント                 | FontId                | text         | System.Guid     |              |                      |
+|    | o  |              | 標準出力前景色           | OutputForeground      | text         | System.String   |              | #AARRGGBB            |
+|    | o  |              | 標準出力背景色           | OutputBackground      | text         | System.String   |              | #AARRGGBB            |
+|    | o  |              | エラー前景色             | ErrorForeground       | text         | System.String   |              | #AARRGGBB            |
+|    | o  |              | エラー背景色             | ErrorBackground       | text         | System.String   |              | #AARRGGBB            |
+|    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |                      |
 
 ### index
 
@@ -180,6 +186,7 @@ ___
 
 | PK | NN | FK           | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
 |:--:|:--:|:-------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |              | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
 |    | o  |              | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
 |    | o  |              | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
 |    | o  |              | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
@@ -212,19 +219,20 @@ ___
 
 ### layout
 
-| PK | NN | FK | 論理カラム名             | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント                                   |
-|:--:|:--:|:---|:-------------------------|:------------------------|:-------------|:----------------|:-------------|:-------------------------------------------|
-|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp        | datetime     | System.DateTime |              | UTC                                        |
-|    | o  |    | 作成ユーザー名           | CreatedAccount          | text         | System.String   |              |                                            |
-|    | o  |    | 作成プログラム名         | CreatedProgramName      | text         | System.String   |              |                                            |
-|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion   | text         | System.Version  |              |                                            |
-|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC                                        |
-|    | o  |    | 更新ユーザー名           | UpdatedAccount          | text         | System.String   |              |                                            |
-|    | o  |    | 更新プログラム名         | UpdatedProgramName      | text         | System.String   |              |                                            |
-|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion   | text         | System.Version  |              |                                            |
-|    | o  |    | 更新回数                 | UpdatedCount            | integer      | System.Int64    |              | 0始まり                                    |
-|    | o  |    | アイドル抑制             | SuppressSystemIdle      | boolean      | System.Boolean  |              |                                            |
-|    | o  |    | Explorer補正             | SupportExplorer         | boolean      | System.Boolean  |              |                                            |
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |    | 世代                     | Generation            | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                      |
+|    | o  |    | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | アイドル抑制             | SuppressSystemIdle    | boolean      | System.Boolean  |              |                      |
+|    | o  |    | Explorer補正             | SupportExplorer       | boolean      | System.Boolean  |              |                      |
 
 ### index
 
