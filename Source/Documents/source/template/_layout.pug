@@ -19,15 +19,14 @@ html(lang='ja')
 		block BLOCK_LAYOUT_STYLE
 		block BLOCK_LAYOUT_HEAD_SCRIPT
 	body
-		div#root
-			if(VAR_LAYOUT_TITLE)
-				h1 #{VAR_LAYOUT_TITLE}
-			else
-				h1 #{TITLE}
-			div#content
-				block BLOCK_LAYOUT_CONTENT
+		if(VAR_LAYOUT_TITLE)
+			h1 #{VAR_LAYOUT_TITLE}
+		else
+			h1 #{TITLE}
+		div#content
+			block BLOCK_LAYOUT_CONTENT
 
-			header#menu
+		header#menu
 				nav
 					ul
 						li
@@ -52,9 +51,6 @@ html(lang='ja')
 								li: a(href="./dev.ci.pug") CI・リリース
 								li: a(href="./dev.table-main.pug") テーブル:Main
 								li: a(href="./dev.table-file.pug") テーブル:File
-
-			footer#footer
-				div footer
 
 		block BLOCK_LAYOUT_TAIL_SCRIPT
 
