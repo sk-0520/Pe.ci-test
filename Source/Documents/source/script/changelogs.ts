@@ -5408,10 +5408,12 @@ window.addEventListener('load', () => {
 
 
 				if ('revision' in log) {
-					const revision = document.createElement('a');
-					revision.className = 'revision';
-					revision.textContent = log['revision']!;
-					header.appendChild(revision);
+					if(log['revision']) {
+						const revision = document.createElement('a');
+						revision.className = 'revision';
+						revision.textContent = log['revision']!;
+						header.appendChild(revision);
+					}
 				}
 
 
