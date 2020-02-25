@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
             var addPath = orgPath + ";" + crtDir;
             Logger.LogDebug("新規PATH: {0}", addPath);
-            Environment.SetEnvironmentVariable("PATH", crtDir);
+            Environment.SetEnvironmentVariable("PATH", addPath);
         }
 
         #endregion

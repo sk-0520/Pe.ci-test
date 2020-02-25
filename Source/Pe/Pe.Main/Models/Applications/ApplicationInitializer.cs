@@ -45,7 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public UserAgentManager? UserAgentManager { get; private set; }
 
         public Mutex? Mutex { get; private set; }
-        public bool LoadedIncludeVisualCppRuntimeRedist { get; private set; }
 
         #endregion
 
@@ -504,9 +503,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             } catch(Exception ex) {
                 logger.LogWarning(ex, ex.Message);
                 webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
-                LoadedIncludeVisualCppRuntimeRedist = true;
             }
-            logger.LogDebug("{0}: {1}", nameof(LoadedIncludeVisualCppRuntimeRedist), LoadedIncludeVisualCppRuntimeRedist);
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
