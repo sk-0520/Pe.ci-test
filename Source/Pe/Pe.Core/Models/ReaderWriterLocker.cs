@@ -15,6 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         /// <summary>
         /// 再帰ロック不可で作成。
+        /// <para>通常はこっちでいいはず。</para>
         /// </summary>
         public ReaderWriterLocker()
         {
@@ -321,9 +322,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(!IsDisposed) {
                 if(disposing) {
                     Locker.Dispose();
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-                    Locker = null;
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+                    Locker = null!;
                 }
             }
 
