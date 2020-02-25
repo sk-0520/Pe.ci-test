@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             }
             var crtDir = Path.Combine(binDirPath, "lib", "Redist.MSVC.CRT", ProcessArchitecture.ApplicationArchitecture);
 
-            var addPath = orgPath + ";" + crtDir;
+            var addPath = crtDir + ";" + orgPath;
             Logger.LogDebug("新規PATH: {0}", addPath);
             Environment.SetEnvironmentVariable("PATH", crtDir);
         }
