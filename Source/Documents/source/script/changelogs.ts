@@ -115,8 +115,8 @@ const changelogs = [
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
-						"subject": ""
+						"revision": "98575402e5956db442cff82752bd3d344ca0e1f3",
+						"subject": "#504: ヘルプファイルの再作成 "
 					},
 					{
 						"revision": "",
