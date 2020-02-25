@@ -498,12 +498,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             var webViewinItializer = new WebViewinItializer(loggerFactory);
-            try {
-                webViewinItializer.Initialize(environmentParameters);
-            } catch(Exception ex) {
-                logger.LogWarning(ex, ex.Message);
-                webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
-            }
+            webViewinItializer.Initialize(environmentParameters);
+            //try {
+            //    webViewinItializer.Initialize(environmentParameters);
+            //} catch(Exception ex) {
+            //    logger.LogWarning(ex, ex.Message);
+            //    webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
+            //}
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
