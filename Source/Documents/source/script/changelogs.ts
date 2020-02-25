@@ -133,7 +133,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#514: 初回起動時に ArgumentNullException で落ちる"
 					},
 					{
 						"revision": "",
