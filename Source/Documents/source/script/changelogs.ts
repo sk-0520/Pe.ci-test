@@ -137,7 +137,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#516: Microsoft Visual C++ 再頒布可能パッケージ のインストールを不要にする"
 					},
 					{
 						"revision": "",

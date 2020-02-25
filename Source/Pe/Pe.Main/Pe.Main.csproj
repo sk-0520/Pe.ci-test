@@ -29,6 +29,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="lib\Redist.MSVC.CRT\x64\concrt140.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x64\msvcp140.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x64\msvcp140_1.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x64\msvcp140_2.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x64\msvcp140_codecvt_ids.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x64\vccorlib140.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x64\vcruntime140.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x64\vcruntime140_1.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x86\concrt140.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x86\msvcp140.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x86\msvcp140_1.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x86\msvcp140_2.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x86\msvcp140_codecvt_ids.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x86\vccorlib140.dll" />
+    <None Remove="lib\Redist.MSVC.CRT\x86\vcruntime140.dll" />
     <None Remove="nlog.config" />
     <None Remove="Resources\Icon\App-beta.ico" />
     <None Remove="Resources\Icon\App-debug.ico" />
@@ -41,6 +56,51 @@
 
   <ItemGroup>
     <Content Include="etc\script\Updater\UpdaterScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\concrt140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\msvcp140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\msvcp140_1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\msvcp140_2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\msvcp140_codecvt_ids.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\vccorlib140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\vcruntime140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x64\vcruntime140_1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x86\concrt140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x86\msvcp140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x86\msvcp140_1.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x86\msvcp140_2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x86\msvcp140_codecvt_ids.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x86\vccorlib140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\Redist.MSVC.CRT\x86\vcruntime140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

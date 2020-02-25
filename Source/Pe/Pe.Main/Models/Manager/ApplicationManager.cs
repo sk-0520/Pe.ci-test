@@ -96,7 +96,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         ILoggerFactory LoggerFactory { get; set; }
         ApplicationDiContainer ApplicationDiContainer { get; set; }
-
         bool IsFirstStartup { get; }
         ILogger Logger { get; set; }
         PlatformThemeLoader PlatformThemeLoader { get; }
