@@ -76,6 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
             ApplicationMutex = initializer.Mutex ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Mutex));
             LoadedIncludeVisualCppRuntimeRedist = initializer.LoadedIncludeVisualCppRuntimeRedist;
+            Logger.LogDebug("{0}: {1}", nameof(LoadedIncludeVisualCppRuntimeRedist), LoadedIncludeVisualCppRuntimeRedist);
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);

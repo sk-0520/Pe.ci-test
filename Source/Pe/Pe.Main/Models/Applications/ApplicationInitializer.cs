@@ -506,6 +506,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
                 LoadedIncludeVisualCppRuntimeRedist = true;
             }
+            logger.LogDebug("{0}: {1}", nameof(LoadedIncludeVisualCppRuntimeRedist), LoadedIncludeVisualCppRuntimeRedist);
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
