@@ -497,7 +497,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
-            new WebViewinItializer().Initialize(environmentParameters);
+            var webViewinItializer = new WebViewinItializer();
+
+            webViewinItializer.Initialize(environmentParameters);
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {

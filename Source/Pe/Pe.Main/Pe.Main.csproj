@@ -65,6 +65,8 @@
 
   <ItemGroup>
     <Folder Include="doc\help\" />
+    <Folder Include="lib\Redist.MSVC.CRT\x64\" />
+    <Folder Include="lib\Redist.MSVC.CRT\x86\" />
   </ItemGroup>
 
   <ItemGroup>
