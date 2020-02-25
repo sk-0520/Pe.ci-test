@@ -75,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
             ApplicationMutex = initializer.Mutex ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Mutex));
+            LoadedIncludeVisualCppRuntimeRedist = initializer.LoadedIncludeVisualCppRuntimeRedist;
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
@@ -96,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         ILoggerFactory LoggerFactory { get; set; }
         ApplicationDiContainer ApplicationDiContainer { get; set; }
-
+        bool LoadedIncludeVisualCppRuntimeRedist { get; }
         bool IsFirstStartup { get; }
         ILogger Logger { get; set; }
         PlatformThemeLoader PlatformThemeLoader { get; }
@@ -798,7 +799,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void DisposeWebView()
         {
-            CefSharp.Cef.Shutdown();
+            if(!LoadedIncludeVisualCppRuntimeRedist) {
+                CefSharp.Cef.Shutdown();
+            } else {
+                Logger.LogWarning("同梱版 Microsoft Visual C++ 再頒布可能パッケージ のため CefSharp 終了処理を実施せず");
+            }
         }
 
         public void Exit(bool ignoreUpdate)

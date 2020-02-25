@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public UserAgentManager? UserAgentManager { get; private set; }
 
         public Mutex? Mutex { get; private set; }
+        public bool LoadedIncludeVisualCppRuntimeRedist { get; private set; }
 
         #endregion
 
@@ -503,6 +504,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             } catch(Exception ex) {
                 logger.LogWarning(ex, ex.Message);
                 webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
+                LoadedIncludeVisualCppRuntimeRedist = true;
             }
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
