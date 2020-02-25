@@ -30,8 +30,8 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 ## Build
 
-* current: [![Build status](https://ci.appveyor.com/api/projects/status/05wsegjflhnlle5n/branch/ci-test?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-dev/branch/ci-test)
-* master: [![Build status](https://ci.appveyor.com/api/projects/status/ghry8e2sjjococ0d/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-release/branch/master)
+* ベータ版: [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-beta)
+* リリース版: [![Build status](https://ci.appveyor.com/api/projects/status/ghry8e2sjjococ0d/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-release/branch/master)
 
 ## 開発
 
