@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Extension
 {
-    public static class TextExtension
+    internal static class TextExtension
     {
         /// <summary>
         /// 指定範囲の値を指定処理で置き換える。

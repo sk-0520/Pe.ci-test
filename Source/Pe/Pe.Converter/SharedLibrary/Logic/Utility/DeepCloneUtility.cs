@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     /// <summary>
     /// ディープコピー用ユーティリティ。
     /// </summary>
-    public static class DeepCloneUtility
+    internal static class DeepCloneUtility
     {
         public static IEnumerable<MemberInfo> GetMembers(IDeepClone deepCone)
         {

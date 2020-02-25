@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF.ReadOnly;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
-    public static class RangeUtility
+    internal static class RangeUtility
     {
         /// <summary>
         /// min &lt;= value &lt;= max

@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     /// <summary>
     /// 設定の入出力。
     /// </summary>
-    public static class SerializeUtility
+    internal static class SerializeUtility
     {
         public static int DefaultBufferSize { get; } = 512;
         public static Encoding DefaultEncoding { get; } = Encoding.UTF8;

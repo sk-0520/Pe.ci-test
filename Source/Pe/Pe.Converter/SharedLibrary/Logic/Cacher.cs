@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    public class Cacher<TKey, TValue>: IEnumerable<KeyValuePair<TKey, TValue>>
+    internal class Cacher<TKey, TValue>: IEnumerable<KeyValuePair<TKey, TValue>>
     {
         /// <summary>
         ///非スレッドセーフでキャッシュ構築。
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     }
 
     [Obsolete("old: Cacher")]
-    public class Caching<TKey, TValue>: Cacher<TKey, TValue>
+    internal class Caching<TKey, TValue>: Cacher<TKey, TValue>
     {
         /// <summary>
         ///非スレッドセーフでキャッシュ構築。

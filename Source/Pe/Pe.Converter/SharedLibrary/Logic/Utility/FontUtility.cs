@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
-    public static class FontUtility
+    internal static class FontUtility
     {
         /// <summary>
         /// 指定フォントファミリ名からFontFamily作成。

@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ using System.Windows;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
-    public static class FreezableUtility
+    internal static class FreezableUtility
     {
         /// <summary>
         /// 安全に<see cref="Freezable.Freeze()"/>する。

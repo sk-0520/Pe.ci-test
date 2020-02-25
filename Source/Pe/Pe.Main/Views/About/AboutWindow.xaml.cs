@@ -9,8 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
 using ContentTypeTextNet.Pe.Core.Models;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Views.About
 {
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
         #region command
 
         public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
-            o => Close()
+            () => Close()
         ));
 
         #endregion

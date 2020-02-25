@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// <summary>
     /// なんかをとりあえず通知する。
     /// </summary>
-    public class NotifyPropertyChangedObject: DisposeFinalizeBase, INotifyPropertyChanged
+    internal class NotifyPropertyChangedObject: DisposeFinalizeBase, INotifyPropertyChanged
     {
         #region function
 
