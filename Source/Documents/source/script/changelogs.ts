@@ -157,8 +157,8 @@ const changelogs = [
 						"subject": "CIのバッジが開発用向いてた"
 					},
 					{
-						"revision": "",
-						"subject": ""
+						"revision": "af68ed61adea4e411c79df3d666c7d92fa9d7715",
+						"subject": "#515: CefSharp を使用するために必要な要件をきちんと調べる"
 					},
 					{
 						"revision": "",
