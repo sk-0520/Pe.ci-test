@@ -26,7 +26,8 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 * 0.9.0以前(正しいコミットだと6bcf1830cc3aa5392200bb285888ead7516f2a65くらい)は必要DLLを削除したため基本的に戻し不可。
 * 開発環境以外での動作は未確認。
-* 0.84.0 から基盤ソフトウェアを .NET Framework を .NET Core に変更したのでファイルサイズが激増しています。
+* 0.84.0 から基盤ソフトウェアを .NET Framework を .NET Core に変更したのでファイルサイズが激増しています。  
+  さらに[Microsoft Visual C++ 再頒布可能パッケージ(Visual Studio 2015、2017 および 2019)](https://support.microsoft.com/ja-jp/help/2977003/the-latest-supported-visual-c-downloads)のインストールが必要になります。
 
 ## Build
 
