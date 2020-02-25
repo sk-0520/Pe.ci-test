@@ -1,0 +1,34 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = 'インストール・アンインストール・保存データについて'
+
+block BLOCK_LAYOUT_CONTENT
+	section
+		h2 インストール
+		p 特別なにか作業は必要ありません。 圧縮ファイルを展開すればインストールは完了します。
+		aside.tips
+			p Pe 格納ディレクトリを移動する場合、スタートアップに登録している場合はディレクトリ移動前に登録を解除してください。
+
+	section
+		h2 アンインストール
+		p  Peの配置されているディレクトリをそのまま削除すればアンインストールは完了します。
+		aside.tips
+			p  スタートアップに登録している場合はアンインストール前に登録を解除してください。
+
+	section
+		h2
+		p 通知領域(タスクトレイ)の Pe アイコンを右クリックし、コンテキストメニューから 情報 -> バージョン情報 を選択して「ユーザーデータ」「端末データ」「一時データ」ボタンを押下すると設定データが格納されたディレクトリがエクスプローラで開きます。
+		p 通常使用であれば設定ファイルやアップデート用アーカイブ等はすべてこのディレクトリに格納されるため完全に消してしまいたい場合はこのディレクトリを Pe 終了後に削除してください。
+
+		section
+			h3 レジストリ
+			p 0.84.0 以降ではレジストリは使用されません。
+			aside.tips
+				p  0.83.0 からバージョンアップした場合、以下のレジストリに PeMain.exe が残っている可能性があります。
+				ul
+					li: code HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION
+					li: code HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_DOCUMENT_COMPATIBLE_MODE
+				p 実稼働に影響はありませんが、気になる場合は削除しても問題ありません。
+
+

@@ -30,9 +30,15 @@ html(lang='ja')
 			header#menu
 				nav
 					ul
-						li: a(href="./index.pug") TOP
+						li
+							a(href="./index.pug") はじめに
+							ul
+								li: a(href="./install-uninstall-data.pug") インストール・アンインストール・保存データについて
+								li: a(href="./x86-x64.pug") 32/64bitについて
+						li: a(href="./privacy.pug") プライバシー
 						li: a(href="./changelogs.pug") 更新履歴
-						li DEV
+						li
+							a(href="./dev-index.pug") 開発
 							ul
 								li: a(href="./dev-build.pug") ビルド
 								li: a(href="./dev-branch.pug") ブランチ
