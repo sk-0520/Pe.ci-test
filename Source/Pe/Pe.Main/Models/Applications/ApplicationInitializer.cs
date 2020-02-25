@@ -539,7 +539,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             cultureServiceChanger.ChangeCulture();
 
             if(acceptResult != null) {
-                Debug.Assert(IsFirstStartup);
+                //Debug.Assert(IsFirstStartup);
                 var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
                 var userIdManager = DiContainer.Build<UserIdManager>();
                 var userId = acceptResult.IsEnabledTelemetry
