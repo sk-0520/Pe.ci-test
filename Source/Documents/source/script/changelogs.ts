@@ -153,8 +153,8 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
-						"subject": ""
+						"revision": "b35a7e67468c60f30d5650487180c1f47e83856a",
+						"subject": "CIのバッジが開発用向いてた"
 					},
 					{
 						"revision": "",
