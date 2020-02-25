@@ -497,9 +497,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
-            var webViewinItializer = new WebViewinItializer();
-
-            webViewinItializer.Initialize(environmentParameters);
+            var webViewinItializer = new WebViewinItializer(loggerFactory);
+            try {
+                webViewinItializer.Initialize(environmentParameters);
+            } catch(Exception ex) {
+                logger.LogWarning(ex, ex.Message);
+                webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
+            }
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
@@ -580,6 +584,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
 
-#endregion
+        #endregion
     }
 }
