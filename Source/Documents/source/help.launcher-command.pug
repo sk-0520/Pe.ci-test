@@ -1,0 +1,24 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = 'コマンド'
+
+block BLOCK_LAYOUT_CONTENT
+	p 登録されているランチャーアイテムをキー入力から起動します。
+	p 通知領域のコンテキストメニューからも呼び出せますがキー入力から呼び出すのが設計思想です。
+	p 入力された文字列からどうこうするのではなくリスト上で選択されているアイテムを起動します。
+
+	section
+		h2 ランチャーアイテム
+		p アイテム選択状態で以下の入力により起動します。
+		table
+			tr
+				th 入力
+				th 起動内容
+			tr
+				td: kbd Enter
+				td 通常起動
+			tr
+				td: kbd Shift + Enter
+				td 指定して実行
+
