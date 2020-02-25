@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
+using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
@@ -42,6 +43,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             // Windows ログオンユーザー名
             return Environment.UserName;
 
+        }
+
+        public string? GetCpuCaption()
+        {
+            var platformInformationCollector = new PlatformInformationCollector();
+
+            var cpu = platformInformationCollector.GetCPU();
+            return cpu.FirstOrDefault(i => i.Key == "Caption").Value as string;
         }
 
         #endregion
