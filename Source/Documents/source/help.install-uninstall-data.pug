@@ -6,12 +6,16 @@ block BLOCK_LAYOUT_VAR
 block BLOCK_LAYOUT_CONTENT
 	section
 		h2 インストール
-		p
-			a(href="https://support.microsoft.com/ja-jp/help/2977003/the-latest-supported-visual-c-downloads") Microsoft Visual C++ 再頒布可能パッケージ
-			| の「Visual Studio 2015、2017 および 2019」が必要になります。
-		p インストール済みであれば圧縮ファイルを展開すればインストールは完了します。
+		p 圧縮ファイルを展開すればインストールは完了します。
 		aside.tips
 			p Pe 格納ディレクトリを移動する場合、スタートアップに登録している場合はディレクトリ移動前に登録を解除してください。
+		aside.tips
+			p Microsoft Visual C++ 再頒布可能パッケージ を内部的に使用しています。
+			p
+				| Pe に同梱しているので意識する必要はありませんが、セキュリティ更新などに追従できない可能性がありますので、必要に応じてインストールしてください。
+				a(href="https://support.microsoft.com/ja-jp/help/2977003/the-latest-supported-visual-c-downloads") Microsoft Visual C++ 再頒布可能パッケージ の「Visual Studio 2015、2017 および 2019」
+			p
+
 
 	section
 		h2 アンインストール
