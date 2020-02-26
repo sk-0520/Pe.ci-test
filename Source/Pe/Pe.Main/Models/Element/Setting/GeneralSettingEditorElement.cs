@@ -111,6 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public bool IsRegisterStartup { get; set; }
         public bool DelayStartup { get; set; }
         public TimeSpan StartupWaitTime { get; set; }
+        public string StartupArgument { get; set; } = string.Empty;
 
 
         #endregion
@@ -140,10 +141,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 IsRegisterStartup = true;
                 DelayStartup = startupParameter.DelayStartup;
                 StartupWaitTime = startupParameter.StartupWaitTime;
+                StartupArgument = startupParameter.Argument;
             } else {
                 IsRegisterStartup = false;
                 DelayStartup = false;
                 StartupWaitTime = TimeSpan.FromSeconds(3);
+                StartupArgument = string.Empty;
             }
         }
 
@@ -161,6 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var startupParameter = new StartupParameter() {
                     DelayStartup = DelayStartup,
                     StartupWaitTime = StartupWaitTime,
+                    Argument = StartupArgument,
                 };
                 startupRegister.Register(startupParameter);
             } else {

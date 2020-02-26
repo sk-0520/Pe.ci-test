@@ -115,7 +115,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#512: スタートアップ登録時に引数も登録できるようにする"
 					},
 					{
 						"revision": "",

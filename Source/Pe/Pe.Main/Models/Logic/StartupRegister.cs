@@ -18,8 +18,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region property
 
+        /// <summary>
+        /// 起動時に待機するか。
+        /// </summary>
         public bool DelayStartup { get; set; }
+        /// <summary>
+        /// 起動待ち時間。
+        /// </summary>
         public TimeSpan StartupWaitTime { get; set; }
+        /// <summary>
+        /// その他引数。
+        /// </summary>
+        public string Argument { get; set; } = string.Empty;
 
         #endregion
     }
@@ -35,15 +45,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         ILogger Logger { get; }
 
-        string StartupFileName { get; } = "Pe.lnk";
+        string StartupFileName { get; } =
+#if DEBUG
+            "Pe-debug.lnk"
+#elif BETA
+            "Pe-beta.lnk"
+#else
+            "Pe.lnk"
+#endif
+        ;
+
         string OldStartupFileName { get; } = "PeMain.lnk";
 
         string StartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), StartupFileName);
         string OldStartupFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), OldStartupFileName);
 
-        #endregion
+#endregion
 
-        #region function
+#region function
 
         /// <summary>
         /// スタートアップが存在するか
@@ -69,9 +88,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     shortcut.TargetPath = assemblyPath;
                     shortcut.WorkingDirectory = Path.GetDirectoryName(assemblyPath)!;
                     shortcut.IconPath = assemblyPath;
+
+                    var arguments = string.Empty;
                     if(startupParameter.DelayStartup) {
-                        shortcut.Arguments = $"--wait {(int)startupParameter.StartupWaitTime.TotalMilliseconds}";
+                        arguments = $"--wait {(int)startupParameter.StartupWaitTime.TotalMilliseconds}";
                     }
+                    if(!string.IsNullOrWhiteSpace(startupParameter.Argument)) {
+                        if(string.IsNullOrEmpty(arguments)) {
+                            arguments = startupParameter.Argument;
+                        } else {
+                            arguments += " " + startupParameter.Argument;
+                        }
+                    }
+
+                    shortcut.Arguments = arguments;
+
 #if SKIP_REGISTER
                     Logger.LogInformation("スタートアップ登録処理はシンボル設定により未実施");
 #else
@@ -132,6 +163,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                             }
                         }
                     }
+                    if(commandLine.Unknowns.Any()) {
+                        startupParameter.Argument = string.Join(" ", commandLine.Unknowns);
+                    }
                 }
                 return ResultSuccessValue.Success(startupParameter);
             } catch(Exception ex) {
@@ -141,6 +175,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return ResultSuccessValue.Failure<StartupParameter>();
         }
 
-        #endregion
+#endregion
     }
 }

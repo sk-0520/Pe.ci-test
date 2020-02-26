@@ -137,6 +137,8 @@
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
+                      <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_General_Starup_Register_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsRegisterStartup}" />
@@ -149,6 +151,9 @@
                       Maximum="{Binding MaximumStartupWaitTimeSeconds}"
                       Value="{Binding StartupWaitTimeSeconds}"
                     />
+
+                    <Label Grid.Column="3" Content="{Binding Resources.String_Setting_Generals_General_Starup_Argument_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <TextBox Grid.Column="4" Text="{Binding StartupArgument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                   </Grid>
                 </Grid>
 
