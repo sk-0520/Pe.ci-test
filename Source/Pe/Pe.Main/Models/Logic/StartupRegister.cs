@@ -18,8 +18,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     {
         #region property
 
+        /// <summary>
+        /// 起動時に待機するか。
+        /// </summary>
         public bool DelayStartup { get; set; }
+        /// <summary>
+        /// 起動待ち時間。
+        /// </summary>
         public TimeSpan StartupWaitTime { get; set; }
+        /// <summary>
+        /// その他引数。
+        /// </summary>
+        public string Argument { get; set; } = string.Empty;
 
         #endregion
     }
