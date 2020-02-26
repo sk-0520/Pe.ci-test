@@ -201,9 +201,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
 
         [ThemeProperty]
-        public ControlTemplate LauncherItemNormalButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate());
+        public ControlTemplate LauncherItemNormalButtonControlTemplate => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate();
         [ThemeProperty]
-        public ControlTemplate LauncherItemToggleButtonControlTemplate => DispatcherWrapper.Get(() => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate());
+        public ControlTemplate LauncherItemToggleButtonControlTemplate => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate();
 
         #endregion
 

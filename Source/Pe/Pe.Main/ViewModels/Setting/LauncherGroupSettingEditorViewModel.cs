@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherGroupKind Kind => Model.Kind;
 
-        public object GroupIcon => DispatcherWrapper.Get(() => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false));
+        public object GroupIcon => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
 
         [IgnoreValidation]
         public LauncherItemSettingEditorViewModel? SelectedLauncherItem
