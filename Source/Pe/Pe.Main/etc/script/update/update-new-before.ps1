@@ -2,7 +2,7 @@
 Param(
 	[parameter(mandatory = $true)][System.IO.DirectoryInfo] $DestinationDirectory,
 	[parameter(mandatory = $true)][version] $CurrentVersion,
-	[parameter(mandatory = $true)][ValidateSet("x32", "x64")][string] $Platform
+	[parameter(mandatory = $true)][ValidateSet("x86", "x64")][string] $Platform
 )
 $ErrorActionPreference = "Stop"
 

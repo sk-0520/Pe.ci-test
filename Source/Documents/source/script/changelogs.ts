@@ -98,9 +98,7 @@ const changelogs = [
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
+						"subject": "🙇 32bit 版は手動でアップデートしてください🙇"
 					},
 					{
 						"revision": "",
@@ -134,7 +132,12 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#526: アップデート時に PowerShell が実行できない",
+						"comments": [
+							"32bit 版で実行できなかった",
+							"x86,x64 のみを受け付けるようにしていたところを x32,x64 を受け付けるようにしていて x86 を渡していたから死んだ",
+							"x32 て。。。"
+						]
 					},
 					{
 						"revision": "",
