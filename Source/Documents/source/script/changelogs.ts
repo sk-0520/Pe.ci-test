@@ -91,22 +91,17 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.xx.1",
+		"date": "2020/02/26",
+		"version": "0.86.0",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"subject": "🙇 32bit 版は手動でアップデートしてください🙇"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "🙇 32bit 版は手動でアップデートしてください🙇",
+						"comments": [
+							"大きめの不具合だし早めにリリース"
+						]
 					}
 				]
 			},
@@ -114,16 +109,8 @@ const changelogs = [
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "f19f850b0adfab1627789468bb3b12c701257543",
 						"subject": "#512: スタートアップ登録時に引数も登録できるようにする"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -131,25 +118,13 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "626553bfb5727d6f2e31b3e67a9fb02fad052867",
 						"subject": "#526: アップデート時に PowerShell が実行できない",
 						"comments": [
 							"32bit 版で実行できなかった",
 							"x86,x64 のみを受け付けるようにしていたところを x32,x64 を受け付けるようにしていて x86 を渡していたから死んだ",
 							"x32 て。。。"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -157,16 +132,12 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
-						"subject": ""
+						"revision": "77c3761e3a307b6c82d55b27a9b7849c45b3795d",
+						"subject": "クッソしょうもないお絵かきが楽しい年ごろ"
 					},
 					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"revision": "260ccf574072d8e539ca509a18078ebfb31a6051",
+						"subject": "VMからテーマUI要素をごにょごにょするところはなんも考えなくていいはず"
 					}
 				]
 			}
