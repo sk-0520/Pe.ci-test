@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
                 .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
 
-                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
+                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), loggerFactory))
                 /*
                 .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessor)

@@ -225,16 +225,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
 
-        //static readonly TimeSpan GarbageTime = TimeSpan.FromMinutes(3);
-        static readonly TimeSpan GarbageTime = TimeSpan.FromSeconds(15);
-
         #endregion
 
         public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan timelimit, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             BaseDirectory = baseDirectory;
-            StatementCache = new ReferencePool<string, string>(GarbageTime, timelimit, false, loggerFactory);
+            StatementCache = new ReferencePool<string, string>(TimeSpan.FromMinutes(10), timelimit, false, loggerFactory);
         }
 
         #region property
