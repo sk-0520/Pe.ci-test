@@ -167,6 +167,26 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                Timer.Elapsed -= Timer_Elapsed;
+                if(disposing) {
+                    Timer.Dispose();
+                    foreach(var pair in Store) {
+                        // ここでロックする事態は状態がおかしいと思う
+                        IncinerateCore(pair.Key, pair.Value);
+                    }
+
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Timer.Stop();

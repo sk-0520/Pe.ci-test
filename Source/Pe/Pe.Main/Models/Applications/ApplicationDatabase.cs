@@ -219,32 +219,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public class ApplicationDatabaseStatementLoader : DatabaseStatementLoaderBase
+    public class ApplicationDatabaseStatementLoader : DatabaseStatementLoaderBase, IDisposable
     {
         #region define
 
         public const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
 
+        //static readonly TimeSpan GarbageTime = TimeSpan.FromMinutes(3);
+        static readonly TimeSpan GarbageTime = TimeSpan.FromSeconds(15);
+
         #endregion
 
-        public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan lifeTime, ILogger logger)
-            : base(logger)
-        {
-            BaseDirectory = baseDirectory;
-            StatementCache = new CachePool<string, string>(lifeTime);
-        }
-
-        public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan lifeTime, ILoggerFactory loggerFactory)
+        public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan timelimit, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             BaseDirectory = baseDirectory;
-            StatementCache = new CachePool<string, string>(lifeTime);
+            StatementCache = new ReferencePool<string, string>(GarbageTime, timelimit, false, loggerFactory);
         }
 
         #region property
 
         DirectoryInfo BaseDirectory { get; }
-        CachePool<string, string> StatementCache { get; }
+        ReferencePool<string, string> StatementCache { get; }
 
         public int SqlFileBufferSize { get; set; } = 4096;
         public Encoding SqlFileEncoding { get; set; } = Encoding.UTF8;
@@ -269,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             Debug.Assert(0 < key.Length);
 
-            return StatementCache.GetOrAdd(key, CreateCache);
+            return StatementCache.Get(key, CreateCache);
         }
 
         #endregion
@@ -293,6 +289,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var key = baseNamespace + "." + callerMemberName;
             return LoadStatement(key);
         }
+
+        #region IDisposable Support
+
+        private bool disposedValue = false; // 重複する呼び出しを検出するには
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!this.disposedValue) {
+                if(disposing) {
+                    StatementCache.Dispose();
+                }
+
+                this.disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        #endregion
 
         #endregion
     }

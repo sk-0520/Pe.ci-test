@@ -104,6 +104,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
+    [Obsolete]
     public class CachePool<TKey, TValue> : DisposerBase
         where TValue: class?
     {

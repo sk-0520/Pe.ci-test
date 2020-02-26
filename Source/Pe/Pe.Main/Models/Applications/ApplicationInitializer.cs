@@ -297,6 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
             using(var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                using var statementLoaderDisposer = statementLoader as IDisposable;
                 var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
                 databaseSetupper.Initialize(accessorPack);
             }
@@ -312,6 +313,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var idFactory = new IdFactory(loggerFactory);
 
             var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+            using var statementLoaderDisposer = statementLoader as IDisposable;
+
             var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
 
             //前回実行バージョンの取得と取得失敗時に再セットアップ処理
@@ -518,6 +521,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             if(IsFirstStartup) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                using var statementLoaderDisposer = statementLoader as IDisposable;
                 var idFactory = new IdFactory(loggerFactory);
                 using var oldVersionConverter = new OldVersionConverter(environmentParameters.OldSettingRootDirectoryPath, pack.accessor.Main, statementLoader, idFactory, loggerFactory);
                 if(oldVersionConverter.ExistisOldSetting()) {
