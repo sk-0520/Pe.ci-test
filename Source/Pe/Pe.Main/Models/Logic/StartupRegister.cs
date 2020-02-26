@@ -1,5 +1,5 @@
 #if DEBUG || BETA
-#   define _SKIP_REGISTER
+#   define SKIP_REGISTER
 #endif
 
 using System;
@@ -95,9 +95,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                     if(!string.IsNullOrWhiteSpace(startupParameter.Argument)) {
                         if(string.IsNullOrEmpty(arguments)) {
-                            arguments = " " + startupParameter.Argument;
-                        } else {
                             arguments = startupParameter.Argument;
+                        } else {
+                            arguments += " " + startupParameter.Argument;
                         }
                     }
 

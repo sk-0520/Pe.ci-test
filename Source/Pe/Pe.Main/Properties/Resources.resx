@@ -1481,4 +1481,7 @@
   <data name="String_Setting_LauncherToolbars_ChangeDefaultGroup_A" xml:space="preserve">
     <value>指定する(_S)</value>
   </data>
+  <data name="String_Setting_Generals_General_Starup_Argument_A" xml:space="preserve">
+    <value>追加引数(_A)</value>
+  </data>
 </root>

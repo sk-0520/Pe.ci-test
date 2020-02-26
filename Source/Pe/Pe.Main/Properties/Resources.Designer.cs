@@ -3340,6 +3340,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   追加引数(_A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_General_Starup_Argument_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_General_Starup_Argument_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   登録する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_General_Starup_Register_A {
