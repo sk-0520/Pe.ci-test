@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// <summary>
     /// コマンド。
     /// </summary>
-    public class DelegateCommand: DisposeFinalizeBase, ICommand
+    internal class DelegateCommand: DisposeFinalizeBase, ICommand
     {
         public DelegateCommand(Action<object> executeCommand)
         {

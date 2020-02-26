@@ -27,7 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Extension
 {
-    public static class LoggerExtension
+    internal static class LoggerExtension
     {
         #region function
 

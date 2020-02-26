@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     /// <summary>
     /// ファイル関連の共通処理。
     /// </summary>
-    public static class FileUtility
+    internal static class FileUtility
     {
         /// <summary>
         /// バイナリファイル読み込み用ストリーム生成。

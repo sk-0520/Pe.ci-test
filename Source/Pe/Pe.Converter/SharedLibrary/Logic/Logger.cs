@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// <summary>
     /// 最低限度の機能を保持したログ出力処理。
     /// </summary>
-    public class Logger: LoggerBase, IIsDisposed
+    internal class Logger: LoggerBase, IIsDisposed
     {
         public Logger()
             : base()

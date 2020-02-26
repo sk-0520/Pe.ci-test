@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
+using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
@@ -30,7 +31,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             // アカウント情報のユーザー名(取れなくてもいい)
             try {
                 var userPrincipal = UserPrincipal.Current;
-                return userPrincipal.DisplayName;
+                var userName = userPrincipal.DisplayName;
+                //#514対応: NULL の可能性あり
+                if(!string.IsNullOrEmpty(userName)) {
+                    return userName;
+                }
             } catch(Exception ex) {
                 Logger.LogWarning(ex, ex.Message);
             }
@@ -38,6 +43,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             // Windows ログオンユーザー名
             return Environment.UserName;
 
+        }
+
+        public string? GetCpuCaption()
+        {
+            var platformInformationCollector = new PlatformInformationCollector();
+
+            var cpu = platformInformationCollector.GetCPU();
+            return cpu.FirstOrDefault(i => i.Key == "Caption").Value as string;
         }
 
         #endregion

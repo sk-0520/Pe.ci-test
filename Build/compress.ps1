@@ -30,9 +30,17 @@ foreach($platform in $Platforms) {
 			Get-ChildItem -Path $binRootDirPath -File -Filter "*.pdb" -Recurse
 			Get-ChildItem -Path (Join-Path $binRootDirPath 'bin') -File -Filter "*.xml" -Recurse
 		) | Select-Object -ExpandProperty FullName
+
+		$unsupportPlatform = switch ($platform) {
+			'x64' { 'x86' }
+			'x86' { 'x64' }
+		}
+		$removeTargets += (Join-Path $binRootDirPath "bin\$unsupportPlatform")
+		$removeTargets += (Join-Path $binRootDirPath "bin\lib\Redist.MSVC.CRT\$unsupportPlatform")
+
 		foreach($removeTarget in $removeTargets) {
 			Write-Output "DIET: $removeTarget"
-			Remove-Item $removeTarget
+			Remove-Item $removeTarget -Recurse -Force
 		}
 	}
 

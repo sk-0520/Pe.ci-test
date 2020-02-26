@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     /// <summary>
     /// 文字列処理共通。
     /// </summary>
-    public static class TextUtility
+    internal static class TextUtility
     {
         /// <summary>
         /// 指定データを集合の中から単一である値に変換する。

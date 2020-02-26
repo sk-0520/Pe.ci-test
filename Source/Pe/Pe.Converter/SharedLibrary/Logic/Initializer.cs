@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// <summary>
     /// <see cref="ISupportInitialize"/>の初期化から初期化終了までを using で実施できるようにする。
     /// </summary>
-    public class Initializer: DisposeFinalizeBase
+    internal class Initializer: DisposeFinalizeBase
     {
         public Initializer(ISupportInitialize target)
         {

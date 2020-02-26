@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic
     /// <summary>
     /// 開始と終了を記録するログ。
     /// </summary>
-    public class TimeLogger: DisposeFinalizeBase
+    internal class TimeLogger: DisposeFinalizeBase
     {
         #region static
 

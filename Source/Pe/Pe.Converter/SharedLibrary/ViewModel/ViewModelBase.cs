@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
     /// <summary>
     /// ViewModelの基底。
     /// </summary>
-    public abstract class ViewModelBase: NotifyPropertyChangedObject, IDisplayText, INotifyDataErrorInfo
+    internal abstract class ViewModelBase: NotifyPropertyChangedObject, IDisplayText, INotifyDataErrorInfo
     {
         #region event
 

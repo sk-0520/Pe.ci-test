@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
-    public static class CheckUtility
+    internal static class CheckUtility
     {
         /// <summary>
         /// 真を強制させる。
