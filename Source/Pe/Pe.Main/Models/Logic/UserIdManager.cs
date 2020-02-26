@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -62,10 +63,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         public string CreateFromEnvironment()
         {
+            var buffer = new StringBuilder();
+
             var pi = new PlatformInformation(LoggerFactory);
-            var userName = pi.GetUserName();
-            //TODO: CPUとメモリを追加する
-            var a = Encoding.UTF8.GetBytes(userName);
+            buffer.Append(Environment.OSVersion.VersionString);
+            buffer.Append(pi.GetUserName());
+            buffer.Append(pi.GetCpuCaption());
+            //TODO: メモリを追加する
+            var a = Encoding.UTF8.GetBytes(buffer.ToString());
             return ComputeHash(a);
         }
 

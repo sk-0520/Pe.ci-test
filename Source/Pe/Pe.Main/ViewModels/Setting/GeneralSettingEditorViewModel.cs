@@ -156,6 +156,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => Model.DelayStartup;
             set => SetModelValue(value);
         }
+        public string StartupArgument
+        {
+            get => Model.StartupArgument;
+            set => SetModelValue(value);
+        }
 
         public double MinimumStartupWaitTimeSeconds => TimeSpan.FromSeconds(1).TotalSeconds;
         public double MaximumStartupWaitTimeSeconds => TimeSpan.FromMinutes(1).TotalSeconds;

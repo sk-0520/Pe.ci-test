@@ -5,9 +5,12 @@
 
 #pragma comment(lib, "shlwapi.lib")
 
+#define PATH_LENGTH (1024 * 4)
+
 void outputDebug(TCHAR* s);
 size_t getAppPath(HINSTANCE hInstance, TCHAR* buffer);
 size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath);
+void addVisualCppRuntimeRedist(const TCHAR* rootDirPath);
 size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath);
 TCHAR* tuneArg(const TCHAR* arg);
 long getWaitTime(const TCHAR* s);
@@ -19,6 +22,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     TCHAR appDirPath[MAX_PATH];
     getParentDirPath(appDirPath, appFilePath);
+
+    addVisualCppRuntimeRedist(appDirPath);
 
     TCHAR appExePath[MAX_PATH];
     getMainModulePath(appExePath, appDirPath);
@@ -128,6 +133,37 @@ size_t getParentDirPath(TCHAR* buffer, const TCHAR* filePath)
     return lstrlen(buffer);
 }
 
+void addVisualCppRuntimeRedist(const TCHAR* rootDirPath) {
+    TCHAR crtPath[MAX_PATH];
+    lstrcpy(crtPath, rootDirPath);
+
+
+    TCHAR dirs[][32] = {
+        _T("bin"),
+        _T("lib"),
+        _T("Redist.MSVC.CRT"),
+#ifdef _WIN64
+        _T("x64"),
+#else
+        _T("x86"),
+#endif
+    };
+    for (size_t i = 0; i < (sizeof(dirs) / sizeof(dirs[0])); i++) {
+        TCHAR buffer[MAX_PATH];
+        TCHAR* name = dirs[i];
+        PathCombine(buffer, crtPath, name);
+        lstrcpy(crtPath, buffer);
+    }
+    outputDebug(crtPath);
+
+    TCHAR pathValue[PATH_LENGTH];
+    GetEnvironmentVariable(_T("PATH"), pathValue, PATH_LENGTH - 1);
+    lstrcat(pathValue, _T(";"));
+    lstrcat(pathValue, crtPath);
+    SetEnvironmentVariable(_T("PATH"), pathValue);
+
+}
+
 size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath)
 {
     TCHAR binPath[MAX_PATH];
@@ -141,7 +177,7 @@ size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath)
 TCHAR* tuneArg(const TCHAR* arg)
 {
     int hasSpace = _tcschr(arg, ' ') != NULL;
-    auto len = lstrlen(arg) + (hasSpace ? 2 : 0);
+    size_t len = lstrlen(arg) + (hasSpace ? 2 : 0);
     TCHAR* s = malloc((len + 1) * sizeof(TCHAR*));
     assert(s);
     if (hasSpace) {

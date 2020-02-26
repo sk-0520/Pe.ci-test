@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
-    public abstract class LoggerBase: DisposeFinalizeBase, ILogger
+    internal abstract class LoggerBase: DisposeFinalizeBase, ILogger
     {
         public LoggerBase()
         {

@@ -15,6 +15,7 @@ $outputDirectory = Join-Path $rootDirPath 'Output'
 
 $rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/source/script/changelogs.ts"
 $rawChangelogLinkFile = Join-Path $rootDirPath "Source/Documents/source/script/changelog-link.js"
+$rawChangelogStyleFile = Join-Path $rootDirPath "Source/Documents/source/style/changelog.css"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
 
 # ノード作らず適当に
@@ -139,9 +140,11 @@ foreach ($content in $currentVersion.contents) {
 		$logSubject.attributes['class'] = 'subject'
 
 		if ($log.PSObject.Properties.Match('revision').Count) {
-			$logRevision = $logHeader.CreateChild('a')
-			$logRevision.CreateText($log.revision)
-			$logRevision.attributes['class'] = 'revision'
+			if($log.revision.Length) {
+				$logRevision = $logHeader.CreateChild('a')
+				$logRevision.CreateText($log.revision)
+				$logRevision.attributes['class'] = 'revision'
+			}
 		}
 
 
@@ -161,6 +164,7 @@ foreach ($content in $currentVersion.contents) {
 $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
 $htmlContent = $htmlContent.Replace('<body></body>', $body.ToHtml())
 $htmlContent = $htmlContent.Replace('//SCRIPT', (Get-Content $rawChangelogLinkFile -Raw -Encoding UTF8))
+$htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $rawChangelogStyleFile -Raw -Encoding UTF8))
 
 $version = GetAppVersion
 Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)) -Value $htmlContent -Encoding UTF8

@@ -297,6 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
             using(var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                using var statementLoaderDisposer = statementLoader as IDisposable;
                 var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
                 databaseSetupper.Initialize(accessorPack);
             }
@@ -312,6 +313,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var idFactory = new IdFactory(loggerFactory);
 
             var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+            using var statementLoaderDisposer = statementLoader as IDisposable;
+
             var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
 
             //前回実行バージョンの取得と取得失敗時に再セットアップ処理
@@ -364,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
                 .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
 
-                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromSeconds(30), loggerFactory))
+                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), loggerFactory))
                 /*
                 .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessor)
@@ -497,7 +500,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
-            new WebViewinItializer().Initialize(environmentParameters);
+            var webViewinItializer = new WebViewinItializer(loggerFactory);
+            webViewinItializer.Initialize(environmentParameters);
+            //try {
+            //    webViewinItializer.Initialize(environmentParameters);
+            //} catch(Exception ex) {
+            //    logger.LogWarning(ex, ex.Message);
+            //    webViewinItializer.AddVisualCppRuntimeRedist(environmentParameters);
+            //}
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
             if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
@@ -511,6 +521,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             if(IsFirstStartup) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                using var statementLoaderDisposer = statementLoader as IDisposable;
                 var idFactory = new IdFactory(loggerFactory);
                 using var oldVersionConverter = new OldVersionConverter(environmentParameters.OldSettingRootDirectoryPath, pack.accessor.Main, statementLoader, idFactory, loggerFactory);
                 if(oldVersionConverter.ExistisOldSetting()) {
@@ -539,7 +550,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             cultureServiceChanger.ChangeCulture();
 
             if(acceptResult != null) {
-                Debug.Assert(IsFirstStartup);
+                //Debug.Assert(IsFirstStartup);
                 var mainDatabaseBarrier = DiContainer.Build<IMainDatabaseBarrier>();
                 var userIdManager = DiContainer.Build<UserIdManager>();
                 var userId = acceptResult.IsEnabledTelemetry
@@ -578,6 +589,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
 
-#endregion
+        #endregion
     }
 }

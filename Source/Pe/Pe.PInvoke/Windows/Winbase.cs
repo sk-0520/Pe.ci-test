@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
     }
 
     [Flags]
-    public enum LOAD_LIBRARY: uint
+    public enum LOAD_LIBRARY : uint
     {
         DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
         LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
@@ -129,5 +129,10 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         [DllImport("kernel32.dll")]
         public static extern uint GetLastError();
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool SetDllDirectory(string lpPathName);
+
+
     }
 }

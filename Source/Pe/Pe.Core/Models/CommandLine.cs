@@ -309,8 +309,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             try {
                 var map = new[] {
                     new { Key = "--", IsLong = true },
-                    new { Key = "-", IsLong = false },
-                    new { Key = "/",IsLong = false },
+                    new { Key = "-",  IsLong = false },
+                    new { Key = "/",  IsLong = false },
                 };
 
                 for(var i = 0; i < Arguments.Count; i++) {
@@ -320,44 +320,45 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         continue;
                     }
 
-                    foreach(var pair in map) {
-                        if(arg.StartsWith(pair.Key)) {
-                            var separatorIndex = arg.IndexOf('=');
-                            if(separatorIndex == -1) {
-                                var key = GetCommandLineKey(arg.Substring(pair.Key.Length));
-                                if(key == null) {
-                                    SetUnknown(arg);
+                    var pair = map.FirstOrDefault(i => arg.StartsWith(i.Key));
+                    if(pair != null) {
+                        var separatorIndex = arg.IndexOf('=');
+                        if(separatorIndex == -1) {
+                            var key = GetCommandLineKey(arg.Substring(pair.Key.Length));
+                            if(key == null) {
+                                SetUnknown(arg);
+                                continue;
+                            }
+                            if(key.HasValue) {
+                                if(i < Arguments.Count - 1) {
+                                    SetValue(key, Arguments[i + 1]);
+                                    i += 1;
                                     continue;
-                                }
-                                if(key.HasValue) {
-                                    if(i < Arguments.Count - 1) {
-                                        SetValue(key, Arguments[i + 1]);
-                                        i += 1;
-                                        continue;
-                                    } else {
-                                        SetValue(key, string.Empty);
-                                        continue;
-                                    }
                                 } else {
-                                    SetSwitch(key);
+                                    SetValue(key, string.Empty);
                                     continue;
                                 }
                             } else {
-                                var key = GetCommandLineKey(arg.Substring(pair.Key.Length, separatorIndex - pair.Key.Length));
-                                if(key == null) {
-                                    SetUnknown(arg);
-                                    continue;
-                                }
-                                if(key.HasValue) {
-                                    var val = arg.Substring(separatorIndex + 1);
-                                    SetValue(key, StripDoubleQuotes(val));
-                                    continue;
-                                } else {
-                                    SetSwitch(key);
-                                    continue;
-                                }
+                                SetSwitch(key);
+                                continue;
+                            }
+                        } else {
+                            var key = GetCommandLineKey(arg.Substring(pair.Key.Length, separatorIndex - pair.Key.Length));
+                            if(key == null) {
+                                SetUnknown(arg);
+                                continue;
+                            }
+                            if(key.HasValue) {
+                                var val = arg.Substring(separatorIndex + 1);
+                                SetValue(key, StripDoubleQuotes(val));
+                                continue;
+                            } else {
+                                SetSwitch(key);
+                                continue;
                             }
                         }
+                    } else {
+                        SetUnknown(arg);
                     }
                 }
                 return true;
@@ -497,7 +498,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     /// <typeparam name="TData"></typeparam>
     public class CommandLineConverter<TData>
-        where TData: class
+        where TData : class
     {
         public CommandLineConverter(CommandLine commandLine, TData data)
         {

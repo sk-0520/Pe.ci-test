@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
     /// <summary>
     /// それっぽい変換屋さん。
     /// </summary>
-    public static class CovertUtility
+    internal static class CovertUtility
     {
         /// <summary>
         /// オブジェクトをバイナリに変換する。

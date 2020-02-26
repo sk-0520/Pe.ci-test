@@ -1,0 +1,87 @@
+section
+{
+	margin-left: 0.5ex;
+}
+
+section h2
+{
+	padding: 0.3ex 1ex;
+	font-weight: bold;
+}
+
+section h3
+{
+	border: none;
+}
+
+section h3.note
+{
+	background: #ffc;
+}
+
+section h3.features
+{
+	background: #cfc;
+}
+
+section h3.fixes
+{
+	background: #fcc;
+}
+
+section h3.developer
+{
+	background: #ccf;
+}
+
+a.revision
+{
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 2px;
+	border: 1px solid #888;
+	padding: 1px;
+	font-size: 70%;
+	width: 8ex;
+	white-space: nowrap;
+	overflow: hidden;
+
+	font-family: Consolas;
+	text-overflow: ellipsis;
+	text-decoration: none;
+}
+
+p.uri
+{
+	margin-top: 0;
+	font-size: 80%;
+}
+
+section *.compatibility:before
+{
+	content: "[互換性]";
+}
+section *.compatibility
+{
+	color: #f00;
+}
+section *.notice:before
+{
+	content: "[事前通知]";
+	color: #f00;
+}
+section *.nuget:before
+{
+	content: "[NuGet]";
+	color: #0a0;
+}
+section *.myget:before
+{
+	content: "[myget]";
+	color: #0a0;
+}
+
+section *.comment
+{
+	font-size: 90%;
+}

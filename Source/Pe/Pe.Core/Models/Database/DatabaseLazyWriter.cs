@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 // 既に登録されている処理が存在する場合は破棄しておく
                 if(uniqueKey != null) {
                     if(UniqueItems.TryGetValue(uniqueKey, out var stockedItem)) {
-                        Logger.LogTrace($"待機処理破棄: {stockedItem.StockTimestamp} {uniqueKey.GetHashCode()}");
+                        Logger.LogTrace("待機処理破棄: {0} {1}", stockedItem.StockTimestamp, uniqueKey.GetHashCode());
                         StockItems.Remove(stockedItem);
                         UniqueItems.Remove(uniqueKey);
                     }

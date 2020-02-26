@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ using System.Windows.Media.Imaging;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
-    public static class MediaUtility
+    internal static class MediaUtility
     {
         /// <summary>
         /// 色を生値に変換。

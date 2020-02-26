@@ -13,12 +13,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
+        /// <summary>
+        /// 最大数。
+        /// </summary>
         int MaxCount { get; }
+        /// <summary>
+        /// 現在数。
+        /// </summary>
         int CurrentCount { get; }
 
+        /// <summary>
+        /// 初回か。
+        /// </summary>
         bool IsFirst { get; }
+        /// <summary>
+        /// 再集か。
+        /// </summary>
         bool IsLast { get; }
 
+        /// <summary>
+        /// ループ完了か。
+        /// </summary>
         bool Complete { get; }
 
         #endregion
@@ -34,13 +49,32 @@ namespace ContentTypeTextNet.Pe.Core.Models
             MaxCount = maxCount;
         }
 
+        #region function
+
+        /// <summary>
+        /// 強制的にカウントアップ。
+        /// </summary>
+        /// <returns>カウントアップできたか。</returns>
+        public bool Increment()
+        {
+            if(CurrentCount == MaxCount) {
+                return false;
+            }
+
+            CurrentCount += 1;
+            Complete = CurrentCount == MaxCount;
+            return true;
+        }
+
+        #endregion
+
         #region ICounter
 
         public int MaxCount { get; }
 
-        public int CurrentCount { get; private set; }
+        public int CurrentCount { get; private set; } = 1;
 
-        public bool IsFirst { get; private set; }
+        public bool IsFirst => CurrentCount == 1;
         public bool IsLast => CurrentCount == MaxCount;
 
         public bool Complete { get; set; }
@@ -57,10 +91,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             Complete = false;
 
-            foreach(var i in Enumerable.Range(1, MaxCount)) {
-                IsFirst = i == 1;
-
-                CurrentCount = i;
+            for(; CurrentCount <= MaxCount; CurrentCount += 1) {
                 yield return this;
             }
 

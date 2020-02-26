@@ -19,36 +19,38 @@ html(lang='ja')
 		block BLOCK_LAYOUT_STYLE
 		block BLOCK_LAYOUT_HEAD_SCRIPT
 	body
-		div#root
-			if(VAR_LAYOUT_TITLE)
-				h1 #{VAR_LAYOUT_TITLE}
-			else
-				h1 #{TITLE}
-			div#content
-				block BLOCK_LAYOUT_CONTENT
+		if(VAR_LAYOUT_TITLE)
+			h1 #{VAR_LAYOUT_TITLE}
+		else
+			h1 #{TITLE}
+		div#content
+			block BLOCK_LAYOUT_CONTENT
 
-			header#menu
+		header#menu
 				nav
 					ul
 						li
-							a(href="./index.pug") TOP
-						li
-							a(href="./changelogs.pug") 更新履歴
-						li DEV
+							a(href="./index.pug") はじめに
 							ul
-								li
-									a(href="./dev-build.pug") ビルド
-								li
-									a(href="./dev-branch.pug") ブランチ
-								li
-									a(href="./dev-ci.pug") CI・リリース
-								li
-									a(href="./dev-table.main.pug") テーブル:Main
-								li
-									a(href="./dev-table.file.pug") テーブル:File
-
-			footer#footer
-				div footer
+								li: a(href="./help.install-uninstall-data.pug") インストール・アンインストール・保存データについて
+								li: a(href="./help.x86-x64.pug") 32/64bitについて
+								li: a(href="./help.privacy.pug") プライバシー
+						li: a(href="./help.notifyarea.pug") 通知領域
+						li
+							a(href="./help.launcher.pug") ランチャー
+							ul
+								li: a(href="./help.launcher-toolbar.pug") ツールバー
+								li: a(href="./help.launcher-command.pug") コマンド
+						li: a(href="./help.note.pug") ノート
+						li: a(href="./help.changelogs.pug") 更新履歴
+						li
+							a(href="./dev.index.pug") 開発
+							ul
+								li: a(href="./dev.build.pug") ビルド
+								li: a(href="./dev.branch.pug") ブランチ
+								li: a(href="./dev.ci.pug") CI・リリース
+								li: a(href="./dev.table-main.pug") テーブル:Main
+								li: a(href="./dev.table-file.pug") テーブル:File
 
 		block BLOCK_LAYOUT_TAIL_SCRIPT
 

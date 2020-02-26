@@ -64,7 +64,7 @@ using System.IO.Compression;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-    public sealed class MainWorkerViewModel : ViewModelBase//, IAppSender, IClipboardWatcher, IHasView<TaskbarIcon>, IHasCommonData
+    public sealed class MainWorkerViewModel //: ViewModelBase//, IAppSender, IClipboardWatcher, IHasView<TaskbarIcon>, IHasCommonData
     {
         #region variable
 

@@ -32,6 +32,8 @@ test_script:
 artifacts:
   - path: Output\*.zip
   - path: Output\*.7z
+  - path: Source\Documents\build
+    name: document
 cache:
   - '%LOCALAPPDATA%\NuGet'
   - '%USERPROFILE%\.nuget'

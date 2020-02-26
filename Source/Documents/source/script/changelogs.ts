@@ -2,87 +2,87 @@ declare function makeChangelogLink(): void;
 
 const changelogs = [
 	/*
-						'class': 'compatibility' 'notice' 'nuget' 'myget'
-						'comments': [
-							''
+						"class": "compatibility" "notice" "nuget" "myget"
+						"comments": [
+							""
 						]
 	---------------------------------------------
 	*/
 	/*
 	{
-		'date': 'YYYY/MM/DD',
-		'version': '0.xx.1',
-		'contents': [
+		"date": "YYYY/MM/DD",
+		"version": "0.xx.1",
+		"contents": [
 			{
-				'type': 'note',
-				'logs': [
+				"type": "note",
+				"logs": [
 					{
-						'revision': '',
-						'class': ''
-						'subject': ''
+						"revision": "",
+						"class": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
 			{
-				'type': 'features',
-				'logs': [
+				"type": "features",
+				"logs": [
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
 			{
-				'type': 'fixes',
-				'logs': [
+				"type": "fixes",
+				"logs": [
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			},
 			{
-				'type': 'developer',
-				'logs': [
+				"type": "developer",
+				"logs": [
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					},
 					{
-						'revision': '',
-						'subject': ''
+						"revision": "",
+						"subject": ""
 					}
 				]
 			}
@@ -90,6 +90,105 @@ const changelogs = [
 	},
 	*/
 	/*--------RELEASE HEAD--------*/
+	{
+		"date": "2020/02/26",
+		"version": "0.86.0",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "🙇 32bit 版は手動でアップデートしてください🙇",
+						"comments": [
+							"大きめの不具合だし早めにリリース"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "f19f850b0adfab1627789468bb3b12c701257543",
+						"subject": "#512: スタートアップ登録時に引数も登録できるようにする"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "626553bfb5727d6f2e31b3e67a9fb02fad052867",
+						"subject": "#526: アップデート時に PowerShell が実行できない",
+						"comments": [
+							"32bit 版で実行できなかった",
+							"x86,x64 のみを受け付けるようにしていたところを x32,x64 を受け付けるようにしていて x86 を渡していたから死んだ",
+							"x32 て。。。"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "77c3761e3a307b6c82d55b27a9b7849c45b3795d",
+						"subject": "クッソしょうもないお絵かきが楽しい年ごろ"
+					},
+					{
+						"revision": "260ccf574072d8e539ca509a18078ebfb31a6051",
+						"subject": "VMからテーマUI要素をごにょごにょするところはなんも考えなくていいはず"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2020/02/26",
+		"version": "0.85.0",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "98575402e5956db442cff82752bd3d344ca0e1f3",
+						"subject": "#504: ヘルプファイルの再作成 "
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "af68ed61adea4e411c79df3d666c7d92fa9d7715",
+						"subject": "#514: 初回起動時に ArgumentNullException で落ちる"
+					},
+					{
+						"revision": "90ab38bbefc98a8285cf00e6c83f9bcf623e8a10",
+						"subject": "#516: Microsoft Visual C++ 再頒布可能パッケージ のインストールを不要にする",
+						"comments": [
+							"対応として再頒布可能パッケージを同梱し、 Pe.exe (PeMain.exe) 起動時に PATH に <Pe>\\bin\\lib\\Redist.MSVC.CRT\\<CPU> を追加するようにした",
+							"インストールされてればそれを使用するし、インストールされてなければ同梱版が使われるのでたぶん大丈夫",
+							"たぶん Windows 10 なら問題ないと思うんだけどクリーン環境で試してなくて、未サポートの Windows 7 環境で試したから根本的に何か間違ってるかも"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "b35a7e67468c60f30d5650487180c1f47e83856a",
+						"subject": "CIのバッジが開発用向いてた"
+					},
+					{
+						"revision": "af68ed61adea4e411c79df3d666c7d92fa9d7715",
+						"subject": "#515: CefSharp を使用するために必要な要件をきちんと調べる"
+					}
+				]
+			}
+		]
+	},
 	{
 		"date": "2020/02/24",
 		"version": "0.84.0",
@@ -5330,10 +5429,12 @@ window.addEventListener('load', () => {
 
 
 				if ('revision' in log) {
-					const revision = document.createElement('a');
-					revision.className = 'revision';
-					revision.textContent = log['revision']!;
-					header.appendChild(revision);
+					if(log['revision']) {
+						const revision = document.createElement('a');
+						revision.className = 'revision';
+						revision.textContent = log['revision']!;
+						header.appendChild(revision);
+					}
 				}
 
 

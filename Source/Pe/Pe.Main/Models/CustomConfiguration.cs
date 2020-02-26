@@ -93,8 +93,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 ["APP-BUILD"] = BuildStatus.BuildType.ToString(),
                 ["APP-VER"] = versionConverter.ConvertNormalVersion(BuildStatus.Version),
                 ["APP-REVISION"] = BuildStatus.Revision,
-                ["LIB-NAME"] = "CefSharp",
-                ["LIB-VER"] = CefSharp.Cef.ChromiumVersion.ToString(),
             };
             ViewUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("view_useragent"), map);
             ClientUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("client_useragent"), map);

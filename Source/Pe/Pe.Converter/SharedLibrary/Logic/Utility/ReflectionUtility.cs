@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is part of SharedLibrary.
 
 SharedLibrary is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
-    public static class ReflectionUtility
+    internal static class ReflectionUtility
     {
         public static IEnumerable<PropertyInfo> FilterSharedLibrary(IEnumerable<PropertyInfo> propertyInfos)
         {
