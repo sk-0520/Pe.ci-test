@@ -155,7 +155,10 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#517: CLR って v4.0.30319 でいいの？",
+						"comments": [
+							"修正ついでに長い情報に RuntimeInformation を追加"
+						]
 					},
 					{
 						"revision": "",

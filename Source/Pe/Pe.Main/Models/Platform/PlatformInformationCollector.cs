@@ -108,6 +108,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return result;
         }
 
+        public virtual IList<PlatformInformationItem> GetRuntimeInformation()
+        {
+            var type = typeof(System.Runtime.InteropServices.RuntimeInformation);
+            var props = type.GetProperties(BindingFlags.Static | BindingFlags.Public);
+
+            var result = new List<PlatformInformationItem>(props.Length);
+
+            var ignoreProperties = new HashSet<string>() {
+            };
+
+            foreach(var prop in props) {
+                if(ignoreProperties.Contains(prop.Name)) {
+                    continue;
+                }
+                var value = prop.GetValue(type, null);
+                switch(prop.Name) {
+                    default:
+                        result.Add(new PlatformInformationItem(prop.Name, value));
+                        break;
+                }
+            }
+            return result;
+        }
+
         public virtual IList<PlatformInformationItem> GetScreen()
         {
             var screens = Screen.AllScreens;
