@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Core.Models;
 using ICSharpCode.AvalonEdit;
 
@@ -64,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         private void View_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
-            var element = (DependencyObject)e.OriginalSource;
+            var element = e.OriginalSource as Visual;
             if(element == null) {
                 return;
             }

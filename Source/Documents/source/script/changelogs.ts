@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#532: 設定画面で落ちる"
 					},
 					{
 						"revision": "",
