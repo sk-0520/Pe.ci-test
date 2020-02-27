@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        public bool DeleteDirectory(DirectoryInfo directory, bool directoryIsDelete = true)
+        private bool DeleteDirectory(DirectoryInfo directory, bool directoryIsDelete = true)
         {
             if(!directory.Exists) {
                 return false;
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return true;
         }
 
-        void CreateDirectory()
+        private void CreateDirectory()
         {
             var counter = new Counter(WaitCount);
             foreach(var count in counter) {
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// <see cref="Directory"/>以下を綺麗にする。
         /// </summary>
-        /// <param name="rootDelete">内部的に<see cref="Directory"/>を削除するか</param>
+        /// <param name="rootDelete"><see cref="Directory"/>その物を削除し、再作成するか。</param>
         public void Clear(bool rootDelete = true)
         {
             Directory.Refresh();
