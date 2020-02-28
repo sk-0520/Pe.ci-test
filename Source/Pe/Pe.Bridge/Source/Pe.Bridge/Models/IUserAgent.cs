@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
             public static string Separator => ":";
             public static string Session => "session";
+            public static string Cache => "cache";
 
             #endregion
         }
