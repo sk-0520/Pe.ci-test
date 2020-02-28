@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             var resSize = NativeMethods.SizeofResource(hModule, hGroup);
             if(resSize == 0) {
-                Logger.LogDebug($"return {nameof(NativeMethods.SizeofResource)}");
+                Debug.WriteLine($"return {nameof(NativeMethods.SizeofResource)}");
                 return null;
             }
 
