@@ -112,6 +112,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         IDatabaseTransaction BeginTransaction();
         IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel);
+        IDatabaseTransaction BeginReadOnlyTransaction();
+        IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);
 
         IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> action);
         IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> action, IsolationLevel isolationLevel);
@@ -388,6 +390,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
             return new DatabaseTransaction(this, isolationLevel);
         }
+
+        public virtual IDatabaseTransaction BeginReadOnlyTransaction()
+        {
+            ThrowIfDisposed();
+
+            return new ReadOnlyDatabaseTransaction(this);
+        }
+        public virtual IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel)
+        {
+            ThrowIfDisposed();
+
+            return new ReadOnlyDatabaseTransaction(this, isolationLevel);
+        }
+
 
         public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function)
         {
