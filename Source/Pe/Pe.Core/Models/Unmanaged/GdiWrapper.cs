@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// Windows 万歳な GDI 系オブジェクトを扱う。
     /// </summary>
-    public abstract class GdiObjectBase : UnmanagedHandleModelBase, IMakeBitmapSource
+    public abstract class GdiObjectBase : UnmanagedHandleWrapper, IMakeBitmapSource
     {
         public GdiObjectBase(IntPtr hHandle)
             : base(hHandle)
