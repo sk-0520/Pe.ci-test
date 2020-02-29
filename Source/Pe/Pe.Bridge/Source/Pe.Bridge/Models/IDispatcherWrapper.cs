@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority);
         DispatcherOperation Begin(Action action);
+        DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
+        DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument);
 
         #endregion
     }

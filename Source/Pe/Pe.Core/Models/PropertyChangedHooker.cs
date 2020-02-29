@@ -400,6 +400,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             DispatcherWrapper.Begin(() => {
                 foreach(var callback in callbacks) {
+                    if(IsDisposed) {
+                        return;
+                    }
                     callback();
                 }
             });
@@ -439,6 +442,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         public bool Execute(PropertyChangedEventArgs e, Action<string> raiser) => Execute(e.PropertyName, raiser);
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                Cache.Clear();
+                Hookers.Clear();
+            }
+            base.Dispose(disposing);
+        }
 
         #endregion
     }

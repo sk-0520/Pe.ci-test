@@ -791,6 +791,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             ThrowIfDisposed();
 
             DispatcherWrapper.Begin(() => {
+                if(IsDisposed) {
+                    return;
+                }
+
                 ApplyCaption();
                 ApplyBorder();
                 ApplyContent();

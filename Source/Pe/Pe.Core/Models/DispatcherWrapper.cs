@@ -87,6 +87,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Dispatcher.BeginInvoke(action, DispatcherPriority.Send);
         }
 
+        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        {
+            return Dispatcher.BeginInvoke(action, dispatcherPriority, argument);
+        }
+        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument)
+        {
+            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send, argument);
+        }
+
         #endregion
     }
 
