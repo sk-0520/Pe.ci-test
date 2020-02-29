@@ -111,7 +111,7 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "4f34892038d792af8c3b114a35861455d93541d3",
 						"subject": "#539: コマンドライン引数無しで実行した EXE のアップデートが行えない",
 						"comments": [
 							"ずーっと --log 付きで実行してたから全然検知できていなかった"
