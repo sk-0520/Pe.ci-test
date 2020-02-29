@@ -138,7 +138,11 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#535: RDP接続で落ちる",
+						"comments": [
+							"解像度変更が主に死んでる",
+							"ある程度は改善できたと思う。思う。。。"
+						]
 					},
 					{
 						"revision": "",
