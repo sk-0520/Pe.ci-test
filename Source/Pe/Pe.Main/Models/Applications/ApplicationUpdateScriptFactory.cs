@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var scriptDirPath = Path.Combine(destinationDirectory.FullName, "etc", "script", "update");
 
             var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
-            var psCommands = new[] {
+            var psCommands = new List<string>() {
                 "-NoProfile",
                 "-ExecutionPolicy", "Unrestricted",
                 "-File", CommandLine.Escape(scriptSourceFIle.FullName),
@@ -60,8 +60,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 "-UpdateBeforeScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-before.ps1")),
                 "-UpdateAfterScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-after.ps1")),
                 "-ExecuteCommand", CommandLine.Escape(EnvironmentParameters.RootApplication.FullName),
-                "-ExecuteArgument", CommandLine.Escape(string.Join(" ", Environment.GetCommandLineArgs().Skip(1).Select(i => CommandLine.Escape(i)))),
             };
+
+            // コマンドライン引数無し対応(#539)
+            var currentCommands = Environment.GetCommandLineArgs()
+                .Skip(1)
+                .Select(i => CommandLine.Escape(i))
+                .ToList()
+            ;
+            if(0 < currentCommands.Count) {
+                psCommands.Add("-ExecuteArgument");
+                psCommands.Add(CommandLine.Escape(string.Join(" ", currentCommands)));
+            }
+
             var psCommand = string.Join(" ", psCommands);
 
             var executePathParameter = new LauncherExecutePathParameter(ps, psCommand, scriptDirectory.FullName);

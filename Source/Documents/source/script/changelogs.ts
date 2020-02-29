@@ -91,7 +91,7 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
+		"date": "2020/02/29",
 		"version": "0.87.001",
 		"contents": [
 			{
@@ -100,32 +100,10 @@ const changelogs = [
 					{
 						"revision": "",
 						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "起動条件によりアップデートに失敗することが分かったので緊急リリースです",
+						"comments": [
+							"コマンドライン引数なしで起動した場合にアップデートスクリプトが実行できないのでダミーで引数を付けるか、<Pe>\\bat\\safe.bat で一時的に起動するか、手動でアップデートが必要です"
+						]
 					}
 				]
 			},
@@ -134,36 +112,10 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "#539: コマンドライン引数無しで実行した EXE のアップデートが行えない",
+						"comments": [
+							"ずーっと --log 付きで実行してたから全然検知できていなかった"
+						]
 					}
 				]
 			}
