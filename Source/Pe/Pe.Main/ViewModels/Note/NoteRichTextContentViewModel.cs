@@ -57,11 +57,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 var noteContentConverter = new NoteContentConverter(LoggerFactory);
                 var stream = noteContentConverter.ToRtfStream(content);
-                DispatcherWrapper.Begin(() => {
-                    var range = new TextRange(Document.ContentStart, Document.ContentEnd);
-                    range.Load(stream, DataFormats.Rtf);
+                DispatcherWrapper.Begin(arg => {
+                    if(arg.@this.IsDisposed) {
+                        return;
+                    }
+
+                    var range = new TextRange(arg.@this.Document.ContentStart, arg.@this.Document.ContentEnd);
+                    range.Load(arg.stream, DataFormats.Rtf);
                     stream.Dispose();
-                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                }, (@this:this, stream), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
             });
         }
 
@@ -93,13 +97,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         void ChangedText()
         {
             if(CanVisible && EnabledUpdate) {
-                var noteContentConverter = new NoteContentConverter(LoggerFactory);
-                DispatcherWrapper.Begin(() => {
-                    if(!IsDisposed) {
-                        var content = noteContentConverter.ToRtfString(Document);
-                        Model?.ChangeRichTextContent(content);
+                DispatcherWrapper.Begin(vm => {
+                    if(vm.IsDisposed) {
+                        return;
                     }
-                }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                    var noteContentConverter = new NoteContentConverter(vm.LoggerFactory);
+                    var content = noteContentConverter.ToRtfString(vm.Document);
+                    vm.Model?.ChangeRichTextContent(content);
+                }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
             }
         }
 

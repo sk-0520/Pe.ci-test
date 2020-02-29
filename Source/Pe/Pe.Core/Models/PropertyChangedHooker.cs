@@ -359,11 +359,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Begin(() => {
-                foreach(var raisePropertyName in raisePropertyNames) {
-                    raiser(raisePropertyName);
+            DispatcherWrapper.Begin(arg => {
+                if(arg.@this.IsDisposed) {
+                    return;
                 }
-            });
+
+                foreach(var raisePropertyName in arg.raisePropertyNames) {
+                    arg.raiser(raisePropertyName);
+                }
+            }, (@this:this, raisePropertyNames, raiser));
 
             return true;
         }
@@ -375,11 +379,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Begin(() => {
-                foreach(var raiseCommand in raiseDelegateCommands) {
+            DispatcherWrapper.Begin(arg => {
+                if(arg.@this.IsDisposed) {
+                    return;
+                }
+
+                foreach(var raiseCommand in arg.raiseDelegateCommands) {
                     raiseCommand.RaiseCanExecuteChanged();
                 }
-            });
+            }, (@this: this, raiseDelegateCommands));
 
             if(raiseCommands.Count != 0) {
                 // 個別にやる方法はわからん

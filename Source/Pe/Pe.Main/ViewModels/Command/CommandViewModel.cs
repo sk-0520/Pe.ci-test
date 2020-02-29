@@ -368,8 +368,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                PlatformTheme.Changed -= PlatformTheme_Changed;
+
                 if(disposing) {
-                    PlatformTheme.Changed -= PlatformTheme_Changed;
                     PropertyChangedHooker.Dispose();
                     CommandItemCollection.Dispose();
                     Font.Dispose();
@@ -383,11 +384,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private void PlatformTheme_Changed(object? sender, EventArgs e)
         {
-            DispatcherWrapper.Begin(() => {
+            DispatcherWrapper.Begin(vm => {
+                if(vm.IsDisposed) {
+                    return;
+                }
+
                 foreach(var themePropertyName in ThemeProperties.GetPropertyNames()) {
                     RaisePropertyChanged(themePropertyName);
                 }
-            }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)

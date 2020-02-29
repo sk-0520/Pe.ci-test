@@ -144,18 +144,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
                 stdioElement = OrderManager.CreateStandardInputOutputElement($"{result.Process.StartInfo.FileName}", process, screen);
-                DispatcherWrapper.Invoke(() => {
-                    stdioElement.StartView();
-                });
+                DispatcherWrapper.Invoke(element => {
+                    element.StartView();
+                }, stdioElement);
             }
 
             result.Success = process.Start();
             if(streamWatch) {
                 stdioElement!.PreparateReceiver();
                 // 受信前に他の処理を終わらせるため少し待つ
-                DispatcherWrapper.Begin(() => {
-                    stdioElement!.RunReceiver();
-                }, DispatcherPriority.ApplicationIdle);
+                DispatcherWrapper.Begin(element => {
+                    element.RunReceiver();
+                }, stdioElement, DispatcherPriority.ApplicationIdle);
             }
 
             return result;
