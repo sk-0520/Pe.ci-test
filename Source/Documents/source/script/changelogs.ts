@@ -178,7 +178,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#501: 過去バージョンのダウンロード先を明記する"
 					}
 				]
 			}
