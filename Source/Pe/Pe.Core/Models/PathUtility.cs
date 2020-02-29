@@ -157,5 +157,73 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return CreateFileNameCore(name, null, extension);
         }
+
+        /// <summary>
+        /// ネットワークディレクトリ名か。
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsNetworkDirectoryPath(string path)
+        {
+            var head = new string(Path.DirectorySeparatorChar, 2);
+            return head.Length < path.Length && path.StartsWith(head);
+        }
+
+        public static string? GetNetworkDirectoryName(string path)
+        {
+            var lastIndex = path.LastIndexOf(Path.DirectorySeparatorChar);
+            if(lastIndex == -1) {
+                return null;
+            }
+            var nameIndex = lastIndex + 1;
+            if(nameIndex < path.Length) {
+                var name = path.Substring(nameIndex);
+                return name;
+            }
+
+            return null;
+        }
+
+        public static string? GetNetworkOwnerName(string path)
+        {
+            var lastIndex = path.LastIndexOf(Path.DirectorySeparatorChar);
+            if(lastIndex == -1) {
+                return null;
+            }
+
+            var name = path.Substring(0, lastIndex);
+            return name;
+        }
+
+        public static bool IsRootName(string? path)
+        {
+            //TODO: UNC とかちょっともう勘弁して
+            if(string.IsNullOrWhiteSpace(path)) {
+                return false;
+            }
+
+            if(IsNetworkDirectoryPath(path)) {
+                var trimPath = path.Substring(@"\\".Length);
+                var trimValues = trimPath.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+                return trimValues.Length == 1;
+            }
+
+            if(@"C:".Length < path.Length) {
+                var values = path.Split(Path.DirectorySeparatorChar, StringSplitOptions.RemoveEmptyEntries);
+                return values.Length == 1;
+            }
+
+            if(1 < path.Length && path[1] == Path.VolumeSeparatorChar) {
+                return true;
+            }
+
+            if(path[0] == Path.DirectorySeparatorChar) {
+                return true;
+            }
+
+            return false;
+        }
+
+
     }
 }

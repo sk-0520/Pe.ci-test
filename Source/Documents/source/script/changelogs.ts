@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#534: ネットワークドライブのコードが取得できない"
 					},
 					{
 						"revision": "",

@@ -61,5 +61,67 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var actual = PathUtility.HasIconPath(value);
             Assert.AreEqual(result, actual);
         }
+
+        [TestMethod]
+        [DataRow(false, @"")]
+        [DataRow(false, @"/")]
+        [DataRow(false, @"//")]
+        [DataRow(false, @"\")]
+        [DataRow(false, @"\\")]
+        [DataRow(true, @"\\a")]
+        public void IsNetworkDirectoryPathTest(bool result, string value)
+        {
+            var actual = PathUtility.IsNetworkDirectoryPath(value);
+            Assert.AreEqual(result, actual);
+        }
+
+        [TestMethod]
+        [DataRow(null, @"")]
+        [DataRow(null, @"A")]
+        [DataRow(null, @"\")]
+        [DataRow("a", @"\a")]
+        [DataRow("a", @"\\a")]
+        [DataRow(null, @"\\a\")]
+        [DataRow("b", @"\\a\b")]
+        [DataRow("b", @"\\a\\b")]
+        public void GetNetworkDirectoryName(string? result, string value)
+        {
+            var actual = PathUtility.GetNetworkDirectoryName(value);
+            Assert.AreEqual(result, actual);
+        }
+
+        [TestMethod]
+        [DataRow(null, @"")]
+        [DataRow(null, @"a")]
+        [DataRow("", @"\a")]
+        [DataRow(@"\a", @"\a\")]
+        [DataRow(@"\a", @"\a\b")]
+        [DataRow(@"\a\b", @"\a\b\c")]
+        public void GetNetworkOwnerName(string? result, string value)
+        {
+            var actual = PathUtility.GetNetworkOwnerName(value);
+            Assert.AreEqual(result, actual);
+        }
+
+        [TestMethod]
+        [DataRow(false, null)]
+        [DataRow(false, @"")]
+        [DataRow(false, @"A")]
+        [DataRow(true, @"\A")]
+        [DataRow(true, @"\\A")]
+        [DataRow(true, @"\\A")]
+        [DataRow(true, @"\\A\")]
+        [DataRow(false, @"\\A\B")]
+        [DataRow(true, @"\\C:")]
+        [DataRow(true, @"\\C:\")]
+        [DataRow(false, @"\\C:\B")]
+        [DataRow(true, @"C:")]
+        [DataRow(true, @"C:\")]
+        [DataRow(false, @"C:\A")]
+        public void IsRootNameTest(bool result, string? value)
+        {
+            var actual = PathUtility.IsRootName(value);
+            Assert.AreEqual(result, actual);
+        }
     }
 }

@@ -246,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 var parentDirectoryPath = Path.GetDirectoryName(Detail?.FullPath);
                 ExistsParentDirectory = Directory.Exists(parentDirectoryPath);
                 CanOpenParentDirectory = ExistsParentDirectory;
-                CanCopyParentDirectory = true; //TODO: ドライブとか
+                CanCopyParentDirectory = !PathUtility.IsRootName(Detail?.FullPath);
             });
         }
 
