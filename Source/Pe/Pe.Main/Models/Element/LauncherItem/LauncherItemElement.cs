@@ -251,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             var data = new DataObject();
             var value = Path.GetDirectoryName(pathData.Path);
             if(string.IsNullOrEmpty(value)) {
-                if(!PathUtility.IsNetworkDrivePath(pathData.Path)) {
+                if(!PathUtility.IsNetworkDirectoryPath(pathData.Path)) {
                     Logger.LogWarning("親ディレクトリ不明: {0}, {1}", pathData.Path, LauncherItemId);
                     return;
                 }

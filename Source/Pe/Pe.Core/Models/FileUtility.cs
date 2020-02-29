@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
 
                 // ネットワークフォルダ名か(.NET Framework と挙動が違う気がする)
-                if(PathUtility.IsNetworkDrivePath(path)) {
+                if(PathUtility.IsNetworkDirectoryPath(path)) {
                     var name = PathUtility.GetNetworkDirectoryName(path);
                     if(!string.IsNullOrEmpty(name)) {
                         return name;
