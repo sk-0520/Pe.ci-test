@@ -109,12 +109,12 @@ $json = '[' + $prevContent.Substring($prevContent.IndexOf('{')) | ConvertFrom-Js
 $currentVersion = $json[0]
 
 # 速度とかどうでもいい
-$body = New-Object Element 'body'
-$headline = $body.CreateChild('h2') # changelogs.ts のスタイル流用のため
+$root = New-Object Element 'div'
+$headline = $root.CreateChild('h2') # changelogs.ts のスタイル流用のため
 $headline.CreateText($currentVersion.version);
 $headline.CreateText(': ');
 $headline.CreateText($currentVersion.date);
-$contents = $body.CreateChild('div');
+$contents = $root.CreateChild('div');
 $contents.attributes['id'] = 'content'
 foreach ($content in $currentVersion.contents) {
 	if (!($content.PSObject.Properties.Match('logs').Count)) {
@@ -162,7 +162,7 @@ foreach ($content in $currentVersion.contents) {
 }
 
 $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
-$htmlContent = $htmlContent.Replace('<body></body>', $body.ToHtml())
+$htmlContent = $htmlContent.Replace('<!--CONTENT-->', $root.ToHtml())
 $htmlContent = $htmlContent.Replace('//SCRIPT', (Get-Content $rawChangelogLinkFile -Raw -Encoding UTF8))
 $htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $rawChangelogStyleFile -Raw -Encoding UTF8))
 
