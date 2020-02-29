@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -49,18 +50,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class AppExecuteSettingEditorElement : GeneralSettingEditorElementBase
     {
-        public AppExecuteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public AppExecuteSettingEditorElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
-        { }
+        {
+            EnvironmentParameters = environmentParameters;
+        }
 
         #region property
 
+        EnvironmentParameters EnvironmentParameters { get; }
         public string UserId { get; set; } = string.Empty;
         public bool IsEnabledTelemetry { get; set; }
+
 
         #endregion
 
         #region function
+
+        public void OpenPrivacyPolicyDocument()
+        {
+            try {
+                // パラメータを渡せないのでしゃあない
+                var systemExecutor = new SystemExecutor();
+                systemExecutor.ExecuteFile(EnvironmentParameters.HelpFile.FullName);
+            } catch (Exception ex) {
+                Logger.LogError(ex, ex.Message);
+            }
+        }
+
         #endregion
 
         #region GeneralSettingEditorBase

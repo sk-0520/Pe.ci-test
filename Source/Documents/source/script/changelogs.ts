@@ -154,6 +154,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#537: 設定画面の「ユーザーIDと使用統計情報」のリンクが完全に置物"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
