@@ -146,7 +146,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#519: システムのアクセントカラーが透明なときがある"
 					},
 					{
 						"revision": "",
