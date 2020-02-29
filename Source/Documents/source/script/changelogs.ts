@@ -166,7 +166,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#533: Microsoft Visual C++ 再頒布可能パッケージは Pe.Main プロジェクトから除外する"
 					},
 					{
 						"revision": "",
