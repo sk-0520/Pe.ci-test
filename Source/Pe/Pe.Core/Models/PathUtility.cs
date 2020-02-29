@@ -157,5 +157,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return CreateFileNameCore(name, null, extension);
         }
+
+        public static bool IsNetworkDrivePath(string path)
+        {
+            var head = new string(Path.DirectorySeparatorChar, 2);
+            return head.Length < path.Length && path.StartsWith(head);
+        }
     }
 }

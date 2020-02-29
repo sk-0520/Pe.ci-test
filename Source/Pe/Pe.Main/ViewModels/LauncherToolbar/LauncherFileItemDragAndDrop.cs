@@ -31,6 +31,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     e.Effects = DragDropEffects.Copy;
                     e.Handled = true;
                 }
+            } else {
+                e.Effects = DragDropEffects.None;
+                    e.Handled = true;
             }
         }
 

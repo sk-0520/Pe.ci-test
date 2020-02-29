@@ -61,5 +61,18 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var actual = PathUtility.HasIconPath(value);
             Assert.AreEqual(result, actual);
         }
+
+        [TestMethod]
+        [DataRow(false, @"")]
+        [DataRow(false, @"/")]
+        [DataRow(false, @"//")]
+        [DataRow(false, @"\")]
+        [DataRow(false, @"\\")]
+        [DataRow(true, @"\\a")]
+        public void IsNetworkDrivePathTest(bool result, string value)
+        {
+            var actual = PathUtility.IsNetworkDrivePath(value);
+            Assert.AreEqual(result, actual);
+        }
     }
 }
