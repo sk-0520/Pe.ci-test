@@ -74,5 +74,20 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var actual = PathUtility.IsNetworkDrivePath(value);
             Assert.AreEqual(result, actual);
         }
+
+        [TestMethod]
+        [DataRow(null, @"")]
+        [DataRow(null, @"A")]
+        [DataRow(null, @"\")]
+        [DataRow("a", @"\a")]
+        [DataRow("a", @"\\a")]
+        [DataRow(null, @"\\a\")]
+        [DataRow("b", @"\\a\b")]
+        [DataRow("b", @"\\a\\b")]
+        public void GetNetworkDirectoryName(string? result, string value)
+        {
+            var actual = PathUtility.GetNetworkDirectoryName(value);
+            Assert.AreEqual(result, actual);
+        }
     }
 }

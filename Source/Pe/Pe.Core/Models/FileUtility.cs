@@ -146,9 +146,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
                 // ネットワークフォルダ名か(.NET Framework と挙動が違う気がする)
                 if(PathUtility.IsNetworkDrivePath(path)) {
-                    var nameIndex = path.LastIndexOf(Path.DirectorySeparatorChar) + 1;
-                    if(nameIndex < path.Length) {
-                        var name = path.Substring(nameIndex);
+                    var name = PathUtility.GetNetworkDirectoryName(path);
+                    if(!string.IsNullOrEmpty(name)) {
                         return name;
                     }
                 }

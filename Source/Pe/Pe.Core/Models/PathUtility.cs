@@ -163,5 +163,33 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var head = new string(Path.DirectorySeparatorChar, 2);
             return head.Length < path.Length && path.StartsWith(head);
         }
+
+        public static string? GetNetworkDirectoryName(string path)
+        {
+            var lastIndex = path.LastIndexOf(Path.DirectorySeparatorChar);
+            if(lastIndex == -1) {
+                return null;
+            }
+            var nameIndex = lastIndex + 1;
+            if(nameIndex < path.Length) {
+                var name = path.Substring(nameIndex);
+                return name;
+            }
+
+            return null;
+        }
+
+        public static string? GetNetworkOwnerName(string path)
+        {
+            var lastIndex = path.LastIndexOf(Path.DirectorySeparatorChar);
+            if(lastIndex == -1) {
+                return null;
+            }
+
+            var name = path.Substring(0, lastIndex);
+            return name;
+        }
+
+
     }
 }

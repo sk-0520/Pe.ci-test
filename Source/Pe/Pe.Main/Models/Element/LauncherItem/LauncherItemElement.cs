@@ -250,6 +250,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             var pathData = GetExecutePath();
             var data = new DataObject();
             var value = Path.GetDirectoryName(pathData.Path);
+            if(string.IsNullOrEmpty(value)) {
+                if(!PathUtility.IsNetworkDrivePath(pathData.Path)) {
+                    Logger.LogWarning("親ディレクトリ不明: {0}, {1}", pathData.Path, LauncherItemId);
+                    return;
+                }
+                var owner = PathUtility.GetNetworkOwnerName(pathData.Path);
+                if(string.IsNullOrEmpty(owner)) {
+                    Logger.LogWarning("親ディレクトリ不明: {0}, {1}", pathData.Path, LauncherItemId);
+                    return;
+                }
+                value = owner;
+            }
             data.SetText(value, TextDataFormat.UnicodeText);
             ClipboardManager.Set(data);
         }
