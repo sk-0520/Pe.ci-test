@@ -107,7 +107,11 @@ try {
 
 		Write-Host ""
 		Write-Host "Pe を起動しています..."
-		$process = Start-Process -PassThru -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
+		if( $ExecuteArgument ) {
+			$process = Start-Process -PassThru -FilePath $ExecuteCommand -ArgumentList $ExecuteArgument
+		} else {
+			$process = Start-Process -PassThru -FilePath $ExecuteCommand
+		}
 		$process.WaitForInputIdle() | Out-Null
 	}
 	finally {
