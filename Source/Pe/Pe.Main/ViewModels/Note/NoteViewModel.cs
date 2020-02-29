@@ -790,15 +790,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             ThrowIfDisposed();
 
-            DispatcherWrapper.Begin(() => {
-                if(IsDisposed) {
+            DispatcherWrapper.Begin(vm => {
+                if(vm.IsDisposed) {
                     return;
                 }
 
-                ApplyCaption();
-                ApplyBorder();
-                ApplyContent();
-            }, DispatcherPriority.Render);
+                vm.ApplyCaption();
+                vm.ApplyBorder();
+                vm.ApplyContent();
+            }, this, DispatcherPriority.Render);
         }
 
         void DelayNotifyWindowAreaChanged()
@@ -969,6 +969,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                if(disposing) {
+                    this._content?.Dispose();
+                }
                 Flush();
                 PlatformTheme.Changed -= PlatformTheme_Changed;
                 if(disposing) {

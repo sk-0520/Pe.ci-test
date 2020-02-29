@@ -103,6 +103,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                Flush();
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         private void Control_TextChanged(object sender, TextChangedEventArgs e)

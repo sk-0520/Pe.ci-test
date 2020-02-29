@@ -398,14 +398,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            DispatcherWrapper.Begin(() => {
-                foreach(var callback in callbacks) {
-                    if(IsDisposed) {
-                        return;
-                    }
+            DispatcherWrapper.Begin(arg => {
+                if(arg.@this.IsDisposed) {
+                    return;
+                }
+
+                foreach(var callback in arg.callbacks) {
                     callback();
                 }
-            });
+            }, (@this: this, callbacks));
 
             return true;
         }
