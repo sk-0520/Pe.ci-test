@@ -3304,7 +3304,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ユーザーIDと使用統計情報について に類似しているローカライズされた文字列を検索します。
+        ///   ユーザーIDと使用統計情報について: ヘルプファイルを開く に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Execute_UserIdDescription {
             get {

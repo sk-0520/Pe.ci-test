@@ -14,10 +14,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
+        /// <summary>
+        /// 未設定の短い形式。
+        /// </summary>
         public const char EmptyShortKey = '\0';
 
         #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shortKey">短いキー。</param>
+        /// <param name="longKey">長いキー。</param>
+        /// <param name="hasValue">値を持つか。</param>
+        /// <param name="description">説明。</param>
         public CommandLineKey(char shortKey, string longKey, bool hasValue, string description)
         {
             ShortKey = shortKey;
@@ -190,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// スイッチ一覧。
         /// </summary>
-        public IReadOnlyCollection<CommandLineKey> Switch => SwitchItems;
+        public IReadOnlyCollection<CommandLineKey> Switches => SwitchItems;
 
         /// <summary>
         /// 不明アイテム一覧。
@@ -449,7 +459,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var commandLineKey = @this.GetKey(key);
             if(commandLineKey != null) {
-                return @this.Switch.Contains(commandLineKey);
+                return @this.Switches.Contains(commandLineKey);
             }
 
             return false;
@@ -610,7 +620,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                             }
                         } else {
                             // スイッチ
-                            if(CommandLine.Switch.Contains(pair.Value)) {
+                            if(CommandLine.Switches.Contains(pair.Value)) {
                                 var switchValue = GetTrueSwitch(pair.Key.PropertyType);
                                 pair.Key.SetValue(Data, switchValue);
                             }

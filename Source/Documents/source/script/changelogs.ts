@@ -11,7 +11,7 @@ const changelogs = [
 	/*
 	{
 		"date": "YYYY/MM/DD",
-		"version": "0.xx.1",
+		"version": "0.xx.001",
 		"contents": [
 			{
 				"type": "note",
@@ -91,8 +91,63 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/02/29",
+		"version": "0.87.000",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "140fdfe6e90055d9e4101d2455555d5a11a3dac9",
+						"subject": "#532: 設定画面で落ちる"
+					},
+					{
+						"revision": "430861596a61385a4ea68ca3d337d5fa50dc6358",
+						"subject": "#535: RDP接続で落ちる",
+						"comments": [
+							"解像度変更が主に死んでる",
+							"ある程度は改善できたと思う。思う。。。"
+						]
+					},
+					{
+						"revision": "81813b0243611a62d8d1b33a71fd0d66874bf8d5",
+						"subject": "#519: システムのアクセントカラーが透明なときがある"
+					},
+					{
+						"revision": "aa339950fbef98ea0bbc9203956ae2f299a9cf6c",
+						"subject": "#523: 内臓ブラウザでリンクを標準ブラウザで開く制限ページにも関わらずホイールクリックによりインターネット世界に羽ばたいていく"
+					},
+					{
+						"revision": "c3ab878b1a8c9ed4510483d1d9459e7558b22016",
+						"subject": "#537: 設定画面の「ユーザーIDと使用統計情報」のリンクが完全に置物"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "31ed7edf55b90ffa90b9c2c11b029e7f061c4c44",
+						"subject": "#517: CLR って v4.0.30319 でいいの？",
+						"comments": [
+							"修正ついでに長い情報に RuntimeInformation を追加"
+						]
+					},
+					{
+						"revision": "b6fd37ea44b7e024225c0a279cbff1627a7fca51",
+						"subject": "#533: Microsoft Visual C++ 再頒布可能パッケージは Pe.Main プロジェクトから除外する"
+					},
+					{
+						"revision": "a7e58267cb21809f5ec906907d1850d257e3a5bf",
+						"subject": "#501: 過去バージョンのダウンロード先を明記する"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/02/26",
-		"version": "0.86.0",
+		"version": "0.86.000",
 		"contents": [
 			{
 				"type": "note",
@@ -145,7 +200,7 @@ const changelogs = [
 	},
 	{
 		"date": "2020/02/26",
-		"version": "0.85.0",
+		"version": "0.85.000",
 		"contents": [
 			{
 				"type": "features",
@@ -191,7 +246,7 @@ const changelogs = [
 	},
 	{
 		"date": "2020/02/24",
-		"version": "0.84.0",
+		"version": "0.84.000",
 		"contents": [
 			{
 				"type": "note",

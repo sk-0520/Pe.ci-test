@@ -10,9 +10,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <para>CLIでこういうクラスあったよなぁ。</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class UnmanagedModelBase<T> : RawModel<T>
+    public abstract class UnmanagedWrapperBase<T> : RawModel<T>
     {
-        public UnmanagedModelBase(T rawObject)
+        public UnmanagedWrapperBase(T rawObject)
             : base(rawObject)
         { }
     }
@@ -20,9 +20,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// アンマネージドなOS提供ハンドルを管理。
     /// </summary>
-    public abstract class UnmanagedHandleModelBase : UnmanagedModelBase<IntPtr>
+    public abstract class UnmanagedHandleWrapper : UnmanagedWrapperBase<IntPtr>
     {
-        public UnmanagedHandleModelBase(IntPtr hHandle)
+        public UnmanagedHandleWrapper(IntPtr hHandle)
             : base(hHandle)
         {
             if(hHandle == IntPtr.Zero) {

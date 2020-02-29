@@ -226,10 +226,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                     return image;
                 } catch(SynchronizationLockException ex) {
                     if(count.IsLast) {
-                        Logger.LogError(ex, "アイコン取得待機失敗: 全試行 {0}回 失敗", count.MaxCount);
+                        Logger.LogError(ex, "アイコン取得待機失敗: 全試行 {0}回 失敗: {1}", count.MaxCount, LauncherItemId);
                         return null;
                     } else {
-                        Logger.LogWarning(ex, "アイコン取得待機失敗: {0}/{1}回 失敗, 再試行待機 {2}", count.CurrentCount, count.MaxCount, RetryWaitTime);
+                        Logger.LogWarning(ex, "アイコン取得待機失敗: {0}/{1}回 失敗, 再試行待機 {2}, {3}", count.CurrentCount, count.MaxCount, RetryWaitTime, LauncherItemId);
                         await Task.Delay(RetryWaitTime).ConfigureAwait(false);
                     }
                 }

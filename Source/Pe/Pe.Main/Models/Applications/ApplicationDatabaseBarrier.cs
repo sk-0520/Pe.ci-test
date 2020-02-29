@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
+    /*
     public sealed class ApplicationDatabaseBarrierTransaction : DisposerBase, IDatabaseTransaction
     {
         public ApplicationDatabaseBarrierTransaction(IDisposable locker, IDatabaseTransaction transaction, IDatabaseImplementation implementation)
@@ -113,8 +114,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #endregion
     }
+    */
 
-    public interface IApplicationDatabaseBarrier: IDatabaseBarrier
+    public interface IApplicationDatabaseBarrier : IDatabaseBarrier
     { }
 
     public interface IMainDatabaseBarrier : IApplicationDatabaseBarrier
@@ -124,35 +126,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     public interface ITemporaryDatabaseBarrier : IApplicationDatabaseBarrier
     { }
 
-    public sealed class ApplicationDatabaseBarrier : IMainDatabaseBarrier, IFileDatabaseBarrier, ITemporaryDatabaseBarrier
+    public sealed class ApplicationDatabaseBarrier : DatabaseBarrier, IMainDatabaseBarrier, IFileDatabaseBarrier, ITemporaryDatabaseBarrier
     {
         public ApplicationDatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
-        {
-            Accessor = accessor;
-            Locker = locker;
-        }
+            : base(accessor, locker)
+        { }
 
-        #region IDatabaseBarrier
+        //#region IDatabaseBarrier
 
-        public IDatabaseAccessor Accessor { get; }
-        public ReaderWriterLocker Locker { get; }
+        //public IDatabaseAccessor Accessor { get; }
+        //public ReaderWriterLocker Locker { get; }
 
-        public IDatabaseTransaction WaitWrite()
-        {
-            var locker = Locker.WaitWriteByDefaultTimeout();
-            var commander = Accessor.BeginTransaction();
-            var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
-            return result;
-        }
+        //public IDatabaseTransaction WaitWrite()
+        //{
+        //    var locker = Locker.WaitWriteByDefaultTimeout();
+        //    var commander = Accessor.BeginTransaction();
+        //    var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
+        //    return result;
+        //}
 
-        public IDatabaseTransaction WaitRead()
-        {
-            var locker = Locker.WaitWriteByDefaultTimeout();
-            var commander = Accessor.BeginTransaction();
-            var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
-            return result;
-        }
+        //public IDatabaseTransaction WaitRead()
+        //{
+        //    var locker = Locker.WaitWriteByDefaultTimeout();
+        //    var commander = Accessor.BeginTransaction();
+        //    var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
+        //    return result;
+        //}
 
-        #endregion
+        //#endregion
     }
 }

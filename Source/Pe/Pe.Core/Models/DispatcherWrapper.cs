@@ -53,8 +53,33 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Invoke(action, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
         }
 
+        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
+        {
+            if(CheckAccess()) {
+                action(argument);
+            } else {
+                Dispatcher.Invoke(action, dispatcherPriority, cancellationToken, timeout);
+            }
+        }
+        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        {
+            Invoke(action, argument, dispatcherPriority, cancellationToken, Timeout.InfiniteTimeSpan);
+        }
+        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        {
+            Invoke(action, argument, dispatcherPriority, CancellationToken.None, Timeout.InfiniteTimeSpan);
+        }
+
+        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument)
+        {
+            Invoke(action, argument, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
+        }
+
+
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
         {
+            // これはもう止まる原因としか言いようがない
+
             if(CheckAccess()) {
                 return func();
             } else {
@@ -78,6 +103,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Get(func, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
         }
 
+
         public DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority)
         {
             return Dispatcher.BeginInvoke(action, dispatcherPriority);
@@ -85,6 +111,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public DispatcherOperation Begin(Action action)
         {
             return Dispatcher.BeginInvoke(action, DispatcherPriority.Send);
+        }
+
+        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        {
+            return Dispatcher.BeginInvoke(action, dispatcherPriority, argument);
+        }
+        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument)
+        {
+            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send, argument);
         }
 
         #endregion

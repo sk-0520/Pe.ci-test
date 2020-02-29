@@ -73,9 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new PlatformInformationItem("Process", Environment.Is64BitProcess ? "64" : "32"),
                 new PlatformInformationItem("Platform", Environment.Is64BitOperatingSystem ? "64" : "32"),
                 new PlatformInformationItem("OS", Environment.OSVersion),
-                new PlatformInformationItem("CLR", System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion()),
+                new PlatformInformationItem("CLR", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription),
             };
-
             var sb = new StringBuilder(255);
             sb.Append(Header);
             foreach(var item in items) {
@@ -96,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 ("EnvironmentParameter", GetEnvironmentParameter),
                 ("CPU", GetCPU),
                 ("OS", GetOS),
+                ("RuntimeInformation", GetRuntimeInformation),
                 ("Environment", GetEnvironment),
                 ("EnvironmentVariables", GetEnvironmentVariables),
                 ("Screen", GetScreen),

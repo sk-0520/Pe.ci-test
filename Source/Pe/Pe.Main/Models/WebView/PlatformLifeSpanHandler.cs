@@ -11,15 +11,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
     {
         public PlatformLifeSpanHandler(ILoggerFactory loggerFactory)
         {
-            LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger(GetType());
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
-        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
+
         #endregion
+
         #region ILifeSpanHandler
 
         public bool DoClose(IWebBrowser chromiumWebBrowser, IBrowser browser)

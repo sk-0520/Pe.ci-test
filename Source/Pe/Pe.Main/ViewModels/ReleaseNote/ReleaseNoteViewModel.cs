@@ -82,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         {
             var view = (ReleaseNoteWindow)window;
             view.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
+            view.webView.RequestHandler = new PlatformRequestHandler(LoggerFactory);
             view.webView.MenuHandler = new DisableContextMenuHandler();
 
             Model.LoadReleaseNoteDocumentAsync().ContinueWith(t => {

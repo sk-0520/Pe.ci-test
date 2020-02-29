@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public IDbTransaction Transaction { get; private set; }
         public IDatabaseImplementation Implementation { get; }
 
-        public void Commit()
+        public virtual void Commit()
         {
             Committed = true;
             Transaction.Commit();
@@ -139,5 +139,23 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         #endregion
+    }
+
+    public class ReadOnlyDatabaseTransaction : DatabaseTransaction
+    {
+        public ReadOnlyDatabaseTransaction(IDatabaseAccessor databaseAccessor)
+            : base(databaseAccessor)
+        { }
+
+        public ReadOnlyDatabaseTransaction(IDatabaseAccessor databaseAccessor, IsolationLevel isolationLevel)
+            : base(databaseAccessor, isolationLevel)
+        { }
+
+        #region DatabaseTransaction
+
+        public override void Commit() => throw new NotSupportedException();
+
+        #endregion
+
     }
 }

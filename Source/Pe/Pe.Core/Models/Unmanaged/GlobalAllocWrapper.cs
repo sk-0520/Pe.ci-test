@@ -8,13 +8,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <summary>
     /// <see cref="Marshal.AllocHGlobal(int)"/>のラッパー。
     /// </summary>
-    public class GlobalAllocModel : UnmanagedModelBase<IntPtr>
+    public class GlobalAllocWrapper : UnmanagedWrapperBase<IntPtr>
     {
         /// <summary>
         /// メモリ確保。
         /// </summary>
         /// <param name="cb">確保するサイズ。</param>
-        public GlobalAllocModel(int cb)
+        public GlobalAllocWrapper(int cb)
             : base(Marshal.AllocHGlobal(cb))
         {
             Size = cb;
@@ -31,14 +31,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
         #region function
 
-        public static GlobalAllocModel Create<T>()
+        public static GlobalAllocWrapper Create<T>()
         {
-            return new GlobalAllocModel(Marshal.SizeOf<T>());
+            return new GlobalAllocWrapper(Marshal.SizeOf<T>());
         }
 
-        public static GlobalAllocModel Create<T>(T structure)
+        public static GlobalAllocWrapper Create<T>(T structure)
         {
-            var result = new GlobalAllocModel(Marshal.SizeOf(structure));
+            var result = new GlobalAllocWrapper(Marshal.SizeOf(structure));
             Marshal.StructureToPtr(structure, result.Raw, false);
 
             return result;

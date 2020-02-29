@@ -56,7 +56,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         void ApplyAccentColor()
         {
             NativeMethods.DwmGetColorizationColor(out var color, out var blend);
-            AccentColor = MediaUtility.ConvertColorFromRawColor(color);
+            SetAccentColor(MediaUtility.ConvertColorFromRawColor(color));
+        }
+
+        void SetAccentColor(Color color)
+        {
+            if(color.A < 0x0f) {
+                var newAlpha = (byte)0xff;
+                Logger.LogInformation("アクセントカラー透明度補正: {0} -> {1}", color.A, newAlpha);
+                color.A = newAlpha;
+            }
+            AccentColor = color;
         }
 
         private void OnThemeChanged()
@@ -68,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         public void WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             var rawColor = (uint)wParam.ToInt64();
-            AccentColor = MediaUtility.ConvertColorFromRawColor(rawColor);
+            SetAccentColor(MediaUtility.ConvertColorFromRawColor(rawColor));
             LazyChanger.DelayAction(OnThemeChanged);
             handled = true;
         }

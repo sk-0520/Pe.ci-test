@@ -83,7 +83,7 @@
                   </Grid.ColumnDefinitions>
 
                   <TextBlock Grid.Column="1">
-                    <Hyperlink>
+                    <Hyperlink Command="{Binding OpenPrivacyPolicyDocumentCommand}">
                       <Run Text="{Binding Resources.String_Setting_Generals_Execute_UserIdDescription, Source={x:Static app_main:CultureService.Current}, Mode=OneWay}" />
                     </Hyperlink>
                   </TextBlock>

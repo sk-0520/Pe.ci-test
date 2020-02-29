@@ -187,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public virtual IDatabaseTransaction WaitRead()
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
-            var commander = Accessor.BeginTransaction();
+            var commander = Accessor.BeginReadOnlyTransaction();
             var result = new DatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
             return result;
         }

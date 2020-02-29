@@ -101,7 +101,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var commanadKey = commandLine.Add(shortKey, longKey, false);
 
             Assert.IsTrue(commandLine.Parse());
-            var has = commandLine.Switch.Contains(commanadKey);
+            var has = commandLine.Switches.Contains(commanadKey);
             Assert.IsTrue(has == result);
         }
 

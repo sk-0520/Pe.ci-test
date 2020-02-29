@@ -118,6 +118,9 @@ try {
 				robocopy /MIR /PURGE /R:3 /S "$src" "$dst"
 			}
 
+			# ライブラリの移送
+			robocopy /R:3 /S /E "Resource\Library\" "Output\Release\$platform\Pe\bin\lib\"
+
 			# 0.83.0 以下のショートカットファイルが PeMain.exe を参照しているため救済処置
 			Copy-Item "Output\Release\$platform\Pe\Pe.exe" "Output\Release\$platform\Pe\PeMain.exe"
 		}

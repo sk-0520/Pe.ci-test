@@ -103,6 +103,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         ));
 
+        public ICommand OpenPrivacyPolicyDocumentCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.OpenPrivacyPolicyDocument();
+            }
+        ));
+
         #endregion
 
         #region function

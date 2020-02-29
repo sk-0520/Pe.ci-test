@@ -543,7 +543,7 @@
     <value>ユーザーID</value>
   </data>
   <data name="String_Setting_Generals_Execute_UserIdDescription" xml:space="preserve">
-    <value>ユーザーIDと使用統計情報について</value>
+    <value>ユーザーIDと使用統計情報について: ヘルプファイルを開く</value>
   </data>
   <data name="String_Setting_Generals_General_Header" xml:space="preserve">
     <value>基本</value>

@@ -535,11 +535,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)
         {
-            DispatcherWrapper.Begin(() => {
-                foreach(var propertName in ThemeProperties.GetPropertyNames()) {
-                    RaisePropertyChanged(propertName);
+            DispatcherWrapper.Begin(vm => {
+                if(vm.IsDisposed) {
+                    return;
                 }
-            }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+
+                foreach(var propertName in vm.ThemeProperties.GetPropertyNames()) {
+                    vm.RaisePropertyChanged(propertName);
+                }
+            }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
 
     }
