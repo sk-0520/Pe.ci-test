@@ -37,6 +37,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
         void Invoke(Action action, DispatcherPriority dispatcherPriority);
         void Invoke(Action action);
+        void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
+        void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
+        void Invoke<TArgument>(Action<TArgument> action, TArgument argument);
+
 
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
@@ -45,6 +50,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority);
         DispatcherOperation Begin(Action action);
+        DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
+        DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument);
 
         #endregion
     }
