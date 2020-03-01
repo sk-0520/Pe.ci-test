@@ -158,7 +158,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#545: リリースビルド処理で node_modules のキャッシュは外す"
 					},
 					{
 						"revision": "",
