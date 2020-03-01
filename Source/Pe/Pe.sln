@@ -29,6 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.DefaultTheme", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Converter", "Pe.Converter\Pe.Converter.csproj", "{E3FF9D2A-577D-49AE-B71B-8131D297D7CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src-doc", "src-doc", "{C963971D-A95D-4948-B9C2-8549094B62CA}"
+	ProjectSection(SolutionItems) = preProject
+		..\Documents\source\script\changelogs.ts = ..\Documents\source\script\changelogs.ts
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

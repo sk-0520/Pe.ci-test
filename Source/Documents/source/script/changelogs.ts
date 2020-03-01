@@ -138,7 +138,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#540: 特に指定のないアイテムの並び順が謎極まる"
 					},
 					{
 						"revision": "",
