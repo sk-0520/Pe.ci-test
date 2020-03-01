@@ -252,10 +252,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var isEnabledCache = param.Any(i => i == UserAgentName.Cache);
                 var isEnabledSession = param.Any(i => i == UserAgentName.Session);
 
-                var httpClient = new HttpClient();
-                var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                if(isEnabledCache || isEnabledSession) {
+                    var handler = new SocketsHttpHandler();
+                    if(isEnabledCache) {
 
-                return newUserAgent;
+                    }
+                    var httpClient = new HttpClient(handler);
+                    var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                    return newUserAgent;
+                } else {
+                    var handler = new SocketsHttpHandler();
+                    var httpClient = new HttpClient(handler);
+                    var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                    return newUserAgent;
+                }
             }
 
             if(Pool.TryGetValue(name, out var ua)) {
