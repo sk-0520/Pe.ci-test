@@ -91,6 +91,84 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "YYYY/MM/DD",
+		"version": "0.88.001",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "notice",
+						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/03/01",
 		"version": "0.88.000",
 		"contents": [
@@ -102,7 +180,8 @@ const changelogs = [
 						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
 					}
 				]
-			},{
+			},
+			{
 				"type": "fixes",
 				"logs": [
 					{
