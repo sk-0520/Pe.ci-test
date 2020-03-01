@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -252,20 +253,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var isEnabledCache = param.Any(i => i == UserAgentName.Cache);
                 var isEnabledSession = param.Any(i => i == UserAgentName.Session);
 
-                if(isEnabledCache || isEnabledSession) {
-                    var handler = new SocketsHttpHandler();
-                    if(isEnabledCache) {
+                var handler = new SocketsHttpHandler() {
+                    UseCookies = isEnabledSession,
+                };
+                var cacheControl =  new CacheControlHeaderValue() {
+                    NoCache = !isEnabledCache
+                };
+                var httpClient = new HttpClient(handler);
+                httpClient.DefaultRequestHeaders.CacheControl = cacheControl;
 
-                    }
-                    var httpClient = new HttpClient(handler);
-                    var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
-                    return newUserAgent;
-                } else {
-                    var handler = new SocketsHttpHandler();
-                    var httpClient = new HttpClient(handler);
-                    var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
-                    return newUserAgent;
-                }
+                var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                return newUserAgent;
             }
 
             if(Pool.TryGetValue(name, out var ua)) {
