@@ -142,7 +142,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#541: アイコン表示に失敗すると連鎖的に全部失敗してる感"
 					},
 					{
 						"revision": "",
