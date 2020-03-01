@@ -8,31 +8,6 @@ using System.Threading.Tasks;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models
 {
-    public static class UserAgentName
-    {
-        #region define
-
-        public static class Special
-        {
-            #region property
-
-            public static string Separator => ":";
-            public static string Session => "session";
-            public static string Cache => "cache";
-
-            #endregion
-        }
-
-        #endregion
-
-        #region property
-
-        public static string SharedSession => Special.Separator + Special.Session;
-
-
-        #endregion
-    }
-
     /// <summary>
     /// <see cref="HttpClient"/>を意識せずに(寿命とか)に <see cref="IDisposable.Dispose"/> できる子。
     /// </summary>
@@ -88,6 +63,33 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
     }
 
+    public interface IUserAgentName
+    {
+        #region property
+
+        /// <summary>
+        /// 分割文字列。
+        /// </summary>
+        string Separator { get; }
+        /// <summary>
+        /// セッション使用文字列。
+        /// </summary>
+        string Session { get; }
+        /// <summary>
+        /// キャッシュ使用文字列。
+        /// </summary>
+        string Cache { get; }
+
+        #endregion
+
+        #region function
+
+        string Join(bool isEnabledSession, bool isEnabledCache);
+        string Join(string name, bool isEnabledSession, bool isEnabledCache);
+
+        #endregion
+    }
+
     /// <summary>
     /// <see cref="IUserAgent"/>生成処理。
     /// <para>生成したやつは <see cref="IDisposable.Dispose"/> すること。</para>
@@ -95,6 +97,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// </summary>
     public interface IUserAgentFactory
     {
+        #region property
+
+        IUserAgentName UserAgentName { get; }
+
+        #endregion
+
         #region function
 
         public IUserAgent CreateUserAgent();
