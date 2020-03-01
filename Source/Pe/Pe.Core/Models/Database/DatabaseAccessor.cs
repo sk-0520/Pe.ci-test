@@ -292,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QueryFirst<T>(statement, parameter);
+            return QueryFirst<T>(statement, parameter, null);
         }
 
         public virtual T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
@@ -324,7 +324,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         {
             ThrowIfDisposed();
 
-            return QuerySingle<T>(statement, parameter);
+            return QuerySingle<T>(statement, parameter, null);
         }
 
         public virtual int Execute(string statement, object? parameter, IDatabaseTransaction? transaction)
