@@ -168,12 +168,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         /// <summary>
         /// 既定の待機時間で書き込み処理を実施する。
-        /// <para><see cref="Locker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
+        /// <para><see cref="Locker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
         /// <returns></returns>
         public virtual IDatabaseTransaction WaitWrite()
         {
-            var locker = Locker.WaitReadByDefaultTimeout();
+            var locker = Locker.WaitWriteByDefaultTimeout();
             var commander = Accessor.BeginTransaction();
             var result = new DatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
             return result;
@@ -181,12 +181,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         /// <summary>
         /// 既定の待機時間で読み込み処理を実施する。
-        /// <para><see cref="Locker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
+        /// <para><see cref="Locker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
         /// <returns></returns>
         public virtual IDatabaseTransaction WaitRead()
         {
-            var locker = Locker.WaitWriteByDefaultTimeout();
+            var locker = Locker.WaitReadByDefaultTimeout();
             var commander = Accessor.BeginReadOnlyTransaction();
             var result = new DatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
             return result;
