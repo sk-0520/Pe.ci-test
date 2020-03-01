@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         /// <param name="file"></param>
         /// <param name="loadShortcut">ショートカットの内容を使用するか。</param>
         /// <returns></returns>
-        internal LauncherFileItemData FromFile(FileInfo file, bool loadShortcut)
+        internal LauncherFileItemData FromFile(FileSystemInfo file, bool loadShortcut)
         {
             var expandedPath = Environment.ExpandEnvironmentVariables(file.FullName);
 
@@ -79,7 +79,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 }
             } else {
-                itemResult.Code = ToCode(Path.GetFileNameWithoutExtension(file.Name));
+                var rawName = Path.GetFileNameWithoutExtension(file.Name);
+                if(string.IsNullOrEmpty(rawName)) {
+                    rawName = itemResult.Name;
+                }
+                itemResult.Code = ToCode(rawName);
                 fileResult.Path = file.FullName;
             }
 

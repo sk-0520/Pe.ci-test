@@ -91,6 +91,41 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/03/01",
+		"version": "0.88.000",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "notice",
+						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
+					}
+				]
+			},{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "a5d5c96f6a86b1c31364c783e738111d4879eaf1",
+						"subject": "#534: ネットワークドライブのコードが取得できない"
+					},
+					{
+						"revision": "05bb0111d70b6ad17b69c0fecbaf0e70f5cb2013",
+						"subject": "#540: 特に指定のないアイテムの並び順が謎極まる"
+					},
+					{
+						"revision": "1c73b4f1fd4f649d5db4ce8ffcd64d36c36b098b",
+						"subject": "#541: アイコン表示に失敗すると連鎖的に全部失敗してる感"
+					},
+					{
+						"revision": "89ed09c7567367b7559dc1697e87b3dc1193cc00",
+						"subject": "#538: ネットワーク接続時のキャッシュ暫定回避をきちんと対応する"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/02/29",
 		"version": "0.87.001",
 		"contents": [

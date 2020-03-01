@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Transaction.Commit();
         }
 
-        public void Rollback()
+        public virtual void Rollback()
         {
             Transaction.Rollback();
         }

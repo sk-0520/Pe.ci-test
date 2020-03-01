@@ -134,13 +134,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var plainName = Path.GetFileNameWithoutExtension(path);
             if(string.IsNullOrEmpty(plainName)) {
-                // ドライブ名
+                // ドライブ名に一致するか
                 var drive = DriveInfo.GetDrives().FirstOrDefault(d => d.Name == path);
                 if(drive != null) {
                     if(drive.DriveType == DriveType.CDRom || drive.DriveType == DriveType.Removable) {
                         return drive.Name;
                     } else {
                         return drive.VolumeLabel;
+                    }
+                }
+
+                // ネットワークフォルダ名か(.NET Framework と挙動が違う気がする)
+                if(PathUtility.IsNetworkDirectoryPath(path)) {
+                    var name = PathUtility.GetNetworkDirectoryName(path);
+                    if(!string.IsNullOrEmpty(name)) {
+                        return name;
                     }
                 }
             }

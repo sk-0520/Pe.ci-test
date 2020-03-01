@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public class ApplicationDatabaseAccessor : DatabaseAccessor<SQLiteConnection>
+    public class ApplicationDatabaseAccessor : SqliteAccessor
     {
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
             : base(connectionCreator, logger)

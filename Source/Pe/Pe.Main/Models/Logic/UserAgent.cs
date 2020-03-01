@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -165,6 +167,61 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    internal class UserAgentName : IUserAgentName
+    {
+        #region function
+
+        string JoinCore(string name, bool isEnabledSession, bool isEnabledCache)
+        {
+            var builder = new StringBuilder(32);
+
+            if(0 < name.Length) {
+                builder.Append(name);
+            }
+
+            if(isEnabledSession) {
+                if(0 < builder.Length) {
+                    builder.Append(Separator);
+                }
+                builder.Append(Session);
+            }
+
+            if(isEnabledCache) {
+                if(0 < builder.Length) {
+                    builder.Append(Separator);
+                }
+                builder.Append(Cache);
+            }
+
+            return builder.ToString();
+        }
+
+        #endregion
+
+
+        #region IUserAgentName
+
+        public string Separator { get; } = ";";
+        public string Session { get; } = "session";
+        public string Cache { get; } = "cache";
+
+        public string Join(bool isEnabledSession, bool isEnabledCache) => JoinCore(string.Empty, isEnabledSession, isEnabledCache);
+        public string Join(string name, bool isEnabledSession, bool isEnabledCache)
+        {
+            if(name == null) {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if(name.IndexOf(Separator) != -1) {
+                throw new ArgumentException(nameof(name));
+            }
+
+            return JoinCore(name, isEnabledSession, isEnabledCache);
+        }
+
+        #endregion
+    }
+
     internal class UserAgentFactory : IUserAgentFactory
     {
         public UserAgentFactory(ILoggerFactory loggerFactory)
@@ -191,9 +248,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             UserAgent Create(string name)
             {
-                var httpClient = new HttpClient();
-                var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                var param = name.Split(UserAgentName.Separator, StringSplitOptions.RemoveEmptyEntries);
 
+                var isEnabledCache = param.Any(i => i == UserAgentName.Cache);
+                var isEnabledSession = param.Any(i => i == UserAgentName.Session);
+
+                var handler = new SocketsHttpHandler() {
+                    UseCookies = isEnabledSession,
+                };
+                var cacheControl =  new CacheControlHeaderValue() {
+                    NoCache = !isEnabledCache
+                };
+                var httpClient = new HttpClient(handler);
+                httpClient.DefaultRequestHeaders.CacheControl = cacheControl;
+
+                var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
                 return newUserAgent;
             }
 
@@ -225,7 +294,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
 
 
-        #region IUserAgentFactory2
+        #region IUserAgentFactory
+
+        public IUserAgentName UserAgentName { get; } = new UserAgentName();
 
         public UserAgent CreateUserAgent() => CreateUserAgentCore(string.Empty);
         IUserAgent IUserAgentFactory.CreateUserAgent() => CreateUserAgent();
