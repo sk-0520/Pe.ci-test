@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Main.Test
+namespace ContentTypeTextNet.Pe.Core.Test
 {
     [TestClass]
     internal class Test
@@ -21,14 +21,14 @@ namespace ContentTypeTextNet.Pe.Main.Test
         public static void AssemblyInitialize(TestContext context)
         {
             var logger = LoggerFactory.CreateLogger(nameof(Test));
-            logger.LogInformation("START Pe.Main.Test");
+            logger.LogInformation("START Core.Test");
         }
 
         [AssemblyCleanup]
         public static void AssemblyCleanup()
         {
             var logger = LoggerFactory.CreateLogger(nameof(Test));
-            logger.LogInformation("END Pe.Main.Test");
+            logger.LogInformation("END Core.Test");
         }
         #endregion
     }
