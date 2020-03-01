@@ -146,6 +146,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#538: ネットワーク接続時のキャッシュ暫定回避をきちんと対応する"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
