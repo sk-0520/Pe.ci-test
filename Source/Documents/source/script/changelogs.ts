@@ -154,7 +154,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#518: 配布形式を 7z にする"
 					},
 					{
 						"revision": "",
