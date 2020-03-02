@@ -33,9 +33,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
         [DataRow(800, "abc", "abc")]
         [DataRow(0, "Abc", "abc")]
         [DataRow(800, "aBc", "abc")]
-        [DataRow(10 * 2, @"abc", "abcabc")]
-        [DataRow(10 * 2, @"abc", "Abcd")]
-        [DataRow(10 * 2, @"Abc", "Abcd")]
         public void CalcScoreTest(int result, string input, string source)
         {
             var simpleRegexFactory = new SimpleRegexFactory(Test.LoggerFactory);
