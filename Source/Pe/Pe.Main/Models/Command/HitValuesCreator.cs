@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Pe.Core.Test")]
@@ -96,9 +97,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             var first = hitValues.First();
             if(first.IsHit) {
                 if(source.StartsWith(first.Value)) {
-                    scrore += GetScore(ScoreKind.Good, 2);
+                    scrore += GetScore(ScoreKind.Good, 10);
                 }
             }
+
+            var nextItems = hitValues.Skip(1).Counting().ToList();
+            foreach(var item in nextItems) {
+                var hitValue = item.Value;
+                if(hitValue.IsHit) {
+                    scrore += GetScore(ScoreKind.Good, (nextItems.Count - item.Number) * 0.5);
+                } else {
+                    scrore += GetScore(ScoreKind.Bad, item.Number / 10.0);
+                }
+            }
+
 
             return scrore;
         }
