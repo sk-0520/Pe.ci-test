@@ -37,8 +37,7 @@ artifacts:
   - path: Source\Documents\build
     name: document
 cache:
-  - '%LOCALAPPDATA%\NuGet'
-  - '%USERPROFILE%\.nuget'
+  - '%USERPROFILE%\.nuget\packages'
   - 'Source\Documents\node_modules'
   - C:\ProgramData\chocolatey\bin -> appveyor.yml
   - C:\ProgramData\chocolatey\lib -> appveyor.yml
