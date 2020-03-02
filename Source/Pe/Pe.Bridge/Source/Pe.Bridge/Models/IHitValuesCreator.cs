@@ -36,10 +36,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// </summary>
         Bad,
 
+        GoodBonus,
+
     }
 
     public interface IHitValuesCreator
     {
+        #region property
+
+        double NoBonus { get; }
+
+        #endregion
+
         #region function
 
         /// <summary>
@@ -47,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// </summary>
         /// <param name="scoreKind"></param>
         /// <returns></returns>
-        int GetScore(ScoreKind scoreKind);
+        int GetScore(ScoreKind scoreKind, double bonus);
 
         /// <summary>
         /// 検索条件に一致した正規表現結果を取得。

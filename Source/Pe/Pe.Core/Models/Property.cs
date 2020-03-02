@@ -2,8 +2,6 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Pe.Core.Test")]
-
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     public interface IPropertyGetter
