@@ -24,12 +24,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region IHitValuesCreator
 
-        public int InitialScore { get; } = 0;
-        public int MaximumScore { get; } = 100;
-        public int MinimumScore { get; } = -100;
-        public int GoodScore { get; } = 10;
-        public int BadScore { get; } = -5;
-        public int SeparatorScore { get; } = 5;
+        public int GetScore(ScoreKind scoreKind)
+        {
+            return scoreKind switch
+            {
+                ScoreKind.Initial => 0,
+                ScoreKind.Maximum => 1000,
+                ScoreKind.Minimum => -1000,
+                ScoreKind.Perfect => 800,
+                ScoreKind.Good => 10,
+                ScoreKind.Bad => -10,
+                _ => throw new NotImplementedException(),
+            };
+        }
 
 
         public IReadOnlyList<Match> GetMatches(Regex regex, string input) => regex.Matches(input).Cast<Match>().ToList();
@@ -79,15 +86,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(hitValues.Count == 1 && hitValues.All(i => i.IsHit)) {
                 // 完全一致
                 Logger.LogInformation(source);
-                return MaximumScore;
+                return GetScore(ScoreKind.Perfect);
             }
-            var scrore = InitialScore;
+            var scrore = GetScore(ScoreKind.Initial);
             var first = hitValues.First();
             if(first.IsHit) {
                 if(source.StartsWith(first.Value)) {
-                    scrore += GoodScore * 2;
+                    scrore += GetScore(ScoreKind.Good) * 2;
                 } else if(source.StartsWith(first.Value, StringComparison.CurrentCultureIgnoreCase)) {
-                    scrore += GoodScore;
+                    scrore += GetScore(ScoreKind.Good);
                 }
             }
 
