@@ -120,7 +120,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#502: コマンドランチャーで待機時間は不要",
+						"comments": [
+							"待機時間をなくすとともに列挙したアイテムの表示処理を改善"
+						]
 					},
 					{
 						"revision": "",
@@ -398,7 +401,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "78ce8c309c5efc1e586fc209560063734094b792",
-						"subject":"#484: 設計練り直して作り直し",
+						"subject": "#484: 設計練り直して作り直し",
 						"comments": [
 							"今回の主要アップデートで他のは付随してきただけの課題です",
 							"色々足りないけど自動更新機能が動けば何とかなる思い"
@@ -5629,7 +5632,7 @@ window.addEventListener('load', () => {
 
 
 				if ('revision' in log) {
-					if(log['revision']) {
+					if (log['revision']) {
 						const revision = document.createElement('a');
 						revision.className = 'revision';
 						revision.textContent = log['revision']!;

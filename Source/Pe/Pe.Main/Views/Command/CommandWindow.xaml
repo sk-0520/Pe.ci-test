@@ -176,7 +176,7 @@
             x:Name="inputCommand"
             BorderThickness="0"
             VerticalAlignment="Center"
-            Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged, Delay=200}"
+            Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}"
             FontFamily="{Binding Font.FontFamily}"
             FontSize="{Binding Font.FontSize}"
             FontStyle="{Binding Font.FontStyle}"

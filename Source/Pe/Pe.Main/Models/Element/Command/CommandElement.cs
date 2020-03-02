@@ -30,11 +30,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement : ElementBase, IViewShowStarter, IFlushable
     {
-        #region variable
-
-        List<ICommandItem> _commandItems = new List<ICommandItem>();
-
-        #endregion
         public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -76,12 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public bool ViewCreated { get; private set; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
-
-        public IReadOnlyList<ICommandItem> CommandItems
-        {
-            get => this._commandItems;
-            set => SetProperty(ref this._commandItems, (List<ICommandItem>)value);
-        }
 
         public bool FindTag { get; private set; }
         public double Width { get; private set; }
@@ -209,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
 
 
-        public Task UpdateCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
+        public Task<IReadOnlyList<ICommandItem>> ListupCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 Logger.LogTrace("検索開始");
@@ -224,18 +213,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 }
                 cancellationToken.ThrowIfCancellationRequested();
 
-
                 Logger.LogTrace("検索終了: {0}", stopwatch.Elapsed);
 
-                return commandItems
+                return (IReadOnlyList<ICommandItem>)commandItems
                     .OrderByDescending(i => i.Score)
                     .ToList()
                 ;
-            }, cancellationToken).ContinueWith(t => {
-                if(t.IsCompletedSuccessfully) {
-                    CommandItems = t.Result;
-                }
-            });
+            }, cancellationToken);
         }
 
         public void ChangeViewWidthDelaySave(double width)
