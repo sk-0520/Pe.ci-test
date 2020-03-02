@@ -72,8 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
 
-        public ObservableCollection<WrapModel<ICommandItem>> CommandItems { get; } = new ObservableCollection<WrapModel<ICommandItem>>();
-
         public bool FindTag { get; private set; }
         public double Width { get; private set; }
         public TimeSpan HideWaitTime { get; private set; }
@@ -200,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
 
 
-        public Task UpdateCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
+        public Task<IReadOnlyList<ICommandItem>> ListupCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 Logger.LogTrace("検索開始");
@@ -215,20 +213,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 }
                 cancellationToken.ThrowIfCancellationRequested();
 
-
                 Logger.LogTrace("検索終了: {0}", stopwatch.Elapsed);
 
-                return commandItems
+                return (IReadOnlyList<ICommandItem>)commandItems
                     .OrderByDescending(i => i.Score)
-                    .Select(i => WrapModel.Create(i, LoggerFactory))
                     .ToList()
                 ;
-            }, cancellationToken).ContinueWith(t => {
-                if(t.IsCompletedSuccessfully) {
-                    var commandItems = t.Result;
-                    CommandItems.SetRange(commandItems);
-                }
-            });
+            }, cancellationToken);
         }
 
         public void ChangeViewWidthDelaySave(double width)
