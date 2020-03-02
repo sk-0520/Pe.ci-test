@@ -11,4 +11,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #region function
         #endregion
     }
+
+    public interface IPolicyBuilder
+    {
+        #region function
+        #endregion
+    }
+
 }

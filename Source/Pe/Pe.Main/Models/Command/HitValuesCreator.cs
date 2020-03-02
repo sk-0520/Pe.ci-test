@@ -5,7 +5,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
+
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Pe.Core.Test")]
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
@@ -24,12 +27,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region IHitValuesCreator
 
-        public int InitialScore { get; } = 0;
-        public int MaximumScore { get; } = 100;
-        public int MinimumScore { get; } = -100;
-        public int GoodScore { get; } = 10;
-        public int BadScore { get; } = -5;
-        public int SeparatorScore { get; } = 5;
+        public double NoBonus => 1;
+
+        public int GetScore(ScoreKind scoreKind, double bonus)
+        {
+            return scoreKind switch
+            {
+                ScoreKind.Initial => 0,
+                ScoreKind.Maximum => 1000,
+                ScoreKind.Minimum => -1000,
+                ScoreKind.Perfect => 800,
+                ScoreKind.Good => (int)Math.Round(10 * bonus),
+                ScoreKind.Bad => (int)Math.Round(-10 * bonus),
+                _ => throw new NotImplementedException(),
+            };
+        }
 
 
         public IReadOnlyList<Match> GetMatches(Regex regex, string input) => regex.Matches(input).Cast<Match>().ToList();
@@ -54,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     var item = new HitValue(value, true);
                     result.Add(item);
                     workMatches.Remove(i);
-                    i = i + hitLength;
+                    i += hitLength;
                     if(workMatches.Count == 0) {
                         if(i < source.Length) {
                             result.Add(new HitValue(source.Substring(i), false));
@@ -79,17 +91,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(hitValues.Count == 1 && hitValues.All(i => i.IsHit)) {
                 // 完全一致
                 Logger.LogInformation(source);
-                return MaximumScore;
+                return GetScore(ScoreKind.Perfect, NoBonus);
             }
-            var scrore = InitialScore;
+            var scrore = GetScore(ScoreKind.Initial, NoBonus);
             var first = hitValues.First();
             if(first.IsHit) {
                 if(source.StartsWith(first.Value)) {
-                    scrore += GoodScore * 2;
-                } else if(source.StartsWith(first.Value, StringComparison.CurrentCultureIgnoreCase)) {
-                    scrore += GoodScore;
+                    scrore += GetScore(ScoreKind.Good, 10);
                 }
             }
+
+            var nextItems = hitValues.Skip(1).Counting().ToList();
+            foreach(var item in nextItems) {
+                var hitValue = item.Value;
+                if(hitValue.IsHit) {
+                    scrore += GetScore(ScoreKind.Good, (nextItems.Count - item.Number) * 0.5);
+                } else {
+                    scrore += GetScore(ScoreKind.Bad, item.Number / 10.0);
+                }
+            }
+
 
             return scrore;
         }
