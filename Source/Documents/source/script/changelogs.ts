@@ -116,7 +116,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#524: コマンド入力のスコア評価を改善する"
 					},
 					{
 						"revision": "",
