@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         string _inputValue = string.Empty;
         InputState _inputState;
         //bool _isActive;
+        private List<CommandItemViewModel> _commandItems = new List<CommandItemViewModel>();
 
         #endregion
 
@@ -47,10 +49,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
             ThemeProperties = new ThemeProperties(this);
 
-            CommandItemCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<ICommandItem>, CommandItemViewModel>(Model.CommandItems) {
-                ToViewModel = m => new CommandItemViewModel(m.Data, IconBox, DispatcherWrapper, LoggerFactory),
-            };
-            CommandItems = CommandItemCollection.GetDefaultView();
+            //CommandItemCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<ICommandItem>, CommandItemViewModel>(Model.CommandItems) {
+            //    ToViewModel = m => new CommandItemViewModel(m.Data, IconBox, DispatcherWrapper, LoggerFactory),
+            //};
+            //CommandItems = CommandItemCollection.GetDefaultView();
 
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
 
@@ -62,6 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             PlatformTheme.Changed += PlatformTheme_Changed;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+            PropertyChangedHooker.AddHook(nameof(Model.CommandItems), BuildCommandItems);
         }
 
 
@@ -74,8 +77,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         DispatcherTimer HideWaitTimer { get; }
 
-        ModelViewModelObservableCollectionManagerBase<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
-        public ICollectionView CommandItems { get; }
+        //ModelViewModelObservableCollectionManagerBase<WrapModel<ICommandItem>, CommandItemViewModel> CommandItemCollection { get; }
+        public IReadOnlyList<CommandItemViewModel> CommandItems
+        {
+            get => this._commandItems;
+            private set => SetProperty(ref this._commandItems, (List<CommandItemViewModel>)value);
+        }
 
         public CommandItemViewModel? CurrentSelectedItem
         {
@@ -147,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                         InputCancellationTokenSource?.Dispose();
                         InputCancellationTokenSource = null;
 
-                        SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+                        SelectedItem = CommandItems.FirstOrDefault();
                         if(SelectedItem == null && !string.IsNullOrWhiteSpace(this._inputValue)) {
                             CurrentSelectedItem = null;
                             InputState = InputState.NotFound;
@@ -285,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         void UpDownSelectItem(bool isUp)
         {
-            if(CommandItemCollection.ViewModels.Count == 0) {
+            if(CommandItems.Count == 0) {
                 Logger.LogTrace("列挙アイテムなし");
                 return;
             }
@@ -293,25 +300,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             if(SelectedItem == null) {
                 // 多分ここには来ないはずだけど一応
                 SelectedItem = isUp
-                    ? CommandItemCollection.ViewModels.First()
-                    : CommandItemCollection.ViewModels.Last()
+                    ? CommandItems.First()
+                    : CommandItems.Last()
                 ;
             } else {
-                var index = CommandItemCollection.ViewModels.IndexOf(SelectedItem);
+                var index = this._commandItems.IndexOf(SelectedItem);
                 if(isUp) {
                     SelectedItem = index == 0
-                        ? CommandItemCollection.ViewModels.Last()
-                        : CommandItemCollection.ViewModels[index - 1]
+                        ? CommandItems.Last()
+                        : CommandItems[index - 1]
                     ;
                 } else {
-                    SelectedItem = index == CommandItemCollection.ViewModels.Count - 1
-                        ? CommandItemCollection.ViewModels[0]
-                        : CommandItemCollection.ViewModels[index + 1]
+                    SelectedItem = index == CommandItems.Count - 1
+                        ? CommandItems[0]
+                        : CommandItems[index + 1]
                     ;
                 }
             }
 
             ScrollSelectedItemRequest.Send();
+        }
+
+        private void BuildCommandItems()
+        {
+            CommandItems = Model.CommandItems
+                .Select(i => new CommandItemViewModel(i, IconBox, DispatcherWrapper, LoggerFactory))
+                .ToList()
+            ;
         }
 
         #endregion
@@ -326,7 +341,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void ReceiveViewLoaded(Window window)
         {
             Model.UpdateCommandItemsAsync(string.Empty, CancellationToken.None).ContinueWith(t => {
-                SelectedItem = CommandItemCollection.ViewModels.FirstOrDefault();
+                SelectedItem = CommandItems.FirstOrDefault();
             });
         }
 
@@ -372,7 +387,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
                 if(disposing) {
                     PropertyChangedHooker.Dispose();
-                    CommandItemCollection.Dispose();
+                    //CommandItems.Dispose();
                     Font.Dispose();
                 }
             }

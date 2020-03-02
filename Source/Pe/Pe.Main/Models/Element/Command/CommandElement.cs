@@ -30,6 +30,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement : ElementBase, IViewShowStarter, IFlushable
     {
+        #region variable
+
+        List<ICommandItem> _commandItems = new List<ICommandItem>();
+
+        #endregion
         public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -72,7 +77,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
 
-        public ObservableCollection<WrapModel<ICommandItem>> CommandItems { get; } = new ObservableCollection<WrapModel<ICommandItem>>();
+        public IReadOnlyList<ICommandItem> CommandItems
+        {
+            get => this._commandItems;
+            set => SetProperty(ref this._commandItems, (List<ICommandItem>)value);
+        }
 
         public bool FindTag { get; private set; }
         public double Width { get; private set; }
@@ -220,13 +229,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
                 return commandItems
                     .OrderByDescending(i => i.Score)
-                    .Select(i => WrapModel.Create(i, LoggerFactory))
                     .ToList()
                 ;
             }, cancellationToken).ContinueWith(t => {
                 if(t.IsCompletedSuccessfully) {
-                    var commandItems = t.Result;
-                    CommandItems.SetRange(commandItems);
+                    CommandItems = t.Result;
                 }
             });
         }
