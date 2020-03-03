@@ -275,6 +275,9 @@
     <i:EventTrigger EventName="MouseDoubleClick">
       <i:InvokeCommandAction Command="{Binding AutoHideToHideCommand}" />
     </i:EventTrigger>
+    <i:EventTrigger EventName="PreviewMouseDown">
+      <prism:InvokeCommandAction Command="{Binding PreviewMouseDownCommand}" />
+    </i:EventTrigger>
   </i:Interaction.Triggers>
   <i:Interaction.Behaviors>
     <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />

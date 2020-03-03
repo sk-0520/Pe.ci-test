@@ -127,6 +127,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#556: マウスの戻る・進むボタンでグループの切り替えを行う"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

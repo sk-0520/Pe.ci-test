@@ -276,6 +276,46 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         ));
 
+        public ICommand PreviewMouseDownCommand => GetOrCreateCommand(() => new DelegateCommand<MouseButtonEventArgs>(
+            o => {
+                if(SelectedLauncherGroup == null) {
+                    Logger.LogError("こねぇよ");
+                    return;
+                }
+                if(LauncherGroupCollection.Count == 1) {
+                    Logger.LogDebug("処理する必要なし");
+                    return;
+                }
+
+                var prev = o.MouseDevice.XButton1.HasFlag(MouseButtonState.Pressed);
+                var next = o.MouseDevice.XButton2.HasFlag(MouseButtonState.Pressed);
+                if((prev || next) && o.ButtonState == MouseButtonState.Pressed) {
+
+                    var currentIndex = LauncherGroupCollection.IndexOf(SelectedLauncherGroup);
+                    int nextIndex;
+                    if(prev) {
+                        nextIndex = currentIndex == 0
+                            ? LauncherGroupCollection.Count - 1
+                            : currentIndex - 1
+                        ;
+                    } else {
+                        Debug.Assert(next);
+                        nextIndex = currentIndex == LauncherGroupCollection.Count - 1
+                            ? 0
+                            : currentIndex + 1
+                        ;
+                    }
+
+                    var vm = LauncherGroupCollection.ViewModels[nextIndex];
+                    var groupModel = LauncherGroupCollection.GetModel(vm)!;
+                    Model.ChangeLauncherGroup(groupModel);
+                    LauncherItems.Refresh();
+
+                    o.Handled = true;
+                }
+            }
+        ));
+
         #endregion
 
         #region function
