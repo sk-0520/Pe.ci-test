@@ -42,32 +42,34 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public Brush GetInputBorderBrush(InputState inputState)
         {
+            var colors = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
+
             return inputState switch
             {
-                InputState.Empty => Brushes.AliceBlue,
-                InputState.Finding => Brushes.Lime,
-                InputState.Listup => Brushes.Yellow,
-                InputState.NotFound => Brushes.Red,
+                InputState.Empty => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Border)),
+                InputState.Finding => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Control)),
+                InputState.Listup => FreezableUtility.GetSafeFreeze(new SolidColorBrush(PlatformTheme.GetAccentColors(PlatformTheme.AccentColor).Base)),
+                InputState.NotFound => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Foreground)),
                 _ => throw new NotImplementedException(),
             };
         }
 
         public Brush GetInputBackground(InputState inputState)
         {
-            var color = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
-            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color.Background));
+            var colors = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Background));
         }
 
         public Brush GetInputForeground(InputState inputState)
         {
-            var color = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
-            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color.Foreground));
+            var colors = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Foreground));
         }
 
         public Brush GetViewBackgroundBrush(bool isActive)
         {
-            var color = PlatformTheme.GetTaskbarColor();
-            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
+            var colors = PlatformTheme.GetTaskbarColor();
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors));
         }
 
         public Thickness GetViewBorderThickness()
