@@ -54,18 +54,20 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public Brush GetInputBackground(InputState inputState)
         {
-            return Brushes.White;
+            var color = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color.Background));
         }
 
         public Brush GetInputForeground(InputState inputState)
         {
-            return Brushes.Black;
+            var color = PlatformTheme.GetApplicationThemeColors(PlatformTheme.ApplicationThemeKind);
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color.Foreground));
         }
 
         public Brush GetViewBackgroundBrush(bool isActive)
         {
             var color = PlatformTheme.GetTaskbarColor();
-            return new SolidColorBrush(color);
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
         }
 
         public Thickness GetViewBorderThickness()
@@ -77,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         {
             var color = PlatformTheme.GetTaskbarColor();
             color.A = (byte)(isActive ? 0xff : 0x80);
-            return new SolidColorBrush(color);
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
         }
 
         public ControlTemplate GetExecuteButtonControlTemplate(IconBox icon)
