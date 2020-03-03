@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
         public void GetMatchesTest(int result, string pattern, string input)
         {
             var hvc = new HitValuesCreator(Test.LoggerFactory);
-            var actual = hvc.GetMatches(new Regex(pattern), input);
+            var actual = hvc.GetMatches(input, new Regex(pattern));
             Assert.AreEqual(result, actual.Count);
         }
 
@@ -39,10 +39,10 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
             var regex = simpleRegexFactory.CreateFilterRegex(input);
 
             var hvc = new HitValuesCreator(Test.LoggerFactory);
-            var matchers = hvc.GetMatches(regex, source);
-            var ranges = hvc.ConvertRanges(matchers);
-            var hitValues = hvc.ConvertHitValues(source, ranges);
-            var actual = hvc.CalcScore(source, hitValues);
+            var matchers = hvc.GetMatches(source, regex);
+            var ranges = hvc.ConvertRanges(input, matchers);
+            var hitValues = hvc.ConvertHitValues(input, source, ranges);
+            var actual = hvc.CalcScore(input, source, hitValues);
             Assert.AreEqual(result, actual);
         }
 

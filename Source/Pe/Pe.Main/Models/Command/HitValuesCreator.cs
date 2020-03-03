@@ -44,11 +44,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         }
 
 
-        public IReadOnlyList<Match> GetMatches(Regex regex, string input) => regex.Matches(input).Cast<Match>().ToList();
+        public IReadOnlyList<Match> GetMatches(string input, Regex regex) => regex.Matches(input).Cast<Match>().ToList();
 
-        public IReadOnlyList<Range> ConvertRanges(IEnumerable<Match> matches) => matches.Select(i => new Range(i.Index, i.Index + i.Length)).ToList();
+        public IReadOnlyList<Range> ConvertRanges(string input, IEnumerable<Match> matches) => matches.Select(i => new Range(i.Index, i.Index + i.Length)).ToList();
 
-        public List<HitValue> ConvertHitValues(string source, IReadOnlyList<Range> hitRanges)
+        public List<HitValue> ConvertHitValues(string input, string source, IReadOnlyList<Range> hitRanges)
         {
             if(hitRanges.Count == 0) {
                 return new List<HitValue>() {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             return result;
         }
 
-        public int CalcScore(string source, IReadOnlyList<HitValue> hitValues)
+        public int CalcScore(string input, string source, IReadOnlyList<HitValue> hitValues)
         {
             Logger.LogDebug(">> {0}, {1}", source, string.Join(",", hitValues.Select(i => $"{(i.IsHit ? 'O' : 'X')}:{i.Value}")));
             if(hitValues.Count == 1 && hitValues.All(i => i.IsHit)) {

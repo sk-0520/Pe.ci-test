@@ -60,16 +60,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// 検索条件に一致した正規表現結果を取得。
         /// </summary>
-        /// <param name="regex"></param>
-        /// <param name="input"></param>
+        /// <param name="input">入力値。</param>
+        /// <param name="regex">Pe から提供される正規表現。</param>
         /// <returns></returns>
-        IReadOnlyList<Match> GetMatches(Regex regex, string input);
+        IReadOnlyList<Match> GetMatches(string input, Regex regex);
 
-        IReadOnlyList<Range> ConvertRanges(IEnumerable<Match> matches);
+        IReadOnlyList<Range> ConvertRanges(string input, IEnumerable<Match> matches);
 
-        List<HitValue> ConvertHitValues(string source, IReadOnlyList<Range> hitRanges);
+        List<HitValue> ConvertHitValues(string input, string source, IReadOnlyList<Range> hitRanges);
 
-        int CalcScore(string source, IReadOnlyList<HitValue> hitValues);
+        int CalcScore(string input, string source, IReadOnlyList<HitValue> hitValues);
 
         #endregion
     }
