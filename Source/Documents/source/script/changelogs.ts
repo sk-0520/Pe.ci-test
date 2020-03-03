@@ -136,7 +136,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#544: コマンド型ランチャー入力時の色設定が完全にデバッグ用なので適当にいい感じにする"
 					},
 					{
 						"revision": "",
