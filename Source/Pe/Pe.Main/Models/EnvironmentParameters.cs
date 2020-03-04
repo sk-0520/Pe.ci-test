@@ -56,6 +56,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region property
 
+        /// <summary>
+        /// ディレクトリ取得時に作成するか。
+        /// </summary>
+        internal protected bool CreateDirectoryWhenGet { get; protected set; }
+
         public static string CommandLineKeyUserDirectory { get; } = "user-dir";
         public static string CommandLineKeyMachineDirectory { get; } = "machine-dir";
         public static string CommandLineKeyTemporaryDirectory { get; } = "temp-dir";
@@ -248,7 +253,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         private DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
         {
             var path = CombinePath(directory.FullName, directoryNames);
-            return new DirectoryInfo(path);
+            var dir = new DirectoryInfo(path);
+            if(CreateDirectoryWhenGet) {
+                if(!dir.Exists) {
+                    dir.Create();
+                }
+            }
+            return dir;
         }
 
         private FileInfo CombineFile(DirectoryInfo directory, params string[] directoryAndFileNames)
@@ -262,5 +273,19 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     }
 
+    internal class ApplicationEnvironmentParameters : EnvironmentParameters
+    {
+        public ApplicationEnvironmentParameters(DirectoryInfo rootDirectory, CommandLine commandLine)
+            : base(rootDirectory, commandLine)
+        { }
 
+        #region function
+
+        public void SetFileSystemInitialized()
+        {
+            CreateDirectoryWhenGet = true;
+        }
+
+        #endregion
+    }
 }
