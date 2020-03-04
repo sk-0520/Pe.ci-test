@@ -144,7 +144,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#522: ツールバーの初期グループ選択設定が未選択の場合に選択されているものとして扱われる"
 					},
 					{
 						"revision": "",

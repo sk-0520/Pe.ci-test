@@ -1478,8 +1478,8 @@
   <data name="String_Setting_LauncherToolbars_DefaultGroup_None" xml:space="preserve">
     <value>未選択</value>
   </data>
-  <data name="String_Setting_LauncherToolbars_ChangeDefaultGroup_A" xml:space="preserve">
-    <value>指定する(_S)</value>
+  <data name="String_Setting_LauncherToolbars_DefaultGroup_None_A" xml:space="preserve">
+    <value>未指定</value>
   </data>
   <data name="String_Setting_Generals_General_Starup_Argument_A" xml:space="preserve">
     <value>追加引数(_A)</value>
