@@ -62,23 +62,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
         }
 
-        private ICommandItem? GetHitItem(CommandItemKind kind, LauncherItemElement element, string targetValue, string targetLogName, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        private ICommandItem? GetHitItem(CommandItemKind kind, LauncherItemElement element, string targetValue, string targetLogName, string input, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
-            var nameMatches = hitValuesCreator.GetMatches(inputRegex, targetValue);
+            var nameMatches = hitValuesCreator.GetMatches(targetValue, inputRegex);
             if(nameMatches.Any()) {
                 Logger.LogTrace("ランチャー: {0}, {1}, {2}", targetLogName, targetValue, element.LauncherItemId);
                 var result = new LauncherCommandItemElement(element, LoggerFactory) {
                     EditableKind = kind,
                 };
                 result.Initialize();
-                var ranges = hitValuesCreator.ConvertRanges(nameMatches);
-                var hitValue = hitValuesCreator.ConvertHitValues(targetValue, ranges);
+                var ranges = hitValuesCreator.ConvertRanges(input, nameMatches);
+                var hitValue = hitValuesCreator.ConvertHitValues(input, targetValue, ranges);
                 if(kind == CommandItemKind.LauncherItemName) {
                     result.EditableHeaderValues.SetRange(hitValue);
-                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableHeaderValues);
+                    result.EditableScore = hitValuesCreator.CalcScore(input, targetValue, result.EditableHeaderValues);
                 } else {
                     result.EditableDescriptionValues.SetRange(hitValue);
-                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableDescriptionValues);
+                    result.EditableScore = hitValuesCreator.CalcScore(input, targetValue, result.EditableDescriptionValues);
                 }
                 return result;
             }
@@ -143,13 +143,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             foreach(var element in LauncherItemElements) {
                 cancellationToken.ThrowIfCancellationRequested();
-                var nameItem = GetHitItem(CommandItemKind.LauncherItemName, element, element.Name, "名前一致", inputRegex, hitValuesCreator, cancellationToken);
+                var nameItem = GetHitItem(CommandItemKind.LauncherItemName, element, element.Name, "名前一致", inputValue, inputRegex, hitValuesCreator, cancellationToken);
                 if(nameItem != null) {
                     yield return nameItem;
                     continue;
                 }
 
-                var codeItem = GetHitItem(CommandItemKind.LauncherItemCode, element, element.Code, "コード一致", inputRegex, hitValuesCreator, cancellationToken);
+                var codeItem = GetHitItem(CommandItemKind.LauncherItemCode, element, element.Code, "コード一致", inputValue, inputRegex, hitValuesCreator, cancellationToken);
                 if(codeItem != null) {
                     yield return codeItem;
                     continue;
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
                 if(LauncherTags.TryGetValue(element.LauncherItemId, out var tags)) {
                     foreach(var tag in tags) {
-                        var tagItem = GetHitItem(CommandItemKind.LauncherItemTag, element, tag, "タグ", inputRegex, hitValuesCreator, cancellationToken);
+                        var tagItem = GetHitItem(CommandItemKind.LauncherItemTag, element, tag, "タグ", inputValue, inputRegex, hitValuesCreator, cancellationToken);
                         if(tagItem != null) {
                             yield return tagItem;
                             continue;

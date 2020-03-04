@@ -35,6 +35,8 @@ using ContentTypeTextNet.Pe.Main.Models.Platform;
 using System.Diagnostics;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.Models;
+using System.Windows.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -43,12 +45,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         #region variable
 
         LauncherDetailViewModelBase? _contextMenuOpendItem;
+        bool _showWaiting;
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, ILauncherGroupTheme launcherGroupTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, ILauncherGroupTheme launcherGroupTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
+            LauncherToolbarConfiguration = launcherToolbarConfiguration;
             PlatformThemeLoader = platformThemeLoader;
             LauncherToolbarTheme = launcherToolbarTheme;
             LauncherGroupTheme = launcherGroupTheme;
@@ -103,6 +107,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
+
+        LauncherToolbarConfiguration LauncherToolbarConfiguration { get; }
         IPlatformTheme PlatformThemeLoader { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
         ILauncherGroupTheme LauncherGroupTheme { get; }
@@ -110,6 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         PropertyChangedHooker PropertyChangedHooker { get; }
         ThemeProperties ThemeProperties { get; }
 
+        DispatcherTimer? AutoHideShowWaitTimer { get; set; }
 
         public IconBox IconBox => Model.IconBox;
         public Thickness ButtonPadding => Model.ButtonPadding;
@@ -169,6 +176,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             get => this._contextMenuOpendItem;
             set => SetProperty(ref this._contextMenuOpendItem, value);
+        }
+
+        public bool ShowWaiting
+        {
+            get => this._showWaiting;
+            set => SetProperty(ref this._showWaiting, value);
         }
 
         ModelViewModelObservableCollectionManagerBase<LauncherGroupElement, LauncherGroupViewModel> LauncherGroupCollection { get; }
@@ -245,11 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public ICommand ChangeLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupViewModel>(
            o => {
-               var groupModel = LauncherGroupCollection.GetModel(o);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-               Model.ChangeLauncherGroup(groupModel);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-               LauncherItems.Refresh();
+               ChangeLauncherGroup(o);
            }
        ));
 
@@ -270,8 +279,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public ICommand AutoHideToHideCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                if(IsVisible && IsAutoHide) {
-                    AppDesktopToolbarExtend!.HideView(true);
+                HideAndShowWaiting();
+            }
+        ));
+
+        public ICommand PreviewMouseDownCommand => GetOrCreateCommand(() => new DelegateCommand<MouseButtonEventArgs>(
+            o => {
+                if(SelectedLauncherGroup == null) {
+                    Logger.LogError("こねぇよ");
+                    return;
+                }
+                if(LauncherGroupCollection.Count == 1) {
+                    Logger.LogDebug("処理する必要なし");
+                    return;
+                }
+
+                var prev = o.MouseDevice.XButton1.HasFlag(MouseButtonState.Pressed);
+                var next = o.MouseDevice.XButton2.HasFlag(MouseButtonState.Pressed);
+                if((prev || next) && o.ButtonState == MouseButtonState.Pressed) {
+
+                    var currentIndex = LauncherGroupCollection.IndexOf(SelectedLauncherGroup);
+                    int nextIndex;
+                    if(prev) {
+                        nextIndex = currentIndex == 0
+                            ? LauncherGroupCollection.Count - 1
+                            : currentIndex - 1
+                        ;
+                    } else {
+                        Debug.Assert(next);
+                        nextIndex = currentIndex == LauncherGroupCollection.Count - 1
+                            ? 0
+                            : currentIndex + 1
+                        ;
+                    }
+
+                    var vm = LauncherGroupCollection.ViewModels[nextIndex];
+                    ChangeLauncherGroup(vm);
+
+                    o.Handled = true;
                 }
             }
         ));
@@ -279,6 +324,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         #endregion
 
         #region function
+
+        void ChangeLauncherGroup(LauncherGroupViewModel targetGroup)
+        {
+            var currentLauncherItems = LauncherItemCollection.ViewModels.ToList();
+
+            var groupModel = LauncherGroupCollection.GetModel(targetGroup)!;
+            Model.ChangeLauncherGroup(groupModel);
+            LauncherItems.Refresh();
+
+            foreach(var vm in currentLauncherItems) {
+                vm.Dispose();
+            }
+        }
 
         DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
         {
@@ -394,6 +452,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         void ExecuteExtendDropData(Guid launcherItemId, string argument)
         {
             Model.OpenExtendsExecuteView(launcherItemId, argument, DockScreen);
+        }
+
+
+        /// <summary>
+        /// 自動的に隠すツールバーを隠して一時的に表示を停止する。
+        /// </summary>
+        public void HideAndShowWaiting()
+        {
+            if(!IsVisible) {
+                return;
+            }
+            if(!IsAutoHide) {
+                return;
+            }
+            if(IsHiding) {
+                return;
+            }
+
+            DispatcherWrapper.VerifyAccess();
+
+            if(TimeSpan.Zero < LauncherToolbarConfiguration.AutoHideShowWaitTime) {
+                if(AutoHideShowWaitTimer != null) {
+                    AutoHideShowWaitTimer.Stop();
+                    AutoHideShowWaitTimer.Tick -= AutoHideShowWaitTimer_Tick;
+                    AutoHideShowWaitTimer = null;
+                }
+
+                AutoHideShowWaitTimer = new DispatcherTimer(DispatcherPriority.Background) {
+                    Interval = LauncherToolbarConfiguration.AutoHideShowWaitTime,
+                };
+                AutoHideShowWaitTimer.Tick += AutoHideShowWaitTimer_Tick;
+            }
+
+            AppDesktopToolbarExtend!.HideView(true);
+            if(AutoHideShowWaitTimer != null) {
+                Logger.LogTrace("自動的に隠すの強制隠しからの復帰抑制を開始");
+                ShowWaiting = true;
+                AutoHideShowWaitTimer.Start();
+            }
         }
 
         #endregion
@@ -544,6 +641,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     vm.RaisePropertyChanged(propertName);
                 }
             }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+        }
+
+        private void AutoHideShowWaitTimer_Tick(object? sender, EventArgs e)
+        {
+            Logger.LogTrace("自動的に隠すの強制隠しからの復帰抑制を解除");
+            ShowWaiting = false;
+
+            if(AutoHideShowWaitTimer != null) {
+                AutoHideShowWaitTimer.Tick -= AutoHideShowWaitTimer_Tick;
+                AutoHideShowWaitTimer.Stop();
+                AutoHideShowWaitTimer = null;
+            }
         }
 
     }

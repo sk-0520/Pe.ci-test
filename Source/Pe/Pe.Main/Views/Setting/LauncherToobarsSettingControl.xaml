@@ -24,7 +24,9 @@
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+    <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
     <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </UserControl.Resources>
 
@@ -82,7 +84,7 @@
 
           <ContentControl.ContentTemplate>
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherToobarSettingEditorViewModel}">
-              <StackPanel Grid.IsSharedSizeScope="True">
+              <StackPanel x:Name="item" Grid.IsSharedSizeScope="True">
 
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -91,30 +93,42 @@
                   </Grid.ColumnDefinitions>
 
                   <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_LauncherToolbars_DefaultGroup_A, Source={x:Static app_main:CultureService.Current}}" />
-                  <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto" />
-                      <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <CheckBox Grid.Column="0" IsChecked="{Binding IsChangeDefaultGroup}" Content="{Binding Resources.String_Setting_LauncherToolbars_ChangeDefaultGroup_A, Source={x:Static app_main:CultureService.Current}}" />
-                    <ComboBox Grid.Column="1" ItemTemplate="{StaticResource Setting-LauncherGroups}" IsEnabled="{Binding IsChangeDefaultGroup}" SelectedValuePath="LauncherGroupId" SelectedValue="{Binding LauncherGroupId}" ItemsSource="{Binding Editor.AllLauncherGroupItems, Source={x:Reference root}}">
-                      <ComboBox.Style>
-                        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                  <Grid Grid.Column="1" HorizontalAlignment="Left">
+                    <ToggleButton x:Name="groupPopup" Width="150" IsChecked="{Binding ShowGroupPopupMenu}">
+                      <ToggleButton.Style>
+                        <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedLauncherGroup, Converter={StaticResource LogicalIsNotNullConverter}}" Value="True">
+                              <Setter Property="Content" Value="{Binding SelectedLauncherGroup}" />
+                              <Setter Property="ContentTemplate" Value="{StaticResource Setting-LauncherGroups}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                              <DataTemplate>
+                                <AccessText Text="{Binding Resources.String_Setting_LauncherToolbars_DefaultGroup_None_A, Source={x:Static app_main:CultureService.Current}}"  />
+                              </DataTemplate>
+                            </Setter.Value>
+                          </Setter>
                         </Style>
-                      </ComboBox.Style>
-                      <!--<ComboBox.ItemTemplate>
-                        <DataTemplate>
-                          <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Horizontal">
-                              <ContentControl Content="{Binding GroupIcon}" />
-                              <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
+                      </ToggleButton.Style>
+                    </ToggleButton>
+                    <Popup IsOpen="{Binding IsChecked, ElementName=groupPopup}" Style="{StaticResource PopupMenu}">
+                      <Border Style="{StaticResource PopupMenuBorder}">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                          <StackPanel>
+                            <MenuItem Header="{Binding Resources.String_Setting_LauncherToolbars_DefaultGroup_None_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.SelectDefaultLauncherGroupCommand, ElementName=item}" CommandParameter="{x:Null}" />
+                            <ItemsControl ItemsSource="{Binding Editor.AllLauncherGroupItems, Source={x:Reference root}}">
+                              <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                  <MenuItem Icon="{Binding GroupIcon}" Header="{Binding Name, Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding DataContext.SelectDefaultLauncherGroupCommand, ElementName=item}" CommandParameter="{Binding}" />
+                                </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                           </StackPanel>
-                        </DataTemplate>
-                      </ComboBox.ItemTemplate>-->
-
-                    </ComboBox>
+                        </ScrollViewer>
+                      </Border>
+                    </Popup>
                   </Grid>
                 </Grid>
 

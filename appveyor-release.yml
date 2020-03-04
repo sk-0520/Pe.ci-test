@@ -4,7 +4,7 @@ skip_tags: true
 clone_depth: 1
 environment:
   BUILD_TYPE:
-  ARCHIVE: zip
+  ARCHIVE: 7z
 branches:
   only:
     - master
@@ -23,7 +23,7 @@ build_script:
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms x64,x86
   - ps: .\Build\create-document.ps1 -Platforms x64,x86
   - ps: .\Build\compress.ps1 -Diet -Archive $env:ARCHIVE -Platforms x64,x86
-  - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion 0.87.1 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86
+  - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion 0.83.0 -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-release-note.ps1
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
@@ -33,7 +33,8 @@ test_script:
 artifacts:
   - path: Output\*.json
   - path: Output\*.html
+  - path: Source\Documents\build
+    name: document
 deploy_script:
-  - ps: .\Build\deploy.ps1 -TargetRepository bitbucket -Archive $env:ARCHIVE -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD
-cache:
-  - 'Source\Documents\node_modules'
+  - ps: .\Build\deploy.ps1 -TargetDownloader bitbucket -TargetRepository bitbucket -Archive $env:ARCHIVE -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD
+

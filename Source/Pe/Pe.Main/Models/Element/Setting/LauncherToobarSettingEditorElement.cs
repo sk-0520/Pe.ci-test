@@ -62,11 +62,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 
+            var defaultLauncherGroupId = LauncherGroupId;
+            if(defaultLauncherGroupId != Guid.Empty) {
+                if(!AllLauncherGroups.Any(i => i.LauncherGroupId == defaultLauncherGroupId)) {
+                    Logger.LogTrace("存在しないランチャーグループIDのため補正: {0}", defaultLauncherGroupId);
+                    defaultLauncherGroupId = Guid.Empty;
+                }
+            }
+
             var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
             var data = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = LauncherToolbarId,
                 FontId = Font.FontId,
-                LauncherGroupId = LauncherGroupId,
+                LauncherGroupId = defaultLauncherGroupId,
                 ToolbarPosition = ToolbarPosition,
                 IconDirection = IconDirection,
                 IconBox = IconBox,

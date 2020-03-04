@@ -8,6 +8,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
+    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    sealed internal class InitialDirectoryAttribute : Attribute
+    {
+        // This is a positional argument
+        public InitialDirectoryAttribute()
+        { }
+    }
+
     public class EnvironmentParameters
     {
         public EnvironmentParameters(DirectoryInfo rootDirectory, CommandLine commandLine)
@@ -47,6 +55,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         }
 
         #region property
+
+        /// <summary>
+        /// ディレクトリ取得時に作成するか。
+        /// </summary>
+        internal protected bool CreateDirectoryWhenGet { get; protected set; }
 
         public static string CommandLineKeyUserDirectory { get; } = "user-dir";
         public static string CommandLineKeyMachineDirectory { get; } = "machine-dir";
@@ -120,32 +133,61 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// ユーザーデータ配置ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo UserRoamingDirectory { get; }
         /// <summary>
         /// バックアップディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo UserBackupDirectory => CombineDirectory(UserRoamingDirectory, "backups");
         /// <summary>
         /// 設定ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo UserSettingDirectory => CombineDirectory(UserRoamingDirectory, "settings");
+        /// <summary>
+        /// プラグインディレクトリ。
+        /// </summary>
         public DirectoryInfo UserPluginDirectory => CombineDirectory(UserSettingDirectory, "plugins");
+        /// <summary>
+        /// プラグイン設定ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </summary>
         public DirectoryInfo UserPluginDataDirectory => CombineDirectory(UserPluginDirectory, "data");
 
         /// <summary>
         /// ユーザー端末配置ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo MachineDirectory { get; set; }
         /// <summary>
         /// アーカイブディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo MachineArchiveDirectory => CombineDirectory(MachineDirectory, "archive");
         /// <summary>
         /// アプリケーションアップデート用アーカイブ配置ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo MachineUpdateArchiveDirectory => CombineDirectory(MachineArchiveDirectory, "application");
+        /// <summary>
+        /// プラグインアップデート用アーカイブ配置ディレクトリ。
+        /// </summary>
+        public DirectoryInfo MachineUpdatePluginDirectory => CombineDirectory(MachineArchiveDirectory, "plugins");
+        /// <summary>
+        /// ユーザー端末プラグインディレクトリ。
+        /// </summary>
         public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
+        /// <summary>
+        /// ユーザー端末プラグイン設定ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </summary>
         public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(MachinePluginDirectory, "data");
+        /// <summary>
+        /// プラグインモジュール配置ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
+        /// </summary>
+        public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(MachinePluginDirectory, "modules");
 
         /// <summary>
         /// WebViewの端末親ディレクトリ。
@@ -156,6 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 一時ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo TemporaryDirectory { get; set; }
 
         /// <summary>
@@ -166,6 +209,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// WebViewのユーザーディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(TemporaryDirectory, "plugins");
+        /// <summary>
+        /// 一時プラグイン設定ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </summary>
         public DirectoryInfo TemporaryPluginDataDirectory => CombineDirectory(TemporaryPluginDirectory, "data");
 
         /// <summary>
@@ -176,6 +223,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アプリケーション展開ディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "application");
+        /// <summary>
+        /// プラグイン展開ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを作成して展開する。</para>
+        /// </summary>
+        public DirectoryInfo TemporaryPluginExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "plugins");
         /// <summary>
         /// WebViewの一時親ディレクトリ。
         /// </summary>
@@ -233,7 +285,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         private DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
         {
             var path = CombinePath(directory.FullName, directoryNames);
-            return new DirectoryInfo(path);
+            var dir = new DirectoryInfo(path);
+            if(CreateDirectoryWhenGet) {
+                if(!dir.Exists) {
+                    dir.Create();
+                }
+            }
+            return dir;
         }
 
         private FileInfo CombineFile(DirectoryInfo directory, params string[] directoryAndFileNames)
@@ -247,5 +305,19 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
     }
 
+    internal class ApplicationEnvironmentParameters : EnvironmentParameters
+    {
+        public ApplicationEnvironmentParameters(DirectoryInfo rootDirectory, CommandLine commandLine)
+            : base(rootDirectory, commandLine)
+        { }
 
+        #region function
+
+        public void SetFileSystemInitialized()
+        {
+            CreateDirectoryWhenGet = true;
+        }
+
+        #endregion
+    }
 }

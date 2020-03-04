@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         #region variable
 
         bool _isOpenNoteMenu;
+        bool _isOpenContextMenu;
         bool _isEnabledManager = true;
 
         #endregion
@@ -96,6 +97,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             get => this._isEnabledManager;
             set => SetProperty(ref this._isEnabledManager, value);
         }
+
+        public bool IsOpenContextMenu
+        {
+            get => this._isOpenContextMenu;
+            set
+            {
+                SetProperty(ref this._isOpenContextMenu, value);
+                Logger.LogDebug("[#530調査] IsOpenContextMenu: {0}", IsOpenContextMenu);
+            }
+        }
+
 
         public IReadOnlyUpdateInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
         #endregion
@@ -221,6 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         {
             if(e.StatusProperty == StatusProperty.CanCallNotifyAreaMenu) {
                 IsEnabledManager = (bool)e.NewValue!;
+                Logger.LogDebug("[#530調査] IsEnabledManager: {0}", IsEnabledManager);
             }
         }
 

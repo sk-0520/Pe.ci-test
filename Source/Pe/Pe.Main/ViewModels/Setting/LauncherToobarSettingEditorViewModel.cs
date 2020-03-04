@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -12,6 +13,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -19,7 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     {
         #region variable
 
-        bool _isChangeDefaultGroup;
+        //bool _isChangeDefaultGroup;
+        bool _showGroupPopupMenu;
 
         #endregion
 
@@ -29,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AllLauncherGroups = allLauncherGroups;
             GeneralTheme = generalTheme;
             IsSelectedGetter = isSelectedGetter;
-            Refresh();
+            //Refresh();
         }
 
         #region property
@@ -39,26 +42,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         IGeneralTheme GeneralTheme { get; }
         public FontViewModel? Font { get; private set; }
 
-        public bool IsChangeDefaultGroup
+        //public bool IsChangeDefaultGroup
+        //{
+        //    get => this._isChangeDefaultGroup;
+        //    set
+        //    {
+        //        SetProperty(ref this._isChangeDefaultGroup, value);
+        //        if(!IsChangeDefaultGroup) {
+        //            LauncherGroupId = Guid.Empty;
+        //        }
+        //    }
+        //}
+
+        public bool ShowGroupPopupMenu
         {
-            get => this._isChangeDefaultGroup;
-            set
-            {
-                SetProperty(ref this._isChangeDefaultGroup, value);
-                if(!IsChangeDefaultGroup) {
-                    LauncherGroupId = Guid.Empty;
-                }
-            }
+            get => this._showGroupPopupMenu;
+            set => SetProperty(ref this._showGroupPopupMenu, value);
         }
+
+        public LauncherGroupSettingEditorViewModel? SelectedLauncherGroup => AllLauncherGroups.ViewModels.FirstOrDefault(i => i.LauncherGroupId == LauncherGroupId);
 
         public Guid LauncherGroupId
         {
             get => Model.LauncherGroupId;
             set
             {
-                if(IsSelectedGetter()) {
-                    SetModelValue(value);
-                }
+                //if(IsSelectedGetter()) {
+                //    SetModelValue(value);
+                //}
+                SetModelValue(value);
             }
         }
 
@@ -145,29 +157,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
+        //public void Refresh()
+        //{
+        //    //RaisePropertyChanged(nameof(IsChangeDefaultGroup));
+        //    //RaisePropertyChanged(nameof(LauncherGroupId));
+
+        //    if(LauncherGroupId != Guid.Empty && 0 < AllLauncherGroups.Count) {
+        //        if(AllLauncherGroups.ViewModels.Any(i => i.LauncherGroupId == LauncherGroupId)) {
+        //            RaisePropertyChanged(nameof(LauncherGroupId));
+        //            IsChangeDefaultGroup = true;
+        //        } else {
+        //            LauncherGroupId = Guid.Empty;
+        //            IsChangeDefaultGroup = false;
+        //        }
+        //    } else {
+        //        LauncherGroupId = Guid.Empty;
+        //        IsChangeDefaultGroup = false;
+        //    }
+
+        //}
         public void Refresh()
         {
-            //RaisePropertyChanged(nameof(IsChangeDefaultGroup));
-            //RaisePropertyChanged(nameof(LauncherGroupId));
-
-            if(LauncherGroupId != Guid.Empty && 0 < AllLauncherGroups.Count) {
-                if(AllLauncherGroups.ViewModels.Any(i => i.LauncherGroupId == LauncherGroupId)) {
-                    RaisePropertyChanged(nameof(LauncherGroupId));
-                    IsChangeDefaultGroup = true;
-                } else {
-                    LauncherGroupId = Guid.Empty;
-                    IsChangeDefaultGroup = false;
-                }
-            } else {
+            var selectedItem = SelectedLauncherGroup;
+            RaisePropertyChanged(nameof(SelectedLauncherGroup));
+            if(selectedItem == null) {
                 LauncherGroupId = Guid.Empty;
-                IsChangeDefaultGroup = false;
             }
-
         }
 
         #endregion
 
         #region command
+
+        public ICommand SelectDefaultLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupSettingEditorViewModel?>(
+            o => {
+                LauncherGroupId = o?.LauncherGroupId ?? Guid.Empty;
+                ShowGroupPopupMenu = false;
+                Refresh();
+            }
+        ));
 
         #endregion
 

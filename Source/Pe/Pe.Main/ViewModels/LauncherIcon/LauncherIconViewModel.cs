@@ -64,6 +64,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
         #endregion
 
         #region SingleModelViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var vm in IconItems.Values) {
+                        vm.Dispose();
+                    }
+                }
+            }
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         #region ILauncherItemId

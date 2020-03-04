@@ -91,6 +91,86 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/03/04",
+		"version": "0.89.000",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "notice",
+						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "1c3d38a7864df733511166519d1b1653b2138e3e",
+						"subject": "#524: コマンド入力のスコア評価を改善する"
+					},
+					{
+						"revision": "9f8bf74cc6115c185605976e0db6df247f9e9a1e",
+						"subject": "#502: コマンドランチャーで待機時間は不要",
+						"comments": [
+							"待機時間をなくすとともに列挙したアイテムの表示処理を改善"
+						]
+					},
+					{
+						"revision": "3abcddddb765cc3518a782b9605d5fac8e711b83",
+						"subject": "#556: マウスの戻る・進むボタンでグループの切り替えを行う"
+					},
+					{
+						"revision": "b009fecc49f444949c526768a353c3f292a1fbb4",
+						"subject": "#548: 自動的に隠すツールバーを強制的に隠した場合の表示条件該当に制限を入れる"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "5b5f2cd74188eb8eb78807d201cd547e8c8514e5",
+						"subject": "#544: コマンド型ランチャー入力時の色設定が完全にデバッグ用なので適当にいい感じにする"
+					},
+					{
+						"revision": "75a38b0cb9ff06646627c162a8013bd8743e04e6",
+						"subject": "#522: ツールバーの初期グループ選択設定が未選択の場合に選択されているものとして扱われる"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "81ea3b586a491bb96bdab6d328de08ebca402980",
+						"subject": "#518: 配布形式を 7z にする"
+					},
+					{
+						"revision": "851425c7aacab4dce068424b636da3df09b9c95c",
+						"subject": "#545: リリースビルド処理で node_modules のキャッシュは外す"
+					},
+					{
+						"revision": "b5cfd2810b064bbd244684fe2e834643b87c8d28",
+						"subject": "#555: Pe の所有しているディレクトリに対しては安全にアクセスできる仕組みを作る"
+					},
+					{
+						"revision": "bcfcb271b5eb08179f5c8e03dab9d598e86eeac2",
+						"subject": "#552: メインアイコンを 3 つも持つ必要なくない？",
+						"comments": [
+							"CI ビルド時に切り替えるようにして *.ico 自体はリポジトリ管理にした"
+						]
+					},
+					{
+						"revision": "dcf88dd4ef9a72558923cbc03e948dfad93907e3",
+						"subject": "#547: デプロイ処理の対象サービスでアーカイブ配布先とタグ付けが一緒になってる"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/03/01",
 		"version": "0.88.000",
 		"contents": [
@@ -102,7 +182,8 @@ const changelogs = [
 						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
 					}
 				]
-			},{
+			},
+			{
 				"type": "fixes",
 				"logs": [
 					{
@@ -319,7 +400,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "78ce8c309c5efc1e586fc209560063734094b792",
-						"subject":"#484: 設計練り直して作り直し",
+						"subject": "#484: 設計練り直して作り直し",
 						"comments": [
 							"今回の主要アップデートで他のは付随してきただけの課題です",
 							"色々足りないけど自動更新機能が動けば何とかなる思い"
@@ -5550,7 +5631,7 @@ window.addEventListener('load', () => {
 
 
 				if ('revision' in log) {
-					if(log['revision']) {
+					if (log['revision']) {
 						const revision = document.createElement('a');
 						revision.className = 'revision';
 						revision.textContent = log['revision']!;

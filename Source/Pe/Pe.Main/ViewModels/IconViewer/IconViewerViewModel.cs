@@ -89,6 +89,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
             Model.PropertyChanged -= Model_PropertyChanged;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    RunningStatus.Dispose();
+                    PropertyChangedHooker.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

@@ -14,7 +14,7 @@ $exeImageMagic = if ($env:IMAGEMAGIC) { $env:IMAGEMAGIC } else { [Environment]::
 
 $appIcons = @(
 	@{
-		name  = 'App'
+		name  = 'App-release'
 		color = '#ffffff'
 	}
 	@{
@@ -68,7 +68,7 @@ function ConvertAppSvgToPng() {
 function PackAppIcon {
 	foreach ($appIcon in $appIcons) {
 		$pattern = "$($appIcon.name)_*.png"
-		$outputPath = Join-Path $currentDirPath "$($appIcon.name).ico"
+		$outputPath = Join-Path $iconDirPath "$($appIcon.name).ico"
 		PackIcon $workDirPath $pattern $outputPath
 	}
 }
@@ -113,7 +113,6 @@ function MoveAppIcon {
 while ($true) {
 	Write-Host "1: Pe: SVG -> PNG"
 	Write-Host "2: Pe: PNG -> ICO"
-	Write-Host "3: Pe: アイコン反映"
 	Write-Host "x: 終了"
 	if ($FirstInput) {
 		$inputValue = $FirstInput
@@ -129,9 +128,6 @@ while ($true) {
 			}
 			'2' {
 				PackAppIcon
-			}
-			'3' {
-				MoveAppIcon
 			}
 			'x' {
 				exit 0;

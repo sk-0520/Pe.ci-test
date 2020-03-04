@@ -275,6 +275,9 @@
     <i:EventTrigger EventName="MouseDoubleClick">
       <i:InvokeCommandAction Command="{Binding AutoHideToHideCommand}" />
     </i:EventTrigger>
+    <i:EventTrigger EventName="PreviewMouseDown">
+      <prism:InvokeCommandAction Command="{Binding PreviewMouseDownCommand}" />
+    </i:EventTrigger>
   </i:Interaction.Triggers>
   <i:Interaction.Behaviors>
     <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />
@@ -289,6 +292,10 @@
         </DataTrigger>
         <DataTrigger Binding="{Binding IsHiding}" Value="True">
           <Setter Property="Topmost" Value="True" />
+        </DataTrigger>
+        <DataTrigger Binding="{Binding ShowWaiting}" Value="True">
+          <!-- 強制的に隠した状態の間はマウスを無視 -->
+          <Setter Property="IsHitTestVisible" Value="False" />
         </DataTrigger>
         <!--<DataTrigger Binding="{Binding IsHiding}" Value="False">
           <Setter Property="Topmost" Value="{Binding IsTopmost}" />

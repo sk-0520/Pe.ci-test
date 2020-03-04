@@ -15,12 +15,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         Version PluginVersion { get; }
 
         /// <summary>
-        /// プラグインが動作可能な Pe の最低バージョン。
-        /// <para>0.83.0.18060 より上が最低バージョンとなる。</para>
+        /// プラグインが動作可能な Pe の最低バージョン(以上)。
+        /// <para>0.0.0 で全バージョン稼働OK。</para>
         /// </summary>
         Version MinimumSupportVersion { get; }
         /// <summary>
-        /// プラグインが動作可能な Pe の最大バージョン。
+        /// プラグインが動作可能な Pe の最大バージョン(以下)。
+        /// <para>0.0.0 で全バージョン稼働OK。</para>
         /// </summary>
         Version MaximumSupportVersion { get; }
 

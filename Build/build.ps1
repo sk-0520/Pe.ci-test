@@ -15,6 +15,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
 	. $scriptFilePath
 }
+$rootDirectory = Split-Path -Path $currentDirPath -Parent
 
 Write-Output "ProductMode = $ProductMode"
 Write-Output "IgnoreChanged = $IgnoreChanged"
@@ -22,20 +23,17 @@ Write-Output "BuildType = $BuildType"
 Write-Output "Platforms = $Platforms"
 Write-Output ""
 
-
 Write-Output ("git: " + (git --version))
 Write-Output ("msbuild: " + (msbuild -version -noLogo))
 Write-Output ("dotnet: " + (dotnet --version))
 
-if(!$IgnoreChanged) {
+if (!$IgnoreChanged) {
 	# SCM 的に現行状態に未コミットがあれば死ぬ
 	if ((git status -s | Measure-Object).Count -ne 0) {
 		throw "変更あり"
 	}
 }
 
-
-$rootDirectory = Split-Path -Path $currentDirPath -Parent
 try {
 	Push-Location $rootDirectory
 
@@ -64,12 +62,14 @@ try {
 	}
 
 	$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
-	if(!$IgnoreChanged) {
-		Write-Output "changed..."
-		foreach($projectFile in $projectFiles) {
+	if (!$IgnoreChanged) {
+		Write-Output "change ..."
+		foreach ($projectFile in $projectFiles) {
 			Write-Output "        -> $projectFile"
 		}
+		Write-Output "        -> App.ico"
 	}
+
 	foreach ($projectFile in $projectFiles) {
 		Write-Output $projectFile.Name
 		$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
@@ -86,19 +86,30 @@ try {
 		$xml.Save($projectFile)
 	}
 
+	# アイコンファイルの差し替え
+	$appIconName = switch ($BuildType) {
+		'BETA' { 'App-beta.ico' }
+		'' { 'App-release.ico' }
+		Default { 'App-debug.ico' }
+	}
+	Write-Output "icon: $appIconName"
+	$appIconPath = Join-Path 'Resource\Icon' $appIconName
+
+	Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
+
 	# ビルド開始
 	$defines = @()
 	if ( $BuildType ) {
 		$defines += $BuildType
 	}
-	if( $ProductMode ) {
+	if ( $ProductMode ) {
 		$defines += 'PRODUCT'
 	}
 	# ; を扱う https://docs.microsoft.com/ja-jp/visualstudio/msbuild/msbuild-special-characters?view=vs-2015&redirectedfrom=MSDN
 	$define = $defines -join '%3B'
 
-	foreach($platform in $Platforms) {
-		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define
+	foreach ($platform in $Platforms) {
+		msbuild        Source/Pe.Boot/Pe.Boot.sln       /m                   /p:Configuration=Release /p:Platform=$platform /p:DefineConstants=$define /t:Rebuild
 		dotnet build   Source/Pe/Pe.sln                 /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform
 		dotnet publish Source/Pe/Pe.Main/Pe.Main.csproj /m --verbosity normal --configuration Release /p:Platform=$platform /p:DefineConstants=$define --runtime win-$platform --output Output/Release/$platform/Pe/bin --self-contained true
 
@@ -127,7 +138,7 @@ try {
 	}
 }
 finally {
-	if(!$IgnoreChanged) {
+	if (!$IgnoreChanged) {
 		git reset --hard
 	}
 	Pop-Location
