@@ -240,15 +240,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         void InitializeFileSystem(EnvironmentParameters environmentParameters, ILogger logger)
         {
-            var dirs = new[] {
-                environmentParameters.UserRoamingDirectory,
-                environmentParameters.UserBackupDirectory,
-                environmentParameters.UserSettingDirectory,
-                environmentParameters.MachineDirectory,
-                environmentParameters.MachineArchiveDirectory,
-                environmentParameters.MachineUpdateArchiveDirectory,
-                environmentParameters.TemporaryDirectory,
-            };
+            var dirs = environmentParameters.GetType()
+                .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(i => i.GetCustomAttribute<InitialDirectoryAttribute>() != null)
+                .Select(i => i.GetValue(environmentParameters))
+                .OfType<DirectoryInfo>()
+                .ToList()
+            ;
 
             foreach(var dir in dirs) {
                 logger.LogDebug("create {0}", dir.FullName);
