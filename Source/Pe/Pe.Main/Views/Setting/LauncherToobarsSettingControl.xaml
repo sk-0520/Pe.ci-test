@@ -106,7 +106,7 @@
                           <Setter Property="ContentTemplate">
                             <Setter.Value>
                               <DataTemplate>
-                                <TextBlock Text="none" />
+                                <AccessText Text="{Binding Resources.String_Setting_LauncherToolbars_DefaultGroup_None_A, Source={x:Static app_main:CultureService.Current}}"  />
                               </DataTemplate>
                             </Setter.Value>
                           </Setter>
@@ -115,13 +115,18 @@
                     </ToggleButton>
                     <Popup IsOpen="{Binding IsChecked, ElementName=groupPopup}" Style="{StaticResource PopupMenu}">
                       <Border Style="{StaticResource PopupMenuBorder}">
-                        <ItemsControl ItemsSource="{Binding Editor.AllLauncherGroupItems, Source={x:Reference root}}">
-                          <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                              <MenuItem Icon="{Binding GroupIcon}" Header="{Binding Name, Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding DataContext.SelectDefaultLauncherGroupCommand, ElementName=item}" CommandParameter="{Binding}" />
-                            </DataTemplate>
-                          </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                          <StackPanel>
+                            <MenuItem Header="{Binding Resources.String_Setting_LauncherToolbars_DefaultGroup_None_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.SelectDefaultLauncherGroupCommand, ElementName=item}" CommandParameter="{x:Null}" />
+                            <ItemsControl ItemsSource="{Binding Editor.AllLauncherGroupItems, Source={x:Reference root}}">
+                              <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                  <MenuItem Icon="{Binding GroupIcon}" Header="{Binding Name, Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding DataContext.SelectDefaultLauncherGroupCommand, ElementName=item}" CommandParameter="{Binding}" />
+                                </DataTemplate>
+                              </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                          </StackPanel>
+                        </ScrollViewer>
                       </Border>
                     </Popup>
                   </Grid>
