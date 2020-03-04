@@ -180,6 +180,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#547: デプロイ処理の対象サービスでアーカイブ配布先とタグ付けが一緒になってる"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

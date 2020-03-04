@@ -1,4 +1,5 @@
 ﻿Param(
+	[parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetDownloader,
 	[parameter(mandatory = $true)][ValidateSet("bitbucket")][string] $TargetRepository,
 	[parameter(mandatory = $true)][ValidateSet("zip", "7z")][string] $Archive,
 	[parameter(mandatory = $true)][string] $DeployApiDownloadUrl,
@@ -69,6 +70,7 @@ function UploadFile([string] $filePath) {
 		-InFile $httpPath
 }
 
+# ダウンローダーへ送信
 switch ($TargetRepository) {
 	'bitbucket' {
 		foreach ($archiveFile in $archiveFiles) {
@@ -76,7 +78,12 @@ switch ($TargetRepository) {
 		}
 		UploadFile $releaseNoteFile
 		UploadFile $updateFile
+	}
+}
 
+# タグ付け
+switch ($TargetRepository) {
+	'bitbucket' {
 		$bitbucketTagApiFile = Join-Path $outputDirectory 'bitbucket-tag.json'
 		Write-Output "Post: $DeployApiTagUrl"
 		Write-Output "File: $bitbucketTagApiFile"
