@@ -25,6 +25,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </UserControl.Resources>
 
@@ -82,7 +83,7 @@
 
           <ContentControl.ContentTemplate>
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:LauncherToobarSettingEditorViewModel}">
-              <StackPanel Grid.IsSharedSizeScope="True">
+              <StackPanel x:Name="item" Grid.IsSharedSizeScope="True">
 
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -105,13 +106,13 @@
                       </ComboBox.Style>
                     </ComboBox>-->
                     <Grid Grid.Column="1">
-                      <ToggleButton x:Name="groupPopup">
+                      <ToggleButton x:Name="groupPopup" Content="{Binding LauncherGroupId}" IsChecked="{Binding ShowGroupPopupMenu}">
                         <ToggleButton.Style>
                           <Style TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
                             <Style.Triggers>
                               <DataTrigger />
                             </Style.Triggers>
-                            <Setter Property="ContentTemplate" Value="{StaticResource Setting-LauncherGroups}" />
+                            <!--<Setter Property="ContentTemplate" Value="{StaticResource Setting-LauncherGroups}" />-->
                           </Style>
                         </ToggleButton.Style>
                       </ToggleButton>
@@ -120,7 +121,7 @@
                           <ItemsControl ItemsSource="{Binding Editor.AllLauncherGroupItems, Source={x:Reference root}}">
                             <ItemsControl.ItemTemplate>
                               <DataTemplate>
-                                <MenuItem Icon="{Binding GroupIcon}" Header="{Binding Name}" />
+                                <MenuItem Icon="{Binding GroupIcon}" Header="{Binding Name, Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding DataContext.SelectDefaultLauncherGroupCommand, ElementName=item}" CommandParameter="{Binding}" />
                               </DataTemplate>
                             </ItemsControl.ItemTemplate>
                           </ItemsControl>

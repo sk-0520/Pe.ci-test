@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -12,6 +13,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
@@ -20,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region variable
 
         bool _isChangeDefaultGroup;
+        bool _showGroupPopupMenu;
 
         #endregion
 
@@ -51,14 +54,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        public bool ShowGroupPopupMenu
+        {
+            get => this._showGroupPopupMenu;
+            set => SetProperty(ref this._showGroupPopupMenu, value);
+        }
+
         public Guid LauncherGroupId
         {
             get => Model.LauncherGroupId;
             set
             {
-                if(IsSelectedGetter()) {
-                    SetModelValue(value);
-                }
+                //if(IsSelectedGetter()) {
+                //    SetModelValue(value);
+                //}
+                SetModelValue(value);
             }
         }
 
@@ -168,6 +178,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region command
+
+        public ICommand SelectDefaultLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupSettingEditorViewModel>(
+            o => {
+                LauncherGroupId = o.LauncherGroupId;
+                ShowGroupPopupMenu = false;
+            }
+        ));
 
         #endregion
 
