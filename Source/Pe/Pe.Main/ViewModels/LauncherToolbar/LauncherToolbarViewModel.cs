@@ -459,6 +459,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             if(!IsAutoHide) {
                 return;
             }
+            if(IsHiding) {
+                return;
+            }
 
             DispatcherWrapper.VerifyAccess();
 
@@ -477,6 +480,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
             AppDesktopToolbarExtend!.HideView(true);
             if(AutoHideShowWaitTimer != null) {
+                Logger.LogTrace("自動的に隠すの強制隠しからの復帰抑制を開始");
                 ShowWaiting = true;
                 AutoHideShowWaitTimer.Start();
             }
@@ -634,15 +638,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void AutoHideShowWaitTimer_Tick(object? sender, EventArgs e)
         {
-            Logger.LogTrace("自動的に隠すの強制隠し抑制を解除");
+            Logger.LogTrace("自動的に隠すの強制隠しからの復帰抑制を解除");
+            ShowWaiting = false;
 
             if(AutoHideShowWaitTimer != null) {
                 AutoHideShowWaitTimer.Tick -= AutoHideShowWaitTimer_Tick;
                 AutoHideShowWaitTimer.Stop();
                 AutoHideShowWaitTimer = null;
             }
-
-            ShowWaiting = false;
         }
 
     }
