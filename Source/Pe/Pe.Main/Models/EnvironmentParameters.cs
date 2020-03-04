@@ -145,7 +145,14 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         [InitialDirectory]
         public DirectoryInfo UserSettingDirectory => CombineDirectory(UserRoamingDirectory, "settings");
+        /// <summary>
+        /// プラグインディレクトリ。
+        /// </summary>
         public DirectoryInfo UserPluginDirectory => CombineDirectory(UserSettingDirectory, "plugins");
+        /// <summary>
+        /// プラグイン設定ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </summary>
         public DirectoryInfo UserPluginDataDirectory => CombineDirectory(UserPluginDirectory, "data");
 
         /// <summary>
@@ -163,8 +170,24 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         [InitialDirectory]
         public DirectoryInfo MachineUpdateArchiveDirectory => CombineDirectory(MachineArchiveDirectory, "application");
+        /// <summary>
+        /// プラグインアップデート用アーカイブ配置ディレクトリ。
+        /// </summary>
+        public DirectoryInfo MachineUpdatePluginDirectory => CombineDirectory(MachineArchiveDirectory, "plugins");
+        /// <summary>
+        /// ユーザー端末プラグインディレクトリ。
+        /// </summary>
         public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
+        /// <summary>
+        /// ユーザー端末プラグイン設定ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </summary>
         public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(MachinePluginDirectory, "data");
+        /// <summary>
+        /// プラグインモジュール配置ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
+        /// </summary>
+        public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(MachinePluginDirectory, "modules");
 
         /// <summary>
         /// WebViewの端末親ディレクトリ。
@@ -186,6 +209,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// WebViewのユーザーディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(TemporaryDirectory, "plugins");
+        /// <summary>
+        /// 一時プラグイン設定ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
+        /// </summary>
         public DirectoryInfo TemporaryPluginDataDirectory => CombineDirectory(TemporaryPluginDirectory, "data");
 
         /// <summary>
@@ -196,6 +223,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アプリケーション展開ディレクトリ。
         /// </summary>
         public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "application");
+        /// <summary>
+        /// プラグイン展開ディレクトリ。
+        /// <para>この下にプラグインごとのディレクトリを作成して展開する。</para>
+        /// </summary>
+        public DirectoryInfo TemporaryPluginExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "plugins");
         /// <summary>
         /// WebViewの一時親ディレクトリ。
         /// </summary>
