@@ -30,9 +30,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon1.ico">
-      <Filter>リソース ファイル</Filter>
-    </Image>
     <Image Include="..\..\Pe\Pe.Main\Resources\Icon\App.ico">
       <Filter>リソース ファイル</Filter>
     </Image>

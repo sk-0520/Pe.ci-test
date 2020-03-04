@@ -206,18 +206,10 @@
             <Setter Property="ContextMenu" Value="{x:Null}" />
             <Setter Property="DoubleClickCommand" Value="{x:Null}" />
           </DataTrigger>
-          <DataTrigger Binding="{Binding BuildType}" Value="Debug">
-            <Setter Property="IconSource" Value="/Resources/Icon/App-debug.ico" />
-          </DataTrigger>
-          <DataTrigger Binding="{Binding BuildType}" Value="Beta">
-            <Setter Property="IconSource" Value="/Resources/Icon/App-beta.ico" />
-          </DataTrigger>
-          <DataTrigger Binding="{Binding BuildType}" Value="Release">
-            <Setter Property="IconSource" Value="/Resources/Icon/App.ico" />
-          </DataTrigger>
         </Style.Triggers>
         <Setter Property="ContextMenu" Value="{StaticResource ContextMenu}" />
         <Setter Property="DoubleClickCommand" Value="{Binding OpenStartupCommand}" />
+        <Setter Property="IconSource" Value="/Resources/Icon/App.ico" />
       </Style>
     </Taskbar:TaskbarIcon.Style>
   </Taskbar:TaskbarIcon>
