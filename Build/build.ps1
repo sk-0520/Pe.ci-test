@@ -63,37 +63,39 @@ try {
 
 	$projectFiles = (Get-ChildItem -Path "Source\Pe\" -Recurse -Include *.csproj)
 	if (!$IgnoreChanged) {
-		Write-Output "changed..."
+		Write-Output "change ..."
 		foreach ($projectFile in $projectFiles) {
 			Write-Output "        -> $projectFile"
 		}
-		foreach ($projectFile in $projectFiles) {
-			Write-Output $projectFile.Name
-			$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
-
-			UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
-			UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
-			$repMap = @{
-				'@YYYY@' = '2020'
-				'@NAME@' = 'sk'
-				'@SITE@' = 'content-type-text.net'
-			}
-			ReplaceElement $repMap $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
-
-			$xml.Save($projectFile)
-		}
-
-		# アイコンファイルの差し替え
-		$appIconName = switch ($BuildType) {
-			'BETA' { 'App-beta.ico' }
-			'' { 'App-release.ico' }
-			Default { 'App-debug.ico' }
-		}
-		Write-Output "icon: $appIconName"
-		$appIconPath = Join-Path 'Resource\Icon' $appIconName
-
-		Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
+		Write-Output "        -> App.ico"
 	}
+
+	foreach ($projectFile in $projectFiles) {
+		Write-Output $projectFile.Name
+		$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
+
+		UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
+		UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+		$repMap = @{
+			'@YYYY@' = '2020'
+			'@NAME@' = 'sk'
+			'@SITE@' = 'content-type-text.net'
+		}
+		ReplaceElement $repMap $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
+
+		$xml.Save($projectFile)
+	}
+
+	# アイコンファイルの差し替え
+	$appIconName = switch ($BuildType) {
+		'BETA' { 'App-beta.ico' }
+		'' { 'App-release.ico' }
+		Default { 'App-debug.ico' }
+	}
+	Write-Output "icon: $appIconName"
+	$appIconPath = Join-Path 'Resource\Icon' $appIconName
+
+	Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
 
 	# ビルド開始
 	$defines = @()
