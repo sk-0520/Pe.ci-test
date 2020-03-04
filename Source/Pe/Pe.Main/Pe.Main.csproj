@@ -74,8 +74,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Icon\App-beta.ico" />
-    <Resource Include="Resources\Icon\App-debug.ico" />
     <Resource Include="Resources\Icon\App.ico" />
   </ItemGroup>
 
