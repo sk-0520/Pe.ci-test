@@ -169,6 +169,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#555: Pe の所有しているディレクトリに対しては安全にアクセスできる仕組みを作る"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

@@ -100,14 +100,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 #endif
 
-        EnvironmentParameters InitializeEnvironment(CommandLine commandLine)
+        ApplicationEnvironmentParameters InitializeEnvironment(CommandLine commandLine)
         {
             Debug.Assert(commandLine.IsParsed);
 
             var applicationDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory);
 
-            return new EnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
+            return new ApplicationEnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
         }
 
         ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, [CallerFilePath] string callerFilePath = "")
@@ -240,15 +240,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         void InitializeFileSystem(EnvironmentParameters environmentParameters, ILogger logger)
         {
-            var dirs = new[] {
-                environmentParameters.UserRoamingDirectory,
-                environmentParameters.UserBackupDirectory,
-                environmentParameters.UserSettingDirectory,
-                environmentParameters.MachineDirectory,
-                environmentParameters.MachineArchiveDirectory,
-                environmentParameters.MachineUpdateArchiveDirectory,
-                environmentParameters.TemporaryDirectory,
-            };
+            var dirs = environmentParameters.GetType()
+                .GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(i => i.GetCustomAttribute<InitialDirectoryAttribute>() != null)
+                .Select(i => i.GetValue(environmentParameters))
+                .OfType<DirectoryInfo>()
+                .ToList()
+            ;
 
             foreach(var dir in dirs) {
                 logger.LogDebug("create {0}", dir.FullName);
@@ -496,6 +494,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             InitializeFileSystem(environmentParameters, logger);
+            environmentParameters.SetFileSystemInitialized();
+
+
             if(IsFirstStartup) {
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
