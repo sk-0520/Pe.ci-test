@@ -8,6 +8,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models
 {
+    [System.AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    sealed internal class InitialDirectoryAttribute : Attribute
+    {
+        // This is a positional argument
+        public InitialDirectoryAttribute()
+        { }
+    }
+
     public class EnvironmentParameters
     {
         public EnvironmentParameters(DirectoryInfo rootDirectory, CommandLine commandLine)
@@ -120,14 +128,17 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// ユーザーデータ配置ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo UserRoamingDirectory { get; }
         /// <summary>
         /// バックアップディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo UserBackupDirectory => CombineDirectory(UserRoamingDirectory, "backups");
         /// <summary>
         /// 設定ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo UserSettingDirectory => CombineDirectory(UserRoamingDirectory, "settings");
         public DirectoryInfo UserPluginDirectory => CombineDirectory(UserSettingDirectory, "plugins");
         public DirectoryInfo UserPluginDataDirectory => CombineDirectory(UserPluginDirectory, "data");
@@ -135,14 +146,17 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// ユーザー端末配置ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo MachineDirectory { get; set; }
         /// <summary>
         /// アーカイブディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo MachineArchiveDirectory => CombineDirectory(MachineDirectory, "archive");
         /// <summary>
         /// アプリケーションアップデート用アーカイブ配置ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo MachineUpdateArchiveDirectory => CombineDirectory(MachineArchiveDirectory, "application");
         public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
         public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(MachinePluginDirectory, "data");
@@ -156,6 +170,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 一時ディレクトリ。
         /// </summary>
+        [InitialDirectory]
         public DirectoryInfo TemporaryDirectory { get; set; }
 
         /// <summary>
