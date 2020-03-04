@@ -91,8 +91,8 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.88.001",
+		"date": "2020/03/04",
+		"version": "0.89.000",
 		"contents": [
 			{
 				"type": "note",
@@ -100,14 +100,6 @@ const changelogs = [
 					{
 						"class": "notice",
 						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -115,27 +107,23 @@ const changelogs = [
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "1c3d38a7864df733511166519d1b1653b2138e3e",
 						"subject": "#524: コマンド入力のスコア評価を改善する"
 					},
 					{
-						"revision": "",
+						"revision": "9f8bf74cc6115c185605976e0db6df247f9e9a1e",
 						"subject": "#502: コマンドランチャーで待機時間は不要",
 						"comments": [
 							"待機時間をなくすとともに列挙したアイテムの表示処理を改善"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "3abcddddb765cc3518a782b9605d5fac8e711b83",
 						"subject": "#556: マウスの戻る・進むボタンでグループの切り替えを行う"
 					},
 					{
-						"revision": "",
+						"revision": "b009fecc49f444949c526768a353c3f292a1fbb4",
 						"subject": "#548: 自動的に隠すツールバーを強制的に隠した場合の表示条件該当に制限を入れる"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -143,20 +131,12 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "5b5f2cd74188eb8eb78807d201cd547e8c8514e5",
 						"subject": "#544: コマンド型ランチャー入力時の色設定が完全にデバッグ用なので適当にいい感じにする"
 					},
 					{
-						"revision": "",
+						"revision": "75a38b0cb9ff06646627c162a8013bd8743e04e6",
 						"subject": "#522: ツールバーの初期グループ選択設定が未選択の場合に選択されているものとして扱われる"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -164,31 +144,27 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "81ea3b586a491bb96bdab6d328de08ebca402980",
 						"subject": "#518: 配布形式を 7z にする"
 					},
 					{
-						"revision": "",
+						"revision": "851425c7aacab4dce068424b636da3df09b9c95c",
 						"subject": "#545: リリースビルド処理で node_modules のキャッシュは外す"
 					},
 					{
-						"revision": "",
+						"revision": "b5cfd2810b064bbd244684fe2e834643b87c8d28",
 						"subject": "#555: Pe の所有しているディレクトリに対しては安全にアクセスできる仕組みを作る"
 					},
 					{
-						"revision": "",
+						"revision": "bcfcb271b5eb08179f5c8e03dab9d598e86eeac2",
 						"subject": "#552: メインアイコンを 3 つも持つ必要なくない？",
 						"comments": [
 							"CI ビルド時に切り替えるようにして *.ico 自体はリポジトリ管理にした"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "dcf88dd4ef9a72558923cbc03e948dfad93907e3",
 						"subject": "#547: デプロイ処理の対象サービスでアーカイブ配布先とタグ付けが一緒になってる"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
