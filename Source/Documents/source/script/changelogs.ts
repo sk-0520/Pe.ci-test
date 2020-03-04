@@ -173,6 +173,13 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#552: メインアイコンを 3 つも持つ必要なくない？",
+						"comments": [
+							"CI ビルド時に切り替えるようにして *.ico 自体はリポジトリ管理にした"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
