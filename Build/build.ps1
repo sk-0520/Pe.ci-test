@@ -69,21 +69,21 @@ try {
 		foreach($projectFile in $projectFiles) {
 			Write-Output "        -> $projectFile"
 		}
-	}
-	foreach ($projectFile in $projectFiles) {
-		Write-Output $projectFile.Name
-		$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
+		foreach ($projectFile in $projectFiles) {
+			Write-Output $projectFile.Name
+			$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
 
-		UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
-		UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
-		$repMap = @{
-			'@YYYY@' = '2020'
-			'@NAME@' = 'sk'
-			'@SITE@' = 'content-type-text.net'
+			UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
+			UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+			$repMap = @{
+				'@YYYY@' = '2020'
+				'@NAME@' = 'sk'
+				'@SITE@' = 'content-type-text.net'
+			}
+			ReplaceElement $repMap $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
+
+			$xml.Save($projectFile)
 		}
-		ReplaceElement $repMap $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
-
-		$xml.Save($projectFile)
 	}
 
 	# ビルド開始
