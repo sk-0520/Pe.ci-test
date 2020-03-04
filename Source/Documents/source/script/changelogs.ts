@@ -131,6 +131,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#548: 自動的に隠すツールバーを強制的に隠した場合の表示条件該当に制限を入れる"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
