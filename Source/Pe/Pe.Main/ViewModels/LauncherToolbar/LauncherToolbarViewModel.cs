@@ -258,11 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public ICommand ChangeLauncherGroupCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherGroupViewModel>(
            o => {
-               var groupModel = LauncherGroupCollection.GetModel(o);
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-               Model.ChangeLauncherGroup(groupModel);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-               LauncherItems.Refresh();
+               ChangeLauncherGroup(o);
            }
        ));
 
@@ -318,9 +314,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     }
 
                     var vm = LauncherGroupCollection.ViewModels[nextIndex];
-                    var groupModel = LauncherGroupCollection.GetModel(vm)!;
-                    Model.ChangeLauncherGroup(groupModel);
-                    LauncherItems.Refresh();
+                    ChangeLauncherGroup(vm);
 
                     o.Handled = true;
                 }
@@ -330,6 +324,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         #endregion
 
         #region function
+
+        void ChangeLauncherGroup(LauncherGroupViewModel targetGroup)
+        {
+            var currentLauncherItems = LauncherItemCollection.ViewModels.ToList();
+
+            var groupModel = LauncherGroupCollection.GetModel(targetGroup)!;
+            Model.ChangeLauncherGroup(groupModel);
+            LauncherItems.Refresh();
+
+            foreach(var vm in currentLauncherItems) {
+                vm.Dispose();
+            }
+        }
 
         DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
         {
