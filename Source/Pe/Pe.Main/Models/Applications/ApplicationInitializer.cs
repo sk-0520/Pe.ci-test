@@ -362,8 +362,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
                 .Register<IDiContainer, ApplicationDiContainer>(container)
+
                 .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
                 .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
+                .Register<GeneralConfiguration, GeneralConfiguration>(environmentParameters.Configuration.General)
+                .Register<WebConfiguration, WebConfiguration>(environmentParameters.Configuration.Web)
+                .Register<ApiConfiguration, ApiConfiguration>(environmentParameters.Configuration.Api)
+                .Register<BackupConfiguration, BackupConfiguration>(environmentParameters.Configuration.Backup)
+                .Register<FileConfiguration, FileConfiguration>(environmentParameters.Configuration.File)
+                .Register<DisplayConfiguration, DisplayConfiguration>(environmentParameters.Configuration.Display)
+                .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.Configuration.LauncherToobar)
+                .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.Configuration.LauncherGroup)
+                .Register<NoteConfiguration, NoteConfiguration>(environmentParameters.Configuration.Note)
+                .Register<CommandConfiguration, CommandConfiguration>(environmentParameters.Configuration.Command)
+                .Register<PlatformConfiguration, PlatformConfiguration>(environmentParameters.Configuration.Platform)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), loggerFactory))
                 /*

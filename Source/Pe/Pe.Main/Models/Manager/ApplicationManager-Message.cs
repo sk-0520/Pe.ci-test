@@ -198,9 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             var windowItems = WindowManager.GetWindowItems(WindowKind.LauncherToolbar);
                             foreach(var windowItem in windowItems) {
                                 var viewModel = (ViewModels.LauncherToolbar.LauncherToolbarViewModel)windowItem.ViewModel;
-                                if(viewModel.IsVisible && viewModel.IsAutoHide) {
-                                    viewModel.AppDesktopToolbarExtend!.HideView(true);
-                                }
+                                viewModel.HideAndShowWaiting();
                             }
                         });
                     }
