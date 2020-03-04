@@ -23,7 +23,6 @@ Write-Output "BuildType = $BuildType"
 Write-Output "Platforms = $Platforms"
 Write-Output ""
 
-
 Write-Output ("git: " + (git --version))
 Write-Output ("msbuild: " + (msbuild -version -noLogo))
 Write-Output ("dotnet: " + (dotnet --version))
@@ -90,6 +89,7 @@ try {
 			'' { 'App-release.ico' }
 			Default { 'App-debug.ico' }
 		}
+		Write-Output "icon: $appIconName"
 		$appIconPath = Join-Path 'Resource\Icon' $appIconName
 
 		Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force

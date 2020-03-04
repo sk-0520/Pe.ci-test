@@ -25,8 +25,8 @@ before_build:
   - cmd: git submodule update
 build_script:
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
-  - ps: .\Build\create-document.ps1 -Platforms $env:PLATFORM
-  - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
+  #- ps: .\Build\create-document.ps1 -Platforms $env:PLATFORM
+  #- ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
 test_script:
