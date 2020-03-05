@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         string CommandLineKeyLog { get; } = "log";
         string CommandLineKeyWithLog { get; } = "with-log";
+        string CommandLineSwitchFullTraceLog { get; } = "full-trace-log";
         string CommandLineSwitchForceLog { get; } = "force-log";
 
         string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
@@ -69,6 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyWithLog, hasValue: true);
+            commandLine.Add(longKey: CommandLineSwitchFullTraceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchAcceptSkip, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchBetaVersion, hasValue: false);
@@ -110,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return new ApplicationEnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
         }
 
-        ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, [CallerFilePath] string callerFilePath = "")
+        ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace, [CallerFilePath] string callerFilePath = "")
         {
             var loggerFactory = new LoggerFactory();
             NLog.LogManager.LoadConfiguration(logginConfigFilePath);
@@ -174,28 +176,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 NLog.LogManager.LogFactory.Configuration.Variables.Add("dirPath", Path.GetDirectoryName(filePath));
             }
 
-            var programmableTargets = enabledLog
+            var traceTargets = enabledLog
                 .Select(i => NLog.LogManager.Configuration.FindTargetByName(i))
                 .ToList()
             ;
 
+
             foreach(var loggingRule in NLog.LogManager.Configuration.LoggingRules) {
-                if(loggingRule.RuleName == "programmable") {
-                    foreach(var programmableTarget in programmableTargets) {
-                        loggingRule.Targets.Add(programmableTarget);
+                if(isFullTrace) {
+                    if(loggingRule.RuleName == "fulltrace") {
+                        foreach(var traceTarget in traceTargets) {
+                            loggingRule.Targets.Add(traceTarget);
+                        }
+                    }
+                } else {
+                    if(loggingRule.RuleName != "fulltrace") {
+                        foreach(var traceTarget in traceTargets) {
+                            loggingRule.Targets.Add(traceTarget);
+                        }
                     }
                 }
             }
 
-            if(programmableTargets.Any()) {
+            if(traceTargets.Any()) {
                 var stopwatch = Stopwatch.StartNew();
                 NLog.LogManager.ReconfigExistingLoggers();
                 NLog.LogManager.Flush();
                 //NLog.LogManager.GetCurrentClassLogger();
                 logger = loggerFactory.CreateLogger(GetType());
-                logger.LogInformation("可変ログあり: {0}", stopwatch.Elapsed);
-                foreach(var programmableTarget in programmableTargets) {
-                    logger.LogInformation("{0}", programmableTarget);
+                if(isFullTrace) {
+                    logger.LogInformation("全データ出力: {0}", stopwatch.Elapsed);
+                } else {
+                    logger.LogInformation("データ出力: {0}", stopwatch.Elapsed);
+                }
+                foreach(var traceTarget in traceTargets) {
+                    logger.LogInformation("{0}", traceTarget);
                 }
             }
 
@@ -467,7 +482,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 logginConfigFilePath,
                 commandLine.GetValue(CommandLineKeyLog, string.Empty),
                 commandLine.GetValue(CommandLineKeyWithLog, string.Empty),
-                commandLine.ExistsSwitch(CommandLineSwitchForceLog)
+                commandLine.ExistsSwitch(CommandLineSwitchForceLog),
+                commandLine.ExistsSwitch(CommandLineSwitchFullTraceLog)
             );
             var logger = loggerFactory.CreateLogger(GetType());
 

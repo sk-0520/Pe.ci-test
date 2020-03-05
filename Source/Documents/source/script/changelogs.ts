@@ -154,7 +154,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#542: ログ出力周りの整理"
 					},
 					{
 						"revision": "",

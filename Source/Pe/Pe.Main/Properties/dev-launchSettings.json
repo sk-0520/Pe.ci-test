@@ -2,7 +2,7 @@
 	"profiles": {
 		"Pe": {
 			"commandName": "Project",
-			"commandLineArgs": "--skip-accept --log=X:\\pe\\log --with-log=xml --force-log --user-dir=X:\\pe\\user --machine-dir=X:\\pe\\machine --temp-dir=X:\\pe\\temp  --old-setting-root=''"
+			"commandLineArgs": "--skip-accept --log=X:\\pe\\log --with-log=xml --force-log --full-trace-log --user-dir=X:\\pe\\user --machine-dir=X:\\pe\\machine --temp-dir=X:\\pe\\temp  --old-setting-root=''"
 		}
 	}
 }
