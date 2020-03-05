@@ -751,7 +751,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void CloseViewsCore(WindowKind windowKind)
         {
-            var windowItems = WindowManager.GetWindowItems(windowKind).ToList();
+            var windowItems = WindowManager.GetWindowItems(windowKind)
+                .Where(i=> i.IsOpened)
+                .Where(i=> !i.IsClosed)
+                .ToList()
+            ;
             foreach(var windowItem in windowItems) {
                 windowItem.Window.Close();
             }

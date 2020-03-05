@@ -98,8 +98,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public bool CloseToDispose { get; set; } = true;
 
-        public bool IsOpened { get; set; }
-        public bool IsClosed { get; set; }
+        /// <summary>
+        /// ウィンドウが開かれたか。
+        /// </summary>
+        public bool IsOpened { get; internal set; }
+        /// <summary>
+        /// ウィンドウが閉じられたか。
+        /// </summary>
+        public bool IsClosed { get; internal set; }
 
         #endregion
     }
