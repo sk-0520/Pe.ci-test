@@ -116,7 +116,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#562: コマンド型ランチャーを ESC で閉じる"
 					},
 					{
 						"revision": "",

@@ -270,11 +270,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 SelectedItem.Execute(DpiScaleOutputor.GetOwnerScreen());
 
                 // 役目は終わったのでコマンドランチャーを閉じる
+                ClearInput(false);
                 Model.HideView(false);
-                InputValue = string.Empty;
             },
             () => SelectedItem != null
         ).ObservesProperty(() => SelectedItem));
+
+        public ICommand HideCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ClearInput(false);
+                Model.HideView(false);
+            }
+        ));
 
         public ICommand UpSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -301,6 +308,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 }
             }
         ));
+
+        public ICommand ViewIsVisibleChangedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+             o => {
+                 if(o.IsVisible) {
+                     InputValue = string.Empty;
+                     RaisePropertyChanged(nameof(InputValue));
+                 }
+             }
+         ));
+
 
         #endregion
 
@@ -357,6 +374,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             }
         }
 
+        private void ClearInput(bool isLoadcommands)
+        {
+            if(isLoadcommands) {
+            //    InputValue = string.Empty;
+            } else {
+            //    this._inputValue = string.Empty;
+            //    RaisePropertyChanged(nameof(InputValue));
+            }
+        }
+
         #endregion
 
         #region IViewLifecycleReceiver
@@ -368,10 +395,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public void ReceiveViewLoaded(Window window)
         {
-            Model.ListupCommandItemsAsync(string.Empty, CancellationToken.None).ContinueWith(t => {
-                SetCommandItems(t.Result);
-                SelectedItem = CommandItems.FirstOrDefault();
-            });
+            //Model.ListupCommandItemsAsync(string.Empty, CancellationToken.None).ContinueWith(t => {
+            //    SetCommandItems(t.Result);
+            //    SelectedItem = CommandItems.FirstOrDefault();
+            //});
         }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
@@ -446,8 +473,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private void HideWaitTimer_Tick(object? sender, EventArgs e)
         {
+            ClearInput(false);
             Model.HideView(false);
-            InputValue = string.Empty;
             HideWaitTimer.Stop();
         }
 
