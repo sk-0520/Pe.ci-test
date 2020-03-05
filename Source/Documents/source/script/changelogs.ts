@@ -91,6 +91,84 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "YYYY/MM/DD",
+		"version": "0.89.001",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "notice",
+						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#563: コマンドランチャーで 1 文字だけの入力だと初期選択が行われない場合がある"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/03/04",
 		"version": "0.89.000",
 		"contents": [

@@ -129,43 +129,56 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             get => this._inputValue;
             set
             {
-                CurrentSelectedItem = SelectedItem;
-                SetProperty(ref this._inputValue, value);
+                ChangeInutValueAsync(value).ConfigureAwait(false);
+            }
+        }
 
-                var prevInputCancellationTokenSource = InputCancellationTokenSource;
-                if(prevInputCancellationTokenSource != null) {
-                    Logger.LogDebug("入力中の何かしらをキャンセル");
-                    prevInputCancellationTokenSource?.Cancel();
+        private async Task ChangeInutValueAsync(string value)
+        {
+#if DEBUG
+            DispatcherWrapper.VerifyAccess();
+#endif
+            CurrentSelectedItem = SelectedItem;
+            SetProperty(ref this._inputValue, value);
+
+            var prevInputCancellationTokenSource = InputCancellationTokenSource;
+            if(prevInputCancellationTokenSource != null) {
+                Logger.LogDebug("入力中の何かしらをキャンセル");
+                prevInputCancellationTokenSource?.Cancel();
+            }
+
+            InputCancellationTokenSource = new CancellationTokenSource();
+
+            var isEmpty = string.IsNullOrWhiteSpace(this._inputValue);
+            if(isEmpty) {
+                InputState = InputState.Empty;
+            } else {
+                InputState = InputState.Finding;
+            }
+
+            try {
+#if DEBUG
+                DispatcherWrapper.VerifyAccess();
+#endif
+
+                var commandItems = await Model.ListupCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token);
+                InputCancellationTokenSource?.Dispose();
+                InputCancellationTokenSource = null;
+#if DEBUG
+                DispatcherWrapper.VerifyAccess();
+#endif
+
+                SetCommandItems(commandItems);
+                SelectedItem = CommandItems.FirstOrDefault();
+                if(SelectedItem == null) {
+                    CurrentSelectedItem = null;
+                    InputState = InputState.NotFound;
+                } else if(!string.IsNullOrWhiteSpace(InputValue)) {
+                    InputState = InputState.Listup;
                 }
+            } catch(OperationCanceledException ex) {
+                Logger.LogDebug(ex, "入力処理はキャンセルされた");
 
-                InputCancellationTokenSource = new CancellationTokenSource();
-
-                var isEmpty = string.IsNullOrWhiteSpace(this._inputValue);
-                if(isEmpty) {
-                    InputState = InputState.Empty;
-                } else {
-                    InputState = InputState.Finding;
-                }
-
-
-                Model.ListupCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token).ContinueWith(t => {
-                    if(t.IsCompletedSuccessfully) {
-                        InputCancellationTokenSource?.Dispose();
-                        InputCancellationTokenSource = null;
-
-                        var commandItems = t.Result;
-                        SetCommandItems(commandItems);
-                        SelectedItem = CommandItems.FirstOrDefault();
-                        if(SelectedItem == null) {
-                            CurrentSelectedItem = null;
-                            InputState = InputState.NotFound;
-                        } else if(!string.IsNullOrWhiteSpace(InputValue)) {
-                            InputState = InputState.Listup;
-                        }
-                    } else {
-                        Logger.LogDebug("入力処理はキャンセルされた");
-                    }
-                });
             }
         }
 
