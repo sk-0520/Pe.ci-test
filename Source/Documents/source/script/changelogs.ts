@@ -137,7 +137,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#564: RDP 復帰後に落ちることがある"
 					},
 					{
 						"revision": "",
