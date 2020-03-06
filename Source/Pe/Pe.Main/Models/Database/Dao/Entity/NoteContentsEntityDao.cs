@@ -148,37 +148,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool UpdateLinkEnabled(Guid noteId, string path, Encoding encoding, FileWatchParameter fileWatchParameter, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
             var encodingConverter = new EncodingConverter(LoggerFactory);
 
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.IsLink, true);
-            builder.AddValueParameter(Column.Address, path);
-            builder.AddValueParameter(Column.Encoding, encodingConverter.ToString(encoding));
-            builder.AddValueParameter(Column.DelayTime, fileWatchParameter.DelayTime);
-            builder.AddValueParameter(Column.BufferSize, fileWatchParameter.BufferSize);
-            builder.AddValueParameter(Column.RefreshTime, fileWatchParameter.RefreshTime);
-            builder.AddValueParameter(Column.IsEnabledRefresh, fileWatchParameter.IsEnabledRefresh);
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.NoteId] = noteId;
+            parameter[Column.IsLink] = true;
+            parameter[Column.Address] = path;
+            parameter[Column.Encoding] = encodingConverter.ToString(encoding);
+            parameter[Column.DelayTime] = fileWatchParameter.DelayTime;
+            parameter[Column.BufferSize] = (long)fileWatchParameter.BufferSize;
+            parameter[Column.RefreshTime] = fileWatchParameter.RefreshTime;
+            parameter[Column.IsEnabledRefresh] = fileWatchParameter.IsEnabledRefresh;
 
-            return ExecuteUpdate(builder) == 1;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateLinkDisabled(Guid noteId, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.NoteId] = noteId;
+            parameter[Column.IsLink] = true;
+            parameter[Column.Address] = string.Empty;
 
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.IsLink, false);
-            builder.AddValueParameter(Column.Address, string.Empty);
-
-            return ExecuteUpdate(builder) == 1;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public int DeleteContents(Guid noteId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.NoteId, noteId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId
+            };
+            return Commander.Execute(statement, parameter);
+
         }
 
         #endregion
