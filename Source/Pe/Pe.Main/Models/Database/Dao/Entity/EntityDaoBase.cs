@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         };
         protected static string UpdatedCount { get; } = "UpdatedCount";
 
+        [Obsolete]
         public virtual string TableName
         {
             get
@@ -47,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             }
         }
 
+        [Obsolete]
         protected DatabaseSelectStatementBuilder CreateSelectBuilder()
         {
             var result = new DatabaseSelectStatementBuilder(Implementation, LoggerFactory);
@@ -55,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        [Obsolete]
         protected DatabaseUpdateStatementBuilder CreateUpdateBuilder(IDatabaseCommonStatus databaseCommonStatus)
         {
             var result = new DatabaseUpdateStatementBuilder(Implementation, LoggerFactory);
@@ -74,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        [Obsolete]
         protected DatabaseDeleteStatementBuilder CreateDeleteBuilder()
         {
             var result = new DatabaseDeleteStatementBuilder(Implementation, LoggerFactory);
@@ -82,6 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
+        [Obsolete]
         protected T SelectSingle<T>(DatabaseSelectStatementBuilder builder)
         {
             var statement = builder.BuildStatement();
@@ -89,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.QuerySingle<T>(statement, param);
         }
 
+        [Obsolete]
         protected T SelectFirst<T>(DatabaseSelectStatementBuilder builder)
         {
             var statement = builder.BuildStatement();
@@ -96,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.QueryFirst<T>(statement, param);
         }
 
+        [Obsolete]
         protected IEnumerable<T> Select<T>(DatabaseSelectStatementBuilder builder)
         {
             var statement = builder.BuildStatement();
@@ -103,6 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Query<T>(statement, param);
         }
 
+        [Obsolete]
         protected int ExecuteUpdate(DatabaseUpdateStatementBuilder builder)
         {
             var statement = builder.BuildStatement();
@@ -110,6 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param);
         }
 
+        [Obsolete]
         protected int ExecuteDelete(DatabaseDeleteStatementBuilder builder)
         {
             var statement = builder.BuildStatement();

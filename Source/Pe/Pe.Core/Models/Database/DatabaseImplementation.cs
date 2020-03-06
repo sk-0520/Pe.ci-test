@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
+    [Obsolete]
     public enum DatabaseCommonStatementKeyword
     {
         Select,
@@ -92,10 +93,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         string PreFormatStatement(string statement);
 
+        [Obsolete]
         string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword);
+        [Obsolete]
         string GetSelectStatementKeyword(DatabaseSelectStatementKeyword keyword);
+        [Obsolete]
         string GetInsertStatementKeyword(DatabaseInsertStatementKeyword keyword);
+        [Obsolete]
         string GetUpdateStatementKeyword(DatabaseUpdateStatementKeyword keyword);
+        [Obsolete]
         string GetDeleteStatementKeyword(DatabaseDeleteStatementKeyword keyword);
 
         string ToStatementTableName(string tableName);
@@ -179,6 +185,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         public virtual string PreFormatStatement(string statement) => statement;
 
+        [Obsolete]
         public virtual string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword)
         {
             switch(keyword) {

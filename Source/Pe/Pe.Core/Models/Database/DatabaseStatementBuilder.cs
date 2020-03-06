@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region function
 
+        [Obsolete]
         public abstract string BuildStatement();
 
         #endregion
@@ -137,6 +138,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
 
         #region DatabaseStatementBuilderBase
+
+        [Obsolete]
         public override string BuildStatement()
         {
             var sb = new StringBuilder();
@@ -275,6 +278,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region DatabaseStatementBuilderBase
 
+        [Obsolete]
         public override string BuildStatement()
         {
             var sb = new StringBuilder();
@@ -365,6 +369,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region DatabaseStatementBuilderBase
 
+        [Obsolete]
         public override string BuildStatement()
         {
             var sb = new StringBuilder();
