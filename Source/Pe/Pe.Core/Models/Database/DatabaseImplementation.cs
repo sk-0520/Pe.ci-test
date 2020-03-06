@@ -4,37 +4,6 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
-    //[Obsolete]
-    public enum DatabaseCommonStatementKeyword
-    {
-        Select,
-        Insert,
-        Update,
-        Delete,
-
-        Where,
-    }
-
-    public enum DatabaseSelectStatementKeyword
-    {
-        From,
-        As,
-        Order,
-        OrderAsc,
-        OrderDesc,
-    }
-    public enum DatabaseInsertStatementKeyword
-    {
-        Value,
-    }
-    public enum DatabaseUpdateStatementKeyword
-    {
-        Set,
-    }
-    public enum DatabaseDeleteStatementKeyword
-    {
-    }
-
     /// <summary>
     /// データベース実装依存処理。
     /// </summary>
@@ -92,17 +61,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement"></param>
         /// <returns></returns>
         string PreFormatStatement(string statement);
-
-        //[Obsolete]
-        string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword);
-        //[Obsolete]
-        string GetSelectStatementKeyword(DatabaseSelectStatementKeyword keyword);
-        //[Obsolete]
-        string GetInsertStatementKeyword(DatabaseInsertStatementKeyword keyword);
-        //[Obsolete]
-        string GetUpdateStatementKeyword(DatabaseUpdateStatementKeyword keyword);
-        //[Obsolete]
-        string GetDeleteStatementKeyword(DatabaseDeleteStatementKeyword keyword);
 
         string ToStatementTableName(string tableName);
         string ToStatementColumnName(string columnName);
@@ -184,80 +142,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         public virtual string PreFormatStatement(string statement) => statement;
-
-        [Obsolete]
-        public virtual string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword)
-        {
-            switch(keyword) {
-                case DatabaseCommonStatementKeyword.Select:
-                    return "select";
-
-                case DatabaseCommonStatementKeyword.Insert:
-                    return "insert into"; // ええんか、これ
-
-                case DatabaseCommonStatementKeyword.Update:
-                    return "update";
-
-                case DatabaseCommonStatementKeyword.Delete:
-                    return "delete";
-
-                case DatabaseCommonStatementKeyword.Where:
-                    return "where";
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        public virtual string GetSelectStatementKeyword(DatabaseSelectStatementKeyword keyword)
-        {
-            switch(keyword) {
-                case DatabaseSelectStatementKeyword.From:
-                    return "from";
-
-                case DatabaseSelectStatementKeyword.As:
-                    return "as";
-
-                case DatabaseSelectStatementKeyword.Order:
-                    return "order by";
-
-                case DatabaseSelectStatementKeyword.OrderAsc:
-                    return "asc";
-
-                case DatabaseSelectStatementKeyword.OrderDesc:
-                    return "desc";
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-        public virtual string GetInsertStatementKeyword(DatabaseInsertStatementKeyword keyword)
-        {
-            switch(keyword) {
-                case DatabaseInsertStatementKeyword.Value:
-                    return "value";
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-        public virtual string GetUpdateStatementKeyword(DatabaseUpdateStatementKeyword keyword)
-        {
-            switch(keyword) {
-                case DatabaseUpdateStatementKeyword.Set:
-                    return "set";
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-        public virtual string GetDeleteStatementKeyword(DatabaseDeleteStatementKeyword keyword)
-        {
-            throw new NotSupportedException();
-        }
-
-
-
 
         public virtual string ToStatementTableName(string tableName) => tableName;
         public virtual string ToStatementColumnName(string columnName) => columnName;

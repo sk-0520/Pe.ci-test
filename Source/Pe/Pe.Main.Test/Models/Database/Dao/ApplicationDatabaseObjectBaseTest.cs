@@ -72,20 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
 
             public bool SupportedTransactionDML => throw new NotImplementedException();
 
-            public string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetDeleteStatementKeyword(DatabaseDeleteStatementKeyword keyword)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetInsertStatementKeyword(DatabaseInsertStatementKeyword keyword)
-            {
-                throw new NotImplementedException();
-            }
 
             public object? GetNullValue(Type type)
             {
@@ -93,16 +79,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
             }
 
             public T GetNullValue<T>()
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetSelectStatementKeyword(DatabaseSelectStatementKeyword keyword)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetUpdateStatementKeyword(DatabaseUpdateStatementKeyword keyword)
             {
                 throw new NotImplementedException();
             }
