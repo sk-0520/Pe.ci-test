@@ -81,16 +81,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteGroupItemsByLauncherItemId(Guid launcherItemId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.LauncherItemId, launcherItemId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
         public int DeleteGroupItemsByLauncherGroupId(Guid launcherGroupId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.LauncherGroupId, launcherGroupId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherGroupId = launcherGroupId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
         public bool DeleteGroupItemsLauncherItem(Guid launcherGroupId, Guid launcherItemId, int index)

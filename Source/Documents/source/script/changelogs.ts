@@ -158,7 +158,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#557: 絶対に動的じゃないとダメでない SQL はファイルとして外に出す"
 					},
 					{
 						"revision": "",

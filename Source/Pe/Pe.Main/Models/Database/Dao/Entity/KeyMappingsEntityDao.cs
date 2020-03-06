@@ -107,9 +107,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteByKeyActionId(Guid keyActionId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.KeyActionId, keyActionId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                KeyActionId = keyActionId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
         #endregion

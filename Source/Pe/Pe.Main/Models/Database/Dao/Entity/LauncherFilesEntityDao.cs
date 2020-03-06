@@ -100,34 +100,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public LauncherExecutePathData SelectPath(Guid launcherItemId)
         {
-            var builder = CreateSelectBuilder();
-            builder.AddSelect(Column.File);
-            builder.AddSelect(Column.Option);
-            builder.AddSelect(Column.WorkDirectory);
-
-            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
-
-            var dto = SelectSingle<LauncherFilesEntityPathDto>(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            var dto = Commander.QuerySingle<LauncherFilesEntityPathDto>(statement, parameter);
             var data = ConvertFromDto(dto);
             return data;
         }
 
         public LauncherFileData SelectFile(Guid launcherItemId)
         {
-            var builder = CreateSelectBuilder();
-            builder.AddSelect(Column.File);
-            builder.AddSelect(Column.Option);
-            builder.AddSelect(Column.WorkDirectory);
-            builder.AddSelect(Column.IsEnabledCustomEnvVar);
-            builder.AddSelect(Column.IsEnabledStandardIo);
-            builder.AddSelect(Column.StandardIoEncoding);
-            builder.AddSelect(Column.RunAdministrator);
-
-            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
-
-            var dto = SelectFirst<LauncherFilesEntityDto>(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            var dto = Commander.QueryFirst<LauncherFilesEntityDto>(statement, parameter);
             var data = ConvertFromDto(dto);
             return data;
+
         }
 
         public bool InsertFile(Guid launcherItemId, LauncherExecutePathData data, IDatabaseCommonStatus commonStatus)
@@ -167,25 +158,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var encodingConverter = new EncodingConverter(LoggerFactory);
 
-            var builder = CreateUpdateBuilder(commonStatus);
-            builder.AddValueParameter(Column.File, pathParameter.Path);
-            builder.AddValueParameter(Column.Option, pathParameter.Option);
-            builder.AddValueParameter(Column.WorkDirectory, pathParameter.WorkDirectoryPath);
-            builder.AddValueParameter(Column.IsEnabledCustomEnvVar, customParameter.IsEnabledCustomEnvironmentVariable);
-            builder.AddValueParameter(Column.IsEnabledStandardIo, customParameter.IsEnabledStandardInputOutput);
-            builder.AddValueParameter(Column.StandardIoEncoding, encodingConverter.ToString(customParameter.StandardInputOutputEncoding));
+            var statement = LoadStatement();
+            var parameter = commonStatus.CreateCommonDtoMapping();
+            parameter[Column.File] = pathParameter.Path;
+            parameter[Column.Option] = pathParameter.Option;
+            parameter[Column.WorkDirectory] = pathParameter.WorkDirectoryPath;
+            parameter[Column.IsEnabledCustomEnvVar] = customParameter.IsEnabledCustomEnvironmentVariable;
+            parameter[Column.IsEnabledStandardIo] = customParameter.IsEnabledStandardInputOutput;
+            parameter[Column.StandardIoEncoding] = encodingConverter.ToString(customParameter.StandardInputOutputEncoding);
+            parameter[Column.RunAdministrator] = customParameter.RunAdministrator;
+            parameter[Column.LauncherItemId] = launcherItemId;
 
-            builder.AddValueParameter(Column.RunAdministrator, customParameter.RunAdministrator);
-            builder.AddKey(Column.LauncherItemId, launcherItemId);
-
-            return ExecuteUpdate(builder) == 1;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool DeleteFileByLauncherItemId(Guid launcherItemId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.LauncherItemId, launcherItemId);
-            return ExecuteDelete(builder) == 1;
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         #endregion
