@@ -95,6 +95,10 @@ insert into
             InitializeDatabase();
 
             ImportSqlFiles();
+
+            DatabaseAccessor.Execute("vacuum");
+            DatabaseAccessor.Execute("reindex");
+            DatabaseAccessor.Execute("analyze");
         }
 
         #endregion
