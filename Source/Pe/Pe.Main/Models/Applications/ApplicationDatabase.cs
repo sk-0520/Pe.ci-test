@@ -219,11 +219,64 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
+    internal readonly struct StatementAccessorParameter
+    {
+        public StatementAccessorParameter(string fullName)
+        {
+            if(fullName == null) {
+                throw new ArgumentNullException(fullName);
+            }
+
+            var values = fullName.Split('.', StringSplitOptions.None);
+
+            if(values.Length < 2) {
+                throw new ArgumentException(fullName);
+            }
+
+            if(values.Any(i => string.IsNullOrWhiteSpace(i))) {
+                throw new ArgumentException(fullName);
+            }
+
+            if(values.Length == 2) {
+                Namespace = string.Empty;
+                ClassName = values[0];
+                MethodName = values[1];
+            } else {
+                Namespace = string.Join('.', values[0..^2]);
+                ClassName = values[^2];
+                MethodName = values[^1];
+            }
+        }
+
+        #region property
+
+        public string Namespace { get; }
+        public string ClassName { get; }
+        public string MethodName { get; }
+
+        #endregion
+    }
+
+
     public class ApplicationDatabaseStatementLoader : DatabaseStatementLoaderBase, IDisposable
     {
         #region define
 
         public const string IgnoreNamespace = "ContentTypeTextNet.Pe.Main";
+        const string SelectStatement = @"
+select
+    Statements.Statement
+from
+    Statements
+where
+    Statements.Namespace = @Namespace
+    and
+    Statements.ClassName = @ClassName
+    and
+    Statements.MethodName = @MethodName
+limit
+    1
+                ";
 
         #endregion
 
@@ -253,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         string ConvertFileName(string key)
         {
-            var keyPath = key.Replace('.', Path.DirectorySeparatorChar) + ".sql";
+            var keyPath = key.Substring(IgnoreNamespace.Length + 1).Replace('.', Path.DirectorySeparatorChar) + ".sql";
             var filePath = Path.Combine(BaseDirectory.FullName, keyPath);
 
             return filePath;
@@ -270,11 +323,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         string CreateCacheFromAccessor(string key)
         {
-            throw new NotImplementedException();
+            Debug.Assert(StatementAccessor != null);
+
+            var statementAccessorParameter = new StatementAccessorParameter(key);
+            return StatementAccessor.QueryFirst<string>(SelectStatement, statementAccessorParameter);
         }
 
         string CreateCache(string key)
         {
+#if DEBUG
+            var sp = Stopwatch.StartNew();
+            using var x = new ActionDisposer(() => Logger.LogTrace("SQL読み込み時間: {0}, {1}", sp.Elapsed, key));
+#endif
             if(StatementAccessor == null) {
                 return CreateCacheFromFile(ConvertFileName(key));
             }
@@ -314,10 +374,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             Debug.Assert(callerType.FullName != null);
 
-            var baseNamespace = callerType.FullName.Substring(IgnoreNamespace.Length + 1);
-            var key = baseNamespace + "." + callerMemberName;
+            var key = callerType.FullName + "." + callerMemberName;
             return LoadStatement(key);
         }
+
+        #endregion
 
         #region IDisposable Support
 
@@ -342,6 +403,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #endregion
 
-        #endregion
     }
 }
