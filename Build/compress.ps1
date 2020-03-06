@@ -14,7 +14,8 @@ foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
 	. $scriptFilePath
 }
-
+$rootDirectory = Split-Path -Path $currentDirPath -Parent
+$builToolDirPath = Join-Path $rootDirectory "Output\tools"
 
 $version = GetAppVersion
 
@@ -42,6 +43,16 @@ foreach($platform in $Platforms) {
 			Write-Output "DIET: $removeTarget"
 			Remove-Item $removeTarget -Recurse -Force
 		}
+
+		Write-Output "pack SQL"
+		$sqlDilrPath = Join-Path $binRootDirPath "etc\sql"
+		$packSqlName = "sql.sqlite3"
+		$packSqlPath = Join-Path $sqlDilrPath $packSqlName
+		if(Test-Path $packSqlPath) {
+			Remove-Item -Path $packSqlPath
+		}
+		& "$builToolDirPath\SqlPack.exe" --sql-root-dir $sqlDilrPath --output $packSqlPath
+		Remove-Item -Path $sqlDilrPath -Recurse  -Force -Exclude $packSqlName
 	}
 
 	switch ($Archive) {
