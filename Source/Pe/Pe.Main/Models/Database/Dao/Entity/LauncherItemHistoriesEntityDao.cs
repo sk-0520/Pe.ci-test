@@ -63,16 +63,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public IEnumerable<LauncherHistoryData> SelectHistories(Guid launcherItemId)
         {
-            var builder = CreateSelectBuilder();
-            builder.AddSelect(Column.Kind);
-            builder.AddSelect(Column.Value);
-            builder.AddSelect(Column.LastExecuteTimestamp);
-
-            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
-
-            builder.AddOrder(Column.LastExecuteTimestamp, DatabaseOrder.Desc);
-
-            return Select<LauncherItemHistoriesEntityDto>(builder)
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Query<LauncherItemHistoriesEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
         }
@@ -113,9 +108,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteHistoriesByLauncherItemId(Guid launcherItemId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.LauncherItemId, launcherItemId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new LauncherItemHistoriesEntityDto() {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
         #endregion
