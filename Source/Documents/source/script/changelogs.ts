@@ -120,7 +120,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#487: デプロイ時にSQLファイルを一つにまとめる",
+						"comments": [
+							"思ってたより意味がないというか若干遅くなったけど気にしない"
+						]
 					},
 					{
 						"revision": "",
