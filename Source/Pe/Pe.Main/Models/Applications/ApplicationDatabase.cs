@@ -227,17 +227,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #endregion
 
-        public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan timelimit, ILoggerFactory loggerFactory)
+        public ApplicationDatabaseStatementLoader(DirectoryInfo baseDirectory, TimeSpan timelimit, DatabaseAccessor? statementAccessor, bool givePriorityToFile, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             BaseDirectory = baseDirectory;
             StatementCache = new ReferencePool<string, string>(TimeSpan.FromMinutes(10), timelimit, false, loggerFactory);
+            GivePriorityToFile = givePriorityToFile;
+            StatementAccessor = statementAccessor;
         }
 
         #region property
 
         DirectoryInfo BaseDirectory { get; }
         ReferencePool<string, string> StatementCache { get; }
+
+        bool GivePriorityToFile { get; }
+        DatabaseAccessor? StatementAccessor { get; }
 
         public int SqlFileBufferSize { get; set; } = 4096;
         public Encoding SqlFileEncoding { get; set; } = Encoding.UTF8;
@@ -246,7 +251,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
-        string CreateCache(string key)
+        string CreateCacheFromFile(string key)
         {
             var keyPath = key.Replace('.', Path.DirectorySeparatorChar) + ".sql";
             var filePath = Path.Combine(BaseDirectory.FullName, keyPath);
@@ -256,6 +261,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     return reader.ReadToEnd();
                 }
             }
+        }
+
+        string CreateCacheFromAccessor(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        string CreateCache(string key)
+        {
+            if(StatementAccessor == null) {
+                return CreateCacheFromFile(key);
+            }
+
+            if(GivePriorityToFile) {
+                return CreateCacheFromFile(key);
+            }
+
+            return CreateCacheFromAccessor(key);
         }
 
         string LoadStatementCore(string key)
@@ -295,6 +318,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             if(!this.disposedValue) {
                 if(disposing) {
+                    StatementAccessor?.Dispose();
                     StatementCache.Dispose();
                 }
 
