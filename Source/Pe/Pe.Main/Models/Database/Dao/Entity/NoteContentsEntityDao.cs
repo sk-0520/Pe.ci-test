@@ -124,18 +124,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public NoteContentData SelectLinkParameter(Guid noteId)
         {
-            var builder = CreateSelectBuilder();
-            builder.AddValueParameter(Column.NoteId, noteId);
-            builder.AddSelect(Column.NoteId);
-            builder.AddSelect(Column.IsLink);
-            builder.AddSelect(Column.Address);
-            builder.AddSelect(Column.Encoding);
-            builder.AddSelect(Column.DelayTime);
-            builder.AddSelect(Column.BufferSize);
-            builder.AddSelect(Column.RefreshTime);
-            builder.AddSelect(Column.IsEnabledRefresh);
-
-            var dto = Select<NoteContentsEntityDto>(builder).First();
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId,
+            };
+            var dto = Commander.QueryFirst<NoteContentsEntityDto>(statement, parameter);
             return ConvertFromDto(dto);
         }
 

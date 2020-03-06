@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             }
         }
 
-        //[Obsolete]
+        [Obsolete]
         protected DatabaseSelectStatementBuilder CreateSelectBuilder()
         {
             var result = new DatabaseSelectStatementBuilder(Implementation, LoggerFactory);
