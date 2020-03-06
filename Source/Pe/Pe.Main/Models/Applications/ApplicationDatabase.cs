@@ -251,11 +251,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
-        string CreateCacheFromFile(string key)
+        string ConvertFileName(string key)
         {
             var keyPath = key.Replace('.', Path.DirectorySeparatorChar) + ".sql";
             var filePath = Path.Combine(BaseDirectory.FullName, keyPath);
 
+            return filePath;
+        }
+
+        string CreateCacheFromFile(string filePath)
+        {
             using(var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, SqlFileBufferSize)) {
                 using(var reader = new StreamReader(stream, SqlFileEncoding)) {
                     return reader.ReadToEnd();
@@ -271,11 +276,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CreateCache(string key)
         {
             if(StatementAccessor == null) {
-                return CreateCacheFromFile(key);
+                return CreateCacheFromFile(ConvertFileName(key));
             }
 
             if(GivePriorityToFile) {
-                return CreateCacheFromFile(key);
+                var filePath = ConvertFileName(key);
+                if(File.Exists(filePath)) {
+                    Logger.LogDebug("{0} に該当するファイルが存在するため優先実行: {1}", key, filePath);
+                    return CreateCacheFromFile(filePath);
+                }
             }
 
             return CreateCacheFromAccessor(key);
