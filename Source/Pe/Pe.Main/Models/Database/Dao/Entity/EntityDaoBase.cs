@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        //[Obsolete]
+        [Obsolete]
         protected DatabaseDeleteStatementBuilder CreateDeleteBuilder()
         {
             var result = new DatabaseDeleteStatementBuilder(Implementation, LoggerFactory);
