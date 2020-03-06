@@ -17,8 +17,8 @@ echo    --old-setting-root=%APPDATA%
 echo                       (設定ディレクトリの親ディレクトリ)
 echo.
 echo 実行しています...
-echo ..\Pe.exe --log .\%DATA_DIR%\logs --force-log --user-dir .\%DATA_DIR%\user --machine-dir .\%DATA_DIR%\machine --temp-dir .\%DATA_DIR%\temp
-..\Pe.exe --log .\%DATA_DIR%\logs --force-log --user-dir .\%DATA_DIR%\user --machine-dir .\%DATA_DIR%\machine --temp-dir .\%DATA_DIR%\temp
+echo ..\Pe.exe --log .\%DATA_DIR%\logs --force-log --full-trace-log --user-dir .\%DATA_DIR%\user --machine-dir .\%DATA_DIR%\machine --temp-dir .\%DATA_DIR%\temp
+..\Pe.exe --log .\%DATA_DIR%\logs --force-log --full-trace-log --user-dir .\%DATA_DIR%\user --machine-dir .\%DATA_DIR%\machine --temp-dir .\%DATA_DIR%\temp
 
 echo.
 echo キー入力でプロンプトを閉じます。
