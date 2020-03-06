@@ -130,12 +130,15 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             DirectoryRemoveWaitCount = section.GetValue<int>("dir_remove_wait_count");
             DirectoryRemoveWaitTime = section.GetValue<TimeSpan>("dir_remove_wait_time");
+            GivePriorityToFile = section.GetValue<bool>("give_priority_to_file");
         }
 
         #region property
 
         public int DirectoryRemoveWaitCount { get; }
         public TimeSpan DirectoryRemoveWaitTime { get; }
+
+        public bool GivePriorityToFile { get; }
 
         #endregion
     }

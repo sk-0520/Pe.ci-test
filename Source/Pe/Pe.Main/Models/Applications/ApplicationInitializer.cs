@@ -277,14 +277,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
         {
             return new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(environmentParameters.MainFile),
-                new ApplicationDatabaseFactory(environmentParameters.FileFile),
+                new ApplicationDatabaseFactory(environmentParameters.MainFile, false),
+                new ApplicationDatabaseFactory(environmentParameters.FileFile, false),
                 new ApplicationDatabaseFactory()
             );
         }
         IDatabaseStatementLoader GetStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
-            return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, loggerFactory);
+            DatabaseAccessor? statementAccessor = null;
+            environmentParameters.SqlStatementAccessorFile.Refresh();
+            if(environmentParameters.SqlStatementAccessorFile.Exists) {
+                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true), loggerFactory);
+            }
+
+            return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory);
         }
 
         void FirstSetup(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
@@ -373,6 +379,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseLazyWriter(barrierPack.Temporary, TimeSpan.FromSeconds(3), loggerFactory)
             );
             */
+            DatabaseAccessor? statementAccessor = null;
+            environmentParameters.SqlStatementAccessorFile.Refresh();
+            if(environmentParameters.SqlStatementAccessorFile.Exists) {
+                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true), loggerFactory);
+            }
 
             container
                 .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
@@ -392,7 +403,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<CommandConfiguration, CommandConfiguration>(environmentParameters.Configuration.Command)
                 .Register<PlatformConfiguration, PlatformConfiguration>(environmentParameters.Configuration.Platform)
 
-                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), loggerFactory))
+                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory))
                 /*
                 .Register<IDatabaseFactoryPack, ApplicationDatabaseFactoryPack>(factory)
                 .Register<IDatabaseAccessorPack, ApplicationDatabaseAccessorPack>(accessor)

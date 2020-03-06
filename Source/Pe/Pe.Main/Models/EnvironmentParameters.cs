@@ -112,6 +112,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo SqlDirectory => CombineDirectory(EtcDirectory, "sql");
         /// <summary>
+        /// 結合済みSQL。
+        /// </summary>
+        public FileInfo SqlStatementAccessorFile => CombineFile(SqlDirectory, "sql.sqlite3");
+        /// <summary>
         /// Pe の SQL ディレクトリ。
         /// </summary>
         public DirectoryInfo MainSqlDirectory => CombineDirectory(SqlDirectory, "ContentTypeTextNet.Pe.Main");

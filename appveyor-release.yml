@@ -19,6 +19,7 @@ install:
 before_build:
   - cmd: git submodule init
   - cmd: git submodule update
+  - ps: .\Build\make-buildtools.ps1
 build_script:
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms x64,x86
   - ps: .\Build\create-document.ps1 -Platforms x64,x86
