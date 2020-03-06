@@ -28,11 +28,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             ConnectionString = builder.ToString();
         }
 
-        public ApplicationDatabaseFactory(FileInfo file)
+        public ApplicationDatabaseFactory(FileInfo file, bool isReadOnly)
         {
             var builder = CreateConnectionBuilder();
             builder.DataSource = ToSafeFile(file).FullName;
             builder.ForeignKeys = true;
+            if(isReadOnly) {
+                builder.ReadOnly = isReadOnly;
+            }
 
             ConnectionString = builder.ToString();
         }
@@ -287,6 +290,16 @@ limit
             StatementCache = new ReferencePool<string, string>(TimeSpan.FromMinutes(10), timelimit, false, loggerFactory);
             GivePriorityToFile = givePriorityToFile;
             StatementAccessor = statementAccessor;
+
+            if(StatementAccessor == null) {
+                Logger.LogInformation("SQL文読み込み方法 -> ファイル: {0}", BaseDirectory.FullName);
+            } else {
+                if(GivePriorityToFile) {
+                    Logger.LogInformation("SQL文読み込み方法 -> 存在ファイル優先のsqlite: {0} -> {1}", BaseDirectory.FullName, StatementAccessor.BaseConnection.ConnectionString);
+                } else {
+                    Logger.LogInformation("SQL文読み込み方法 -> sqlite: {0}", StatementAccessor.BaseConnection.ConnectionString);
+                }
+            }
         }
 
         #region property

@@ -277,8 +277,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
         {
             return new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(environmentParameters.MainFile),
-                new ApplicationDatabaseFactory(environmentParameters.FileFile),
+                new ApplicationDatabaseFactory(environmentParameters.MainFile, false),
+                new ApplicationDatabaseFactory(environmentParameters.FileFile, false),
                 new ApplicationDatabaseFactory()
             );
         }
@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
             if(environmentParameters.SqlStatementAccessorFile.Exists) {
-                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile), loggerFactory);
+                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true), loggerFactory);
             }
 
             return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory);
@@ -382,7 +382,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
             if(environmentParameters.SqlStatementAccessorFile.Exists) {
-                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile), loggerFactory);
+                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true), loggerFactory);
             }
 
             container
