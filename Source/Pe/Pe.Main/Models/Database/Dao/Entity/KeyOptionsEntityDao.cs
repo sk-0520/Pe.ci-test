@@ -45,12 +45,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public IEnumerable<KeyValuePair<string, string>> SelectOptions(Guid keyActionId)
         {
-            var builder = CreateSelectBuilder();
-            builder.AddSelect(Column.KeyActionId);
-            builder.AddSelect(Column.KeyOptionName);
-            builder.AddSelect(Column.KeyOptionValue);
-            builder.AddValueParameter(Column.KeyActionId, keyActionId);
-            return Select<KeyOptionsEntityDto>(builder)
+            var statement = LoadStatement();
+            var parameter = new {
+                KeyActionId = keyActionId,
+            };
+            return Commander.Query<KeyOptionsEntityDto>(statement, parameter)
                 .Select(i => KeyValuePair.Create(i.KeyOptionName, i.KeyOptionValue))
             ;
         }
@@ -68,9 +67,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteByKeyActionId(Guid keyActionId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.KeyActionId, keyActionId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                KeyActionId = keyActionId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
         #endregion

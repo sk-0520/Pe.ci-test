@@ -111,34 +111,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool UpdateFamilyName(Guid fontId, string familyName, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.FontId, fontId);
-            builder.AddValueParameter(Column.FamilyName, familyName);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.FontId] = fontId;
+            parameter[Column.FamilyName] = familyName;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateBold(Guid fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.FontId, fontId);
-            builder.AddValueParameter(Column.IsBold, isBold);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.FontId] = fontId;
+            parameter[Column.IsBold] = isBold;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateItalic(Guid fontId, bool isItalic, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.FontId, fontId);
-            builder.AddValueParameter(Column.IsItalic, isItalic);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.FontId] = fontId;
+            parameter[Column.IsItalic] = isItalic;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateHeight(Guid fontId, double height, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.FontId, fontId);
-            builder.AddValueParameter(Column.Height, height);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.FontId] = fontId;
+            parameter[Column.Height] = height;
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateFont(Guid fontId, FontData data, IDatabaseCommonStatus commonStatus)
