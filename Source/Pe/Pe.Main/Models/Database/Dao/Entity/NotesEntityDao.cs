@@ -183,18 +183,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool UpdateLock(Guid noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.IsLocked, isLocked);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.IsLocked] = isLocked;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateTextWrap(Guid noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.TextWrap, textWrap);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.TextWrap] = textWrap;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateTitle(Guid noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
@@ -267,9 +269,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteNote(Guid noteId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.NoteId, noteId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
 

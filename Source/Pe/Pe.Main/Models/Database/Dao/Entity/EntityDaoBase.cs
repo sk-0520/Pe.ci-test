@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return result;
         }
 
-        //[Obsolete]
+        [Obsolete]
         protected DatabaseUpdateStatementBuilder CreateUpdateBuilder(IDatabaseCommonStatus databaseCommonStatus)
         {
             var result = new DatabaseUpdateStatementBuilder(Implementation, LoggerFactory);
