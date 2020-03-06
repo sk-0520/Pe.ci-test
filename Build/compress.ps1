@@ -63,7 +63,7 @@ foreach($platform in $Platforms) {
 		'7z' {
 			try {
 				Push-Location $binRootDirPath
-				7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on "$archiveFileName" * -r
+				7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on "$archiveFileName" * -r -bsp1
 			} finally {
 				Pop-Location
 			}
