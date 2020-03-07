@@ -121,9 +121,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
-        public ICommand ApplySeletectionStrikeThroughCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleSeletectionUnderlineCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
+                ToggleSelectionDecoration(TextDecorationLocation.Underline);
+            }
+        ));
 
+        public ICommand ToggleSeletectionStrikeThroughCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ToggleSelectionDecoration(TextDecorationLocation.Strikethrough);
             }
         ));
 
@@ -141,6 +147,46 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
             action(ContentElement, ContentElement.Selection);
         }
+
+        private void ToggleSelectionDecoration(TextDecorationLocation location)
+        {
+            ApplySelectionCore((r, s) => {
+                var textDecorationsProperty = s.GetPropertyValue(Inline.TextDecorationsProperty);
+                if(textDecorationsProperty == DependencyProperty.UnsetValue) {
+                    var decs = location switch {
+                        TextDecorationLocation.Underline => TextDecorations.Underline,
+                        TextDecorationLocation.Strikethrough => TextDecorations.Strikethrough,
+                        TextDecorationLocation.Baseline => TextDecorations.Baseline,
+                        TextDecorationLocation.OverLine => TextDecorations.OverLine,
+                        _ => throw new NotImplementedException(),
+                    };
+                    s.ApplyPropertyValue(Inline.TextDecorationsProperty, decs);
+                } else {
+                    var decorations = (TextDecorationCollection)textDecorationsProperty;
+                    var current = decorations.FirstOrDefault(i => i.Location == location);
+                    if(current != null) {
+                        if(decorations.IsFrozen) {
+                            var newDecorations = new TextDecorationCollection(decorations.Where(i => i != current));
+                            s.ApplyPropertyValue(Inline.TextDecorationsProperty, newDecorations);
+                        } else {
+                            decorations.Remove(current);
+                        }
+                    } else {
+                        var dec = FreezableUtility.GetSafeFreeze(new TextDecoration() {
+                            Location = location,
+                        });
+                        if(decorations.IsFrozen) {
+                            var newDecorations = new TextDecorationCollection(decorations);
+                            newDecorations.Add(dec);
+                            s.ApplyPropertyValue(Inline.TextDecorationsProperty, newDecorations);
+                        } else {
+                            decorations.Add(dec);
+                        }
+                    }
+                }
+            });
+        }
+
         private void ApplySelectionPropertyValue(DependencyProperty dependencyProperty, object value)
         {
             ApplySelectionCore((r, s) => s.ApplyPropertyValue(dependencyProperty, value));
@@ -149,27 +195,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void ApplySelectionFontFamily()
         {
             if(SelectionFontFamily != null) {
-                ApplySelectionPropertyValue(Run.FontFamilyProperty, SelectionFontFamily);
+                ApplySelectionPropertyValue(Inline.FontFamilyProperty, SelectionFontFamily);
             }
         }
 
         private void ApplySelectionFontHeight()
         {
             if(0 < SelectionFontHeight) {
-                ApplySelectionPropertyValue(Run.FontSizeProperty, Convert.ToDouble(SelectionFontHeight));
+                ApplySelectionPropertyValue(Inline.FontSizeProperty, Convert.ToDouble(SelectionFontHeight));
             }
         }
 
         private void ApplySelectionForegroundColor()
         {
             var brush = FreezableUtility.GetSafeFreeze(new SolidColorBrush(SelectionForegroundColor));
-            ApplySelectionPropertyValue(Run.ForegroundProperty, brush);
+            ApplySelectionPropertyValue(Inline.ForegroundProperty, brush);
         }
 
         private void ApplySelectionBackgroundColor()
         {
             var brush = FreezableUtility.GetSafeFreeze(new SolidColorBrush(SelectionBackgroundColor));
-            ApplySelectionPropertyValue(Run.BackgroundProperty, brush);
+            ApplySelectionPropertyValue(Inline.BackgroundProperty, brush);
         }
 
         #endregion

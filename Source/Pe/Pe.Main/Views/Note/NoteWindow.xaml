@@ -379,8 +379,8 @@
 
                         <Button Content="b" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold" />
                         <Button Content="i" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleItalic" />
-                        <Button Content="u" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleUnderline" />
-                        <Button Content="s" Command="{Binding ApplySeletectionStrikeThroughCommand}" />
+                        <Button Content="u" Command="{Binding ToggleSeletectionUnderlineCommand}" />
+                        <Button Content="s" Command="{Binding ToggleSeletectionStrikeThroughCommand}" />
 
                         <Separator />
 
@@ -401,10 +401,6 @@
                         <Button Content="center" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignCenter" />
                         <Button Content="right" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignRight" />
                         <Button Content="just" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignJustify" />
-
-                        <Separator />
-                        <Button Content="-&gt;" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseIndentation" />
-                        <Button Content="&lt;-" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseIndentation" />
 
                       </StackPanel>
                     </Grid>
