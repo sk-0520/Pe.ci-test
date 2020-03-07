@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             private set => SetProperty(ref this._canVisible, value);
         }
 
-        private Control? Control { get; set; }
+        private FrameworkElement? BaseElement { get; set; }
 
         public bool IsLink => Model.IsLink;
 
@@ -91,14 +91,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void AttachControlCore(Control o)
         {
-            Control = o;
-            Control.Unloaded += Control_Unloaded;
+            BaseElement = o;
+            BaseElement.Unloaded += Control_Unloaded;
         }
 
         private void DetachControlCore()
         {
-            if(Control != null) {
-                Control.Unloaded -= Control_Unloaded;
+            if(BaseElement != null) {
+                BaseElement.Unloaded -= Control_Unloaded;
             }
         }
 
@@ -106,9 +106,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         /// コンテンツが必要になった際に呼び出される。
         /// <para>UI要素への購買処理も実施すること。</para>
         /// </summary>
-        /// <param name="control"></param>
+        /// <param name="baseElement"></param>
         /// <returns></returns>
-        protected abstract Task LoadContentAsync(Control control);
+        protected abstract Task LoadContentAsync(FrameworkElement baseElement);
         /// <summary>
         /// コンテンツが不要になった際に呼び出される。
         /// <para>UI要素への解除処理も実施すること。</para>
@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void Model_LinkContentChanged(object? sender, EventArgs e)
         {
-            if(Control == null) {
+            if(BaseElement == null) {
                 Logger.LogTrace("change ...");
                 return;
             }
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Logger.LogTrace("change!");
             EnabledUpdate = false;
             UnloadContent();
-            LoadContentAsync(Control).ContinueWith(t => {
+            LoadContentAsync(BaseElement).ContinueWith(t => {
                 EnabledUpdate = true;
             }).ConfigureAwait(false);
         }

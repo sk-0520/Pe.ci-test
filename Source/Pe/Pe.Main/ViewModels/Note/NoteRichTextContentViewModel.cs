@@ -44,10 +44,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task LoadContentAsync(Control control)
+        protected override Task LoadContentAsync(FrameworkElement baseElement)
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
-            RichTextBox = (RichTextBox)control;
+            RichTextBox = (RichTextBox)baseElement;
 
             RichTextBox.TextChanged += Control_TextChanged;
 
