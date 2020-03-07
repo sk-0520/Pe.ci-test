@@ -331,8 +331,20 @@
                         </Setter.Value>
                       </Setter>
                     </Style>
-
                   </Popup.Resources>
+                  <Popup.Style>
+                    <Style TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
+                      <Style.Triggers>
+                        <MultiDataTrigger>
+                          <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsOpenToolbar}" Value="True" />
+                            <Condition Binding="{Binding IsActive, ElementName=root, Mode=OneWay}" Value="True" />
+                          </MultiDataTrigger.Conditions>
+                          <Setter Property="IsOpen" Value="True" />
+                        </MultiDataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Popup.Style>
                   <Border>
                     <Grid>
                       <Grid.RowDefinitions>
