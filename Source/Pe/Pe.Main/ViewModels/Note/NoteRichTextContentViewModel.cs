@@ -333,6 +333,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 return;
             }
 
+            var inlineContainer = ContentElement.Selection.Start.GetAdjacentElement(LogicalDirection.Forward) as InlineUIContainer;
+            if(inlineContainer != null && inlineContainer.Child is Image image) {
+                if(inlineContainer == ContentElement.Selection.End.GetAdjacentElement(LogicalDirection.Backward)) {
+                    // TODO: 画像選択からの処理は未実装
+                    return;
+                }
+            }
+
             // 選択状態から表示可能項目の抜出
             var fontFamliyProperty = ContentElement.Selection.GetPropertyValue(RichTextBox.FontFamilyProperty);
             var fontSizeProperty = ContentElement.Selection.GetPropertyValue(RichTextBox.FontSizeProperty);
