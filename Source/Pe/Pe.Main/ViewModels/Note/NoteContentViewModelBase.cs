@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand<Control>(
+        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand<FrameworkElement>(
             async o => {
                 if(CanVisible) {
                     return;
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region function
 
-        private void AttachControlCore(Control o)
+        private void AttachControlCore(FrameworkElement o)
         {
             BaseElement = o;
             BaseElement.Unloaded += Control_Unloaded;

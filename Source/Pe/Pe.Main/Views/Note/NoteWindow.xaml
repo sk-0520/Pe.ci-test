@@ -288,18 +288,31 @@
                 </xctk:RichTextBoxFormatBarManager.FormatBar>
               </xctk:RichTextBox>-->
 
-              <RichTextBox x:Name="control" >
+              <Grid  x:Name="control">
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <RichTextBox.Style>
-                  <Style TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}">
-                    <Style.Triggers />
-                  </Style>
-                </RichTextBox.Style>
-              </RichTextBox>
+
+                <RichTextBox x:Name="content">
+                  <RichTextBox.Style>
+                    <Style TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}">
+                      <Style.Triggers />
+                    </Style>
+                  </RichTextBox.Style>
+                </RichTextBox>
+                <Popup x:Name="popup" Placement="Absolute" IsOpen="{Binding IsOpenToolbar}">
+                  <Border>
+                    <StackPanel Orientation="Horizontal">
+                      <Button Content="left" />
+                      <Button Content="center" />
+                      <Button Content="right" />
+                    </StackPanel>
+                  </Border>
+                </Popup>
+              </Grid>
+
             </DataTemplate>
             <!--#endregion -->
 

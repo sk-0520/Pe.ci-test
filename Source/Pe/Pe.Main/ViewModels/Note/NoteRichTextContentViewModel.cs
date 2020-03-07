@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -20,6 +22,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
     public class NoteRichTextContentViewModel : NoteContentViewModelBase, IFlushable
     {
+        #region variable
+
+        bool _isOpenToolbar;
+
+        #endregion
+
         public NoteRichTextContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, clipboardManager, dispatcherWrapper, loggerFactory)
         {
@@ -31,8 +39,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         //Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
         RichTextBox? RichTextBox { get; set; }
         FlowDocument Document => RichTextBox?.Document ?? throw new NullReferenceException(nameof(RichTextBox));
+        Popup? Popup { get; set; }
 
         LazyAction TextChangeLazyAction { get; }
+
+        public bool IsOpenToolbar
+        {
+            get => this._isOpenToolbar;
+            set => SetProperty(ref this._isOpenToolbar, value);
+        }
 
         #endregion
 
@@ -47,9 +62,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override Task LoadContentAsync(FrameworkElement baseElement)
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
-            RichTextBox = (RichTextBox)baseElement;
+            RichTextBox = (RichTextBox)baseElement.FindName("content");
+            Popup = (Popup)baseElement.FindName("popup");
 
             RichTextBox.TextChanged += Control_TextChanged;
+            RichTextBox.SelectionChanged += RichTextBox_SelectionChanged;
 
             return Task.Run(() => {
                 var content = Model.LoadRichTextContent();
@@ -65,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     var range = new TextRange(arg.@this.Document.ContentStart, arg.@this.Document.ContentEnd);
                     range.Load(arg.stream, DataFormats.Rtf);
                     stream.Dispose();
-                }, (@this:this, stream), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                }, (@this: this, stream), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
             });
         }
 
@@ -78,6 +95,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             RichTextBox.TextChanged -= Control_TextChanged;
+            RichTextBox.SelectionChanged -= RichTextBox_SelectionChanged;
+
+            Popup = null;
+            RichTextBox = null;
+            IsOpenToolbar = false;
         }
 
         protected override IDataObject GetClipbordContentData()
@@ -119,11 +141,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        private void Control_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextChangeLazyAction.DelayAction(ChangedText);
-        }
-
         #region IFlushable
         public void Flush()
         {
@@ -131,5 +148,37 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         }
 
         #endregion
+
+
+        private void Control_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextChangeLazyAction.DelayAction(ChangedText);
+        }
+
+        private void RichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            // ツールバー的なの何かできればいいなぁと
+            Debug.Assert(RichTextBox != null);
+            Debug.Assert(Popup != null);
+
+            if(RichTextBox.Selection.IsEmpty) {
+                IsOpenToolbar = false;
+                return;
+            }
+
+            // Popup.Placement = PlacementMode.AbsolutePoint;
+            var startRect = RichTextBox.Selection.Start.GetCharacterRect(LogicalDirection.Forward);
+            var endRect = RichTextBox.Selection.End.GetCharacterRect(LogicalDirection.Forward);
+            var rect = new Rect(
+                RichTextBox.PointToScreen(new Point(startRect.X, startRect.Y + startRect.Height)),
+                new Size(endRect.Width, endRect.Height)
+            );
+
+            Popup.PlacementRectangle = rect;
+            Logger.LogInformation(ObjectDumper.GetDumpString(rect));
+
+            IsOpenToolbar = true;
+        }
+
     }
 }
