@@ -360,9 +360,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             // 表示位置補正
             var startRect = ContentElement.Selection.Start.GetCharacterRect(LogicalDirection.Forward);
-            var endRect = ContentElement.Selection.End.GetCharacterRect(LogicalDirection.Forward);
+            var endRect = ContentElement.Selection.End.GetCharacterRect(LogicalDirection.Backward);
+            var mixX = Math.Min(endRect.X, startRect.X);
+            var maxX = Math.Max(endRect.X, startRect.X);
             var rect = new Rect(
-                ContentElement.PointToScreen(new Point(startRect.X, startRect.Y + startRect.Height)),
+                ContentElement.PointToScreen(new Point(maxX - mixX, endRect.Y + endRect.Height)),
                 new Size(endRect.Width, endRect.Height)
             );
             PopupElement.PlacementRectangle = rect;

@@ -356,10 +356,10 @@
                           <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                               <VirtualizingStackPanel
-                                  VirtualizingStackPanel.IsVirtualizing="True"
-                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
-                                  ScrollUnit="Item"
-                                >
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                ScrollUnit="Item"
+                              >
                                 <VirtualizingStackPanel.Style>
                                   <Style TargetType="VirtualizingStackPanel">
                                     <Style.Triggers>
@@ -380,39 +380,91 @@
                         </ComboBox>
                         <app_core_views:NumericUpDown Value="{Binding SelectionFontHeight}" />
 
-                        <Button Content="+" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseFontSize" />
-                        <Button Content="-" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseFontSize" />
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-IncreaseSize}" />
+                        </Button>
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-DecreaseSize}" />
+                        </Button>
                         <Separator />
-                        <Button Content="." Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript" />
-                        <Button Content="^" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSuperscript" />
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Subscript}" />
+                        </Button>
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSuperscript">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Superscript}" />
+                        </Button>
 
                       </StackPanel>
                       <StackPanel Grid.Row="1" Orientation="Horizontal">
 
-                        <Button Content="b" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold" />
-                        <Button Content="i" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleItalic" />
-                        <Button Content="u" Command="{Binding ToggleSeletectionUnderlineCommand}" />
-                        <Button Content="s" Command="{Binding ToggleSeletectionStrikeThroughCommand}" />
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Bold}" />
+                        </Button>
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleItalic">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Italic}" />
+                        </Button>
+                        <Button Command="{Binding ToggleSeletectionUnderlineCommand}">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Underline}" />
+                        </Button>
+                        <Button Command="{Binding ToggleSeletectionStrikeThroughCommand}">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-StrikeThrough}" />
+                        </Button>
 
                         <Separator />
 
-                        <Button Content="ol" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleNumbering" />
-                        <Button Content="ul" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBullets" />
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleNumbering">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-List-Numbering}" />
+                        </Button>
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBullets">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-List-Bullets}" />
+                        </Button>
 
                         <Separator />
 
-                        <Button Command="{Binding ApplySeletectionForegroundColorCommand}" Content="{Binding SelectionForegroundColor}" />
+                        <Button Command="{Binding ApplySeletectionForegroundColorCommand}">
+                          <Grid>
+                            <Border>
+                              <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                  <GradientStop Offset="0" Color="Transparent" />
+                                  <GradientStop Offset="0.5" Color="{Binding SelectionForegroundColor}" />
+                                </LinearGradientBrush>
+                              </Border.Background>
+                            </Border>
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-ForegroundColor}" />
+                          </Grid>
+                        </Button>
                         <app_core_views:ColorCanvas HasAlpha="False" SelectedColor="{Binding SelectionForegroundColor}" Style="{StaticResource NoteColorPicker}" />
 
-                        <Button Command="{Binding ApplySeletectionBackgroundColorCommand}" Content="{Binding SelectionBackgroundColor}" />
+                        <Button Command="{Binding ApplySeletectionBackgroundColorCommand}">
+                          <Grid>
+                            <Border>
+                              <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                  <GradientStop Offset="0" Color="Transparent" />
+                                  <GradientStop Offset="0.5" Color="{Binding SelectionBackgroundColor}" />
+                                </LinearGradientBrush>
+                              </Border.Background>
+                            </Border>
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-BackgroundColor}" />
+                          </Grid>
+                        </Button>
                         <app_core_views:ColorCanvas HasAlpha="True"  SelectedColor="{Binding SelectionBackgroundColor}" Style="{StaticResource NoteColorPicker}" />
 
                         <Separator />
 
-                        <Button Content="left" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignLeft" />
-                        <Button Content="center" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignCenter" />
-                        <Button Content="right" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignRight" />
-                        <Button Content="just" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignJustify" />
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignLeft">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Left}" />
+                        </Button>
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignCenter">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Center}" />
+                        </Button>
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignRight">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Right}" />
+                        </Button>
+                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignJustify">
+                          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Justify}" />
+                        </Button>
 
                       </StackPanel>
                     </Grid>
