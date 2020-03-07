@@ -109,6 +109,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #endregion
 
         #region command
+
+        public ICommand ApplySeletectionForegroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplySelectionForegroundColor();
+            }
+        ));
+        public ICommand ApplySeletectionBackgroundColorCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplySelectionBackgroundColor();
+            }
+        ));
+
+        public ICommand ApplySeletectionStrikeThroughCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+
+            }
+        ));
+
         #endregion
 
         #region function
@@ -151,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void ApplySelectionBackgroundColor()
         {
             var brush = FreezableUtility.GetSafeFreeze(new SolidColorBrush(SelectionBackgroundColor));
-            ApplySelectionPropertyValue(Run.ForegroundProperty, brush);
+            ApplySelectionPropertyValue(Run.BackgroundProperty, brush);
         }
 
         #endregion

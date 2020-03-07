@@ -340,7 +340,7 @@
                         <RowDefinition Height="Auto" />
                       </Grid.RowDefinitions>
                       <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <ComboBox x:Name="listFont" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}"  ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                        <ComboBox x:Name="listFont" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
                           <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                               <VirtualizingStackPanel
@@ -380,7 +380,7 @@
                         <Button Content="b" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold" />
                         <Button Content="i" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleItalic" />
                         <Button Content="u" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleUnderline" />
-                        <Button Content="s" />
+                        <Button Content="s" Command="{Binding ApplySeletectionStrikeThroughCommand}" />
 
                         <Separator />
 
@@ -389,10 +389,10 @@
 
                         <Separator />
 
-                        <Button Content="{Binding SelectionForegroundColor}" />
+                        <Button Command="{Binding ApplySeletectionForegroundColorCommand}" Content="{Binding SelectionForegroundColor}" />
                         <app_core_views:ColorCanvas HasAlpha="False" SelectedColor="{Binding SelectionForegroundColor}" Style="{StaticResource NoteColorPicker}" />
 
-                        <Button Content="{Binding SelectionBackgroundColor}" />
+                        <Button Command="{Binding ApplySeletectionBackgroundColorCommand}" Content="{Binding SelectionBackgroundColor}" />
                         <app_core_views:ColorCanvas HasAlpha="True"  SelectedColor="{Binding SelectionBackgroundColor}" Style="{StaticResource NoteColorPicker}" />
 
                         <Separator />
