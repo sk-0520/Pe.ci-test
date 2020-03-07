@@ -9,6 +9,7 @@
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:cttn_lib_shared_lib_view_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
@@ -55,6 +56,8 @@
       <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
       <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+      <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
+      <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
         ResizeBorderThickness="{Binding BorderThickness}"
@@ -303,12 +306,108 @@
                   </RichTextBox.Style>
                 </RichTextBox>
                 <Popup x:Name="popup" Placement="Absolute" IsOpen="{Binding IsOpenToolbar}">
+                  <Popup.Resources>
+                    <Style x:Key="EmbeddedCommand" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                      <Setter Property="CommandTarget" Value="{Binding ElementName=content}" />
+                    </Style>
+
+                    <Style x:Key="NoteColorPicker" TargetType="app_core_views:ColorCanvas">
+                      <Setter Property="Template">
+                        <Setter.Value>
+                          <ControlTemplate TargetType="{x:Type app_core_views:ColorCanvas}">
+                            <Grid>
+                              <ToggleButton x:Name="commandPopup" Width="8" />
+                              <Popup IsOpen="{Binding IsChecked, ElementName=commandPopup}" Style="{StaticResource PopupMenu}">
+                                <Border Style="{StaticResource PopupMenuBorder}">
+                                  <app_core_views:ColorCanvas
+                                    Width="200"
+                                    SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                    HasAlpha="{Binding HasAlpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                  />
+                                </Border>
+                              </Popup>
+                            </Grid>
+                          </ControlTemplate>
+                        </Setter.Value>
+                      </Setter>
+                    </Style>
+
+                  </Popup.Resources>
                   <Border>
-                    <StackPanel Orientation="Horizontal">
-                      <Button Content="left" />
-                      <Button Content="center" />
-                      <Button Content="right" />
-                    </StackPanel>
+                    <Grid>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                      </Grid.RowDefinitions>
+                      <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <ComboBox x:Name="listFont" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}"  ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                          <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                              <VirtualizingStackPanel
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  ScrollUnit="Item"
+                                >
+                                <VirtualizingStackPanel.Style>
+                                  <Style TargetType="VirtualizingStackPanel">
+                                    <Style.Triggers>
+                                      <DataTrigger Binding="{Binding ActualWidth, ElementName=listFont, Converter={StaticResource LessEqual-DoubleCompareConverter}, ConverterParameter=200}" Value="True">
+                                        <Setter Property="Width"  Value="200" />
+                                      </DataTrigger>
+                                    </Style.Triggers>
+                                  </Style>
+                                </VirtualizingStackPanel.Style>
+                              </VirtualizingStackPanel>
+                            </ItemsPanelTemplate>
+                          </ComboBox.ItemsPanel>
+                          <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                              <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
+                            </DataTemplate>
+                          </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <app_core_views:NumericUpDown Value="{Binding SelectionFontHeight}" />
+
+                        <Button Content="+" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseFontSize" />
+                        <Button Content="-" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseFontSize" />
+                        <Separator />
+                        <Button Content="." Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript" />
+                        <Button Content="^" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSuperscript" />
+
+                      </StackPanel>
+                      <StackPanel Grid.Row="1" Orientation="Horizontal">
+
+                        <Button Content="b" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold" />
+                        <Button Content="i" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleItalic" />
+                        <Button Content="u" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleUnderline" />
+                        <Button Content="s" />
+
+                        <Separator />
+
+                        <Button Content="ol" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleNumbering" />
+                        <Button Content="ul" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBullets" />
+
+                        <Separator />
+
+                        <Button Content="{Binding SelectionForegroundColor}" />
+                        <app_core_views:ColorCanvas HasAlpha="False" SelectedColor="{Binding SelectionForegroundColor}" Style="{StaticResource NoteColorPicker}" />
+
+                        <Button Content="{Binding SelectionBackgroundColor}" />
+                        <app_core_views:ColorCanvas HasAlpha="True"  SelectedColor="{Binding SelectionBackgroundColor}" Style="{StaticResource NoteColorPicker}" />
+
+                        <Separator />
+
+                        <Button Content="left" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignLeft" />
+                        <Button Content="center" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignCenter" />
+                        <Button Content="right" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignRight" />
+                        <Button Content="just" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignJustify" />
+
+                        <Separator />
+                        <Button Content="-&gt;" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseIndentation" />
+                        <Button Content="&lt;-" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseIndentation" />
+
+                      </StackPanel>
+                    </Grid>
                   </Border>
                 </Popup>
               </Grid>
