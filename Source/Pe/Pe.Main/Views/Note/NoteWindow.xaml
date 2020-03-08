@@ -358,8 +358,24 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                       </Grid.RowDefinitions>
-                      <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <ComboBox x:Name="listFont" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+
+                      <Grid Grid.Row="0" Width="{Binding ActualWidth, ElementName=baseSize}">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="Auto" />
+
+                          <ColumnDefinition Width="Auto" />
+
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="Auto" />
+
+                          <ColumnDefinition Width="Auto" />
+
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox x:Name="listFont" Grid.Column="0" VerticalAlignment="Stretch" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
                           <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                               <VirtualizingStackPanel
@@ -386,32 +402,34 @@
                           </ComboBox.ItemTemplate>
                         </ComboBox>
                         <app_core_views:NumericUpDown
+                          Grid.Column="1"
+                          VerticalContentAlignment="Center"
+                          Height="{Binding Height, ElementName=listFont}"
                           Value="{Binding SelectionFontHeight}"
                           Minimum="{Binding FontMinimumSize}"
                           Maximum="{Binding FontMaximumSize}"
                         />
 
-                        <Separator />
+                        <Separator Grid.Column="2" />
 
-                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
+                        <Button Grid.Column="3" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-IncreaseSize}" />
                         </Button>
-                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
+                        <Button Grid.Column="4" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-DecreaseSize}" />
                         </Button>
 
-                        <Separator />
+                        <Separator Grid.Column="5" />
 
-                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript">
+                        <Button Grid.Column="6" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Subscript}" />
                         </Button>
-                        <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSuperscript">
+                        <Button Grid.Column="7" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSuperscript">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Superscript}" />
                         </Button>
+                      </Grid>
 
-                      </StackPanel>
-                      <StackPanel Grid.Row="1" Orientation="Horizontal">
-
+                      <StackPanel x:Name="baseSize" Grid.Row="1" Orientation="Horizontal">
                         <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Bold}" />
                         </Button>
