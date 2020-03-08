@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
         {
             return CastUtility.AsFunc<FontFamily, string>(value, fontFamily => {
                 var currentLang = XmlLanguage.GetLanguage(culture.IetfLanguageTag);
-                return fontFamily.FamilyNames.FirstOrDefault(o => o.Key == currentLang).Value ?? fontFamily.Source;
+                return fontFamily.FamilyNames.FirstOrDefault(o => o.Key == currentLang).Value ?? fontFamily?.Source ?? string.Empty;
             });
         }
 

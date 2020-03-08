@@ -392,7 +392,19 @@
                           <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox x:Name="listFont" Grid.Column="0" VerticalAlignment="Stretch" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                        <ComboBox x:Name="listFont" Grid.Column="0" VerticalAlignment="Stretch" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}"  ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                          <!--<ComboBox.Style>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                              <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectionFontFamily}" Value="{x:Null}">
+                                  <Setter Property="SelectedValuePath" Value="{x:Null}" />
+                                  <Setter Property="SelectedValue" Value="{x:Null}" />
+                                </DataTrigger>
+                              </Style.Triggers>
+                              <Setter Property="SelectedValuePath" Value="Source" />
+                              <Setter Property="SelectedValue" Value="{Binding SelectionFontFamily}" />
+                            </Style>
+                          </ComboBox.Style>-->
                           <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                               <VirtualizingStackPanel
@@ -414,7 +426,8 @@
                           </ComboBox.ItemsPanel>
                           <ComboBox.ItemTemplate>
                             <DataTemplate>
-                              <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
+                              <!--<TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}"  />-->
+                              <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" />
                             </DataTemplate>
                           </ComboBox.ItemTemplate>
                         </ComboBox>
