@@ -40,4 +40,5 @@ node_modules/
 .vscode/
 */**/Properties/launchSettings.json
 /Source/Pe/Pe.Main/etc/appsettings.debug.json
+/Source/Pe/Pe.Main/etc/appsettings.*-*-*.json
 /Source/Pe/Pe.Main/doc/help/

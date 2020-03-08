@@ -172,6 +172,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#567: アプリケーション構成ファイルをバージョン専用で使用できるようにする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
