@@ -15,13 +15,23 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region property
 
-        protected static string GetString(IConfigurationSection section, string key) => section.GetValue<string>(key);
-        protected static int GetInteger(IConfigurationSection section, string key) => section.GetValue<int>(key);
-
         protected static Size GetSize(IConfigurationSection section, string key)
         {
             var size = section.GetSection(key);
             return new Size(size.GetValue<double>("width"), size.GetValue<double>("height"));
+        }
+
+        protected static MinMax<T> GetMinMax<T>(IConfigurationSection section, string key)
+            where T : IComparable
+        {
+            var size = section.GetSection(key);
+            return new MinMax<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"));
+        }
+        protected static MinMaxDefault<T> GetMinMaxDefault<T>(IConfigurationSection section, string key)
+            where T : IComparable
+        {
+            var size = section.GetSection(key);
+            return new MinMaxDefault<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"), size.GetValue<T>("default"));
         }
 
         #endregion
@@ -130,12 +140,15 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             DirectoryRemoveWaitCount = section.GetValue<int>("dir_remove_wait_count");
             DirectoryRemoveWaitTime = section.GetValue<TimeSpan>("dir_remove_wait_time");
+            GivePriorityToFile = section.GetValue<bool>("give_priority_to_file");
         }
 
         #region property
 
         public int DirectoryRemoveWaitCount { get; }
         public TimeSpan DirectoryRemoveWaitTime { get; }
+
+        public bool GivePriorityToFile { get; }
 
         #endregion
     }
@@ -191,12 +204,14 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             LayoutAbsoluteSize = GetSize(section, "layout_absolute_size");
             LayoutRelativeSize = GetSize(section, "layout_relative_size");
+            FontSize = GetMinMaxDefault<double>(section, "font_size");
         }
 
         #region property
 
         public Size LayoutAbsoluteSize { get; }
         public Size LayoutRelativeSize { get; }
+        public MinMaxDefault<double> FontSize { get; }
 
         #endregion
     }

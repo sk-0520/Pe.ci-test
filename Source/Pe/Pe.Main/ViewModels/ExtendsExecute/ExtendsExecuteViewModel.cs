@@ -204,6 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             ThrowIfDisposed();
 
             var launcherFileData = new LauncherFileData() {
+                Caption = Model.CaptionName,
                 Path = ExecuteValue,
                 Option = Option,
                 WorkDirectoryPath = WorkDirectoryPath,

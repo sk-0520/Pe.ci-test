@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.ViewModels.Command;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -112,6 +113,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         private void root_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            // IsVisibleChanged が拾えない悲しみ
+            if(DataContext is CommandViewModel viewModel) {
+                viewModel.ViewIsVisibleChangedCommand.ExecuteIfCanExecute(this);
+            }
+
             if(IsVisible) {
                 WindowsUtility.ShowActiveForeground(HandleUtility.GetWindowHandle(this));
                 this.inputCommand.Focus();

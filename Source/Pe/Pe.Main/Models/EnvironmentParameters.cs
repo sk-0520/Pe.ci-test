@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models
@@ -30,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
 #if !PRODUCT
             ApplicationBaseDirectory = new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 #endif
+            var versionConverter = new VersionConverter();
+            var versionAppSettingFileName = "appsettings." + versionConverter.ConvertDisplayVersion(BuildStatus.Version, "-") + ".json";
 
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder
@@ -42,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 .AddJsonFile("appsettings.beta.json", true)
 #endif
                 .AddJsonFile("appsettings.user.json", true)
+                .AddJsonFile(versionAppSettingFileName, true)
             ;
             var configurationRoot = configurationBuilder.Build();
             Configuration = new CustomConfiguration(configurationRoot);
@@ -111,6 +115,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// SQL ディレクトリ。
         /// </summary>
         public DirectoryInfo SqlDirectory => CombineDirectory(EtcDirectory, "sql");
+        /// <summary>
+        /// 結合済みSQL。
+        /// </summary>
+        public FileInfo SqlStatementAccessorFile => CombineFile(SqlDirectory, "sql.sqlite3");
         /// <summary>
         /// Pe の SQL ディレクトリ。
         /// </summary>

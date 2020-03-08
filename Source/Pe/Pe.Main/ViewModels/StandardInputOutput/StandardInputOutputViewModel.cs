@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
         }
 
         public bool ProcessExited => Model.ProcessExited;
-        public int ExitCode => Model.Process.ExitCode;
+        public int ExitCode => ProcessExited ? Model.Process.ExitCode: int.MinValue;
 
         public string InputValue
         {

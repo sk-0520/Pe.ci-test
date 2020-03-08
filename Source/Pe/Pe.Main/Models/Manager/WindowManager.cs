@@ -98,6 +98,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public bool CloseToDispose { get; set; } = true;
 
+        /// <summary>
+        /// ウィンドウが開かれたか。
+        /// </summary>
+        public bool IsOpened { get; internal set; }
+        /// <summary>
+        /// ウィンドウが閉じられたか。
+        /// </summary>
+        public bool IsClosed { get; internal set; }
+
         #endregion
     }
 
@@ -236,8 +245,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             window.SourceInitialized -= Window_SourceInitialized!;
 
-
-
             var item = Items.First(i => i.Window == window);
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
                 var hWnd = HandleUtility.GetWindowHandle(window);
@@ -257,6 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             window.Loaded -= Window_Loaded;
 
             var item = Items.First(i => i.Window == window);
+            item.IsOpened = true;
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
                 viewLifecycleReceiver.ReceiveViewLoaded(window);
             }
@@ -278,12 +286,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var window = (Window)sender;
             Logger.LogDebug("ウィンドウ破棄: {0}", window);
 
+            window.Loaded -= Window_Loaded;
+            window.SourceInitialized -= Window_SourceInitialized!;
             window.Closing -= Window_Closing;
             window.Closed -= Window_Closed!;
 
             Windows.Remove(window);
 
             var item = Items.First(i => i.Window == window);
+            item.IsClosed = true;
             Items.Remove(item);
 
             if(WindowHandleSources.TryGetValue(item, out var hWndSource)) {

@@ -178,8 +178,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
             var factory = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(settings.Main),
-                new ApplicationDatabaseFactory(settings.File),
+                new ApplicationDatabaseFactory(settings.Main, false),
+                new ApplicationDatabaseFactory(settings.File, false),
                 new ApplicationDatabaseFactory()
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
@@ -386,11 +386,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var themes = new[] { PlatformThemeKind.Dark, PlatformThemeKind.Light };
             foreach(var theme in themes) {
                 var themeKey = theme.ToString();
-                var colors = PlatformThemeLoader.GetApplicationThemeColors(PlatformThemeKind.Dark);
+                var colors = PlatformThemeLoader.GetApplicationThemeColors(theme);
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BackgroundColor"] = colors.Background;
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ForegroundColor"] = colors.Foreground;
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ControlColor"] = colors.Control;
                 Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BorderColor"] = colors.Border;
+
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BackgroundBrush"] = FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Background));
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ForegroundBrush"] = FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Foreground));
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-ControlBrush"] = FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Control));
+                Application.Current.Resources["PlatformTheme-" + themeKey + "ThemeColors-BorderBrush"] = FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Border));
+
             }
         }
 
@@ -751,7 +757,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void CloseViewsCore(WindowKind windowKind)
         {
-            var windowItems = WindowManager.GetWindowItems(windowKind).ToList();
+            var windowItems = WindowManager.GetWindowItems(windowKind)
+                .Where(i=> i.IsOpened)
+                .Where(i=> !i.IsClosed)
+                .ToList()
+            ;
             foreach(var windowItem in windowItems) {
                 windowItem.Window.Close();
             }

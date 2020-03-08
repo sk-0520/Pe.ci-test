@@ -132,6 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                     envItems = new List<LauncherEnvironmentVariableData>();
                 }
             }
+            fileData.Caption = Name;
 
             var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, screen);

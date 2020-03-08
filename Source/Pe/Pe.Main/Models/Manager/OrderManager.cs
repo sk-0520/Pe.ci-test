@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         NoteContentElement CreateNoteContentElement(Guid noteId, NoteContentKind contentKind);
         SavingFontElement CreateFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater);
 
-        StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, IScreen screen);
+        StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen);
 
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);

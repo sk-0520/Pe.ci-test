@@ -129,43 +129,56 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             get => this._inputValue;
             set
             {
-                CurrentSelectedItem = SelectedItem;
-                SetProperty(ref this._inputValue, value);
+                ChangeInutValueAsync(value).ConfigureAwait(false);
+            }
+        }
 
-                var prevInputCancellationTokenSource = InputCancellationTokenSource;
-                if(prevInputCancellationTokenSource != null) {
-                    Logger.LogDebug("入力中の何かしらをキャンセル");
-                    prevInputCancellationTokenSource?.Cancel();
+        private async Task ChangeInutValueAsync(string value)
+        {
+#if DEBUG
+            DispatcherWrapper.VerifyAccess();
+#endif
+            CurrentSelectedItem = SelectedItem;
+            SetProperty(ref this._inputValue, value);
+
+            var prevInputCancellationTokenSource = InputCancellationTokenSource;
+            if(prevInputCancellationTokenSource != null) {
+                Logger.LogDebug("入力中の何かしらをキャンセル");
+                prevInputCancellationTokenSource?.Cancel();
+            }
+
+            InputCancellationTokenSource = new CancellationTokenSource();
+
+            var isEmpty = string.IsNullOrWhiteSpace(this._inputValue);
+            if(isEmpty) {
+                InputState = InputState.Empty;
+            } else {
+                InputState = InputState.Finding;
+            }
+
+            try {
+#if DEBUG
+                DispatcherWrapper.VerifyAccess();
+#endif
+
+                var commandItems = await Model.ListupCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token);
+                InputCancellationTokenSource?.Dispose();
+                InputCancellationTokenSource = null;
+#if DEBUG
+                DispatcherWrapper.VerifyAccess();
+#endif
+
+                SetCommandItems(commandItems);
+                SelectedItem = CommandItems.FirstOrDefault();
+                if(SelectedItem == null) {
+                    CurrentSelectedItem = null;
+                    InputState = InputState.NotFound;
+                } else if(!string.IsNullOrWhiteSpace(InputValue)) {
+                    InputState = InputState.Listup;
                 }
+            } catch(OperationCanceledException ex) {
+                Logger.LogDebug(ex, "入力処理はキャンセルされた");
 
-                InputCancellationTokenSource = new CancellationTokenSource();
-
-                var isEmpty = string.IsNullOrWhiteSpace(this._inputValue);
-                if(isEmpty) {
-                    InputState = InputState.Empty;
-                } else {
-                    InputState = InputState.Finding;
-                }
-
-
-                Model.ListupCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token).ContinueWith(t => {
-                    if(t.IsCompletedSuccessfully) {
-                        InputCancellationTokenSource?.Dispose();
-                        InputCancellationTokenSource = null;
-
-                        var commandItems = t.Result;
-                        SetCommandItems(commandItems);
-                        SelectedItem = CommandItems.FirstOrDefault();
-                        if(SelectedItem == null) {
-                            CurrentSelectedItem = null;
-                            InputState = InputState.NotFound;
-                        } else if(!string.IsNullOrWhiteSpace(InputValue)) {
-                            InputState = InputState.Listup;
-                        }
-                    } else {
-                        Logger.LogDebug("入力処理はキャンセルされた");
-                    }
-                });
             }
         }
 
@@ -257,11 +270,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 SelectedItem.Execute(DpiScaleOutputor.GetOwnerScreen());
 
                 // 役目は終わったのでコマンドランチャーを閉じる
-                Model.HideView(false);
-                InputValue = string.Empty;
+                HideView();
             },
             () => SelectedItem != null
         ).ObservesProperty(() => SelectedItem));
+
+        public ICommand HideCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                HideView();
+            }
+        ));
 
         public ICommand UpSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -288,6 +306,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 }
             }
         ));
+
+        public ICommand ViewIsVisibleChangedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+             o => {
+                 if(o.IsVisible) {
+                     InputValue = string.Empty;
+                     RaisePropertyChanged(nameof(InputValue));
+                 }
+             }
+         ));
+
 
         #endregion
 
@@ -324,13 +352,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             ScrollSelectedItemRequest.Send();
         }
 
-        //private void BuildCommandItems()
-        //{
-        //    CommandItems = Model.CommandItems
-        //        .Select(i => new CommandItemViewModel(i, IconBox, DispatcherWrapper, LoggerFactory))
-        //        .ToList()
-        //    ;
-        //}
+        private void HideView()
+        {
+            Model.HideView(false);
+            SetCommandItems(new List<ICommandItem>());
+        }
 
         private void SetCommandItems(IReadOnlyList<ICommandItem> commandItems)
         {
@@ -354,17 +380,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         }
 
         public void ReceiveViewLoaded(Window window)
-        {
-            Model.ListupCommandItemsAsync(string.Empty, CancellationToken.None).ContinueWith(t => {
-                SetCommandItems(t.Result);
-                SelectedItem = CommandItems.FirstOrDefault();
-            });
-        }
+        { }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
-            Model.HideView(false);
+            HideView();
         }
 
         public void ReceiveViewClosing(CancelEventArgs e)
@@ -433,9 +454,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private void HideWaitTimer_Tick(object? sender, EventArgs e)
         {
-            Model.HideView(false);
-            InputValue = string.Empty;
             HideWaitTimer.Stop();
+            HideView();
         }
 
 

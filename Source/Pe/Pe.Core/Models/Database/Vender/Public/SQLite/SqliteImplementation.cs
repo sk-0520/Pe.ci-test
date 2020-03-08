@@ -114,14 +114,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
 
         public override bool SupportedTransactionDDL { get; } = true;
 
-        public override string GetCommonStatementKeyword(DatabaseCommonStatementKeyword keyword)
-        {
-            if(keyword == DatabaseCommonStatementKeyword.Delete) {
-                return "delete from";
-            }
-            return base.GetCommonStatementKeyword(keyword);
-        }
-
         public override string ToStatementTableName(string tableName) => "[" + tableName + "]";
         public override string ToStatementColumnName(string columnName) => "[" + columnName + "]";
         public override string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;

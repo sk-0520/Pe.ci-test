@@ -145,9 +145,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteLayouts(Guid noteId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.NoteId, noteId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
         #endregion

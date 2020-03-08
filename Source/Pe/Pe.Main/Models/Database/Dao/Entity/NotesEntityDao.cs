@@ -183,18 +183,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool UpdateLock(Guid noteId, bool isLocked, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.IsLocked, isLocked);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.IsLocked] = isLocked;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateTextWrap(Guid noteId, bool textWrap, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.TextWrap, textWrap);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.TextWrap] = textWrap;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateTitle(Guid noteId, string title, IDatabaseCommonStatus databaseCommonStatus)
@@ -217,53 +219,61 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public bool UpdateForegroundColor(Guid noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.ForegroundColor, FromColor(color));
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.ForegroundColor] = FromColor(color);
+            return Commander.Execute(statement, param) == 1;
+
         }
         public bool UpdateBackgroundColor(Guid noteId, Color color, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.BackgroundColor, FromColor(color));
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.BackgroundColor] = FromColor(color);
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateContentKind(Guid noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteContentKindTansfer = new EnumTransfer<NoteContentKind>();
 
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.ContentKind, noteContentKindTansfer.ToString(contentKind));
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.ContentKind] = noteContentKindTansfer.ToString(contentKind);
+            return Commander.Execute(statement, param) == 1;
         }
 
         public bool UpdateLayoutKind(Guid noteId, NoteLayoutKind layoutKind, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteLayoutKindTansfer = new EnumTransfer<NoteLayoutKind>();
 
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.LayoutKind, noteLayoutKindTansfer.ToString(layoutKind));
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.LayoutKind] = noteLayoutKindTansfer.ToString(layoutKind);
+            return Commander.Execute(statement, param) == 1;
         }
 
 
         public bool UpdateVisible(Guid noteId, bool isVisible, IDatabaseCommonStatus databaseCommonStatus)
         {
-            var builder = CreateUpdateBuilder(databaseCommonStatus);
-            builder.AddKey(Column.NoteId, noteId);
-            builder.AddValueParameter(Column.IsVisible, isVisible);
-            return ExecuteUpdate(builder) == 1;
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.IsVisible] = isVisible;
+            return Commander.Execute(statement, param) == 1;
         }
 
         public int DeleteNote(Guid noteId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.NoteId, noteId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                NoteId = noteId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
 

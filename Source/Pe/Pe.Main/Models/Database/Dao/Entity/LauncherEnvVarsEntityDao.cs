@@ -68,16 +68,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public IEnumerable<LauncherEnvironmentVariableData> SelectEnvVarItems(Guid launcherItemId)
         {
-            var builder = CreateSelectBuilder();
-            builder.AddSelect(Column.EnvName);
-            builder.AddSelect(Column.EnvValue);
-
-            builder.AddValueParameter(Column.LauncherItemId, launcherItemId);
-
-            var result = Select<LauncherEnvVarsEntityDto>(builder)
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            var result = Commander.Query<LauncherEnvVarsEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
             return result;
+
         }
 
         public void InsertEnvVarItems(Guid launcherItemId, IEnumerable<LauncherEnvironmentVariableData> items, IDatabaseCommonStatus databaseCommonStatus)
@@ -91,9 +90,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteEnvVarItemsByLauncherItemId(Guid launcherItemId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.LauncherItemId, launcherItemId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
 

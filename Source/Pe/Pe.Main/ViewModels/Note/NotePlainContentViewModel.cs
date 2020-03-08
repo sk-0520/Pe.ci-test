@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -22,8 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NotePlainContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, clipboardManager, dispatcherWrapper, loggerFactory)
+        public NotePlainContentViewModel(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region NoteContentViewModelBase
 
-        protected override Task LoadContentAsync(Control control)
+        protected override Task LoadContentAsync(FrameworkElement baseElement)
         {
             return Task.Run(() => {
                 try {

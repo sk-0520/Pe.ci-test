@@ -74,9 +74,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         public int DeleteTagByLauncherItemId(Guid launcherItemId)
         {
-            var builder = CreateDeleteBuilder();
-            builder.AddKey(Column.LauncherItemId, launcherItemId);
-            return ExecuteDelete(builder);
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Execute(statement, parameter);
         }
 
         #endregion

@@ -91,6 +91,90 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/03/08",
+		"version": "0.90.000",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "notice",
+						"subject": "バージョン 0.91.000 で 0.83.0 のデータコンバート処理を破棄します"
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "ded9c606ccc1394846f2b813ddfdd455a9ffa2f9",
+						"subject": "#562: コマンド型ランチャーを ESC で閉じる"
+					},
+					{
+						"revision": "6e771610a6d0f5f2188615424c8cd1100996dc16",
+						"subject": "#487: デプロイ時にSQLファイルを一つにまとめる",
+						"comments": [
+							"思ってたより意味がないというか若干遅くなったけど気にしない"
+						]
+					},
+					{
+						"revision": "6449c91f3235d08b042dd58fe197bd3f563991b6",
+						"subject": "#508: ノートの書式付きを操作できるようにする",
+						"comments": [
+							"本課題の副産物としてカラーピッカーに既定の色を追加"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "d582c63e3b89505e729af9113de102e6c9b7c1a0",
+						"subject": "#563: コマンドランチャーで 1 文字だけの入力だと初期選択が行われない場合がある"
+					},
+					{
+						"revision": "3f959aa37dc4d384ab9e0f183033a5318260ce63",
+						"subject": "#564: RDP 復帰後に落ちることがある"
+					},
+					{
+						"revision": "f9bb81f4a6590cf1087acfed9448162e40797079",
+						"subject": "書式付きノートを最小化/元に戻すをガチャガチャした場合に落ちるの対応"
+					},
+					{
+						"revision": "35a1221d36edfd22f4f6617f85e10742d6cbe56a",
+						"subject": "#558: 標準入出力のタイトルバーがアイテム名じゃなくてパスになってる"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "29a41075eb122c509d9823f78e08d657d6ae868c",
+						"subject": "#542: ログ出力周りの整理"
+					},
+					{
+						"revision": "ab435c7f58ea01c50b3c8d065996debf118c3360",
+						"subject": "#557: 絶対に動的じゃないとダメでない SQL はファイルとして外に出す"
+					},
+					{
+						"revision": "7135ae9fcc8cdc451a7615fb8f591ed25ce30263",
+						"subject": "#567: アプリケーション構成ファイルをバージョン専用で使用できるようにする"
+					},
+					{
+						"revision": "a5926acff7ddca674dc5321387c13b5a134683dd",
+						"subject": "#568: デバッグ時のノートがデバッグ用として見てわかるようにする"
+					},
+					{
+						"revision": "9f3def2684720169010fe6a637eb57520ac95fc6",
+						"subject": "#565: コマンドライン引数のドキュメントを作成する"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/03/04",
 		"version": "0.89.000",
 		"contents": [

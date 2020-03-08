@@ -1,5 +1,5 @@
-﻿
+
 select
-	count(*) != 0
+	COUNT(*) != 0
 from
 	LauncherGroups
