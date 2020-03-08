@@ -184,6 +184,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#565: コマンドライン引数のドキュメントを作成する"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
