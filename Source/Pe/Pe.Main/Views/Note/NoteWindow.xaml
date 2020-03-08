@@ -231,6 +231,11 @@
         <Grid Grid.Row="1" Background="{Binding ContentBackground}">
           <Grid.Resources>
             <Style x:Key="TextBoxBase" TargetType="TextBoxBase">
+              <Style.Triggers>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions></MultiDataTrigger.Conditions>
+                </MultiDataTrigger>
+              </Style.Triggers>
               <Setter Property="Background" Value="Transparent" />
               <Setter Property="BorderThickness" Value="0" />
               <Setter Property="AcceptsReturn" Value="True" />
@@ -240,6 +245,7 @@
               <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
               <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
               <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
+              <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
             </Style>
             <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
               <Style.Triggers>
@@ -309,7 +315,18 @@
                 <!--#region リッチテキスト選択中ポップアップ-->
                 <Popup x:Name="popup" Placement="Absolute" IsOpen="{Binding IsOpenToolbar}">
                   <Popup.Resources>
+                    <!--<Style x:Key="Base" TargetType="ContentControl">
+                      <Setter Property="Background" Value="{DynamicResource PlatformTheme-ThemeColors2-ControlBrush}" />
+                      <Setter Property="BorderBrush" Value="{DynamicResource PlatformTheme-ThemeColors2-BorderBrush}" />
+                    </Style>
+                    <Style TargetType="RepeatButton" BasedOn="{StaticResource Base}"></Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource Base}"></Style>
+                    <Style TargetType="ToggleButton" BasedOn="{StaticResource Base}"></Style>-->
+
                     <Style x:Key="EmbeddedCommand" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                      <Setter Property="CommandTarget" Value="{Binding ElementName=content}" />
+                    </Style>
+                    <Style x:Key="RepeatEmbeddedCommand" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
                       <Setter Property="CommandTarget" Value="{Binding ElementName=content}" />
                     </Style>
 
@@ -352,7 +369,7 @@
                     </Style>
                   </Popup.Style>
 
-                  <Border>
+                  <Border Padding="1" CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PlatformTheme-ThemeColors2-BorderBrush}" Background="{DynamicResource PlatformTheme-ThemeColors2-ControlBrush}">
                     <Grid>
                       <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -412,12 +429,12 @@
 
                         <Separator Grid.Column="2" />
 
-                        <Button Grid.Column="3" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
+                        <RepeatButton Grid.Column="3" Style="{StaticResource RepeatEmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-IncreaseSize}" />
-                        </Button>
-                        <Button Grid.Column="4" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
+                        </RepeatButton>
+                        <RepeatButton Grid.Column="4" Style="{StaticResource RepeatEmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-DecreaseSize}" />
-                        </Button>
+                        </RepeatButton>
 
                         <Separator Grid.Column="5" />
 
