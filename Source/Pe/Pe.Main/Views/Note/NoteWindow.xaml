@@ -57,6 +57,7 @@
       <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
       <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
       <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
+      <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
       <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
@@ -426,8 +427,8 @@
                           </ComboBox.ItemsPanel>
                           <ComboBox.ItemTemplate>
                             <DataTemplate>
-                              <!--<TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}"  />-->
-                              <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" />
+                              <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
+                              <!--<TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}"  />-->
                             </DataTemplate>
                           </ComboBox.ItemTemplate>
                         </ComboBox>
