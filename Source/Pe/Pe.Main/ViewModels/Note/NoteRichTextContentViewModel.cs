@@ -292,6 +292,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(vm.IsDisposed) {
                         return;
                     }
+                    if(ContentElement == null) {
+                        Logger.LogDebug("RichTextBox が破棄されている");
+                        return;
+                    }
+
                     var noteContentConverter = new NoteContentConverter(vm.LoggerFactory);
                     var content = noteContentConverter.ToRtfString(vm.Document);
                     vm.Model?.ChangeRichTextContent(content);

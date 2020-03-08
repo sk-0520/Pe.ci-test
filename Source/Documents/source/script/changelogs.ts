@@ -151,7 +151,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "書式付きノートを最小化/元に戻すをガチャガチャした場合に落ちるの対応"
 					},
 					{
 						"revision": "",
