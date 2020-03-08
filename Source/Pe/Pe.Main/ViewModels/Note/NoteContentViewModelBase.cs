@@ -9,6 +9,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -25,11 +26,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteContentViewModelBase(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteContentViewModelBase(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             ClipboardManager = clipboardManager;
             DispatcherWrapper = dispatcherWrapper;
+            NoteConfiguration = noteConfiguration;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(IsLink), nameof(IsLink));
@@ -38,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         public NoteContentKind Kind => Model.ContentKind;
+        protected NoteConfiguration NoteConfiguration { get; }
         protected IClipboardManager ClipboardManager { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         public bool CanVisible
@@ -46,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             private set => SetProperty(ref this._canVisible, value);
         }
 
-        private Control? Control { get; set; }
+        private FrameworkElement? BaseElement { get; set; }
 
         public bool IsLink => Model.IsLink;
 
@@ -58,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region command
 
-        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand<Control>(
+        public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand<FrameworkElement>(
             async o => {
                 if(CanVisible) {
                     return;
@@ -89,16 +92,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #region function
 
-        private void AttachControlCore(Control o)
+        private void AttachControlCore(FrameworkElement o)
         {
-            Control = o;
-            Control.Unloaded += Control_Unloaded;
+            BaseElement = o;
+            BaseElement.Unloaded += Control_Unloaded;
         }
 
         private void DetachControlCore()
         {
-            if(Control != null) {
-                Control.Unloaded -= Control_Unloaded;
+            if(BaseElement != null) {
+                BaseElement.Unloaded -= Control_Unloaded;
             }
         }
 
@@ -106,9 +109,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         /// コンテンツが必要になった際に呼び出される。
         /// <para>UI要素への購買処理も実施すること。</para>
         /// </summary>
-        /// <param name="control"></param>
+        /// <param name="baseElement"></param>
         /// <returns></returns>
-        protected abstract Task LoadContentAsync(Control control);
+        protected abstract Task LoadContentAsync(FrameworkElement baseElement);
         /// <summary>
         /// コンテンツが不要になった際に呼び出される。
         /// <para>UI要素への解除処理も実施すること。</para>
@@ -146,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void Model_LinkContentChanged(object? sender, EventArgs e)
         {
-            if(Control == null) {
+            if(BaseElement == null) {
                 Logger.LogTrace("change ...");
                 return;
             }
@@ -154,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Logger.LogTrace("change!");
             EnabledUpdate = false;
             UnloadContent();
-            LoadContentAsync(Control).ContinueWith(t => {
+            LoadContentAsync(BaseElement).ContinueWith(t => {
                 EnabledUpdate = true;
             }).ConfigureAwait(false);
         }
@@ -166,14 +169,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region function
 
-        public static NoteContentViewModelBase Create(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public static NoteContentViewModelBase Create(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             switch(model.ContentKind) {
                 case NoteContentKind.Plain:
-                    return new NotePlainContentViewModel(model, clipboardManager, dispatcherWrapper, loggerFactory);
+                    return new NotePlainContentViewModel(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory);
 
                 case NoteContentKind.RichText:
-                    return new NoteRichTextContentViewModel(model, clipboardManager, dispatcherWrapper, loggerFactory);
+                    return new NoteRichTextContentViewModel(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory);
 
                 //case NoteContentKind.Link:
                 //    return new NoteLinkContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);

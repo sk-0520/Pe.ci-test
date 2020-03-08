@@ -58,9 +58,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, CustomConfiguration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, CustomConfiguration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
+            NoteConfiguration = noteConfiguration;
             NoteTheme = noteTheme;
             GeneralTheme = generalTheme;
             PlatformTheme = platformTheme;
@@ -70,9 +71,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             PlatformTheme.Changed += PlatformTheme_Changed;
 
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
+            Debug.Assert(Model.FontElement != null);
             Font = new NoteFontViewModel(Model.FontElement, DispatcherWrapper, LoggerFactory);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
 
             DragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
                 CanDragStart = CanDragStartFile,
@@ -109,6 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         bool CanLayoutNotify { get; set; }
 
+        NoteConfiguration NoteConfiguration { get; }
         INoteTheme NoteTheme { get; }
         IGeneralTheme GeneralTheme { get; }
         IPlatformTheme PlatformTheme { get; }
@@ -136,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         this._content.Dispose();
                     }
 #pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, ClipboardManager, DispatcherWrapper, LoggerFactory);
+                    this._content = NoteContentViewModelFactory.Create(Model.ContentElement, NoteConfiguration, ClipboardManager, DispatcherWrapper, LoggerFactory);
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 }
 

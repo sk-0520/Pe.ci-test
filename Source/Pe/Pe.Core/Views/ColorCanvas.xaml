@@ -5,6 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views"
+  xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:sys="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -14,6 +15,8 @@
 >
   <UserControl.Resources>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <app_core_views_converter:AutoColorConverter x:Key="AutoColorConverter" />
+    <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
 
     <Style TargetType="Border">
       <Setter Property="Padding" Value="0" />
@@ -42,6 +45,39 @@
 
   <Grid Width="{Binding ActualWidth, ElementName=root}">
     <StackPanel>
+
+      <ItemsControl Margin="10,0,10,0" ItemsSource="{Binding DefaultColorItemsSource, ElementName=root}">
+        <ItemsControl.Style>
+          <Style TargetType="ItemsControl">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding DefaultColorsColumns, ElementName=root}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ItemsControl.Style>
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="{Binding DefaultColorsColumns, ElementName=root}" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Button Click="Button_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Tag="{Binding}" Height="{Binding FontSize, ElementName=root, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=1.5}" >
+              <Button.Template>
+                <ControlTemplate>
+                  <Border CornerRadius="2" Margin="1" BorderThickness="1" BorderBrush="#88000000">
+                    <Border.Background>
+                      <SolidColorBrush Color="{Binding }" />
+                    </Border.Background>
+                  </Border>
+                </ControlTemplate>
+              </Button.Template>
+            </Button>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
       <Border HorizontalAlignment="Stretch" Height="30" Margin="10">
         <Border.Background>
           <DrawingBrush Viewport="0,0,8,8" TileMode="Tile" ViewportUnits="Absolute">

@@ -127,6 +127,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#508: ノートの書式付きを操作できるようにする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
