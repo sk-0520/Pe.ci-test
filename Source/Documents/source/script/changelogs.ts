@@ -155,6 +155,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#558: 標準入出力のタイトルバーがアイテム名じゃなくてパスになってる"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

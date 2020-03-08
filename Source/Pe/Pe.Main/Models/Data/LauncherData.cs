@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherExecutePathParameter: ILauncherExecutePathParameter
+    public class LauncherExecutePathParameter : ILauncherExecutePathParameter
     {
         public LauncherExecutePathParameter(string path, string option, string workDirectoryPath)
         {
@@ -101,6 +101,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     public interface ILauncherExecuteCustomParameter
     {
         #region property
+
+        string Caption { get; set; }
 
         bool IsEnabledCustomEnvironmentVariable { get; set; }
         bool IsEnabledStandardInputOutput { get; set; }
@@ -124,6 +126,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region ILauncherExecuteCustomParameter
 
+        public string Caption { get; set; } = string.Empty;
         public bool IsEnabledCustomEnvironmentVariable { get; set; }
         public bool IsEnabledStandardInputOutput { get; set; }
         public Encoding StandardInputOutputEncoding { get; set; } = EncodingConverter.DefaultStandardInputOutputEncoding;
@@ -131,7 +134,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherStoreAppData {
+    public class LauncherStoreAppData
+    {
         #region property
 
         public string ProtocolAlias { get; set; } = string.Empty;
@@ -139,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherEnvironmentVariableData: DataBase
+    public class LauncherEnvironmentVariableData : DataBase
     {
         #region property
 
@@ -225,7 +229,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    internal class LauncherItemOldImportData: LauncherItemData
+    internal class LauncherItemOldImportData : LauncherItemData
     {
         #region property
 
@@ -328,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     }
 
-    internal class LauncherToolbarsOldData: LauncherToolbarsDisplayData
+    internal class LauncherToolbarsOldData : LauncherToolbarsDisplayData
     {
         public IScreen? Screen { get; set; }
     }
