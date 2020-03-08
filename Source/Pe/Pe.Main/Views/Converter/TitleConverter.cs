@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
             var footer = BuildStatus.BuildType switch
             {
                 BuildType.Release => string.Empty,
-                _ => " " + new VersionConverter().ConvertNormalVersion(BuildStatus.Version) + ProcessArchitecture.ApplicationArchitecture + "/" + ProcessArchitecture.PlatformArchitecture + " <" + BuildStatus.Revision + ">",
+                _ => " " + new VersionConverter().ConvertNormalVersion(BuildStatus.Version) + " APP:" +  ProcessArchitecture.ApplicationArchitecture + "/OS:" + ProcessArchitecture.PlatformArchitecture + " <" + BuildStatus.Revision + ">",
             };
 
             return header + caption + footer + " - " + BuildStatus.Name;
