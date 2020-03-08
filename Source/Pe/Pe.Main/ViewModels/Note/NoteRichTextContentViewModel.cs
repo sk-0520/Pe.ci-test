@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             : base(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory)
         {
             TextChangeLazyAction = new LazyAction("RTF変更抑制", TimeSpan.FromSeconds(2), LoggerFactory);
+            SelectionForegroundColor = Colors.Black;
+            SelectionBackgroundColor = Colors.Yellow;
         }
 
         #region property
