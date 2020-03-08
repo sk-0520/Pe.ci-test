@@ -180,6 +180,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#568: デバッグ時のノートがデバッグ用として見てわかるようにする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

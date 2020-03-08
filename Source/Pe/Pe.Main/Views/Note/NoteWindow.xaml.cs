@@ -47,7 +47,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         ILoggerFactory? LoggerFactory { get; set; }
 
         PopupAttacher? PopupAttacher { get; set; }
-
+#if DEBUG || BETA
+        PopupAttacher? PopupAttacher2 { get; set; }
+#endif
         CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
@@ -217,12 +219,33 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
             UIUtility.SetToolWindowStyle(this, false, false);
             PopupAttacher = new PopupAttacher(this, this.popup);
+
+#if DEBUG || BETA
+            var devPopup = new System.Windows.Controls.Primitives.Popup() {
+                IsOpen = true,
+                PlacementTarget = this,
+                AllowsTransparency = true,
+                Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom,
+                Child = new System.Windows.Controls.Border() {
+                    Background = new SolidColorBrush(Color.FromArgb(0x80, 0xff, 0xff, 0xff)),
+                    Child = new System.Windows.Controls.TextBlock() {
+                        Text = Models.BuildStatus.BuildType.ToString(),
+                    }
+                }
+            };
+            var grid = UIUtility.FindLogicalChildren<Grid>(this).First();
+            grid.Children.Add(devPopup);
+            PopupAttacher2 = new PopupAttacher(this, devPopup);
+#endif
         }
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             PopupAttacher?.Dispose();
+#if DEBUG || BETA
+            PopupAttacher2?.Dispose();
+#endif
         }
 
         #endregion
