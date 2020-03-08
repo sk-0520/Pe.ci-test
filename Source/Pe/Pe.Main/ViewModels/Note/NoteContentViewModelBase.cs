@@ -9,6 +9,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -25,11 +26,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteContentViewModelBase(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteContentViewModelBase(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             ClipboardManager = clipboardManager;
             DispatcherWrapper = dispatcherWrapper;
+            NoteConfiguration = noteConfiguration;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddHook(nameof(IsLink), nameof(IsLink));
@@ -38,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         public NoteContentKind Kind => Model.ContentKind;
+        protected NoteConfiguration NoteConfiguration { get; }
         protected IClipboardManager ClipboardManager { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         public bool CanVisible
@@ -166,14 +169,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region function
 
-        public static NoteContentViewModelBase Create(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public static NoteContentViewModelBase Create(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             switch(model.ContentKind) {
                 case NoteContentKind.Plain:
-                    return new NotePlainContentViewModel(model, clipboardManager, dispatcherWrapper, loggerFactory);
+                    return new NotePlainContentViewModel(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory);
 
                 case NoteContentKind.RichText:
-                    return new NoteRichTextContentViewModel(model, clipboardManager, dispatcherWrapper, loggerFactory);
+                    return new NoteRichTextContentViewModel(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory);
 
                 //case NoteContentKind.Link:
                 //    return new NoteLinkContentViewModel(model, clipboardManager, dispatcherWapper, loggerFactory);

@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
@@ -34,8 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteRichTextContentViewModel(NoteContentElement model, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, clipboardManager, dispatcherWrapper, loggerFactory)
+        public NoteRichTextContentViewModel(NoteContentElement model, NoteConfiguration noteConfiguration, IClipboardManager clipboardManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, noteConfiguration, clipboardManager, dispatcherWrapper, loggerFactory)
         {
             TextChangeLazyAction = new LazyAction("RTF変更抑制", TimeSpan.FromSeconds(2), LoggerFactory);
         }
@@ -48,6 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         Popup? PopupElement { get; set; }
 
         LazyAction TextChangeLazyAction { get; }
+
+        public double FontMinimumSize => NoteConfiguration.FontSize.Minimum;
+        public double FontMaximumSize => NoteConfiguration.FontSize.Maximum;
 
         public bool IsOpenToolbar
         {

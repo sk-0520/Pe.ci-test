@@ -305,6 +305,8 @@
                     </Style>
                   </RichTextBox.Style>
                 </RichTextBox>
+
+                <!--#region リッチテキスト選択中ポップアップ-->
                 <Popup x:Name="popup" Placement="Absolute" IsOpen="{Binding IsOpenToolbar}">
                   <Popup.Resources>
                     <Style x:Key="EmbeddedCommand" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -331,6 +333,10 @@
                         </Setter.Value>
                       </Setter>
                     </Style>
+
+                    <Style TargetType="Separator" BasedOn="{StaticResource Indent}">
+                      <Setter Property="Width" Value="{StaticResource HalfMarginWidth}" />
+                    </Style>
                   </Popup.Resources>
                   <Popup.Style>
                     <Style TargetType="Popup" BasedOn="{StaticResource PopupMenu}">
@@ -345,6 +351,7 @@
                       </Style.Triggers>
                     </Style>
                   </Popup.Style>
+
                   <Border>
                     <Grid>
                       <Grid.RowDefinitions>
@@ -378,7 +385,13 @@
                             </DataTemplate>
                           </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <app_core_views:NumericUpDown Value="{Binding SelectionFontHeight}" />
+                        <app_core_views:NumericUpDown
+                          Value="{Binding SelectionFontHeight}"
+                          Minimum="{Binding FontMinimumSize}"
+                          Maximum="{Binding FontMaximumSize}"
+                        />
+
+                        <Separator />
 
                         <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-IncreaseSize}" />
@@ -386,7 +399,9 @@
                         <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-DecreaseSize}" />
                         </Button>
+
                         <Separator />
+
                         <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Subscript}" />
                         </Button>
@@ -470,6 +485,7 @@
                     </Grid>
                   </Border>
                 </Popup>
+                <!--#endregion-->
               </Grid>
 
             </DataTemplate>
