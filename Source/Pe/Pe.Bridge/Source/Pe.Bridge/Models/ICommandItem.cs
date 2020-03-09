@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     {
         #region property
 
+        #region Pe
         /// <summary>
         /// コマンドはランチャーアイテム。
         /// </summary>
@@ -26,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// ランチャーアイテムのタグに一致。
         /// </summary>
         LauncherItemTag,
+        #endregion
         /// <summary>
         /// プラグイン処理により生成。
         /// </summary>
@@ -34,6 +36,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// コマンド型ランチャーで表示するアイテム。
+    /// </summary>
     public interface ICommandItem
     {
         #region property
@@ -59,6 +64,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #region function
 
+        /// <summary>
+        /// アイコン取得。
+        /// <para>UIスレッド上で実行を保証。</para>
+        /// </summary>
+        /// <param name="iconBox"></param>
+        /// <returns>アイコンとなるデータ。</returns>
         object GetIcon(IconBox iconBox);
 
         /// <summary>

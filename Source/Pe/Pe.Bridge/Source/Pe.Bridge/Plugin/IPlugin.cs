@@ -4,9 +4,18 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// プラグイン種別。
+    /// </summary>
     public enum PluginKind
     {
+        /// <summary>
+        /// アドオン。
+        /// </summary>
         Addon,
+        /// <summary>
+        /// テーマ。
+        /// </summary>
         Theme,
     }
 
