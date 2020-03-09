@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -83,6 +84,39 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Invoke(action, argument, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
         }
 
+        public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        {
+            if(CheckAccess()) {
+                action();
+                return Task.CompletedTask;
+            }
+
+            return Dispatcher.InvokeAsync(action, dispatcherPriority, cancellationToken).Task;
+        }
+        public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority)
+        {
+            return InvokeAsync(action, dispatcherPriority, CancellationToken.None);
+        }
+        public Task InvokeAsync(Action action)
+        {
+            return InvokeAsync(action, DispatcherPriority.Send, CancellationToken.None);
+        }
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        {
+            if(CheckAccess()) {
+                return Task.FromResult(func());
+            }
+
+            return Dispatcher.InvokeAsync(func, dispatcherPriority, cancellationToken).Task;
+        }
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority)
+        {
+            return InvokeAsync(func, dispatcherPriority, CancellationToken.None);
+        }
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func)
+        {
+            return InvokeAsync(func, DispatcherPriority.Send, CancellationToken.None);
+        }
 
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {

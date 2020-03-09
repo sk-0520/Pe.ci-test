@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models
@@ -49,6 +50,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
         [Obsolete]
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument);
+
+        Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority);
+        Task InvokeAsync(Action action);
+        Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority);
+        Task<TResult> InvokeAsync<TResult>(Func<TResult> func);
+
 
         /// <summary>
         /// 対象 <see cref="Dispatcher"/> でなんかした結果を取得する。
