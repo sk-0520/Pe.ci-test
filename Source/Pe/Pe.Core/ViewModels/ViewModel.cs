@@ -395,6 +395,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
                 Disposing(this, EventArgs.Empty);
             }
 
+#if PROPERTY_CACHE
+            PropertyCacher.Clear();
+#endif
+
             if(disposing) {
                 GC.SuppressFinalize(this);
             }

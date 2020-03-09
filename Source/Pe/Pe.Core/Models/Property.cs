@@ -1,3 +1,7 @@
+#if DEBUG || BETA
+#define CHECK_PROPERTY_NAME
+#endif
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -258,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public object? Get(string propertyName)
         {
-#if DEBUG
+#if CHECK_PROPERTY_NAME
             if(Properties.TryGetValue(propertyName, out var prop)) {
                 if(!prop.CanRead) {
                     throw new ArgumentException(nameof(propertyName));
@@ -273,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void Set(string propertyName, object? value)
         {
-#if DEBUG
+#if CHECK_PROPERTY_NAME
             if(Properties.TryGetValue(propertyName, out var prop)) {
                 if(!prop.CanWrite) {
                     throw new ArgumentException(nameof(propertyName));
