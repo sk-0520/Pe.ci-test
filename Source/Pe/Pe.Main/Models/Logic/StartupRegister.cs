@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
 #endregion
 
-#region function
+        #region function
 
         /// <summary>
         /// スタートアップが存在するか
@@ -175,6 +175,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return ResultSuccessValue.Failure<StartupParameter>();
         }
 
-#endregion
+        #endregion
     }
 }

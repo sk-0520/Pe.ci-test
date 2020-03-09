@@ -32,5 +32,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public IconViewerViewModel IconViewer { get; }
 
         #endregion
+
+        #region ElementViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    IconViewer.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+        #endregion
     }
 }

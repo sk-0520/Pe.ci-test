@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -52,6 +53,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
+#if DEBUG
+            //TODO: PropertyCacher で何とかしたいと思ってはいるよ
+            var stopwatch = Stopwatch.StartNew();
+            using var _a_ = new ActionDisposer(d => Logger.LogTrace("PROP TIME: {0}", stopwatch.Elapsed));
+#endif
+
             ThrowIfDisposed();
 
             var type = obj.GetType();

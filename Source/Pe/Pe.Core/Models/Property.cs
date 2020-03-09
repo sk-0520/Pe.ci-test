@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -140,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        private static void ThrowSetter(object owner,object value) => throw new NotSupportedException();
+        private static void ThrowSetter(object owner, object value) => throw new NotSupportedException();
 
         #endregion
 
@@ -215,6 +217,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var type = owner.GetType();
             var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
         }
+
+        #region property
+
+        #endregion
+
+        #region function
+
+        #endregion
     }
 }

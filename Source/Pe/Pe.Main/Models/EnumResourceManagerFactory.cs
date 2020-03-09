@@ -10,17 +10,6 @@ namespace ContentTypeTextNet.Pe.Main.Models
     {
         #region function
 
-        private static IReadOnlyList<EnumResource> GetKeys()
-        {
-            var baseName = typeof(Key).FullName + ".";
-
-            return new[] {
-                Key.None,
-            }.Select(i => new EnumResource((int)i, baseName + i.ToString()))
-            .ToList()
-            ;
-        }
-
         public static EnumResourceManager Create()
         {
             var enumResourceManager = new EnumResourceManager();
