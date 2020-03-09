@@ -50,8 +50,30 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         [Obsolete]
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument);
 
+        /// <summary>
+        /// 対象 <see cref="Dispatcher"/> でなんかした結果を取得する。
+        /// <para>内部的には停止状態。</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <param name="dispatcherPriority"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        /// <summary>
+        /// <see cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <param name="dispatcherPriority"></param>
+        /// <returns></returns>
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority);
+        /// <summary>
+        /// <see cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
         T Get<T>(Func<T> func);
 
         DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority);
