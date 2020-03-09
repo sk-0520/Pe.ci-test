@@ -50,7 +50,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         [Obsolete]
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument);
 
-        T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority);
         T Get<T>(Func<T> func);

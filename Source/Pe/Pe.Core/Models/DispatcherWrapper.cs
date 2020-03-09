@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
 
-        public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
+        public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {
             if(CheckAccess()) {
                 return func();
@@ -92,24 +92,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 T result = default!;
                 using var resultWait = new ManualResetEventSlim();
                 Dispatcher.BeginInvoke(new Action(() => {
+                    cancellationToken.ThrowIfCancellationRequested();
                     result = func();
                     resultWait.Set();
-                }), dispatcherPriority, cancellationToken, timeout);
-                resultWait.Wait();
+                }), dispatcherPriority);
+                resultWait.Wait(cancellationToken);
                 return result;
             }
         }
-        public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
-        {
-            return Get(func, dispatcherPriority, cancellationToken, Timeout.InfiniteTimeSpan);
-        }
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority)
         {
-            return Get(func, dispatcherPriority, CancellationToken.None, Timeout.InfiniteTimeSpan);
+            return Get(func, dispatcherPriority, CancellationToken.None);
         }
         public T Get<T>(Func<T> func)
         {
-            return Get(func, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
+            return Get(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
 
