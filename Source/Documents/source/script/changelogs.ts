@@ -141,7 +141,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "ノートの種別変更で同一種別に変更しようとすると内部的に例外が飛んでいた事象の修正"
 					},
 					{
 						"revision": "",

@@ -235,7 +235,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set
             {
                 if(IsLink) {
-                    Logger.LogError("リンク中は変更できない");
+                    Logger.LogWarning("リンク中は変更できない");
+                    return;
+                }
+                if(value == Model.ContentKind) {
+                    // 同一値はなんもしない
                     return;
                 }
 
@@ -258,6 +262,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             get => Model.LayoutKind;
             set
             {
+                if(value == Model.LayoutKind) {
+                    // 同一値はなんもしない
+                    return;
+                }
+
                 Flush();
                 var rect = value switch
                 {
