@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -92,6 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
+                this._imageSource = null;
                 if(disposing) {
                     RunningStatus.Dispose();
                     PropertyChangedHooker.Dispose();

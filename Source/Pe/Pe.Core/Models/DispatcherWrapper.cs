@@ -78,15 +78,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
         {
-            // これはもう止まる原因としか言いようがない
-
             if(CheckAccess()) {
                 return func();
             } else {
                 T result = default!;
-                Dispatcher.Invoke(() => {
+                using var resultWait = new ManualResetEventSlim();
+                Dispatcher.BeginInvoke(new Action(() => {
                     result = func();
-                }, dispatcherPriority, cancellationToken, timeout);
+                    resultWait.Set();
+                }), dispatcherPriority, cancellationToken, timeout);
+                resultWait.Wait();
                 return result;
             }
         }
