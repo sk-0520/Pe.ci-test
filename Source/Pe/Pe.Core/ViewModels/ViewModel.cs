@@ -50,8 +50,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected IEnumerable<ICommand> Commands => CommandStore.Commands;
         CommandStore CommandStore { get; } = new CommandStore();
 
+#if PROPERTY_CACHE
         ConcurrentDictionary<object, PropertyCacher> PropertyCacher { get; } = new ConcurrentDictionary<object, PropertyCacher>();
-
+#endif
+        ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
 
         #endregion
 
@@ -86,7 +88,8 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 #else
                 propertyInfo.SetValue(obj, value);
 #endif
-                OnPropertyChanged(new PropertyChangedEventArgs(notifyPropertyName));
+                var e = PropertyChangedEventArgsCache.GetOrAdd(notifyPropertyName, s => new PropertyChangedEventArgs(s));
+                OnPropertyChanged(e);
 
                 return true;
             }
