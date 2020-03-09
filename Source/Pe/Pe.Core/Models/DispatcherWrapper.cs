@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -31,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void VerifyAccess() => Dispatcher.VerifyAccess();
 
+        [Obsolete]
         public void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
         {
             if(CheckAccess()) {
@@ -39,20 +41,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 Dispatcher.Invoke(action, dispatcherPriority, cancellationToken, timeout);
             }
         }
+        [Obsolete]
         public void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {
             Invoke(action, dispatcherPriority, cancellationToken, Timeout.InfiniteTimeSpan);
         }
+        [Obsolete]
         public void Invoke(Action action, DispatcherPriority dispatcherPriority)
         {
             Invoke(action, dispatcherPriority, CancellationToken.None, Timeout.InfiniteTimeSpan);
         }
+        [Obsolete]
         public void Invoke(Action action)
         {
             // https://referencesource.microsoft.com/#WindowsBase/Base/System/Windows/Threading/Dispatcher.cs,560
             Invoke(action, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
         }
 
+        [Obsolete]
         public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
         {
             if(CheckAccess()) {
@@ -61,46 +67,80 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 Dispatcher.Invoke(action, dispatcherPriority, cancellationToken, timeout);
             }
         }
+        [Obsolete]
         public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {
             Invoke(action, argument, dispatcherPriority, cancellationToken, Timeout.InfiniteTimeSpan);
         }
+        [Obsolete]
         public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
         {
             Invoke(action, argument, dispatcherPriority, CancellationToken.None, Timeout.InfiniteTimeSpan);
         }
 
+        [Obsolete]
         public void Invoke<TArgument>(Action<TArgument> action, TArgument argument)
         {
             Invoke(action, argument, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
         }
 
-
-        public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
+        public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {
-            // これはもう止まる原因としか言いようがない
+            if(CheckAccess()) {
+                action();
+                return Task.CompletedTask;
+            }
 
+            return Dispatcher.InvokeAsync(action, dispatcherPriority, cancellationToken).Task;
+        }
+        public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority)
+        {
+            return InvokeAsync(action, dispatcherPriority, CancellationToken.None);
+        }
+        public Task InvokeAsync(Action action)
+        {
+            return InvokeAsync(action, DispatcherPriority.Send, CancellationToken.None);
+        }
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        {
+            if(CheckAccess()) {
+                return Task.FromResult(func());
+            }
+
+            return Dispatcher.InvokeAsync(func, dispatcherPriority, cancellationToken).Task;
+        }
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority)
+        {
+            return InvokeAsync(func, dispatcherPriority, CancellationToken.None);
+        }
+        public Task<TResult> InvokeAsync<TResult>(Func<TResult> func)
+        {
+            return InvokeAsync(func, DispatcherPriority.Send, CancellationToken.None);
+        }
+
+        public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        {
             if(CheckAccess()) {
                 return func();
             } else {
                 T result = default!;
-                Dispatcher.Invoke(() => {
+                using var resultWait = new ManualResetEventSlim();
+                Dispatcher.BeginInvoke(new Action(() => {
+                    cancellationToken.ThrowIfCancellationRequested();
                     result = func();
-                }, dispatcherPriority, cancellationToken, timeout);
+                    resultWait.Set();
+                }), dispatcherPriority);
+                resultWait.Wait(cancellationToken);
                 return result;
             }
         }
-        public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
-        {
-            return Get(func, dispatcherPriority, cancellationToken, Timeout.InfiniteTimeSpan);
-        }
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority)
         {
-            return Get(func, dispatcherPriority, CancellationToken.None, Timeout.InfiniteTimeSpan);
+            return Get(func, dispatcherPriority, CancellationToken.None);
         }
         public T Get<T>(Func<T> func)
         {
-            return Get(func, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
+            return Get(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
 

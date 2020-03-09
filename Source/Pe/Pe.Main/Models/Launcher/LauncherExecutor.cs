@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
                 stdioElement = OrderManager.CreateStandardInputOutputElement(customParameter.Caption, process, screen);
-                DispatcherWrapper.Invoke(element => {
+                DispatcherWrapper.Begin(element => {
                     element.StartView();
                 }, stdioElement);
             }

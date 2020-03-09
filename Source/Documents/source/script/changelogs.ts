@@ -165,7 +165,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#570: Dispatcher.Invoke を滅ぼしましょう"
 					},
 					{
 						"revision": "",

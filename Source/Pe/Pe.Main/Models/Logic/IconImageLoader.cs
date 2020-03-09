@@ -58,14 +58,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                 }
                 stream.Position = 0;
-                BitmapSource? iconImage = null;
-                DispatcherWrapper.Invoke(() => {
+                var iconImage = DispatcherWrapper.Get(() => {
                     var imageLoader = new ImageLoader(LoggerFactory);
-                    iconImage = imageLoader.Load(stream);
-                    FreezableUtility.SafeFreeze(iconImage);
+                    var image = imageLoader.Load(stream);
+                    FreezableUtility.SafeFreeze(image);
+                    return image;
                 });
                 return iconImage;
-
             }
         }
 
@@ -115,17 +114,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogDebug("画像ファイルとして読み込み {0}", path);
                     var imageLoader = new ImageLoader(LoggerFactory);
                     using(var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        DispatcherWrapper.Invoke(() => {
+                        iconImage = DispatcherWrapper.Get(() => {
                             var image = imageLoader.Load(stream);
-                            iconImage = FreezableUtility.GetSafeFreeze(image);
+                            return FreezableUtility.GetSafeFreeze(image);
                         });
                     }
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", path);
                     var iconLoader = new IconLoader(LoggerFactory);
-                    DispatcherWrapper.Invoke(() => {
+                    iconImage = DispatcherWrapper.Get(() => {
                         var image = iconLoader.Load(path, new IconSize(IconBox), iconData.Index);
-                        iconImage = FreezableUtility.GetSafeFreeze(image!);
+                        return FreezableUtility.GetSafeFreeze(image!);
                     });
                 }
 
