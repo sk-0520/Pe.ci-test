@@ -33,15 +33,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// </summary>
         void VerifyAccess();
 
+        [Obsolete]
         void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
+        [Obsolete]
         void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        [Obsolete]
         void Invoke(Action action, DispatcherPriority dispatcherPriority);
+        [Obsolete]
         void Invoke(Action action);
+        [Obsolete]
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
+        [Obsolete]
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        [Obsolete]
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
+        [Obsolete]
         void Invoke<TArgument>(Action<TArgument> action, TArgument argument);
-
 
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
