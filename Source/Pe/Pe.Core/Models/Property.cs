@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static ParameterExpression CreateOwner(object owner) => Expression.Parameter(owner.GetType(), nameof(owner));
         public static ParameterExpression CreateOwner<T>() => Expression.Parameter(typeof(T), typeof(T).Name);
 
-        public static Func<object, object> CreateGetter(ParameterExpression owner, string propertyName)
+        public static Func<object, object?> CreateGetter(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
 
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
 
             var executor = lambda.Compile();
-            return new Func<object, object>(o => executor.DynamicInvoke(o)!);
+            return new Func<object, object?>(o => executor.DynamicInvoke(o));
         }
         public static Func<TOwner, TValue> CreateGetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
         {
