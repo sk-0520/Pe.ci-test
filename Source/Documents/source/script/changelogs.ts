@@ -155,7 +155,10 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#573: 自前でプロパティ変更通知している処理の高速化",
+						"comments": [
+							"これまた遅くなった気がしないでもないけど気にしない"
+						]
 					},
 					{
 						"revision": "",
