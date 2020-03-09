@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             IsPausing = true;
-            return new ActionDisposer(() => {
+            return new ActionDisposer(d => {
                 IsPausing = false;
             });
         }

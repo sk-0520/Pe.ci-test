@@ -101,14 +101,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public sealed class ActionDisposer : DisposerBase
     {
-        public ActionDisposer(Action action)
-            : this(d => action())
-        {
-            if(action == null) {
-                throw new ArgumentNullException(nameof(action));
-            }
-        }
-
         public ActionDisposer(Action<bool> action)
         {
             if(action == null) {
@@ -131,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(!IsDisposed) {
                 if(Action != null) {
                     Action(disposing);
-                    //Action = null;
+                    Action = null!;
                 }
             }
 
@@ -141,7 +133,44 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class GroupDisposer : DisposerBase
+    public sealed class ActionDisposer<TArgument> : DisposerBase
+    {
+        public ActionDisposer(Action<bool, TArgument> action, TArgument argument)
+        {
+            if(action == null) {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            Action = action;
+            Argument = argument;
+        }
+
+        #region property
+
+        Action<bool, TArgument> Action { get; set; }
+        TArgument Argument { get; set; }
+
+        #endregion
+
+        #region ActionDisposer
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(Action != null) {
+                    Action(disposing, Argument);
+                    Action = null!;
+                    Argument = default!;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+    }
+
+    public class DisposableStocker : DisposerBase
     {
         #region property
 

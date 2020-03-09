@@ -336,7 +336,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             Debug.Assert(PopupElement != null);
 
             NowSelectionProcess = true;
-            using var _cleanup_ = new ActionDisposer(() => NowSelectionProcess = false);
+            using var _cleanup_ = new ActionDisposer(d => NowSelectionProcess = false);
 
             if(ContentElement.Selection.IsEmpty) {
                 // 未選択。さよなら

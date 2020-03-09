@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             StopLinkWatch();
-            using(new ActionDisposer(() => StartLinkWatch(parameter))) {
+            using(new ActionDisposer(d => StartLinkWatch(parameter))) {
                 using(var stream = parameter.File!.Open(FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read)) {
                     using(var writer = new StreamWriter(stream, parameter.Encoding!)) {
                         writer.Write(content);

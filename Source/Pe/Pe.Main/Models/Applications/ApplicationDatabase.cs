@@ -346,7 +346,7 @@ limit
         {
 #if DEBUG
             var sp = Stopwatch.StartNew();
-            using var x = new ActionDisposer(() => Logger.LogTrace("SQL読み込み時間: {0}, {1}", sp.Elapsed, key));
+            using var x = new ActionDisposer(d => Logger.LogTrace("SQL読み込み時間: {0}, {1}", sp.Elapsed, key));
 #endif
             if(StatementAccessor == null) {
                 return CreateCacheFromFile(ConvertFileName(key));
