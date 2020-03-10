@@ -146,10 +146,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 引数からコマンドライン分解。
         /// </summary>
         /// <param name="arguments">コマンドライン引数。</param>
-        /// <param name="firstIsProgram"><see cref="arguments"/>の先頭はプログラム名か。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
-        public CommandLine(IEnumerable<string> arguments, bool firstIsProgram = false)
+        /// <param name="commandStartsWith"><see cref="arguments"/>の先頭はプログラム/コマンドか。<para>Main関数だと含まれず、<see cref="Environment.GetCommandLineArgs()"/>だと含まれてる的な。</para></param>
+        public CommandLine(IEnumerable<string> arguments, bool commandStartsWith = false)
         {
-            if(firstIsProgram) {
+            if(commandStartsWith) {
                 ProgramName = arguments.FirstOrDefault() ?? string.Empty;
                 Arguments = arguments.Skip(1).ToList();
             } else {
