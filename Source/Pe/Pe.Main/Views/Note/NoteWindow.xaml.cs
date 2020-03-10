@@ -47,9 +47,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         ILoggerFactory? LoggerFactory { get; set; }
 
         PopupAttacher? PopupAttacher { get; set; }
-#if DEBUG || BETA
-        PopupAttacher? PopupAttacher2 { get; set; }
-#endif
         CommandStore CommandStore { get; } = new CommandStore();
 
         #endregion
@@ -221,21 +218,21 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             PopupAttacher = new PopupAttacher(this, this.popup);
 
 #if DEBUG || BETA
-            var devPopup = new System.Windows.Controls.Primitives.Popup() {
-                IsOpen = true,
-                PlacementTarget = this,
-                AllowsTransparency = true,
-                Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom,
-                Child = new System.Windows.Controls.Border() {
-                    Background = new SolidColorBrush(Color.FromArgb(0x80, 0xff, 0xff, 0xff)),
-                    Child = new System.Windows.Controls.TextBlock() {
-                        Text = Models.BuildStatus.BuildType.ToString(),
-                    }
+            var devElement = new System.Windows.Controls.Border() {
+                Background = new SolidColorBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff)),
+                VerticalAlignment = VerticalAlignment.Bottom,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 0, 1, 0),
+                IsHitTestVisible = false,
+                Child = new System.Windows.Controls.TextBlock() {
+                    Text = Models.BuildStatus.BuildType.ToString(),
+                    Opacity = 0.9,
+                    FontSize = 9,
                 }
             };
             var grid = UIUtility.FindLogicalChildren<Grid>(this).First();
-            grid.Children.Add(devPopup);
-            PopupAttacher2 = new PopupAttacher(this, devPopup);
+            grid.Children.Add(devElement);
 #endif
         }
 
@@ -243,9 +240,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
         {
             base.OnClosed(e);
             PopupAttacher?.Dispose();
-#if DEBUG || BETA
-            PopupAttacher2?.Dispose();
-#endif
         }
 
         #endregion
