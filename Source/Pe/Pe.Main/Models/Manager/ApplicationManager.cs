@@ -470,7 +470,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(Logger.IsEnabled(LogLevel.Debug)) {
-                Logger.LogDebug(ObjectDumper.GetDumpString(accent));
+                Logger.LogDebug("アクセントカラー: #{0:x2}{1:x2}{2:x2}{3:x2}", accent.Accent.A, accent.Accent.R, accent.Accent.G, accent.Accent.B);
             }
         }
 

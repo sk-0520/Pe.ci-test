@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,6 +27,8 @@ namespace ContentTypeTextNet.Pe.Main
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             base.OnStartup(e);
 #if DEBUG
             DebugStartup();
@@ -56,10 +59,10 @@ namespace ContentTypeTextNet.Pe.Main
             notifyIcon.DataContext = viewModel;
             //Shutdown();
 
-            Dispatcher.BeginInvoke(new Action(() => {
-                Logger.LogInformation("つかえるよ！");
+            Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
+                Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
                 ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
-            }), System.Windows.Threading.DispatcherPriority.SystemIdle);
+            }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
