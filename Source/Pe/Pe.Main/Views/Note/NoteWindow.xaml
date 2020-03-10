@@ -679,24 +679,199 @@
                           Size="{Binding DataContext.Font.Size, ElementName=root}"
                           SizeMinimum="{Binding DataContext.Font.MinimumSize, ElementName=root}"
                           SizeMaximum="{Binding DataContext.Font.MaximumSize, ElementName=root}"
-                        >
-                          <app_main_views:FontSelectControl.Style>
-                            <Style TargetType="app_main_views:FontSelectControl">
-                              <Style.Triggers>
-                                <DataTrigger Binding="{Binding ContentKind}" Value="RichText">
-                                  <Setter Property="IsEnabled" Value="False" />
-                                  <Setter Property="Opacity" Value="{StaticResource DisableOpacity}" />
-                                </DataTrigger>
-                              </Style.Triggers>
-                            </Style>
-                          </app_main_views:FontSelectControl.Style>
-                        </app_main_views:FontSelectControl>
+                        />
                       </Grid>
                     </DataTemplate>
                     <!--#endregion-->
 
                     <!--#region リッチテキスト -->
                     <DataTemplate DataType="{x:Type app_main_viewmodels_note:NoteRichTextContentViewModel}">
+
+                      <Grid>
+                        <Grid.Resources>
+
+                          <Style x:Key="EmbeddedCommand" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="CommandTarget" Value="{Binding ElementName=content}" />
+                          </Style>
+                          <Style x:Key="RepeatEmbeddedCommand" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
+                            <Setter Property="CommandTarget" Value="{Binding ElementName=content}" />
+                          </Style>
+
+                          <Style x:Key="NoteColorPicker" TargetType="app_core_views:ColorCanvas">
+                            <Setter Property="Template">
+                              <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type app_core_views:ColorCanvas}">
+                                  <Grid>
+                                    <ToggleButton x:Name="commandPopup" Width="8" />
+                                    <Popup IsOpen="{Binding IsChecked, ElementName=commandPopup}" Style="{StaticResource PopupMenu}">
+                                      <Border Style="{StaticResource PopupMenuBorder}">
+                                        <app_core_views:ColorCanvas
+                                          Width="200"
+                                          SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                          HasAlpha="{Binding HasAlpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                        />
+                                      </Border>
+                                    </Popup>
+                                  </Grid>
+                                </ControlTemplate>
+                              </Setter.Value>
+                            </Setter>
+                          </Style>
+
+                          <Style TargetType="Separator" BasedOn="{StaticResource Indent}">
+                            <Setter Property="Width" Value="{StaticResource HalfMarginWidth}" />
+                          </Style>
+                        </Grid.Resources>
+
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Width="{Binding ActualWidth, ElementName=baseSize}">
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+
+                            <ColumnDefinition Width="Auto" />
+
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+
+                            <ColumnDefinition Width="Auto" />
+
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                          </Grid.ColumnDefinitions>
+
+                          <ComboBox x:Name="listFont" Grid.Column="0" VerticalAlignment="Stretch" SelectedValuePath="Source" SelectedValue="{Binding SelectionFontFamily}"  ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                            <ComboBox.ItemsPanel>
+                              <ItemsPanelTemplate>
+                                <VirtualizingStackPanel
+                                  VirtualizingStackPanel.IsVirtualizing="True"
+                                  VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  ScrollUnit="Item"
+                                >
+                                  <VirtualizingStackPanel.Style>
+                                    <Style TargetType="VirtualizingStackPanel">
+                                      <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ActualWidth, ElementName=listFont, Converter={StaticResource LessEqual-DoubleCompareConverter}, ConverterParameter=200}" Value="True">
+                                          <Setter Property="Width"  Value="200" />
+                                        </DataTrigger>
+                                      </Style.Triggers>
+                                    </Style>
+                                  </VirtualizingStackPanel.Style>
+                                </VirtualizingStackPanel>
+                              </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                            <ComboBox.ItemTemplate>
+                              <DataTemplate>
+                                <TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}" FontFamily="{Binding}" />
+                                <!--<TextBlock LineStackingStrategy="MaxHeight" Text="{Binding Converter={StaticResource FontFamilyToNameConverter}}"  />-->
+                              </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                          </ComboBox>
+                          <app_core_views:NumericUpDown
+                            Grid.Column="1"
+                            VerticalContentAlignment="Center"
+                            Height="{Binding Height, ElementName=listFont}"
+                            Value="{Binding SelectionFontHeight}"
+                            Minimum="{Binding FontMinimumSize}"
+                            Maximum="{Binding FontMaximumSize}"
+                          />
+
+                          <Separator Grid.Column="2" />
+
+                          <RepeatButton Grid.Column="3" Style="{StaticResource RepeatEmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-IncreaseSize}" />
+                          </RepeatButton>
+                          <RepeatButton Grid.Column="4" Style="{StaticResource RepeatEmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-DecreaseSize}" />
+                          </RepeatButton>
+
+                          <Separator Grid.Column="5" />
+
+                          <Button Grid.Column="6" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Subscript}" />
+                          </Button>
+                          <Button Grid.Column="7" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSuperscript">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Superscript}" />
+                          </Button>
+                        </Grid>
+
+                        <StackPanel x:Name="baseSize" Grid.Row="1" Orientation="Horizontal">
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Bold}" />
+                          </Button>
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleItalic">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Italic}" />
+                          </Button>
+                          <Button Command="{Binding ToggleSeletectionUnderlineCommand}">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Underline}" />
+                          </Button>
+                          <Button Command="{Binding ToggleSeletectionStrikeThroughCommand}">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-StrikeThrough}" />
+                          </Button>
+
+                          <Separator />
+
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleNumbering">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-List-Numbering}" />
+                          </Button>
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBullets">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-List-Bullets}" />
+                          </Button>
+
+                          <Separator />
+
+                          <Button Command="{Binding ApplySeletectionForegroundColorCommand}">
+                            <Grid>
+                              <Border>
+                                <Border.Background>
+                                  <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="Transparent" />
+                                    <GradientStop Offset="0.5" Color="{Binding SelectionForegroundColor}" />
+                                  </LinearGradientBrush>
+                                </Border.Background>
+                              </Border>
+                              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-ForegroundColor}" />
+                            </Grid>
+                          </Button>
+                          <app_core_views:ColorCanvas HasAlpha="False" SelectedColor="{Binding SelectionForegroundColor}" Style="{StaticResource NoteColorPicker}" />
+
+                          <Button Command="{Binding ApplySeletectionBackgroundColorCommand}">
+                            <Grid>
+                              <Border>
+                                <Border.Background>
+                                  <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="Transparent" />
+                                    <GradientStop Offset="0.5" Color="{Binding SelectionBackgroundColor}" />
+                                  </LinearGradientBrush>
+                                </Border.Background>
+                              </Border>
+                              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-BackgroundColor}" />
+                            </Grid>
+                          </Button>
+                          <app_core_views:ColorCanvas HasAlpha="True"  SelectedColor="{Binding SelectionBackgroundColor}" Style="{StaticResource NoteColorPicker}" />
+
+                          <Separator />
+
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignLeft">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Left}" />
+                          </Button>
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignCenter">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Center}" />
+                          </Button>
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignRight">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Right}" />
+                          </Button>
+                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignJustify">
+                            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Justify}" />
+                          </Button>
+
+                        </StackPanel>
+                      </Grid>
+
                     </DataTemplate>
                   </ContentControl.Resources>
 
