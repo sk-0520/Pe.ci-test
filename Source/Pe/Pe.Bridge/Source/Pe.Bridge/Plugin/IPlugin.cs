@@ -19,6 +19,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         Theme,
     }
 
+    /// <summary>
+    /// プラグインの既定インターフェイス。
+    /// <para><see cref="Addon.IAddon"/>か<see cref="Theme.ITheme"/>をさらに実装している必要あり。</para>
+    /// </summary>
     public interface IPlugin
     {
         #region property
