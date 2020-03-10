@@ -26,8 +26,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region variable
 
-        bool _isOpenToolbar;
-
         FontFamily? _selectionFontFamily;
         decimal _selectionFontHeight;
         Color _foregroundColor;
@@ -48,18 +46,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         //Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
         RichTextBox? RichText { get; set; }
         FlowDocument Document => RichText?.Document ?? throw new NullReferenceException(nameof(RichText));
-        Popup? PopupElement { get; set; }
 
         LazyAction TextChangeLazyAction { get; }
 
         public double FontMinimumSize => NoteConfiguration.FontSize.Minimum;
         public double FontMaximumSize => NoteConfiguration.FontSize.Maximum;
 
-        public bool IsOpenToolbar
-        {
-            get => this._isOpenToolbar;
-            set => SetProperty(ref this._isOpenToolbar, value);
-        }
 
         bool NowSelectionProcess { get; set; }
 
@@ -271,7 +263,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
             RichText = (RichTextBox)baseElement.FindName("content");
-            PopupElement = (Popup)baseElement.FindName("popup");
 
             RichText.TextChanged += Control_TextChanged;
             RichText.SelectionChanged += RichTextBox_SelectionChanged;
@@ -306,9 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             RichText.TextChanged -= Control_TextChanged;
             RichText.SelectionChanged -= RichTextBox_SelectionChanged;
 
-            PopupElement = null;
             RichText = null;
-            IsOpenToolbar = false;
         }
 
         protected override IDataObject GetClipbordContentData()
@@ -373,14 +362,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             // ツールバー的なの何かできればいいなぁと
             Debug.Assert(RichText != null);
-            Debug.Assert(PopupElement != null);
 
             NowSelectionProcess = true;
             using var _cleanup_ = new ActionDisposer(d => NowSelectionProcess = false);
 
             if(RichText.Selection.IsEmpty) {
                 // 未選択。さよなら
-                IsOpenToolbar = false;
                 return;
             }
 
@@ -418,9 +405,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 RichText.PointToScreen(new Point(maxX - mixX, endRect.Y + endRect.Height)),
                 new Size(endRect.Width, endRect.Height)
             );
-            PopupElement.PlacementRectangle = rect;
-
-            IsOpenToolbar = true;
         }
 
     }
