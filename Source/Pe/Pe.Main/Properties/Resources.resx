@@ -950,10 +950,10 @@
     <value>テキスト(_P)</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteContentKind.RichText" xml:space="preserve">
-    <value>書式付き</value>
+    <value>リッチテキスト</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteContentKind.RichText_A" xml:space="preserve">
-    <value>書式付き(_R)</value>
+    <value>リッチテキスト(_R)</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteCreateTitleKind.Count" xml:space="preserve">
     <value>カウント</value>
