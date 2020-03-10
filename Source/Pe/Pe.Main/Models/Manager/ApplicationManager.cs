@@ -521,7 +521,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             infoCollector.Indent = string.Empty;
 
             var s = infoCollector.GetLongInformation();
-            Logger.LogInformation("[Logging]" + Environment.NewLine + s);
+            Logger.LogInformation("[各種情報]" + Environment.NewLine + s);
         }
 
         public bool Startup(App app, StartupEventArgs e)
