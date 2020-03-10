@@ -689,14 +689,6 @@
 
                       <Grid>
                         <Grid.Resources>
-
-                          <Style x:Key="EmbeddedCommand" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="CommandTarget" Value="{Binding ElementName=content}" />
-                          </Style>
-                          <Style x:Key="RepeatEmbeddedCommand" TargetType="RepeatButton" BasedOn="{StaticResource {x:Type RepeatButton}}">
-                            <Setter Property="CommandTarget" Value="{Binding ElementName=content}" />
-                          </Style>
-
                           <Style x:Key="NoteColorPicker" TargetType="app_core_views:ColorCanvas">
                             <Setter Property="Template">
                               <Setter.Value>
@@ -782,28 +774,28 @@
 
                           <Separator Grid.Column="2" />
 
-                          <RepeatButton Grid.Column="3" Style="{StaticResource RepeatEmbeddedCommand}" Command="EditingCommands.IncreaseFontSize">
+                          <RepeatButton Grid.Column="3" Command="{Binding ToggleSeletectionIncreaseFontSizeCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-IncreaseSize}" />
                           </RepeatButton>
-                          <RepeatButton Grid.Column="4" Style="{StaticResource RepeatEmbeddedCommand}" Command="EditingCommands.DecreaseFontSize">
+                          <RepeatButton Grid.Column="4" Command="{Binding ToggleSeletectionDecreaseFontSizeCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-DecreaseSize}" />
                           </RepeatButton>
 
                           <Separator Grid.Column="5" />
 
-                          <Button Grid.Column="6" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSubscript">
+                          <Button Grid.Column="6" Command="{Binding ToggleSeletectionSubscriptCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Subscript}" />
                           </Button>
-                          <Button Grid.Column="7" Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleSuperscript">
+                          <Button Grid.Column="7" Command="{Binding ToggleSeletectionSuperscriptCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Superscript}" />
                           </Button>
                         </Grid>
 
                         <StackPanel x:Name="baseSize" Grid.Row="1" Orientation="Horizontal">
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBold">
+                          <Button Command="{Binding ToggleSeletectionBoldCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Bold}" />
                           </Button>
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleItalic">
+                          <Button Command="{Binding ToggleSeletectionItalicCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Italic}" />
                           </Button>
                           <Button Command="{Binding ToggleSeletectionUnderlineCommand}">
@@ -815,10 +807,10 @@
 
                           <Separator />
 
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleNumbering">
+                          <Button Command="{Binding ToggleNumberingCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-List-Numbering}" />
                           </Button>
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.ToggleBullets">
+                          <Button Command="{Binding ToggleBulletsCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-List-Bullets}" />
                           </Button>
 
@@ -856,16 +848,16 @@
 
                           <Separator />
 
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignLeft">
+                          <Button Command="{Binding AlignLeftCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Left}" />
                           </Button>
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignCenter">
+                          <Button Command="{Binding AlignCenterCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Center}" />
                           </Button>
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignRight">
+                          <Button Command="{Binding AlignRightCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Right}" />
                           </Button>
-                          <Button Style="{StaticResource EmbeddedCommand}" Command="EditingCommands.AlignJustify">
+                          <Button Command="{Binding AlignJustifyCommand}">
                             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Text-Justify}" />
                           </Button>
 
