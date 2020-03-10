@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="Directory"/>以下を綺麗にする。
         /// </summary>
         /// <param name="rootDelete"><see cref="Directory"/>その物を削除し、再作成するか。</param>
-        public void Clear(bool rootDelete = true)
+        public void Clear(bool rootDelete = false)
         {
             Directory.Refresh();
             if(Directory.Exists) {
