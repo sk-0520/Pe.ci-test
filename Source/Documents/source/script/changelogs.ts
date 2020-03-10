@@ -98,9 +98,8 @@ const changelogs = [
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
+						"class": "compatibility",
+						"subject": "バージョン 0.83.0 以下のデータコンバート処理を破棄しました"
 					},
 					{
 						"revision": "",
@@ -166,6 +165,10 @@ const changelogs = [
 					{
 						"revision": "",
 						"subject": "#570: Dispatcher.Invoke を滅ぼしましょう"
+					},
+					{
+						"revision": "",
+						"subject": "#543: 0.83.0 からのデータ変換処理を破棄する"
 					},
 					{
 						"revision": "",
