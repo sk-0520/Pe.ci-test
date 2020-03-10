@@ -145,7 +145,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#551: もしかしてだけど Pe から Pe.Main に --wait が飛んでる？"
 					},
 					{
 						"revision": "",

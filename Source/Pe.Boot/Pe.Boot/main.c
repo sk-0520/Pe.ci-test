@@ -37,7 +37,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     }
     else {
         // コマンドライン渡して実行
-        size_t tunedArgsCount = argCount - 1;
+        size_t tunedArgsCount = (size_t)argCount - 1;
         TCHAR** tunedArgs = malloc(tunedArgsCount * sizeof(TCHAR*));
         if (!tunedArgs) {
             // これもう立ち上げ不能だと思う
@@ -49,6 +49,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         // 実行待機用
         long waitTime = 0;
         size_t totalLength = 0;
+        int skipIndex1 = -1;
+        int skipIndex2 = -1;
 
         for (int i = 1, j = 0; i < argCount; i++, j++) {
             TCHAR* workArg = args[i];
@@ -66,6 +68,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                 for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
                     TCHAR* wait = _tcsstr(tunedArg, waits[waitIndex]);
                     if (wait == tunedArg) {
+                        skipIndex1 = j;
+
                         TCHAR* eq = _tcschr(wait, '=');
                         if (eq && eq + 1) {
                             TCHAR* value = eq + 1;
@@ -73,6 +77,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                         }
                         else if(i + 1 < argCount) {
                             waitTime = getWaitTime(args[i + 1]);
+
+                            skipIndex2 = j + 1;
                         }
                         break;
                     }
@@ -85,6 +91,9 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
             commandArg[0] = 0;
             for (size_t i = 0; i < tunedArgsCount; i++) {
                 // 大丈夫、はやいよ！
+                if ((skipIndex1 == i) || (skipIndex2 == i)) {
+                    continue;
+                }
                 lstrcat(commandArg, tunedArgs[i]);
                 lstrcat(commandArg, _T(" "));
             }
@@ -174,10 +183,14 @@ size_t getMainModulePath(TCHAR* buffer, const TCHAR* rootDirPath)
     return lstrlen(buffer);
 }
 
+/**
+書式調整後の動的確保された文字列を返す。
+呼び出し側で世話すること。
+*/
 TCHAR* tuneArg(const TCHAR* arg)
 {
     int hasSpace = _tcschr(arg, ' ') != NULL;
-    size_t len = lstrlen(arg) + (hasSpace ? 2 : 0);
+    size_t len = (size_t)lstrlen(arg) + (hasSpace ? 2 : 0);
     TCHAR* s = malloc((len + 1) * sizeof(TCHAR*));
     assert(s);
     if (hasSpace) {
