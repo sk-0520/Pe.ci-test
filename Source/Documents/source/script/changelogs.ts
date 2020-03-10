@@ -117,7 +117,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#579: ノートの書式付き操作ツールバーを操作メニュー側に一元化する"
 					},
 					{
 						"revision": "",
