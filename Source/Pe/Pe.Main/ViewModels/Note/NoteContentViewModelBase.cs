@@ -150,11 +150,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void Model_LinkContentChanged(object? sender, EventArgs e)
         {
             if(BaseElement == null) {
-                Logger.LogTrace("change ...");
+                Logger.LogTrace("リンク先内容変更を検知したが無効");
                 return;
             }
 
-            Logger.LogTrace("change!");
+            Logger.LogDebug("リンク先内容変更検知");
             EnabledUpdate = false;
             UnloadContent();
             LoadContentAsync(BaseElement).ContinueWith(t => {

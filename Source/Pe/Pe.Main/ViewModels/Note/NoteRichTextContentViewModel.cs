@@ -243,6 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 var noteContentConverter = new NoteContentConverter(LoggerFactory);
                 var stream = noteContentConverter.ToRtfStream(content);
+
                 DispatcherWrapper.Begin(arg => {
                     if(arg.@this.IsDisposed) {
                         return;

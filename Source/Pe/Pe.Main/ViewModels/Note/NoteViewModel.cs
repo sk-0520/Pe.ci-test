@@ -136,9 +136,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(this._content != null) {
                         this._content.Dispose();
                     }
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
+                    Debug.Assert(Model.ContentElement != null);
                     this._content = NoteContentViewModelFactory.Create(Model.ContentElement, NoteConfiguration, ClipboardManager, DispatcherWrapper, LoggerFactory);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 }
 
                 return this._content;
@@ -981,6 +980,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             if(!IsDisposed) {
                 if(disposing) {
                     this._content?.Dispose();
+                    this._content = null;
                 }
                 Flush();
                 PlatformTheme.Changed -= PlatformTheme_Changed;
