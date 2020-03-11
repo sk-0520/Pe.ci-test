@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    /// <summary>
+    /// <inheritdoc cref="IUserAgent"/>
+    /// </summary>
     internal class UserAgent : DisposerBase, IUserAgent
     {
         #region variable
@@ -167,6 +170,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    /// <summary>
+    /// <inheritdoc cref="IUserAgent"/>
+    /// </summary>
     internal class UserAgentName : IUserAgentName
     {
         #region function
@@ -201,8 +207,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IUserAgentName
 
+        /// <summary>
+        /// <inheritdoc cref="IUserAgentName.Separator"/>
+        /// </summary>
         public string Separator { get; } = ";";
+        /// <summary>
+        /// <inheritdoc cref="IUserAgentName.Session"/>
+        /// </summary>
         public string Session { get; } = "session";
+        /// <summary>
+        /// <inheritdoc cref="IUserAgentName.Cache"/>
+        /// </summary>
         public string Cache { get; } = "cache";
 
         public string Join(bool isEnabledSession, bool isEnabledCache) => JoinCore(string.Empty, isEnabledSession, isEnabledCache);
@@ -222,6 +237,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    /// <summary>
+    /// <inheritdoc cref="IUserAgentFactory"/>
+    /// </summary>
     internal class UserAgentFactory : IUserAgentFactory
     {
         public UserAgentFactory(ILoggerFactory loggerFactory)
