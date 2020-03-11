@@ -18,6 +18,7 @@
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
   xmlns:app_main_viewmodels_note="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Note"
+  xmlns:app_main_viewmodels_font="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Font"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
@@ -450,15 +451,28 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Font_A, Source={x:Static app_main:CultureService.Current}}" />
-                        <app_main_views:FontSelectControl
-                          Grid.Column="1"
-                          SelectedFontFamily="{Binding DataContext.Font.FontFamily, ElementName=root}"
-                          IsBold="{Binding DataContext.Font.IsBold, ElementName=root}"
-                          IsItalic="{Binding DataContext.Font.IsItalic, ElementName=root}"
-                          Size="{Binding DataContext.Font.Size, ElementName=root}"
-                          SizeMinimum="{Binding DataContext.Font.MinimumSize, ElementName=root}"
-                          SizeMaximum="{Binding DataContext.Font.MaximumSize, ElementName=root}"
-                        />
+                        <ContentControl Grid.Column="1">
+                          <ContentControl.Style>
+                            <Style TargetType="ContentControl">
+                              <Style.Triggers>
+                                <Trigger Property="IsVisible" Value="True">
+                                  <Setter Property="Content">
+                                    <Setter.Value>
+                                      <app_main_views:FontSelectControl
+                                        SelectedFontFamily="{Binding DataContext.Font.FontFamily, Source={x:Reference root}}"
+                                        IsBold="{Binding DataContext.Font.IsBold, Source={x:Reference root}}"
+                                        IsItalic="{Binding DataContext.Font.IsItalic, Source={x:Reference root}}"
+                                        Size="{Binding DataContext.Font.Size, Source={x:Reference root}}"
+                                        SizeMinimum="{Binding DataContext.Font.MinimumSize, Source={x:Reference root}}"
+                                        SizeMaximum="{Binding DataContext.Font.MaximumSize, Source={x:Reference root}}"
+                                      />
+                                    </Setter.Value>
+                                  </Setter>
+                                </Trigger>
+                              </Style.Triggers>
+                            </Style>
+                          </ContentControl.Style>
+                        </ContentControl>
                       </Grid>
                     </DataTemplate>
                     <!--#endregion-->
