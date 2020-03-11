@@ -64,7 +64,6 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 #pragma warning(pop)
             if (!waitTime) {
                 TCHAR waits[][16] = { _T("--wait"), _T("-wait"), _T("/wait") };
-                int findWait = 0;
                 for (size_t waitIndex = 0; waitIndex < sizeof(waits) / sizeof(waits[0]); waitIndex++) {
                     TCHAR* wait = _tcsstr(tunedArg, waits[waitIndex]);
                     if (wait == tunedArg) {
@@ -210,7 +209,7 @@ long getWaitTime(const TCHAR* s)
     if (!s) {
         return 0;
     }
-    size_t len = lstrlen(s);
+    //size_t len = lstrlen(s);
     TCHAR* end = NULL;
     long result = _tcstol(s, &end, 10);
     return result;
