@@ -17,12 +17,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         Task<HttpResponseMessage> GetAsync(Uri requestUri);
         Task<HttpResponseMessage> GetAsync(Uri requestUri, CancellationToken cancellationToken);
+
         Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content);
         Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken);
+
         Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content);
         Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content, CancellationToken cancellationToken);
+
         Task<HttpResponseMessage> DeleteAsync(Uri requestUri);
         Task<HttpResponseMessage> DeleteAsync(Uri requestUri, CancellationToken cancellationToken);
+
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken);
 
