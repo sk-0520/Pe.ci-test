@@ -44,7 +44,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
                 document.FontStyle = fontConverter.ToStyle(fontData.IsItalic);
                 document.Foreground = FreezableUtility.GetSafeFreeze(new SolidColorBrush(foregroundColor));
 
-                document.Blocks.Add(new Paragraph(new Run(plainText)));
+                var lines = TextUtility.ReadLines(plainText)
+                    .Select(i => new Run(i))
+                    .Select(i => new Paragraph(i))
+                ;
+                document.Blocks.AddRange(lines);
             }
 
             return ToRtfString(document);
