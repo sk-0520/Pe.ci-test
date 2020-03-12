@@ -10,6 +10,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
     /// <see cref="HttpClient"/>を意識せずに(寿命とか)に <see cref="IDisposable.Dispose"/> できる子。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IUserAgent : IDisposable
     {
@@ -67,6 +68,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
     }
 
+    /// <summary>
+    /// <para>Pe から提供される。</para>
+    /// </summary>
     public interface IUserAgentName
     {
         #region property
@@ -98,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// <see cref="IUserAgent"/>生成処理。
     /// <para>生成したやつは <see cref="IDisposable.Dispose"/> すること。</para>
     /// HttpClientFactoryを使いたかったけど今の仕組みに乗せるのは難しそうな気がした(裏で使うかも)。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IUserAgentFactory
     {

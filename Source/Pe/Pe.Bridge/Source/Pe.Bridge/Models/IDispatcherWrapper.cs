@@ -9,6 +9,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     /// <summary>
     /// 特定の <see cref="System.Windows.Threading.Dispatcher"/> で実行する。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IDispatcherWrapper
     {
