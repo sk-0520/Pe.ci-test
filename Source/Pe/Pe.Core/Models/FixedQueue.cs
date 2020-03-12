@@ -53,9 +53,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public int Limit { get; }
 
         /// <inheritdoc cref="Queue{T}.Count"/>
-        public int Count { get; }
-        /// <inheritdoc cref="Queue{T}.IsEmpty"/>
-        public bool IsEmpty { get; }
+        public int Count => Queue.Count;
+        /// <inheritdoc cref="IFixedQueue{T}.IsEmpty"/>
+        public bool IsEmpty => Queue.Count == 0;
 
         #endregion
 
