@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public ApplicationDiContainer? DiContainer { get; private set; }
         public ILoggerFactory? LoggerFactory { get; private set; }
+        public ApplicationLogging? ApplicationLogging { get; private set; }
         public WindowManager? WindowManager { get; private set; }
         //public OrderManager OrderManager { get; private set; }
         public NotifyManager? NotifyManager { get; private set; }
@@ -110,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return new ApplicationEnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
         }
 
-        ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace, [CallerFilePath] string callerFilePath = "")
+        ILoggerFactory CreateLoggerFactory(ApplicationLogging applicationLogging, string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace, [CallerFilePath] string callerFilePath = "")
         {
             var loggerFactory = new LoggerFactory();
             NLog.LogManager.LoadConfiguration(logginConfigFilePath);
@@ -118,6 +119,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var op = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
             var prov = new NLog.Extensions.Logging.NLogLoggerProvider(op, NLog.LogManager.LogFactory);
             loggerFactory.AddProvider(prov);
+
+            var appTarget = new NLog.Targets.MethodCallTarget("MATHOD", applicationLogging.ReceiveLog);
+            NLog.LogManager.Configuration.AddTarget(appTarget);
+            NLog.LogManager.Configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, appTarget);
 
             var logger = loggerFactory.CreateLogger(GetType());
             logger.LogInformation("ログ出力開始");
@@ -486,8 +491,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #endif
             var environmentParameters = InitializeEnvironment(commandLine);
 
+            var applicationLogging = new ApplicationLogging();
             var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
             var loggerFactory = CreateLoggerFactory(
+                applicationLogging,
                 logginConfigFilePath,
                 commandLine.GetValue(CommandLineKeyLog, string.Empty),
                 commandLine.GetValue(CommandLineKeyWithLog, string.Empty),
@@ -495,6 +502,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 commandLine.ExistsSwitch(CommandLineSwitchFullTraceLog)
             );
             var logger = loggerFactory.CreateLogger(GetType());
+            ApplicationLogging = applicationLogging;
 
             var mutexName = environmentParameters.Configuration.General.MutexName;
             logger.LogInformation("mutext: {0}", mutexName);
