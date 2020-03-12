@@ -492,13 +492,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             ThrowIfDisposed();
 
+            Debug.Assert(FontElement != null);
+
             var noteContentConverter = new NoteContentConverter(LoggerFactory);
             switch(fromKind) {
                 case NoteContentKind.Plain:
                     switch(toKind) {
                         case NoteContentKind.RichText:
+                            return noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor);
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                            //return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 
                         case NoteContentKind.Plain:

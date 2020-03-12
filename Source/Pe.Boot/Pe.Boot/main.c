@@ -49,8 +49,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         // 実行待機用
         long waitTime = 0;
         size_t totalLength = 0;
-        int skipIndex1 = -1;
-        int skipIndex2 = -1;
+        size_t skipIndex1 = SIZE_MAX;
+        size_t skipIndex2 = SIZE_MAX;
 
         for (int i = 1, j = 0; i < argCount; i++, j++) {
             TCHAR* workArg = args[i];

@@ -148,6 +148,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#575: テキスト <-> 書式付きの変換処理で改行が取り払われる"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
