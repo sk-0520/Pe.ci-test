@@ -35,12 +35,13 @@ namespace ContentTypeTextNet.Pe.Main
 #endif
             var initializer = new ApplicationInitializer();
             var accepted = initializer.Initialize(this, e);
+            Debug.Assert(initializer.Logging != null);
             if(!accepted) {
                 Shutdown();
                 return;
             }
 
-            Logger = initializer.LoggerFactory.CreateLogger(GetType());
+            Logger = initializer.Logging.Factory.CreateLogger(GetType());
 
             ApplicationManager = new ApplicationManager(initializer);
 

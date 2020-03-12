@@ -61,12 +61,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         public ApplicationManager(ApplicationInitializer initializer)
         {
-            LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.LoggerFactory));
-            Logger = LoggerFactory.CreateLogger(GetType());
+            Logging = initializer.Logging ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Logging));
+            Logger = Logging.Factory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
-            
+
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
 
@@ -96,7 +96,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        ILoggerFactory LoggerFactory { get; set; }
+        ApplicationLogging Logging { get; set; }
+        ILoggerFactory LoggerFactory => Logging.Factory;
         ApplicationDiContainer ApplicationDiContainer { get; set; }
         bool IsFirstStartup { get; }
         ILogger Logger { get; set; }
