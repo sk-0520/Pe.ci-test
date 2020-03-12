@@ -148,6 +148,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#554: アクセントカラーがなーんかまだ透明っぽいときがある"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
