@@ -156,6 +156,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "エクスプローラ補正のキャッシュ数指定が 0 になってる不具合修正"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
