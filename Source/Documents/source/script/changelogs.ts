@@ -156,6 +156,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "エクスプローラ補正のキャッシュ数指定が 0 になってる不具合修正"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
@@ -177,6 +181,10 @@ const changelogs = [
 					{
 						"revision": "",
 						"subject": "#543: 0.83.0 からのデータ変換処理を破棄する"
+					},
+					{
+						"revision": "",
+						"subject": "#582: 本体内部にログの一部を保持する"
 					},
 					{
 						"revision": "",
