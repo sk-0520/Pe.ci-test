@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         PluginId PluginId { get; }
 
-        IPluginInformation IPluginInformation { get; }
+        IPluginInformations IPluginInformations { get; }
 
         bool IsInitialized { get; }
 

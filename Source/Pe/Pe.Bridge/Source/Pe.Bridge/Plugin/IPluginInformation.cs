@@ -5,7 +5,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
-    public interface IPluginVersion
+    public interface IPluginVersions
     {
         #region property
 
@@ -28,6 +28,36 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
     }
 
+    /// <summary>
+    /// <inheritdoc cref="IPluginVersions"/>
+    /// </summary>
+    public class PluginVersions : IPluginVersions
+    {
+        public PluginVersions(Version pluginVersion, Version minimumSupportVersion, Version maximumSupportVersion)
+        {
+            PluginVersion = pluginVersion;
+            MinimumSupportVersion = minimumSupportVersion;
+            MaximumSupportVersion = maximumSupportVersion;
+
+        }
+        #region IPluginVersion
+
+        /// <summary>
+        /// <inheritdoc cref="IPluginVersions.PluginVersion"/>
+        /// </summary>
+        public Version PluginVersion { get; }
+        /// <summary>
+        /// <inheritdoc cref="IPluginVersions.MinimumSupportVersion"/>
+        /// </summary>
+        public Version MinimumSupportVersion { get; }
+        /// <summary>
+        /// <inheritdoc cref="IPluginVersions.MaximumSupportVersion"/>
+        /// </summary>
+        public Version MaximumSupportVersion { get; }
+
+        #endregion
+    }
+
     public static class PluginLicense
     {
         #region property
@@ -43,15 +73,57 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
     }
 
-    public interface IPluginAuthor
+    public interface IPluginAuthors
     {
         IAuthor PluginAuthor { get; }
         string PluginLicense { get; }
     }
 
-    public interface IPluginInformation
+    /// <summary>
+    /// <inheritdoc cref="IPluginAuthors"/>
+    /// </summary>
+    public class PluginAuthors : IPluginAuthors
     {
-        IPluginVersion PluginVersion { get; }
-        IPluginAuthor PluginAuthor { get; }
+        public PluginAuthors(IAuthor pluginAuthor, string pluginLicense)
+        {
+            PluginAuthor = pluginAuthor;
+            PluginLicense = pluginLicense;
+        }
+        #region IPluginAuthors
+
+        /// <summary>
+        /// <inheritdoc cref="IPluginAuthors.PluginAuthor"/>
+        /// </summary>
+        public IAuthor PluginAuthor { get; }
+        /// <summary>
+        /// <inheritdoc cref="IPluginAuthors.PluginLicense"/>
+        /// </summary>
+        public string PluginLicense { get; }
+
+        #endregion
+    }
+
+
+    public interface IPluginInformations
+    {
+        IPluginVersions PluginVersions { get; }
+        IPluginAuthors PluginAuthors { get; }
+    }
+
+    public class PluginInformations : IPluginInformations
+    {
+        public PluginInformations(IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
+        {
+            PluginVersions = pluginVersions;
+            PluginAuthors = pluginAuthors;
+        }
+
+        #region IPluginInformations
+
+        public IPluginVersions PluginVersions { get; }
+
+        public IPluginAuthors PluginAuthors { get; }
+
+        #endregion
     }
 }

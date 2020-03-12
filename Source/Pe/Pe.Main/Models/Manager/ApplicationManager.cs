@@ -64,10 +64,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.LoggerFactory));
             Logger = LoggerFactory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
-            PlatformThemeLoader = new PlatformThemeLoader(LoggerFactory);
-            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
+            
+            PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
+            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
+
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));

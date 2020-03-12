@@ -4,10 +4,22 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
+    /// <summary>
+    /// 標準的な連絡先の一覧。
+    /// </summary>
     public static class ContactKinds
     {
+        /// <summary>
+        /// Webサイト。
+        /// </summary>
         public static string WebSite { get; } = "web-site";
+        /// <summary>
+        /// リポジトリ。
+        /// </summary>
         public static string Repository { get; } = "repository";
+        /// <summary>
+        /// 電子メール。
+        /// </summary>
         public static string EMail { get; } = "e-mail";
     }
 

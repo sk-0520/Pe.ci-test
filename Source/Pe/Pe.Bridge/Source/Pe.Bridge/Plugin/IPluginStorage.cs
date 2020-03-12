@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <summary>
     /// ファイル操作処理。
     /// <para>Pe の管理下で処理する。</para>
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginFileStorage
     {
@@ -25,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <summary>
     /// 永続データ操作処理。
     /// <para>Pe の管理下で処理する。</para>
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginPersistentStorage
     {
@@ -35,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// ファイル操作処理グループ。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginFile
     {
@@ -60,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// 永続データ操作処理グループ。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginPersistent
     {
@@ -83,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// プラグインからのストレージ操作処理。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginStorage
     {

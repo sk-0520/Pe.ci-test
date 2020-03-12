@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
+    /// <summary>
+    /// 著者。
+    /// </summary>
     public interface IAuthor
     {
         #region property

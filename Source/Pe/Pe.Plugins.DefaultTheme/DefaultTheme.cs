@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         public PluginId PluginId => Id;
 
-        public IPluginInformation IPluginInformation => throw new NotImplementedException();
+        public IPluginInformations IPluginInformations => throw new NotImplementedException();
 
         public bool IsInitialized { get; private set; }
 
