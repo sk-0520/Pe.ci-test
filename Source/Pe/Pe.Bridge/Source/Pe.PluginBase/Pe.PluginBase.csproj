@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Pe.Bridge\Pe.Bridge.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Data\" />
-  </ItemGroup>
-
 </Project>
