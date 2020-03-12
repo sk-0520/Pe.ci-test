@@ -184,6 +184,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#582: 本体内部にログの一部を保持する"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
