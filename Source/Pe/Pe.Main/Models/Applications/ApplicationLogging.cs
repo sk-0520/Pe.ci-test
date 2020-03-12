@@ -12,8 +12,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     public class ApplicationLogging
     {
-        public ApplicationLogging(string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace)
+        public ApplicationLogging(int logLimit, string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace)
         {
+            LogItems = new ConcurrentFixedQueue<LogEventInfo>(logLimit);
+
             Factory = new LoggerFactory();
             LogManager.LoadConfiguration(logginConfigFilePath);
 
@@ -121,6 +123,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region property
 
+        private IFixedQueue<LogEventInfo> LogItems { get; }
+
         public LoggerFactory Factory { get; }
 
         #endregion
@@ -129,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public void ReceiveLog(LogEventInfo logEventInfo, object[] parameters)
         {
-            Debug.WriteLine(logEventInfo.Level);
+            LogItems.Enqueue(logEventInfo);
         }
 
         #endregion

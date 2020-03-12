@@ -24,8 +24,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     public class ApplicationInitializer
     {
+        #region define
+
+        const int AppLogLimit = 128;
+
+        #endregion
+
         #region property
 
+        string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
         string CommandLineKeyLog { get; } = "log";
         string CommandLineKeyWithLog { get; } = "with-log";
         string CommandLineSwitchFullTraceLog { get; } = "full-trace-log";
@@ -68,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyUserDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyMachineDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
+            commandLine.Add(longKey: CommandLineKeyAppLogLimit, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyWithLog, hasValue: true);
             commandLine.Add(longKey: CommandLineSwitchFullTraceLog, hasValue: false);
@@ -381,8 +389,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #endif
             var environmentParameters = InitializeEnvironment(commandLine);
 
+            if(!int.TryParse(commandLine.GetValue(CommandLineKeyAppLogLimit, string.Empty), out var appLogLimit)) {
+                appLogLimit = AppLogLimit;
+            }
+            if(appLogLimit < 1) {
+                appLogLimit = AppLogLimit;
+            }
+
             var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
             Logging = new ApplicationLogging(
+                appLogLimit,
                 logginConfigFilePath,
                 commandLine.GetValue(CommandLineKeyLog, string.Empty),
                 commandLine.GetValue(CommandLineKeyWithLog, string.Empty),
