@@ -91,6 +91,85 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "YYYY/MM/DD",
+		"version": "0.91.001",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/03/13",
 		"version": "0.91.000",
 		"contents": [
