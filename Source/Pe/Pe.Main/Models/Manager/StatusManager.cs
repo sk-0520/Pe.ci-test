@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             OnStatusChanged(StatusChangedMode.TemporaryChanged, statusProperty, oldValue, newValue);
 
-            return ResultSuccessValue.Success((IDisposable)new ActionDisposer(() => {
+            return ResultSuccessValue.Success((IDisposable)new ActionDisposer(d => {
                 var restoreValue = statusProperty switch
                 {
                     StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu = oldValue,

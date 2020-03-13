@@ -68,10 +68,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
     }
 
+    /// <summary>
+    /// <para>Pe から提供される。</para>
+    /// </summary>
     public interface IPlatformTheme
     {
         #region define
 
+        /// <summary>
+        /// OSのテーマ情報が変更された。
+        /// </summary>
         event EventHandler? Changed;
 
         #endregion
@@ -106,9 +112,29 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         #region function
 
+        /// <summary>
+        /// 既定の Windows モードの色一覧を取得。
+        /// </summary>
+        /// <param name="themeKind"></param>
+        /// <returns></returns>
         PlatformThemeColors GetWindowsThemeColors(PlatformThemeKind themeKind);
+        /// <summary>
+        /// 既定のアプリモードの色一覧を取得。
+        /// </summary>
+        /// <param name="themeKind"></param>
+        /// <returns></returns>
         PlatformThemeColors GetApplicationThemeColors(PlatformThemeKind themeKind);
+        /// <summary>
+        ///アクセントカラー一覧を取得。
+        /// </summary>
+        /// <param name="accentColor"></param>
+        /// <returns></returns>
         PlatformAccentColors GetAccentColors(Color accentColor);
+        /// <summary>
+        /// アクセントカラー一覧からテキスト色一覧を取得。
+        /// </summary>
+        /// <param name="accentColors"></param>
+        /// <returns></returns>
         PlatformAccentColors GetTextColor(PlatformAccentColors accentColors);
 
         #endregion
@@ -118,6 +144,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     {
         #region function
 
+        /// <summary>
+        /// タスクバーの色を取得。
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
         public static Color GetTaskbarColor(this IPlatformTheme @this)
         {
             // 透明度どうしよう

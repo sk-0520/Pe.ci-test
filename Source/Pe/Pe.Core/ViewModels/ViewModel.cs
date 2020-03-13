@@ -1,8 +1,12 @@
+#define PROPERTY_CACHE
+
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -46,14 +50,28 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected IEnumerable<ICommand> Commands => CommandStore.Commands;
         CommandStore CommandStore { get; } = new CommandStore();
 
+#if PROPERTY_CACHE
+        ConcurrentDictionary<object, PropertyCacher> PropertyCacher { get; } = new ConcurrentDictionary<object, PropertyCacher>();
+#endif
+        ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
+
         #endregion
 
         #region function
 
         protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
+#if DEBUG
+            //TODO: PropertyCacher で何とかしたいと思ってはいるよ
+            var stopwatch = Stopwatch.StartNew();
+            using var _a_ = new ActionDisposer(d => Logger.LogTrace("PROP TIME: {0}", stopwatch.Elapsed));
+#endif
             ThrowIfDisposed();
 
+#if PROPERTY_CACHE
+            var propertyCacher = PropertyCacher.GetOrAdd(obj, o => new PropertyCacher(o));
+            var nowValue = propertyCacher.Get(targetMemberName);
+#else
             var type = obj.GetType();
             var propertyInfo = type.GetProperty(targetMemberName);
 
@@ -62,10 +80,16 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             var nowValue = (TValue)propertyInfo.GetValue(obj);
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
+#endif
 
             if(!IComparable<TValue>.Equals(nowValue, value)) {
+#if PROPERTY_CACHE
+                propertyCacher.Set(targetMemberName, value);
+#else
                 propertyInfo.SetValue(obj, value);
-                OnPropertyChanged(new PropertyChangedEventArgs(notifyPropertyName));
+#endif
+                var e = PropertyChangedEventArgsCache.GetOrAdd(notifyPropertyName, s => new PropertyChangedEventArgs(s));
+                OnPropertyChanged(e);
 
                 return true;
             }
@@ -370,6 +394,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             if(Disposing != null) {
                 Disposing(this, EventArgs.Empty);
             }
+
+#if PROPERTY_CACHE
+            PropertyCacher.Clear();
+#endif
 
             if(disposing) {
                 GC.SuppressFinalize(this);

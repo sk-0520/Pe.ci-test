@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
-    public readonly struct PluginId
+    public sealed class PluginId
     {
         public PluginId(Guid id, string name)
         {

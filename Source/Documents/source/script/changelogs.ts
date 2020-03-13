@@ -91,6 +91,90 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/03/13",
+		"version": "0.91.000",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "compatibility",
+						"subject": "バージョン 0.83.0 以下のデータコンバート処理を破棄しました"
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "1e6f0af99d9a25d6eaa7faeba1b5c32f5fcaeaa3",
+						"subject": "#579: ノートの書式付き操作ツールバーを操作メニュー側に一元化する"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "2b1005f6965629112d504a353dc1c7711b3eab80",
+						"subject": "#572: アップデートスクリプトのアップデート前後処理スクリプトが既存スクリプトを使用している",
+						"comments": [
+							"関連: #574: 0.92.0 公開時に 0.91.0 以上をアップデート可能対象にする"
+						]
+					},
+					{
+						"revision": "21348cd12d35fcde3634a7431eb91ef22c8047b8",
+						"subject": "ノートの種別変更で同一種別に変更しようとすると内部的に例外が飛んでいた事象の修正"
+					},
+					{
+						"revision": "de0be7a47b4e1feb602a01fceb7c2507354e6e56",
+						"subject": "#551: もしかしてだけど Pe から Pe.Main に --wait が飛んでる？"
+					},
+					{
+						"revision": "4dffd989953d6b9ab889def88c42011e5e1c15b0",
+						"subject": "#554: アクセントカラーがなーんかまだ透明っぽいときがある"
+					},
+					{
+						"revision": "4dffd989953d6b9ab889def88c42011e5e1c15b0",
+						"subject": "#575: テキスト <-> 書式付きの変換処理で改行が取り払われる"
+					},
+					{
+						"revision": "7b56a24a5a74e5b1878257bf1f5b9fcd7a5786d5",
+						"subject": "エクスプローラ補正のキャッシュ数指定が 0 になってる不具合修正"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "a201feb9f96bb41fb6925155e11673ea304b77fa",
+						"subject": "#573: 自前でプロパティ変更通知している処理の高速化",
+						"comments": [
+							"これまた遅くなった気がしないでもないけど気にしない"
+						]
+					},
+					{
+						"revision": "b947c6b31734dd1b4031db3c8f27c290bb0fca8b",
+						"subject": "#570: Dispatcher.Invoke を滅ぼしましょう"
+					},
+					{
+						"revision": "a0823b0101df750fc0b2c8424c2352368f0f6d0e",
+						"subject": "#543: 0.83.0 からのデータ変換処理を破棄する"
+					},
+					{
+						"revision": "03bde067f136480e03031e4583bc3b64a27c2526",
+						"subject": "#582: 本体内部にログの一部を保持する"
+					},
+					{
+						"revision": "e401a6afd0ab769e319ac60cf6d210bdab852e0b",
+						"subject": "#578 ノートの「書式付き」をリッチテキストに変更する "
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/03/08",
 		"version": "0.90.000",
 		"contents": [

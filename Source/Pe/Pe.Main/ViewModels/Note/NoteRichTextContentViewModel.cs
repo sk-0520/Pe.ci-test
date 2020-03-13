@@ -26,8 +26,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
     {
         #region variable
 
-        bool _isOpenToolbar;
-
         FontFamily? _selectionFontFamily;
         decimal _selectionFontHeight;
         Color _foregroundColor;
@@ -46,20 +44,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #region property
 
         //Xceed.Wpf.Toolkit.RichTextBox Control { get; set; }
-        RichTextBox? ContentElement { get; set; }
-        FlowDocument Document => ContentElement?.Document ?? throw new NullReferenceException(nameof(ContentElement));
-        Popup? PopupElement { get; set; }
+        RichTextBox? RichText { get; set; }
+        FlowDocument Document => RichText?.Document ?? throw new NullReferenceException(nameof(RichText));
 
         LazyAction TextChangeLazyAction { get; }
 
         public double FontMinimumSize => NoteConfiguration.FontSize.Minimum;
         public double FontMaximumSize => NoteConfiguration.FontSize.Maximum;
 
-        public bool IsOpenToolbar
-        {
-            get => this._isOpenToolbar;
-            set => SetProperty(ref this._isOpenToolbar, value);
-        }
 
         bool NowSelectionProcess { get; set; }
 
@@ -139,19 +131,57 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand ToggleSeletectionIncreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.IncreaseFontSize.Execute(null, RichText)
+        ));
+        public ICommand ToggleSeletectionDecreaseFontSizeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.DecreaseFontSize.Execute(null, RichText)
+        ));
+
+        public ICommand ToggleSeletectionSubscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.ToggleSubscript.Execute(null, RichText)
+        ));
+        public ICommand ToggleSeletectionSuperscriptCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.ToggleSuperscript.Execute(null, RichText)
+        ));
+        public ICommand ToggleSeletectionBoldCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.ToggleBold.Execute(null, RichText)
+        ));
+        public ICommand ToggleSeletectionItalicCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.ToggleItalic.Execute(null, RichText)
+        ));
+        public ICommand ToggleNumberingCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.ToggleNumbering.Execute(null, RichText)
+        ));
+        public ICommand ToggleBulletsCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.ToggleBullets.Execute(null, RichText)
+        ));
+        public ICommand AlignLeftCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.AlignLeft.Execute(null, RichText)
+        ));
+        public ICommand AlignCenterCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.AlignCenter.Execute(null, RichText)
+        ));
+        public ICommand AlignRightCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.AlignRight.Execute(null, RichText)
+        ));
+        public ICommand AlignJustifyCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => EditingCommands.AlignJustify.Execute(null, RichText)
+        ));
+
         #endregion
 
         #region function
 
         private void ApplySelectionCore(Action<RichTextBox, TextSelection> action)
         {
-            if(ContentElement == null) {
+            if(RichText == null) {
                 return;
             }
-            if(ContentElement.Selection.IsEmpty) {
+            if(RichText.Selection.IsEmpty) {
                 return;
             }
-            action(ContentElement, ContentElement.Selection);
+            action(RichText, RichText.Selection);
         }
 
         private void ToggleSelectionDecoration(TextDecorationLocation location)
@@ -159,7 +189,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             ApplySelectionCore((r, s) => {
                 var textDecorationsProperty = s.GetPropertyValue(Inline.TextDecorationsProperty);
                 if(textDecorationsProperty == DependencyProperty.UnsetValue) {
-                    var decs = location switch {
+                    var decs = location switch
+                    {
                         TextDecorationLocation.Underline => TextDecorations.Underline,
                         TextDecorationLocation.Strikethrough => TextDecorations.Strikethrough,
                         TextDecorationLocation.Baseline => TextDecorations.Baseline,
@@ -231,11 +262,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override Task LoadContentAsync(FrameworkElement baseElement)
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
-            ContentElement = (RichTextBox)baseElement.FindName("content");
-            PopupElement = (Popup)baseElement.FindName("popup");
+            RichText = (RichTextBox)baseElement.FindName("content");
 
-            ContentElement.TextChanged += Control_TextChanged;
-            ContentElement.SelectionChanged += RichTextBox_SelectionChanged;
+            RichText.TextChanged += Control_TextChanged;
+            RichText.SelectionChanged += RichTextBox_SelectionChanged;
 
             return Task.Run(() => {
                 var content = Model.LoadRichTextContent();
@@ -243,6 +273,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 var noteContentConverter = new NoteContentConverter(LoggerFactory);
                 var stream = noteContentConverter.ToRtfStream(content);
+
                 DispatcherWrapper.Begin(arg => {
                     if(arg.@this.IsDisposed) {
                         return;
@@ -259,16 +290,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             Flush();
 
-            if(ContentElement == null) {
+            if(RichText == null) {
                 return;
             }
 
-            ContentElement.TextChanged -= Control_TextChanged;
-            ContentElement.SelectionChanged -= RichTextBox_SelectionChanged;
+            RichText.TextChanged -= Control_TextChanged;
+            RichText.SelectionChanged -= RichTextBox_SelectionChanged;
 
-            PopupElement = null;
-            ContentElement = null;
-            IsOpenToolbar = false;
+            RichText = null;
         }
 
         protected override IDataObject GetClipbordContentData()
@@ -292,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(vm.IsDisposed) {
                         return;
                     }
-                    if(ContentElement == null) {
+                    if(RichText == null) {
                         Logger.LogDebug("RichTextBox が破棄されている");
                         return;
                     }
@@ -332,29 +361,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private void RichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             // ツールバー的なの何かできればいいなぁと
-            Debug.Assert(ContentElement != null);
-            Debug.Assert(PopupElement != null);
+            Debug.Assert(RichText != null);
 
             NowSelectionProcess = true;
-            using var _cleanup_ = new ActionDisposer(() => NowSelectionProcess = false);
+            using var _cleanup_ = new ActionDisposer(d => NowSelectionProcess = false);
 
-            if(ContentElement.Selection.IsEmpty) {
+            if(RichText.Selection.IsEmpty) {
                 // 未選択。さよなら
-                IsOpenToolbar = false;
                 return;
             }
 
-            var inlineContainer = ContentElement.Selection.Start.GetAdjacentElement(LogicalDirection.Forward) as InlineUIContainer;
+            var inlineContainer = RichText.Selection.Start.GetAdjacentElement(LogicalDirection.Forward) as InlineUIContainer;
             if(inlineContainer != null && inlineContainer.Child is Image image) {
-                if(inlineContainer == ContentElement.Selection.End.GetAdjacentElement(LogicalDirection.Backward)) {
+                if(inlineContainer == RichText.Selection.End.GetAdjacentElement(LogicalDirection.Backward)) {
                     // TODO: 画像選択からの処理は未実装
                     return;
                 }
             }
 
             // 選択状態から表示可能項目の抜出
-            var fontFamliyProperty = ContentElement.Selection.GetPropertyValue(RichTextBox.FontFamilyProperty);
-            var fontSizeProperty = ContentElement.Selection.GetPropertyValue(RichTextBox.FontSizeProperty);
+            var fontFamliyProperty = RichText.Selection.GetPropertyValue(RichTextBox.FontFamilyProperty);
+            var fontSizeProperty = RichText.Selection.GetPropertyValue(RichTextBox.FontSizeProperty);
             Logger.LogDebug("fontFamliyProperty: {0}", fontFamliyProperty);
             Logger.LogDebug("fontSizeProperty: {0}", fontSizeProperty);
 
@@ -370,17 +397,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
 
             // 表示位置補正
-            var startRect = ContentElement.Selection.Start.GetCharacterRect(LogicalDirection.Forward);
-            var endRect = ContentElement.Selection.End.GetCharacterRect(LogicalDirection.Backward);
+            var startRect = RichText.Selection.Start.GetCharacterRect(LogicalDirection.Forward);
+            var endRect = RichText.Selection.End.GetCharacterRect(LogicalDirection.Backward);
             var mixX = Math.Min(endRect.X, startRect.X);
             var maxX = Math.Max(endRect.X, startRect.X);
             var rect = new Rect(
-                ContentElement.PointToScreen(new Point(maxX - mixX, endRect.Y + endRect.Height)),
+                RichText.PointToScreen(new Point(maxX - mixX, endRect.Y + endRect.Height)),
                 new Size(endRect.Width, endRect.Height)
             );
-            PopupElement.PlacementRectangle = rect;
-
-            IsOpenToolbar = true;
         }
 
     }

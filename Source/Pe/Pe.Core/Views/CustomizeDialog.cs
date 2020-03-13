@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             AddControl(control);
             CurrentGroup = control;
 
-            return new ActionDisposer(() => CurrentGroup = null);
+            return new ActionDisposer(d => CurrentGroup = null);
         }
 
         public CustomizeDialogLabel AddLabel(string label)

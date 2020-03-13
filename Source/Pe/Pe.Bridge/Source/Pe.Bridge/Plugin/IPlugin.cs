@@ -4,19 +4,32 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// プラグイン種別。
+    /// </summary>
     public enum PluginKind
     {
+        /// <summary>
+        /// アドオン。
+        /// </summary>
         Addon,
+        /// <summary>
+        /// テーマ。
+        /// </summary>
         Theme,
     }
 
+    /// <summary>
+    /// プラグインの既定インターフェイス。
+    /// <para><see cref="Addon.IAddon"/>か<see cref="Theme.ITheme"/>をさらに実装している必要あり。</para>
+    /// </summary>
     public interface IPlugin
     {
         #region property
 
         PluginId PluginId { get; }
 
-        IPluginInformation IPluginInformation { get; }
+        IPluginInformations IPluginInformations { get; }
 
         bool IsInitialized { get; }
 

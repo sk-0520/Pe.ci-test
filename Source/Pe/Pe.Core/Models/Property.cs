@@ -1,4 +1,11 @@
+#if DEBUG || BETA
+#define CHECK_PROPERTY_NAME
+#endif
+
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -8,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        object Get(object owner);
+        object? Get(object owner);
 
         #endregion
     }
@@ -48,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static ParameterExpression CreateOwner(object owner) => Expression.Parameter(owner.GetType(), nameof(owner));
         public static ParameterExpression CreateOwner<T>() => Expression.Parameter(typeof(T), typeof(T).Name);
 
-        public static Func<object, object> CreateGetter(ParameterExpression owner, string propertyName)
+        public static Func<object, object?> CreateGetter(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
 
@@ -61,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
 
             var executor = lambda.Compile();
-            return new Func<object, object>(o => executor.DynamicInvoke(o)!);
+            return new Func<object, object?>(o => executor.DynamicInvoke(o));
         }
         public static Func<TOwner, TValue> CreateGetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
         {
@@ -77,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return lambda.Compile();
         }
 
-        public static Action<object, object> CreateSetter(ParameterExpression owner, string propertyName)
+        public static Action<object, object?> CreateSetter(ParameterExpression owner, string propertyName)
         {
             var property = Expression.PropertyOrField(owner, propertyName);
             var value = Expression.Parameter(typeof(object), "value");
@@ -91,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
 
             var executor = lambda.Compile();
-            return new Action<object, object>((o, v) => executor.DynamicInvoke(o, v));
+            return new Action<object, object?>((o, v) => executor.DynamicInvoke(o, v));
         }
         public static Action<TOwner, TValue> CreateSetter<TOwner, TValue>(ParameterExpression owner, string propertyName)
         {
@@ -113,47 +120,57 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public class PropertyAccesser : IPropertyGetter, IPropertySetter
     {
+        public PropertyAccesser(ParameterExpression ownerExpression, PropertyInfo propertyInfo)
+        {
+            PropertyInfo = propertyInfo;
+            if(PropertyInfo.CanWrite) {
+                Setter = PropertyFactory.CreateSetter(ownerExpression, propertyInfo.Name);
+            } else {
+                Setter = ThrowSetter;
+            }
+            Getter = PropertyFactory.CreateGetter(ownerExpression, propertyInfo.Name);
+        }
         public PropertyAccesser(object owner, string propertyName)
         {
-            var ownerProperty = PropertyFactory.CreateOwner(owner);
-            var propertyInfo = ownerProperty.Type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var ownerExpression = PropertyFactory.CreateOwner(owner);
+            var propertyInfo = ownerExpression.Type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if(propertyInfo == null) {
                 throw new ArgumentException($"{nameof(propertyName)}: {propertyName}");
             }
             PropertyInfo = propertyInfo;
             if(PropertyInfo.CanWrite) {
-                Setter = PropertyFactory.CreateSetter(ownerProperty, propertyName);
+                Setter = PropertyFactory.CreateSetter(ownerExpression, propertyName);
             } else {
                 Setter = ThrowSetter;
             }
-            Getter = PropertyFactory.CreateGetter(ownerProperty, propertyName);
+            Getter = PropertyFactory.CreateGetter(ownerExpression, propertyName);
         }
 
         #region property
 
         public PropertyInfo PropertyInfo { get; }
 
-        Func<object, object> Getter { get; }
-        Action<object, object> Setter { get; }
+        Func<object, object?> Getter { get; }
+        Action<object, object?> Setter { get; }
 
         #endregion
 
         #region function
 
-        private static void ThrowSetter(object owner,object value) => throw new NotSupportedException();
+        private static void ThrowSetter(object owner, object? value) => throw new NotSupportedException();
 
         #endregion
 
 
         #region IPropertyGetter
 
-        public object Get(object owner) => Getter(owner);
+        public object? Get(object owner) => Getter(owner);
 
         #endregion
 
         #region IPropertySetter
 
-        public void Set(object owner, object value) => Setter(owner, value);
+        public void Set(object owner, object? value) => Setter(owner, value);
 
         #endregion
     }
@@ -213,8 +230,66 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public PropertyCacher(object owner)
         {
-            var type = owner.GetType();
-            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            Owner = owner;
+            OwnerExpression = PropertyFactory.CreateOwner(Owner);
+            Properties = OwnerExpression.Type
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .ToDictionary(
+                    k => k.Name,
+                    v => v
+                )
+            ;
         }
+
+        #region property
+
+        object Owner { get; }
+
+        ParameterExpression OwnerExpression { get; }
+
+        IReadOnlyDictionary<string, PropertyInfo> Properties { get; }
+
+        ConcurrentDictionary<string, PropertyAccesser> AccesserCache { get; } = new ConcurrentDictionary<string, PropertyAccesser>(); // CPUの数とかこの層で取得するのしんどいのでコンストラクタでキャパ指定せず。
+
+        #endregion
+
+        #region function
+
+        PropertyAccesser GetAccessor(string propertyName) => AccesserCache.GetOrAdd(propertyName, s => {
+            var propertyInfo = Properties[s];
+            return new PropertyAccesser(OwnerExpression, propertyInfo);
+        });
+
+        public object? Get(string propertyName)
+        {
+#if CHECK_PROPERTY_NAME
+            if(Properties.TryGetValue(propertyName, out var prop)) {
+                if(!prop.CanRead) {
+                    throw new ArgumentException(nameof(propertyName));
+                }
+            } else {
+                throw new ArgumentException(nameof(propertyName));
+            }
+#endif
+            var accessor = GetAccessor(propertyName);
+            return accessor.Get(Owner);
+        }
+
+        public void Set(string propertyName, object? value)
+        {
+#if CHECK_PROPERTY_NAME
+            if(Properties.TryGetValue(propertyName, out var prop)) {
+                if(!prop.CanWrite) {
+                    throw new ArgumentException(nameof(propertyName));
+                }
+            } else {
+                throw new ArgumentException(nameof(propertyName));
+            }
+#endif
+            var accessor = GetAccessor(propertyName);
+            accessor.Set(Owner, value);
+        }
+
+        #endregion
     }
 }

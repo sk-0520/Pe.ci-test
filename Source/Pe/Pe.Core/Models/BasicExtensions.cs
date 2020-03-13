@@ -6,10 +6,10 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public readonly struct Counter<TNumber, TElement>
+    public readonly struct CountingItem<TNumber, TElement>
         where TNumber : struct
     {
-        public Counter(TNumber number, TElement element)
+        public CountingItem(TNumber number, TElement element)
         {
             Value = element;
             Number = number;
@@ -47,9 +47,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <typeparam name="TElement"></typeparam>
         /// <param name="this"></param>
         /// <returns></returns>
-        public static IEnumerable<Counter<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this)
+        public static IEnumerable<CountingItem<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this)
         {
-            return @this.Select((v, i) => new Counter<int, TElement>(i, v));
+            return @this.Select((v, i) => new CountingItem<int, TElement>(i, v));
         }
         /// <summary>
         /// 独自基点のインデックスと値ペア列挙。
@@ -58,9 +58,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="this"></param>
         /// <param name="baseNumber">基点。</param>
         /// <returns></returns>
-        public static IEnumerable<Counter<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this, int baseNumber)
+        public static IEnumerable<CountingItem<int, TElement>> Counting<TElement>(this IEnumerable<TElement> @this, int baseNumber)
         {
-            return @this.Select((v, i) => new Counter<int, TElement>(i + baseNumber, v));
+            return @this.Select((v, i) => new CountingItem<int, TElement>(i + baseNumber, v));
         }
     }
 

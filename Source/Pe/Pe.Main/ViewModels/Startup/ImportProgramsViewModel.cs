@@ -71,6 +71,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         {
             if(!IsDisposed) {
                 if(disposing) {
+                    foreach(var vm in ProgramCollection.ViewModels) {
+                        vm.Dispose();
+                    }
                     ProgramCollection.Dispose();
                 }
             }

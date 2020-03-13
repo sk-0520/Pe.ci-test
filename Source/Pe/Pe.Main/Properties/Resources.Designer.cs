@@ -1175,7 +1175,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   書式付き に類似しているローカライズされた文字列を検索します。
+        ///   リッチテキスト に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteContentKind_RichText {
             get {
@@ -1184,7 +1184,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   書式付き(_R) に類似しているローカライズされた文字列を検索します。
+        ///   リッチテキスト(_R) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteContentKind_RichText_A {
             get {

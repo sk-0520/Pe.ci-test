@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         public bool? ShowDialog(Window parent) => ShowDialog(HandleUtility.GetWindowHandle(parent));
         public bool? ShowDialog(IntPtr hWnd)
         {
-            var cleaner = new GroupDisposer();
+            var cleaner = new DisposableStocker();
 
             var options = GetFos();
             FileDialog.Com.SetOptions(options);

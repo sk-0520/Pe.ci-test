@@ -61,13 +61,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         public ApplicationManager(ApplicationInitializer initializer)
         {
-            LoggerFactory = initializer.LoggerFactory ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.LoggerFactory));
-            Logger = LoggerFactory.CreateLogger(GetType());
+            Logging = initializer.Logging ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Logging));
+            Logger = Logging.Factory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
-            PlatformThemeLoader = new PlatformThemeLoader(LoggerFactory);
-            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
+
+            PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
+            PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
+
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
@@ -94,7 +96,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region property
 
-        ILoggerFactory LoggerFactory { get; set; }
+        ApplicationLogging Logging { get; set; }
+        ILoggerFactory LoggerFactory => Logging.Factory;
         ApplicationDiContainer ApplicationDiContainer { get; set; }
         bool IsFirstStartup { get; }
         ILogger Logger { get; set; }
@@ -470,7 +473,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(Logger.IsEnabled(LogLevel.Debug)) {
-                Logger.LogDebug(ObjectDumper.GetDumpString(accent));
+                Logger.LogDebug("アクセントカラー: #{0:x2}{1:x2}{2:x2}{3:x2}", accent.Accent.A, accent.Accent.R, accent.Accent.G, accent.Accent.B);
             }
         }
 
@@ -521,7 +524,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             infoCollector.Indent = string.Empty;
 
             var s = infoCollector.GetLongInformation();
-            Logger.LogInformation("[Logging]" + Environment.NewLine + s);
+            Logger.LogInformation("[各種情報]" + Environment.NewLine + s);
         }
 
         public bool Startup(App app, StartupEventArgs e)

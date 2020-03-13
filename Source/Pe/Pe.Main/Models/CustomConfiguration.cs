@@ -238,12 +238,24 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public PlatformConfiguration(IConfigurationSection section)
             : base(section)
         {
+            ThemeAccentColorMinimumAlpha = section.GetValue<byte>("theme_accent_color_minimum_alpha");
+            ThemeAccentColorDefaultAlpha = section.GetValue<byte>("theme_accent_color_default_alpha");
+
             ExplorerSupporterRefreshTime = section.GetValue<TimeSpan>("explorer_supporter_refresh_time");
             ExplorerSupporterCacheSize = section.GetValue<int>("explorer_supporter_cache_size");
         }
 
         #region property
 
+        /// <summary>
+        /// アクセントカラーの透明度を無効と判断する最低A値。
+        /// <para>この値未満であれば無効。</para>
+        /// </summary>
+        public byte ThemeAccentColorMinimumAlpha { get; }
+        /// <summary>
+        /// アクセントカラーの透明度が<see cref="ThemeAccentColorMinimumAlpha"/>で無効判定なら使用するA値。
+        /// </summary>
+        public byte ThemeAccentColorDefaultAlpha { get; }
         public TimeSpan ExplorerSupporterRefreshTime { get; }
         public int ExplorerSupporterCacheSize { get; }
 

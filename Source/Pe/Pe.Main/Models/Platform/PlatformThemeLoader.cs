@@ -13,9 +13,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     public class PlatformThemeLoader : DisposerBase, IPlatformTheme
     {
-        public PlatformThemeLoader(ILoggerFactory loggerFactory)
+        public PlatformThemeLoader(PlatformConfiguration platformConfiguration, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
+            PlatformConfiguration = platformConfiguration;
 
             LazyChanger = new LazyAction(GetType().Name, TimeSpan.FromMilliseconds(400), loggerFactory);
             Refresh();
@@ -24,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         #region property
 
         ILogger Logger { get; }
+        PlatformConfiguration PlatformConfiguration { get; }
 
         LazyAction LazyChanger { get; }
 
@@ -61,8 +63,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         void SetAccentColor(Color color)
         {
-            if(color.A < 0x0f) {
-                var newAlpha = (byte)0xff;
+            if(color.A < PlatformConfiguration.ThemeAccentColorMinimumAlpha) {
+                var newAlpha = PlatformConfiguration.ThemeAccentColorDefaultAlpha;
                 Logger.LogInformation("アクセントカラー透明度補正: {0} -> {1}", color.A, newAlpha);
                 color.A = newAlpha;
             }

@@ -24,8 +24,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
     public class ApplicationInitializer
     {
+        #region define
+
+        const int AppLogLimit = 128;
+
+        #endregion
+
         #region property
 
+        string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
         string CommandLineKeyLog { get; } = "log";
         string CommandLineKeyWithLog { get; } = "with-log";
         string CommandLineSwitchFullTraceLog { get; } = "full-trace-log";
@@ -37,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public bool IsFirstStartup { get; private set; }
 
         public ApplicationDiContainer? DiContainer { get; private set; }
-        public ILoggerFactory? LoggerFactory { get; private set; }
+        public ApplicationLogging? Logging { get; private set; }
         public WindowManager? WindowManager { get; private set; }
         //public OrderManager OrderManager { get; private set; }
         public NotifyManager? NotifyManager { get; private set; }
@@ -68,14 +75,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyUserDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyMachineDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
+            commandLine.Add(longKey: CommandLineKeyAppLogLimit, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyWithLog, hasValue: true);
             commandLine.Add(longKey: CommandLineSwitchFullTraceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchAcceptSkip, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchBetaVersion, hasValue: false);
-
-            commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyOldSettingRootDirectoryPath, hasValue: true);
 
             commandLine.Parse();
 
@@ -110,111 +116,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var rootDirectoryPath = Path.GetDirectoryName(applicationDirectory);
 
             return new ApplicationEnvironmentParameters(new DirectoryInfo(rootDirectoryPath), commandLine);
-        }
-
-        ILoggerFactory CreateLoggerFactory(string logginConfigFilePath, string outputPath, string withLog, bool createDirectory, bool isFullTrace, [CallerFilePath] string callerFilePath = "")
-        {
-            var loggerFactory = new LoggerFactory();
-            NLog.LogManager.LoadConfiguration(logginConfigFilePath);
-
-            var op = new NLog.Extensions.Logging.NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true };
-            var prov = new NLog.Extensions.Logging.NLogLoggerProvider(op, NLog.LogManager.LogFactory);
-            loggerFactory.AddProvider(prov);
-
-            var logger = loggerFactory.CreateLogger(GetType());
-            logger.LogInformation("ログ出力開始");
-
-            var enabledLog = new HashSet<string>();
-
-            // ログ出力(ファイル・ディレクトリが存在しなければ終了で構わない)
-            if(!string.IsNullOrWhiteSpace(outputPath)) {
-                var expandedOutputPath = Environment.ExpandEnvironmentVariables(outputPath);
-                if(createDirectory) {
-                    var fileName = Path.GetFileName(expandedOutputPath);
-                    if(!string.IsNullOrEmpty(fileName) && fileName.IndexOf('.') == -1) {
-                        // 拡張子がなければディレクトリ指定と決めつけ
-                        Directory.CreateDirectory(expandedOutputPath);
-                    } else {
-                        var parentDir = Path.GetDirectoryName(expandedOutputPath);
-                        if(!string.IsNullOrEmpty(parentDir)) {
-                            Directory.CreateDirectory(parentDir);
-                        }
-                    }
-                }
-
-                // ディレクトリ指定であればタイムスタンプ付きでファイル生成(プレーンログ)
-                var filePath = expandedOutputPath;
-                if(Directory.Exists(expandedOutputPath)) {
-                    var fileName = PathUtility.AppendExtension(DateTime.Now.ToString("yyyy-MM-dd_HHmmss"), "log");
-                    filePath = Path.Combine(expandedOutputPath, fileName);
-                }
-
-                //TODO: なんかうまいことする
-                switch(Path.GetExtension(filePath)?.ToLowerInvariant() ?? string.Empty) {
-                    case ".log":
-                        NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", filePath);
-                        enabledLog.Add("log");
-                        switch(withLog) {
-                            case "xml":
-                                NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", Path.ChangeExtension(filePath, "xml"));
-                                enabledLog.Add("xml");
-                                break;
-                        }
-                        break;
-
-                    case ".xml":
-                        NLog.LogManager.LogFactory.Configuration.Variables.Add("xmlPath", filePath);
-                        enabledLog.Add("xml");
-                        switch(withLog) {
-                            case "log":
-                                NLog.LogManager.LogFactory.Configuration.Variables.Add("logPath", Path.ChangeExtension(filePath, "log"));
-                                enabledLog.Add("log");
-                                break;
-                        }
-                        break;
-                }
-                NLog.LogManager.LogFactory.Configuration.Variables.Add("dirPath", Path.GetDirectoryName(filePath));
-            }
-
-            var traceTargets = enabledLog
-                .Select(i => NLog.LogManager.Configuration.FindTargetByName(i))
-                .ToList()
-            ;
-
-
-            foreach(var loggingRule in NLog.LogManager.Configuration.LoggingRules) {
-                if(isFullTrace) {
-                    if(loggingRule.RuleName == "fulltrace") {
-                        foreach(var traceTarget in traceTargets) {
-                            loggingRule.Targets.Add(traceTarget);
-                        }
-                    }
-                } else {
-                    if(loggingRule.RuleName != "fulltrace") {
-                        foreach(var traceTarget in traceTargets) {
-                            loggingRule.Targets.Add(traceTarget);
-                        }
-                    }
-                }
-            }
-
-            if(traceTargets.Any()) {
-                var stopwatch = Stopwatch.StartNew();
-                NLog.LogManager.ReconfigExistingLoggers();
-                NLog.LogManager.Flush();
-                //NLog.LogManager.GetCurrentClassLogger();
-                logger = loggerFactory.CreateLogger(GetType());
-                if(isFullTrace) {
-                    logger.LogInformation("全データ出力: {0}", stopwatch.Elapsed);
-                } else {
-                    logger.LogInformation("データ出力: {0}", stopwatch.Elapsed);
-                }
-                foreach(var traceTarget in traceTargets) {
-                    logger.LogInformation("{0}", traceTarget);
-                }
-            }
-
-            return loggerFactory;
         }
 
         bool CheckFirstStartup(EnvironmentParameters environmentParameters, ILogger logger)
@@ -488,15 +389,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #endif
             var environmentParameters = InitializeEnvironment(commandLine);
 
+            if(!int.TryParse(commandLine.GetValue(CommandLineKeyAppLogLimit, string.Empty), out var appLogLimit)) {
+                appLogLimit = AppLogLimit;
+            }
+            if(appLogLimit < 1) {
+                appLogLimit = AppLogLimit;
+            }
+
             var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
-            var loggerFactory = CreateLoggerFactory(
+            Logging = new ApplicationLogging(
+                appLogLimit,
                 logginConfigFilePath,
                 commandLine.GetValue(CommandLineKeyLog, string.Empty),
                 commandLine.GetValue(CommandLineKeyWithLog, string.Empty),
                 commandLine.ExistsSwitch(CommandLineSwitchForceLog),
                 commandLine.ExistsSwitch(CommandLineSwitchFullTraceLog)
             );
-            var logger = loggerFactory.CreateLogger(GetType());
+            var loggerFactory = Logging.Factory;
+            var logger = Logging.Factory.CreateLogger(GetType());
+
 
             var mutexName = environmentParameters.Configuration.General.MutexName;
             logger.LogInformation("mutext: {0}", mutexName);
@@ -559,25 +470,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
-            if(IsFirstStartup) {
-                var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
-                using var statementLoaderDisposer = statementLoader as IDisposable;
-                var idFactory = new IdFactory(loggerFactory);
-                using var oldVersionConverter = new OldVersionConverter(environmentParameters.OldSettingRootDirectoryPath, pack.accessor.Main, statementLoader, idFactory, loggerFactory);
-                if(oldVersionConverter.ExistisOldSetting()) {
-                    logger.LogInformation("旧設定ファイルは存在するため変換処理を実施");
-                    var sw = Stopwatch.StartNew();
-                    oldVersionConverter.Execute();
-                    logger.LogInformation("旧設定ファイル変換所要時間: {0}", sw.Elapsed);
-                    // 旧設定ファイルがあれば初回実行じゃない
-                    IsFirstStartup = false;
-                }
-            }
-
             var factory = pack.factory;
             pack.accessor.Dispose();
 
-            LoggerFactory = loggerFactory;
             DiContainer = SetupContainer(environmentParameters, factory, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);

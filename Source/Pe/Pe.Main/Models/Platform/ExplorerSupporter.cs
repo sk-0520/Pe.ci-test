@@ -17,25 +17,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         const string Windows10ChildClass = "win10";
 
-        class FixedQueue<T>: IEnumerable<T>
-        {
-            Queue<T> Queue { get; } =  new Queue<T>();
-
-            public int Limit { get; set; }
-            public void Enqueue(T obj)
-            {
-                Queue.Enqueue(obj);
-                while(Queue.Count > Limit && Queue.TryDequeue(out _)) { }
-            }
-
-            #region IEnumerable
-
-            public IEnumerator<T> GetEnumerator() => Queue.GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            #endregion
-        }
 
         #endregion
         public ExplorerSupporter(TimeSpan checkSpan, int cacheSize, ILoggerFactory loggerFactory)
@@ -48,9 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             };
             Timer.Elapsed += Timer_Elapsed;
 
-            SettedHorizontalScrollbarExplorerHandles = new FixedQueue<IntPtr>() {
-                Limit = cacheSize,
-            };
+            SettedHorizontalScrollbarExplorerHandles = new FixedQueue<IntPtr>(cacheSize);
         }
 
         #region property
@@ -78,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
         };
 
-        FixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; }
+        IFixedQueue<IntPtr> SettedHorizontalScrollbarExplorerHandles { get; }
 
         #endregion
 

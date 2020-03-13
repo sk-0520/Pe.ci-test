@@ -58,13 +58,12 @@ block BLOCK_LAYOUT_CONTENT
 				td o
 				td 一時ディレクトリパス。
 			tr
-				td: code old-setting-root
-				td o
+				td: code app-log-limit
+				td x
 				td
-					| 0.83.0 設定ディレクトリパスのルートディレクトリパス。
+					| Pe 内部で保持するログ数を設定。
 					br
-					| 新規使用もしくは 0.83.0 で設定ディレクトリを変更していない限り設定する必要なし。
-					aside.tips 0.91.000 で廃止予定。
+					| 1 未満を指定するか数値として不正な値を指定した場合は自動設定される。
 			tr
 				td: code log
 				td o

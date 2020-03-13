@@ -136,9 +136,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                     if(this._content != null) {
                         this._content.Dispose();
                     }
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
+                    Debug.Assert(Model.ContentElement != null);
                     this._content = NoteContentViewModelFactory.Create(Model.ContentElement, NoteConfiguration, ClipboardManager, DispatcherWrapper, LoggerFactory);
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 }
 
                 return this._content;
@@ -235,7 +234,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set
             {
                 if(IsLink) {
-                    Logger.LogError("リンク中は変更できない");
+                    Logger.LogWarning("リンク中は変更できない");
+                    return;
+                }
+                if(value == Model.ContentKind) {
+                    // 同一値はなんもしない
                     return;
                 }
 
@@ -258,6 +261,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             get => Model.LayoutKind;
             set
             {
+                if(value == Model.LayoutKind) {
+                    // 同一値はなんもしない
+                    return;
+                }
+
                 Flush();
                 var rect = value switch
                 {
@@ -972,6 +980,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             if(!IsDisposed) {
                 if(disposing) {
                     this._content?.Dispose();
+                    this._content = null;
                 }
                 Flush();
                 PlatformTheme.Changed -= PlatformTheme_Changed;

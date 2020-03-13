@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 throw new Exception("[pwsh] and [powershell] is null");
             }
 
-            var scriptDirPath = Path.Combine(destinationDirectory.FullName, "etc", "script", "update");
+            var scriptDirPath = Path.Combine(sourceDirectory.FullName, "etc", "script", "update");
 
             var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
             var psCommands = new List<string>() {

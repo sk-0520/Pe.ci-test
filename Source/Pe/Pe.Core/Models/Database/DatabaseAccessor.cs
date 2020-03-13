@@ -231,20 +231,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             if(!IsOpend) {
-                return new ActionDisposer(() => { });
+                return new ActionDisposer(d => { });
             }
 
             if(!StoppingConnection) {
                 BaseConnection.Close();
                 IsOpend = false;
                 StoppingConnection = true;
-                return new ActionDisposer(() => {
+                return new ActionDisposer(d => {
                     StoppingConnection = false;
                     LazyConnection = new Lazy<IDbConnection>(OpenConnection);
                 });
             }
 
-            return new ActionDisposer(() => { });
+            return new ActionDisposer(d => { });
         }
 
         public virtual IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
