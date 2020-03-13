@@ -155,7 +155,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#574: 0.92.0 公開時に 0.91.0 以上をアップデート可能対象にする"
 					},
 					{
 						"revision": "",
