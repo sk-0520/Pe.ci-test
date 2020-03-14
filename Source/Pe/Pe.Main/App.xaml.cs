@@ -43,27 +43,37 @@ namespace ContentTypeTextNet.Pe.Main
 
             Logger = initializer.Logging.Factory.CreateLogger(GetType());
 
-            ApplicationManager = new ApplicationManager(initializer);
+            switch(initializer.RunMode) {
+                case Models.Data.RunMode.Normal: {
+                        ApplicationManager = new ApplicationManager(initializer);
 
-            if(!ApplicationManager.Startup(this, e)) {
-                Shutdown();
-                return;
+                        if(!ApplicationManager.Startup(this, e)) {
+                            Shutdown();
+                            return;
+                        }
+
+                        var viewModel = ApplicationManager.CreateViewModel();
+                        ApplicationManager.Execute();
+
+                        var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
+                        notifyIcon.DataContext = viewModel;
+
+                        Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
+                            Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
+                            ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
+                        }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
+                    }
+                    break;
+
+                case Models.Data.RunMode.CrashReport: {
+
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
 
-            var viewModel = ApplicationManager.CreateViewModel();
-            //var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
-            //notifyIcon.DataContext = viewModel;
-
-            ApplicationManager.Execute();
-
-            var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)FindResource("root");
-            notifyIcon.DataContext = viewModel;
-            //Shutdown();
-
-            Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
-                Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
-                ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
-            }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

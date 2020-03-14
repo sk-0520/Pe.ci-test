@@ -4,18 +4,30 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
-    public class RunMode
+    public enum RunMode
+    {
+        Normal,
+        CrashReport,
+    }
+
+    internal static class RunModeUtility
     {
         #region property
 
-        /// <summary>
-        /// 通常起動。
-        /// </summary>
-        public string Normal { get; } = string.Empty;
-        /// <summary>
-        /// クラッシュレポート送信起動。
-        /// </summary>
-        public string CrashReport { get; } = "crash-report";
+        #endregion
+
+        #region function
+
+        public static RunMode Parse(string? value)
+        {
+            switch(value?.ToLowerInvariant()) {
+                case "crash-report":
+                    return RunMode.CrashReport;
+
+                default:
+                    return RunMode.Normal;
+            }
+        }
 
         #endregion
     }
