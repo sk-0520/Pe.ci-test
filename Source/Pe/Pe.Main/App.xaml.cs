@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 using Prism;
@@ -23,6 +24,8 @@ namespace ContentTypeTextNet.Pe.Main
 
         ApplicationManager? ApplicationManager { get; set; }
         ILogger? Logger { get; set; }
+        RunMode RunMode { get; set; }
+
         #endregion
 
         protected override void OnStartup(StartupEventArgs e)
@@ -42,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main
             }
 
             Logger = initializer.Logging.Factory.CreateLogger(GetType());
+            RunMode = initializer.RunMode;
 
             switch(initializer.RunMode) {
                 case Models.Data.RunMode.Normal: {
@@ -66,7 +70,20 @@ namespace ContentTypeTextNet.Pe.Main
                     break;
 
                 case Models.Data.RunMode.CrashReport: {
-
+                        Debug.Assert(initializer.ApplicationEnvironmentParameters != null);
+                        ShutdownMode = ShutdownMode.OnMainWindowClose;
+                        var options = new Core.Models.CommandLineSimpleConverter<CrashReport.Models.Data.CrashReportOptions>(new Core.Models.CommandLine(e.Args, false)).GetMappingData();
+                        if(options == null) {
+                            Logger.LogError("クラッシュレポート起動できず: {0}", string.Join(" ", e.Args));
+                            Shutdown(-1);
+                            return;
+                        }
+                        var model = new CrashReport.Models.Element.CrashReportElement(options, initializer.ApplicationEnvironmentParameters, initializer.Logging.Factory);
+                        var viewModel = new CrashReport.ViewModels.CrashReportViewModel(model, new Models.Telemetry.UserTracker(initializer.Logging.Factory), new ApplicationDispatcherWrapper(), initializer.Logging.Factory);
+                        MainWindow = new CrashReport.Views.CrashReportWindow() {
+                            DataContext = viewModel,
+                        };
+                        MainWindow.Show();
                     }
                     break;
 
@@ -80,6 +97,9 @@ namespace ContentTypeTextNet.Pe.Main
         {
             if(Logger != null) {
                 Logger.LogError(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
+                if(RunMode == RunMode.Normal) {
+                    //TODO: クラッシュレポートの生成
+                }
             } else {
                 MessageBox.Show(e.Exception.ToString());
             }

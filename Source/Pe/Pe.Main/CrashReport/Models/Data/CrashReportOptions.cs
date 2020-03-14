@@ -16,13 +16,25 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         public bool AutoSend { get; set; }
 
         /// <summary>
-        /// クラッシュレポートのファイルパス。
+        /// 生クラッシュレポートのファイルパス。
         /// </summary>
-        [CommandLine(longKey: "report-file", hasValue: true)]
-        public string CrashReportFilePath { get; set; } = string.Empty;
+        [CommandLine(longKey: "report-raw-file", hasValue: true)]
+        public string CrashReportRawFilePath { get; set; } = string.Empty;
 
         /// <summary>
-        /// クラッシュレポートのファイルパス。
+        /// 送信時に保存されるクラッシュレポートのファイルパス。
+        /// </summary>
+        [CommandLine(longKey: "report-save-file", hasValue: true)]
+        public string CrashReportSaveFilePath { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Pe の実行コマンド。
+        /// </summary>
+        [CommandLine(longKey: "execute", hasValue: true)]
+        public string ExecuteCommand { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Pe の起動時オプション。
         /// </summary>
         [CommandLine(longKey: "arguments", hasValue: true)]
         public string Arguments { get; set; } = string.Empty;
