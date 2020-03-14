@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element;
 using Microsoft.Extensions.Logging;
 
@@ -8,11 +10,17 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 {
     class CrashReportElement : ElementBase
     {
-        public CrashReportElement(ILoggerFactory loggerFactory) : base(loggerFactory)
+        public CrashReportElement(CrashReportOptions options, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+            : base(loggerFactory)
         {
+            Options = options;
+            EnvironmentParameters = environmentParameters;
         }
 
         #region property
+
+        EnvironmentParameters EnvironmentParameters { get; }
+        CrashReportOptions Options { get; }
 
         #endregion
 
@@ -24,7 +32,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
         protected override void InitializeImpl()
         {
-            throw new NotImplementedException();
         }
 
         #endregion
