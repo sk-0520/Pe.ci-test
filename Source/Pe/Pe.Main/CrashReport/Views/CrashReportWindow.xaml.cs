@@ -10,14 +10,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ContentTypeTextNet.Pe.CrashReport.Views
+namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
 {
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// CrashReportWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CrashReportWindow : Window
     {
-        public MainWindow()
+        public CrashReportWindow()
         {
             InitializeComponent();
         }

@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 
-namespace ContentTypeTextNet.Pe.CrashReport.Models
+namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
 {
-    public class Options
+    internal class CrashReportOptions
     {
         #region property
-
-        /// <summary>
-        /// Pe から呼び出されたか。
-        /// <para>道徳心が大事。</para>
-        /// </summary>
-        [CommandLine(longKey: "call-from-pe", hasValue: false)]
-        public bool CallFromPe { get; set; }
-
 
         /// <summary>
         /// 自動送信するか。
