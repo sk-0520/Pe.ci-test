@@ -1,18 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.CrashReport.ViewModels;
 
 namespace ContentTypeTextNet.Pe.CrashReport.Models
 {
     public class CrashReportInitializer
     {
-        public CrashReportInitializer()
+        public CrashReportInitializer(Options options)
         {
-
+            Options = options;
         }
 
         #region property
+
+        Options Options { get; }
 
         #endregion
 

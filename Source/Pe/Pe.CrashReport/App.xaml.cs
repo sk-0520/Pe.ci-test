@@ -19,7 +19,13 @@ namespace ContentTypeTextNet.Pe.CrashReport
         {
             base.OnStartup(e);
 
-            var initializer = new Models.CrashReportInitializer();
+            var options = new Core.Models.CommandLineSimpleConverter<Models.Options>(new Core.Models.CommandLine()).GetMappingData();
+            if(options == null) {
+                Shutdown(1);
+                return;
+            }
+
+            var initializer = new Models.CrashReportInitializer(options);
 
             var model = initializer.CreateWorker();
             var viewModel = initializer.CreateViewModel(model);
