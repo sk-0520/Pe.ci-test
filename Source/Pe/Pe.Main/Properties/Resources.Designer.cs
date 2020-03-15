@@ -581,6 +581,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   クラッシュレポート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Caption {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   チェックサムで失敗 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Download_ChecksumError {

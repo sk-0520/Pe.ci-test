@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,6 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
 {
@@ -21,5 +24,19 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
         {
             InitializeComponent();
         }
+
+        #region Window
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            var hWnd = HandleUtility.GetWindowHandle(this);
+            var style = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_STYLE);
+            style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
+            WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
+        }
+
+        #endregion
     }
 }

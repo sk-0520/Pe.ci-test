@@ -88,6 +88,7 @@ namespace ContentTypeTextNet.Pe.Main
                             return;
                         }
                         var model = new CrashReport.Models.Element.CrashReportElement(options, initializer.Logging.Factory);
+                        model.Initialize();
                         var viewModel = new CrashReport.ViewModels.CrashReportViewModel(model, new Models.Telemetry.UserTracker(initializer.Logging.Factory), new ApplicationDispatcherWrapper(), initializer.Logging.Factory);
                         MainWindow = new CrashReport.Views.CrashReportWindow() {
                             DataContext = viewModel,

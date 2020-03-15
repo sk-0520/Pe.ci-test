@@ -1484,4 +1484,7 @@
   <data name="String_Setting_Generals_General_Starup_Argument_A" xml:space="preserve">
     <value>追加引数(_A)</value>
   </data>
+  <data name="String_CrashReport_Caption" xml:space="preserve">
+    <value>クラッシュレポート</value>
+  </data>
 </root>
