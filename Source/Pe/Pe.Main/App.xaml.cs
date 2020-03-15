@@ -120,6 +120,7 @@ namespace ContentTypeTextNet.Pe.Main
                 if(RunMode == RunMode.Normal && ApplicationManager.CanSendCrashReport) {
                     // ふりしぼれ最後の輝き
                     var outputFile = ApplicationManager.OutputRawCrashReport(e.Exception);
+                    ApplicationManager.ExecuteCrashReport(outputFile);
 
                     e.Handled = ApplicationManager.UnhandledExceptionHandled;
                 }

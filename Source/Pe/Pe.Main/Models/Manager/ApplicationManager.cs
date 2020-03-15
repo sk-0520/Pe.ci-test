@@ -56,6 +56,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using System.Text.Json;
+using System.Reflection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -1099,7 +1100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             };
 
             ExceptionWrapper(() => {
-                rawData.UserId = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData<string>(c => {
+                rawData.UserId = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
                     var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
                     var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
                     return setting.UserId;
@@ -1141,6 +1142,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 #endif
             return file;
+        }
+
+        internal void ExecuteCrashReport(FileInfo rawReport)
+        {
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var saveReportFilePath = Path.Combine(environmentParameters.MachineCrashReportDirectory.FullName, Path.ChangeExtension(rawReport.Name, "json"));
+
+            var currentCommands = Environment.GetCommandLineArgs()
+                .Skip(1)
+                .Select(i => CommandLine.Escape(i))
+                .ToList()
+            ;
+
+            var autoSend = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
+                var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
+                var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+                return setting.IsEnabledTelemetry;
+            });
+
+            var args = new List<string> {
+                "--run-mode", "crash-report",
+                "--post-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportUri.OriginalString),
+                "--report-raw-file", CommandLine.Escape(rawReport.FullName),
+                "--report-save-file", CommandLine.Escape(saveReportFilePath),
+                "--execute-command", CommandLine.Escape(environmentParameters.RootApplication.FullName),
+                "--execute-argument", CommandLine.Escape(string.Join(" ", currentCommands)),
+            };
+            if(autoSend) {
+                args.Add("--auto-send");
+            }
+            args.AddRange(currentCommands);
+
+            var arg = string.Join(' ', args);
+
+            var systemExecutor = new SystemExecutor();
+            var commandPath = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "exe");
+            Logger.LogInformation("path: {0}", commandPath);
+            Logger.LogInformation("args: {0}", arg);
+            systemExecutor.ExecuteFile(commandPath, arg);
         }
 
         #endregion

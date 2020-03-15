@@ -36,14 +36,14 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         /// <summary>
         /// Pe の実行コマンド。
         /// </summary>
-        [CommandLine(longKey: "execute", hasValue: true)]
+        [CommandLine(longKey: "execute-command", hasValue: true)]
         public string ExecuteCommand { get; set; } = string.Empty;
 
         /// <summary>
         /// Pe の起動時オプション。
         /// </summary>
-        [CommandLine(longKey: "arguments", hasValue: true)]
-        public string Arguments { get; set; } = string.Empty;
+        [CommandLine(longKey: "execute-argument", hasValue: true)]
+        public string ExecuteArgument { get; set; } = string.Empty;
 
         #endregion
     }
