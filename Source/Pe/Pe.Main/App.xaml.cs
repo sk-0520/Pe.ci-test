@@ -25,8 +25,15 @@ namespace ContentTypeTextNet.Pe.Main
         ApplicationManager? ApplicationManager { get; set; }
         ILogger? Logger { get; set; }
         RunMode RunMode { get; set; }
+        bool CachedUnhandledException { get; set; }
 
         #endregion
+
+        #region function
+
+        #endregion
+
+        #region Application
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -66,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main
                             Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
                             ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
 
-                            throw new Exception("#503");
+                            throw new ApplicationException("#503");
 
                         }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
                     }
@@ -95,14 +102,26 @@ namespace ContentTypeTextNet.Pe.Main
 
         }
 
+        #endregion
+
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+            if(!CachedUnhandledException) {
+                CachedUnhandledException = true;
+            } else {
+                // すでになんかしてるならもう何もしない
+                Shutdown(2);
+                return;
+            }
+
             if(Logger != null) {
                 Logger.LogCritical(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
                 Debug.Assert(ApplicationManager != null);
-                if(RunMode == RunMode.Normal && ApplicationManager.EnvironmentParameters.Configuration.General.SendCrashReport) {
+                if(RunMode == RunMode.Normal && ApplicationManager.CanSendCrashReport) {
                     // ふりしぼれ最後の輝き
-                    e.Handled = ApplicationManager.EnvironmentParameters.Configuration.General.UnhandledExceptionHandled;
+                    var outputFile = ApplicationManager.OutputRawCrashReport(e.Exception);
+
+                    e.Handled = ApplicationManager.UnhandledExceptionHandled;
                 }
             } else {
                 MessageBox.Show(e.Exception.ToString());

@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             UpdateCheckUri = section.GetValue<Uri>("version_check_uri");
             UpdateWait = section.GetValue<TimeSpan>("update_wait");
 
-            SendCrashReport = section.GetValue<bool>("send_crash_report");
+            CanSendCrashReport = section.GetValue<bool>("can_send_crash_report");
             UnhandledExceptionHandled = section.GetValue<bool>("unhandled_exception_handled");
         }
 
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Uri UpdateCheckUri { get; }
         public TimeSpan UpdateWait { get; }
 
-        public bool SendCrashReport { get; }
+        public bool CanSendCrashReport { get; }
         public bool UnhandledExceptionHandled { get; }
 
         #endregion

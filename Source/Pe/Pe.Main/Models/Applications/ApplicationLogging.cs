@@ -136,6 +136,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             LogItems.Enqueue(logEventInfo);
         }
 
+        public IReadOnlyList<LogEventInfo> GetLogItems() => LogItems.ToArray();
+
         #endregion
     }
 }
