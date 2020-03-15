@@ -10,16 +10,14 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 {
     class CrashReportElement : ElementBase
     {
-        public CrashReportElement(CrashReportOptions options, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+        public CrashReportElement(CrashReportOptions options, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Options = options;
-            EnvironmentParameters = environmentParameters;
         }
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
         CrashReportOptions Options { get; }
 
         #endregion

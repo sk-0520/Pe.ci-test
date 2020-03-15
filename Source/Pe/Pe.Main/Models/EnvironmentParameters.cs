@@ -198,6 +198,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo MachineWebViewDirectory => CombineDirectory(MachineDirectory, "web-view");
         public DirectoryInfo MachineWebViewUserDirectory => CombineDirectory(MachineWebViewDirectory, "user");
+        /// <summary>
+        /// 送信済みクラッシュレポート配置ディレクトリ。
+        /// </summary>
+        public DirectoryInfo MachineCrashReportDirectory => CombineDirectory(MachineDirectory, "crash");
+
 
         /// <summary>
         /// 一時ディレクトリ。
@@ -244,6 +249,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アップデート時ログファイル。
         /// </summary>
         public FileInfo TemporaryUpdateLogFile => CombineFile(TemporaryDirectory, "update.log");
+        /// <summary>
+        /// 生クラッシュレポート配置ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryCrashReportDirectory => CombineDirectory(TemporaryDirectory, "crash");
 
         /// <summary>
         /// 設定格納DBファイル。

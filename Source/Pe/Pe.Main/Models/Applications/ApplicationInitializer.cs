@@ -54,7 +54,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public UserAgentManager? UserAgentManager { get; private set; }
 
         public Mutex? Mutex { get; private set; }
-        internal ApplicationEnvironmentParameters? ApplicationEnvironmentParameters { get; private set; }
 
         #endregion
 
@@ -393,7 +392,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 #endif
-            ApplicationEnvironmentParameters = InitializeEnvironment(commandLine);
+            var environmentParameters = InitializeEnvironment(commandLine);
 
             if(!int.TryParse(commandLine.GetValue(CommandLineKeyAppLogLimit, string.Empty), out var appLogLimit)) {
                 appLogLimit = AppLogLimit;
@@ -402,7 +401,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 appLogLimit = AppLogLimit;
             }
 
-            var logginConfigFilePath = Path.Combine(ApplicationEnvironmentParameters.EtcDirectory.FullName, ApplicationEnvironmentParameters.Configuration.General.LoggingConfigFileName);
+            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
             Logging = new ApplicationLogging(
                 appLogLimit,
                 logginConfigFilePath,
@@ -415,7 +414,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var logger = Logging.Factory.CreateLogger(GetType());
 
             if(RunMode == RunMode.Normal) {
-                var mutexName = ApplicationEnvironmentParameters.Configuration.General.MutexName;
+                var mutexName = environmentParameters.Configuration.General.MutexName;
                 logger.LogInformation("mutext: {0}", mutexName);
                 var mutex = new Mutex(true, mutexName, out var createdNew);
                 if(!createdNew) {
@@ -430,6 +429,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var cultureService = new CultureService(EnumResourceManagerFactory.Create());
             CultureService.Initialize(cultureService);
 
+            if(RunMode == RunMode.CrashReport) {
+                // DI/その他 の重要インフラは構築しない
+                logger.LogInformation("クラッシュレポート起動のため初期化処理 途中終了");
+                return true;
+            }
+
             AcceptResult? acceptResult = null;
             if(RunMode == RunMode.Normal) {
                 var skipAccept = commandLine.ExistsSwitch(CommandLineSwitchAcceptSkip);
@@ -437,12 +442,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");
                 }
 
-                IsFirstStartup = CheckFirstStartup(ApplicationEnvironmentParameters, logger);
+                IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
                 if(IsFirstStartup) {
                     logger.LogInformation("初回実行");
                     if(!skipAccept) {
                         // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                        acceptResult = ShowAcceptView(new DiContainer(false), ApplicationEnvironmentParameters, loggerFactory);
+                        acceptResult = ShowAcceptView(new DiContainer(false), environmentParameters, loggerFactory);
                         if(!acceptResult.Accepted) {
                             // 初回の使用許諾を得られなかったのでばいちゃ
                             logger.LogInformation("使用許諾得られず");
@@ -452,21 +457,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 
-            InitializeFileSystem(ApplicationEnvironmentParameters, logger);
-            ApplicationEnvironmentParameters.SetFileSystemInitialized();
-
-            if(RunMode == RunMode.CrashReport) {
-                // DI/その他 の重要インフラは構築しない
-                logger.LogInformation("クラッシュレポート起動のため初期化処理 途中終了");
-                return true;
-            }
+            InitializeFileSystem(environmentParameters, logger);
+            environmentParameters.SetFileSystemInitialized();
 
             if(IsFirstStartup) {
-                FirstSetup(ApplicationEnvironmentParameters, loggerFactory, logger);
+                FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
             var webViewinItializer = new WebViewinItializer(loggerFactory);
-            webViewinItializer.Initialize(ApplicationEnvironmentParameters);
+            webViewinItializer.Initialize(environmentParameters);
             //try {
             //    webViewinItializer.Initialize(environmentParameters);
             //} catch(Exception ex) {
@@ -475,10 +474,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             //}
 
             (ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor) pack;
-            if(!NormalSetup(out pack, ApplicationEnvironmentParameters, loggerFactory, logger)) {
+            if(!NormalSetup(out pack, environmentParameters, loggerFactory, logger)) {
                 // データぶっ壊れてる系
-                FirstSetup(ApplicationEnvironmentParameters, loggerFactory, logger);
-                var retryResult = NormalSetup(out pack, ApplicationEnvironmentParameters, loggerFactory, logger);
+                FirstSetup(environmentParameters, loggerFactory, logger);
+                var retryResult = NormalSetup(out pack, environmentParameters, loggerFactory, logger);
                 if(!retryResult) {
                     throw new ApplicationException();
                 }
@@ -487,7 +486,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var factory = pack.factory;
             pack.accessor.Dispose();
 
-            DiContainer = SetupContainer(ApplicationEnvironmentParameters, factory, loggerFactory);
+            DiContainer = SetupContainer(environmentParameters, factory, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);

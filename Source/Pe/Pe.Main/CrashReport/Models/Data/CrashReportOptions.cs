@@ -16,6 +16,12 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         public bool AutoSend { get; set; }
 
         /// <summary>
+        /// 送信先。
+        /// </summary>
+        [CommandLine(longKey: "post-uri", hasValue: true)]
+        public string PostUri { get; set; } = string.Empty;
+
+        /// <summary>
         /// 生クラッシュレポートのファイルパス。
         /// </summary>
         [CommandLine(longKey: "report-raw-file", hasValue: true)]

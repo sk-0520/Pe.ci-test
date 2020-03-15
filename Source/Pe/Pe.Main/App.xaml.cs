@@ -65,12 +65,12 @@ namespace ContentTypeTextNet.Pe.Main
                         Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
                             Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
                             ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
+                            throw new Exception("#503");
                         }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
                     }
                     break;
 
                 case Models.Data.RunMode.CrashReport: {
-                        Debug.Assert(initializer.ApplicationEnvironmentParameters != null);
                         ShutdownMode = ShutdownMode.OnMainWindowClose;
                         var options = new Core.Models.CommandLineSimpleConverter<CrashReport.Models.Data.CrashReportOptions>(new Core.Models.CommandLine(e.Args, false)).GetMappingData();
                         if(options == null) {
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main
                             Shutdown(-1);
                             return;
                         }
-                        var model = new CrashReport.Models.Element.CrashReportElement(options, initializer.ApplicationEnvironmentParameters, initializer.Logging.Factory);
+                        var model = new CrashReport.Models.Element.CrashReportElement(options, initializer.Logging.Factory);
                         var viewModel = new CrashReport.ViewModels.CrashReportViewModel(model, new Models.Telemetry.UserTracker(initializer.Logging.Factory), new ApplicationDispatcherWrapper(), initializer.Logging.Factory);
                         MainWindow = new CrashReport.Views.CrashReportWindow() {
                             DataContext = viewModel,
@@ -96,13 +96,16 @@ namespace ContentTypeTextNet.Pe.Main
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             if(Logger != null) {
-                Logger.LogError(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
+                Logger.LogCritical(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
                 if(RunMode == RunMode.Normal) {
                     //TODO: クラッシュレポートの生成
+                    // ふりしぼれ最後の輝き
                 }
             } else {
                 MessageBox.Show(e.Exception.ToString());
             }
+
+            Shutdown(1);
         }
     }
 }
