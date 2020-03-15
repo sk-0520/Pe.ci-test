@@ -1,6 +1,10 @@
 {
 	"general": {
 		"project_name": "Pe-debug",
-		"mutex_name": "Pe-debug"
+		"mutex_name": "Pe-debug",
+		"unhandled_exception_handled": false
+	},
+	"api": {
+		"crash_report_uri": "https://script.google.com/macros/s/AKfycbzxj0jTgCmaqe1zJ8b9hRqxXkA4W3R74jECdhRMHk1JxvUCpwV-/exec"
 	}
 }

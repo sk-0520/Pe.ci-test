@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             IsFirstStartup = initializer.IsFirstStartup;
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
-
+            EnvironmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
 
@@ -98,6 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         ApplicationLogging Logging { get; set; }
         ILoggerFactory LoggerFactory => Logging.Factory;
+        public EnvironmentParameters EnvironmentParameters { get; }
         ApplicationDiContainer ApplicationDiContainer { get; set; }
         bool IsFirstStartup { get; }
         ILogger Logger { get; set; }

@@ -65,7 +65,9 @@ namespace ContentTypeTextNet.Pe.Main
                         Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
                             Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
                             ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
+
                             throw new Exception("#503");
+
                         }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
                     }
                     break;
@@ -97,9 +99,10 @@ namespace ContentTypeTextNet.Pe.Main
         {
             if(Logger != null) {
                 Logger.LogCritical(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
-                if(RunMode == RunMode.Normal) {
-                    //TODO: クラッシュレポートの生成
+                Debug.Assert(ApplicationManager != null);
+                if(RunMode == RunMode.Normal && ApplicationManager.EnvironmentParameters.Configuration.General.SendCrashReport) {
                     // ふりしぼれ最後の輝き
+                    e.Handled = ApplicationManager.EnvironmentParameters.Configuration.General.UnhandledExceptionHandled;
                 }
             } else {
                 MessageBox.Show(e.Exception.ToString());

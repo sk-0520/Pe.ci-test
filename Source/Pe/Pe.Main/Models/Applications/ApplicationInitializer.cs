@@ -435,24 +435,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 return true;
             }
 
-            AcceptResult? acceptResult = null;
-            if(RunMode == RunMode.Normal) {
-                var skipAccept = commandLine.ExistsSwitch(CommandLineSwitchAcceptSkip);
-                if(skipAccept) {
-                    logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");
-                }
+            var skipAccept = commandLine.ExistsSwitch(CommandLineSwitchAcceptSkip);
+            if(skipAccept) {
+                logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");
+            }
 
-                IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
-                if(IsFirstStartup) {
-                    logger.LogInformation("初回実行");
-                    if(!skipAccept) {
-                        // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
-                        acceptResult = ShowAcceptView(new DiContainer(false), environmentParameters, loggerFactory);
-                        if(!acceptResult.Accepted) {
-                            // 初回の使用許諾を得られなかったのでばいちゃ
-                            logger.LogInformation("使用許諾得られず");
-                            return false;
-                        }
+            AcceptResult? acceptResult = null;
+            IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
+            if(IsFirstStartup) {
+                logger.LogInformation("初回実行");
+                if(!skipAccept) {
+                    // 設定ファイルやらなんやらを構築する前に完全初回の使用許諾を取る
+                    acceptResult = ShowAcceptView(new DiContainer(false), environmentParameters, loggerFactory);
+                    if(!acceptResult.Accepted) {
+                        // 初回の使用許諾を得られなかったのでばいちゃ
+                        logger.LogInformation("使用許諾得られず");
+                        return false;
                     }
                 }
             }
