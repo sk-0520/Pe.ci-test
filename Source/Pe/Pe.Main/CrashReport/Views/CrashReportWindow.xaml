@@ -12,7 +12,7 @@
   Height="450"
   Width="400"
   WindowStartupLocation="CenterScreen"
-  Topmost="True"
+  
   ResizeMode="CanResizeWithGrip"
 
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
@@ -66,16 +66,26 @@
       </Grid.ColumnDefinitions>
 
       <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="raw" />
-      <TextBox Grid.Row="0" Grid.Column="1" />
+      <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Text="{Binding CrashReportRawFilePath, Mode=OneTime}" />
 
       <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="content" />
-      <TextBox Grid.Row="1" Grid.Column="1" />
+      <TreeView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding RawProperties, Mode=OneTime}">
+        <TreeView.ItemTemplate>
+          <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name}" />
+              <TextBlock Text=": " />
+              <TextBlock Text="{Binding Value}" />
+            </StackPanel>
+          </HierarchicalDataTemplate>
+        </TreeView.ItemTemplate>
+      </TreeView>
 
       <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="comment" />
-      <TextBox Grid.Row="2" Grid.Column="1" />
+      <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
       <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="contact" />
-      <TextBox Grid.Row="3" Grid.Column="1" />
+      <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ContactMailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 
     <UniformGrid Grid.Row="2" Style="{StaticResource DialogCommand}">
