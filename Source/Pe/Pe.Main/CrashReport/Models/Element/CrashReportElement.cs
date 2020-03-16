@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
         public string RawJson { get; private set; } = string.Empty;
 
         public IReadOnlyList<ObjectDumpItem> RawProperties { get; private set; } = new List<ObjectDumpItem>();
-        
+
         #endregion
 
         #region function
@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
             Data = new CrashReportSaveData() {
                 UserId = rawData.UserId,
                 Timestamp = rawData.Timestamp,
+                Exception = rawData.Exception,
                 Informations = rawData.Informations,
                 LogItems = rawData.LogItems,
             };

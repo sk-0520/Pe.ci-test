@@ -18,6 +18,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [Timestamp(DateTimeKind.Utc)]
         public DateTime Timestamp { get; set; }
         [DataMember]
+        public string Exception { get; set; } = string.Empty;
+        [DataMember]
         public Dictionary<string, Dictionary<string, object?>> Informations { get; set; } = new Dictionary<string, Dictionary<string, object?>>();
         [DataMember]
         public List<LogItem> LogItems { get; set; } = new List<LogItem>();

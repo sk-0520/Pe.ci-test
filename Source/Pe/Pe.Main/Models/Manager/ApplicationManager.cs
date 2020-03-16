@@ -1096,6 +1096,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var rawData = new CrashReportRawData() {
+                Exception = exception.ToString(),
                 Timestamp = DateTime.UtcNow,
             };
 
