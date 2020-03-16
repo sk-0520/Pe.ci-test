@@ -1,4 +1,5 @@
 <Window
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.CrashReport.Views.CrashReportWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,6 +7,7 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
+  xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
@@ -32,6 +34,9 @@
     <i:EventTrigger EventName="Loaded">
       <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
     </i:EventTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
+      <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
+    </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
 
   <Grid Margin="4">
@@ -101,8 +106,8 @@
 
     <UniformGrid Grid.Row="2" Style="{StaticResource DialogCommand}">
       <Button Content="send" />
-      <Button Content="reboot" />
-      <Button Content="exit" />
+      <Button Content="reboot" Command="{Binding RebootCommand}" />
+      <Button Content="exit" Command="{Binding CloseCommand, ElementName=root}" />
     </UniformGrid>
 
   </Grid>

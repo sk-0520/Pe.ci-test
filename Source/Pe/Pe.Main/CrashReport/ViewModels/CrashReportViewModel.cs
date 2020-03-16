@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels;
@@ -26,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
         }
 
         #region property
+        public RequestSender CloseRequest { get; } = new RequestSender();
 
         public bool AutoSend => Model.AutoSend;
         public string UserId => Model.Data.UserId;
@@ -56,6 +58,13 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
         public ICommand LoadedCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
 
+            }
+        ));
+
+        public ICommand RebootCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.Reboot();
+                CloseRequest.Send();
             }
         ));
 

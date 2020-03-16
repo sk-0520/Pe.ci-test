@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
@@ -33,6 +34,14 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
         #endregion
 
         #region function
+
+        public void Reboot()
+        {
+            var systemExecutor = new SystemExecutor();
+            Logger.LogInformation("App path: {0}", Options.ExecuteCommand);
+            Logger.LogInformation("App args: {0}", Options.ExecuteArgument);
+            systemExecutor.ExecuteFile(Options.ExecuteCommand, Options.ExecuteArgument);
+        }
 
         CrashReportRawData LoadRawData()
         {

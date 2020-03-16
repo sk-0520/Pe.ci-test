@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
 {
@@ -24,6 +25,21 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
         {
             InitializeComponent();
         }
+
+        #region property
+
+        CommandStore CommandStore { get; } = new CommandStore();
+
+        #endregion
+
+        #region command
+
+        public ICommand CloseCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+            () => Close()
+        ));
+
+        #endregion
+
 
         #region Window
 
