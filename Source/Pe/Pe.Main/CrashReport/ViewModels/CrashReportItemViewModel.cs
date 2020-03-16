@@ -11,6 +11,12 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 {
     public class CrashReportItemViewModel : ViewModelBase
     {
+        #region variable
+
+        bool _isExpanded = true;
+
+        #endregion
+
         public CrashReportItemViewModel(ObjectDumpItem item, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -31,6 +37,12 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
         public string Name { get; }
 
         public IReadOnlyList<CrashReportItemViewModel> Children { get; } = new List<CrashReportItemViewModel>();
+
+        public bool IsExpanded
+        {
+            get => this._isExpanded;
+            set => SetProperty(ref this._isExpanded, value);
+        }
 
         #endregion
     }

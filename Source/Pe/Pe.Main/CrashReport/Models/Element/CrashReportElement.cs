@@ -27,7 +27,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
         public bool AutoSend => Options.AutoSend;
         public string CrashReportRawFilePath => Environment.ExpandEnvironmentVariables(Options.CrashReportRawFilePath);
 
-        public string RawJson { get; private set; } = string.Empty;
 
         public IReadOnlyList<ObjectDumpItem> RawProperties { get; private set; } = new List<ObjectDumpItem>();
 
@@ -52,7 +51,6 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
             var dumper = new ObjectDumper();
             RawProperties = dumper.Dump(rawData);
-            var x = ObjectDumper.GetDumpString(rawData);
 
             Data = new CrashReportSaveData() {
                 UserId = rawData.UserId,
