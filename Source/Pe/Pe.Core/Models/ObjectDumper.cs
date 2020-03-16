@@ -251,14 +251,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             switch(target) {
+                case string _:
+                    break;
+
                 case IDictionary dic:
                     return DumpDictionary(dic, nest, ignoreAutoMember);
 
                 case Array array:
                     return DumpArray(array, nest, ignoreAutoMember);
-
-                case string _:
-                    break;
 
                 case IEnumerable enumerable:
                     return DumpEnumerable(enumerable, nest, ignoreAutoMember);
@@ -286,7 +286,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var memberValue = GetMemberValue(target, member);
                 var children = EmptyChildren;
                 if(memberValue != null && !IgnoreNestedMembers.Contains(memberValue.GetType())) {
-                    if(!(memberValue is IEnumerable)) {
+                    if((memberValue is IEnumerable)) {
                         children = DumpCore(memberValue, GetNextNest(nest), ignoreAutoMember);
                     }
                 }

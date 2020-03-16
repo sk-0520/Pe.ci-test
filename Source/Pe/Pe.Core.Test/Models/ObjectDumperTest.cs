@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Children.Count);
             Assert.AreEqual("aaa", items.First(i => i.MemberInfo.Name == nameof(Nest2.Value)).Value);
 
-            Assert.AreEqual(4, items.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
+            Assert.AreEqual(0, items.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
 
         }
 
@@ -93,9 +93,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var items = od.Dump(nest3);
             Assert.AreEqual(5, items.Count);
 
-            Assert.AreEqual(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.Count);
-            Assert.AreEqual(4, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
-            Assert.AreEqual(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.First(i => i.MemberInfo.Name == nameof(Simple.PublicF)).Value);
+            //Assert.AreEqual(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.Count);
+            //Assert.AreEqual(4, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.Count);
+            //Assert.AreEqual(3, items.First(i => i.MemberInfo.Name == nameof(Nest3.NotNullNest2)).Children.First(i => i.MemberInfo.Name == nameof(Nest2.NotNull)).Children.First(i => i.MemberInfo.Name == nameof(Simple.PublicF)).Value);
 
         }
 

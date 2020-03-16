@@ -17,20 +17,11 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
             Item = item;
             Name = Item.MemberInfo.Name;
             Value = Item.Value;
-            switch(Item.Value) {
-                case string _:
-                    break;
-                case IEnumerable enumerable:
-                    var objectDumper = new ObjectDumper();
-                    Children = objectDumper.Dump(enumerable)
-                        .Select(i => new CrashReportItemViewModel(i, LoggerFactory))
-                        .ToList()
-                    ;
-                    break;
-                default:
-                    break;
-            }
-            
+            Children = Item.Children
+                .Select(i => new CrashReportItemViewModel(i, LoggerFactory))
+                .ToList()
+            ;
+
         }
 
         #region property
