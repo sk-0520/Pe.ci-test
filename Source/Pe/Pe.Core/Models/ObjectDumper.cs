@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
                         result.Add(item);
                     } else {
-                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), s, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
                         result.Add(item);
                     }
                 }
@@ -210,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                             var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
                             result.Add(item);
                         } else {
-                            var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), s, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                            var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
                             result.Add(item);
                         }
                     }
