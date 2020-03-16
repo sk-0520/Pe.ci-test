@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [DataMember]
         public bool HasProperties { get; set; }
         [DataMember]
-        public Dictionary<object, object> Properties { get; set; } = new Dictionary<object, object>();
+        public Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
         [DataMember]
         public string Message { get; set; } = string.Empty;
         [DataMember]
@@ -84,7 +84,10 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
                 TimeStamp = logEventInfo.TimeStamp.ToUniversalTime(),
             };
             foreach(var prop in logEventInfo.Properties) {
-                item.Properties.Add(prop.Key, prop.Value);
+                var key = System.Convert.ToString(prop.Key);
+                if(key != null) {
+                    item.Properties.Add(key, prop.Value);
+                }
             }
 
             return item;
