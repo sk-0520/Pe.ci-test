@@ -13,6 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         #region property
 
         public string UserId { get; set; } = string.Empty;
+        public Version Version { get; set; } = new Version();
+        public string Revision { get; set; } = string.Empty;
 
         public string ContactMailAddress { get; set; } = string.Empty;
 

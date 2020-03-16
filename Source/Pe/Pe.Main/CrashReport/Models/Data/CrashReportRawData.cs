@@ -15,6 +15,11 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [DataMember]
         public string UserId { get; set; } = string.Empty;
         [DataMember]
+        public Version Version { get; set; } = new Version();
+        [DataMember]
+        public string Revision { get; set; } = string.Empty;
+
+        [DataMember]
         [Timestamp(DateTimeKind.Utc)]
         public DateTime Timestamp { get; set; }
         [DataMember]

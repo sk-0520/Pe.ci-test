@@ -1096,6 +1096,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var rawData = new CrashReportRawData() {
+                Version = BuildStatus.Version,
+                Revision = BuildStatus.Revision,
                 Exception = exception.ToString(),
                 Timestamp = DateTime.UtcNow,
             };

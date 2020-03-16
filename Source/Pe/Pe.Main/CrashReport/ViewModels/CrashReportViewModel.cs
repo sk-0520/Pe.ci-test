@@ -24,10 +24,12 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
                 .Select(i => new CrashReportItemViewModel(i, LoggerFactory))
                 .ToList()
             ;
+            SendStatus = new RunningStatusViewModel(Model.SendStatus, LoggerFactory);
         }
 
         #region property
         public RequestSender CloseRequest { get; } = new RequestSender();
+        public RunningStatusViewModel SendStatus { get; }
 
         public bool AutoSend => Model.AutoSend;
         public string UserId => Model.Data.UserId;
@@ -51,6 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
         /// </summary>
         public IReadOnlyList<CrashReportItemViewModel> RawProperties { get; }
 
+
         #endregion
 
         #region command
@@ -61,12 +64,24 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
             }
         ));
 
+        public ICommand SendCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.SendAsync().ConfigureAwait(false);
+            }
+        ));
+
         public ICommand RebootCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 Model.Reboot();
                 CloseRequest.Send();
             }
         ));
+
+        public ICommand CancelCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.Cancel();
+             }
+         ));
 
         #endregion
 

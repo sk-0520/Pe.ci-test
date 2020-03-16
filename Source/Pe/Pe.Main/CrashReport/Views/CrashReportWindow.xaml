@@ -11,8 +11,8 @@
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
-  Height="450"
-  Width="400"
+  Height="600"
+  Width="500"
   WindowStartupLocation="CenterScreen"
 
   ResizeMode="CanResizeWithGrip"
@@ -105,10 +105,103 @@
     </Grid>
 
     <UniformGrid Grid.Row="2" Style="{StaticResource DialogCommand}">
-      <Button Content="send" />
+      <Button Content="send" Command="{Binding SendCommand}" />
       <Button Content="reboot" Command="{Binding RebootCommand}" />
       <Button Content="exit" Command="{Binding CloseCommand, ElementName=root}" />
     </UniformGrid>
+
+    <Border Grid.RowSpan="3" Background="#aaffffff" Padding="20">
+      <Border.Style>
+        <Style TargetType="Border">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+              <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+              <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+              <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+      </Border.Style>
+      <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+        <ContentControl>
+          <ContentControl.Style>
+            <Style TargetType="ContentControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+          </ContentControl.Style>
+          <ContentControl.Content>
+            <StackPanel>
+              <TextBlock HorizontalAlignment="Center" Text="sending..." />
+              <ProgressBar Height="8" IsIndeterminate="True" />
+            </StackPanel>
+          </ContentControl.Content>
+        </ContentControl>
+        <ContentControl>
+          <ContentControl.Style>
+            <Style TargetType="ContentControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+          </ContentControl.Style>
+          <ContentControl.Content>
+            <StackPanel>
+              <TextBlock HorizontalAlignment="Center" Text="error" />
+              <TextBlock HorizontalAlignment="Center">
+                <Hyperlink Command="{Binding SendCommand}">
+                  <Run Text="retry" />
+                </Hyperlink>
+              </TextBlock>
+              <TextBlock HorizontalAlignment="Center">
+                <Hyperlink Command="{Binding CancelCommand}">
+                  <Run Text="cancel" />
+                </Hyperlink>
+              </TextBlock>
+            </StackPanel>
+          </ContentControl.Content>
+        </ContentControl>
+        <ContentControl>
+          <ContentControl.Style>
+            <Style TargetType="ContentControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+                  <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+          </ContentControl.Style>
+          <ContentControl.Content>
+            <StackPanel>
+              <TextBlock HorizontalAlignment="Center" Text="sent" />
+              <TextBlock HorizontalAlignment="Center">
+                <Hyperlink Command="{Binding RebootCommand}">
+                  <Run Text="reboot" />
+                </Hyperlink>
+              </TextBlock>
+              <TextBlock HorizontalAlignment="Center">
+              <Hyperlink Command="{Binding CloseCommand, ElementName=root}">
+                  <Run Text="exit" />
+                </Hyperlink>
+              </TextBlock>
+            </StackPanel>
+          </ContentControl.Content>
+        </ContentControl>
+      </Grid>
+    </Border>
 
   </Grid>
 </Window>
