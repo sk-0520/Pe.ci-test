@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             foreach(var item in fosAttributes) {
                 var isChecked = (bool)item.Property.GetValue(this)!;
                 if(isChecked) {
-                    options |= item.Attribute.Fos;
+                    options |= item.Attribute!.Fos;
                 }
             }
 

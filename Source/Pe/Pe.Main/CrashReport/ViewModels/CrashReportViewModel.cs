@@ -36,10 +36,10 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
 
         public string CrashReportRawFilePath => Model.CrashReportRawFilePath;
 
-        public string ContactMailAddress
+        public string MailAddress
         {
-            get => Model.Data.ContactMailAddress;
-            set => SetPropertyValue(Model.Data, value, nameof(Model.Data.ContactMailAddress));
+            get => Model.Data.MailAddress;
+            set => SetPropertyValue(Model.Data, value, nameof(Model.Data.MailAddress));
         }
 
         public string Comment

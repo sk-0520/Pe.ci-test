@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [DataMember]
         public string Exception { get; set; } = string.Empty;
         [DataMember]
-        public Dictionary<string, Dictionary<string, object?>> Informations { get; set; } = new Dictionary<string, Dictionary<string, object?>>();
+        public Dictionary<string, Dictionary<string, string?>> Informations { get; set; } = new Dictionary<string, Dictionary<string, string?>>();
         [DataMember]
         public List<LogItem> LogItems { get; set; } = new List<LogItem>();
 

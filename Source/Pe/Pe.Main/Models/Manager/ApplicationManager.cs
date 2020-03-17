@@ -1084,7 +1084,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var fileName = versionConverter.ConvertFileName(timestamp, BuildStatus.Version, BuildStatus.Revision, "dmp");
             var filePath = Path.Combine(environmentParameters.TemporaryCrashReportDirectory.FullName, fileName);
 
-            static Dictionary<string, object?> CreateInfoMap(IEnumerable<PlatformInformationItem> items) => items.ToDictionary(k => k.Key, v => (object?)Convert.ToString(v.Value));
+            static Dictionary<string, string?> CreateInfoMap(IEnumerable<PlatformInformationItem> items) => items.ToDictionary(k => k.Key, v => Convert.ToString(v.Value));
             void ExceptionWrapper(Action action)
             {
                 try {
@@ -1110,15 +1110,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
             });
 
+            string TrimFunc(string s) => s.Replace("Get", string.Empty);
+
             var info = new ApplicationInformationCollector(environmentParameters);
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetApplication)] = CreateInfoMap(info.GetApplication()));
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetEnvironmentParameter)] = CreateInfoMap(info.GetEnvironmentParameter()));
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetCPU)] = CreateInfoMap(info.GetCPU()));
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetOS)] = CreateInfoMap(info.GetOS()));
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetRuntimeInformation)] = CreateInfoMap(info.GetRuntimeInformation()));
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetEnvironment)] = CreateInfoMap(info.GetEnvironment()));
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetEnvironmentVariables)] = CreateInfoMap(info.GetEnvironmentVariables()));
-            ExceptionWrapper(() => rawData.Informations[nameof(info.GetScreen)] = CreateInfoMap(info.GetScreen()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetApplication))] = CreateInfoMap(info.GetApplication()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentParameter))] = CreateInfoMap(info.GetEnvironmentParameter()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetCPU))] = CreateInfoMap(info.GetCPU()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetOS))] = CreateInfoMap(info.GetOS()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetRuntimeInformation))] = CreateInfoMap(info.GetRuntimeInformation()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironment))] = CreateInfoMap(info.GetEnvironment()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentVariables))] = CreateInfoMap(info.GetEnvironmentVariables()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetScreen))] = CreateInfoMap(info.GetScreen()));
 
             // この子はもうこの時点のログで確定
             rawData.LogItems = Logging.GetLogItems().Select(i => LogItem.Create(i)).ToList();

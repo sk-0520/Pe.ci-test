@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
@@ -123,9 +124,11 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
             var dumper = new ObjectDumper();
             RawProperties = dumper.Dump(rawData);
 
+            var versionConverter = new VersionConverter();
+
             Data = new CrashReportSaveData() {
                 UserId = rawData.UserId,
-                Version = rawData.Version,
+                Version = versionConverter.ConvertNormalVersion( rawData.Version),
                 Revision = rawData.Revision,
                 Timestamp = rawData.Timestamp,
                 Exception = rawData.Exception,
