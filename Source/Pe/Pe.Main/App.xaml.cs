@@ -116,11 +116,16 @@ namespace ContentTypeTextNet.Pe.Main
             }
 
             if(Logger != null) {
-                Logger.LogCritical(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
+                Logger.LogError(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
                 Debug.Assert(ApplicationManager != null);
+                Logger.LogInformation("RunMode: {0}", RunMode);
+                Logger.LogInformation("CanSendCrashReport: {0}", ApplicationManager.CanSendCrashReport);
                 if(RunMode == RunMode.Normal && ApplicationManager.CanSendCrashReport) {
                     // ふりしぼれ最後の輝き
+                    Logger.LogInformation("生クラッシュレポートファイルを吐き出し");
                     var outputFile = ApplicationManager.OutputRawCrashReport(e.Exception);
+                    Logger.LogInformation("生クラッシュレポートファイル: {0}", outputFile);
+                    Logger.LogInformation("クラッシュレポート送信処理立ち上げ...");
                     ApplicationManager.ExecuteCrashReport(outputFile);
 
                     e.Handled = ApplicationManager.UnhandledExceptionHandled;
