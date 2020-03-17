@@ -1169,6 +1169,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var args = new List<string> {
                 "--run-mode", "crash-report",
                 "--post-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportUri.OriginalString),
+                "--src-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportSourceUri.OriginalString),
                 "--report-raw-file", CommandLine.Escape(rawReport.FullName),
                 "--report-save-file", CommandLine.Escape(saveReportFilePath),
                 "--execute-command", CommandLine.Escape(environmentParameters.RootApplication.FullName),

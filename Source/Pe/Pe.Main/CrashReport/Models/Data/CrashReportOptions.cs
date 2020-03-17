@@ -20,6 +20,11 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         /// </summary>
         [CommandLine(longKey: "post-uri", hasValue: true)]
         public string PostUri { get; set; } = string.Empty;
+        /// <summary>
+        /// 送信先。
+        /// </summary>
+        [CommandLine(longKey: "src-uri", hasValue: true)]
+        public string SourceUri { get; set; } = string.Empty;
 
         /// <summary>
         /// 生クラッシュレポートのファイルパス。

@@ -25,6 +25,7 @@
   mc:Ignorable="d"
 >
   <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
   </Window.Resources>
   <Window.Title>
@@ -39,78 +40,120 @@
     </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
 
-  <Grid Margin="4">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
+  <Grid>
+    <!--#region 入力部分 -->
+    <Grid Margin="10,4">
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding AutoSend}" Value="True">
+              <Setter Property="Effect">
+                <Setter.Value>
+                  <BlurEffect  />
+                </Setter.Value>
+              </Setter>
+              <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
 
-    <StackPanel Grid.Row="0">
-      <TextBlock TextWrapping="Wrap" Text="pe は死にました" />
-      <TextBlock TextWrapping="Wrap" Text="このReportを送信することで云々" />
-      <TextBlock TextWrapping="Wrap" Text="送信されたレポートは云々" />
-      <TextBlock TextWrapping="Wrap" Text="※受信側プログラムはPeリポジトリではなくgoogle driveに存在します" />
-      <TextBlock TextWrapping="Wrap" >
-        <Hyperlink>
-          <Run Text="こちらを参照" />
-        </Hyperlink>
-      </TextBlock>
-    </StackPanel>
-
-    <Grid Grid.Row="1">
+            <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+              <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+              <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+              <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="7*" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="3*" />
+        <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="raw" />
-      <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding CrashReportRawFilePath, Mode=OneTime}" />
+      <StackPanel Grid.Row="0" Margin="10">
+        <TextBlock TextWrapping="Wrap" Text="pe は死にました" />
+        <TextBlock TextWrapping="Wrap" Text="このReportを送信することで云々" />
+        <TextBlock TextWrapping="Wrap" Text="送信されたレポートは云々" />
+        <TextBlock TextWrapping="Wrap" Text="※受信側プログラムはPeリポジトリではなくgoogle driveに存在します" />
+        <TextBlock TextWrapping="Wrap" >
+        <Hyperlink Command="{Binding ShowSourceUriCommand}">
+          <Run Text="こちらを参照" />
+        </Hyperlink>
+        </TextBlock>
+      </StackPanel>
 
-      <!-- TODO: 検索機能 -->
+      <Grid Grid.Row="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="7*" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="3*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="content" />
-      <TreeView Grid.Row="2" Grid.Column="1"  ItemsSource="{Binding RawProperties, Mode=OneTime}">
-        <TreeView.ItemContainerStyle>
-          <Style TargetType="TreeViewItem">
-            <Setter Property="IsExpanded" Value="True"/>
-          </Style>
-        </TreeView.ItemContainerStyle>
-        <TreeView.ItemTemplate>
-          <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{Binding Name}" />
-              <TextBlock Text=": " />
-              <TextBlock Text="{Binding Value}" />
-            </StackPanel>
-          </HierarchicalDataTemplate>
-        </TreeView.ItemTemplate>
-      </TreeView>
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="raw" />
+        <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding CrashReportRawFilePath, Mode=OneTime}" />
 
-      <GridSplitter Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Horizon-GridSplitter}" />
+        <!-- TODO: 検索機能 -->
 
-      <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="comment" />
-      <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Stretch" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Style="{StaticResource Vertical-TextBox}" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="content" />
+        <TreeView Grid.Row="2" Grid.Column="1"  ItemsSource="{Binding RawProperties, Mode=OneTime}">
+          <TreeView.ItemContainerStyle>
+            <Style TargetType="TreeViewItem">
+              <Setter Property="IsExpanded" Value="True"/>
+            </Style>
+          </TreeView.ItemContainerStyle>
+          <TreeView.ItemTemplate>
+            <HierarchicalDataTemplate ItemsSource="{Binding Children, Mode=OneTime}">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                <TextBlock Text=": " />
+                <TextBlock Text="{Binding Value, Mode=OneTime}" />
+              </StackPanel>
+            </HierarchicalDataTemplate>
+          </TreeView.ItemTemplate>
+        </TreeView>
 
-      <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="contact" />
-      <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource Vertical-TextBox}" Text="{Binding MailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <GridSplitter Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Horizon-GridSplitter}" />
+
+        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="comment" />
+        <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Stretch" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Style="{StaticResource Vertical-TextBox}" Text="{Binding Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="contact" />
+        <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource Vertical-TextBox}" Text="{Binding MailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+      </Grid>
+
+      <UniformGrid Grid.Row="2" Style="{StaticResource DialogCommand}">
+        <Button Content="send" Command="{Binding SendCommand}" />
+        <Button Content="reboot" Command="{Binding RebootCommand}" />
+        <Button Content="exit" Command="{Binding CloseCommand, ElementName=root}" />
+      </UniformGrid>
     </Grid>
+    <!--#endregion-->
 
-    <UniformGrid Grid.Row="2" Style="{StaticResource DialogCommand}">
-      <Button Content="send" Command="{Binding SendCommand}" />
-      <Button Content="reboot" Command="{Binding RebootCommand}" />
-      <Button Content="exit" Command="{Binding CloseCommand, ElementName=root}" />
-    </UniformGrid>
 
-    <Border Grid.RowSpan="3" Background="#aaffffff" Padding="20">
+    <!--#region 自動送信 -->
+    <Border TextElement.Foreground="#ffffff" Background="#cc808080" Padding="20" Visibility="{Binding AutoSend, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch">
+        <StackPanel>
+          <TextBlock Text="wait..." TextAlignment="Center" />
+          <ProgressBar Height="8" Minimum="0" Maximum="1" Value="{Binding WaitCount}" />
+          <Button Content="stop" Command="{Binding StopAutoSendCommand}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+    <!--#endregion-->
+
+    <!--#region 送信結果 -->
+    <Border Background="#aaffffff" Padding="20">
       <Border.Style>
         <Style TargetType="Border">
           <Style.Triggers>
@@ -141,7 +184,7 @@
           </ContentControl.Style>
           <ContentControl.Content>
             <StackPanel>
-              <TextBlock HorizontalAlignment="Center" Text="sending..." />
+              <TextBlock TextAlignment="Center" Text="sending..." />
               <ProgressBar Height="8" IsIndeterminate="True" />
             </StackPanel>
           </ContentControl.Content>
@@ -159,14 +202,14 @@
           </ContentControl.Style>
           <ContentControl.Content>
             <StackPanel>
-              <TextBlock HorizontalAlignment="Center" Text="error" />
-              <TextBlock HorizontalAlignment="Center" Text="{Binding ErrorMessage}" />
-              <TextBlock HorizontalAlignment="Center">
+              <TextBlock TextAlignment="Center" Text="error" />
+              <TextBlock TextAlignment="Center" Text="{Binding ErrorMessage}" />
+              <TextBlock TextAlignment="Center">
                 <Hyperlink Command="{Binding SendCommand}">
                   <Run Text="retry" />
                 </Hyperlink>
               </TextBlock>
-              <TextBlock HorizontalAlignment="Center">
+              <TextBlock TextAlignment="Center">
                 <Hyperlink Command="{Binding CancelCommand}">
                   <Run Text="cancel" />
                 </Hyperlink>
@@ -187,22 +230,25 @@
           </ContentControl.Style>
           <ContentControl.Content>
             <StackPanel>
-              <TextBlock HorizontalAlignment="Center" Text="sent" />
-              <TextBlock HorizontalAlignment="Center">
+              <TextBlock TextAlignment="Center" Text="sent" />
+              <TextBlock TextAlignment="Center">
                 <Hyperlink Command="{Binding RebootCommand}">
                   <Run Text="reboot" />
                 </Hyperlink>
               </TextBlock>
-              <TextBlock HorizontalAlignment="Center">
+              <TextBlock TextAlignment="Center">
               <Hyperlink Command="{Binding CloseCommand, ElementName=root}">
                   <Run Text="exit" />
                 </Hyperlink>
               </TextBlock>
+              <TextBlock TextAlignment="Center" Text="report" />
+              <TextBox IsReadOnly="True" Text="{Binding CrashReportSaveFilePath, Mode=OneWay}" />
             </StackPanel>
           </ContentControl.Content>
         </ContentControl>
       </Grid>
     </Border>
+    <!--#endregion-->
 
   </Grid>
 </Window>

@@ -25,8 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [JsonPropertyName("revision")]
         public string Revision { get; set; } = string.Empty;
         [JsonPropertyName("timestamp")]
-        [Timestamp(DateTimeKind.Utc)]
-        public DateTime Timestamp { get; set; }
+        public string Timestamp { get; set; } = string.Empty;
         [JsonPropertyName("exception")]
         public string Exception { get; set; } = string.Empty;
         [JsonPropertyName("informations")]
