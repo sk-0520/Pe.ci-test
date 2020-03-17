@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
         public IReadOnlyList<ObjectDumpItem> RawProperties { get; private set; } = new List<ObjectDumpItem>();
 
         public RunningStatus SendStatus { get; }
+        public string ErrorMessage { get; private set; } = string.Empty;
 
         #endregion
 
@@ -46,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
 
         public async Task SendAsync()
         {
+            ErrorMessage = string.Empty;
             SendStatus.State = RunningState.Running;
 
             // 入力内容をファイルに保存及び、該当ファイルを転送する
@@ -56,17 +58,18 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                 await writer.WriteAsync(jsonValue);
             }
 
-            var map = new Dictionary<string, string>() {
-                ["report"] = jsonValue,
-            };
-            var encoding = Encoding.UTF8;
-            var items = map
-                .Select(p => new { Key = HttpUtility.UrlEncode(p.Key, encoding), Value = HttpUtility.UrlEncode(p.Value, encoding) })
-                .Select(i => $"{i.Key}={i.Value}");
-            ;
-            var param = string.Join("&", items);
-            var content = new StringContent(param, encoding, "application/x-www-form-urlencoded");
 
+            //var map = new Dictionary<string, string>() {
+            //    ["report"] = jsonValue,
+            //};
+            //var encoding = Encoding.UTF8;
+            //var items = map
+            //    .Select(p => new { Key = HttpUtility.UrlEncode(p.Key, encoding), Value = HttpUtility.UrlEncode(p.Value, encoding) })
+            //    .Select(i => $"{i.Key}={i.Value}");
+            //;
+            //var param = string.Join("&", items);
+            //var content = new StringContent(param, encoding, "application/x-www-form-urlencoded");
+            var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
             foreach(var counter in new Counter(5)) {
                 Logger.LogInformation("post {0}/{1}", counter.CurrentCount, counter.MaxCount);
@@ -76,7 +79,16 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                         var result = await httpClient.PostAsync(Options.PostUri, content);
                         if(result.IsSuccessStatusCode) {
                             Logger.LogInformation("送信完了");
-                            SendStatus.State = RunningState.End;
+                            var rawResponse = await result.Content.ReadAsStringAsync();
+                            var response = JsonSerializer.Deserialize<CrashReportResponse>(rawResponse);
+
+                            if(response.Success) {
+                                SendStatus.State = RunningState.End;
+                            } else {
+                                ErrorMessage = response.Message;
+                                SendStatus.State = RunningState.Error;
+                            }
+
                             return;
                         }
                         Logger.LogWarning("HTTP: {0}", result.StatusCode);
@@ -87,10 +99,12 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
                     if(!counter.IsLast) {
                         Logger.LogDebug("待機中: {0}", RetryWaitTime);
                         await Task.Delay(RetryWaitTime);
+                    } else {
+                        ErrorMessage = ex.Message;
+                        SendStatus.State = RunningState.Error;
                     }
                 }
             }
-            SendStatus.State = RunningState.Error;
         }
 
         public void Reboot()
@@ -127,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
             var versionConverter = new VersionConverter();
 
             Data = new CrashReportSaveData() {
-                UserId = rawData.UserId,
+                //UserId = rawData.UserId,
                 Version = versionConverter.ConvertNormalVersion( rawData.Version),
                 Revision = rawData.Revision,
                 Timestamp = rawData.Timestamp,

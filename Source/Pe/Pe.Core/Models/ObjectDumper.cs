@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), target, EmptyChildren);
                         result.Add(item);
                     } else {
-                        var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), key, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
                         result.Add(item);
                     }
                 }

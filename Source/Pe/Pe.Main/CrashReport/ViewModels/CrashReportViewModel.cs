@@ -25,11 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
                 .ToList()
             ;
             SendStatus = new RunningStatusViewModel(Model.SendStatus, LoggerFactory);
+            SendStatus.PropertyChanged += SendStatus_PropertyChanged;
         }
 
         #region property
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RunningStatusViewModel SendStatus { get; }
+        public string ErrorMessage => Model.ErrorMessage;
 
         public bool AutoSend => Model.AutoSend;
         public string UserId => Model.Data.UserId;
@@ -88,5 +90,28 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.ViewModels
         #region function
 
         #endregion
+
+        #region ElementViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                SendStatus.PropertyChanged -= SendStatus_PropertyChanged;
+                if(disposing) {
+                    SendStatus.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        private void SendStatus_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(SendStatus.State)) {
+                RaisePropertyChanged(nameof(ErrorMessage));
+            }
+        }
     }
 }

@@ -160,6 +160,7 @@
           <ContentControl.Content>
             <StackPanel>
               <TextBlock HorizontalAlignment="Center" Text="error" />
+              <TextBlock HorizontalAlignment="Center" Text="{Binding ErrorMessage}" />
               <TextBlock HorizontalAlignment="Center">
                 <Hyperlink Command="{Binding SendCommand}">
                   <Run Text="retry" />
