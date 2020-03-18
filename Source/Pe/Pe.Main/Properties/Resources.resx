@@ -1484,4 +1484,71 @@
   <data name="String_Setting_Generals_General_Starup_Argument_A" xml:space="preserve">
     <value>追加引数(_A)</value>
   </data>
+  <data name="String_CrashReport_Caption" xml:space="preserve">
+    <value>クラッシュレポート</value>
+  </data>
+  <data name="String_Common_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="String_Common_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="String_Common_Reboot" xml:space="preserve">
+    <value>再起動</value>
+  </data>
+  <data name="String_Common_Reboot_A" xml:space="preserve">
+    <value>再起動(_R)</value>
+  </data>
+  <data name="String_CrashReport_AutoSendWaiting" xml:space="preserve">
+    <value>自動送信待機中...</value>
+  </data>
+  <data name="String_CrashReport_CancelAutoSend" xml:space="preserve">
+    <value>自動送信停止(_C)</value>
+  </data>
+  <data name="String_CrashReport_Comment_A" xml:space="preserve">
+    <value>追加コメント(_C)</value>
+  </data>
+  <data name="String_CrashReport_Error" xml:space="preserve">
+    <value>エラー発生</value>
+  </data>
+  <data name="String_CrashReport_Header_AppIsDead" xml:space="preserve">
+    <value>Pe は死にました</value>
+  </data>
+  <data name="String_CrashReport_Header_ReportInformation" xml:space="preserve">
+    <value>このレポートを送信していただければ改善につながる可能性があります。
+レポートは開発側で共有されます。</value>
+  </data>
+  <data name="String_CrashReport_Header_ReportSourceAddress" xml:space="preserve">
+    <value>※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。</value>
+  </data>
+  <data name="String_CrashReport_Header_ReportSourceOpen" xml:space="preserve">
+    <value>ソースコードを参照</value>
+  </data>
+  <data name="String_CrashReport_MailAddress_A" xml:space="preserve">
+    <value>連絡先メールアドレス(_M)</value>
+  </data>
+  <data name="String_CrashReport_RawContent_A" xml:space="preserve">
+    <value>異常時データ内容(_D)</value>
+  </data>
+  <data name="String_CrashReport_RawFilePath_A" xml:space="preserve">
+    <value>異常時エラーファイル(_E)</value>
+  </data>
+  <data name="String_CrashReport_RetrySend" xml:space="preserve">
+    <value>再送信</value>
+  </data>
+  <data name="String_CrashReport_SaveFileDescription" xml:space="preserve">
+    <value>送信済みクラッシュレポートは自動削除されません 云々</value>
+  </data>
+  <data name="String_CrashReport_SaveFilePath" xml:space="preserve">
+    <value>送信済みクラッシュレポート</value>
+  </data>
+  <data name="String_CrashReport_Sending" xml:space="preserve">
+    <value>送信中...</value>
+  </data>
+  <data name="String_CrashReport_Send_A" xml:space="preserve">
+    <value>送信(_S)</value>
+  </data>
+  <data name="String_CrashReport_Sent" xml:space="preserve">
+    <value>送信完了</value>
+  </data>
 </root>

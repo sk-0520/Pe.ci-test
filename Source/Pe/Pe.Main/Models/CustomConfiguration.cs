@@ -54,6 +54,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
             ProjectWebSiteUri = section.GetValue<Uri>("project_website_uri");
             UpdateCheckUri = section.GetValue<Uri>("version_check_uri");
             UpdateWait = section.GetValue<TimeSpan>("update_wait");
+
+            CanSendCrashReport = section.GetValue<bool>("can_send_crash_report");
+            UnhandledExceptionHandled = section.GetValue<bool>("unhandled_exception_handled");
         }
 
         #region property
@@ -73,6 +76,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Uri UpdateCheckUri { get; }
         public TimeSpan UpdateWait { get; }
 
+        public bool CanSendCrashReport { get; }
+        public bool UnhandledExceptionHandled { get; }
+
         #endregion
     }
 
@@ -81,12 +87,14 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public ApiConfiguration(IConfigurationSection section)
             : base(section)
         {
-            AppCenter = section.GetValue<string>("app_center");
+            CrashReportUri = section.GetValue<Uri>("crash_report_uri");
+            CrashReportSourceUri = section.GetValue<Uri>("crash_report_src_uri");
         }
 
         #region property
 
-        public string AppCenter { get; }
+        public Uri CrashReportUri { get; }
+        public Uri CrashReportSourceUri { get; }
 
         #endregion
     }

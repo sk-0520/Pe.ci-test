@@ -54,6 +54,10 @@ using System.IO.Compression;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using System.Windows.Data;
+using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
+using System.Text.Json;
+using System.Reflection;
+using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -66,7 +70,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             IsFirstStartup = initializer.IsFirstStartup;
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
-
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
 
@@ -133,6 +136,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public UpdateInfo ApplicationUpdateInfo { get; }
 
         public bool CanCallNotifyAreaMenu { get; private set; }
+
+        internal bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
+        internal bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
 
         #endregion
 
@@ -761,8 +767,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void CloseViewsCore(WindowKind windowKind)
         {
             var windowItems = WindowManager.GetWindowItems(windowKind)
-                .Where(i=> i.IsOpened)
-                .Where(i=> !i.IsClosed)
+                .Where(i => i.IsOpened)
+                .Where(i => !i.IsClosed)
                 .ToList()
             ;
             foreach(var windowItem in windowItems) {
@@ -1069,6 +1075,130 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ApplicationUpdateInfo.SetError(ex.Message);
             }
 
+        }
+
+        internal FileInfo OutputRawCrashReport(Exception exception)
+        {
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var versionConverter = new VersionConverter();
+            var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HHmmss_fff'Z'");
+            var fileName = versionConverter.ConvertFileName(timestamp, BuildStatus.Version, BuildStatus.Revision, "dmp");
+            var filePath = Path.Combine(environmentParameters.TemporaryCrashReportDirectory.FullName, fileName);
+
+            static Dictionary<string, string?> CreateInfoMap(IEnumerable<PlatformInformationItem> items) => items.ToDictionary(k => k.Key, v => Convert.ToString(v.Value));
+            void ExceptionWrapper(Action action)
+            {
+                try {
+                    action();
+                } catch(Exception ex) {
+                    // 運に任せる
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+
+            var rawData = new CrashReportRawData() {
+                Version = BuildStatus.Version,
+                Revision = BuildStatus.Revision,
+                Exception = exception.ToString(),
+                Timestamp = DateTime.UtcNow,
+            };
+
+            ExceptionWrapper(() => {
+                rawData.UserId = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
+                    var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
+                    var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+                    var userIdManager = new UserIdManager(LoggerFactory);
+                    if(!userIdManager.IsValidUserId(setting.UserId)) {
+                        Logger.LogInformation("ユーザーIDが存在しないため環境から生成");
+                        return userIdManager.CreateFromEnvironment();
+                    }
+
+                    return setting.UserId;
+                });
+            });
+            if(string.IsNullOrWhiteSpace(rawData.UserId)) {
+                Logger.LogInformation("ユーザーIDがダメっぽいのでダミー文字列の投入");
+                rawData.UserId = ":-(";
+            }
+
+            string TrimFunc(string s) => s.Substring(3);
+
+            var info = new ApplicationInformationCollector(environmentParameters);
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetApplication))] = CreateInfoMap(info.GetApplication()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentParameter))] = CreateInfoMap(info.GetEnvironmentParameter()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetCPU))] = CreateInfoMap(info.GetCPU()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetOS))] = CreateInfoMap(info.GetOS()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetRuntimeInformation))] = CreateInfoMap(info.GetRuntimeInformation()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironment))] = CreateInfoMap(info.GetEnvironment()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentVariables))] = CreateInfoMap(info.GetEnvironmentVariables()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetScreen))] = CreateInfoMap(info.GetScreen()));
+
+            // この子はもうこの時点のログで確定
+            rawData.LogItems = Logging.GetLogItems().Select(i => LogItem.Create(i)).ToList();
+
+            var file = new FileInfo(filePath);
+            using(var stream = file.Create()) {
+                var serializer = new CrashReportSerializer();
+                serializer.Save(rawData, stream);
+            }
+#if DEBUG
+            using(var stream = file.Open(FileMode.Open)) {
+                var serializer = new CrashReportSerializer();
+                var data = serializer.Load<CrashReportRawData>(new KeepStream(stream));
+                var diffStream = new MemoryStream();
+                serializer.Save(data, new KeepStream(diffStream));
+                stream.Position = 0;
+                diffStream.Position = 0;
+                Debug.Assert(stream.Length == diffStream.Length);
+                var s = new byte[stream.Length];
+                var d = new byte[diffStream.Length];
+                stream.Read(s);
+                diffStream.Read(d);
+                Debug.Assert(s.SequenceEqual(d));
+            }
+#endif
+            return file;
+        }
+
+        internal void ExecuteCrashReport(FileInfo rawReport)
+        {
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var saveReportFilePath = Path.Combine(environmentParameters.MachineCrashReportDirectory.FullName, Path.ChangeExtension(rawReport.Name, "json"));
+
+            var currentCommands = Environment.GetCommandLineArgs()
+                .Skip(1)
+                .Select(i => CommandLine.Escape(i))
+                .ToList()
+            ;
+
+            var autoSend = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
+                var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
+                var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+                return setting.IsEnabledTelemetry;
+            });
+
+            var args = new List<string> {
+                "--run-mode", "crash-report",
+                "--language", System.Globalization.CultureInfo.CurrentCulture.Name,
+                "--post-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportUri.OriginalString),
+                "--src-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportSourceUri.OriginalString),
+                "--report-raw-file", CommandLine.Escape(rawReport.FullName),
+                "--report-save-file", CommandLine.Escape(saveReportFilePath),
+                "--execute-command", CommandLine.Escape(environmentParameters.RootApplication.FullName),
+                "--execute-argument", CommandLine.Escape(string.Join(" ", currentCommands)),
+            };
+            if(autoSend) {
+                args.Add("--auto-send");
+            }
+            args.AddRange(currentCommands);
+
+            var arg = string.Join(' ', args);
+
+            var systemExecutor = new SystemExecutor();
+            var commandPath = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "exe");
+            Logger.LogInformation("path: {0}", commandPath);
+            Logger.LogInformation("args: {0}", arg);
+            systemExecutor.ExecuteFile(commandPath, arg);
         }
 
         #endregion

@@ -122,7 +122,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         public T GetNullValue<T>()
         {
 #pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
+#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
             return (T)GetNullValue(typeof(T));
+#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
         }
 
