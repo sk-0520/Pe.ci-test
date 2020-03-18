@@ -72,9 +72,6 @@ namespace ContentTypeTextNet.Pe.Main
                         Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
                             Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
                             ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
-
-                            throw new ApplicationException("#503");
-
                         }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
                     }
                     break;
