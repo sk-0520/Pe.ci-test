@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -37,23 +38,17 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         [JsonPropertyName("formatted_message")]
         public string FormattedMessage { get; set; } = string.Empty;
         [DataMember]
-        [JsonPropertyName("has_properties")]
-        public bool HasProperties { get; set; }
-        [DataMember]
-        [JsonPropertyName("properties")]
-        public Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
+        [JsonPropertyName("parameters")]
+        public List<string?> Parameters { get; set; } = new List<string?>();
         [DataMember]
         [JsonPropertyName("message")]
         public string Message { get; set; } = string.Empty;
         [DataMember]
-        [JsonPropertyName("user_stack_frameNumber")]
-        public int UserStackFrameNumber { get; set; }
-        [DataMember]
-        [JsonPropertyName("lebel")]
+        [JsonPropertyName("level")]
         public string Level { get; set; } = string.Empty;
         [DataMember]
-        [JsonPropertyName("has_stack_trace")]
-        public bool HasStackTrace { get; set; }
+        [JsonPropertyName("stack_trace")]
+        public string[] StackTrace { get; set; } = new string[0];
         [DataMember]
         [JsonPropertyName("sequence_id")]
         public int SequenceID { get; set; }
@@ -91,19 +86,14 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
                 ExceptionString = logEventInfo.Exception?.ToString() ?? string.Empty,
                 LoggerName = logEventInfo.LoggerName,
                 FormattedMessage = logEventInfo.FormattedMessage,
-                HasProperties = logEventInfo.HasProperties,
                 Message = logEventInfo.Message,
-                UserStackFrameNumber = logEventInfo.UserStackFrameNumber,
+                StackTrace = TextUtility.ReadLines(logEventInfo.StackTrace.ToString()).Skip(logEventInfo.UserStackFrameNumber).ToArray(),
                 Level = Convert(logEventInfo.Level),
-                HasStackTrace = logEventInfo.HasStackTrace,
                 SequenceID = logEventInfo.SequenceID,
                 TimeStamp = logEventInfo.TimeStamp.ToUniversalTime(),
             };
-            foreach(var prop in logEventInfo.Properties) {
-                var key = System.Convert.ToString(prop.Key);
-                if(key != null) {
-                    item.Properties.Add(key, prop.Value);
-                }
+            foreach(var parameter in logEventInfo.Parameters) {
+                item.Parameters.Add(System.Convert.ToString(parameter));
             }
 
             return item;
