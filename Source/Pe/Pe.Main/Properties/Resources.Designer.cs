@@ -671,7 +671,8 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   このレポートを云々 に類似しているローカライズされた文字列を検索します。
+        ///   このレポートを送信していただければ改善につながる可能性があります。
+        ///レポートは開発側で共有されます。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_Header_ReportInformation {
             get {
@@ -680,7 +681,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ぐーぐるどらいぶ に類似しているローカライズされた文字列を検索します。
+        ///   ※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_Header_ReportSourceAddress {
             get {
@@ -689,7 +690,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   こちらを参照 に類似しているローカライズされた文字列を検索します。
+        ///   ソースコードを参照 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_Header_ReportSourceOpen {
             get {

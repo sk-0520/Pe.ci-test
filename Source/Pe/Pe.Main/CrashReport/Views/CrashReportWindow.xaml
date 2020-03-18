@@ -91,7 +91,7 @@
       </Grid.RowDefinitions>
 
       <StackPanel Grid.Row="0" Margin="10">
-        <TextBlock TextWrapping="Wrap" Text="{Binding Resources.String_CrashReport_Header_AppIsDead, Source={x:Static app_main:CultureService.Current}}" />
+        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding Resources.String_CrashReport_Header_AppIsDead, Source={x:Static app_main:CultureService.Current}}" />
         <TextBlock TextWrapping="Wrap" Text="{Binding Resources.String_CrashReport_Header_ReportInformation, Source={x:Static app_main:CultureService.Current}}" />
         <TextBlock TextWrapping="Wrap" Text="{Binding Resources.String_CrashReport_Header_ReportSourceAddress, Source={x:Static app_main:CultureService.Current}}" />
         <TextBlock TextWrapping="Wrap" >
