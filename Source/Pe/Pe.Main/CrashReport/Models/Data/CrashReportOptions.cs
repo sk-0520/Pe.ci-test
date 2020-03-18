@@ -10,6 +10,12 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         #region property
 
         /// <summary>
+        /// 言語。
+        /// </summary>
+        [CommandLine(longKey: "language", hasValue: false)]
+        public string Language { get; set; } = string.Empty;
+
+        /// <summary>
         /// 自動送信するか。
         /// </summary>
         [CommandLine(longKey: "auto-send", hasValue: false)]

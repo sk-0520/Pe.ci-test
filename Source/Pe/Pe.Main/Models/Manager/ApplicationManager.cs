@@ -1179,6 +1179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var args = new List<string> {
                 "--run-mode", "crash-report",
+                "--language", System.Globalization.CultureInfo.CurrentCulture.Name,
                 "--post-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportUri.OriginalString),
                 "--src-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportSourceUri.OriginalString),
                 "--report-raw-file", CommandLine.Escape(rawReport.FullName),
