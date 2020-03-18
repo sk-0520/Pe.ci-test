@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
 
             var hWnd = HandleUtility.GetWindowHandle(this);
             var style = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_STYLE);
-            style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX | WS.WS_SYSMENU);
+            style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
             WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
         }
 
