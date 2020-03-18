@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Element
         CrashReportRawData LoadRawData()
         {
             using var stream = new FileStream(Options.CrashReportRawFilePath, FileMode.Open);
-            var serializer = new BinaryDataContractSerializer();
+            var serializer = new CrashReportSerializer();
             return serializer.Load<CrashReportRawData>(stream);
         }
 

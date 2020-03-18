@@ -161,14 +161,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        protected XmlReaderSettings CreateXmlReaderSettings()
+        protected virtual XmlReaderSettings CreateXmlReaderSettings()
         {
             return new XmlReaderSettings() {
                 CloseInput = false,
             };
         }
 
-        protected XmlWriterSettings CreateXmlWriterSettings()
+        protected virtual XmlWriterSettings CreateXmlWriterSettings()
         {
             return new XmlWriterSettings() {
                 CloseOutput = false,

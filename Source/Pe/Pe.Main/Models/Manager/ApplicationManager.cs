@@ -57,6 +57,7 @@ using System.Windows.Data;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using System.Text.Json;
 using System.Reflection;
+using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -1127,12 +1128,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var file = new FileInfo(filePath);
             using(var stream = file.Create()) {
-                var serializer = new BinaryDataContractSerializer();
+                var serializer = new CrashReportSerializer();
                 serializer.Save(rawData, stream);
             }
 #if false
             using(var stream = file.Open(FileMode.Open)) {
-                var serializer = new BinaryDataContractSerializer();
+                var serializer = new CrashReportSerializer();
                 var data = serializer.Load<CrashReportRawData>(new KeepStream(stream));
                 var diffStream = new MemoryStream();
                 serializer.Save(data, new KeepStream(diffStream));
