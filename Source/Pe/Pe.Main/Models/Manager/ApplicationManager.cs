@@ -1111,7 +1111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
             });
 
-            string TrimFunc(string s) => s.Replace("Get", string.Empty);
+            string TrimFunc(string s) => s.Substring(3);
 
             var info = new ApplicationInformationCollector(environmentParameters);
             ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetApplication))] = CreateInfoMap(info.GetApplication()));
@@ -1131,7 +1131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var serializer = new CrashReportSerializer();
                 serializer.Save(rawData, stream);
             }
-#if false
+#if DEBUG
             using(var stream = file.Open(FileMode.Open)) {
                 var serializer = new CrashReportSerializer();
                 var data = serializer.Load<CrashReportRawData>(new KeepStream(stream));

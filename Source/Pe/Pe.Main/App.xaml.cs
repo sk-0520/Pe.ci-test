@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main
             }
 
             if(Logger != null) {
-                Logger.LogError(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
+                Logger.LogCritical(e.Exception, "{0}, {1}", e.Dispatcher.Thread.ManagedThreadId, e.Exception.Message);
                 Debug.Assert(ApplicationManager != null);
                 Logger.LogInformation("RunMode: {0}", RunMode);
                 Logger.LogInformation("CanSendCrashReport: {0}", ApplicationManager.CanSendCrashReport);
