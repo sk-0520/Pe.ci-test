@@ -1107,9 +1107,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 rawData.UserId = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
                     var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
                     var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+                    var userIdManager = new UserIdManager(LoggerFactory);
+                    if(!userIdManager.IsValidUserId(setting.UserId)) {
+                        Logger.LogInformation("ユーザーIDが存在しないため環境から生成");
+                        return userIdManager.CreateFromEnvironment();
+                    }
+
                     return setting.UserId;
                 });
             });
+            if(string.IsNullOrWhiteSpace(rawData.UserId)) {
+                Logger.LogInformation("ユーザーIDがダメっぽいのでダミー文字列の投入");
+                rawData.UserId = ":-(";
+            }
 
             string TrimFunc(string s) => s.Substring(3);
 
