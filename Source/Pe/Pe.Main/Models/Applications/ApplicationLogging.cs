@@ -25,7 +25,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var appTarget = new NLog.Targets.MethodCallTarget("APPLOG", ReceiveLog);
             LogManager.Configuration.AddTarget(appTarget);
-            LogManager.Configuration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, appTarget);
 
             var logger = Factory.CreateLogger(GetType());
             logger.LogInformation("ログ出力開始");
@@ -102,6 +101,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                         }
                     }
                 }
+            }
+            foreach(var loggingRule in LogManager.Configuration.LoggingRules.Where(i => i.RuleName == "fulltrace")) {
+                loggingRule.Targets.Insert(0, appTarget);
             }
 
             if(traceTargets.Any()) {
