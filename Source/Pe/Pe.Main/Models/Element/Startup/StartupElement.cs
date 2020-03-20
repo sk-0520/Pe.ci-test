@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();
                 var view = diContainer.Make<ImportProgramsWindow>();
 
-                WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, view));
+                WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, importProgramsModel, view));
 
                 view.ShowDialog();
                 if(importProgramsModel.IsRegisteredLauncher) {

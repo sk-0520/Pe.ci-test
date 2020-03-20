@@ -848,6 +848,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void DelayNotifyWindowAreaChanged()
         {
+            if(IsDisposed) {
+                return;
+            }
+
             Logger.LogDebug("モデルへの位置・サイズ通知: {0}, {1}", Model.NoteId, CanLayoutNotify);
             if(!CanLayoutNotify) {
                 Logger.LogDebug("モデルへの通知抑制中");

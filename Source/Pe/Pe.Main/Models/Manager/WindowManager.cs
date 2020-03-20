@@ -11,6 +11,7 @@ using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.ViewModels;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -76,9 +77,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     public class WindowItem
     {
-        public WindowItem(WindowKind windowKind, Window window)
+        internal WindowItem(WindowKind windowKind, ElementBase model, Window window)
         {
             WindowKind = windowKind;
+            Element = model;
             Window = window;
             ViewModel = (ViewModelBase)Window.DataContext;
         }
@@ -87,6 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public WindowKind WindowKind { get; }
         public ViewModelBase ViewModel { get; }
+        internal ElementBase Element { get; }
         public Window Window { get; }
 
         /// <summary>
@@ -246,6 +249,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             window.SourceInitialized -= Window_SourceInitialized!;
 
             var item = Items.First(i => i.Window == window);
+
+            if(item.ViewModel.IsDisposed || item.Element.IsDisposed) {
+                Logger.LogWarning(
+                    "ウィンドウに紐づく" + nameof(window.DataContext) +", Model がすでに終了しているためウィンドウ破棄: {0} - {1}." + nameof(item.ViewModel.IsDisposed) + "={2} - {3}." + nameof(item.Element.IsDisposed) + "={4}",
+                    window,
+                    item.ViewModel,
+                    item.ViewModel.IsDisposed,
+                    item.Element,
+                    item.Element.IsDisposed
+                );
+                item.Window.Loaded -= Window_Loaded;
+                item.Window.Closing -= Window_Closing;
+                item.Window.Closed -= Window_Closed!;
+                item.Window.Close();
+
+                if(item.CloseToDataContextNull) {
+                    ClearUnsafeElements(item.Window);
+                    item.Window.DataContext = null;
+                }
+
+                if(!item.ViewModel.IsDisposed && item.CloseToDispose) {
+                    item.ViewModel.Dispose();
+                }
+                // item.Element の生死はノータッチ
+                Items.Remove(item);
+                return;
+            }
+
+
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
                 var hWnd = HandleUtility.GetWindowHandle(window);
                 var hWndSource = HwndSource.FromHwnd(hWnd);

@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var view = diContainer.Make<Views.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
-                windowManager.Register(new WindowItem(WindowKind.Startup, view));
+                windowManager.Register(new WindowItem(WindowKind.Startup, startupModel, view));
 
                 view.ShowDialog();
 
@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var view = diContainer.Make<Views.About.AboutWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
-                windowManager.Register(new WindowItem(WindowKind.About, view));
+                windowManager.Register(new WindowItem(WindowKind.About, model, view));
 
                 view.ShowDialog();
             }
@@ -345,7 +345,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
-                WindowManager.Register(new WindowItem(WindowKind.Release, view));
+                WindowManager.Register(new WindowItem(WindowKind.Release, element, view));
                 view.Show();
             }
 
@@ -766,13 +766,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void CloseViewsCore(WindowKind windowKind)
         {
-            var windowItems = WindowManager.GetWindowItems(windowKind)
-                .Where(i => i.IsOpened)
-                .Where(i => !i.IsClosed)
-                .ToList()
-            ;
+            var windowItems = WindowManager.GetWindowItems(windowKind).ToList();
             foreach(var windowItem in windowItems) {
-                windowItem.Window.Close();
+                if(windowItem.IsOpened) {
+                    if(!windowItem.IsClosed) {
+                        Logger.LogTrace("閉じることのできるウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                        windowItem.Window.Close();
+                    } else {
+                        Logger.LogTrace("既に閉じられたウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                    }
+                } else {
+                    Logger.LogTrace("まだ開かれていないウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                }
             }
         }
 

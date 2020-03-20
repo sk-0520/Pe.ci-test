@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
-                    windowManager.Register(new WindowItem(WindowKind.Accept, view));
+                    windowManager.Register(new WindowItem(WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
 
                     return new AcceptResult(
