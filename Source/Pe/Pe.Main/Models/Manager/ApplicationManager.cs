@@ -770,8 +770,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             foreach(var windowItem in windowItems) {
                 if(windowItem.IsOpened) {
                     if(!windowItem.IsClosed) {
-                        Logger.LogTrace("閉じることのできるウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
-                        windowItem.Window.Close();
+                        if(windowItem.Window.IsVisible) {
+                            Logger.LogTrace("閉じることのできるウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                            windowItem.Window.Close();
+                        } else {
+                            Logger.LogTrace("非表示ウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                        }
                     } else {
                         Logger.LogTrace("既に閉じられたウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
                     }
