@@ -139,7 +139,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#588: ディスプレイ設定変更後に強制終了する時がある"
 					},
 					{
 						"revision": "",
