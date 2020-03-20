@@ -1554,4 +1554,7 @@
   <data name="String_AppManager_About_Feedback_A" xml:space="preserve">
     <value>フィードバック(_F)</value>
   </data>
+  <data name="String_Feedback_Caption" xml:space="preserve">
+    <value>フィードバック</value>
+  </data>
 </root>

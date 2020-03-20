@@ -903,6 +903,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var feedbackElement = ApplicationDiContainer.Build<FeedbackElement>();
+            feedbackElement.Initialize();
             var windowItem = OrderManager.CreateFeedbackWindow(feedbackElement);
             WindowManager.Register(windowItem);
             windowItem.Window.Show();

@@ -2545,6 +2545,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   フィードバック に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Caption {
+            get {
+                return ResourceManager.GetString("String_Feedback_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランチャーアイテム取り込み に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ImportPrograms_Caption {

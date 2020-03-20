@@ -58,6 +58,7 @@
 
   <ItemGroup>
     <Folder Include="doc\help\" />
+    <Folder Include="etc\web-view\style\" />
   </ItemGroup>
 
   <ItemGroup>
