@@ -95,6 +95,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+
+            LazyViewReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyViewReset), TimeSpan.FromSeconds(5));
         }
 
         #region property
@@ -139,6 +141,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         internal bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
         internal bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
+
+        private bool ResetWaiting { get; set; }
+        private LazyAction LazyViewReset { get; }
 
         #endregion
 
@@ -920,7 +925,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             );
         }
 
-        private void ResetScreenViewElements()
+        private void ClearScreenViewElements()
         {
             CloseLauncherToolbarViews();
             CloseNoteViews();
@@ -928,8 +933,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();
             DisposeNoteElements();
+        }
+
+        private void ResetScreenViewElements()
+        {
+            ClearScreenViewElements();
 
             ExecuteElements();
+        }
+
+        private void DelayExecuteElements()
+        {
+            LazyViewReset.DelayAction(() => {
+                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, DispatcherPriority.SystemIdle);
+                ResetWaiting = false;
+            });
+        }
+
+        private void DelayResetScreenViewElements()
+        {
+
+            if(!ResetWaiting) {
+                ResetWaiting = true;
+                ClearScreenViewElements();
+                DelayExecuteElements();
+            } else {
+                DelayExecuteElements();
+            }
         }
 
         public async Task DelayCheckUpdateAsync()
@@ -1389,6 +1419,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     ApplicationMutex.ReleaseMutex();
                     ApplicationMutex.Dispose();
+
+                    LazyViewReset.Dispose();
 
                     CloseViews();
                     DisposeElements();

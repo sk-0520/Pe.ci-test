@@ -472,7 +472,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // そろそろ switch すべきちゃうんかと
 
             if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
-                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, System.Windows.Threading.DispatcherPriority.SystemIdle);
+                DelayResetScreenViewElements();
                 if(e.Reason == SessionSwitchReason.SessionUnlock) {
                     // アップデート処理とかとか
                     DelayCheckUpdateAsync().ConfigureAwait(false);
@@ -491,7 +491,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("ディスプレイ変更検知");
 
-            ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, System.Windows.Threading.DispatcherPriority.SystemIdle);
+            DelayResetScreenViewElements();
         }
 
 
