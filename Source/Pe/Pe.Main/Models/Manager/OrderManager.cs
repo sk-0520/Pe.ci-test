@@ -40,6 +40,9 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.ViewModels.Command;
 using ContentTypeTextNet.Pe.Main.Views.Command;
+using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
+using ContentTypeTextNet.Pe.Main.ViewModels.Feedback;
+using ContentTypeTextNet.Pe.Main.Views.Feedback;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -302,6 +305,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 window.DataContext = viewModel;
 
                 return new WindowItem(WindowKind.Setting, element, window);
+            }
+
+            public WindowItem CreateFeedbackWindow(FeedbackElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    return c.Build<FeedbackViewModel>(element);
+                });
+                var window = DiContainer.BuildView<FeedbackWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.Feedback, element, window);
             }
 
             #endregion

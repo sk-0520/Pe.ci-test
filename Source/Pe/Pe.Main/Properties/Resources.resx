@@ -1551,4 +1551,7 @@
   <data name="String_CrashReport_Sent" xml:space="preserve">
     <value>送信完了</value>
   </data>
+  <data name="String_AppManager_About_Feedback_A" xml:space="preserve">
+    <value>フィードバック(_F)</value>
+  </data>
 </root>

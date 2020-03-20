@@ -213,6 +213,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             }
         ));
 
+        public ICommand ShowFeedbackViewCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ApplicationManager.ShowFeedbackView();
+            }
+        ));
 
 
         #endregion

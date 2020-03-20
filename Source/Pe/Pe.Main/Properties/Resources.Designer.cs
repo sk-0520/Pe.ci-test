@@ -302,6 +302,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   フィードバック(_F) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_About_Feedback_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_About_Feedback_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ヘルプ(_H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_About_Help_A {
