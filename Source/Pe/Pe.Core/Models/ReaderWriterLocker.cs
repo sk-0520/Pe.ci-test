@@ -65,11 +65,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ThrowIfDisposed();
 
             beginAction();
-            return new ActionDisposer(disposing => {
+            return new ActionDisposer<Action>((disposing, action) => {
                 if(disposing) {
-                    exitAction();
+                    action();
                 }
-            });
+            }, exitAction);
         }
 
         /// <summary>
@@ -231,11 +231,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             ThrowIfDisposed();
 
             if(tryAction(timeout)) {
-                return new ActionDisposer(disposing => {
+                return new ActionDisposer<Action>((disposing, action) => {
                     if(disposing) {
-                        exitAction();
+                        action();
                     }
-                });
+                }, exitAction);
             }
 
             throw new SynchronizationLockException();
