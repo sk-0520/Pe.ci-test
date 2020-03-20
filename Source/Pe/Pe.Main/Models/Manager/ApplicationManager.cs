@@ -745,7 +745,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                 // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
-                if(currentActiveWindowHandle != IntPtr.Zero) {
+                if(currentActiveWindowHandle != IntPtr.Zero && currentActiveWindowHandle != MessageWindowHandleSource?.Handle) {
                     WindowsUtility.ShowActive(currentActiveWindowHandle);
                 }
                 MoveZOrderAllNotes(false);
