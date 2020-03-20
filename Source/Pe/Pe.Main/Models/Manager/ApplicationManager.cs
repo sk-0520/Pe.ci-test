@@ -96,7 +96,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
 
-            LazyViewReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyViewReset), TimeSpan.FromSeconds(3));
+            var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
+            LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
         }
 
         #region property
@@ -143,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         internal bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
 
         private bool ResetWaiting { get; set; }
-        private LazyAction LazyViewReset { get; }
+        private LazyAction LazyScreenElementReset { get; }
 
         #endregion
 
@@ -946,7 +947,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             void DelayExecuteElements()
             {
-                LazyViewReset.DelayAction(() => {
+                LazyScreenElementReset.DelayAction(() => {
                     ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, DispatcherPriority.SystemIdle);
                     ResetWaiting = false;
                 });
@@ -1419,7 +1420,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ApplicationMutex.ReleaseMutex();
                     ApplicationMutex.Dispose();
 
-                    LazyViewReset.Dispose();
+                    LazyScreenElementReset.Dispose();
 
                     CloseViews();
                     DisposeElements();
