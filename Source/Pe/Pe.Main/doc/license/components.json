@@ -28,15 +28,6 @@
 			"comment": ""
 		},
 		{
-			"name": "Newtonsoft.Json",
-			"uri": "https://www.newtonsoft.com/json",
-			"license": {
-				"name": "MIT License",
-				"uri": "https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md"
-			},
-			"comment": "Pe.Converter で使用"
-		},
-		{
 			"name": "NLog",
 			"uri": "https://nlog-project.org/",
 			"license": {
