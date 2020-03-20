@@ -2,7 +2,8 @@
 	"general": {
 		"project_name": "Pe-debug",
 		"mutex_name": "Pe-debug",
-		"unhandled_exception_handled": false
+		"unhandled_exception_handled": false,
+		"version_check_uri": "https://bitbucket.org/sk_0520/pe-ci_test/downloads/update.json"
 	},
 	"api": {
 		"crash_report_uri": "https://script.google.com/macros/s/AKfycbzxj0jTgCmaqe1zJ8b9hRqxXkA4W3R74jECdhRMHk1JxvUCpwV-/exec",
