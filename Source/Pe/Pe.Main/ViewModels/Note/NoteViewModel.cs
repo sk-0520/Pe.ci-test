@@ -123,8 +123,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         CustomConfiguration Configuration { get; }
 
         public Guid NoteId => Model.NoteId;
-        public bool IsLink => Model.ContentElement?.IsLink ?? false;
-        public string? LinkPath => Model.ContentElement?.GetLinkFilePath();
+        public bool IsLink
+        {
+            get
+            {
+                if(IsDisposed) {
+                    return false;
+                }
+
+                if(Model.ContentElement == null) {
+                    return false;
+                }
+
+                if(Model.ContentElement.IsDisposed) {
+                    return false;
+                }
+
+                return Model.ContentElement.IsLink;
+            }
+        }
+        public string? LinkPath
+        {
+            get
+            {
+                if(IsDisposed) {
+                    return string.Empty;
+                }
+
+                if(Model.ContentElement == null) {
+                    return string.Empty;
+                }
+
+                if(Model.ContentElement.IsDisposed) {
+                    return string.Empty;
+                }
+
+                return Model.ContentElement.GetLinkFilePath();
+            }
+        }
 
         public FontViewModel Font { get; }
 
@@ -812,6 +848,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void DelayNotifyWindowAreaChanged()
         {
+            if(IsDisposed) {
+                return;
+            }
+
             Logger.LogDebug("モデルへの位置・サイズ通知: {0}, {1}", Model.NoteId, CanLayoutNotify);
             if(!CanLayoutNotify) {
                 Logger.LogDebug("モデルへの通知抑制中");

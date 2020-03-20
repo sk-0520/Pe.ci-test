@@ -197,7 +197,7 @@ echo end
                 di.RegisterMvvm<DebugColorPickerElement, DebugColorPickerViewModel, DebugColorPickerWindow>();
                 var model = di.Build<DebugColorPickerElement>();
                 var view = di.Build<DebugColorPickerWindow>();
-                var windowItem = new WindowItem(WindowKind.Debug, view);
+                var windowItem = new WindowItem(WindowKind.Debug, model,view);
                 WindowManager.Register(windowItem);
                 view.ShowDialog();
             }

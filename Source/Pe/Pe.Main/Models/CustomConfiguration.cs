@@ -251,6 +251,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
             ExplorerSupporterRefreshTime = section.GetValue<TimeSpan>("explorer_supporter_refresh_time");
             ExplorerSupporterCacheSize = section.GetValue<int>("explorer_supporter_cache_size");
+
+            ScreenElementsResetWaitTime = section.GetValue<TimeSpan>("screen_elements_reset_wait_time");
         }
 
         #region property
@@ -266,6 +268,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public byte ThemeAccentColorDefaultAlpha { get; }
         public TimeSpan ExplorerSupporterRefreshTime { get; }
         public int ExplorerSupporterCacheSize { get; }
+
+        public TimeSpan ScreenElementsResetWaitTime { get; }
 
         #endregion
     }

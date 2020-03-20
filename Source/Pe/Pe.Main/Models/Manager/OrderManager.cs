@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 });
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.LauncherToolbar, window);
+                return new WindowItem(WindowKind.LauncherToolbar, element, window);
             }
 
             public WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element)
@@ -242,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var window = DiContainer.BuildView<LauncherItemCustomizeWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.LauncherCustomize, window);
+                return new WindowItem(WindowKind.LauncherCustomize, element, window);
             }
 
             public WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element)
@@ -253,7 +253,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var window = DiContainer.BuildView<ExtendsExecuteWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.ExtendsExecute, window);
+                return new WindowItem(WindowKind.ExtendsExecute, element, window);
             }
 
             public WindowItem CreateNoteWindow(NoteElement element)
@@ -265,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var window = DiContainer.BuildView<NoteWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.Note, window);
+                return new WindowItem(WindowKind.Note, element, window);
             }
 
             public WindowItem CreateCommandWindow(CommandElement element)
@@ -277,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var window = DiContainer.BuildView<CommandWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.Command, window);
+                return new WindowItem(WindowKind.Command, element, window);
             }
 
 
@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var window = DiContainer.BuildView<StandardInputOutputWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.StandardInputOutput, window);
+                return new WindowItem(WindowKind.StandardInputOutput, element, window);
             }
 
             public WindowItem CreateSettingWindow(SettingContainerElement element)
@@ -301,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var window = DiContainer.BuildView<SettingWindow>();
                 window.DataContext = viewModel;
 
-                return new WindowItem(WindowKind.Setting, window);
+                return new WindowItem(WindowKind.Setting, element, window);
             }
 
             #endregion
