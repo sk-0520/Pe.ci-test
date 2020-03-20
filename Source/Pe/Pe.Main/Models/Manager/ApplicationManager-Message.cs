@@ -316,8 +316,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("ディスプレイ数変更検知: WindowsAPI = {0}, Toolbar = {1}", rawScreenCount, LauncherToolbarElements.Count);
                     var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
 
-                    CloseViews();
-                    DisposeElements();
+                    DelayResetScreenViewElements();
 
                     Task.Run(() => {
                         // Forms で取得するディスプレイ数の合計値は少し遅れる
@@ -335,9 +334,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             managedScreenCount = Screen.AllScreens.Length;
                         }
 
-                    }).ContinueWith(t => {
-                        ExecuteElements();
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                        DelayResetScreenViewElements();
+                    });
                 }
             }
         }

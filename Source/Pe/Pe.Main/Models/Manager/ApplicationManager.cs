@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
 
-            LazyViewReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyViewReset), TimeSpan.FromSeconds(5));
+            LazyViewReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyViewReset), TimeSpan.FromSeconds(3));
         }
 
         #region property
@@ -942,16 +942,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ExecuteElements();
         }
 
-        private void DelayExecuteElements()
-        {
-            LazyViewReset.DelayAction(() => {
-                ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, DispatcherPriority.SystemIdle);
-                ResetWaiting = false;
-            });
-        }
-
         private void DelayResetScreenViewElements()
         {
+            void DelayExecuteElements()
+            {
+                LazyViewReset.DelayAction(() => {
+                    ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, DispatcherPriority.SystemIdle);
+                    ResetWaiting = false;
+                });
+            }
 
             if(!ResetWaiting) {
                 ResetWaiting = true;
