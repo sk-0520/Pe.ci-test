@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
             Model.LoadHtmlSourceAsync().ContinueWith(t => {
                 var htmlSource = t.Result;
-                view.webView.LoadHtml(htmlSource, "localhost");
+                view.webView.LoadHtml(htmlSource, "http://localhost/" + nameof(FeedbackViewModel));
             }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
         }
 
