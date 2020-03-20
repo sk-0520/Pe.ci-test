@@ -119,6 +119,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// Pe の SQL ディレクトリ。
         /// </summary>
         public DirectoryInfo MainSqlDirectory => CombineDirectory(SqlDirectory, "ContentTypeTextNet.Pe.Main");
+
+        public DirectoryInfo WebViewTemplateDirectory => CombineDirectory(EtcDirectory, "web-view");
+        public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(WebViewTemplateDirectory, "feedback");
+        public FileInfo WebViewFeedbackTemplateFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.html");
+
+
         /// <summary>
         /// 文書ディレクトリ。
         /// </summary>
