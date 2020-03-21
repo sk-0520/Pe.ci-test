@@ -35,7 +35,7 @@
     <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" Grid.Row="0" />
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button Content="send" Command="{Binding SendCommand}" />
+      <Button Content="send" Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=webView}" />
       <Button Content="close" Command="{Binding CloseCommand, ElementName=root}" />
     </UniformGrid>
   </Grid>

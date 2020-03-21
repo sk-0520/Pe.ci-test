@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Input;
 using CefSharp;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
@@ -27,9 +30,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         #region command
 
-        public ICommand SendCommand => GetOrCreateCommand(() => new DelegateCommand(
-            () => {
-                Model.SendAync();
+        public ICommand SendCommand => GetOrCreateCommand(() => new DelegateCommand<IWebBrowser>(
+            async (webView) => {
+                var response = await webView.EvaluateScriptAsync("getInputValues()");
+                if(response.Success && response.Result != null) {
+                    var json = response.Result.ToString();
+                    var options = new JsonSerializerOptions();
+                    options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                    var data = JsonSerializer.Deserialize<FeedbackInputData>(json, options);
+                    await Model.SendAync(data);
+                }
             }
         ));
 

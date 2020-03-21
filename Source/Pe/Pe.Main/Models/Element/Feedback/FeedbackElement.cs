@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
         #region function
 
-        public Task SendAync()
+        public Task SendAync(FeedbackInputData data)
         {
             return Task.CompletedTask;
         }
@@ -41,14 +41,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
         public async Task<string> LoadHtmlSourceAsync()
         {
             const string feedbackHtml = "feedback-html";
-            const string feedbackScript = "FEEDBACK-TEMPLATE-SCRIPT";
+            //const string feedbackScript = "FEEDBACK-TEMPLATE-SCRIPT";
             const string feedbackStyle = "FEEDBACK-TEMPLATE-STYLE";
             var fileMap = new Dictionary<string, FileInfo>() {
                 [feedbackHtml] = EnvironmentParameters.WebViewFeedbackTemplateFile,
                 [HtmlTemplateJqury] = EnvironmentParameters.WebViewJqueryScriptFile,
                 [HtmlTemplateMarked] = EnvironmentParameters.WebViewMarkedScriptFile,
                 [HtmlTemplateBasicStyle] = EnvironmentParameters.WebViewBasicStyleFile,
-                [feedbackScript] = EnvironmentParameters.WebViewFeedbackScriptFile,
+                //[feedbackScript] = EnvironmentParameters.WebViewFeedbackScriptFile,
                 [feedbackStyle] = EnvironmentParameters.WebViewFeedbackStyleFile,
             };
             var sourceMap = await LoadSourceFilesAsync(fileMap);
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                 [HtmlTemplateJqury] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateJqury]),
                 [HtmlTemplateMarked] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateMarked]),
                 [HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
-                [feedbackScript] = new RawTextWebViewTemplate(sourceMap[feedbackScript]),
+                //[feedbackScript] = new RawTextWebViewTemplate(sourceMap[feedbackScript]),
                 [feedbackStyle] = new RawTextWebViewTemplate(sourceMap[feedbackStyle]),
                 ["FEEDBACK-TITLE"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Title),
                 ["FEEDBACK-DESCRIPTION"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Description),
@@ -81,12 +81,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                 ["FEEDBACK-KIND-OTHERS"] = new HtmlTextWebViewTemplate(FeedbackKind.Others.ToString()),
                 ["FEEDBACK-KIND-SET"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_KindSet),
                 ["FEEDBACK-COMMENT"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Comment),
-                ["FEEDBACK-COMMENT-CONTENT"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_CommentContent),
-                ["FEEDBACK-COMMENT-PREVIEW"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_CommentPreview),
-                ["FEEDBACK-COMMENT-FORMAT"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Format),
-                ["FEEDBACK-COMMENT-KIND-BUG"] = new RawTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Kind_Bug),
-                ["FEEDBACK-COMMENT-KIND-PROPOSAL"] = new RawTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Kind_Proposal),
-                ["FEEDBACK-COMMENT-KIND-OTHERS"] = new RawTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Kind_Others),
+                ["FEEDBACK-CONTENT"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_CommentContent),
+                ["FEEDBACK-PREVIEW"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_CommentPreview),
+                ["FEEDBACK-FORMAT"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Format),
+                ["FEEDBACK-SET-KIND-BUG"] = new RawTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Kind_Bug),
+                ["FEEDBACK-SET-KIND-PROPOSAL"] = new RawTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Kind_Proposal),
+                ["FEEDBACK-SET-KIND-OTHERS"] = new RawTextWebViewTemplate(Properties.Resources.String_Feedback_Comment_Kind_Others),
             };
             var embeddedSource = BuildTemplate(sourceMap[feedbackHtml], map);
             return embeddedSource;

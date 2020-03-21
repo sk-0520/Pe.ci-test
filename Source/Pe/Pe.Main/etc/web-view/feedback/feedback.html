@@ -9,39 +9,78 @@
 	<style>/*${FEEDBACK-TEMPLATE-STYLE}*/</style>
 	<script>
 		function updatePreview() {
-			const commentElement = document.getElementById('comment');
+			const contentElement = document.getElementById('content');
 			const previewElement = document.getElementById('preview');
-			const markdownSource = commentElement.value;
+			const markdownSource = contentElement.value;
 			const markdownHtmlSource = marked(markdownSource, {});
 			previewElement.innerHTML = markdownHtmlSource;
 		}
 
-		function setKindFormatCore(commentElement) {
+		function setKindFormatCore(contentElement) {
 			const kindElement = document.getElementById('kind');
 			var kind = kindElement.value;
 			var kindFormats = {
-				'${FEEDBACK-KIND-BUG:S}': '${FEEDBACK-COMMENT-KIND-BUG:S}',
-				'${FEEDBACK-KIND-PROPOSAL:S}': '${FEEDBACK-COMMENT-KIND-PROPOSAL:S}',
-				'${FEEDBACK-KIND-OTHERS:S}': '${FEEDBACK-COMMENT-KIND-OTHERS:S}'
+				'${FEEDBACK-KIND-BUG:S}': '${FEEDBACK-SET-KIND-BUG:S}',
+				'${FEEDBACK-KIND-PROPOSAL:S}': '${FEEDBACK-SET-KIND-PROPOSAL:S}',
+				'${FEEDBACK-KIND-OTHERS:S}': '${FEEDBACK-SET-KIND-OTHERS:S}',
 			};
 			var value = kindFormats[kind];
-			commentElement.value = value;
+			contentElement.value = value;
 		}
 
 		function setKindFormat() {
-			const commentElement = document.getElementById('comment');
+			const contentElement = document.getElementById('content');
 			//TODO: 入力破棄確認
-			setKindFormatCore(commentElement);
+			setKindFormatCore(contentElement);
 			updatePreview();
 		}
 
 		window.addEventListener('load', ev => {
-			const commentElement = document.getElementById('comment');
-			commentElement.addEventListener('keyup', ev => updatePreview())
+			const contentElement = document.getElementById('content');
+			contentElement.addEventListener('keyup', ev => updatePreview())
 
 			const commandKindElement = document.getElementById('command-kind');
 			commandKindElement.addEventListener('click', ev => setKindFormat());
 		});
+
+		function checkAndFeedback(value, element, func) {
+			var result = func(value);
+			if (result) {
+				element.classList.remove('error');
+			} else {
+				element.classList.add('error');
+			}
+			return result;
+		}
+
+		function getInputValues() {
+			const kindElement = document.getElementById('kind');
+			const subjectElement = document.getElementById('subject');
+			const contentElement = document.getElementById('content');
+			const data = {
+				kind: kindElement.value,
+				subject: subjectElement.value.trim(),
+				content: contentElement.value.trim(),
+			};
+
+			//TODO: 種類確認
+
+			// 件名確認
+			const subjectIsValid = checkAndFeedback(data.subject, subjectElement, s => {
+				return s.length;
+			});
+
+			// 内容確認
+			const contentIsValid = checkAndFeedback(data.content, contentElement, s => {
+				return s.length;
+			});
+
+			if (!subjectIsValid || !contentIsValid) {
+				throw "ERROR!";
+			}
+
+			return JSON.stringify(data);
+		}
 
 	</script>
 </head>
@@ -65,17 +104,17 @@
 
 		<dt>${FEEDBACK-COMMENT}</dt>
 		<dd>
-			<table class="comment-area">
+			<table class="content-area">
 				<tr>
-					<th class="input">${FEEDBACK-COMMENT-CONTENT}</th>
-					<th class="preview">${FEEDBACK-COMMENT-PREVIEW}</th>
+					<th class="input">${FEEDBACK-CONTENT}</th>
+					<th class="preview">${FEEDBACK-PREVIEW}</th>
 				</tr>
 				<tr>
-					<td><textarea id="comment"></textarea></td>
+					<td><textarea id="content"></textarea></td>
 					<td><div id="preview"></div></td>
 				</tr>
 			</table>
-			<p>${FEEDBACK-COMMENT-FORMAT}</p>
+			<p>${FEEDBACK-FORMAT}</p>
 		</dd>
 	</dl>
 </body>
