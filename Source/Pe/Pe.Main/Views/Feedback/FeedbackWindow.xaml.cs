@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CefSharp.Wpf.Experimental;
 using ContentTypeTextNet.Pe.Core.Models;
 using Prism.Commands;
 
@@ -23,14 +24,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Feedback
         {
             InitializeComponent();
 
-            this.webView.PreviewTextInput += (sender, e) =>
-            {
-                foreach(var character in e.Text) {
-                    //this.webView.ke((int)0x0102, character, 0);
-                }
-
-                e.Handled = true;
-            };
         }
 
         #region property
