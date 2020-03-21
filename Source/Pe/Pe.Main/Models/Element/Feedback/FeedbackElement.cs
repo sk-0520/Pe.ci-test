@@ -40,26 +40,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             using var scriptReader = new StreamReader(EnvironmentParameters.WebViewFeedbackScriptFile.OpenRead());
             using var styleReader = new StreamReader(EnvironmentParameters.WebViewFeedbackStyleFile.OpenRead());
 
+            // これは非同期で一気にやる必要ないと思うなぁ
+            var htmlTask = htmlReader.ReadToEndAsync();
+            var jqueryTask = jqueryReader.ReadToEndAsync();
+            var scriptTask = scriptReader.ReadToEndAsync();
+            var styleTask = styleReader.ReadToEndAsync();
+
             var results = await Task.WhenAll(new[] {
-                htmlReader.ReadToEndAsync(),
-                jqueryReader.ReadToEndAsync(),
-                scriptReader.ReadToEndAsync(),
-                styleReader.ReadToEndAsync(),
+                htmlTask,
+                jqueryTask,
+                scriptTask,
+                styleTask,
             });
 
-            var htmlSource = results[0];
-            var jquerySource = results[1];
-            var scriptSource = results[2];
-            var styleSource = results[3];
+            var htmlSource = htmlTask.Result;
+            var jquerySource = jqueryTask.Result;
+            var scriptSource = scriptTask.Result;
+            var styleSource = styleTask.Result;
 
-            var map = new Dictionary<string, string>() {
-                ["HTML-JQUERY"] = jquerySource,
-                ["FEEDBACK-SCRIPT"] = scriptSource,
-                ["FEEDBACK-STYLE"] = styleSource,
-                ["FEEDBACK-TITLE"] = "title",
-                ["FEEDBACK-DESCRIPTION"] = "description",
+            var map = new Dictionary<string, WebViewTemplate>() {
+                [HtmlTemplateJqury] = new WebViewTemplate(TemplateTarget.Raw, jquerySource),
+                ["FEEDBACK-TEMPLATE-SCRIPT"] = new WebViewTemplate(TemplateTarget.Raw, scriptSource),
+                ["FEEDBACK-TEMPLATE-STYLE"] = new WebViewTemplate(TemplateTarget.Raw, styleSource),
+                ["FEEDBACK-TITLE"] = new WebViewTemplate(TemplateTarget.Text, "title"),
+                ["FEEDBACK-DESCRIPTION"] = new WebViewTemplate(TemplateTarget.Text, "description"),
             };
-            var embeddedSource = TextUtility.ReplaceFromDictionary(htmlSource, map);
+            var embeddedSource = BuildTemplate(htmlSource, map);
             return embeddedSource;
         }
 

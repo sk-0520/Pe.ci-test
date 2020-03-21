@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<script>${HTML-JQUERY}</script>
-	<script>${FEEDBACK-SCRIPT}</script>
-	<style>${FEEDBACK-STYLE}</style>
+	<title>${FEEDBACK-TITLE}</title>
+	<script>/*${HTML-TEMPLATE-JQUERY}*/</script>
+	<script>/*${FEEDBACK-TEMPLATE-SCRIPT}*/</script>
+	<style>/*${FEEDBACK-TEMPLATE-STYLE}*/</style>
 </head>
 <body>
 	<h1>${FEEDBACK-TITLE}</h1>
+	<p>${FEEDBACK-DESCRIPTION}</p>
 
 	<dl>
-		<dt>${COMMENT}</dt>
+		<dt>${FEEDBACK-TARGET}</dt>
+		<dd>
+			<select>
+				<option>${FEEDBACK-TARGET-APP}</option>
+			</select>
+		</dd>
+
+		<dt>${FEEDBACK-COMMENT}</dt>
 		<dd><textarea id="comment"></textarea></dd>
 	</dl>
 </body>

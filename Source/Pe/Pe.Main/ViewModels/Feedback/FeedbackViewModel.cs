@@ -49,12 +49,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
             var view = (FeedbackWindow)window;
             view.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
             view.webView.RequestHandler = new PlatformRequestHandler(LoggerFactory);
-            view.webView.MenuHandler = new DisableContextMenuHandler();
+            //view.webView.MenuHandler = new DisableContextMenuHandler();
 
             Model.LoadHtmlSourceAsync().ContinueWith(t => {
                 var htmlSource = t.Result;
                 view.webView.LoadHtml(htmlSource, "http://localhost/" + nameof(FeedbackViewModel));
-            }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+            });
         }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
