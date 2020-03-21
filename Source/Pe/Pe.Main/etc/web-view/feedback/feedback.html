@@ -30,7 +30,7 @@
 
 		function setKindFormat() {
 			const contentElement = document.getElementById('content');
-			//TODO: ì¸óÕîjä¸ämîF
+			//TODO: ÂÖ•ÂäõÁ†¥Ê£ÑÁ¢∫Ë™ç
 			setKindFormatCore(contentElement);
 			updatePreview();
 		}
@@ -63,14 +63,14 @@
 				content: contentElement.value.trim(),
 			};
 
-			//TODO: éÌóﬁämîF
+			//TODO: Á®ÆÈ°ûÁ¢∫Ë™ç
 
-			// åèñºämîF
+			// ‰ª∂ÂêçÁ¢∫Ë™ç
 			const subjectIsValid = checkAndFeedback(data.subject, subjectElement, s => {
 				return s.length;
 			});
 
-			// ì‡óeämîF
+			// ÂÜÖÂÆπÁ¢∫Ë™ç
 			const contentIsValid = checkAndFeedback(data.content, contentElement, s => {
 				return s.length;
 			});
@@ -88,6 +88,7 @@
 	<section id="description">
 		<p>${FEEDBACK-DESCRIPTION}</p>
 		<p>${FEEDBACK-WARNING}</p>
+		<p>IME Ê≠ª„Çì„Åß„Çã„Éû„É≥ÂèÇ‰∏äÔºÅ</p>
 	</section>
 
 	<dl id="input-area">

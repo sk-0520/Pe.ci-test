@@ -16,6 +16,7 @@
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 
+  WindowStartupLocation="CenterScreen"
   Height="600"
   Width="900"
 
@@ -40,11 +41,126 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" Grid.Row="0" />
+    <Grid Grid.Row="0">
+      <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView">
+        <cef_sharp_wpf:ChromiumWebBrowser.Style>
+          <Style TargetType="cef_sharp_wpf:ChromiumWebBrowser">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="IsEnabled" Value="True" />
+          </Style>
+        </cef_sharp_wpf:ChromiumWebBrowser.Style>
+      </cef_sharp_wpf:ChromiumWebBrowser>
+      <Border Background="#80cccccc" Padding="16">
+        <Border.Style>
+          <Style TargetType="Border">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+                <Setter Property="Visibility" Value="Visible" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+                <Setter Property="Visibility" Value="Visible" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+                <Setter Property="Visibility" Value="Visible" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Visibility" Value="Collapsed" />
+          </Style>
+        </Border.Style>
+        <StackPanel VerticalAlignment="Center">
+          <!--#region 実行中 -->
+          <ContentControl IsTabStop="False" Background="Lime">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Visibility" Value="Collapsed" />
+              </Style>
+            </ContentControl.Style>
+            <ProgressBar Height="16" IsIndeterminate="True" />
+          </ContentControl>
+          <!--#endregion-->
+
+          <!--#region 失敗 -->
+          <ContentControl IsTabStop="False">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Visibility" Value="Collapsed" />
+              </Style>
+            </ContentControl.Style>
+            <TextBlock TextAlignment="Center" Text="{Binding ErrorMessage}" />
+          </ContentControl>
+          <!--#endregion-->
+
+          <!--#region 成功 -->
+          <ContentControl IsTabStop="False">
+            <ContentControl.Style>
+              <Style TargetType="ContentControl">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Visibility" Value="Collapsed" />
+              </Style>
+            </ContentControl.Style>
+            <TextBlock TextAlignment="Center" Text="SEND!!" />
+          </ContentControl>
+          <!--#endregion-->
+
+        </StackPanel>
+      </Border>
+    </Grid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button Content="send" Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=webView}" />
-      <Button Content="close" Command="{Binding CloseCommand, ElementName=root}" />
+      <Button Content="send" Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=webView}">
+        <Button.Style>
+          <Style TargetType="Button" BasedOn="{StaticResource DialogCommandButton}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="IsEnabled" Value="True" />
+          </Style>
+        </Button.Style>
+      </Button>
+      <Button Content="close" Command="{Binding CloseCommand, ElementName=root}">
+        <Button.Style>
+          <Style TargetType="Button" BasedOn="{StaticResource DialogCommandButton}">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="IsEnabled" Value="True" />
+          </Style>
+        </Button.Style>
+      </Button>
     </UniformGrid>
   </Grid>
 </Window>

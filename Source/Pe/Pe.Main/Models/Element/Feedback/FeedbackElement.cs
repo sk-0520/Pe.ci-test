@@ -92,6 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             };
 
             var json = JsonSerializer.Serialize(data);
+            Logger.LogDebug("json: {0}", json);
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             foreach(var counter in new Counter(5)) {

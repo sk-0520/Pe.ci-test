@@ -22,6 +22,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Feedback
         public FeedbackWindow()
         {
             InitializeComponent();
+
+            this.webView.PreviewTextInput += (sender, e) =>
+            {
+                foreach(var character in e.Text) {
+                    //this.webView.ke((int)0x0102, character, 0);
+                }
+
+                e.Handled = true;
+            };
         }
 
         #region property
