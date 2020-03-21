@@ -23,11 +23,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
     {
         public FeedbackViewModel(FeedbackElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            SendStatus = new RunningStatusViewModel(Model.SendStatus, LoggerFactory);
+            SendStatus.PropertyChanged += SendStatus_PropertyChanged;
+        }
 
         #region property
 
         public RequestSender CloseRequest { get; } = new RequestSender();
+        public RunningStatusViewModel SendStatus { get; }
+        public string ErrorMessage => Model.ErrorMessage;
 
         #endregion
 
@@ -41,10 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                     var options = new JsonSerializerOptions();
                     options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                     var data = JsonSerializer.Deserialize<FeedbackInputData>(json, options);
-                    var result = await Model.SendAync(data);
-                    if(result) {
-                        CloseRequest.Send();
-                    }
+                    await Model.SendAync(data);
                 }
             }
         ));
@@ -84,5 +86,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         { }
 
         #endregion
+
+        #region ElementViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                SendStatus.PropertyChanged -= SendStatus_PropertyChanged;
+                if(disposing) {
+                    SendStatus.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+
+        private void SendStatus_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(SendStatus.State)) {
+                RaisePropertyChanged(nameof(ErrorMessage));
+            }
+        }
+
     }
 }

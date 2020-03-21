@@ -45,13 +45,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
         TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);
         public RunningStatus SendStatus { get; }
-
+        public string ErrorMessage { get; private set; } = string.Empty;
         #endregion
 
         #region function
 
-        public async Task<bool> SendAync(FeedbackInputData inputData)
+        public async Task SendAync(FeedbackInputData inputData)
         {
+            ErrorMessage = string.Empty;
+            SendStatus.State = RunningState.Running;
+
             var settingData = await Task.Run(() => {
                 return MainDatabaseBarrier.ReadData(c => {
                     var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
@@ -103,13 +106,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                         if(response.Success) {
                             SendStatus.State = RunningState.End;
                             Logger.LogInformation("BODY: {0}", rawResponse);
-                            return true;
+                            return;
                         } else {
                             Logger.LogError(response.Message);
+                            ErrorMessage = response.Message;
                             SendStatus.State = RunningState.Error;
                         }
 
-                        return false;
+                        return;
                     }
                     Logger.LogWarning("HTTP: {0}", result.StatusCode);
                     Logger.LogWarning("{0}", await result.Content.ReadAsStringAsync());
@@ -120,12 +124,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                         await Task.Delay(RetryWaitTime);
                     } else {
                         Logger.LogError(ex, ex.Message);
+                        ErrorMessage = ex.Message;
                         SendStatus.State = RunningState.Error;
                     }
                 }
             }
 
-            return false;
+            return;
         }
 
         public async Task<string> LoadHtmlSourceAsync()
