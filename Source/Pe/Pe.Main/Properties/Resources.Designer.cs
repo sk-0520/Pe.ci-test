@@ -2581,6 +2581,124 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   コメント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   てきすと に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Format {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再現手順 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Kind_Bug {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Kind_Bug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なんなりと に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Kind_Others {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Kind_Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なにをどう に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Kind_Proposal {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Kind_Proposal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   内容 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_CommentContent {
+            get {
+                return ResourceManager.GetString("String_Feedback_CommentContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プレビュー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_CommentPreview {
+            get {
+                return ResourceManager.GetString("String_Feedback_CommentPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   入力された内容は開発側で共有されます。
+        ///課題を起票する際にも入力内容が引用として使用される可能性があります。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Description {
+            get {
+                return ResourceManager.GetString("String_Feedback_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種類 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Kind {
+            get {
+                return ResourceManager.GetString("String_Feedback_Kind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   テンプレートを設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_KindSet {
+            get {
+                return ResourceManager.GetString("String_Feedback_KindSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   件名 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Subject {
+            get {
+                return ResourceManager.GetString("String_Feedback_Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フィードバック に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Title {
+            get {
+                return ResourceManager.GetString("String_Feedback_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   個人情報を含めないでください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Warning {
+            get {
+                return ResourceManager.GetString("String_Feedback_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランチャーアイテム取り込み に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ImportPrograms_Caption {

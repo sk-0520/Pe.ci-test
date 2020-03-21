@@ -121,12 +121,16 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo MainSqlDirectory => CombineDirectory(SqlDirectory, "ContentTypeTextNet.Pe.Main");
 
         public DirectoryInfo WebViewTemplateDirectory => CombineDirectory(EtcDirectory, "web-view");
+        public DirectoryInfo WebViewThirdPartyDirectory => CombineDirectory(WebViewTemplateDirectory, "third-party");
 
-        public DirectoryInfo WebViewStyletDirectory => CombineDirectory(WebViewTemplateDirectory, "style");
 
         public DirectoryInfo WebViewScriptDirectory => CombineDirectory(WebViewTemplateDirectory, "script");
-        public FileInfo WebViewJQueryScriptFile => CombineFile(WebViewScriptDirectory, "jquery.js");
+        public DirectoryInfo WebViewJqueryDirectory => CombineDirectory(WebViewThirdPartyDirectory, "jquery");
+        public FileInfo WebViewJqueryScriptFile => CombineFile(WebViewJqueryDirectory, "jquery.js");
+        public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(WebViewThirdPartyDirectory, "Marked");
+        public FileInfo WebViewMarkedScriptFile => CombineFile(WebViewMarkedDirectory, "marked.min.js");
         public DirectoryInfo WebViewStyleDirectory => CombineDirectory(WebViewTemplateDirectory, "style");
+        public FileInfo WebViewBasicStyleFile => CombineFile(WebViewStyleDirectory, "basic.css");
         public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(WebViewTemplateDirectory, "feedback");
         public FileInfo WebViewFeedbackTemplateFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.html");
         public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");

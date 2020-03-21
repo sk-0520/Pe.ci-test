@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -74,6 +75,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         #region RawTextWebViewTemplate
 
         public override string Build(string option) => HttpUtility.HtmlEncode(Text);
+
+        #endregion
+    }
+
+    public class JavascriptTextViewTemplate : RawTextWebViewTemplate
+    {
+        public JavascriptTextViewTemplate(string text)
+            : base(text)
+        { }
+
+        #region RawTextWebViewTemplate
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="option">CSV形式, S = 文字列のくくりに ' が使用されている</param>
+        /// <returns></returns>
+        public override string Build(string option)
+        {
+            // あまあま
+
+            var options = option.Split(',');
+            if(options.Any(i => i == "S")) {
+                return Text
+                    .Replace("'", @"\'")
+                    .Replace("\r", @"\r")
+                    .Replace("\n", @"\n")
+                    .Replace("\\", @"\\")
+                ;
+            }
+
+            return Text
+                .Replace("\"", "\\\"")
+                .Replace("\r", @"\r")
+                .Replace("\n", @"\n")
+                .Replace("\\", @"\\")
+            ;
+        }
 
         #endregion
     }

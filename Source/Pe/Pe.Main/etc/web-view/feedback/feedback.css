@@ -1,2 +1,12 @@
-body {
+*.kind-description {
+	display: none;
 }
+
+table.comment-area {
+	table-layout: fixed;
+	width: 100%;
+}
+
+	table.comment-area th.input, table.comment-area th.preview {
+		width: 50%;
+	}

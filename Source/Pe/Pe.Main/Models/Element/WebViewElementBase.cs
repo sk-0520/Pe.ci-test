@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
 
         public string HtmlTemplateLang => "HTML-TEMPLATE-LANG";
         public string HtmlTemplateJqury => "HTML-TEMPLATE-JQUERY";
+        public string HtmlTemplateMarked => "HTML-TEMPLATE-MARKED";
+        public string HtmlTemplateBasicStyle => "HTML-TEMPLATE-BASIC-STYLE";
 
         protected IUserAgentManager UserAgentManager { get; }
 

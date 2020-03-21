@@ -3,12 +3,51 @@
 <head>
 	<title>${FEEDBACK-TITLE}</title>
 	<script>/*${HTML-TEMPLATE-JQUERY}*/</script>
+	<script>/*${HTML-TEMPLATE-MARKED}*/</script>
 	<script>/*${FEEDBACK-TEMPLATE-SCRIPT}*/</script>
+	<style>/*${HTML-TEMPLATE-BASIC-STYLE}*/</style>
 	<style>/*${FEEDBACK-TEMPLATE-STYLE}*/</style>
+	<script>
+		function updatePreview() {
+			const commentElement = document.getElementById('comment');
+			const previewElement = document.getElementById('preview');
+			const markdownSource = commentElement.value;
+			const markdownHtmlSource = marked(markdownSource, {});
+			previewElement.innerHTML = markdownHtmlSource;
+		}
+
+		function setKindFormatCore(commentElement) {
+			const kindElement = document.getElementById('kind');
+			var kind = kindElement.value;
+			var kindFormats = {
+				'${FEEDBACK-KIND-BUG:S}': '${FEEDBACK-COMMENT-KIND-BUG:S}',
+				'${FEEDBACK-KIND-PROPOSAL:S}': '${FEEDBACK-COMMENT-KIND-PROPOSAL:S}',
+				'${FEEDBACK-KIND-OTHERS:S}': '${FEEDBACK-COMMENT-KIND-OTHERS:S}'
+			};
+			var value = kindFormats[kind];
+			commentElement.value = value;
+		}
+
+		function setKindFormat() {
+			const commentElement = document.getElementById('comment');
+			//TODO: “ü—Í”jŠüŠm”F
+			setKindFormatCore(commentElement);
+			updatePreview();
+		}
+
+		window.addEventListener('load', ev => {
+			const commentElement = document.getElementById('comment');
+			commentElement.addEventListener('keyup', ev => updatePreview())
+
+			const commandKindElement = document.getElementById('command-kind');
+			commandKindElement.addEventListener('click', ev => setKindFormat());
+		});
+
+	</script>
 </head>
 <body>
-	<h1>${FEEDBACK-TITLE}</h1>
 	<p>${FEEDBACK-DESCRIPTION}</p>
+	<p>${FEEDBACK-WARNING}</p>
 
 	<dl>
 		<dt>${FEEDBACK-SUBJECT}</dt>
@@ -18,13 +57,26 @@
 
 		<dt>${FEEDBACK-KIND}</dt>
 		<dd>
-			<select>
+			<select id="kind">
 				${FEEDBACK-KIND-OPTIONS}
 			</select>
+			<button id="command-kind">${FEEDBACK-KIND-SET}</button>
 		</dd>
 
 		<dt>${FEEDBACK-COMMENT}</dt>
-		<dd><textarea id="comment"></textarea></dd>
+		<dd>
+			<table class="comment-area">
+				<tr>
+					<th class="input">${FEEDBACK-COMMENT-CONTENT}</th>
+					<th class="preview">${FEEDBACK-COMMENT-PREVIEW}</th>
+				</tr>
+				<tr>
+					<td><textarea id="comment"></textarea></td>
+					<td><div id="preview"></div></td>
+				</tr>
+			</table>
+			<p>${FEEDBACK-COMMENT-FORMAT}</p>
+		</dd>
 	</dl>
 </body>
 </html>
