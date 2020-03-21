@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using CefSharp;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -26,6 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         #region property
 
+        public RequestSender CloseRequest { get; } = new RequestSender();
+
         #endregion
 
         #region command
@@ -38,7 +41,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                     var options = new JsonSerializerOptions();
                     options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
                     var data = JsonSerializer.Deserialize<FeedbackInputData>(json, options);
-                    await Model.SendAync(data);
+                    var result = await Model.SendAync(data);
+                    if(result) {
+                        CloseRequest.Send();
+                    }
                 }
             }
         ));

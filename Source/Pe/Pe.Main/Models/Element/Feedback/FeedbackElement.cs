@@ -2,12 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
@@ -16,26 +22,110 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 {
     public class FeedbackElement : WebViewElementBase
     {
-        public FeedbackElement(EnvironmentParameters environmentParameters, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public FeedbackElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(userAgentManager, loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            StatementLoader = statementLoader;
             OrderManager = orderManager;
             CultureService = cultureService;
+
+            SendStatus = new RunningStatus(LoggerFactory);
         }
 
         #region property
 
         EnvironmentParameters EnvironmentParameters { get; }
+        ApiConfiguration ApiConfiguration => EnvironmentParameters.Configuration.Api;
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
         IOrderManager OrderManager { get; }
         CultureService CultureService { get; }
+
+        TimeSpan RetryWaitTime { get; } = TimeSpan.FromSeconds(5);
+        public RunningStatus SendStatus { get; }
+
         #endregion
 
         #region function
 
-        public Task SendAync(FeedbackInputData data)
+        public async Task<bool> SendAync(FeedbackInputData inputData)
         {
-            return Task.CompletedTask;
+            var settingData = await Task.Run(() => {
+                return MainDatabaseBarrier.ReadData(c => {
+                    var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                    //var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+
+                    var userIdManager = new UserIdManager(LoggerFactory);
+                    var userId = userIdManager.SafeGetOrCreateUserId(appExecuteSettingEntityDao);
+
+                    var firstData = appExecuteSettingEntityDao.SelectFirstData();
+
+                    return (userId, firstVersion: firstData.FirstExecuteVersion, firstTimestamp: firstData.FirstExecuteTimestamp);
+                });
+            });
+
+            var versionConverter = new VersionConverter();
+
+            var data = new FeedbackSendData() {
+                Kind = inputData.Kind.ToString().ToLowerInvariant(),
+                Subject = inputData.Subject,
+                Content = inputData.Content,
+
+                Timestamp = DateTime.UtcNow.ToString("u"),
+                Version = versionConverter.ConvertNormalVersion(BuildStatus.Version),
+                Revision = BuildStatus.Revision,
+                Build = BuildStatus.BuildType.ToString().ToLowerInvariant(),
+
+                UserId = settingData.userId,
+                FirstExecuteVersion = versionConverter.ConvertNormalVersion(settingData.firstVersion),
+                FirstExecuteTimestamp = settingData.firstTimestamp.ToString("u"),
+
+                Process = ProcessArchitecture.ApplicationArchitecture,
+                Platform = ProcessArchitecture.PlatformArchitecture,
+                Os = Environment.OSVersion.ToString(),
+                Clr = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription,
+            };
+
+            var json = JsonSerializer.Serialize(data);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            foreach(var counter in new Counter(5)) {
+                try {
+                    using var userAgent = UserAgentManager.CreateUserAgent();
+                    var result = await userAgent.PostAsync(ApiConfiguration.FeedbackUri, content);
+                    if(result.IsSuccessStatusCode) {
+                        Logger.LogInformation("送信完了");
+                        var rawResponse = await result.Content.ReadAsStringAsync();
+                        var response = JsonSerializer.Deserialize<FeedbackResponse>(rawResponse);
+
+                        if(response.Success) {
+                            SendStatus.State = RunningState.End;
+                            Logger.LogInformation("BODY: {0}", rawResponse);
+                            return true;
+                        } else {
+                            Logger.LogError(response.Message);
+                            SendStatus.State = RunningState.Error;
+                        }
+
+                        return false;
+                    }
+                    Logger.LogWarning("HTTP: {0}", result.StatusCode);
+                    Logger.LogWarning("{0}", await result.Content.ReadAsStringAsync());
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, ex.Message);
+                    if(!counter.IsLast) {
+                        Logger.LogDebug("待機中: {0}", RetryWaitTime);
+                        await Task.Delay(RetryWaitTime);
+                    } else {
+                        Logger.LogError(ex, ex.Message);
+                        SendStatus.State = RunningState.Error;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public async Task<string> LoadHtmlSourceAsync()

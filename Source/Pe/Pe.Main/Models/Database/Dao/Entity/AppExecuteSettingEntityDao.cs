@@ -27,6 +27,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #endregion
     }
 
+    internal class AppGeneralFirstEntityDto : CommonDtoBase
+    {
+        #region property
+
+        public Version FirstVersion { get; set; } = new Version();
+
+        [Timestamp(DateTimeKind.Utc)]
+        public DateTime FirstTimestamp { get; set; }
+
+
+        #endregion
+    }
+
     public class AppExecuteSettingEntityDao : EntityDaoBase
     {
         public AppExecuteSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
@@ -61,6 +74,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 UserId = dto.UserId,
             };
             return result;
+        }
+
+        public AppGeneralFirstData SelectFirstData()
+        {
+            var statement = LoadStatement();
+            var dto = Commander.QueryFirst<AppGeneralFirstEntityDto>(statement);
+            return new AppGeneralFirstData() {
+                FirstExecuteVersion = dto.FirstVersion,
+                FirstExecuteTimestamp = dto.FirstTimestamp,
+            };
         }
 
         public bool UpdateSettingExecuteSetting(SettingAppExecuteSettingData data, IDatabaseCommonStatus commonStatus)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
@@ -72,6 +73,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             //TODO: メモリを追加する
             var a = Encoding.UTF8.GetBytes(buffer.ToString());
             return ComputeHash(a);
+        }
+
+        public string SafeGetOrCreateUserId(AppExecuteSettingEntityDao appExecuteSettingEntityDao)
+        {
+            var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+            var userId = setting.UserId;
+            if(!IsValidUserId(userId)) {
+                Logger.LogInformation("ユーザーIDが存在しないため環境から生成");
+                userId = CreateFromEnvironment();
+            }
+
+            if(string.IsNullOrWhiteSpace(userId)) {
+                Logger.LogInformation("ユーザーIDがダメっぽいのでダミー文字列の投入");
+                userId = ":-(";
+            }
+
+            return userId;
         }
 
         #endregion
