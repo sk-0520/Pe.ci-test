@@ -85,10 +85,12 @@
 	</script>
 </head>
 <body>
-	<p>${FEEDBACK-DESCRIPTION}</p>
-	<p>${FEEDBACK-WARNING}</p>
+	<section id="description">
+		<p>${FEEDBACK-DESCRIPTION}</p>
+		<p>${FEEDBACK-WARNING}</p>
+	</section>
 
-	<dl>
+	<dl id="input-area">
 		<dt>${FEEDBACK-SUBJECT}</dt>
 		<dd>
 			<input id="subject" type="text" />
@@ -102,8 +104,8 @@
 			<button id="command-kind">${FEEDBACK-KIND-SET}</button>
 		</dd>
 
-		<dt>${FEEDBACK-COMMENT}</dt>
-		<dd>
+		<dt>${FEEDBACK-COMMENT}(${FEEDBACK-FORMAT})</dt>
+		<dd id="comment">
 			<table class="content-area">
 				<tr>
 					<th class="input">${FEEDBACK-CONTENT}</th>
@@ -114,7 +116,6 @@
 					<td><div id="preview"></div></td>
 				</tr>
 			</table>
-			<p>${FEEDBACK-FORMAT}</p>
 		</dd>
 	</dl>
 </body>

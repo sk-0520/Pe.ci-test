@@ -13,8 +13,8 @@
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 
-  Height="450"
-  Width="800"
+  Height="600"
+  Width="900"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
