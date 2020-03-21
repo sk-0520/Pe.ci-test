@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -76,6 +79,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
         #endregion
 
         #region function
+
+        private async Task<KeyValuePair<string, string>> LoadSourceFileAsync(KeyValuePair<string, FileInfo> pair)
+        {
+            var file = pair.Value;
+            using var htmlReader = new StreamReader(file.OpenRead());
+            var content = await htmlReader.ReadToEndAsync();
+            return KeyValuePair.Create(pair.Key, content);
+        }
+
+        protected async Task<IReadOnlyDictionary<string, string>> LoadSourceFilesAsync(IReadOnlyDictionary<string, FileInfo> loadFiles)
+        {
+            var result = new Dictionary<string, string>(loadFiles.Count);
+            foreach(var pair in loadFiles) {
+                var loadedFile = await LoadSourceFileAsync(pair);
+                result.Add(loadedFile.Key, loadedFile.Value);
+            }
+            return result;
+        }
 
         protected string BuildTemplate(string source, IReadOnlyDictionary<string, WebViewTemplateBase> map)
         {
