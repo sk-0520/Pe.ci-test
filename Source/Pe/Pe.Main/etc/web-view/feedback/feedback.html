@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="${HTML-TEMPLATE-LANG}">
 <head>
 	<title>${FEEDBACK-TITLE}</title>
 	<script>/*${HTML-TEMPLATE-JQUERY}*/</script>
@@ -11,10 +11,15 @@
 	<p>${FEEDBACK-DESCRIPTION}</p>
 
 	<dl>
-		<dt>${FEEDBACK-TARGET}</dt>
+		<dt>${FEEDBACK-SUBJECT}</dt>
+		<dd>
+			<input id="subject" type="text" />
+		</dd>
+
+		<dt>${FEEDBACK-KIND}</dt>
 		<dd>
 			<select>
-				<option>${FEEDBACK-TARGET-APP}</option>
+				${FEEDBACK-KIND-OPTIONS}
 			</select>
 		</dd>
 

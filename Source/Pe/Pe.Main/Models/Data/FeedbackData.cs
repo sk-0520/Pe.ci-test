@@ -4,8 +4,22 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
-    public enum FeedbackTarget
+    public enum FeedbackKind
     {
-        Application,
+        /// <summary>
+        /// 不具合報告。
+        /// </summary>
+        [EnumResource]
+        Bug,
+        /// <summary>
+        /// 提案。
+        /// </summary>
+        [EnumResource]
+        Proposal,
+        /// <summary>
+        /// その他。
+        /// </summary>
+        [EnumResource]
+        Others,
     }
 }

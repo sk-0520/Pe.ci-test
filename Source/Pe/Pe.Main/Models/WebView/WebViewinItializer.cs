@@ -22,12 +22,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
         #region function
 
-        public void Initialize(EnvironmentParameters environmentParameters)
+        public void Initialize(EnvironmentParameters environmentParameters, CultureService cultureService)
         {
             var settings = new CefSharp.Wpf.CefSettings();
 
-            settings.Locale = CultureService.Current.Culture.Parent.ToString();
-            settings.AcceptLanguageList = CultureService.Current.Culture.Name;
+            settings.Locale = cultureService.Culture.Parent.ToString();
+            settings.AcceptLanguageList = cultureService.Culture.Name;
 
             settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
             settings.UserDataPath = environmentParameters.MachineWebViewUserDirectory.FullName;

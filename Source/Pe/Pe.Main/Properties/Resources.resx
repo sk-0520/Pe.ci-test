@@ -1557,4 +1557,13 @@
   <data name="String_Feedback_Caption" xml:space="preserve">
     <value>フィードバック</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Bug" xml:space="preserve">
+    <value>不具合報告</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Proposal" xml:space="preserve">
+    <value>提案</value>
+  </data>
 </root>

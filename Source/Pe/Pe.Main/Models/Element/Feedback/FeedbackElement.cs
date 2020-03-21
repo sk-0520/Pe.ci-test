@@ -1,29 +1,34 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 {
     public class FeedbackElement : WebViewElementBase
     {
-        public FeedbackElement(EnvironmentParameters environmentParameters, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public FeedbackElement(EnvironmentParameters environmentParameters, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(userAgentManager, loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
             OrderManager = orderManager;
+            CultureService = cultureService;
         }
 
         #region property
 
         EnvironmentParameters EnvironmentParameters { get; }
         IOrderManager OrderManager { get; }
-
+        CultureService CultureService { get; }
         #endregion
 
         #region function
@@ -58,12 +63,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             var scriptSource = scriptTask.Result;
             var styleSource = styleTask.Result;
 
-            var map = new Dictionary<string, WebViewTemplate>() {
-                [HtmlTemplateJqury] = new WebViewTemplate(TemplateTarget.Raw, jquerySource),
-                ["FEEDBACK-TEMPLATE-SCRIPT"] = new WebViewTemplate(TemplateTarget.Raw, scriptSource),
-                ["FEEDBACK-TEMPLATE-STYLE"] = new WebViewTemplate(TemplateTarget.Raw, styleSource),
-                ["FEEDBACK-TITLE"] = new WebViewTemplate(TemplateTarget.Text, "title"),
-                ["FEEDBACK-DESCRIPTION"] = new WebViewTemplate(TemplateTarget.Text, "description"),
+            var map = new WebViewTemplateDictionary() {
+                [HtmlTemplateLang] = new CultureWebViewTemplate(CultureService.Current.Culture),
+                [HtmlTemplateJqury] = new RawTextWebViewTemplate(jquerySource),
+                ["FEEDBACK-TEMPLATE-SCRIPT"] = new RawTextWebViewTemplate(scriptSource),
+                ["FEEDBACK-TEMPLATE-STYLE"] = new RawTextWebViewTemplate(styleSource),
+                ["FEEDBACK-TITLE"] = new HtmlTextWebViewTemplate("title"),
+                ["FEEDBACK-DESCRIPTION"] = new HtmlTextWebViewTemplate("description"),
+                ["FEEDBACK-SUBJECT"] = new HtmlTextWebViewTemplate("subject"),
+                ["FEEDBACK-KIND"] = new HtmlTextWebViewTemplate("target"),
+                ["FEEDBACK-KIND-OPTIONS"] = new CustomWebViewTemplate(s => {
+                    var builder = new StringBuilder();
+                    foreach(var kind in EnumUtility.GetMembers<FeedbackKind>().OrderBy(i => i)) {
+                        builder.Append("<option value=");
+                        builder.Append(HttpUtility.HtmlEncode(kind.ToString()));
+                        builder.Append("\">");
+                        builder.Append(HttpUtility.HtmlEncode(CultureService.GetString(kind, ResourceNameKind.Normal)));
+                        builder.Append("</option>");
+                    }
+                    return builder.ToString();
+                }),
             };
             var embeddedSource = BuildTemplate(htmlSource, map);
             return embeddedSource;

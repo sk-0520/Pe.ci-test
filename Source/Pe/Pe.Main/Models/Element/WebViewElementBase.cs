@@ -1,42 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element
 {
-    public enum TemplateTarget
-    {
-        Raw,
-        //StyleSheet,
-        //Script,
-        Text,
-    }
-
-    public class WebViewTemplate
-    {
-        public WebViewTemplate(TemplateTarget target, string value)
-        {
-            Target = target;
-            Value = value;
-        }
-
-        #region property
-
-
-        public TemplateTarget Target { get; }
-        public string Value { get; }
-
-        #endregion
-    }
 
     public abstract class WebViewElementBase : ElementBase
     {
+        #region define
+
+        protected class WebViewTemplateDictionary : Dictionary<string, WebViewTemplateBase>
+        {
+            public WebViewTemplateDictionary()
+            { }
+
+            public WebViewTemplateDictionary(IDictionary<string, WebViewTemplateBase> dictionary) : base(dictionary)
+            { }
+        }
+
+        #endregion
+
+
         public WebViewElementBase(IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -44,6 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
         }
 
         #region property
+
+        public string HtmlTemplateLang => "HTML-TEMPLATE-LANG";
         public string HtmlTemplateJqury => "HTML-TEMPLATE-JQUERY";
 
         protected IUserAgentManager UserAgentManager { get; }
@@ -60,6 +54,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
             )?
             \${
             (?<KEY>.+?)
+            (
+                :
+                (?<OPTION>.+?)
+            )?
             }
             (
                 \s*
@@ -77,32 +75,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
 
         #region function
 
-        private string ConvertTemplate(WebViewTemplate template)
-        {
-            switch(template.Target) {
-                case TemplateTarget.Raw:
-                    return template.Value;
-
-                //case TemplateTarget.StyleSheet:
-                //    return template.Value;
-
-                //case TemplateTarget.Script:
-                //    return template.Value;
-
-                case TemplateTarget.Text:
-                    return HttpUtility.HtmlEncode(template.Value);
-
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
-        protected string BuildTemplate(string source, IReadOnlyDictionary<string, WebViewTemplate> map)
+        protected string BuildTemplate(string source, IReadOnlyDictionary<string, WebViewTemplateBase> map)
         {
             return TemplateRegex.Replace(source, (Match m) => {
                 var key = m.Groups["KEY"].Value;
+                var option = m.Groups["OPTION"].Value;
                 if(map.TryGetValue(key, out var template)) {
-                    return ConvertTemplate(template);
+                    return template.Build(option);
                 }
                 return m.Value;
             });
