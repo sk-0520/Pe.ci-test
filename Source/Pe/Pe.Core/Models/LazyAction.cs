@@ -40,6 +40,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
+        public void Clear()
+        {
+            lock(this._timerLocker) {
+                if(Timer.Enabled) {
+                    Timer.Stop();
+                    Logger.LogDebug($"[{LazyName}] タイマー終了");
+                }
+                Action = null;
+            }
+        }
+
         public void DelayAction(Action action)
         {
             ThrowIfDisposed();

@@ -1566,7 +1566,7 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Proposal" xml:space="preserve">
     <value>提案</value>
   </data>
-  <data name="String_Feedback_Comment" xml:space="preserve">
+  <data name="String_Feedback_Comment_A" xml:space="preserve">
     <value>コメント</value>
   </data>
   <data name="String_Feedback_CommentContent" xml:space="preserve">
@@ -1591,19 +1591,19 @@
     <value>入力された内容は開発側で共有されます。
 課題を起票する際にも入力内容が引用として使用される可能性があります。</value>
   </data>
-  <data name="String_Feedback_Kind" xml:space="preserve">
+  <data name="String_Feedback_Kind_A" xml:space="preserve">
     <value>種類</value>
   </data>
-  <data name="String_Feedback_KindSet" xml:space="preserve">
+  <data name="String_Feedback_KindSet_A" xml:space="preserve">
     <value>テンプレートを設定</value>
   </data>
-  <data name="String_Feedback_Subject" xml:space="preserve">
+  <data name="String_Feedback_Subject_A" xml:space="preserve">
     <value>件名</value>
-  </data>
-  <data name="String_Feedback_Title" xml:space="preserve">
-    <value>フィードバック</value>
   </data>
   <data name="String_Feedback_Warning" xml:space="preserve">
     <value>個人情報を含めないでください。</value>
+  </data>
+  <data name="String_Feedback_KindSetWarning" xml:space="preserve">
+    <value>入力内容は破棄されます。</value>
   </data>
 </root>

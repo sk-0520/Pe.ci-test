@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         {
             var settings = new CefSharp.Wpf.CefSettings();
 
-            settings.Locale = cultureService.Culture.Parent.ToString();
+            settings.Locale = cultureService.Culture.TwoLetterISOLanguageName;
             settings.AcceptLanguageList = cultureService.Culture.Name;
 
             settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;

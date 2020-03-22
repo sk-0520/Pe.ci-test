@@ -2583,9 +2583,9 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   コメント に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Feedback_Comment {
+        public static string String_Feedback_Comment_A {
             get {
-                return ResourceManager.GetString("String_Feedback_Comment", resourceCulture);
+                return ResourceManager.GetString("String_Feedback_Comment_A", resourceCulture);
             }
         }
         
@@ -2656,36 +2656,36 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   種類 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Feedback_Kind {
+        public static string String_Feedback_Kind_A {
             get {
-                return ResourceManager.GetString("String_Feedback_Kind", resourceCulture);
+                return ResourceManager.GetString("String_Feedback_Kind_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   テンプレートを設定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Feedback_KindSet {
+        public static string String_Feedback_KindSet_A {
             get {
-                return ResourceManager.GetString("String_Feedback_KindSet", resourceCulture);
+                return ResourceManager.GetString("String_Feedback_KindSet_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   入力内容は破棄されます。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_KindSetWarning {
+            get {
+                return ResourceManager.GetString("String_Feedback_KindSetWarning", resourceCulture);
             }
         }
         
         /// <summary>
         ///   件名 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Feedback_Subject {
+        public static string String_Feedback_Subject_A {
             get {
-                return ResourceManager.GetString("String_Feedback_Subject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   フィードバック に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Feedback_Title {
-            get {
-                return ResourceManager.GetString("String_Feedback_Title", resourceCulture);
+                return ResourceManager.GetString("String_Feedback_Subject_A", resourceCulture);
             }
         }
         
