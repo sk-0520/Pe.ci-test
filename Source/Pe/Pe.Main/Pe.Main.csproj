@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <Version>0.91.4</Version>
+    <Version>0.91.5</Version>
 
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -23,6 +23,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="etc\web-view\script\**" />
+    <EmbeddedResource Remove="etc\web-view\script\**" />
+    <None Remove="etc\web-view\script\**" />
+    <Page Remove="etc\web-view\script\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="etc\script\UpdaterScript.cs" />

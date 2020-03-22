@@ -28,6 +28,10 @@ namespace ContentTypeTextNet.Pe.Main
 
         static CultureInfo StartupCulture { get; } = CultureInfo.CurrentCulture;
 
+        /// <summary>
+        /// TODO: あまり使わない方針で行きたい
+        /// あと名前が悪い
+        /// </summary>
         public static CultureService Current { get; private set; } = null!;
 
         public Properties.Resources Resources { get; } = new Properties.Resources();

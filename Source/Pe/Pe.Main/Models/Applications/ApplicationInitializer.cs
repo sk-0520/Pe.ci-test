@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return true;
         }
 
-        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, ILoggerFactory loggerFactory)
+        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, CultureService cultureService, ILoggerFactory loggerFactory)
         {
             var container = new ApplicationDiContainer();
 
@@ -324,6 +324,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 */
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
                 .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+                .Register<CultureService, CultureService>(cultureService)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
             ;
@@ -463,7 +464,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             var webViewinItializer = new WebViewinItializer(loggerFactory);
-            webViewinItializer.Initialize(environmentParameters);
+            webViewinItializer.Initialize(environmentParameters, cultureService);
             //try {
             //    webViewinItializer.Initialize(environmentParameters);
             //} catch(Exception ex) {
@@ -484,7 +485,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var factory = pack.factory;
             pack.accessor.Dispose();
 
-            DiContainer = SetupContainer(environmentParameters, factory, loggerFactory);
+            DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);

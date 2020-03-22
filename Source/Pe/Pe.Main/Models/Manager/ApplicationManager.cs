@@ -58,6 +58,7 @@ using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
 using System.Text.Json;
 using System.Reflection;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models;
+using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -87,6 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManagerImpl);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
+            ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
@@ -124,6 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
         CommandElement CommandElement { get; }
+        //FeedbackElement? FeedbackElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
@@ -888,6 +892,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CommandElement.StartView();
         }
 
+        public void ShowFeedbackView()
+        {
+            var items = WindowManager.GetWindowItems(WindowKind.Feedback).ToList();
+            if(items.Count != 0) {
+                foreach(var item in items) {
+                    WindowManager.Flash(item);
+                }
+                return;
+            }
+
+            var feedbackElement = ApplicationDiContainer.Build<FeedbackElement>();
+            feedbackElement.Initialize();
+            var windowItem = OrderManager.CreateFeedbackWindow(feedbackElement);
+            WindowManager.Register(windowItem);
+            windowItem.Window.Show();
+        }
 
         void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount, string userBackupDirectoryPath)
         {
@@ -1145,20 +1165,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ExceptionWrapper(() => {
                 rawData.UserId = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
                     var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
-                    var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
                     var userIdManager = new UserIdManager(LoggerFactory);
-                    if(!userIdManager.IsValidUserId(setting.UserId)) {
-                        Logger.LogInformation("ユーザーIDが存在しないため環境から生成");
-                        return userIdManager.CreateFromEnvironment();
-                    }
-
-                    return setting.UserId;
+                    return userIdManager.SafeGetOrCreateUserId(appExecuteSettingEntityDao);
                 });
             });
-            if(string.IsNullOrWhiteSpace(rawData.UserId)) {
-                Logger.LogInformation("ユーザーIDがダメっぽいのでダミー文字列の投入");
-                rawData.UserId = ":-(";
-            }
 
             string TrimFunc(string s) => s.Substring(3);
 

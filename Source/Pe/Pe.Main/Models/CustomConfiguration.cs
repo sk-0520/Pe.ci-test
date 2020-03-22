@@ -89,12 +89,18 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             CrashReportUri = section.GetValue<Uri>("crash_report_uri");
             CrashReportSourceUri = section.GetValue<Uri>("crash_report_src_uri");
+
+            FeedbackUri = section.GetValue<Uri>("feedback_uri");
+            FeedbackSourceUri = section.GetValue<Uri>("feedback_src_uri");
         }
 
         #region property
 
         public Uri CrashReportUri { get; }
         public Uri CrashReportSourceUri { get; }
+
+        public Uri FeedbackUri { get; }
+        public Uri FeedbackSourceUri { get; }
 
         #endregion
     }

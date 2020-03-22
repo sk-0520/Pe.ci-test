@@ -126,7 +126,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#506: フィードバック機能の再実装"
 					},
 					{
 						"revision": "",

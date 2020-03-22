@@ -73,6 +73,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// 設定。
         /// </summary>
         Setting,
+        /// <summary>
+        /// フィードバック。
+        /// </summary>
+        Feedback,
     }
 
     public class WindowItem
