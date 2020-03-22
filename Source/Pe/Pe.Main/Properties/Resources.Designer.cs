@@ -2626,7 +2626,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   てきすと に類似しているローカライズされた文字列を検索します。
+        ///   Markdown にてにて記述 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Comment_Format {
             get {
@@ -2635,7 +2635,21 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   再現手順 に類似しているローカライズされた文字列を検索します。
+        ///   ### 期待する挙動
+        ///
+        ///(期待する挙動を記述してください)
+        ///
+        ///
+        ///### 実際の挙動
+        ///
+        ///(実際に起こる挙動を記述してください)
+        ///
+        ///
+        ///### 再現手順
+        ///
+        ///1. (再現手順1を記述してください)
+        ///2. (再現手順2を記述してください)
+        ///3. (再現手順3以降を記述してください) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Comment_Kind_Bug {
             get {
@@ -2644,7 +2658,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   なんなりと に類似しているローカライズされた文字列を検索します。
+        ///   (自由に記述してください) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Comment_Kind_Others {
             get {
@@ -2653,7 +2667,13 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   なにをどう に類似しているローカライズされた文字列を検索します。
+        ///   ### 提案
+        ///
+        ///* (このテンプレート内容は説明ですので消してください)
+        ///* 提案内容を記述してください
+        ///* 1回のフィードバックで行う提案は1件のみにしてください
+        ///  * 複数ある場合は複数回フィードバック送信を行ってください
+        ///* きちんとした議論が必要な場合はフォーラムか課題にて対応します に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Comment_Kind_Proposal {
             get {
@@ -2722,6 +2742,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Feedback_KindSetWarning {
             get {
                 return ResourceManager.GetString("String_Feedback_KindSetWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_SourceAddress {
+            get {
+                return ResourceManager.GetString("String_Feedback_SourceAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ソースコードを参照 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_SourceOpen {
+            get {
+                return ResourceManager.GetString("String_Feedback_SourceOpen", resourceCulture);
             }
         }
         

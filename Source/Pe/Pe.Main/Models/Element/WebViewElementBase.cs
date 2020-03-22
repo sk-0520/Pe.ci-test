@@ -110,6 +110,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
             });
         }
 
+        public string ToJavascriptString(string text)
+        {
+            var s = text
+                .Replace("\\", @"\\")
+                .Replace("\r", @"\r")
+                .Replace("\n", @"\n")
+                .Replace("\t", @"\t")
+                .Replace("\"", @"\""")
+                .Replace("\'", @"\'")
+            ;
+            return "\"" + s + "\"";
+        }
+
         #endregion
     }
 }

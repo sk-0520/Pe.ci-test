@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -54,10 +55,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         public IReadOnlyList<FeedbackKind> FeedbackKindItems { get; } = EnumUtility.GetMembers<FeedbackKind>().ToList();
 
+        [Required]
         public string Subject
         {
             get => this._subject;
-            set => SetProperty(ref this._subject, value);
+            set
+            {
+                SetProperty(ref this._subject, value);
+                ValidateProperty(this._subject);
+            }
         }
 
         public FeedbackKind SelectedFeedbackKind
@@ -85,6 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                     FeedbackKind.Others => Properties.Resources.String_Feedback_Comment_Kind_Others,
                     _ => throw new NotImplementedException(),
                 };
+                DelayUpdatePreview.Clear();
                 ContentDocument.Text = text;
                 DelayUpdatePreview.Flush();
             }
@@ -105,13 +112,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         public ICommand SendCommand => GetOrCreateCommand(() => new DelegateCommand(
             async () => {
-                var data = new FeedbackInputData() {
-                    Subject = Subject,
-                    Kind = SelectedFeedbackKind,
-                    Content = ContentDocument.Text,
-                };
+                if(Validate()) {
+                    var data = new FeedbackInputData() {
+                        Subject = Subject,
+                        Kind = SelectedFeedbackKind,
+                        Content = ContentDocument.Text,
+                    };
 
-                await Model.SendAync(data);
+                    await Model.SendAync(data);
+                }
             }
         ));
 
@@ -191,7 +200,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                 DispatcherWrapper.Begin(() => {
                     var text = ContentDocument.Text;
                     // TODO: エスケープ
-                    WebView.EvaluateScriptAsync("updatePreview('" + text + "')");
+                    WebView.EvaluateScriptAsync("updatePreview(" + Model.ToJavascriptString(text) + ")");
                 }, System.Windows.Threading.DispatcherPriority.Render);
             });
         }

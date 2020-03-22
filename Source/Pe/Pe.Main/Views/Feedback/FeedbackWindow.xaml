@@ -13,13 +13,14 @@
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
 
+  WindowStartupLocation="CenterScreen"
+  Height="500"
+  Width="700"
+  ResizeMode="CanResizeWithGrip"
+
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
-
-  WindowStartupLocation="CenterScreen"
-  Height="600"
-  Width="900"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -44,7 +45,7 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <Grid>
+      <Grid Margin="{StaticResource AllMargin}">
         <Grid.Style>
           <Style TargetType="Grid">
             <Style.Triggers>
@@ -67,8 +68,6 @@
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -76,15 +75,23 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Resources.String_Feedback_Description, Source={x:Static app_main:CultureService.Current}}"  />
-        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Resources.String_Feedback_Warning, Source={x:Static app_main:CultureService.Current}}"  />
-        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Resources.String_Feedback_Subject_A, Source={x:Static app_main:CultureService.Current}}"  />
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+          <TextBlock Text="{Binding Resources.String_Feedback_Description, Source={x:Static app_main:CultureService.Current}}"  />
+          <TextBlock Text="{Binding Resources.String_Feedback_Warning, Source={x:Static app_main:CultureService.Current}}"  />
+          <TextBlock Text="{Binding Resources.String_Feedback_SourceAddress, Source={x:Static app_main:CultureService.Current}}" />
+          <TextBlock>
+            <Hyperlink Command="{Binding ShowSourceUriCommand}">
+              <TextBlock Text="{Binding Resources.String_Feedback_SourceOpen, Source={x:Static app_main:CultureService.Current}}" />
+            </Hyperlink>
+          </TextBlock>
+          <Separator Style="{StaticResource Vertical-Padding}" />
+        </StackPanel>
 
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Subject_A, Source={x:Static app_main:CultureService.Current}}" />
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Subject, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Subject_A, Source={x:Static app_main:CultureService.Current}}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Subject, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
-        <Grid Grid.Row="4" Grid.Column="1" >
+        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Grid Grid.Row="2" Grid.Column="1" >
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
@@ -97,12 +104,12 @@
               </DataTemplate>
             </ComboBox.ItemTemplate>
           </ComboBox>
-          <Button Grid.Column="1" Content="{Binding Resources.String_Feedback_KindSet_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SetTemplateCommand}" />
-          <TextBlock Grid.Column="2" Text="{Binding Resources.String_Feedback_KindSetWarning, Source={x:Static app_main:CultureService.Current}}" />
+          <Button Grid.Column="1"  Content="{Binding Resources.String_Feedback_KindSet_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SetTemplateCommand}" />
+          <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{Binding Resources.String_Feedback_KindSetWarning, Source={x:Static app_main:CultureService.Current}}" />
         </Grid>
 
-        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Comment_A, Source={x:Static app_main:CultureService.Current}}" />
-        <Grid Grid.Row="5" Grid.Column="1" >
+        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Comment_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Grid Grid.Row="3" Grid.Column="1" >
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -118,10 +125,19 @@
 
           <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
-          <sharpdevelop_avalonedit:TextEditor Grid.Row="1" Grid.Column="0" Document="{Binding ContentDocument}">
+          <sharpdevelop_avalonedit:TextEditor
+            Grid.Row="1"
+            Grid.Column="0"
+            ShowLineNumbers="True"
+            Document="{Binding ContentDocument}"
+            SyntaxHighlighting="MarkDown"
+          >
             <sharpdevelop_avalonedit:TextEditor.Options>
               <sharpdevelop_avalonedit:TextEditorOptions
-
+                ShowSpaces="True"
+                ShowTabs="True"
+                ShowColumnRuler="True"
+                ShowEndOfLine="True"
               />
             </sharpdevelop_avalonedit:TextEditor.Options>
           </sharpdevelop_avalonedit:TextEditor>
@@ -220,7 +236,7 @@
             <StackPanel>
               <TextBlock TextAlignment="Center" Text="{Binding Resources.String_Common_Sent, Source={x:Static app_main:CultureService.Current}}" />
               <TextBlock TextAlignment="Center">
-                <Hyperlink Command="{Binding CorrectCommand}">
+                <Hyperlink Command="{Binding CloseCommand, ElementName=root}">
                   <TextBlock Text="{Binding Resources.String_Common_Close, Source={x:Static app_main:CultureService.Current}}" />
                 </Hyperlink>
               </TextBlock>

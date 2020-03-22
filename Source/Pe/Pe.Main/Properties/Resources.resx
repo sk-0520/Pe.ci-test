@@ -1576,16 +1576,36 @@
     <value>プレビュー</value>
   </data>
   <data name="String_Feedback_Comment_Format" xml:space="preserve">
-    <value>てきすと</value>
+    <value>Markdown にてにて記述</value>
   </data>
   <data name="String_Feedback_Comment_Kind_Bug" xml:space="preserve">
-    <value>再現手順</value>
+    <value>### 期待する挙動
+
+(期待する挙動を記述してください)
+
+
+### 実際の挙動
+
+(実際に起こる挙動を記述してください)
+
+
+### 再現手順
+
+1. (再現手順1を記述してください)
+2. (再現手順2を記述してください)
+3. (再現手順3以降を記述してください)</value>
   </data>
   <data name="String_Feedback_Comment_Kind_Others" xml:space="preserve">
-    <value>なんなりと</value>
+    <value>(自由に記述してください)</value>
   </data>
   <data name="String_Feedback_Comment_Kind_Proposal" xml:space="preserve">
-    <value>なにをどう</value>
+    <value>### 提案
+
+* (このテンプレート内容は説明ですので消してください)
+* 提案内容を記述してください
+* 1回のフィードバックで行う提案は1件のみにしてください
+  * 複数ある場合は複数回フィードバック送信を行ってください
+* きちんとした議論が必要な場合はフォーラムか課題にて対応します</value>
   </data>
   <data name="String_Feedback_Description" xml:space="preserve">
     <value>入力された内容は開発側で共有されます。
@@ -1620,5 +1640,11 @@
   </data>
   <data name="String_Feedback_KindSetWarning" xml:space="preserve">
     <value>入力内容は破棄されます。</value>
+  </data>
+  <data name="String_Feedback_SourceAddress" xml:space="preserve">
+    <value>※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。</value>
+  </data>
+  <data name="String_Feedback_SourceOpen" xml:space="preserve">
+    <value>ソースコードを参照</value>
   </data>
 </root>
