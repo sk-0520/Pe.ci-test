@@ -91,32 +91,14 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.91.001",
+		"date": "2020/03/22",
+		"version": "0.92.000",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "0832fd551d021da3c16ad13b5aa5d7cc2cb9199c",
 						"subject": "#503: 無言で死ぬのを何とかする",
 						"comments": [
 							"アプリケーション側で検知可能な未処理例外に対してクラッシュレポートを表示",
@@ -125,12 +107,8 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
+						"revision": "1672c0723532c8f36b677d077fd0bd390bf3d0dd",
 						"subject": "#506: フィードバック機能の再実装"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -138,20 +116,16 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "8ad089ea862928c798376538b918e88d3a1d5f71",
 						"subject": "#588: ディスプレイ設定変更後に強制終了する時がある"
 					},
 					{
-						"revision": "",
+						"revision": "2591d4ae145b4ed6250aaa68a380cdb4039a2a74",
 						"subject": "ヘルプのコマンドライン引数 app-log-limit の説明書きが値無しになっていたのを修正"
 					},
 					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"revision": "072b8b618f454e7f280d53146ef878215eb61da0",
+						"subject": "#586: ログが二重に出力されている"
 					}
 				]
 			},
@@ -159,17 +133,13 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "5fecb71fefb2f389dfee63943765cf5dc1e5901d",
 						"subject": "#574: 0.92.0 公開時に 0.91.0 以上をアップデート可能対象にする"
 					},
 					{
-						"revision": "",
+						"revision": "dd8c64fdf09c3d03121a2b27ba1d9e520a598444",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 1.6.1 -> 1.6.2"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
