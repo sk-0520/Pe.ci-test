@@ -143,7 +143,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "ヘルプのコマンドライン引数 app-log-limit の説明書きが値無しになっていたのを修正"
 					},
 					{
 						"revision": "",
