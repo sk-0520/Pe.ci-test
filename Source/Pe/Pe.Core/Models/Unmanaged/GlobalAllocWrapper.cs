@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
         }
 
         public static GlobalAllocWrapper Create<T>(T structure)
+            where T: struct
         {
             var result = new GlobalAllocWrapper(Marshal.SizeOf(structure));
             Marshal.StructureToPtr(structure, result.Raw, false);

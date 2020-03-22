@@ -119,6 +119,24 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// Pe の SQL ディレクトリ。
         /// </summary>
         public DirectoryInfo MainSqlDirectory => CombineDirectory(SqlDirectory, "ContentTypeTextNet.Pe.Main");
+
+        public DirectoryInfo WebViewTemplateDirectory => CombineDirectory(EtcDirectory, "web-view");
+        public DirectoryInfo WebViewThirdPartyDirectory => CombineDirectory(WebViewTemplateDirectory, "third-party");
+
+
+        public DirectoryInfo WebViewScriptDirectory => CombineDirectory(WebViewTemplateDirectory, "script");
+        public DirectoryInfo WebViewJqueryDirectory => CombineDirectory(WebViewThirdPartyDirectory, "jquery");
+        public FileInfo WebViewJqueryScriptFile => CombineFile(WebViewJqueryDirectory, "jquery.js");
+        public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(WebViewThirdPartyDirectory, "Marked");
+        public FileInfo WebViewMarkedScriptFile => CombineFile(WebViewMarkedDirectory, "marked.min.js");
+        public DirectoryInfo WebViewStyleDirectory => CombineDirectory(WebViewTemplateDirectory, "style");
+        public FileInfo WebViewBasicStyleFile => CombineFile(WebViewStyleDirectory, "basic.css");
+        public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(WebViewTemplateDirectory, "feedback");
+        public FileInfo WebViewFeedbackTemplateFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.html");
+        public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");
+        public FileInfo WebViewFeedbackScriptFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.js");
+
+
         /// <summary>
         /// 文書ディレクトリ。
         /// </summary>
@@ -198,6 +216,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo MachineWebViewDirectory => CombineDirectory(MachineDirectory, "web-view");
         public DirectoryInfo MachineWebViewUserDirectory => CombineDirectory(MachineWebViewDirectory, "user");
+        /// <summary>
+        /// 送信済みクラッシュレポート配置ディレクトリ。
+        /// </summary>
+        public DirectoryInfo MachineCrashReportDirectory => CombineDirectory(MachineDirectory, "crash");
+
 
         /// <summary>
         /// 一時ディレクトリ。
@@ -244,6 +267,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アップデート時ログファイル。
         /// </summary>
         public FileInfo TemporaryUpdateLogFile => CombineFile(TemporaryDirectory, "update.log");
+        /// <summary>
+        /// 生クラッシュレポート配置ディレクトリ。
+        /// </summary>
+        public DirectoryInfo TemporaryCrashReportDirectory => CombineDirectory(TemporaryDirectory, "crash");
 
         /// <summary>
         /// 設定格納DBファイル。

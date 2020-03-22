@@ -62,7 +62,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
 #if DEBUG
-            //TODO: PropertyCacher で何とかしたいと思ってはいるよ
             var stopwatch = Stopwatch.StartNew();
             using var _a_ = new ActionDisposer(d => Logger.LogTrace("PROP TIME: {0}", stopwatch.Elapsed));
 #endif

@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region property
 
+        string CommandLineKeyRunMode { get; } = "run-mode";
         string CommandLineKeyAppLogLimit { get; } = "app-log-limit";
         string CommandLineKeyLog { get; } = "log";
         string CommandLineKeyWithLog { get; } = "with-log";
@@ -42,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CommandLineSwitchBetaVersion { get; } = "beta-version";
 
         public bool IsFirstStartup { get; private set; }
-
+        public RunMode RunMode { get; private set; }
         public ApplicationDiContainer? DiContainer { get; private set; }
         public ApplicationLogging? Logging { get; private set; }
         public WindowManager? WindowManager { get; private set; }
@@ -75,6 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyUserDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyMachineDirectory, hasValue: true);
             commandLine.Add(longKey: EnvironmentParameters.CommandLineKeyTemporaryDirectory, hasValue: true);
+            commandLine.Add(longKey: CommandLineKeyRunMode, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyAppLogLimit, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyLog, hasValue: true);
             commandLine.Add(longKey: CommandLineKeyWithLog, hasValue: true);
@@ -142,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
-                    windowManager.Register(new WindowItem(WindowKind.Accept, view));
+                    windowManager.Register(new WindowItem(WindowKind.Accept, acceptModel, view));
                     view.ShowDialog();
 
                     return new AcceptResult(
@@ -256,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return true;
         }
 
-        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, ILoggerFactory loggerFactory)
+        ApplicationDiContainer SetupContainer(EnvironmentParameters environmentParameters, ApplicationDatabaseFactoryPack factory, CultureService cultureService, ILoggerFactory loggerFactory)
         {
             var container = new ApplicationDiContainer();
 
@@ -322,6 +324,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 */
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
                 .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+                .Register<CultureService, CultureService>(cultureService)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
             ;
@@ -382,9 +385,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             InitializeClr();
 
             var commandLine = CreateCommandLine(e.Args);
+            RunMode = RunModeUtility.Parse(commandLine.GetValue(CommandLineKeyRunMode, string.Empty));
 #if BETA
-            if(!ShowCommandLineMessageIfUnspecified(commandLine)) {
-                return false;
+            if(RunMode != RunMode.CrashReport) {
+                if(!ShowCommandLineMessageIfUnspecified(commandLine)) {
+                    return false;
+                }
             }
 #endif
             var environmentParameters = InitializeEnvironment(commandLine);
@@ -408,27 +414,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var loggerFactory = Logging.Factory;
             var logger = Logging.Factory.CreateLogger(GetType());
 
-
-            var mutexName = environmentParameters.Configuration.General.MutexName;
-            logger.LogInformation("mutext: {0}", mutexName);
-            var mutex = new Mutex(true, mutexName, out var createdNew);
-            if(!createdNew) {
-                //NOTE: 起動中プロセスになんかするならここかなぁ
-                logger.LogWarning("二重起動: {0}", mutexName);
-                mutex.Dispose();
-                return false;
+            if(RunMode == RunMode.Normal) {
+                var mutexName = environmentParameters.Configuration.General.MutexName;
+                logger.LogInformation("mutext: {0}", mutexName);
+                var mutex = new Mutex(true, mutexName, out var createdNew);
+                if(!createdNew) {
+                    //NOTE: 起動中プロセスになんかするならここかなぁ
+                    logger.LogWarning("二重起動: {0}", mutexName);
+                    mutex.Dispose();
+                    return false;
+                }
+                Mutex = mutex;
             }
-            Mutex = mutex;
 
             var cultureService = new CultureService(EnumResourceManagerFactory.Create());
             CultureService.Initialize(cultureService);
+
+            if(RunMode == RunMode.CrashReport) {
+                // DI/その他 の重要インフラは構築しない
+                logger.LogInformation("クラッシュレポート起動のため初期化処理 途中終了");
+                return true;
+            }
 
             var skipAccept = commandLine.ExistsSwitch(CommandLineSwitchAcceptSkip);
             if(skipAccept) {
                 logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");
             }
 
-            AcceptResult? acceptResult = null; ;
+            AcceptResult? acceptResult = null;
             IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
             if(IsFirstStartup) {
                 logger.LogInformation("初回実行");
@@ -446,13 +459,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             InitializeFileSystem(environmentParameters, logger);
             environmentParameters.SetFileSystemInitialized();
 
-
             if(IsFirstStartup) {
                 FirstSetup(environmentParameters, loggerFactory, logger);
             }
 
             var webViewinItializer = new WebViewinItializer(loggerFactory);
-            webViewinItializer.Initialize(environmentParameters);
+            webViewinItializer.Initialize(environmentParameters, cultureService);
             //try {
             //    webViewinItializer.Initialize(environmentParameters);
             //} catch(Exception ex) {
@@ -473,7 +485,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var factory = pack.factory;
             pack.accessor.Dispose();
 
-            DiContainer = SetupContainer(environmentParameters, factory, loggerFactory);
+            DiContainer = SetupContainer(environmentParameters, factory, cultureService, loggerFactory);
             WindowManager = SetupWindowManager(DiContainer);
             //OrderManager = SetupOrderManager(DiContainer);
             NotifyManager = SetupNotifyManager(DiContainer);

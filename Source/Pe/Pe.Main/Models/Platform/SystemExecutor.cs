@@ -68,6 +68,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return process;
         }
 
+        public Process ExecuteFile(string filePath, string argument)
+        {
+            var process = new Process();
+            var startInfo = process.StartInfo;
+
+            // 実行パス
+            startInfo.FileName = filePath;
+            startInfo.Arguments = argument;
+            startInfo.UseShellExecute = true;
+
+            process.Start();
+
+            return process;
+        }
+
         public void ShowProperty(string filePath)
         {
             NativeMethods.SHObjectProperties(IntPtr.Zero, SHOP.SHOP_FILEPATH, filePath, string.Empty);

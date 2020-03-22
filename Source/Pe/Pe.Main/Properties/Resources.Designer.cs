@@ -302,6 +302,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   フィードバック(_F) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_About_Feedback_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_About_Feedback_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ヘルプ(_H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_About_Help_A {
@@ -509,6 +518,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   キャンセル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Cancel {
+            get {
+                return ResourceManager.GetString("String_Common_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   キャンセル(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Cancel_A {
@@ -523,6 +541,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Common_Clear {
             get {
                 return ResourceManager.GetString("String_Common_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   閉じる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Close {
+            get {
+                return ResourceManager.GetString("String_Common_Close", resourceCulture);
             }
         }
         
@@ -554,6 +581,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   再起動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Reboot {
+            get {
+                return ResourceManager.GetString("String_Common_Reboot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再起動(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Reboot_A {
+            get {
+                return ResourceManager.GetString("String_Common_Reboot_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ディレクトリ選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_SelectDirectory {
@@ -572,11 +617,210 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   送信 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Send {
+            get {
+                return ResourceManager.GetString("String_Common_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Send_A {
+            get {
+                return ResourceManager.GetString("String_Common_Send_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Sending {
+            get {
+                return ResourceManager.GetString("String_Common_Sending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Sent {
+            get {
+                return ResourceManager.GetString("String_Common_Sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   上へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Up {
             get {
                 return ResourceManager.GetString("String_Common_Up", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動送信待機中... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_AutoSendWaiting {
+            get {
+                return ResourceManager.GetString("String_CrashReport_AutoSendWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   自動送信停止(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_CancelAutoSend {
+            get {
+                return ResourceManager.GetString("String_CrashReport_CancelAutoSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   クラッシュレポート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Caption {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   追加コメント(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Comment_A {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Comment_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   エラー発生 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Error {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pe は死にました に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Header_AppIsDead {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Header_AppIsDead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   このレポートを送信していただければ改善につながる可能性があります。
+        ///レポートは開発側で共有されます。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Header_ReportInformation {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Header_ReportInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Header_ReportSourceAddress {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Header_ReportSourceAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ソースコードを参照 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Header_ReportSourceOpen {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Header_ReportSourceOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   連絡先メールアドレス(_M) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_MailAddress_A {
+            get {
+                return ResourceManager.GetString("String_CrashReport_MailAddress_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   異常時データ内容(_D) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_RawContent_A {
+            get {
+                return ResourceManager.GetString("String_CrashReport_RawContent_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   異常時エラーファイル(_E) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_RawFilePath_A {
+            get {
+                return ResourceManager.GetString("String_CrashReport_RawFilePath_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再送信 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_RetrySend {
+            get {
+                return ResourceManager.GetString("String_CrashReport_RetrySend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信済みクラッシュレポートは自動削除されません 云々 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_SaveFileDescription {
+            get {
+                return ResourceManager.GetString("String_CrashReport_SaveFileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信済みクラッシュレポート に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_SaveFilePath {
+            get {
+                return ResourceManager.GetString("String_CrashReport_SaveFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Send_A {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Send_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信中... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Sending {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Sending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_CrashReport_Sent {
+            get {
+                return ResourceManager.GetString("String_CrashReport_Sent", resourceCulture);
             }
         }
         
@@ -869,6 +1113,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Software {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.AboutComponentKind.Software", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不具合報告 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_FeedbackKind_Bug {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Bug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   その他 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_FeedbackKind_Others {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   提案 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_FeedbackKind_Proposal {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Proposal", resourceCulture);
             }
         }
         
@@ -2333,6 +2604,180 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_ExtendsExecute_WorkDirectory_A {
             get {
                 return ResourceManager.GetString("String_ExtendsExecute_WorkDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   フィードバック に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Caption {
+            get {
+                return ResourceManager.GetString("String_Feedback_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コメント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_A {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Markdown にてにて記述 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Format {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ### 期待する挙動
+        ///
+        ///(期待する挙動を記述してください)
+        ///
+        ///
+        ///### 実際の挙動
+        ///
+        ///(実際に起こる挙動を記述してください)
+        ///
+        ///
+        ///### 再現手順
+        ///
+        ///1. (再現手順1を記述してください)
+        ///2. (再現手順2を記述してください)
+        ///3. (再現手順3以降を記述してください) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Kind_Bug {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Kind_Bug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   (自由に記述してください) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Kind_Others {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Kind_Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ### 提案
+        ///
+        ///* (このテンプレート内容は説明ですので消してください)
+        ///* 提案内容を記述してください
+        ///* 1回のフィードバックで行う提案は1件のみにしてください
+        ///  * 複数ある場合は複数回フィードバック送信を行ってください
+        ///* きちんとした議論が必要な場合はフォーラムか課題にて対応します に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Comment_Kind_Proposal {
+            get {
+                return ResourceManager.GetString("String_Feedback_Comment_Kind_Proposal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   内容 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_CommentContent {
+            get {
+                return ResourceManager.GetString("String_Feedback_CommentContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プレビュー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_CommentPreview {
+            get {
+                return ResourceManager.GetString("String_Feedback_CommentPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再入力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Correct {
+            get {
+                return ResourceManager.GetString("String_Feedback_Correct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   入力された内容は開発側で共有されます。
+        ///課題を起票する際にも入力内容が引用として使用される可能性があります。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Description {
+            get {
+                return ResourceManager.GetString("String_Feedback_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種類 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Kind_A {
+            get {
+                return ResourceManager.GetString("String_Feedback_Kind_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   テンプレートを設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_KindSet_A {
+            get {
+                return ResourceManager.GetString("String_Feedback_KindSet_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   入力内容は破棄されます。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_KindSetWarning {
+            get {
+                return ResourceManager.GetString("String_Feedback_KindSetWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_SourceAddress {
+            get {
+                return ResourceManager.GetString("String_Feedback_SourceAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ソースコードを参照 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_SourceOpen {
+            get {
+                return ResourceManager.GetString("String_Feedback_SourceOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   件名 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Subject_A {
+            get {
+                return ResourceManager.GetString("String_Feedback_Subject_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   個人情報を含めないでください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Warning {
+            get {
+                return ResourceManager.GetString("String_Feedback_Warning", resourceCulture);
             }
         }
         

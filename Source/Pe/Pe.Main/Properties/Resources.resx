@@ -1484,4 +1484,167 @@
   <data name="String_Setting_Generals_General_Starup_Argument_A" xml:space="preserve">
     <value>追加引数(_A)</value>
   </data>
+  <data name="String_CrashReport_Caption" xml:space="preserve">
+    <value>クラッシュレポート</value>
+  </data>
+  <data name="String_Common_Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="String_Common_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="String_Common_Reboot" xml:space="preserve">
+    <value>再起動</value>
+  </data>
+  <data name="String_Common_Reboot_A" xml:space="preserve">
+    <value>再起動(_R)</value>
+  </data>
+  <data name="String_CrashReport_AutoSendWaiting" xml:space="preserve">
+    <value>自動送信待機中...</value>
+  </data>
+  <data name="String_CrashReport_CancelAutoSend" xml:space="preserve">
+    <value>自動送信停止(_C)</value>
+  </data>
+  <data name="String_CrashReport_Comment_A" xml:space="preserve">
+    <value>追加コメント(_C)</value>
+  </data>
+  <data name="String_CrashReport_Error" xml:space="preserve">
+    <value>エラー発生</value>
+  </data>
+  <data name="String_CrashReport_Header_AppIsDead" xml:space="preserve">
+    <value>Pe は死にました</value>
+  </data>
+  <data name="String_CrashReport_Header_ReportInformation" xml:space="preserve">
+    <value>このレポートを送信していただければ改善につながる可能性があります。
+レポートは開発側で共有されます。</value>
+  </data>
+  <data name="String_CrashReport_Header_ReportSourceAddress" xml:space="preserve">
+    <value>※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。</value>
+  </data>
+  <data name="String_CrashReport_Header_ReportSourceOpen" xml:space="preserve">
+    <value>ソースコードを参照</value>
+  </data>
+  <data name="String_CrashReport_MailAddress_A" xml:space="preserve">
+    <value>連絡先メールアドレス(_M)</value>
+  </data>
+  <data name="String_CrashReport_RawContent_A" xml:space="preserve">
+    <value>異常時データ内容(_D)</value>
+  </data>
+  <data name="String_CrashReport_RawFilePath_A" xml:space="preserve">
+    <value>異常時エラーファイル(_E)</value>
+  </data>
+  <data name="String_CrashReport_RetrySend" xml:space="preserve">
+    <value>再送信</value>
+  </data>
+  <data name="String_CrashReport_SaveFileDescription" xml:space="preserve">
+    <value>送信済みクラッシュレポートは自動削除されません 云々</value>
+  </data>
+  <data name="String_CrashReport_SaveFilePath" xml:space="preserve">
+    <value>送信済みクラッシュレポート</value>
+  </data>
+  <data name="String_CrashReport_Sending" xml:space="preserve">
+    <value>送信中...</value>
+  </data>
+  <data name="String_CrashReport_Send_A" xml:space="preserve">
+    <value>送信(_S)</value>
+  </data>
+  <data name="String_CrashReport_Sent" xml:space="preserve">
+    <value>送信完了</value>
+  </data>
+  <data name="String_AppManager_About_Feedback_A" xml:space="preserve">
+    <value>フィードバック(_F)</value>
+  </data>
+  <data name="String_Feedback_Caption" xml:space="preserve">
+    <value>フィードバック</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Bug" xml:space="preserve">
+    <value>不具合報告</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Others" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.FeedbackKind.Proposal" xml:space="preserve">
+    <value>提案</value>
+  </data>
+  <data name="String_Feedback_Comment_A" xml:space="preserve">
+    <value>コメント</value>
+  </data>
+  <data name="String_Feedback_CommentContent" xml:space="preserve">
+    <value>内容</value>
+  </data>
+  <data name="String_Feedback_CommentPreview" xml:space="preserve">
+    <value>プレビュー</value>
+  </data>
+  <data name="String_Feedback_Comment_Format" xml:space="preserve">
+    <value>Markdown にてにて記述</value>
+  </data>
+  <data name="String_Feedback_Comment_Kind_Bug" xml:space="preserve">
+    <value>### 期待する挙動
+
+(期待する挙動を記述してください)
+
+
+### 実際の挙動
+
+(実際に起こる挙動を記述してください)
+
+
+### 再現手順
+
+1. (再現手順1を記述してください)
+2. (再現手順2を記述してください)
+3. (再現手順3以降を記述してください)</value>
+  </data>
+  <data name="String_Feedback_Comment_Kind_Others" xml:space="preserve">
+    <value>(自由に記述してください)</value>
+  </data>
+  <data name="String_Feedback_Comment_Kind_Proposal" xml:space="preserve">
+    <value>### 提案
+
+* (このテンプレート内容は説明ですので消してください)
+* 提案内容を記述してください
+* 1回のフィードバックで行う提案は1件のみにしてください
+  * 複数ある場合は複数回フィードバック送信を行ってください
+* きちんとした議論が必要な場合はフォーラムか課題にて対応します</value>
+  </data>
+  <data name="String_Feedback_Description" xml:space="preserve">
+    <value>入力された内容は開発側で共有されます。
+課題を起票する際にも入力内容が引用として使用される可能性があります。</value>
+  </data>
+  <data name="String_Feedback_Kind_A" xml:space="preserve">
+    <value>種類</value>
+  </data>
+  <data name="String_Feedback_KindSet_A" xml:space="preserve">
+    <value>テンプレートを設定</value>
+  </data>
+  <data name="String_Feedback_Subject_A" xml:space="preserve">
+    <value>件名</value>
+  </data>
+  <data name="String_Feedback_Warning" xml:space="preserve">
+    <value>個人情報を含めないでください。</value>
+  </data>
+  <data name="String_Common_Send" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="String_Common_Sending" xml:space="preserve">
+    <value>送信中</value>
+  </data>
+  <data name="String_Common_Send_A" xml:space="preserve">
+    <value>送信(_S)</value>
+  </data>
+  <data name="String_Common_Sent" xml:space="preserve">
+    <value>送信完了</value>
+  </data>
+  <data name="String_Feedback_Correct" xml:space="preserve">
+    <value>再入力</value>
+  </data>
+  <data name="String_Feedback_KindSetWarning" xml:space="preserve">
+    <value>入力内容は破棄されます。</value>
+  </data>
+  <data name="String_Feedback_SourceAddress" xml:space="preserve">
+    <value>※受信側処理はリポジトリに格納されておらず Google Drive に配置されています。</value>
+  </data>
+  <data name="String_Feedback_SourceOpen" xml:space="preserve">
+    <value>ソースコードを参照</value>
+  </data>
 </root>

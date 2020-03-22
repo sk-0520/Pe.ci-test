@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), target, EmptyChildren);
                         result.Add(item);
                     } else {
-                        var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), key, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
                         result.Add(item);
                     }
                 }
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var result = new List<ObjectDumpItem>(array.Length);
             var arrayType = array.GetType();
-            for(var i=0; i< array.Length; i++) {
+            for(var i = 0; i < array.Length; i++) {
                 var s = "[" + i.ToString() + "]";
                 var target = array.GetValue(i);
 
@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
                         result.Add(item);
                     } else {
-                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), s, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
                         result.Add(item);
                     }
                 }
@@ -189,6 +189,42 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
 
         }
+
+        private IReadOnlyList<ObjectDumpItem> DumpEnumerable(IEnumerable enumerable, int nest, bool ignoreAutoMember)
+        {
+            var result = new List<ObjectDumpItem>();
+            var arrayType = enumerable.GetType();
+            var enumerator = enumerable.GetEnumerator();
+            int i = 0;
+            while(enumerator.MoveNext()) {
+                try {
+                    var s = "[" + i.ToString() + "]";
+                    var target = enumerator.Current;
+
+                    if(target == null) {
+                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, typeof(object)), null, EmptyChildren);
+                        result.Add(item);
+                    } else {
+                        var targetType = target.GetType();
+                        if(IgnoreNestedMembers.Contains(targetType)) {
+                            var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
+                            result.Add(item);
+                        } else {
+                            var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+                            result.Add(item);
+                        }
+                    }
+
+                } finally {
+                    i++;
+                }
+
+            }
+
+            return result;
+
+        }
+
 
         IReadOnlyList<ObjectDumpItem> DumpFileSystemInfo(FileSystemInfo fileSystemInfo, int nest, bool ignoreAutoMember)
         {
@@ -215,11 +251,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             switch(target) {
+                case string _:
+                    break;
+
                 case IDictionary dic:
                     return DumpDictionary(dic, nest, ignoreAutoMember);
 
                 case Array array:
                     return DumpArray(array, nest, ignoreAutoMember);
+
+                case IEnumerable enumerable:
+                    return DumpEnumerable(enumerable, nest, ignoreAutoMember);
 
                 case FileSystemInfo fsi:
                     return DumpFileSystemInfo(fsi, nest, ignoreAutoMember);
@@ -244,7 +286,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 var memberValue = GetMemberValue(target, member);
                 var children = EmptyChildren;
                 if(memberValue != null && !IgnoreNestedMembers.Contains(memberValue.GetType())) {
-                    if(!(memberValue is IEnumerable)) {
+                    if((memberValue is IEnumerable)) {
                         children = DumpCore(memberValue, GetNextNest(nest), ignoreAutoMember);
                     }
                 }

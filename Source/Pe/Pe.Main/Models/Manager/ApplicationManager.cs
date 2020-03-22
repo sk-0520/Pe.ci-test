@@ -54,6 +54,11 @@ using System.IO.Compression;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using System.Windows.Data;
+using ContentTypeTextNet.Pe.Main.CrashReport.Models.Data;
+using System.Text.Json;
+using System.Reflection;
+using ContentTypeTextNet.Pe.Main.CrashReport.Models;
+using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -66,7 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             IsFirstStartup = initializer.IsFirstStartup;
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
-
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
 
@@ -84,6 +88,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManagerImpl);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
+            ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
@@ -92,6 +98,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+
+            var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
+            LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
         }
 
         #region property
@@ -118,6 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
         CommandElement CommandElement { get; }
+        //FeedbackElement? FeedbackElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
 
@@ -133,6 +143,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public UpdateInfo ApplicationUpdateInfo { get; }
 
         public bool CanCallNotifyAreaMenu { get; private set; }
+
+        internal bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
+        internal bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
+
+        private bool ResetWaiting { get; set; }
+        private LazyAction LazyScreenElementReset { get; }
 
         #endregion
 
@@ -285,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var view = diContainer.Make<Views.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
-                windowManager.Register(new WindowItem(WindowKind.Startup, view));
+                windowManager.Register(new WindowItem(WindowKind.Startup, startupModel, view));
 
                 view.ShowDialog();
 
@@ -313,7 +329,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var view = diContainer.Make<Views.About.AboutWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
-                windowManager.Register(new WindowItem(WindowKind.About, view));
+                windowManager.Register(new WindowItem(WindowKind.About, model, view));
 
                 view.ShowDialog();
             }
@@ -339,7 +355,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
-                WindowManager.Register(new WindowItem(WindowKind.Release, view));
+                WindowManager.Register(new WindowItem(WindowKind.Release, element, view));
                 view.Show();
             }
 
@@ -733,7 +749,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                 // ノート生成で最後のノートがアクティブになる対応。設定でも発生するけど起動時に何とかしていって思い
-                if(currentActiveWindowHandle != IntPtr.Zero) {
+                if(currentActiveWindowHandle != IntPtr.Zero && currentActiveWindowHandle != MessageWindowHandleSource?.Handle) {
                     WindowsUtility.ShowActive(currentActiveWindowHandle);
                 }
                 MoveZOrderAllNotes(false);
@@ -760,13 +776,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void CloseViewsCore(WindowKind windowKind)
         {
-            var windowItems = WindowManager.GetWindowItems(windowKind)
-                .Where(i=> i.IsOpened)
-                .Where(i=> !i.IsClosed)
-                .ToList()
-            ;
+            var windowItems = WindowManager.GetWindowItems(windowKind).ToList();
             foreach(var windowItem in windowItems) {
-                windowItem.Window.Close();
+                if(windowItem.IsOpened) {
+                    if(!windowItem.IsClosed) {
+                        if(windowItem.Window.IsVisible) {
+                            Logger.LogTrace("閉じることのできるウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                            windowItem.Window.Close();
+                        } else {
+                            Logger.LogTrace("非表示ウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                        }
+                    } else {
+                        Logger.LogTrace("既に閉じられたウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                    }
+                } else {
+                    Logger.LogTrace("まだ開かれていないウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                }
             }
         }
 
@@ -867,6 +892,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CommandElement.StartView();
         }
 
+        public void ShowFeedbackView()
+        {
+            var items = WindowManager.GetWindowItems(WindowKind.Feedback).ToList();
+            if(items.Count != 0) {
+                foreach(var item in items) {
+                    WindowManager.Flash(item);
+                }
+                return;
+            }
+
+            var feedbackElement = ApplicationDiContainer.Build<FeedbackElement>();
+            feedbackElement.Initialize();
+            var windowItem = OrderManager.CreateFeedbackWindow(feedbackElement);
+            WindowManager.Register(windowItem);
+            windowItem.Window.Show();
+        }
 
         void BackupSettings(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string backupFileBaseName, int enabledCount, string userBackupDirectoryPath)
         {
@@ -905,7 +946,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             );
         }
 
-        private void ResetScreenViewElements()
+        private void ClearScreenViewElements()
         {
             CloseLauncherToolbarViews();
             CloseNoteViews();
@@ -913,8 +954,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();
             DisposeNoteElements();
+        }
+
+        private void ResetScreenViewElements()
+        {
+            ClearScreenViewElements();
 
             ExecuteElements();
+        }
+
+        private void DelayResetScreenViewElements()
+        {
+            void DelayExecuteElements()
+            {
+                LazyScreenElementReset.DelayAction(() => {
+                    ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(ResetScreenViewElements, DispatcherPriority.SystemIdle);
+                    ResetWaiting = false;
+                });
+            }
+
+            if(!ResetWaiting) {
+                ResetWaiting = true;
+                ClearScreenViewElements();
+                DelayExecuteElements();
+            } else {
+                DelayExecuteElements();
+            }
         }
 
         public async Task DelayCheckUpdateAsync()
@@ -1069,6 +1134,120 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ApplicationUpdateInfo.SetError(ex.Message);
             }
 
+        }
+
+        internal FileInfo OutputRawCrashReport(Exception exception)
+        {
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var versionConverter = new VersionConverter();
+            var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HHmmss_fff'Z'");
+            var fileName = versionConverter.ConvertFileName(timestamp, BuildStatus.Version, BuildStatus.Revision, "dmp");
+            var filePath = Path.Combine(environmentParameters.TemporaryCrashReportDirectory.FullName, fileName);
+
+            static Dictionary<string, string?> CreateInfoMap(IEnumerable<PlatformInformationItem> items) => items.ToDictionary(k => k.Key, v => Convert.ToString(v.Value));
+            void ExceptionWrapper(Action action)
+            {
+                try {
+                    action();
+                } catch(Exception ex) {
+                    // 運に任せる
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+
+            var rawData = new CrashReportRawData() {
+                Version = BuildStatus.Version,
+                Revision = BuildStatus.Revision,
+                Exception = exception.ToString(),
+                Timestamp = DateTime.UtcNow,
+            };
+
+            ExceptionWrapper(() => {
+                rawData.UserId = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
+                    var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
+                    var userIdManager = new UserIdManager(LoggerFactory);
+                    return userIdManager.SafeGetOrCreateUserId(appExecuteSettingEntityDao);
+                });
+            });
+
+            string TrimFunc(string s) => s.Substring(3);
+
+            var info = new ApplicationInformationCollector(environmentParameters);
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetApplication))] = CreateInfoMap(info.GetApplication()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentParameter))] = CreateInfoMap(info.GetEnvironmentParameter()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetCPU))] = CreateInfoMap(info.GetCPU()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetOS))] = CreateInfoMap(info.GetOS()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetRuntimeInformation))] = CreateInfoMap(info.GetRuntimeInformation()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironment))] = CreateInfoMap(info.GetEnvironment()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetEnvironmentVariables))] = CreateInfoMap(info.GetEnvironmentVariables()));
+            ExceptionWrapper(() => rawData.Informations[TrimFunc(nameof(info.GetScreen))] = CreateInfoMap(info.GetScreen()));
+
+            // この子はもうこの時点のログで確定
+            rawData.LogItems = Logging.GetLogItems().Select(i => LogItem.Create(i)).ToList();
+
+            var file = new FileInfo(filePath);
+            using(var stream = file.Create()) {
+                var serializer = new CrashReportSerializer();
+                serializer.Save(rawData, stream);
+            }
+#if DEBUG
+            using(var stream = file.Open(FileMode.Open)) {
+                var serializer = new CrashReportSerializer();
+                var data = serializer.Load<CrashReportRawData>(new KeepStream(stream));
+                var diffStream = new MemoryStream();
+                serializer.Save(data, new KeepStream(diffStream));
+                stream.Position = 0;
+                diffStream.Position = 0;
+                Debug.Assert(stream.Length == diffStream.Length);
+                var s = new byte[stream.Length];
+                var d = new byte[diffStream.Length];
+                stream.Read(s);
+                diffStream.Read(d);
+                Debug.Assert(s.SequenceEqual(d));
+            }
+#endif
+            return file;
+        }
+
+        internal void ExecuteCrashReport(FileInfo rawReport)
+        {
+            var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+            var saveReportFilePath = Path.Combine(environmentParameters.MachineCrashReportDirectory.FullName, Path.ChangeExtension(rawReport.Name, "json"));
+
+            var currentCommands = Environment.GetCommandLineArgs()
+                .Skip(1)
+                .Select(i => CommandLine.Escape(i))
+                .ToList()
+            ;
+
+            var autoSend = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
+                var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
+                var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
+                return setting.IsEnabledTelemetry;
+            });
+
+            var args = new List<string> {
+                "--run-mode", "crash-report",
+                "--language", System.Globalization.CultureInfo.CurrentCulture.Name,
+                "--post-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportUri.OriginalString),
+                "--src-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportSourceUri.OriginalString),
+                "--report-raw-file", CommandLine.Escape(rawReport.FullName),
+                "--report-save-file", CommandLine.Escape(saveReportFilePath),
+                "--execute-command", CommandLine.Escape(environmentParameters.RootApplication.FullName),
+                "--execute-argument", CommandLine.Escape(string.Join(" ", currentCommands)),
+            };
+            if(autoSend) {
+                args.Add("--auto-send");
+            }
+            args.AddRange(currentCommands);
+
+            var arg = string.Join(' ', args);
+
+            var systemExecutor = new SystemExecutor();
+            var commandPath = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "exe");
+            Logger.LogInformation("path: {0}", commandPath);
+            Logger.LogInformation("args: {0}", arg);
+            systemExecutor.ExecuteFile(commandPath, arg);
         }
 
         #endregion
@@ -1250,6 +1429,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     ApplicationMutex.ReleaseMutex();
                     ApplicationMutex.Dispose();
+
+                    LazyScreenElementReset.Dispose();
 
                     CloseViews();
                     DisposeElements();

@@ -67,6 +67,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(result, fx.Count);
         }
 
+        /*
         [TestMethod]
         public void ConcurrentEnqueueTest()
         {
@@ -75,6 +76,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Parallel.ForEach(Enumerable.Range(0, ushort.MaxValue), i => { fx.Enqueue(i); });
             Assert.AreEqual(limit, fx.Count);
         }
+        */
         #endregion
     }
 
