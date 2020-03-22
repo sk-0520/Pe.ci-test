@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
@@ -49,6 +50,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
         #endregion
 
         #region function
+
+        public void ShowSourceUri()
+        {
+            var systemExecutor = new SystemExecutor();
+            try {
+                systemExecutor.OpenUri(ApiConfiguration.FeedbackSourceUri);
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
+            }
+        }
+
+        public void Cancel()
+        {
+            SendStatus.State = RunningState.None;
+        }
 
         public async Task SendAync(FeedbackInputData inputData)
         {

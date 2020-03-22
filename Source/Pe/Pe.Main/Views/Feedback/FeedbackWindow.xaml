@@ -44,25 +44,25 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <Grid.Style>
-        <Style TargetType="Grid">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
-              <Setter Property="IsEnabled" Value="False" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
-              <Setter Property="IsEnabled" Value="False" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
-              <Setter Property="IsEnabled" Value="False" />
-            </DataTrigger>
-          </Style.Triggers>
-          <Setter Property="IsEnabled" Value="True" />
-        </Style>
+      <Grid>
+        <Grid.Style>
+          <Style TargetType="Grid">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+              <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
+                <Setter Property="IsEnabled" Value="False" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="IsEnabled" Value="True" />
+          </Style>
 
-      </Grid.Style>
+        </Grid.Style>
 
-      <Grid Grid.Column="0">
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
@@ -194,7 +194,14 @@
                 <Setter Property="Visibility" Value="Collapsed" />
               </Style>
             </ContentControl.Style>
-            <TextBlock TextAlignment="Center" Text="{Binding ErrorMessage}" />
+            <StackPanel>
+              <TextBlock TextAlignment="Center" Text="{Binding ErrorMessage}" />
+              <TextBlock TextAlignment="Center">
+                <Hyperlink Command="{Binding CorrectCommand}">
+                  <TextBlock Text="{Binding Resources.String_Feedback_Correct, Source={x:Static app_main:CultureService.Current}}" />
+                </Hyperlink>
+              </TextBlock>
+            </StackPanel>
           </ContentControl>
           <!--#endregion-->
 
@@ -210,7 +217,14 @@
                 <Setter Property="Visibility" Value="Collapsed" />
               </Style>
             </ContentControl.Style>
-            <TextBlock TextAlignment="Center" Text="SEND!!" />
+            <StackPanel>
+              <TextBlock TextAlignment="Center" Text="{Binding Resources.String_Common_Sent, Source={x:Static app_main:CultureService.Current}}" />
+              <TextBlock TextAlignment="Center">
+                <Hyperlink Command="{Binding CorrectCommand}">
+                  <TextBlock Text="{Binding Resources.String_Common_Close, Source={x:Static app_main:CultureService.Current}}" />
+                </Hyperlink>
+              </TextBlock>
+            </StackPanel>
           </ContentControl>
           <!--#endregion-->
 
@@ -219,7 +233,7 @@
     </Grid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button Content="send" Command="{Binding SendCommand}">
+      <Button Content="{Binding Resources.String_Common_Send_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SendCommand}">
         <Button.Style>
           <Style TargetType="Button" BasedOn="{StaticResource DialogCommandButton}">
             <Style.Triggers>
@@ -237,7 +251,7 @@
           </Style>
         </Button.Style>
       </Button>
-      <Button Content="close" Command="{Binding CloseCommand, ElementName=root}">
+      <Button Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}">
         <Button.Style>
           <Style TargetType="Button" BasedOn="{StaticResource DialogCommandButton}">
             <Style.Triggers>

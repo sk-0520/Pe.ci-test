@@ -1603,6 +1603,21 @@
   <data name="String_Feedback_Warning" xml:space="preserve">
     <value>個人情報を含めないでください。</value>
   </data>
+  <data name="String_Common_Send" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="String_Common_Sending" xml:space="preserve">
+    <value>送信中</value>
+  </data>
+  <data name="String_Common_Send_A" xml:space="preserve">
+    <value>送信(_S)</value>
+  </data>
+  <data name="String_Common_Sent" xml:space="preserve">
+    <value>送信完了</value>
+  </data>
+  <data name="String_Feedback_Correct" xml:space="preserve">
+    <value>再入力</value>
+  </data>
   <data name="String_Feedback_KindSetWarning" xml:space="preserve">
     <value>入力内容は破棄されます。</value>
   </data>

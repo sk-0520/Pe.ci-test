@@ -617,6 +617,42 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   送信 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Send {
+            get {
+                return ResourceManager.GetString("String_Common_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信(_S) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Send_A {
+            get {
+                return ResourceManager.GetString("String_Common_Send_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信中 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Sending {
+            get {
+                return ResourceManager.GetString("String_Common_Sending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信完了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Common_Sent {
+            get {
+                return ResourceManager.GetString("String_Common_Sent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   上へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Common_Up {
@@ -2640,6 +2676,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Feedback_CommentPreview {
             get {
                 return ResourceManager.GetString("String_Feedback_CommentPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再入力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Feedback_Correct {
+            get {
+                return ResourceManager.GetString("String_Feedback_Correct", resourceCulture);
             }
         }
         

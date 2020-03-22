@@ -70,6 +70,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
         #region command
 
+        public ICommand ShowSourceUriCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.ShowSourceUri();
+             }
+        ));
+
         public ICommand SetTemplateCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var text = SelectedFeedbackKind switch
@@ -107,7 +113,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 
                 await Model.SendAync(data);
             }
-         ));
+        ));
+
+        public ICommand CorrectCommand => GetOrCreateCommand(() => new DelegateCommand(
+             () => {
+                 Model.Cancel();
+             }
+        ));
 
         #endregion
 
