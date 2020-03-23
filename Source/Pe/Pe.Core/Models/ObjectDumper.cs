@@ -134,6 +134,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         int GetNextNest(int nest) => nest < 0 ? -1 : nest - 1;
 
+        private ObjectDumpItem DumpEnumerableItem(string key, object? current, Type collectiontype, int nest, bool ignoreAutoMember)
+        {
+            var target = current;
+
+            if(target == null) {
+                return new ObjectDumpItem(new DummyInfo(key, collectiontype, typeof(object)), null, EmptyChildren);
+            }
+
+            var targetType = target.GetType();
+            if(IgnoreNestedMembers.Contains(targetType)) {
+                return new ObjectDumpItem(new DummyInfo(key, collectiontype, targetType), target, EmptyChildren);
+            }
+            return new ObjectDumpItem(new DummyInfo(key, collectiontype, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
+        }
+
         IReadOnlyList<ObjectDumpItem> DumpDictionary(IDictionary dictionary, int nest, bool ignoreAutoMember)
         {
             var result = new List<ObjectDumpItem>(dictionary.Count);
@@ -144,20 +159,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
 
                 var key = baseKey;
-                var target = dictionary[key];
-                if(target == null) {
-                    var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, typeof(object)), null, EmptyChildren);
-                    result.Add(item);
-                } else {
-                    var targetType = target.GetType();
-                    if(IgnoreNestedMembers.Contains(targetType)) {
-                        var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), target, EmptyChildren);
-                        result.Add(item);
-                    } else {
-                        var item = new ObjectDumpItem(new DummyInfo(key.ToString()!, dictionaryType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
-                        result.Add(item);
-                    }
-                }
+                var current = dictionary[key];
+                var item = DumpEnumerableItem(key.ToString()!, current, dictionaryType, nest, ignoreAutoMember);
+                result.Add(item);
             }
 
             return result;
@@ -168,22 +172,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var result = new List<ObjectDumpItem>(array.Length);
             var arrayType = array.GetType();
             for(var i = 0; i < array.Length; i++) {
-                var s = "[" + i.ToString() + "]";
-                var target = array.GetValue(i);
+                var key = "[" + i.ToString() + "]";
+                var current = array.GetValue(i);
 
-                if(target == null) {
-                    var item = new ObjectDumpItem(new DummyInfo(s, arrayType, typeof(object)), null, EmptyChildren);
-                    result.Add(item);
-                } else {
-                    var targetType = target.GetType();
-                    if(IgnoreNestedMembers.Contains(targetType)) {
-                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
-                        result.Add(item);
-                    } else {
-                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
-                        result.Add(item);
-                    }
-                }
+                var item = DumpEnumerableItem(key, current, arrayType, nest, ignoreAutoMember);
+                result.Add(item);
             }
 
             return result;
@@ -198,23 +191,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             int i = 0;
             while(enumerator.MoveNext()) {
                 try {
-                    var s = "[" + i.ToString() + "]";
-                    var target = enumerator.Current;
+                    var key = "[" + i.ToString() + "]";
+                    var current = enumerator.Current;
 
-                    if(target == null) {
-                        var item = new ObjectDumpItem(new DummyInfo(s, arrayType, typeof(object)), null, EmptyChildren);
-                        result.Add(item);
-                    } else {
-                        var targetType = target.GetType();
-                        if(IgnoreNestedMembers.Contains(targetType)) {
-                            var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, EmptyChildren);
-                            result.Add(item);
-                        } else {
-                            var item = new ObjectDumpItem(new DummyInfo(s, arrayType, targetType), target, DumpCore(target, GetNextNest(nest), ignoreAutoMember));
-                            result.Add(item);
-                        }
-                    }
-
+                    var item = DumpEnumerableItem(key, current, arrayType, nest, ignoreAutoMember);
+                    result.Add(item);
                 } finally {
                     i++;
                 }
