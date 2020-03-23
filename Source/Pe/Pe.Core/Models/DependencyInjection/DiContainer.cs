@@ -287,13 +287,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         #region property
 
         /// <summary>
-        /// シングルトンなDIコンテナ。
-        /// <para><see cref="Initialize"/>にて初期化が必要。</para>
-        /// </summary>
-        [Obsolete]
-        public static IDiContainer? Instance { get; private set; }
-
-        /// <summary>
         /// 解放処理をコンテナに任せるか。
         /// </summary>
         protected bool IsDisposeObjectPool { get; }
@@ -316,20 +309,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         #endregion
 
         #region function
-
-        /// <summary>
-        /// <see cref="Instance"/> を使用するための準備処理。
-        /// </summary>
-        /// <param name="creator"></param>
-        [Obsolete]
-        public static void Initialize(Func<IDiContainer> creator)
-        {
-            if(Instance != null) {
-                throw new InvalidOperationException();
-            }
-
-            Instance = creator();
-        }
 
         protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
         {
