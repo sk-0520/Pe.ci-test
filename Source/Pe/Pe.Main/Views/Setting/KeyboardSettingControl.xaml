@@ -27,12 +27,12 @@
     </Style>
 
     <Style x:Key="Comment" TargetType="TextBox" BasedOn="{StaticResource Vertical-TextBox}">
-      <Setter Property="ToolTip" Value="{Binding Resources.String_Setting_Keyboard_Comment, Source={x:Static app_main:CultureService.Current}}" />
+      <Setter Property="ToolTip" Value="{Binding Resources.String_Setting_Keyboard_Comment, Source={x:Static app_main:CultureService.Instance}}" />
     </Style>
 
     <Style x:Key="RemoveItem" TargetType="Button">
       <Setter Property="HorizontalAlignment" Value="Right" />
-      <Setter Property="ToolTip" Value="{Binding Resources.String_Setting_Keyboard_Remove, Source={x:Static app_main:CultureService.Current}}" />
+      <Setter Property="ToolTip" Value="{Binding Resources.String_Setting_Keyboard_Remove, Source={x:Static app_main:CultureService.Instance}}" />
       <Setter Property="Margin" Value="{StaticResource BottomMargin}" />
     </Style>
 
@@ -53,8 +53,8 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
-        <Label  Content="{Binding Resources.String_Setting_Keyboard_Replace_Header, Source={x:Static app_main:CultureService.Current}}" />
-        <Button Content="{Binding Resources.String_Setting_Keyboard_Replace_Add_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddReplaceJobCommand, ElementName=root}" />
+        <Label  Content="{Binding Resources.String_Setting_Keyboard_Replace_Header, Source={x:Static app_main:CultureService.Instance}}" />
+        <Button Content="{Binding Resources.String_Setting_Keyboard_Replace_Add_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddReplaceJobCommand, ElementName=root}" />
       </ToolBar>
 
       <ScrollViewer Grid.Row="1">
@@ -77,7 +77,7 @@
                       </Grid.ColumnDefinitions>
 
                       <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="0" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding SourceKey}" IsVisibleModifierKey="False" />
-                      <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Resources.String_Setting_Keyboard_Replace_To, Source={x:Static app_main:CultureService.Current}}" />
+                      <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Resources.String_Setting_Keyboard_Replace_To, Source={x:Static app_main:CultureService.Instance}}" />
                       <app_main_views_setting:KeyInputControl Grid.Row="0" Grid.Column="2" KeyItemsSource="{Binding Editor.ReplaceKeyItems, ElementName=root}" Key="{Binding ReplaceKey}" IsVisibleModifierKey="False" />
                     </Grid>
                   </Expander.Header>
@@ -106,8 +106,8 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
-        <Label  Content="{Binding Resources.String_Setting_Keyboard_Ignore_Header, Source={x:Static app_main:CultureService.Current}}" />
-        <Button Content="{Binding Resources.String_Setting_Keyboard_Ignore_Add_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
+        <Label  Content="{Binding Resources.String_Setting_Keyboard_Ignore_Header, Source={x:Static app_main:CultureService.Instance}}" />
+        <Button Content="{Binding Resources.String_Setting_Keyboard_Ignore_Add_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddDisableJobCommand, ElementName=root}" />
       </ToolBar>
 
       <ScrollViewer Grid.Row="1">
@@ -126,7 +126,7 @@
                   </Expander.Header>
                   <Expander.Content>
                     <StackPanel>
-                      <CheckBox Grid.Column="1" Margin="{StaticResource HalfMargin}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Forever_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding Forever}" />
+                      <CheckBox Grid.Column="1" Margin="{StaticResource HalfMargin}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Forever_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding Forever}" />
                       <TextBox Style="{StaticResource Comment}" Text="{Binding Comment}" />
                       <Button Style="{StaticResource RemoveItem}" Command="{Binding Editor.RemoveDisableJobCommand, ElementName=root}" CommandParameter="{Binding}">
                         <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
@@ -150,16 +150,16 @@
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
-        <Label  Content="{Binding Resources.String_Setting_Keyboard_Pressed_Header, Source={x:Static app_main:CultureService.Current}}" />
+        <Label  Content="{Binding Resources.String_Setting_Keyboard_Pressed_Header, Source={x:Static app_main:CultureService.Instance}}" />
         <Grid>
-          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Add_A, Source={x:Static app_main:CultureService.Current}}" />
+          <ToggleButton x:Name="switchCreateJob" IsChecked="{Binding Editor.IsPopupCreateJobMenu, ElementName=root}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_Add_A, Source={x:Static app_main:CultureService.Instance}}" />
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateJob}">
             <Border Style="{StaticResource PopupMenuBorder}">
               <StackPanel>
-                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_Command_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddCommandJobCommand, ElementName=root}" />
-                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_LauncherItem_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddLauncherItemJobCommand, ElementName=root}" />
-                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_Toolbar_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddLauncherToolbarJobCommand, ElementName=root}" />
-                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_Note_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddNoteJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_Command_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddCommandJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_LauncherItem_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddLauncherItemJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_Toolbar_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddLauncherToolbarJobCommand, ElementName=root}" />
+                <MenuItem Header="{Binding Resources.String_Setting_Keyboard_Pressed_Add_Note_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNoteJobCommand, ElementName=root}" />
 
               </StackPanel>
             </Border>
@@ -187,13 +187,13 @@
                           <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Button Grid.Row="0" ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.UpMappingCommand, ElementName=item}" CommandParameter="{Binding}">
+                        <Button Grid.Row="0" ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.UpMappingCommand, ElementName=item}" CommandParameter="{Binding}">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
                         </Button>
-                        <Button Grid.Row="1" ToolTip="{Binding Resources.String_Setting_Keyboard_Mapping_Remove, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.RemoveMappingCommand, ElementName=item}" CommandParameter="{Binding}">
+                        <Button Grid.Row="1" ToolTip="{Binding Resources.String_Setting_Keyboard_Mapping_Remove, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveMappingCommand, ElementName=item}" CommandParameter="{Binding}">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
                         </Button>
-                        <Button Grid.Row="2" ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.DownMappingCommand, ElementName=item}" CommandParameter="{Binding}">
+                        <Button Grid.Row="2" ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.DownMappingCommand, ElementName=item}" CommandParameter="{Binding}">
                           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
                         </Button>
                       </Grid>
@@ -203,10 +203,10 @@
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
-              <Button Content="{Binding Resources.String_Setting_Keyboard_Pressed_Command_AddMapping, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
+              <Button Content="{Binding Resources.String_Setting_Keyboard_Pressed_Command_AddMapping, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.AddMappingCommand, ElementName=item}" />
             </StackPanel>
             <StackPanel x:Key="Common" x:Shared="False">
-              <CheckBox Margin="{StaticResource HalfMargin}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_ThroughSystem_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding ThroughSystem}" />
+              <CheckBox Margin="{StaticResource HalfMargin}" Content="{Binding Resources.String_Setting_Keyboard_Pressed_ThroughSystem_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding ThroughSystem}" />
               <TextBox Style="{StaticResource Comment}" Text="{Binding Comment}" />
               <Button  Style="{StaticResource RemoveItem}"  Command="{Binding Editor.RemovePressedJobCommand, ElementName=root}" CommandParameter="{Binding}">
                 <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
@@ -216,7 +216,7 @@
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardCommandJobSettingEditorViewModel}">
               <Expander x:Name="item">
                 <Expander.Header>
-                  <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Command_Header, Source={x:Static app_main:CultureService.Current}}" />
+                  <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Command_Header, Source={x:Static app_main:CultureService.Instance}}" />
                 </Expander.Header>
                 <StackPanel>
                   <ContentControl Content="{StaticResource Mappings}" />
@@ -234,7 +234,7 @@
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="{Binding Resources.String_Setting_Keyboard_Pressed_LauncherItem_Header, Source={x:Static app_main:CultureService.Current}}" />
+                    <TextBlock Grid.Column="0" Text="{Binding Resources.String_Setting_Keyboard_Pressed_LauncherItem_Header, Source={x:Static app_main:CultureService.Instance}}" />
                     <ComboBox Grid.Column="1" ItemTemplate="{StaticResource Setting-LauncherItems}" ItemsSource="{Binding AllLauncherItems}" SelectedItem="{Binding LauncherItem}">
                       <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -262,7 +262,7 @@
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Keyboard_Pressed_LauncherItem_Execute_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Keyboard_Pressed_LauncherItem_Execute_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <WrapPanel Grid.Column="1" VerticalAlignment="Center">
                       <RadioButton Content="{Binding Source={x:Static app_main_modes_data:KeyActionContentLauncherItem.Execute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.Execute}}" />
                       <RadioButton Content="{Binding Source={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}}" />
@@ -277,7 +277,7 @@
             <DataTemplate DataType="{x:Type app_main_viewmodels_setting:KeyboardLauncherToolbarJobSettingEditorViewModel}">
               <Expander x:Name="item">
                 <Expander.Header>
-                  <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Toolbar_Header, Source={x:Static app_main:CultureService.Current}}" />
+                  <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Toolbar_Header, Source={x:Static app_main:CultureService.Instance}}" />
                 </Expander.Header>
                 <StackPanel>
                   <ContentControl Content="{StaticResource Mappings}" />
@@ -294,7 +294,7 @@
                       <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Note_Header, Source={x:Static app_main:CultureService.Current}}" />
+                    <TextBlock Grid.Column="0" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Note_Header, Source={x:Static app_main:CultureService.Instance}}" />
                     <ComboBox Grid.Column="1" ItemsSource="{Binding ContentItems}" SelectedItem="{Binding Content}">
                       <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>

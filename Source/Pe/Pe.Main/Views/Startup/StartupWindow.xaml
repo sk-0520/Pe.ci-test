@@ -27,7 +27,7 @@
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
   </Window.Resources>
   <Window.Title>
-    <Binding Path="Resources.String_Startup_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+    <Binding Path="Resources.String_Startup_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
 
   <Grid Margin="10">
@@ -51,27 +51,27 @@
       <Button Command="{Binding ImportProgramsCommand}">
         <StackPanel>
           <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-FindinFiles}" />
-          <AccessText Text="{Binding Resources.String_Startup_ImportPrograms_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_Startup_ImportPrograms_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </Button>
 
       <Button Command="{Binding ShowNotificationAreaCommand}">
         <StackPanel>
           <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-Flag}" />
-          <AccessText Text="{Binding Resources.String_Startup_NotifyArea_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_Startup_NotifyArea_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </Button>
 
       <Button Command="{Binding RegisterStartupCommand}">
         <StackPanel>
           <Control Style="{StaticResource Image-Jumbo}" Template="{StaticResource App-Image-Windows}" />
-          <AccessText Text="{Binding Resources.String_Startup_RegisterStartup_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_Startup_RegisterStartup_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </Button>
     </UniformGrid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
+      <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand, ElementName=root}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Instance}}" />
     </UniformGrid>
   </Grid>
 </Window>

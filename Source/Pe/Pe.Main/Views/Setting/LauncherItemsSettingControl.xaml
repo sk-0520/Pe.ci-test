@@ -73,10 +73,10 @@
             </Popup>
           </Grid>
           -->
-          <Button Grid.Column="0" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button Grid.Column="0" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
           </Button>
-          <Button Grid.Column="1" ToolTip="{Binding Resources.String_Setting_LauncherItems_Remove, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button Grid.Column="1" ToolTip="{Binding Resources.String_Setting_LauncherItems_Remove, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
           </Button>
           <TextBox Grid.Column="2" Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />

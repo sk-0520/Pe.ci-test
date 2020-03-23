@@ -53,7 +53,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Execute_UserId_A, Source={x:Static app_main:CultureService.Current}}"></Label>
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Execute_UserId_A, Source={x:Static app_main:CultureService.Instance}}"></Label>
                   <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="Auto" />
@@ -62,8 +62,8 @@
                       <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Horizontal-TextBox}" Text="{Binding UserId, Mode=OneWay}" />
-                    <Button Grid.Column="2" Content="{Binding Resources.String_Setting_Generals_Execute_CreateUserIdFromRandom_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CreateUserIdFromRandomCommand}" />
-                    <Button Grid.Column="3" Content="{Binding Resources.String_Setting_Generals_Execute_CreateUserIdFromEnvironment_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CreateUserIdFromEnvironmentCommand}" />
+                    <Button Grid.Column="2" Content="{Binding Resources.String_Setting_Generals_Execute_CreateUserIdFromRandom_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CreateUserIdFromRandomCommand}" />
+                    <Button Grid.Column="3" Content="{Binding Resources.String_Setting_Generals_Execute_CreateUserIdFromEnvironment_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CreateUserIdFromEnvironmentCommand}" />
                   </Grid>
                 </Grid>
 
@@ -73,7 +73,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Column="1" Margin="{StaticResource BasePadding}" Style="{StaticResource Vertical-CheckBox}" IsChecked="{Binding IsEnabledTelemetry}" Content="{Binding Resources.String_Setting_Generals_Execute_IsEnabledTelemetry_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <CheckBox Grid.Column="1" Margin="{StaticResource BasePadding}" Style="{StaticResource Vertical-CheckBox}" IsChecked="{Binding IsEnabledTelemetry}" Content="{Binding Resources.String_Setting_Generals_Execute_IsEnabledTelemetry_A, Source={x:Static app_main:CultureService.Instance}}" />
                 </Grid>
 
                 <Grid>
@@ -84,7 +84,7 @@
 
                   <TextBlock Grid.Column="1">
                     <Hyperlink Command="{Binding OpenPrivacyPolicyDocumentCommand}">
-                      <Run Text="{Binding Resources.String_Setting_Generals_Execute_UserIdDescription, Source={x:Static app_main:CultureService.Current}, Mode=OneWay}" />
+                      <Run Text="{Binding Resources.String_Setting_Generals_Execute_UserIdDescription, Source={x:Static app_main:CultureService.Instance}, Mode=OneWay}" />
                     </Hyperlink>
                   </TextBlock>
                 </Grid>
@@ -106,7 +106,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_Language_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_Language_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <ComboBox Grid.Column="1" Style="{StaticResource Vertical-ComboBox}" ItemsSource="{Binding CultureInfoItems}" SelectedItem="{Binding SelectedCultureInfo}">
                     <ComboBox.ItemsPanel>
                       <ItemsPanelTemplate>
@@ -132,7 +132,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_Starup_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_Starup_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <Grid Grid.Column="1" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="Auto" />
@@ -141,8 +141,8 @@
                       <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_General_Starup_Register_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsRegisterStartup}" />
-                    <CheckBox x:Name="startWaitTime" Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}"  Content="{Binding Resources.String_Setting_Generals_General_Starup_WaitTime_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding DelayStartup}" />
+                    <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_General_Starup_Register_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsRegisterStartup}" />
+                    <CheckBox x:Name="startWaitTime" Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}"  Content="{Binding Resources.String_Setting_Generals_General_Starup_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding DelayStartup}" />
                     <app_core_views:NumericUpDown
                       Grid.Column="2"
                       HorizontalAlignment="Left"
@@ -152,7 +152,7 @@
                       Value="{Binding StartupWaitTimeSeconds}"
                     />
 
-                    <Label Grid.Column="3" Content="{Binding Resources.String_Setting_Generals_General_Starup_Argument_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <Label Grid.Column="3" Content="{Binding Resources.String_Setting_Generals_General_Starup_Argument_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <TextBox Grid.Column="4" Text="{Binding StartupArgument, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                   </Grid>
                 </Grid>
@@ -163,7 +163,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_UserBackupDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_UserBackupDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="*" />
@@ -171,7 +171,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox Grid.Column="0" Style="{StaticResource Horizontal-TextBox}" Text="{Binding UserBackupDirectoryPath}" />
-                    <Button Grid.Column="1" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Current}}" Command="{Binding UserBackupDirectorySelectCommand}">
+                    <Button Grid.Column="1" ToolTip="{Binding Resources.String_Common_SelectDirectory, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding UserBackupDirectorySelectCommand}">
                       <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
                     </Button>
                   </Grid>
@@ -189,7 +189,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Update_UpdateKind_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Update_UpdateKind_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:UpdateKind.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.None}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:UpdateKind.Notify}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding UpdateKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:UpdateKind.Notify}}" />
@@ -211,7 +211,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Font_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <!-- バインドできない問題 -->
                   <ContentControl Grid.Column="1">
                     <ContentControl.Style>
@@ -244,7 +244,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label x:Name="commandViewWidth" Style="{StaticResource HeaderLabel}" Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Command_Width_A, Source={x:Static app_main:CultureService.Current}}"></Label>
+                  <Label x:Name="commandViewWidth" Style="{StaticResource HeaderLabel}" Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Command_Width_A, Source={x:Static app_main:CultureService.Instance}}"></Label>
                   <app_core_views:NumericUpDown
                     Grid.Column="1"
                     VerticalAlignment="Center"
@@ -263,7 +263,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label x:Name="commandWaitTime" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Wait_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label x:Name="commandWaitTime" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Wait_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <app_core_views:NumericUpDown
                     Grid.Column="1"
                     VerticalAlignment="Center"
@@ -282,7 +282,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0"  Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Icon_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0"  Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Icon_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Small}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Small}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:IconBox.Normal}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding IconBox, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:IconBox.Normal}}" />
@@ -296,9 +296,9 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0"  Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Find_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0"  Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Command_Find_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_Command_Find_Tag_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding FindTag}" />
+                    <CheckBox Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_Command_Find_Tag_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding FindTag}" />
                   </WrapPanel>
                 </Grid>
 
@@ -315,7 +315,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Font_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <ContentControl Grid.Column="1">
                     <ContentControl.Style>
                       <Style TargetType="ContentControl">
@@ -346,7 +346,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Title_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Title_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Timestamp}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteCreateTitleKind.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding TitleKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteCreateTitleKind.Count}}" />
@@ -359,7 +359,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Layout_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Layout_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Absolute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Relative}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}" />
@@ -372,7 +372,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Note_Color_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Content="{Binding Resources.String_Setting_Generals_Note_Color_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                       <RowDefinition Height="Auto" />
@@ -383,9 +383,9 @@
                       <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ForegroundColor}" />
-                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Background_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_Note_Color_Background_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />
                   </Grid>
                 </Grid>
@@ -396,7 +396,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_Note_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost}" />
+                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_Note_Topmost_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsTopmost}" />
                 </Grid>
 
               </StackPanel>
@@ -412,7 +412,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_Font_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <ContentControl Grid.Column="1">
                     <ContentControl.Style>
                       <Style TargetType="ContentControl">
@@ -444,7 +444,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                       <RowDefinition Height="Auto" />
@@ -455,9 +455,9 @@
                       <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding OutputForegroundColor}" />
-                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Background_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_OutputColor_Background_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding OutputBackgroundColor}" />
                   </Grid>
                 </Grid>
@@ -469,7 +469,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                       <RowDefinition Height="Auto" />
@@ -480,9 +480,9 @@
                       <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="0" SelectedColor="{Binding ErrorForegroundColor}" />
-                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Background_A, Source={x:Static app_main:CultureService.Current}}"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_ErrorColor_Background_A, Source={x:Static app_main:CultureService.Instance}}"></Label>
                     <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" SelectedColor="{Binding ErrorBackgroundColor}" />
 
                   </Grid>
@@ -495,7 +495,7 @@
                     <ColumnDefinition Style="{StaticResource ContentDefinition}" />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost}" />
+                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Setting_Generals_StandardInputOutput_Topmost_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsTopmost}" />
                 </Grid>
               </StackPanel>
             </GroupBox>

@@ -51,16 +51,16 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="0" Grid.Column="0" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Shift_A, Source={x:Static app_main:CultureService.Current}}" />
+      <Label Grid.Row="0" Grid.Column="0" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Shift_A, Source={x:Static app_main:CultureService.Instance}}" />
       <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Shift, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
 
-      <Label Grid.Row="0" Grid.Column="1" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Control_A, Source={x:Static app_main:CultureService.Current}}" />
+      <Label Grid.Row="0" Grid.Column="1" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Control_A, Source={x:Static app_main:CultureService.Instance}}" />
       <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Control, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
 
-      <Label Grid.Row="0" Grid.Column="2" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Alt_A, Source={x:Static app_main:CultureService.Current}}" />
+      <Label Grid.Row="0" Grid.Column="2" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Alt_A, Source={x:Static app_main:CultureService.Instance}}" />
       <ComboBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Alt, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
 
-      <Label Grid.Row="0" Grid.Column="3" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Super_A, Source={x:Static app_main:CultureService.Current}}" />
+      <Label Grid.Row="0" Grid.Column="3" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Super_A, Source={x:Static app_main:CultureService.Instance}}" />
       <ComboBox Grid.Row="1" Grid.Column="3" ItemsSource="{Binding ModifierKeyItemsSource, ElementName=root}" SelectedItem="{Binding Super, ElementName=root}" ItemTemplate="{StaticResource ModifierKey}" />
     </Grid>
   </StackPanel>

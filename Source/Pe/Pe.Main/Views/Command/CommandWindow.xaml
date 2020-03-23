@@ -92,7 +92,7 @@
     </Style>
   </Window.Style>
   <Window.Title>
-    <Binding Path="Resources.String_Command_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+    <Binding Path="Resources.String_Command_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
 
   <i:Interaction.Triggers>
@@ -304,7 +304,7 @@
       <Border
         Grid.Column="3"
         Margin="{Binding SelectedIconMargin}"
-        ToolTip="{Binding Resources.String_Command_Execute, Source={x:Static app_main:CultureService.Current}}"
+        ToolTip="{Binding Resources.String_Command_Execute, Source={x:Static app_main:CultureService.Instance}}"
       >
         <Button
           Focusable="False"

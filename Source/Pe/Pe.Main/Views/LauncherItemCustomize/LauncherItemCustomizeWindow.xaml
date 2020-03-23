@@ -51,8 +51,8 @@
     </ScrollViewer>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button IsDefault="True" Content="{Binding Resources.String_Common_Ok_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SubmitCommand}" />
-      <Button IsCancel="True" Content="{Binding Resources.String_Common_Cancel_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CancelCommand}" />
+      <Button IsDefault="True" Content="{Binding Resources.String_Common_Ok_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding SubmitCommand}" />
+      <Button IsCancel="True" Content="{Binding Resources.String_Common_Cancel_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CancelCommand}" />
     </UniformGrid>
 
   </Grid>

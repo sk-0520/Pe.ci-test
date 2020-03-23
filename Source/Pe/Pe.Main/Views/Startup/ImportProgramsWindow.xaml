@@ -29,7 +29,7 @@
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
   </Window.Resources>
   <Window.Title>
-    <Binding Path="Resources.String_ImportPrograms_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+    <Binding Path="Resources.String_ImportPrograms_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
 
   <i:Interaction.Triggers>
@@ -68,8 +68,8 @@
     </ListBox>
 
     <UniformGrid Grid.Row="1" ScrollViewer.CanContentScroll="True" Style="{StaticResource DialogCommand}">
-      <Button Command="{Binding ImportCommand}" Content="{Binding Resources.String_ImportPrograms_Import_A, Source={x:Static app_main:CultureService.Current}}" />
-      <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" />
+      <Button Command="{Binding ImportCommand}" Content="{Binding Resources.String_ImportPrograms_Import_A, Source={x:Static app_main:CultureService.Instance}}" />
+      <Button IsDefault="True" IsCancel="True" Command="{Binding CloseCommand}" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Instance}}" />
     </UniformGrid>
 
 

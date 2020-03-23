@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
-                using(var windowManager = new WindowManager(diContainer, CultureService.Current, diContainer.Get<ILoggerFactory>())) {
+                using(var windowManager = new WindowManager(diContainer, CultureService.Instance, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
@@ -336,7 +336,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         WindowManager SetupWindowManager(IDiRegisterContainer diContainer)
         {
-            var manager = diContainer.Build<WindowManager>(CultureService.Current);
+            var manager = diContainer.Build<WindowManager>(CultureService.Instance);
 
             return manager;
         }
@@ -493,7 +493,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             ClipboardManager = SetupClipboardManager(DiContainer);
             UserAgentManager = SetupUserAgentManager(DiContainer);
 
-            var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Current, WindowManager);
+            var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Instance, WindowManager);
             cultureServiceChanger.ChangeCulture();
 
             if(acceptResult != null) {

@@ -257,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 foreach(var stopping in stoppings) {
                     stopping.Dispose();
                 }
-                var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Current);
+                var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Instance);
                 cultureServiceChanger.ChangeCulture();
 
                 Logger.LogInformation("設定適用のため各要素生成");

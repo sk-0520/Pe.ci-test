@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
             var sourceMap = await LoadSourceFilesAsync(fileMap);
 
             var map = new WebViewTemplateDictionary() {
-                [HtmlTemplateLang] = new CultureWebViewTemplate(CultureService.Current.Culture),
+                [HtmlTemplateLang] = new CultureWebViewTemplate(CultureService.Instance.Culture),
                 [HtmlTemplateJqury] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateJqury]),
                 [HtmlTemplateMarked] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateMarked]),
                 [HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
