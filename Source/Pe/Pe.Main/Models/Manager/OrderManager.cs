@@ -43,6 +43,7 @@ using ContentTypeTextNet.Pe.Main.Views.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Main.ViewModels.Feedback;
 using ContentTypeTextNet.Pe.Main.Views.Feedback;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {

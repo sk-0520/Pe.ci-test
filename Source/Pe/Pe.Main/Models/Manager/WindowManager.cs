@@ -10,6 +10,7 @@ using System.Windows.Interop;
 using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.ViewModels;

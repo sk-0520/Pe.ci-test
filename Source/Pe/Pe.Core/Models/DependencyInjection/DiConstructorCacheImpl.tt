@@ -12,7 +12,7 @@ using System;
 using System.Diagnostics;
 
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 {
     partial class DiConstructorCache {
 <#

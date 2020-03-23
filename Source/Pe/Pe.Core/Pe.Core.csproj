@@ -26,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Models\DiConstructorCache.tt">
+    <None Update="Models\DependencyInjection\DiConstructorCacheImpl.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DiConstructorCache.cs</LastGenOutput>
+      <LastGenOutput>DiConstructorCacheImpl.cs</LastGenOutput>
     </None>
     <None Update="Models\DiContainerCreate.txt">
       <DesignTime>True</DesignTime>
@@ -42,10 +42,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Models\DiConstructorCache.cs">
+    <Compile Update="Models\DependencyInjection\DiConstructorCacheImpl.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>DiConstructorCache.tt</DependentUpon>
+      <DependentUpon>DiConstructorCacheImpl.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

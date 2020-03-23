@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Main.Views.Startup;
 using ContentTypeTextNet.Pe.Main.ViewModels.Startup;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {

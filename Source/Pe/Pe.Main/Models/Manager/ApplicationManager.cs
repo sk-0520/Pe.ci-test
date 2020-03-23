@@ -59,6 +59,7 @@ using System.Text.Json;
 using System.Reflection;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
