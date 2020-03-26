@@ -310,16 +310,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region function
 
-        protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, string? name,DiLifecycle lifecycle, DiCreator creator)
         {
-            Mapping.Add(interfaceType, objectType);
-            Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
+            if(name == null) {
+                Mapping.Add(interfaceType, objectType);
+                Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
+            } else {
+                throw new NotImplementedException();
+            }
         }
 
-        void RegisterFactorySingleton(Type interfaceType, Type objectType, DiCreator creator)
+        void RegisterFactorySingleton(Type interfaceType, Type objectType, string? name, DiCreator creator)
         {
             var lazy = new Lazy<object>(() => creator());
-            RegisterFactoryCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
+            RegisterFactoryCore(interfaceType, objectType, name, DiLifecycle.Singleton, () => lazy.Value);
         }
 
         protected virtual void SimpleRegister(Type interfaceType, Type objectType, object value)
@@ -328,7 +332,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             ObjectPool.Add(interfaceType, value);
         }
 
-        void Register(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        void Register(Type interfaceType, Type objectType, string? name, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!interfaceType.IsAssignableFrom(objectType)) {
                 throw new ArgumentException($"error: {interfaceType} <- {objectType}");
@@ -336,11 +340,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             switch(lifecycle) {
                 case DiLifecycle.Transient:
-                    RegisterFactoryCore(interfaceType, objectType, DiLifecycle.Transient, creator);
+                    RegisterFactoryCore(interfaceType, objectType, name, DiLifecycle.Transient, creator);
                     break;
 
                 case DiLifecycle.Singleton:
-                    RegisterFactorySingleton(interfaceType, objectType, creator);
+                    RegisterFactorySingleton(interfaceType, objectType, name, creator);
                     break;
 
                 default:
@@ -715,9 +719,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             var interfaceType = typeof(TInterface);
             var objectType = typeof(TObject);
             if(interfaceType == objectType) {
-                Register(typeof(TInterface), typeof(TObject), lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), false));
+                Register(typeof(TInterface), typeof(TObject), default, lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), false));
             } else {
-                Register(typeof(TInterface), typeof(TObject), lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), true));
+                Register(typeof(TInterface), typeof(TObject), default, lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), true));
             }
 
             return this;
@@ -728,7 +732,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             where TObject : class, TInterface
 #endif
         {
-            Register(typeof(TInterface), typeof(TObject), lifecycle, creator);
+            Register(typeof(TInterface), typeof(TObject), default, lifecycle, creator);
 
             return this;
         }
@@ -775,7 +779,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         public bool IsRegistered(Type type, string name) => throw new NotSupportedException();
         public IContainerRegistry Register(Type from, Type to)
         {
-            Register(from, to, DiLifecycle.Transient, () => NewCore(to, Enumerable.Empty<object>(), false));
+            Register(from, to, default, DiLifecycle.Transient, () => NewCore(to, Enumerable.Empty<object>(), false));
             return this;
         }
         public IContainerRegistry Register(Type from, Type to, string name) => throw new NotSupportedException();
@@ -787,7 +791,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         public IContainerRegistry RegisterInstance(Type type, object instance, string name) => throw new NotSupportedException();
         public IContainerRegistry RegisterSingleton(Type from, Type to)
         {
-            Register(from, to, DiLifecycle.Singleton, () => NewCore(to, Enumerable.Empty<object>(), false));
+            Register(from, to, default, DiLifecycle.Singleton, () => NewCore(to, Enumerable.Empty<object>(), false));
             return this;
         }
         public IContainerRegistry RegisterSingleton(Type from, Type to, string name) => throw new NotSupportedException();

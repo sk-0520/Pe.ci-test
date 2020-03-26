@@ -51,13 +51,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region DiContainer
 
-        protected override void RegisterFactoryCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected override void RegisterFactoryCore(Type interfaceType, Type objectType, string? name, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!RegisteredTypeSet.Contains(interfaceType)) {
                 Mapping.Remove(interfaceType);
                 Factory.Remove(interfaceType);
 
-                base.RegisterFactoryCore(interfaceType, objectType, lifecycle, creator);
+                base.RegisterFactoryCore(interfaceType, objectType, name, lifecycle, creator);
                 RegisteredTypeSet.Add(interfaceType);
             } else {
                 throw new ArgumentException(nameof(interfaceType));
