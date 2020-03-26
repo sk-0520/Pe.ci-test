@@ -193,6 +193,21 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
         }
 
         [TestMethod]
+        public void GetTest_Singleton2()
+        {
+            using(var dic1 = new DiContainer()) {
+                dic1.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.IsFalse(d); }));
+            }
+
+            ActionDisposer ad2;
+            using(var dic2 = new DiContainer()) {
+                dic2.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.IsTrue(d); }));
+                ad2 = dic2.Get<ActionDisposer>();
+            }
+
+        }
+
+        [TestMethod]
         public void NewTest_I1()
         {
             var dic = new DiContainer();
