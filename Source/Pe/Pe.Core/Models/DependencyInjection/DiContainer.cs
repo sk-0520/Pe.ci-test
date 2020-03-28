@@ -24,7 +24,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// </summary>
     public class DiContainer : DisposerBase, IDiRegisterContainer
     {
-        const string DummyName = "";
         /// <summary>
         /// プールしているオブジェクトはコンテナに任せる。
         /// </summary>
@@ -286,10 +285,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             // コンストラクタのキャッシュを使用
             if(Constructors[name].TryGetValue(objectType, out var constructorCache)) {
-                //NOTE: これ生成できなければ下の処理に流した方がいいと思う
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-                return TryNewObjectCore(objectType, name, true, constructorCache, manualParameters, out createdObject);
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
+                if(TryNewObjectCore(objectType, name, true, constructorCache, manualParameters, out createdObject!)) {
+                    return true;
+                }
+                // 生成できなきゃ下の処理に流してキャッシュも多分変わる
             }
 
             // 属性付きで引数が多いものを優先
