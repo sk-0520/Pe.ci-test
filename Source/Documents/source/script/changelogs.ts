@@ -138,7 +138,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#589: ヘルプドキュメントのメニュー部が使いにくい"
 					},
 					{
 						"revision": "",
