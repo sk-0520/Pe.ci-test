@@ -320,7 +320,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// コンストラクタキャッシュ。
         /// </summary>
-        protected IDictionary<Type, DiConstructorCache> Constructors { get; } = new Dictionary<Type, DiConstructorCache>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>> Constructors { get; } = new DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>>();
         protected IDictionary<Type, object> ObjectPool { get; } = new Dictionary<Type, object>();
         protected IList<DiDirtyMember> DirtyMembers { get; } = new List<DiDirtyMember>();
 
@@ -371,7 +371,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             if(Factory[name].TryGetValue(interfaceType, out var factory)) {
                 Mapping[name].TryRemove(interfaceType, out _);
                 Factory[name].TryRemove(interfaceType, out _);
-                Constructors.Remove(interfaceType);
+                Constructors[name].TryRemove(interfaceType, out _);
                 if(factory.Lifecycle == DiLifecycle.Singleton) {
                     ObjectPool.Remove(interfaceType);
                     factory.Dispose();
@@ -424,13 +424,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
-        bool TryNewObjectCore(Type objectType, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, out object? createdObject)
+        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, out object? createdObject)
         {
             var parameters = constructorCache.ParameterInfos;
 
             if(parameters.Count == 0) {
                 if(!isCached) {
-                    Constructors.Add(objectType, constructorCache);
+                    Constructors[name].TryAdd(objectType, constructorCache);
                 }
 #pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
                 createdObject = constructorCache.Create(null);
@@ -449,13 +449,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
 
             if(!isCached) {
-                Constructors.Add(objectType, constructorCache);
+                Constructors[name].TryAdd(objectType, constructorCache);
             }
             createdObject = constructorCache.Create(arguments);
             return true;
         }
 
-        bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
+        bool TryNewObject(Type objectType, string name, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
         {
             if(ObjectPool.TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
@@ -464,17 +464,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             if(useFactoryCache) {
                 // 生成可能なものはこの段階で生成
-                if(Factory[DummyName].TryGetValue(objectType, out var factoryWorker)) {
+                if(Factory[name].TryGetValue(objectType, out var factoryWorker)) {
                     createdObject = factoryWorker.Create();
                     return true;
                 }
             }
 
             // コンストラクタのキャッシュを使用
-            if(Constructors.TryGetValue(objectType, out var constructorCache)) {
+            if(Constructors[name].TryGetValue(objectType, out var constructorCache)) {
                 //NOTE: これ生成できなければ下の処理に流した方がいいと思う
 #pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-                return TryNewObjectCore(objectType, true, constructorCache, manualParameters, out createdObject);
+                return TryNewObjectCore(objectType, name, true, constructorCache, manualParameters, out createdObject);
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
             }
 
@@ -500,7 +500,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             foreach(var constructorItem in constructorItems) {
 #pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-                if(TryNewObjectCore(objectType, false, constructorItem, manualParameters, out createdObject)) {
+                if(TryNewObjectCore(objectType, name, false, constructorItem, manualParameters, out createdObject)) {
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
                     return true;
                 }
@@ -518,7 +518,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 return poolValue;
             }
 
-            if(TryNewObject(GetMappingType(type, name), manualParameters, useFactoryCache, out var raw)) {
+            if(TryNewObject(GetMappingType(type, name), name, manualParameters, useFactoryCache, out var raw)) {
                 return raw;
             }
 
@@ -538,7 +538,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 return true;
             }
 
-            return TryNewObject(GetMappingType(interfaceType, name), manualParameters, true, out value);
+            return TryNewObject(GetMappingType(interfaceType, name), name, manualParameters, true, out value);
         }
 
         Type GetMemberType(MemberInfo memberInfo)
@@ -716,8 +716,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             foreach(var pair in ObjectPool) {
                 cloneContainer.ObjectPool.Add(pair.Key, pair.Value);
             }
-            foreach(var pair in Constructors) {
-                cloneContainer.Constructors.Add(pair.Key, pair.Value);
+            foreach(var pair in Constructors.ToArray()) {
+                var constructor = cloneContainer.Constructors[pair.Key];
+                foreach(var sub in pair.Value) {
+                    constructor.TryAdd(sub.Key, sub.Value);
+                }
             }
             foreach(var item in DirtyMembers) {
                 cloneContainer.DirtyMembers.Add(item);
