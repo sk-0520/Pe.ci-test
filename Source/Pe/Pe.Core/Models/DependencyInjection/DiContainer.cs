@@ -120,136 +120,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         #endregion
     }
 
-    public interface IDiScopeContainerFactory
-    {
-        /// <summary>
-        /// 限定的なDIコンテナを作成。
-        /// </summary>
-        /// <returns>現在マッピングを複製したDIコンテナ。</returns>
-        IScopeDiContainer Scope();
-    }
-
-    /// <summary>
-    /// 取得可能コンテナ。
-    /// </summary>
-    public interface IDiContainer : IDiScopeContainerFactory
-#if ENABLED_PRISM7
-        , IContainerProvider
-#endif
-    {
-        /// <summary>
-        /// マッピングから実体を取得。
-        /// <para>必ずしも依存が解決されるわけではない。</para>
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <returns>実体そのまま</returns>
-        TInterface Get<TInterface>();
-
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// <para>依存を解決する。</para>
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
-        /// <returns></returns>
-        /// <remarks>null をパラメータとして使用する場合は型情報が死ぬので <see cref="DiDefaultParameter"/> を使用すること。</remarks>
-        object New(Type type, IEnumerable<object> manualParameters);
-
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
-        object New(Type type);
-
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
-        TObject New<TObject>(IEnumerable<object> manualParameters)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
-        TObject New<TObject>()
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        /// <summary>
-        /// プロパティインジェクション。
-        /// <para><see cref="InjectAttribute"/> を補完する。</para>
-        /// </summary>
-        /// <typeparam name="TObject">生成済みオブジェクト</typeparam>
-        /// <param name="target">クラスインスタンス。</param>
-        void Inject<TObject>(TObject target)
-            where TObject : class
-        ;
-#if ENABLED_STRUCT
-        void Inject<TObject>(ref TObject target)
-            where TObject : struct
-        ;
-#endif
-    }
-
-    /// <summary>
-    ///登録可能コンテナ。
-    /// </summary>
-    public interface IDiRegisterContainer : IDiContainer
-#if ENABLED_PRISM7
-        , IContainerRegistry
-#endif
-    {
-        /// <summary>
-        /// シンプルなマッピングを追加。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
-#if !ENABLED_STRUCT
-            where TObject : class, TInterface
-#endif
-        ;
-
-        /// <summary>
-        /// 自分で作る版のマッピング。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="lifecycle"></param>
-        /// <param name="creator"></param>
-        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
-#if !ENABLED_STRUCT
-            where TObject : class, TInterface
-#endif
-        ;
-
-        /// <summary>
-        /// シングルトンとしてオブジェクトを単純登録。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        IDiRegisterContainer Register<TInterface, TObject>(TObject value)
-#if !ENABLED_STRUCT
-            where TObject : class, TInterface
-#endif
-        ;
-
-        /// <summary>
-        /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectAttribute"/> を設定できないプロパティに無理やり設定する。
-        /// </summary>
-        /// <param name="baseType"></param>
-        /// <param name="memberName"></param>
-        /// <param name="objectType"></param>
-        IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
-        IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
-
-        /// <summary>
-        /// 登録解除。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <returns></returns>
-        bool Unregister<TInterface>();
-    }
-
     /// <summary>
     /// DI コンテナ。
     /// </summary>
@@ -300,6 +170,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
+
             Mapping[name].TryAdd(interfaceType, objectType);
             Factory[name].TryAdd(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
@@ -355,6 +226,16 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         Type GetMappingType(Type type, string name)
         {
             return Mapping[name].TryGetValue(type, out var objectType) ? objectType : type;
+        }
+
+        protected object GetCore(Type interfaceType, string name)
+        {
+            var tunedName = TuneName(name);
+            if(ObjectPool[tunedName].TryGetValue(interfaceType, out var value)) {
+                return value;
+            }
+
+            return Factory[tunedName][interfaceType].Create();
         }
 
         object[] CreateParameters(IReadOnlyList<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
@@ -580,34 +461,67 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
+        protected string TuneName(string? name)
+        {
+            if(name == null) {
+                return string.Empty;
+            }
+
+            return name.Trim();
+        }
+
         #endregion
 
         #region IDiContainer
 
+        /// <inheritdoc cref="IDiContainer.Get(Type)"/>
         public object Get(Type interfaceType)
         {
-            if(ObjectPool[DummyName].TryGetValue(interfaceType, out var value)) {
-                return value;
-            }
-
-            return Factory[DummyName][interfaceType].Create();
+            return GetCore(interfaceType, string.Empty);
         }
 
+        /// <inheritdoc cref="IDiContainer.Get(Type, string)"/>
+        public object Get(Type interfaceType, string name)
+        {
+            return GetCore(interfaceType, TuneName(name));
+        }
+
+        /// <inheritdoc cref="IDiContainer.Get{TInterface}()"/>
         public TInterface Get<TInterface>()
         {
             return (TInterface)Get(typeof(TInterface));
         }
 
+        /// <inheritdoc cref="IDiContainer.Get{TInterface}(string)"/>
+        public TInterface Get<TInterface>(string name)
+        {
+            return (TInterface)Get(typeof(TInterface), TuneName(name));
+        }
+
+        /// <inheritdoc cref="IDiContainer.New(Type, IEnumerable{object})"/>
         public object New(Type type, IEnumerable<object> manualParameters)
         {
             return NewCore(type, string.Empty, manualParameters, true);
         }
+        /// <inheritdoc cref="IDiContainer.New(Type, string, IEnumerable{object})"/>
+        public object New(Type type, string name, IEnumerable<object> manualParameters)
+        {
+            return NewCore(type, TuneName(name), manualParameters, true);
+        }
 
+        /// <inheritdoc cref="IDiContainer.New(Type)"/>
         public object New(Type type)
         {
             return New(type, Enumerable.Empty<object>());
         }
+        /// <inheritdoc cref="IDiContainer.New(Type, string)"/>
+        public object New(Type type, string name)
+        {
+            return New(type, name, Enumerable.Empty<object>());
+        }
 
+
+        /// <inheritdoc cref="IDiContainer.New{TObject}(IEnumerable{object})"/>
         public TObject New<TObject>(IEnumerable<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
@@ -615,13 +529,31 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             return (TObject)New(typeof(TObject), manualParameters);
         }
+        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IEnumerable{object})"/>
+        public TObject New<TObject>(string name, IEnumerable<object> manualParameters)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            return (TObject)New(typeof(TObject), name, manualParameters);
+        }
 
+
+        /// <inheritdoc cref="IDiContainer.New{TObject}"/>
         public TObject New<TObject>()
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
             return (TObject)New(typeof(TObject), Enumerable.Empty<object>());
+        }
+        /// <inheritdoc cref="IDiContainer.New{TObject}(string)"/>
+        public TObject New<TObject>(string name)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            return (TObject)New(typeof(TObject), name, Enumerable.Empty<object>());
         }
 
         public void Inject<TObject>(TObject target)
@@ -688,7 +620,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region IDiRegisterContainer
 
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(DiLifecycle)"/>
         public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        {
+            return Register<TInterface, TObject>(string.Empty, lifecycle);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(string, DiLifecycle)"/>
+        public IDiRegisterContainer Register<TInterface, TObject>(string name, DiLifecycle lifecycle)
 #if !ENABLED_STRUCT
             where TObject : class, TInterface
 #endif
@@ -696,30 +638,50 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             var interfaceType = typeof(TInterface);
             var objectType = typeof(TObject);
             if(interfaceType == objectType) {
-                Register(typeof(TInterface), typeof(TObject), string.Empty, lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), false));
+                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), false));
             } else {
-                Register(typeof(TInterface), typeof(TObject), string.Empty, lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), true));
+                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), true));
             }
 
             return this;
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(DiLifecycle, DiCreator)"/>
         public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
 #if !ENABLED_STRUCT
             where TObject : class, TInterface
 #endif
         {
-            Register(typeof(TInterface), typeof(TObject), string.Empty, lifecycle, creator);
+            return Register<TInterface, TObject>(string.Empty, lifecycle, creator);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(string, DiLifecycle, DiCreator)"/>
+        public IDiRegisterContainer Register<TInterface, TObject>(string name, DiLifecycle lifecycle, DiCreator creator)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        {
+            Register(typeof(TInterface), typeof(TObject), name, lifecycle, creator);
 
             return this;
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(TObject)"/>
         public IDiRegisterContainer Register<TInterface, TObject>(TObject value)
 #if !ENABLED_STRUCT
             where TObject : class, TInterface
 #endif
         {
-            SimpleRegister(typeof(TInterface), typeof(TObject), string.Empty, value);
+            return Register<TInterface, TObject>(string.Empty, value);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(string, TObject)"/>
+        public IDiRegisterContainer Register<TInterface, TObject>(string name, TObject value)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        {
+            SimpleRegister(typeof(TInterface), typeof(TObject), name, value);
 
             return this;
         }

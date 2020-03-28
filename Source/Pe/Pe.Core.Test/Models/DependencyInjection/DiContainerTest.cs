@@ -13,12 +13,54 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
     {
         #region define
 
+        interface I0
+        {
+            int Func(int a);
+        }
+
+        class C0 : I0
+        {
+            public C0(Func<int, int> f)
+            {
+                F = f;
+            }
+            Func<int, int> F { get; }
+
+            public int Func(int a) => F(a);
+
+        }
+
         interface I1
         {
             int Func(int a, int b);
         }
 
+        interface Idmy1
+        {
+            int Func(int a, int b);
+        }
+
         class C1 : I1
+        {
+            public int Func(int a, int b) => a + b;
+        }
+        class C1_other : I1
+        {
+            public int Func(int a, int b) => a - b;
+        }
+
+        class C1_Func : I1
+        {
+            public C1_Func(Func<int, int, int> func)
+            {
+                F = func;
+            }
+
+            Func<int, int, int> F { get; }
+            public int Func(int a, int b) => F(a, b);
+        }
+
+        class Cdmy1 : Idmy1
         {
             public int Func(int a, int b) => a + b;
         }
@@ -208,14 +250,43 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
         }
 
         [TestMethod]
+        public void GetTest_Name_Create()
+        {
+            var dic = new DiContainer();
+            dic.Register<I1, C1>(DiLifecycle.Transient);
+            dic.Register<I1, C1_other>("other", DiLifecycle.Transient);
+
+            Assert.AreEqual(3, dic.Get<I1>().Func(1, 2));
+            Assert.AreEqual(-1, dic.Get<I1>("other").Func(1, 2));
+
+
+            dic.Register<string, string>("NAMELESS");
+            dic.Register<string, string>("name", "NAMED");
+
+            Assert.AreEqual("NAMELESS", dic.Get<string>());
+            Assert.AreEqual("NAMED", dic.Get<string>("name"));
+
+            dic.Register<I0, C0>(DiLifecycle.Transient, () => new C0(a => a + 2));
+            dic.Register<I0, C0>("b", DiLifecycle.Transient, () => new C0(a => a * 2));
+
+            Assert.AreEqual(5, dic.Get<I0>().Func(3));
+            Assert.AreEqual(6, dic.Get<I0>("b").Func(3));
+
+        }
+
+        [TestMethod]
         public void NewTest_I1()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
+            dic.Register<I1, C1_other>("name", DiLifecycle.Transient);
 
             // 引数のない人はそのまんま生成される
             var i1 = dic.New<I1>();
             Assert.AreEqual(10, i1.Func(4, 6));
+
+            var i2 = dic.New<I1>("name");
+            Assert.AreEqual(-2, i2.Func(4, 6));
         }
 
         [TestMethod]
@@ -370,7 +441,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
         }
 #endif
 
-#region nest
+        #region nest
 
         interface INest1
         {
@@ -485,7 +556,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             Assert.IsTrue(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
         }
 
-#endregion
+        #endregion
 
         class CScopeA : I1
         {
