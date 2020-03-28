@@ -207,22 +207,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        bool Unregister(Type interfaceType, string name)
-        {
-            if(Factory[name].TryGetValue(interfaceType, out var factory)) {
-                Mapping[name].TryRemove(interfaceType, out _);
-                Factory[name].TryRemove(interfaceType, out _);
-                Constructors[name].TryRemove(interfaceType, out _);
-                if(factory.Lifecycle == DiLifecycle.Singleton) {
-                    ObjectPool[name].TryRemove(interfaceType, out _);
-                    factory.Dispose();
-                }
-                return true;
-            }
-
-            return false;
-        }
-
         Type GetMappingType(Type type, string name)
         {
             return Mapping[name].TryGetValue(type, out var objectType) ? objectType : type;
@@ -717,7 +701,36 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), name);
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister(Type)"/>
+        public bool Unregister(Type interfaceType)
+        {
+            return Unregister(interfaceType, string.Empty);
+        }
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister(Type, string)"/>
+        public bool Unregister(Type interfaceType, string name)
+        {
+            if(Factory[name].TryGetValue(interfaceType, out var factory)) {
+                Mapping[name].TryRemove(interfaceType, out _);
+                Factory[name].TryRemove(interfaceType, out _);
+                Constructors[name].TryRemove(interfaceType, out _);
+                if(factory.Lifecycle == DiLifecycle.Singleton) {
+                    ObjectPool[name].TryRemove(interfaceType, out _);
+                    factory.Dispose();
+                }
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister{TInterface}"/>
         public bool Unregister<TInterface>()
+        {
+            return Unregister(typeof(TInterface), string.Empty);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister{TInterface}(string)"/>
+        public bool Unregister<TInterface>(string name)
         {
             return Unregister(typeof(TInterface), string.Empty);
         }

@@ -206,9 +206,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// 登録解除。
         /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
+        /// <param name="interfaceType"></param>
         /// <returns></returns>
+        bool Unregister(Type interfaceType);
+        /// <inheritdoc cref="Unregister(Type)"/>
+        bool Unregister(Type interfaceType, string name);
+        /// <inheritdoc cref="Unregister(Type)"/>
         bool Unregister<TInterface>();
+        /// <inheritdoc cref="Unregister(Type)"/>
+        bool Unregister<TInterface>(string name);
 
         #endregion
 
