@@ -321,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// コンストラクタキャッシュ。
         /// </summary>
         protected DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>> Constructors { get; } = new DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>>();
-        protected IDictionary<Type, object> ObjectPool { get; } = new Dictionary<Type, object>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, object>> ObjectPool { get; } = new DiNamedContainer<ConcurrentDictionary<Type, object>>();
         protected IList<DiDirtyMember> DirtyMembers { get; } = new List<DiDirtyMember>();
 
         #endregion
@@ -343,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         protected virtual void SimpleRegister(Type interfaceType, Type objectType, string name, object value)
         {
             Mapping[name].TryAdd(interfaceType, objectType);
-            ObjectPool.Add(interfaceType, value);
+            ObjectPool[name].TryAdd(interfaceType, value);
         }
 
         void Register(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
@@ -373,7 +373,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 Factory[name].TryRemove(interfaceType, out _);
                 Constructors[name].TryRemove(interfaceType, out _);
                 if(factory.Lifecycle == DiLifecycle.Singleton) {
-                    ObjectPool.Remove(interfaceType);
+                    ObjectPool[name].TryRemove(interfaceType, out _);
                     factory.Dispose();
                 }
                 return true;
@@ -408,7 +408,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     }
                 }
 
-                if(ObjectPool.TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
+                if(ObjectPool[DummyName].TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
                     arguments[i] = poolValue;
                 } else if(Factory[DummyName].TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments[i] = factoryWorker.Create();
@@ -457,7 +457,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         bool TryNewObject(Type objectType, string name, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
         {
-            if(ObjectPool.TryGetValue(objectType, out var poolValue)) {
+            if(ObjectPool[name].TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
                 return true;
             }
@@ -514,7 +514,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         object NewCore(Type type, string name, IEnumerable<object> manualParameters, bool useFactoryCache)
         {
-            if(ObjectPool.TryGetValue(type, out var poolValue)) {
+            if(ObjectPool[name].TryGetValue(type, out var poolValue)) {
                 return poolValue;
             }
 
@@ -527,7 +527,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         bool TryGetInstance(Type interfaceType, string name, IEnumerable<object> manualParameters, out object value)
         {
-            if(ObjectPool.TryGetValue(interfaceType, out var poolValue)) {
+            if(ObjectPool[name].TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;
                 return true;
             }
@@ -616,7 +616,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         public object Get(Type interfaceType)
         {
-            if(ObjectPool.TryGetValue(interfaceType, out var value)) {
+            if(ObjectPool[DummyName].TryGetValue(interfaceType, out var value)) {
                 return value;
             }
 
@@ -713,8 +713,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     factory.TryAdd(sub.Key, sub.Value);
                 }
             }
-            foreach(var pair in ObjectPool) {
-                cloneContainer.ObjectPool.Add(pair.Key, pair.Value);
+            foreach(var pair in ObjectPool.ToArray()) {
+                var objectPool = cloneContainer.ObjectPool[pair.Key];
+                foreach(var sub in pair.Value) {
+                    objectPool.TryAdd(sub.Key, sub.Value);
+                }
             }
             foreach(var pair in Constructors.ToArray()) {
                 var constructor = cloneContainer.Constructors[pair.Key];
@@ -831,13 +834,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                         factory.Dispose();
                     }
                     if(IsDisposeObjectPool) {
-                        foreach(var pair in ObjectPool) {
-                            // 自分自身が処理中なので無視
-                            if(pair.Value == this) {
-                                continue;
-                            }
-                            if(pair.Value is IDisposable disposer) {
-                                disposer.Dispose();
+                        foreach(var pair in ObjectPool.ToArray()) {
+                            foreach(var sub in pair.Value) {
+                                // 自分自身が処理中なので無視
+                                if(sub.Value == this) {
+                                    continue;
+                                }
+                                if(sub.Value is IDisposable disposer) {
+                                    disposer.Dispose();
+                                }
                             }
                         }
                     }

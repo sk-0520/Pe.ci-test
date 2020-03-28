@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             if(!RegisteredTypeSet[name].Contains(interfaceType)) {
                 Mapping[name].TryRemove(interfaceType, out _);
-                ObjectPool.Remove(interfaceType);
+                ObjectPool[name].TryRemove(interfaceType, out _);
 
                 base.SimpleRegister(interfaceType, objectType, name, value);
                 RegisteredTypeSet[name].Add(interfaceType);
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                             }
 
                             if(IsDisposeObjectPool) {
-                                if(ObjectPool.TryGetValue(type, out var poolObject)) {
+                                if(ObjectPool[name].TryGetValue(type, out var poolObject)) {
                                     if(poolObject != this && poolObject is IDisposable disposer) {
                                         disposer.Dispose();
                                     }
