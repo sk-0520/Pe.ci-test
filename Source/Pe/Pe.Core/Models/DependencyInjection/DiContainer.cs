@@ -312,16 +312,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
 
             foreach(var constructorItem in constructorItems) {
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-                if(TryNewObjectCore(objectType, name, false, constructorItem, manualParameters, out createdObject)) {
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
+                if(TryNewObjectCore(objectType, name, false, constructorItem, manualParameters, out createdObject!)) {
                     return true;
                 }
             }
 
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-            createdObject = default(object);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+            createdObject = default!;
             return false;
         }
 
@@ -335,7 +331,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 return raw;
             }
 
-            throw new DiException($"{type}: create rror");
+            throw new DiException($"{type}: create error {name}");
         }
 
         bool TryGetInstance(Type interfaceType, string name, IEnumerable<object> manualParameters, out object value)
