@@ -24,7 +24,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         public TData this[string name] => Container.GetOrAdd(name, s => new TData());
 
-        public IEnumerable<TData> GetAllData() => Container.Values;
+        public IEnumerable<TData> Values => Container.Values;
+        public IEnumerable<string> Keys => Container.Keys;
+
+        public KeyValuePair<string, TData>[] ToArray() => Container.ToArray();
 
         #endregion
     }

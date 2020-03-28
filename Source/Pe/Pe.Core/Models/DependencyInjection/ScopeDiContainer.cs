@@ -51,10 +51,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region DiContainer
 
-        protected override void RegisterFactoryCore(Type interfaceType, Type objectType, string? name, DiLifecycle lifecycle, DiCreator creator)
+        protected override void RegisterFactoryCore(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!RegisteredTypeSet.Contains(interfaceType)) {
-                Mapping.Remove(interfaceType);
+                Mapping[name].TryRemove(interfaceType, out _);
                 Factory.Remove(interfaceType);
 
                 base.RegisterFactoryCore(interfaceType, objectType, name, lifecycle, creator);
@@ -64,13 +64,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        protected override void SimpleRegister(Type interfaceType, Type objectType, object value)
+        protected override void SimpleRegister(Type interfaceType, Type objectType, string name, object value)
         {
             if(!RegisteredTypeSet.Contains(interfaceType)) {
-                Mapping.Remove(interfaceType);
+                Mapping[name].TryRemove(interfaceType, out _);
                 ObjectPool.Remove(interfaceType);
 
-                base.SimpleRegister(interfaceType, objectType, value);
+                base.SimpleRegister(interfaceType, objectType, name, value);
                 RegisteredTypeSet.Add(interfaceType);
             } else {
                 throw new ArgumentException(nameof(interfaceType));

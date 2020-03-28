@@ -1,6 +1,7 @@
 #define ENABLED_PRISM7
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -40,7 +41,23 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// </summary>
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class InjectAttribute : Attribute
-    { }
+    {
+        public InjectAttribute()
+        {
+            Name = string.Empty;
+        }
+
+        public InjectAttribute(string name)
+        {
+            Name = name;
+        }
+
+        #region property
+
+        public string Name { get; }
+
+        #endregion
+    }
 
     /// <summary>
     /// DI処理でわっけ分からんことになったら投げられる例外。
@@ -294,7 +311,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// IF → 実体 のマッピング。
         /// </summary>
-        protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, Type>> Mapping { get; } = new DiNamedContainer<ConcurrentDictionary<Type, Type>>();
         /// <summary>
         /// 生成処理キャッシュ。
         /// </summary>
@@ -310,29 +327,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region function
 
-        protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, string? name,DiLifecycle lifecycle, DiCreator creator)
+        protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
-            if(name == null) {
-                Mapping.Add(interfaceType, objectType);
-                Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
-            } else {
-                throw new NotImplementedException();
-            }
+            Mapping[name].TryAdd(interfaceType, objectType);
+            Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
 
-        void RegisterFactorySingleton(Type interfaceType, Type objectType, string? name, DiCreator creator)
+        void RegisterFactorySingleton(Type interfaceType, Type objectType, string name, DiCreator creator)
         {
             var lazy = new Lazy<object>(() => creator());
             RegisterFactoryCore(interfaceType, objectType, name, DiLifecycle.Singleton, () => lazy.Value);
         }
 
-        protected virtual void SimpleRegister(Type interfaceType, Type objectType, object value)
+        protected virtual void SimpleRegister(Type interfaceType, Type objectType, string name, object value)
         {
-            Mapping.Add(interfaceType, objectType);
+            Mapping[name].TryAdd(interfaceType, objectType);
             ObjectPool.Add(interfaceType, value);
         }
 
-        void Register(Type interfaceType, Type objectType, string? name, DiLifecycle lifecycle, DiCreator creator)
+        void Register(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!interfaceType.IsAssignableFrom(objectType)) {
                 throw new ArgumentException($"error: {interfaceType} <- {objectType}");
@@ -352,13 +365,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        bool Unregister(Type interfaceType)
+        bool Unregister(Type interfaceType, string name)
         {
             if(Factory.TryGetValue(interfaceType, out var factory)) {
-                Mapping.Remove(interfaceType);
+                Mapping[name].TryRemove(interfaceType, out _);
                 Factory.Remove(interfaceType);
                 Constructors.Remove(interfaceType);
-                if(factory .Lifecycle == DiLifecycle.Singleton) {
+                if(factory.Lifecycle == DiLifecycle.Singleton) {
                     ObjectPool.Remove(interfaceType);
                     factory.Dispose();
                 }
@@ -368,9 +381,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return false;
         }
 
-        Type GetMappingType(Type type)
+        Type GetMappingType(Type type, string name)
         {
-            return Mapping.TryGetValue(type, out var objectType) ? objectType : type;
+            return Mapping[name].TryGetValue(type, out var objectType) ? objectType : type;
         }
 
         object[] CreateParameters(IReadOnlyList<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
@@ -498,20 +511,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return false;
         }
 
-        object NewCore(Type type, IEnumerable<object> manualParameters, bool useFactoryCache)
+        object NewCore(Type type, string name, IEnumerable<object> manualParameters, bool useFactoryCache)
         {
             if(ObjectPool.TryGetValue(type, out var poolValue)) {
                 return poolValue;
             }
 
-            if(TryNewObject(GetMappingType(type), manualParameters, useFactoryCache, out var raw)) {
+            if(TryNewObject(GetMappingType(type, name), manualParameters, useFactoryCache, out var raw)) {
                 return raw;
             }
 
             throw new DiException($"{type}: create rror");
         }
 
-        bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
+        bool TryGetInstance(Type interfaceType, string name, IEnumerable<object> manualParameters, out object value)
         {
             if(ObjectPool.TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;
@@ -524,7 +537,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 return true;
             }
 
-            return TryNewObject(GetMappingType(interfaceType), manualParameters, true, out value);
+            return TryNewObject(GetMappingType(interfaceType, name), manualParameters, true, out value);
         }
 
         Type GetMemberType(MemberInfo memberInfo)
@@ -541,12 +554,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type valueType)
+        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type valueType, string name)
         {
             switch(memberInfo.MemberType) {
                 case MemberTypes.Field:
                     var fieldInfo = (FieldInfo)memberInfo;
-                    if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var fieldValue)) {
+                    if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var fieldValue)) {
                         fieldInfo.SetValue(target, fieldValue);
                     } else {
                         throw new DiException($"{fieldInfo}: create fail");
@@ -555,7 +568,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
                 case MemberTypes.Property:
                     var propertyInfo = (PropertyInfo)memberInfo;
-                    if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var propertyValue)) {
+                    if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var propertyValue)) {
                         propertyInfo.SetValue(target, propertyValue);
                     } else {
                         throw new DiException($"{propertyInfo}: create fail");
@@ -567,23 +580,22 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        void InjectCore<TObject>(ref TObject target)
+        void InjectCore<TObject>(ref TObject target, string name)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
-            var targetType = GetMappingType(typeof(TObject));
+            var targetType = GetMappingType(typeof(TObject), name);
             var memberItems = targetType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty)
-                .Select(m => new { MemberInfo = m, IsInjectionTarget = m.GetCustomAttribute<InjectAttribute>() != null })
+                .Select(m => new { MemberInfo = m, Inject = m.GetCustomAttribute<InjectAttribute>() })
                 .ToList()
             ;
-            foreach(var memberItem in memberItems.Where(i => i.IsInjectionTarget)) {
-                SetMemberValue(ref target, memberItem.MemberInfo, GetMemberType(memberItem.MemberInfo));
+            foreach(var memberItem in memberItems.Where(i => i.Inject != null)) {
+                SetMemberValue(ref target, memberItem.MemberInfo, GetMemberType(memberItem.MemberInfo), memberItem.Inject!.Name);
             }
 
             // 強制付け替え処理の実施
             var dirtyPairs = memberItems
-                .Where(i => !i.IsInjectionTarget)
                 .Join(
                     DirtyMembers.Where(d => d.BaseType.IsAssignableFrom(targetType)),
                     m => m.MemberInfo.Name,
@@ -592,7 +604,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 )
             ;
             foreach(var pair in dirtyPairs) {
-                SetMemberValue(ref target, pair.Item.MemberInfo, pair.Dirty.ObjectType);
+                SetMemberValue(ref target, pair.Item.MemberInfo, pair.Dirty.ObjectType, pair.Item.Inject?.Name ?? string.Empty);
             }
 
         }
@@ -617,7 +629,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         public object New(Type type, IEnumerable<object> manualParameters)
         {
-            return NewCore(type, manualParameters, true);
+            return NewCore(type, string.Empty, manualParameters, true);
         }
 
         public object New(Type type)
@@ -644,7 +656,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         public void Inject<TObject>(TObject target)
             where TObject : class
         {
-            InjectCore(ref target);
+            InjectCore(ref target, string.Empty);
         }
 
         public TObject Make<TObject>(IEnumerable<object> manualParameters)
@@ -653,7 +665,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
         {
             var obj = New<TObject>(manualParameters);
-            InjectCore(ref obj);
+            InjectCore(ref obj, string.Empty);
             return obj;
         }
 
@@ -688,8 +700,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         public virtual IScopeDiContainer Scope()
         {
             var cloneContainer = new ScopeDiContainer(IsDisposeObjectPool);
-            foreach(var pair in Mapping) {
-                cloneContainer.Mapping.Add(pair.Key, pair.Value);
+            foreach(var pair in Mapping.ToArray()) {
+                var map = cloneContainer.Mapping[pair.Key];
+                foreach(var sub in pair.Value) {
+                    map.TryAdd(sub.Key, sub.Value);
+                }
             }
             foreach(var pair in Factory) {
                 cloneContainer.Factory.Add(pair.Key, pair.Value);
@@ -719,9 +734,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             var interfaceType = typeof(TInterface);
             var objectType = typeof(TObject);
             if(interfaceType == objectType) {
-                Register(typeof(TInterface), typeof(TObject), default, lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), false));
+                Register(typeof(TInterface), typeof(TObject), string.Empty, lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), false));
             } else {
-                Register(typeof(TInterface), typeof(TObject), default, lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), true));
+                Register(typeof(TInterface), typeof(TObject), string.Empty, lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), true));
             }
 
             return this;
@@ -732,7 +747,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             where TObject : class, TInterface
 #endif
         {
-            Register(typeof(TInterface), typeof(TObject), default, lifecycle, creator);
+            Register(typeof(TInterface), typeof(TObject), string.Empty, lifecycle, creator);
 
             return this;
         }
@@ -742,7 +757,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             where TObject : class, TInterface
 #endif
         {
-            SimpleRegister(typeof(TInterface), typeof(TObject), value);
+            SimpleRegister(typeof(TInterface), typeof(TObject), string.Empty, value);
 
             return this;
         }
@@ -771,27 +786,27 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         public bool Unregister<TInterface>()
         {
-            return Unregister(typeof(TInterface));
+            return Unregister(typeof(TInterface), string.Empty);
         }
 
 #if ENABLED_PRISM7
-        public bool IsRegistered(Type type) => Mapping.ContainsKey(type);
+        public bool IsRegistered(Type type) => Mapping[string.Empty].ContainsKey(type);
         public bool IsRegistered(Type type, string name) => throw new NotSupportedException();
         public IContainerRegistry Register(Type from, Type to)
         {
-            Register(from, to, default, DiLifecycle.Transient, () => NewCore(to, Enumerable.Empty<object>(), false));
+            Register(from, to, string.Empty, DiLifecycle.Transient, () => NewCore(to, string.Empty, Enumerable.Empty<object>(), false));
             return this;
         }
         public IContainerRegistry Register(Type from, Type to, string name) => throw new NotSupportedException();
         public IContainerRegistry RegisterInstance(Type type, object instance)
         {
-            SimpleRegister(type, instance.GetType(), instance);
+            SimpleRegister(type, instance.GetType(), string.Empty, instance);
             return this;
         }
         public IContainerRegistry RegisterInstance(Type type, object instance, string name) => throw new NotSupportedException();
         public IContainerRegistry RegisterSingleton(Type from, Type to)
         {
-            Register(from, to, default, DiLifecycle.Singleton, () => NewCore(to, Enumerable.Empty<object>(), false));
+            Register(from, to, string.Empty, DiLifecycle.Singleton, () => NewCore(to, string.Empty, Enumerable.Empty<object>(), false));
             return this;
         }
         public IContainerRegistry RegisterSingleton(Type from, Type to, string name) => throw new NotSupportedException();
