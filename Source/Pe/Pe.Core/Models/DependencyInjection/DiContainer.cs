@@ -686,13 +686,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return this;
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister(Type, string, Type)"/>
         public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType)
+        {
+            return DirtyRegister(baseType, memberName, objectType, string.Empty);
+        }
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister(Type, string, Type, string)"/>
+        public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType, string name)
         {
             var memberInfo = baseType.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
             if(memberInfo == null || memberInfo.Length != 1) {
                 throw new NullReferenceException(memberName);
             }
-            var member = new DiDirtyMember(baseType, memberInfo[0], objectType);
+            var member = new DiDirtyMember(baseType, memberInfo[0], objectType, TuneName(name));
             if(DirtyMembers.Any(m => m.BaseType == member.BaseType && m.MemberInfo.Name == member.MemberInfo.Name)) {
                 throw new ArgumentException($"{baseType}.{memberInfo}");
             }
@@ -700,12 +706,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             return this;
         }
-
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string)"/>
         public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName)
         {
-            DirtyRegister(typeof(TBase), propertyName, typeof(TObject));
-
-            return this;
+            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), string.Empty);
+        }
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string, string)"/>
+        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName, string name)
+        {
+            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), name);
         }
 
         public bool Unregister<TInterface>()

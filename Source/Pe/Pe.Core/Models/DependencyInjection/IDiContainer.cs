@@ -191,7 +191,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <param name="memberName"></param>
         /// <param name="objectType"></param>
         IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
+        /// <inheritdoc cref="DirtyRegister(Type, string, Type)"/>
+        IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType, string name);
+
+        /// <inheritdoc cref="DirtyRegister(Type, string, Type)"/>
         IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
+        /// <inheritdoc cref="DirtyRegister(Type, string, Type)"/>
+        IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName, string name);
 
         #endregion
 
