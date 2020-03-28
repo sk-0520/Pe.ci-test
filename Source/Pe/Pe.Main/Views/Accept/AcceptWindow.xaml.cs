@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Accept
 
         #region property
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
 
         #endregion

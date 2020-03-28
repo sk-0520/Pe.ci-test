@@ -155,7 +155,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#493: DI に名前付きがほしい"
 					},
 					{
 						"revision": "",

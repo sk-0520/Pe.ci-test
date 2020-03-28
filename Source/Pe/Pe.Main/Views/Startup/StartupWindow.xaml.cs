@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
 
         #region property
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
         CommandStore CommandStore { get; } = new CommandStore();
 

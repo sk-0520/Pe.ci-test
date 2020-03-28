@@ -1,6 +1,7 @@
 #define ENABLED_PRISM7
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -18,251 +19,6 @@ using Prism.Ioc;
 
 namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 {
-    /// <summary>
-    /// 生成タイミング。
-    /// </summary>
-    public enum DiLifecycle
-    {
-        /// <summary>
-        /// 毎回作る。
-        /// </summary>
-        Transient,
-        /// <summary>
-        /// シングルトン。
-        /// </summary>
-        Singleton,
-    }
-
-    /// <summary>
-    /// 注入マーク。
-    /// <para><see cref="IDiContainer.New{T}(IEnumerable{object})"/> する際の対象コンストラクタを限定。</para>
-    /// <para><see cref="IDiContainer.Inject{T}(T)"/> を使用する際の対象を指定。</para>
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class InjectionAttribute : Attribute
-    { }
-
-    /// <summary>
-    /// DI処理でわっけ分からんことになったら投げられる例外。
-    /// <para><see cref="ArgumentException"/>等の分かっているのはその例外を投げるのでこの例外だけ受ければ良いという話ではない。</para>
-    /// </summary>
-    public class DiException : ApplicationException
-    {
-        public DiException()
-        { }
-
-        public DiException(string? message)
-            : base(message)
-        { }
-
-        public DiException(string? message, Exception? innerException)
-            : base(message, innerException)
-        { }
-
-        protected DiException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        { }
-    }
-
-    /// <summary>
-    /// パラメータに型判別できない(default(T)とか)を無理やり認識させるしゃあなし対応。
-    /// </summary>
-    public struct DiDefaultParameter
-    {
-        public DiDefaultParameter(Type type)
-        {
-            Type = type;
-        }
-
-        #region property
-
-        public Type Type { get; }
-
-        #endregion
-
-        #region function
-
-        public KeyValuePair<Type, object> GetPair()
-        {
-            if(Type.IsValueType) {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                return new KeyValuePair<Type, object>(Type, Activator.CreateInstance(Type));
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-            }
-
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-            return new KeyValuePair<Type, object>(Type, null);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
-        }
-
-        public static DiDefaultParameter Create<T>()
-        {
-            return new DiDefaultParameter(typeof(T));
-        }
-
-        #endregion
-    }
-
-    public interface IDiScopeContainerFactory
-    {
-        /// <summary>
-        /// 限定的なDIコンテナを作成。
-        /// </summary>
-        /// <returns>現在マッピングを複製したDIコンテナ。</returns>
-        IScopeDiContainer Scope();
-    }
-
-    /// <summary>
-    /// 取得可能コンテナ。
-    /// </summary>
-    public interface IDiContainer : IDiScopeContainerFactory
-#if ENABLED_PRISM7
-        , IContainerProvider
-#endif
-    {
-        /// <summary>
-        /// マッピングから実体を取得。
-        /// <para>必ずしも依存が解決されるわけではない。</para>
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <returns>実体そのまま</returns>
-        TInterface Get<TInterface>();
-
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// <para>依存を解決するとともにパラメータを指定。</para>
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
-        /// <returns></returns>
-        object New(Type type, IEnumerable<object> manualParameters);
-
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        object New(Type type);
-
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// <para>依存を解決するとともにパラメータを指定。</para>
-        /// </summary>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
-        /// <returns></returns>
-        TObject New<TObject>(IEnumerable<object> manualParameters)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// </summary>
-        /// <typeparam name="TObject"></typeparam>
-        /// <returns></returns>
-        TObject New<TObject>()
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        /// <summary>
-        /// <see cref="InjectionAttribute"/> を補完する。
-        /// </summary>
-        /// <typeparam name="TObject">生成済みオブジェクト</typeparam>
-        /// <param name="target"></param>
-        void Inject<TObject>(TObject target)
-            where TObject : class
-        ;
-#if ENABLED_STRUCT
-        void Inject<TObject>(ref TObject target)
-            where TObject : struct
-        ;
-#endif
-
-        /// <summary>
-        /// <see cref="New"/>して<see cref="Inject{TObject}(TObject)"/>するイメージ。
-        /// </summary>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
-        /// <returns></returns>
-        TObject Make<TObject>(IEnumerable<object> manualParameters)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        TObject Make<TObject>()
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-    }
-
-    /// <summary>
-    ///登録可能コンテナ。
-    /// </summary>
-    public interface IDiRegisterContainer : IDiContainer
-#if ENABLED_PRISM7
-        , IContainerRegistry
-#endif
-    {
-        /// <summary>
-        /// シンプルなマッピングを追加。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
-#if !ENABLED_STRUCT
-            where TObject : class, TInterface
-#endif
-        ;
-
-        /// <summary>
-        /// 自分で作る版のマッピング。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="lifecycle"></param>
-        /// <param name="creator"></param>
-        IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
-#if !ENABLED_STRUCT
-            where TObject : class, TInterface
-#endif
-        ;
-
-        /// <summary>
-        /// シングルトンとしてオブジェクトを単純登録。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        IDiRegisterContainer Register<TInterface, TObject>(TObject value)
-#if !ENABLED_STRUCT
-            where TObject : class, TInterface
-#endif
-        ;
-
-        /// <summary>
-        /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectionAttribute"/> を設定できないプロパティに無理やり設定する。
-        /// </summary>
-        /// <param name="baseType"></param>
-        /// <param name="memberName"></param>
-        /// <param name="objectType"></param>
-        IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
-        IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
-
-        /// <summary>
-        /// 登録解除。
-        /// </summary>
-        /// <typeparam name="TInterface"></typeparam>
-        /// <returns></returns>
-        bool Unregister<TInterface>();
-    }
-
     /// <summary>
     /// DI コンテナ。
     /// </summary>
@@ -294,41 +50,42 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// IF → 実体 のマッピング。
         /// </summary>
-        protected IDictionary<Type, Type> Mapping { get; } = new Dictionary<Type, Type>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, Type>> Mapping { get; } = new DiNamedContainer<ConcurrentDictionary<Type, Type>>();
         /// <summary>
         /// 生成処理キャッシュ。
         /// </summary>
-        protected IDictionary<Type, DiFactoryWorker> Factory { get; } = new Dictionary<Type, DiFactoryWorker>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, DiFactoryWorker>> Factory { get; } = new DiNamedContainer<ConcurrentDictionary<Type, DiFactoryWorker>>();
         /// <summary>
         /// コンストラクタキャッシュ。
         /// </summary>
-        protected IDictionary<Type, DiConstructorCache> Constructors { get; } = new Dictionary<Type, DiConstructorCache>();
-        protected IDictionary<Type, object> ObjectPool { get; } = new Dictionary<Type, object>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>> Constructors { get; } = new DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, object>> ObjectPool { get; } = new DiNamedContainer<ConcurrentDictionary<Type, object>>();
         protected IList<DiDirtyMember> DirtyMembers { get; } = new List<DiDirtyMember>();
 
         #endregion
 
         #region function
 
-        protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
-            Mapping.Add(interfaceType, objectType);
-            Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
+
+            Mapping[name].TryAdd(interfaceType, objectType);
+            Factory[name].TryAdd(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
 
-        void RegisterFactorySingleton(Type interfaceType, Type objectType, DiCreator creator)
+        void RegisterFactorySingleton(Type interfaceType, Type objectType, string name, DiCreator creator)
         {
             var lazy = new Lazy<object>(() => creator());
-            RegisterFactoryCore(interfaceType, objectType, DiLifecycle.Singleton, () => lazy.Value);
+            RegisterFactoryCore(interfaceType, objectType, name, DiLifecycle.Singleton, () => lazy.Value);
         }
 
-        protected virtual void SimpleRegister(Type interfaceType, Type objectType, object value)
+        protected virtual void SimpleRegister(Type interfaceType, Type objectType, string name, object value)
         {
-            Mapping.Add(interfaceType, objectType);
-            ObjectPool.Add(interfaceType, value);
+            Mapping[name].TryAdd(interfaceType, objectType);
+            ObjectPool[name].TryAdd(interfaceType, value);
         }
 
-        void Register(Type interfaceType, Type objectType, DiLifecycle lifecycle, DiCreator creator)
+        void Register(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
             if(!interfaceType.IsAssignableFrom(objectType)) {
                 throw new ArgumentException($"error: {interfaceType} <- {objectType}");
@@ -336,11 +93,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             switch(lifecycle) {
                 case DiLifecycle.Transient:
-                    RegisterFactoryCore(interfaceType, objectType, DiLifecycle.Transient, creator);
+                    RegisterFactoryCore(interfaceType, objectType, name, DiLifecycle.Transient, creator);
                     break;
 
                 case DiLifecycle.Singleton:
-                    RegisterFactorySingleton(interfaceType, objectType, creator);
+                    RegisterFactorySingleton(interfaceType, objectType, name, creator);
                     break;
 
                 default:
@@ -348,28 +105,55 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        bool Unregister(Type interfaceType)
+        Type GetMappingType(Type type, string name)
         {
-            if(Factory.TryGetValue(interfaceType, out var factory)) {
-                Mapping.Remove(interfaceType);
-                Factory.Remove(interfaceType);
-                Constructors.Remove(interfaceType);
-                if(factory .Lifecycle == DiLifecycle.Singleton) {
-                    ObjectPool.Remove(interfaceType);
-                    factory.Dispose();
-                }
-                return true;
+            return Mapping[name].TryGetValue(type, out var objectType) ? objectType : type;
+        }
+
+        protected object GetCore(Type interfaceType, string name)
+        {
+            if(ObjectPool[name].TryGetValue(interfaceType, out var value)) {
+                return value;
             }
 
-            return false;
+            var targetFactory = Factory[name];
+            if(targetFactory.TryGetValue(interfaceType, out var targetFactoryWorker)) {
+                return targetFactoryWorker.Create();
+            }
+
+            // 対象の名前で存在しなければ存在するところから引っ張る
+            if(name != string.Empty) {
+                // まずは空の名前から検索
+                var namelessPool = ObjectPool[string.Empty];
+                if(namelessPool.TryGetValue(interfaceType, out var poolValue)) {
+                    return poolValue;
+                }
+
+                var namelessFactory = Factory[string.Empty];
+                if(namelessFactory.TryGetValue(interfaceType, out var factoryValue)) {
+                    return factoryValue;
+                }
+            }
+
+            // 順序なく総なめ
+            var namedPools = ObjectPool.ToArray().Where(i => i.Key != name);
+            foreach(var namedPool in namedPools) {
+                if(namedPool.Value.TryGetValue(interfaceType, out var namedValue)) {
+                    return namedValue;
+                }
+            }
+
+            var namedFactories = Factory.ToArray().Where(i => i.Key != name);
+            foreach(var namedFactory in namedFactories) {
+                if(namedFactory.Value.TryGetValue(interfaceType, out var namedValue)) {
+                    return namedValue;
+                }
+            }
+
+            throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
-        Type GetMappingType(Type type)
-        {
-            return Mapping.TryGetValue(type, out var objectType) ? objectType : type;
-        }
-
-        object[] CreateParameters(IReadOnlyList<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
+        object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IEnumerable<object> manualParameters)
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
@@ -390,15 +174,59 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     }
                 }
 
-                if(ObjectPool.TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
+                if(parameterInjections.TryGetValue(parameterInfo, out var injectAttribute) && injectAttribute.Name != string.Empty) {
+                    var injectName = injectAttribute.Name;
+
+                    if(ObjectPool[injectName].TryGetValue(parameterInfo.ParameterType, out var injectNamePoolValue)) {
+                        arguments[i] = injectNamePoolValue;
+                        continue;
+                    }
+                    if(Factory[injectName].TryGetValue(parameterInfo.ParameterType, out var injectFactory)) {
+                        arguments[i] = injectFactory.Create();
+                        continue;
+                    }
+                }
+
+                if(ObjectPool[name].TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
                     arguments[i] = poolValue;
-                } else if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
+                } else if(Factory[name].TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments[i] = factoryWorker.Create();
                 } else {
+                    if(name == string.Empty) {
+                        if(ObjectPool[string.Empty].TryGetValue(parameterInfo.ParameterType, out var namelessPoolValue)) {
+                            arguments[i] = namelessPoolValue;
+                            continue;
+                        }
+                        if(Factory[string.Empty].TryGetValue(parameterInfo.ParameterType, out var namelessFactory)) {
+                            arguments[i] = namelessFactory.Create();
+                            continue;
+                        }
+                    }
+
+                    var namedPools = ObjectPool.ToArray().Where(i => i.Key != name);
+                    foreach(var namedPool in namedPools) {
+                        if(namedPool.Value.TryGetValue(parameterInfo.ParameterType, out var namedValue)) {
+                            arguments[i] = namedValue;
+                            break;
+                        }
+                    }
+                    if(arguments[i] != null) {
+                        continue;
+                    }
+
+                    var namedFacories = Factory.ToArray().Where(i => i.Key != name);
+                    foreach(var namedFactory in namedFacories) {
+                        if(namedFactory.Value.TryGetValue(parameterInfo.ParameterType, out var factory)) {
+                            arguments[i] = factory.Create();
+                            break;
+                        }
+                    }
+                    if(arguments[i] != null) {
+                        continue;
+                    }
+
                     // どうしようもねぇ
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
                     return null;
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
                 }
             }
 
@@ -406,21 +234,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
-        bool TryNewObjectCore(Type objectType, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, out object? createdObject)
+        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, out object? createdObject)
         {
             var parameters = constructorCache.ParameterInfos;
+            var parameterInjections = constructorCache.ParameterInjections;
 
             if(parameters.Count == 0) {
                 if(!isCached) {
-                    Constructors.Add(objectType, constructorCache);
+                    Constructors[name].TryAdd(objectType, constructorCache);
                 }
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-                createdObject = constructorCache.Create(null);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+                createdObject = constructorCache.Create(new object[0]);
                 return true;
             }
 
-            var arguments = CreateParameters(parameters, manualParameters);
+            var arguments = CreateParameters(name, parameters, parameterInjections, manualParameters);
             if(arguments == null) {
                 createdObject = default(object);
                 return false;
@@ -431,33 +258,33 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
 
             if(!isCached) {
-                Constructors.Add(objectType, constructorCache);
+                Constructors[name].TryAdd(objectType, constructorCache);
             }
             createdObject = constructorCache.Create(arguments);
             return true;
         }
 
-        bool TryNewObject(Type objectType, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
+        bool TryNewObject(Type objectType, string name, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
         {
-            if(ObjectPool.TryGetValue(objectType, out var poolValue)) {
+            if(ObjectPool[name].TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
                 return true;
             }
 
             if(useFactoryCache) {
                 // 生成可能なものはこの段階で生成
-                if(Factory.TryGetValue(objectType, out var factoryWorker)) {
+                if(Factory[name].TryGetValue(objectType, out var factoryWorker)) {
                     createdObject = factoryWorker.Create();
                     return true;
                 }
             }
 
             // コンストラクタのキャッシュを使用
-            if(Constructors.TryGetValue(objectType, out var constructorCache)) {
-                //NOTE: これ生成できなければ下の処理に流した方がいいと思う
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-                return TryNewObjectCore(objectType, true, constructorCache, manualParameters, out createdObject);
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
+            if(Constructors[name].TryGetValue(objectType, out var constructorCache)) {
+                if(TryNewObjectCore(objectType, name, true, constructorCache, manualParameters, out createdObject!)) {
+                    return true;
+                }
+                // 生成できなきゃ下の処理に流してキャッシュも多分変わる
             }
 
             // 属性付きで引数が多いものを優先
@@ -465,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 .Select(c => new {
                     Constructor = c,
                     Parameters = c.GetParameters(),
-                    Attribute = c.GetCustomAttribute<InjectionAttribute>()
+                    Attribute = c.GetCustomAttribute<InjectAttribute>()
                 })
                 .Where(i => i.Attribute != null ? true : i.Constructor.IsPublic)
                 .OrderBy(i => i.Attribute != null ? 0 : 1)
@@ -481,46 +308,42 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 #endif
 
             foreach(var constructorItem in constructorItems) {
-#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
-                if(TryNewObjectCore(objectType, false, constructorItem, manualParameters, out createdObject)) {
-#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
+                if(TryNewObjectCore(objectType, name, false, constructorItem, manualParameters, out createdObject!)) {
                     return true;
                 }
             }
 
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-            createdObject = default(object);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+            createdObject = default!;
             return false;
         }
 
-        object NewCore(Type type, IEnumerable<object> manualParameters, bool useFactoryCache)
+        object NewCore(Type type, string name, IEnumerable<object> manualParameters, bool useFactoryCache)
         {
-            if(ObjectPool.TryGetValue(type, out var poolValue)) {
+            if(ObjectPool[name].TryGetValue(type, out var poolValue)) {
                 return poolValue;
             }
 
-            if(TryNewObject(GetMappingType(type), manualParameters, useFactoryCache, out var raw)) {
+            if(TryNewObject(GetMappingType(type, name), name, manualParameters, useFactoryCache, out var raw)) {
                 return raw;
             }
 
-            throw new DiException($"{type}: create rror");
+            throw new DiException($"{type}: create error {name}");
         }
 
-        bool TryGetInstance(Type interfaceType, IEnumerable<object> manualParameters, out object value)
+        bool TryGetInstance(Type interfaceType, string name, IEnumerable<object> manualParameters, out object value)
         {
-            if(ObjectPool.TryGetValue(interfaceType, out var poolValue)) {
+            if(ObjectPool[name].TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;
                 return true;
             }
 
             // 生成可能なものはこの段階で生成
-            if(Factory.TryGetValue(interfaceType, out var factoryWorker)) {
+            if(Factory[name].TryGetValue(interfaceType, out var factoryWorker)) {
                 value = factoryWorker.Create();
                 return true;
             }
 
-            return TryNewObject(GetMappingType(interfaceType), manualParameters, true, out value);
+            return TryNewObject(GetMappingType(interfaceType, name), name, manualParameters, true, out value);
         }
 
         Type GetMemberType(MemberInfo memberInfo)
@@ -537,12 +360,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type valueType)
+        void SetMemberValue<TObject>(ref TObject target, MemberInfo memberInfo, Type valueType, string name)
         {
             switch(memberInfo.MemberType) {
                 case MemberTypes.Field:
                     var fieldInfo = (FieldInfo)memberInfo;
-                    if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var fieldValue)) {
+                    if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var fieldValue)) {
                         fieldInfo.SetValue(target, fieldValue);
                     } else {
                         throw new DiException($"{fieldInfo}: create fail");
@@ -551,7 +374,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
                 case MemberTypes.Property:
                     var propertyInfo = (PropertyInfo)memberInfo;
-                    if(TryGetInstance(valueType, Enumerable.Empty<object>(), out var propertyValue)) {
+                    if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var propertyValue)) {
                         propertyInfo.SetValue(target, propertyValue);
                     } else {
                         throw new DiException($"{propertyInfo}: create fail");
@@ -563,23 +386,22 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
         }
 
-        void InjectCore<TObject>(ref TObject target)
+        void InjectCore<TObject>(ref TObject target, string name)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         {
-            var targetType = GetMappingType(typeof(TObject));
+            var targetType = GetMappingType(typeof(TObject), name);
             var memberItems = targetType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty)
-                .Select(m => new { MemberInfo = m, IsInjectionTarget = m.GetCustomAttribute<InjectionAttribute>() != null })
+                .Select(m => new { MemberInfo = m, Inject = m.GetCustomAttribute<InjectAttribute>() })
                 .ToList()
             ;
-            foreach(var memberItem in memberItems.Where(i => i.IsInjectionTarget)) {
-                SetMemberValue(ref target, memberItem.MemberInfo, GetMemberType(memberItem.MemberInfo));
+            foreach(var memberItem in memberItems.Where(i => i.Inject != null)) {
+                SetMemberValue(ref target, memberItem.MemberInfo, GetMemberType(memberItem.MemberInfo), memberItem.Inject!.Name);
             }
 
             // 強制付け替え処理の実施
             var dirtyPairs = memberItems
-                .Where(i => !i.IsInjectionTarget)
                 .Join(
                     DirtyMembers.Where(d => d.BaseType.IsAssignableFrom(targetType)),
                     m => m.MemberInfo.Name,
@@ -588,39 +410,72 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 )
             ;
             foreach(var pair in dirtyPairs) {
-                SetMemberValue(ref target, pair.Item.MemberInfo, pair.Dirty.ObjectType);
+                SetMemberValue(ref target, pair.Item.MemberInfo, pair.Dirty.ObjectType, pair.Item.Inject?.Name ?? string.Empty);
             }
 
+        }
+
+        protected string TuneName(string? name)
+        {
+            if(name == null) {
+                return string.Empty;
+            }
+
+            return name.Trim();
         }
 
         #endregion
 
         #region IDiContainer
 
+        /// <inheritdoc cref="IDiContainer.Get(Type)"/>
         public object Get(Type interfaceType)
         {
-            if(ObjectPool.TryGetValue(interfaceType, out var value)) {
-                return value;
-            }
-
-            return Factory[interfaceType].Create();
+            return GetCore(interfaceType, string.Empty);
         }
 
+        /// <inheritdoc cref="IDiContainer.Get(Type, string)"/>
+        public object Get(Type interfaceType, string name)
+        {
+            return GetCore(interfaceType, TuneName(name));
+        }
+
+        /// <inheritdoc cref="IDiContainer.Get{TInterface}()"/>
         public TInterface Get<TInterface>()
         {
             return (TInterface)Get(typeof(TInterface));
         }
 
-        public object New(Type type, IEnumerable<object> manualParameters)
+        /// <inheritdoc cref="IDiContainer.Get{TInterface}(string)"/>
+        public TInterface Get<TInterface>(string name)
         {
-            return NewCore(type, manualParameters, true);
+            return (TInterface)Get(typeof(TInterface), TuneName(name));
         }
 
+        /// <inheritdoc cref="IDiContainer.New(Type, IEnumerable{object})"/>
+        public object New(Type type, IEnumerable<object> manualParameters)
+        {
+            return NewCore(type, string.Empty, manualParameters, true);
+        }
+        /// <inheritdoc cref="IDiContainer.New(Type, string, IEnumerable{object})"/>
+        public object New(Type type, string name, IEnumerable<object> manualParameters)
+        {
+            return NewCore(type, TuneName(name), manualParameters, true);
+        }
+
+        /// <inheritdoc cref="IDiContainer.New(Type)"/>
         public object New(Type type)
         {
             return New(type, Enumerable.Empty<object>());
         }
+        /// <inheritdoc cref="IDiContainer.New(Type, string)"/>
+        public object New(Type type, string name)
+        {
+            return New(type, name, Enumerable.Empty<object>());
+        }
 
+
+        /// <inheritdoc cref="IDiContainer.New{TObject}(IEnumerable{object})"/>
         public TObject New<TObject>(IEnumerable<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
@@ -628,7 +483,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             return (TObject)New(typeof(TObject), manualParameters);
         }
+        /// <inheritdoc cref="IDiContainer.New{TObject}(string, IEnumerable{object})"/>
+        public TObject New<TObject>(string name, IEnumerable<object> manualParameters)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            return (TObject)New(typeof(TObject), name, manualParameters);
+        }
 
+
+        /// <inheritdoc cref="IDiContainer.New{TObject}"/>
         public TObject New<TObject>()
 #if !ENABLED_STRUCT
             where TObject : class
@@ -636,29 +501,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             return (TObject)New(typeof(TObject), Enumerable.Empty<object>());
         }
+        /// <inheritdoc cref="IDiContainer.New{TObject}(string)"/>
+        public TObject New<TObject>(string name)
+#if !ENABLED_STRUCT
+            where TObject : class
+#endif
+        {
+            return (TObject)New(typeof(TObject), name, Enumerable.Empty<object>());
+        }
 
         public void Inject<TObject>(TObject target)
             where TObject : class
         {
-            InjectCore(ref target);
-        }
-
-        public TObject Make<TObject>(IEnumerable<object> manualParameters)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            var obj = New<TObject>(manualParameters);
-            InjectCore(ref obj);
-            return obj;
-        }
-
-        public TObject Make<TObject>()
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            return Make<TObject>(Enumerable.Empty<object>());
+            InjectCore(ref target, string.Empty);
         }
 
 
@@ -684,17 +539,29 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         public virtual IScopeDiContainer Scope()
         {
             var cloneContainer = new ScopeDiContainer(IsDisposeObjectPool);
-            foreach(var pair in Mapping) {
-                cloneContainer.Mapping.Add(pair.Key, pair.Value);
+            foreach(var pair in Mapping.ToArray()) {
+                var map = cloneContainer.Mapping[pair.Key];
+                foreach(var sub in pair.Value) {
+                    map.TryAdd(sub.Key, sub.Value);
+                }
             }
-            foreach(var pair in Factory) {
-                cloneContainer.Factory.Add(pair.Key, pair.Value);
+            foreach(var pair in Factory.ToArray()) {
+                var factory = cloneContainer.Factory[pair.Key];
+                foreach(var sub in pair.Value) {
+                    factory.TryAdd(sub.Key, sub.Value);
+                }
             }
-            foreach(var pair in ObjectPool) {
-                cloneContainer.ObjectPool.Add(pair.Key, pair.Value);
+            foreach(var pair in ObjectPool.ToArray()) {
+                var objectPool = cloneContainer.ObjectPool[pair.Key];
+                foreach(var sub in pair.Value) {
+                    objectPool.TryAdd(sub.Key, sub.Value);
+                }
             }
-            foreach(var pair in Constructors) {
-                cloneContainer.Constructors.Add(pair.Key, pair.Value);
+            foreach(var pair in Constructors.ToArray()) {
+                var constructor = cloneContainer.Constructors[pair.Key];
+                foreach(var sub in pair.Value) {
+                    constructor.TryAdd(sub.Key, sub.Value);
+                }
             }
             foreach(var item in DirtyMembers) {
                 cloneContainer.DirtyMembers.Add(item);
@@ -707,7 +574,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region IDiRegisterContainer
 
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(DiLifecycle)"/>
         public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        {
+            return Register<TInterface, TObject>(string.Empty, lifecycle);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(string, DiLifecycle)"/>
+        public IDiRegisterContainer Register<TInterface, TObject>(string name, DiLifecycle lifecycle)
 #if !ENABLED_STRUCT
             where TObject : class, TInterface
 #endif
@@ -715,41 +592,67 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             var interfaceType = typeof(TInterface);
             var objectType = typeof(TObject);
             if(interfaceType == objectType) {
-                Register(typeof(TInterface), typeof(TObject), lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), false));
+                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), false));
             } else {
-                Register(typeof(TInterface), typeof(TObject), lifecycle, () => NewCore(typeof(TObject), Enumerable.Empty<object>(), true));
+                Register(typeof(TInterface), typeof(TObject), TuneName(name), lifecycle, () => NewCore(typeof(TObject), string.Empty, Enumerable.Empty<object>(), true));
             }
 
             return this;
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(DiLifecycle, DiCreator)"/>
         public IDiRegisterContainer Register<TInterface, TObject>(DiLifecycle lifecycle, DiCreator creator)
 #if !ENABLED_STRUCT
             where TObject : class, TInterface
 #endif
         {
-            Register(typeof(TInterface), typeof(TObject), lifecycle, creator);
+            return Register<TInterface, TObject>(string.Empty, lifecycle, creator);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(string, DiLifecycle, DiCreator)"/>
+        public IDiRegisterContainer Register<TInterface, TObject>(string name, DiLifecycle lifecycle, DiCreator creator)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        {
+            Register(typeof(TInterface), typeof(TObject), name, lifecycle, creator);
 
             return this;
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(TObject)"/>
         public IDiRegisterContainer Register<TInterface, TObject>(TObject value)
 #if !ENABLED_STRUCT
             where TObject : class, TInterface
 #endif
         {
-            SimpleRegister(typeof(TInterface), typeof(TObject), value);
+            return Register<TInterface, TObject>(string.Empty, value);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Register{TInterface, TObject}(string, TObject)"/>
+        public IDiRegisterContainer Register<TInterface, TObject>(string name, TObject value)
+#if !ENABLED_STRUCT
+            where TObject : class, TInterface
+#endif
+        {
+            SimpleRegister(typeof(TInterface), typeof(TObject), name, value);
 
             return this;
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister(Type, string, Type)"/>
         public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType)
+        {
+            return DirtyRegister(baseType, memberName, objectType, string.Empty);
+        }
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister(Type, string, Type, string)"/>
+        public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType, string name)
         {
             var memberInfo = baseType.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
             if(memberInfo == null || memberInfo.Length != 1) {
                 throw new NullReferenceException(memberName);
             }
-            var member = new DiDirtyMember(baseType, memberInfo[0], objectType);
+            var member = new DiDirtyMember(baseType, memberInfo[0], objectType, TuneName(name));
             if(DirtyMembers.Any(m => m.BaseType == member.BaseType && m.MemberInfo.Name == member.MemberInfo.Name)) {
                 throw new ArgumentException($"{baseType}.{memberInfo}");
             }
@@ -757,37 +660,69 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             return this;
         }
-
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string)"/>
         public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName)
         {
-            DirtyRegister(typeof(TBase), propertyName, typeof(TObject));
-
-            return this;
+            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), string.Empty);
+        }
+        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string, string)"/>
+        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName, string name)
+        {
+            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), name);
         }
 
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister(Type)"/>
+        public bool Unregister(Type interfaceType)
+        {
+            return Unregister(interfaceType, string.Empty);
+        }
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister(Type, string)"/>
+        public bool Unregister(Type interfaceType, string name)
+        {
+            if(Factory[name].TryGetValue(interfaceType, out var factory)) {
+                Mapping[name].TryRemove(interfaceType, out _);
+                Factory[name].TryRemove(interfaceType, out _);
+                Constructors[name].TryRemove(interfaceType, out _);
+                if(factory.Lifecycle == DiLifecycle.Singleton) {
+                    ObjectPool[name].TryRemove(interfaceType, out _);
+                    factory.Dispose();
+                }
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister{TInterface}"/>
         public bool Unregister<TInterface>()
         {
-            return Unregister(typeof(TInterface));
+            return Unregister(typeof(TInterface), string.Empty);
+        }
+
+        /// <inheritdoc cref="IDiRegisterContainer.Unregister{TInterface}(string)"/>
+        public bool Unregister<TInterface>(string name)
+        {
+            return Unregister(typeof(TInterface), string.Empty);
         }
 
 #if ENABLED_PRISM7
-        public bool IsRegistered(Type type) => Mapping.ContainsKey(type);
+        public bool IsRegistered(Type type) => Mapping[string.Empty].ContainsKey(type);
         public bool IsRegistered(Type type, string name) => throw new NotSupportedException();
         public IContainerRegistry Register(Type from, Type to)
         {
-            Register(from, to, DiLifecycle.Transient, () => NewCore(to, Enumerable.Empty<object>(), false));
+            Register(from, to, string.Empty, DiLifecycle.Transient, () => NewCore(to, string.Empty, Enumerable.Empty<object>(), false));
             return this;
         }
         public IContainerRegistry Register(Type from, Type to, string name) => throw new NotSupportedException();
         public IContainerRegistry RegisterInstance(Type type, object instance)
         {
-            SimpleRegister(type, instance.GetType(), instance);
+            SimpleRegister(type, instance.GetType(), string.Empty, instance);
             return this;
         }
         public IContainerRegistry RegisterInstance(Type type, object instance, string name) => throw new NotSupportedException();
         public IContainerRegistry RegisterSingleton(Type from, Type to)
         {
-            Register(from, to, DiLifecycle.Singleton, () => NewCore(to, Enumerable.Empty<object>(), false));
+            Register(from, to, string.Empty, DiLifecycle.Singleton, () => NewCore(to, string.Empty, Enumerable.Empty<object>(), false));
             return this;
         }
         public IContainerRegistry RegisterSingleton(Type from, Type to, string name) => throw new NotSupportedException();
@@ -801,17 +736,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    foreach(var factory in Factory.Values) {
+                    foreach(var factory in Factory.Values.SelectMany(i => i.Values)) {
                         factory.Dispose();
                     }
                     if(IsDisposeObjectPool) {
-                        foreach(var pair in ObjectPool) {
-                            // 自分自身が処理中なので無視
-                            if(pair.Value == this) {
-                                continue;
-                            }
-                            if(pair.Value is IDisposable disposer) {
-                                disposer.Dispose();
+                        foreach(var pair in ObjectPool.ToArray()) {
+                            foreach(var sub in pair.Value) {
+                                // 自分自身が処理中なので無視
+                                if(sub.Value == this) {
+                                    continue;
+                                }
+                                if(sub.Value is IDisposable disposer) {
+                                    disposer.Dispose();
+                                }
                             }
                         }
                     }

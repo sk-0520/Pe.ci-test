@@ -353,7 +353,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         */
         NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
         {
-            var manager = diContainer.Make<NotifyManager>();
+            var manager = diContainer.Build<NotifyManager>();
 
             return manager;
         }

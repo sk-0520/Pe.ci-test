@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #region property
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
         ScrollTuner ScrollTuner { get; }
         CommandStore CommandStore { get; } = new CommandStore();

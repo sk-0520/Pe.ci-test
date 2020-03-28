@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
         #region property
         DialogRequestReceiver DialogRequestReceiver { get; }
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
 
         CommandStore CommandStore { get; } = new CommandStore();

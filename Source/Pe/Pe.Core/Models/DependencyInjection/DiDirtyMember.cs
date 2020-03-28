@@ -16,11 +16,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <param name="baseType">対象オブジェクト。</param>
         /// <param name="memberInfo"><paramref name="baseType"/>の対象プロパティ。</param>
         /// <param name="objectType">設定する値。</param>
-        public DiDirtyMember(Type baseType, MemberInfo memberInfo, Type objectType)
+        /// <param name="name">名前。</param>
+        public DiDirtyMember(Type baseType, MemberInfo memberInfo, Type objectType, string name)
         {
             BaseType = baseType;
             MemberInfo = memberInfo;
             ObjectType = objectType;
+            Name = name;
         }
 
         #region property
@@ -37,6 +39,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// 設定する値。
         /// </summary>
         public Type ObjectType { get; }
+
+        /// <summary>
+        /// 名前。
+        /// </summary>
+        public string Name { get; }
 
         #endregion
     }

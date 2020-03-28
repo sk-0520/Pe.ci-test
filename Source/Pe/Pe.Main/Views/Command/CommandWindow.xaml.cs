@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         PopupAttacher PopupAttacher { get; }
         CommandStore CommandStore { get; } = new CommandStore();
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
 
         #endregion

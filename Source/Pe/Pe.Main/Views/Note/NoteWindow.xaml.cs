@@ -42,9 +42,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
 
         #region property
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
-        [Injection]
+        [Inject]
         ILoggerFactory? LoggerFactory { get; set; }
 
         PopupAttacher? PopupAttacher { get; set; }
