@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
                 : base(a, b, new[] { i1, i2, i3, })
             { }
 
-            [Injection]
+            [Inject]
             private C5_Private(int a, I1 i1, int b, I1 i2, I1 i3, I1 i4)
                 : base(a, b, new[] { i1, i2, i3, i4 })
             { }
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
 
         class C5_Minimum : C5
         {
-            [Injection]
+            [Inject]
             public C5_Minimum(int a, I1 i1, int b)
                 : base(a, b, new[] { i1 })
             { }
@@ -127,16 +127,16 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
         {
             private I1? fieldUnset_private;
             public I1? fieldUnset_public;
-            [Injection]
+            [Inject]
             private I1? fieldSet_private;
-            [Injection]
+            [Inject]
             public I1? fieldSet_public;
 
             private I1? PropertyUnset_private { get; set; }
             public I1? PropertyUnset_public { get; set; }
-            [Injection]
+            [Inject]
             private I1? PropertySet_private { get; set; }
-            [Injection]
+            [Inject]
             public I1? PropertySet_public { get; set; }
         }
 
@@ -612,9 +612,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
 #pragma warning disable 169, 649
         class D2 : ID2
         {
-            [Injection]
+            [Inject]
             public I1? I1_1;
-            [Injection]
+            [Inject]
 #pragma warning disable CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
 #pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
             public I1 I1_2 { get; set; }

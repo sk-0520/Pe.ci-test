@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
 
         #region property
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
         ScrollTuner ScrollTuner { get; }
 

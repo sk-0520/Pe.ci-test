@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
 
         #region property
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
         LauncherToolbarViewModel ViewModel => (LauncherToolbarViewModel)DataContext;
 

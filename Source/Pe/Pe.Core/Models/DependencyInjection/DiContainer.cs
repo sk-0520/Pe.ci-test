@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <para><see cref="IDiContainer.Inject{T}(T)"/> を使用する際の対象を指定。</para>
     /// </summary>
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class InjectionAttribute : Attribute
+    public class InjectAttribute : Attribute
     { }
 
     /// <summary>
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         ;
 
         /// <summary>
-        /// <see cref="InjectionAttribute"/> を補完する。
+        /// <see cref="InjectAttribute"/> を補完する。
         /// </summary>
         /// <typeparam name="TObject">生成済みオブジェクト</typeparam>
         /// <param name="target"></param>
@@ -247,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         ;
 
         /// <summary>
-        /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectionAttribute"/> を設定できないプロパティに無理やり設定する。
+        /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectAttribute"/> を設定できないプロパティに無理やり設定する。
         /// </summary>
         /// <param name="baseType"></param>
         /// <param name="memberName"></param>
@@ -469,7 +469,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 .Select(c => new {
                     Constructor = c,
                     Parameters = c.GetParameters(),
-                    Attribute = c.GetCustomAttribute<InjectionAttribute>()
+                    Attribute = c.GetCustomAttribute<InjectAttribute>()
                 })
                 .Where(i => i.Attribute != null ? true : i.Constructor.IsPublic)
                 .OrderBy(i => i.Attribute != null ? 0 : 1)
@@ -574,7 +574,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             var targetType = GetMappingType(typeof(TObject));
             var memberItems = targetType.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty)
-                .Select(m => new { MemberInfo = m, IsInjectionTarget = m.GetCustomAttribute<InjectionAttribute>() != null })
+                .Select(m => new { MemberInfo = m, IsInjectionTarget = m.GetCustomAttribute<InjectAttribute>() != null })
                 .ToList()
             ;
             foreach(var memberItem in memberItems.Where(i => i.IsInjectionTarget)) {
