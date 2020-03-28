@@ -153,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
-        object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IEnumerable<object> manualParameters)
+        object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IEnumerable<object> manualParameters)
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
@@ -226,9 +226,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     }
 
                     // どうしようもねぇ
-#pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
                     return null;
-#pragma warning restore CS8603 // Null 参照戻り値である可能性があります。
                 }
             }
 
@@ -245,9 +243,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 if(!isCached) {
                     Constructors[name].TryAdd(objectType, constructorCache);
                 }
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-                createdObject = constructorCache.Create(null);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+                createdObject = constructorCache.Create(new object[0]);
                 return true;
             }
 
