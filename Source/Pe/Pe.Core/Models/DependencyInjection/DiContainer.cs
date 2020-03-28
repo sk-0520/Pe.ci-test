@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <para><see cref="IDiContainer.New{T}(IEnumerable{object})"/> する際の対象コンストラクタを限定。</para>
     /// <para><see cref="IDiContainer.Inject{T}(T)"/> を使用する際の対象を指定。</para>
     /// </summary>
-    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class InjectAttribute : Attribute
     {
         public InjectAttribute()
@@ -214,15 +214,48 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         protected object GetCore(Type interfaceType, string name)
         {
-            var tunedName = TuneName(name);
-            if(ObjectPool[tunedName].TryGetValue(interfaceType, out var value)) {
+            if(ObjectPool[name].TryGetValue(interfaceType, out var value)) {
                 return value;
             }
 
-            return Factory[tunedName][interfaceType].Create();
+            var targetFactory = Factory[name];
+            if(targetFactory.TryGetValue(interfaceType, out var targetFactoryWorker)) {
+                return targetFactoryWorker.Create();
+            }
+
+            // 対象の名前で存在しなければ存在するところから引っ張る
+            if(name != string.Empty) {
+                // まずは空の名前から検索
+                var namelessPool = ObjectPool[string.Empty];
+                if(namelessPool.TryGetValue(interfaceType, out var poolValue)) {
+                    return poolValue;
+                }
+
+                var namelessFactory = Factory[string.Empty];
+                if(namelessFactory.TryGetValue(interfaceType, out var factoryValue)) {
+                    return factoryValue;
+                }
+            }
+
+            // 順序なく総なめ
+            var namedPools = ObjectPool.ToArray().Where(i => i.Key != name);
+            foreach(var namedPool in namedPools) {
+                if(namedPool.Value.TryGetValue(interfaceType, out var namedValue)) {
+                    return namedValue;
+                }
+            }
+
+            var namedFactories = Factory.ToArray().Where(i => i.Key != name);
+            foreach(var namedFactory in namedFactories) {
+                if(namedFactory.Value.TryGetValue(interfaceType, out var namedValue)) {
+                    return namedValue;
+                }
+            }
+
+            throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
-        object[] CreateParameters(IReadOnlyList<ParameterInfo> parameterInfos, IEnumerable<object> manualParameters)
+        object[] CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IEnumerable<object> manualParameters)
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
@@ -243,11 +276,57 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     }
                 }
 
-                if(ObjectPool[DummyName].TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
+                if(parameterInjections.TryGetValue(parameterInfo, out var injectAttribute) && injectAttribute.Name != string.Empty) {
+                    var injectName = injectAttribute.Name;
+
+                    if(ObjectPool[injectName].TryGetValue(parameterInfo.ParameterType, out var injectNamePoolValue)) {
+                        arguments[i] = injectNamePoolValue;
+                        continue;
+                    }
+                    if(Factory[injectName].TryGetValue(parameterInfo.ParameterType, out var injectFactory)) {
+                        arguments[i] = injectFactory.Create();
+                        continue;
+                    }
+                }
+
+                if(ObjectPool[name].TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
                     arguments[i] = poolValue;
-                } else if(Factory[DummyName].TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
+                } else if(Factory[name].TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments[i] = factoryWorker.Create();
                 } else {
+                    if(name == string.Empty) {
+                        if(ObjectPool[string.Empty].TryGetValue(parameterInfo.ParameterType, out var namelessPoolValue)) {
+                            arguments[i] = namelessPoolValue;
+                            continue;
+                        }
+                        if(Factory[string.Empty].TryGetValue(parameterInfo.ParameterType, out var namelessFactory)) {
+                            arguments[i] = namelessFactory.Create();
+                            continue;
+                        }
+                    }
+
+                    var namedPools = ObjectPool.ToArray().Where(i => i.Key != name);
+                    foreach(var namedPool in namedPools) {
+                        if(namedPool.Value.TryGetValue(parameterInfo.ParameterType, out var namedValue)) {
+                            arguments[i] = namedValue;
+                            break;
+                        }
+                    }
+                    if(arguments[i] != null) {
+                        continue;
+                    }
+
+                    var namedFacories = Factory.ToArray().Where(i => i.Key != name);
+                    foreach(var namedFactory in namedFacories) {
+                        if(namedFactory.Value.TryGetValue(parameterInfo.ParameterType, out var factory)) {
+                            arguments[i] = factory.Create();
+                            break;
+                        }
+                    }
+                    if(arguments[i] != null) {
+                        continue;
+                    }
+
                     // どうしようもねぇ
 #pragma warning disable CS8603 // Null 参照戻り値である可能性があります。
                     return null;
@@ -262,6 +341,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, out object? createdObject)
         {
             var parameters = constructorCache.ParameterInfos;
+            var parameterInjections = constructorCache.ParameterInjections;
 
             if(parameters.Count == 0) {
                 if(!isCached) {
@@ -273,7 +353,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 return true;
             }
 
-            var arguments = CreateParameters(parameters, manualParameters);
+            var arguments = CreateParameters(name, parameters, parameterInjections, manualParameters);
             if(arguments == null) {
                 createdObject = default(object);
                 return false;

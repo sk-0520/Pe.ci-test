@@ -750,5 +750,32 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             Assert.AreEqual("b", nc2.B);
 
         }
+
+        class NamedClass2
+        {
+            public NamedClass2(string a, [Inject("named")] string b, [Inject("notfound")] string c)
+            {
+                A = a;
+                B = b;
+                C = c;
+            }
+
+            public string A { get; } = string.Empty;
+            public string B { get; } = string.Empty;
+            public string C { get; } = string.Empty;
+        }
+        [TestMethod]
+        public void New_Name_Test()
+        {
+            var dic = new DiContainer();
+            dic.Register<string, string>("a");
+            dic.Register<string, string>("named", "b");
+
+            var nc = dic.New<NamedClass2>();
+            Assert.AreEqual("a", nc.A);
+            Assert.AreEqual("b", nc.B);
+            Assert.AreEqual("a", nc.C);
+        }
+
     }
 }

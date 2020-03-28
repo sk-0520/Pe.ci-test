@@ -17,12 +17,22 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             ConstructorInfo = constructorInfo;
             ParameterInfos = parameterInfos;
+
+            var map = new Dictionary<ParameterInfo, InjectAttribute>();
+            foreach(var parameterInfo in ParameterInfos) {
+                var attr = parameterInfo.GetCustomAttribute<InjectAttribute>();
+                if(attr != null) {
+                    map.Add(parameterInfo, attr);
+                }
+            }
+            ParameterInjections = map;
         }
 
         #region proeprty
 
         public ConstructorInfo ConstructorInfo { get; }
         public IReadOnlyList<ParameterInfo> ParameterInfos { get; }
+        public IReadOnlyDictionary<ParameterInfo, InjectAttribute> ParameterInjections { get; }
         Func<object[], object>? Creator { get; set; }
 
         #endregion
