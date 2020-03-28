@@ -146,15 +146,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 stdioElement = OrderManager.CreateStandardInputOutputElement(customParameter.Caption, process, screen);
                 DispatcherWrapper.Begin(element => {
                     element.StartView();
-                }, stdioElement);
+                    element!.PreparateReceiver();
+                }, stdioElement, DispatcherPriority.Send);
             }
 
             result.Success = process.Start();
             if(streamWatch) {
-                stdioElement!.PreparateReceiver();
                 // 受信前に他の処理を終わらせるため少し待つ
                 DispatcherWrapper.Begin(element => {
-                    element.RunReceiver();
+                    element!.RunReceiver();
                 }, stdioElement, DispatcherPriority.ApplicationIdle);
             }
 

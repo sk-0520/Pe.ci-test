@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "標準入出力死んでるやん！"
 					},
 					{
 						"revision": "",
