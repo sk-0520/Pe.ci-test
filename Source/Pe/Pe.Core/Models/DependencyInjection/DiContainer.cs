@@ -285,6 +285,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// </summary>
     public class DiContainer : DisposerBase, IDiRegisterContainer
     {
+        const string DummyName = "";
         /// <summary>
         /// プールしているオブジェクトはコンテナに任せる。
         /// </summary>
@@ -315,7 +316,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// 生成処理キャッシュ。
         /// </summary>
-        protected IDictionary<Type, DiFactoryWorker> Factory { get; } = new Dictionary<Type, DiFactoryWorker>();
+        protected DiNamedContainer<ConcurrentDictionary<Type, DiFactoryWorker>> Factory { get; } = new DiNamedContainer<ConcurrentDictionary<Type, DiFactoryWorker>>();
         /// <summary>
         /// コンストラクタキャッシュ。
         /// </summary>
@@ -330,7 +331,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
             Mapping[name].TryAdd(interfaceType, objectType);
-            Factory.Add(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
+            Factory[name].TryAdd(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
 
         void RegisterFactorySingleton(Type interfaceType, Type objectType, string name, DiCreator creator)
@@ -367,9 +368,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         bool Unregister(Type interfaceType, string name)
         {
-            if(Factory.TryGetValue(interfaceType, out var factory)) {
+            if(Factory[name].TryGetValue(interfaceType, out var factory)) {
                 Mapping[name].TryRemove(interfaceType, out _);
-                Factory.Remove(interfaceType);
+                Factory[name].TryRemove(interfaceType, out _);
                 Constructors.Remove(interfaceType);
                 if(factory.Lifecycle == DiLifecycle.Singleton) {
                     ObjectPool.Remove(interfaceType);
@@ -409,7 +410,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
                 if(ObjectPool.TryGetValue(parameterInfo.ParameterType, out var poolValue)) {
                     arguments[i] = poolValue;
-                } else if(Factory.TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
+                } else if(Factory[DummyName].TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments[i] = factoryWorker.Create();
                 } else {
                     // どうしようもねぇ
@@ -463,7 +464,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
             if(useFactoryCache) {
                 // 生成可能なものはこの段階で生成
-                if(Factory.TryGetValue(objectType, out var factoryWorker)) {
+                if(Factory[DummyName].TryGetValue(objectType, out var factoryWorker)) {
                     createdObject = factoryWorker.Create();
                     return true;
                 }
@@ -532,7 +533,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             }
 
             // 生成可能なものはこの段階で生成
-            if(Factory.TryGetValue(interfaceType, out var factoryWorker)) {
+            if(Factory[name].TryGetValue(interfaceType, out var factoryWorker)) {
                 value = factoryWorker.Create();
                 return true;
             }
@@ -619,7 +620,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 return value;
             }
 
-            return Factory[interfaceType].Create();
+            return Factory[DummyName][interfaceType].Create();
         }
 
         public TInterface Get<TInterface>()
@@ -706,8 +707,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     map.TryAdd(sub.Key, sub.Value);
                 }
             }
-            foreach(var pair in Factory) {
-                cloneContainer.Factory.Add(pair.Key, pair.Value);
+            foreach(var pair in Factory.ToArray()) {
+                var factory = cloneContainer.Factory[pair.Key];
+                foreach(var sub in pair.Value) {
+                    factory.TryAdd(sub.Key, sub.Value);
+                }
             }
             foreach(var pair in ObjectPool) {
                 cloneContainer.ObjectPool.Add(pair.Key, pair.Value);
@@ -820,7 +824,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    foreach(var factory in Factory.Values) {
+                    foreach(var factory in Factory.Values.SelectMany(i => i.Values)) {
                         factory.Dispose();
                     }
                     if(IsDisposeObjectPool) {
