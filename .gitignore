@@ -37,6 +37,7 @@ Thumbs.db
 node_modules/
 /Source/Documents/dist
 /Source/Documents/build
+/Source/Benchmark
 .vscode/
 */**/Properties/launchSettings.json
 /Source/Pe/Pe.Main/etc/appsettings.debug.json
