@@ -133,14 +133,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
             {
-                var element = DiContainer.Make<LauncherGroupElement>(new object[] { launcherGroupId });
+                var element = DiContainer.Build<LauncherGroupElement>(launcherGroupId);
                 element.Initialize();
                 return element;
             }
 
             public LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups)
             {
-                var element = DiContainer.Make<LauncherToolbarElement>(new object[] { dockScreen, launcherGroups });
+                var element = DiContainer.Build<LauncherToolbarElement>(dockScreen, launcherGroups);
                 element.Initialize();
                 return element;
             }
@@ -150,13 +150,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
 
                     var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                        .Select(i => DiContainer.Make<LauncherIconLoader>(new object[] { launcherItemId, i }))
+                        .Select(i => DiContainer.Build<LauncherIconLoader>(launcherItemId, i))
                     ;
                     var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
 
-                    var launcherIconElement = DiContainer.Make<LauncherIconElement>(new object[] { launcherItemId, iconImageLoaderPack });
+                    var launcherIconElement = DiContainer.Build<LauncherIconElement>(launcherItemId, iconImageLoaderPack);
 
-                    var launcherItemElement = DiContainer.Make<LauncherItemElement>(new object[] { launcherItemIdKey, launcherIconElement });
+                    var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey, launcherIconElement);
                     launcherItemElement.Initialize();
                     return launcherItemElement;
                 });
@@ -225,12 +225,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 var viewModel = DiContainer.UsingTemporaryContainer(c => {
                     //c.Register<ILoggerFactory, ILoggerFactory>(element);
-                    return c.Make<LauncherToolbarViewModel>(new[] { element, });
+                    return c.Build<LauncherToolbarViewModel>(element);
                 });
                 var window = DiContainer.BuildView<LauncherToolbarWindow>();
                 viewModel.AppDesktopToolbarExtend = DiContainer.UsingTemporaryContainer(c => {
                     //c.Register<ILoggerFactory, ILoggerFactory>(viewModel);
-                    return c.Make<AppDesktopToolbarExtend>(new object[] { window, element, });
+                    return c.Build<AppDesktopToolbarExtend>(window, element);
                 });
                 window.DataContext = viewModel;
 

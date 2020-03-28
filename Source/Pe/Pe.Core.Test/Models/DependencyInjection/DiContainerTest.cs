@@ -634,7 +634,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
 #pragma warning restore 169, 649
 
         [TestMethod]
-        public void MakeTest()
+        public void BuildTest()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
@@ -643,7 +643,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             dic.DirtyRegister<D2, I1>("I1_3");
             dic.DirtyRegister<D2, I1>(nameof(D1.I1_4));
 
-            var d = (D2)dic.Make<ID2>();
+            var d = (D2)dic.Build<ID2>();
             Assert.IsNotNull(d.I1_1);
             Assert.IsNotNull(d.I1_2);
             Assert.IsNotNull(d.I1_3);

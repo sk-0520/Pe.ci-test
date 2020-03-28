@@ -147,38 +147,25 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         /// <summary>
         /// コンストラクタインジェクション。
-        /// <para>依存を解決するとともにパラメータを指定。</para>
+        /// <para>依存を解決する。</para>
         /// </summary>
         /// <param name="type"></param>
         /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
         /// <returns></returns>
+        /// <remarks>null をパラメータとして使用する場合は型情報が死ぬので <see cref="DiDefaultParameter"/> を使用すること。</remarks>
         object New(Type type, IEnumerable<object> manualParameters);
 
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
         object New(Type type);
 
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// <para>依存を解決するとともにパラメータを指定。</para>
-        /// </summary>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
-        /// <returns></returns>
+        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
         TObject New<TObject>(IEnumerable<object> manualParameters)
 #if !ENABLED_STRUCT
             where TObject : class
 #endif
         ;
 
-        /// <summary>
-        /// コンストラクタインジェクション。
-        /// </summary>
-        /// <typeparam name="TObject"></typeparam>
-        /// <returns></returns>
+        /// <inheritdoc cref="New(Type, IEnumerable{object})"/>
         TObject New<TObject>()
 #if !ENABLED_STRUCT
             where TObject : class
@@ -186,10 +173,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         ;
 
         /// <summary>
-        /// <see cref="InjectAttribute"/> を補完する。
+        /// プロパティインジェクション。
+        /// <para><see cref="InjectAttribute"/> を補完する。</para>
         /// </summary>
         /// <typeparam name="TObject">生成済みオブジェクト</typeparam>
-        /// <param name="target"></param>
+        /// <param name="target">クラスインスタンス。</param>
         void Inject<TObject>(TObject target)
             where TObject : class
         ;
@@ -198,24 +186,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             where TObject : struct
         ;
 #endif
-
-        /// <summary>
-        /// <see cref="New"/>して<see cref="Inject{TObject}(TObject)"/>するイメージ。
-        /// </summary>
-        /// <typeparam name="TObject"></typeparam>
-        /// <param name="manualParameters">依存関係以外のパラメータ。前方から型に一致するものが使用される。</param>
-        /// <returns></returns>
-        TObject Make<TObject>(IEnumerable<object> manualParameters)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
-
-        TObject Make<TObject>()
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        ;
     }
 
     /// <summary>
@@ -658,24 +628,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             where TObject : class
         {
             InjectCore(ref target, string.Empty);
-        }
-
-        public TObject Make<TObject>(IEnumerable<object> manualParameters)
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            var obj = New<TObject>(manualParameters);
-            InjectCore(ref obj, string.Empty);
-            return obj;
-        }
-
-        public TObject Make<TObject>()
-#if !ENABLED_STRUCT
-            where TObject : class
-#endif
-        {
-            return Make<TObject>(Enumerable.Empty<object>());
         }
 
 
