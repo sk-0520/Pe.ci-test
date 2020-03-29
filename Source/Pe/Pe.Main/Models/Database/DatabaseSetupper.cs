@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         public void Initialize(IDatabaseAccessorPack accessorPack)
         {
-            Logger.LogInformation("init");
+            Logger.LogInformation("初期化処理実行");
 
             var dto = CreateSetupDto(new Version(0, 0, 0, 0));
             var setup = new Setupper_V_00_84_000(IdFactory, StatementLoader, LoggerFactory);
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         public void Migrate(IDatabaseAccessorPack accessorPack, Version lastVersion)
         {
-            Logger.LogInformation("migrate");
+            Logger.LogInformation("マイグレーション処理実行");
 
             var dto = CreateSetupDto(lastVersion);
 

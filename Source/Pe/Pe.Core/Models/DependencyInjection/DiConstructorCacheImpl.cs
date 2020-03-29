@@ -1,9 +1,9 @@
-// [T4] build 2019-11-24 10:28:02Z(UTC)
+// [T4] build 2020-03-28 10:39:54Z(UTC)
 using System;
 using System.Diagnostics;
 
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 {
     partial class DiConstructorCache {
         private delegate object DiConstructorCacheP1(object p1);

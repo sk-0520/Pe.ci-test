@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.ExtendsExecute
         #region property
         DialogRequestReceiver DialogRequestReceiver { get; }
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
 
         CommandStore CommandStore { get; } = new CommandStore();

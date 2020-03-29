@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Startup
 
         #region property
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
         CommandStore CommandStore { get; } = new CommandStore();
 

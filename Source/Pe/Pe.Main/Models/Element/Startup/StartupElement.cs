@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Main.Views.Startup;
 using ContentTypeTextNet.Pe.Main.ViewModels.Startup;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()
                 ;
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();
-                var view = diContainer.Make<ImportProgramsWindow>();
+                var view = diContainer.Build<ImportProgramsWindow>();
 
                 WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, importProgramsModel, view));
 

@@ -13,7 +13,11 @@
 			//const contentElement = document.getElementById('content');
 			const previewElement = document.getElementById('preview');
 			//const markdownSource = contentElement.value;
-			const markdownHtmlSource = marked(markdownSource, {});
+			var renderer = new marked.Renderer();
+			renderer.link = (href, title, text) => {
+				return '<a target="_blank" href="' + href + '" title="' + title + '">' + text + '</a>';
+			}
+			const markdownHtmlSource = marked(markdownSource, { renderer: renderer});
 			previewElement.innerHTML = markdownHtmlSource;
 		}
 		/*

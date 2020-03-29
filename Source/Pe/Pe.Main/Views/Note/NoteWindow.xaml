@@ -203,7 +203,7 @@
             </TextBox.InputBindings>
           </TextBox>
 
-          <Button Grid.Column="1" ToolTip="{Binding Resources.String_Note_Caption_ToggleCompact, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ToggleCompactCommand}">
+          <Button Grid.Column="1" ToolTip="{Binding Resources.String_Note_Caption_ToggleCompact, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ToggleCompactCommand}">
             <Button.Style>
               <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
                 <Style.Triggers>
@@ -215,7 +215,7 @@
               </Style>
             </Button.Style>
           </Button>
-          <Button Grid.Column="2" ToolTip="{Binding Resources.String_Note_Caption_ToggleTopmost, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ToggleTopmostCommand}">
+          <Button Grid.Column="2" ToolTip="{Binding Resources.String_Note_Caption_ToggleTopmost, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ToggleTopmostCommand}">
             <Button.Style>
               <Style TargetType="Button" BasedOn="{StaticResource CaptionButton}">
                 <Style.Triggers>
@@ -227,7 +227,7 @@
               </Style>
             </Button.Style>
           </Button>
-          <Button Grid.Column="3" ToolTip="{Binding Resources.String_Note_Caption_Close, Source={x:Static app_main:CultureService.Current}}" Style="{StaticResource CaptionButton}" Content="{Binding CaptionCloseImage}" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
+          <Button Grid.Column="3" ToolTip="{Binding Resources.String_Note_Caption_Close, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource CaptionButton}" Content="{Binding CaptionCloseImage}" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
         </Grid>
 
         <Grid Grid.Row="1" Background="{Binding ContentBackground}">
@@ -346,7 +346,7 @@
             </ContentControl.Style>
           </ContentControl>
           <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
-            <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Current}}" />
+            <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
         </Grid>
       </Grid>
@@ -393,7 +393,7 @@
                 </Style.Triggers>
               </Style>
             </StackPanel.Style>
-            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Format_Header, Source={x:Static app_main:CultureService.Current}}">
+            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Format_Header, Source={x:Static app_main:CultureService.Instance}}">
               <StackPanel Grid.IsSharedSizeScope="True">
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -401,7 +401,7 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Kind_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" IsEnabled="{Binding IsLink, Converter={StaticResource LogicalNotConverter}}">
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.Plain}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.Plain}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteContentKind.RichText}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteContentKind.RichText}}"  />
@@ -414,7 +414,7 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Layout_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Layout_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Absolute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Absolute}}" />
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:NoteLayoutKind.Relative}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding LayoutKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:NoteLayoutKind.Relative}}"  />
@@ -431,11 +431,11 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Foreground_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Foreground_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <!--<xctk:ColorPicker Grid.Row="0" Grid.Column="1" SelectedColor="{Binding ForegroundColor}" />-->
                   <app_core_views:ColorCanvas Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding ForegroundColor, Mode=TwoWay}" />
 
-                  <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Background_A, Source={x:Static app_main:CultureService.Current}}" />
+                  <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Background_A, Source={x:Static app_main:CultureService.Instance}}" />
                   <!--<xctk:ColorPicker Grid.Row="1" Grid.Column="1" SelectedColor="{Binding BackgroundColor}" />-->
                   <app_core_views:ColorCanvas Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorPicker}" SelectedColor="{Binding BackgroundColor, Mode=TwoWay}" />
                 </Grid>
@@ -450,7 +450,7 @@
                           <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Font_A, Source={x:Static app_main:CultureService.Current}}" />
+                        <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Format_Font_A, Source={x:Static app_main:CultureService.Instance}}" />
                         <ContentControl Grid.Column="1">
                           <ContentControl.Style>
                             <Style TargetType="ContentControl">
@@ -685,7 +685,7 @@
               </StackPanel>
             </GroupBox>
 
-            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Status_Header, Source={x:Static app_main:CultureService.Current}}">
+            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Status_Header, Source={x:Static app_main:CultureService.Instance}}">
               <StackPanel>
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -694,11 +694,11 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Lock_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsLocked, Mode=OneWay}" Command="{Binding ToggleLockCommand}" />
-                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Compact_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsCompact, Mode=OneWay}" Command="{Binding ToggleCompactCommand}" />
-                  <CheckBox Grid.Column="2" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Topmost_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
+                  <CheckBox Grid.Column="0" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Lock_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsLocked, Mode=OneWay}" Command="{Binding ToggleLockCommand}" />
+                  <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Compact_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsCompact, Mode=OneWay}" Command="{Binding ToggleCompactCommand}" />
+                  <CheckBox Grid.Column="2" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Topmost_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
                 </Grid>
-                <CheckBox Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_WordWrap_A, Source={x:Static app_main:CultureService.Current}}" IsChecked="{Binding TextWrap, Mode=OneWay}" Command="{Binding ToggleTextWrapCommand}">
+                <CheckBox Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_WordWrap_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding TextWrap, Mode=OneWay}" Command="{Binding ToggleTextWrapCommand}">
                   <CheckBox.Style>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource Vertical-CheckBox}">
                       <Style.Triggers>
@@ -709,11 +709,11 @@
                     </Style>
                   </CheckBox.Style>
                 </CheckBox>
-                <Button Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding LinkChangeCommand}" />
+                <Button Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding LinkChangeCommand}" />
               </StackPanel>
             </GroupBox>
 
-            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Operation_Header, Source={x:Static app_main:CultureService.Current}}">
+            <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Operation_Header, Source={x:Static app_main:CultureService.Instance}}">
               <StackPanel>
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -722,14 +722,14 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Button Grid.Column="0" Content="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding Content.CopyCommand}" />
-                  <Button Grid.Column="1" Content="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Current}}" Command="{x:Static SystemCommands.CloseWindowCommand}" />
+                  <Button Grid.Column="0" Content="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Content.CopyCommand}" />
+                  <Button Grid.Column="1" Content="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{x:Static SystemCommands.CloseWindowCommand}" />
                   <Grid Grid.Column="2">
-                    <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}" Content="{Binding Resources.String_Note_Operation_Remove_Confirm_A, Source={x:Static app_main:CultureService.Current}}" />
+                    <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}" Content="{Binding Resources.String_Note_Operation_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchRemoveNote}">
                       <Border Style="{StaticResource PopupMenuBorder}">
                         <StackPanel>
-                          <MenuItem Header="{Binding Resources.String_Note_Operation_Remove_Execute_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding RemoveCommand}" />
+                          <MenuItem Header="{Binding Resources.String_Note_Operation_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding RemoveCommand}" />
                         </StackPanel>
                       </Border>
                     </Popup>
@@ -769,8 +769,8 @@
               >
                 <StackPanel>
                   <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ChangingContentKindMessage}" />
-                  <Button Content="{Binding Resources.String_Note_KindChanging_Convert_A, Source={x:Static app_main:CultureService.Current}}"  Command="{Binding ContentKindChangeConvertCommand}" />
-                  <Button Content="{Binding Resources.String_Common_Cancel_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding ContentKindChangeCancelCommand}" />
+                  <Button Content="{Binding Resources.String_Note_KindChanging_Convert_A, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding ContentKindChangeConvertCommand}" />
+                  <Button Content="{Binding Resources.String_Common_Cancel_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ContentKindChangeCancelCommand}" />
                 </StackPanel>
               </Border>
 
@@ -808,10 +808,10 @@
               >
                 <Grid x:Name="parent">
                   <StackPanel Visibility="{Binding IsLink, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Resources.String_Note_Link_Linking, Source={x:Static app_main:CultureService.Current}}" />
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Resources.String_Note_Link_Linking, Source={x:Static app_main:CultureService.Instance}}" />
                     <Separator />
-                    <Button Content="{Binding Resources.String_Note_Link_Unlink_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding UnlinkCommand}" />
-                    <Button Content="{Binding Resources.String_Note_Link_Delete_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding DeleteCommand}" />
+                    <Button Content="{Binding Resources.String_Note_Link_Unlink_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding UnlinkCommand}" />
+                    <Button Content="{Binding Resources.String_Note_Link_Delete_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DeleteCommand}" />
 
                     <Grid>
                       <Grid.ColumnDefinitions>
@@ -826,10 +826,10 @@
                     </Grid>
                   </StackPanel>
                   <StackPanel Visibility="{Binding IsLink, Converter={StaticResource FalseToVisibilityConverter}}" Width="{Binding ActualWidth, ElementName=parent}">
-                    <TextBlock HorizontalAlignment="Center" Text="{Binding Resources.String_Note_Link_NotLinking, Source={x:Static app_main:CultureService.Current}}" />
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding Resources.String_Note_Link_NotLinking, Source={x:Static app_main:CultureService.Instance}}" />
                     <Separator />
-                    <Button Content="{Binding Resources.String_Note_Link_SaveLink_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SaveLinkCommand}" />
-                    <Button Content="{Binding Resources.String_Note_Link_OpenLink_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding OpenLinkCommand}" />
+                    <Button Content="{Binding Resources.String_Note_Link_SaveLink_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding SaveLinkCommand}" />
+                    <Button Content="{Binding Resources.String_Note_Link_OpenLink_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding OpenLinkCommand}" />
                   </StackPanel>
                 </Grid>
               </Border>

@@ -31,7 +31,7 @@
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </Window.Resources>
   <Window.Title>
-    <Binding Path="Resources.String_Feedback_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+    <Binding Path="Resources.String_Feedback_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
   <i:Interaction.Triggers>
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
@@ -76,21 +76,21 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-          <TextBlock Text="{Binding Resources.String_Feedback_Description, Source={x:Static app_main:CultureService.Current}}"  />
-          <TextBlock Text="{Binding Resources.String_Feedback_Warning, Source={x:Static app_main:CultureService.Current}}"  />
-          <TextBlock Text="{Binding Resources.String_Feedback_SourceAddress, Source={x:Static app_main:CultureService.Current}}" />
+          <TextBlock Text="{Binding Resources.String_Feedback_Description, Source={x:Static app_main:CultureService.Instance}}"  />
+          <TextBlock Text="{Binding Resources.String_Feedback_Warning, Source={x:Static app_main:CultureService.Instance}}"  />
+          <TextBlock Text="{Binding Resources.String_Feedback_SourceAddress, Source={x:Static app_main:CultureService.Instance}}" />
           <TextBlock>
             <Hyperlink Command="{Binding ShowSourceUriCommand}">
-              <TextBlock Text="{Binding Resources.String_Feedback_SourceOpen, Source={x:Static app_main:CultureService.Current}}" />
+              <TextBlock Text="{Binding Resources.String_Feedback_SourceOpen, Source={x:Static app_main:CultureService.Instance}}" />
             </Hyperlink>
           </TextBlock>
           <Separator Style="{StaticResource Vertical-Padding}" />
         </StackPanel>
 
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Subject_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Subject_A, Source={x:Static app_main:CultureService.Instance}}" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Subject, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Kind_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Kind_A, Source={x:Static app_main:CultureService.Instance}}" />
         <Grid Grid.Row="2" Grid.Column="1" >
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -104,11 +104,11 @@
               </DataTemplate>
             </ComboBox.ItemTemplate>
           </ComboBox>
-          <Button Grid.Column="1"  Content="{Binding Resources.String_Feedback_KindSet_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SetTemplateCommand}" />
-          <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{Binding Resources.String_Feedback_KindSetWarning, Source={x:Static app_main:CultureService.Current}}" />
+          <Button Grid.Column="1"  Content="{Binding Resources.String_Feedback_KindSet_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding SetTemplateCommand}" />
+          <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{Binding Resources.String_Feedback_KindSetWarning, Source={x:Static app_main:CultureService.Instance}}" />
         </Grid>
 
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Comment_A, Source={x:Static app_main:CultureService.Current}}" />
+        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Comment_A, Source={x:Static app_main:CultureService.Instance}}" />
         <Grid Grid.Row="3" Grid.Column="1" >
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -120,8 +120,8 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
 
-          <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Resources.String_Feedback_CommentContent, Source={x:Static app_main:CultureService.Current}}" ToolTip="{Binding Resources.String_Feedback_Comment_Format, Source={x:Static app_main:CultureService.Current}}" />
-          <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Resources.String_Feedback_CommentPreview, Source={x:Static app_main:CultureService.Current}}" />
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Resources.String_Feedback_CommentContent, Source={x:Static app_main:CultureService.Instance}}" ToolTip="{Binding Resources.String_Feedback_Comment_Format, Source={x:Static app_main:CultureService.Instance}}" />
+          <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Resources.String_Feedback_CommentPreview, Source={x:Static app_main:CultureService.Instance}}" />
 
           <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
@@ -214,7 +214,7 @@
               <TextBlock TextAlignment="Center" Text="{Binding ErrorMessage}" />
               <TextBlock TextAlignment="Center">
                 <Hyperlink Command="{Binding CorrectCommand}">
-                  <TextBlock Text="{Binding Resources.String_Feedback_Correct, Source={x:Static app_main:CultureService.Current}}" />
+                  <TextBlock Text="{Binding Resources.String_Feedback_Correct, Source={x:Static app_main:CultureService.Instance}}" />
                 </Hyperlink>
               </TextBlock>
             </StackPanel>
@@ -234,10 +234,10 @@
               </Style>
             </ContentControl.Style>
             <StackPanel>
-              <TextBlock TextAlignment="Center" Text="{Binding Resources.String_Common_Sent, Source={x:Static app_main:CultureService.Current}}" />
+              <TextBlock TextAlignment="Center" Text="{Binding Resources.String_Common_Sent, Source={x:Static app_main:CultureService.Instance}}" />
               <TextBlock TextAlignment="Center">
                 <Hyperlink Command="{Binding CloseCommand, ElementName=root}">
-                  <TextBlock Text="{Binding Resources.String_Common_Close, Source={x:Static app_main:CultureService.Current}}" />
+                  <TextBlock Text="{Binding Resources.String_Common_Close, Source={x:Static app_main:CultureService.Instance}}" />
                 </Hyperlink>
               </TextBlock>
             </StackPanel>
@@ -249,7 +249,7 @@
     </Grid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button Content="{Binding Resources.String_Common_Send_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding SendCommand}">
+      <Button Content="{Binding Resources.String_Common_Send_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding SendCommand}">
         <Button.Style>
           <Style TargetType="Button" BasedOn="{StaticResource DialogCommandButton}">
             <Style.Triggers>
@@ -267,7 +267,7 @@
           </Style>
         </Button.Style>
       </Button>
-      <Button Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}">
+      <Button Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CloseCommand, ElementName=root}">
         <Button.Style>
           <Style TargetType="Button" BasedOn="{StaticResource DialogCommandButton}">
             <Style.Triggers>

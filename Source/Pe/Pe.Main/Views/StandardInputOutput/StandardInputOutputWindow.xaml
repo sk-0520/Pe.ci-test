@@ -48,19 +48,19 @@
       <ToggleButton IsChecked="{Binding IsTopmost}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-Topmost}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Topmost_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Topmost_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </ToggleButton>
       <ToggleButton IsChecked="{Binding AutoScroll}" >
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-AutoScroll}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_AutoScroll_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_AutoScroll_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </ToggleButton>
       <ToggleButton IsChecked="{Binding WordWrap}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-WordWrap}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_WordWrap_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_WordWrap_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </ToggleButton>
 
@@ -69,13 +69,13 @@
       <Button Command="{Binding SaveCommand}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-SaveAs}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Save_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Save_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </Button>
       <Button Command="{Binding ClearOutputCommand}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-Clear}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Clear_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Clear_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </Button>
 
@@ -84,7 +84,7 @@
       <Button Command="{Binding KillOutputCommand}">
         <StackPanel Style="{StaticResource ImageLabel-Small}">
           <Control Template="{StaticResource App-Image-StandardInputOutput-Kill}" />
-          <AccessText Text="{Binding Resources.String_StandardInputOutput_Kill_A, Source={x:Static app_main:CultureService.Current}}" />
+          <AccessText Text="{Binding Resources.String_StandardInputOutput_Kill_A, Source={x:Static app_main:CultureService.Instance}}" />
         </StackPanel>
       </Button>
 
@@ -99,21 +99,21 @@
                 <Setter Property="Content">
                   <Setter.Value>
                     <TextBlock>
-                      <Run Text="{Binding Resources.String_StandardInputOutput_ExitCode, Source={x:Static app_main:CultureService.Current}, Mode=OneTime}" />
+                      <Run Text="{Binding Resources.String_StandardInputOutput_ExitCode, Source={x:Static app_main:CultureService.Instance}, Mode=OneTime}" />
                       <Run Text="{Binding ExitCode, Mode=OneTime}" />
                     </TextBlock>
                   </Setter.Value>
                 </Setter>
               </DataTrigger>
             </Style.Triggers>
-            <Setter Property="Content" Value="{Binding Resources.String_StandardInputOutput_Running, Source={x:Static app_main:CultureService.Current}}" />
+            <Setter Property="Content" Value="{Binding Resources.String_StandardInputOutput_Running, Source={x:Static app_main:CultureService.Instance}}" />
           </Style>
         </Label.Style>
       </Label>
     </StatusBar>
 
     <TabControl>
-      <TabItem Header="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Header, Source={x:Static app_main:CultureService.Current}}">
+      <TabItem Header="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Header, Source={x:Static app_main:CultureService.Instance}}">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -196,7 +196,7 @@
             </ComboBox>
             <Button
               Grid.Column="1"
-              Content="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Send_A, Source={x:Static app_main:CultureService.Current}}"
+              Content="{Binding Resources.String_StandardInputOutput_StandardInputOutput_Send_A, Source={x:Static app_main:CultureService.Instance}}"
               Command="{Binding SendInputCommand}"
             />
           </Grid>

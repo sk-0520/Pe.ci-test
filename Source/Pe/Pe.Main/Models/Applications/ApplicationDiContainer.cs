@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -45,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return @this
                 .Register<TModel, TModel>(DiLifecycle.Singleton)
                 .Register<TViewModel, TViewModel>(DiLifecycle.Transient)
-                .Register<ILogger, ILogger>(@this.Make<ILoggerFactory>().CreateLogger(typeof(TView)))
+                .Register<ILogger, ILogger>(@this.Build<ILoggerFactory>().CreateLogger(typeof(TView)))
                 .DirtyRegister<TView, TViewModel>(nameof(FrameworkElement.DataContext))
             ;
         }
@@ -63,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #endif
         {
             return @this.UsingTemporaryContainer(c => {
-                c.Register<ILogger, ILogger>(c.Make<ILoggerFactory>().CreateLogger(typeof(TView)));
+                c.Register<ILogger, ILogger>(c.Build<ILoggerFactory>().CreateLogger(typeof(TView)));
                 return c.Build<TView>();
             });
         }

@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
     {
         #region property
 
-        public CultureService CultureService { get; set; } = CultureService.Current;
+        public CultureService CultureService { get; set; } = CultureService.Instance;
 
         public bool UndefinedIsRaw { get; set; }
 

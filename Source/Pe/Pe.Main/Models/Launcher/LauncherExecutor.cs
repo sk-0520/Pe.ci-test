@@ -144,18 +144,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(streamWatch) {
                 process.EnableRaisingEvents = true;
                 stdioElement = OrderManager.CreateStandardInputOutputElement(customParameter.Caption, process, screen);
-                DispatcherWrapper.Begin(element => {
-                    element.StartView();
-                }, stdioElement);
+                //DispatcherWrapper.Begin(element => {
+                //    element.StartView();
+                //    element!.PreparateReceiver();
+                //}, stdioElement, DispatcherPriority.Send);
             }
 
             result.Success = process.Start();
             if(streamWatch) {
-                stdioElement!.PreparateReceiver();
+                Debug.Assert(stdioElement != null);
                 // 受信前に他の処理を終わらせるため少し待つ
                 DispatcherWrapper.Begin(element => {
+                    element.StartView();
+                    element.PreparateReceiver();
                     element.RunReceiver();
-                }, stdioElement, DispatcherPriority.ApplicationIdle);
+                }, stdioElement, DispatcherPriority.Send);
             }
 
             return result;

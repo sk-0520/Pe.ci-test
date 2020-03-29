@@ -3,21 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ContentTypeTextNet.Pe.Core.Test.Models
+namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
 {
     [TestClass]
     public class DiContainerTest
     {
         #region define
 
+        interface I0
+        {
+            int Func(int a);
+        }
+
+        class C0 : I0
+        {
+            public C0(Func<int, int> f)
+            {
+                F = f;
+            }
+            Func<int, int> F { get; }
+
+            public int Func(int a) => F(a);
+
+        }
+
         interface I1
         {
             int Func(int a, int b);
         }
 
+        interface Idmy1
+        {
+            int Func(int a, int b);
+        }
+
         class C1 : I1
+        {
+            public int Func(int a, int b) => a + b;
+        }
+        class C1_other : I1
+        {
+            public int Func(int a, int b) => a - b;
+        }
+
+        class C1_Func : I1
+        {
+            public C1_Func(Func<int, int, int> func)
+            {
+                F = func;
+            }
+
+            Func<int, int, int> F { get; }
+            public int Func(int a, int b) => F(a, b);
+        }
+
+        class Cdmy1 : Idmy1
         {
             public int Func(int a, int b) => a + b;
         }
@@ -99,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
                 : base(a, b, new[] { i1, i2, i3, })
             { }
 
-            [Injection]
+            [Inject]
             private C5_Private(int a, I1 i1, int b, I1 i2, I1 i3, I1 i4)
                 : base(a, b, new[] { i1, i2, i3, i4 })
             { }
@@ -107,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 
         class C5_Minimum : C5
         {
-            [Injection]
+            [Inject]
             public C5_Minimum(int a, I1 i1, int b)
                 : base(a, b, new[] { i1 })
             { }
@@ -126,16 +169,16 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         {
             private I1? fieldUnset_private;
             public I1? fieldUnset_public;
-            [Injection]
+            [Inject]
             private I1? fieldSet_private;
-            [Injection]
+            [Inject]
             public I1? fieldSet_public;
 
             private I1? PropertyUnset_private { get; set; }
             public I1? PropertyUnset_public { get; set; }
-            [Injection]
+            [Inject]
             private I1? PropertySet_private { get; set; }
-            [Injection]
+            [Inject]
             public I1? PropertySet_public { get; set; }
         }
 
@@ -192,14 +235,58 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 
         [TestMethod]
+        public void GetTest_Singleton2()
+        {
+            using(var dic1 = new DiContainer()) {
+                dic1.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.IsFalse(d); }));
+            }
+
+            ActionDisposer ad2;
+            using(var dic2 = new DiContainer()) {
+                dic2.Register<ActionDisposer, ActionDisposer>(DiLifecycle.Singleton, () => new ActionDisposer(d => { Assert.IsTrue(d); }));
+                ad2 = dic2.Get<ActionDisposer>();
+            }
+
+        }
+
+        [TestMethod]
+        public void GetTest_Name_Create()
+        {
+            var dic = new DiContainer();
+            dic.Register<I1, C1>(DiLifecycle.Transient);
+            dic.Register<I1, C1_other>("other", DiLifecycle.Transient);
+
+            Assert.AreEqual(3, dic.Get<I1>().Func(1, 2));
+            Assert.AreEqual(-1, dic.Get<I1>("other").Func(1, 2));
+
+
+            dic.Register<string, string>("NAMELESS");
+            dic.Register<string, string>("name", "NAMED");
+
+            Assert.AreEqual("NAMELESS", dic.Get<string>());
+            Assert.AreEqual("NAMED", dic.Get<string>("name"));
+
+            dic.Register<I0, C0>(DiLifecycle.Transient, () => new C0(a => a + 2));
+            dic.Register<I0, C0>("b", DiLifecycle.Transient, () => new C0(a => a * 2));
+
+            Assert.AreEqual(5, dic.Get<I0>().Func(3));
+            Assert.AreEqual(6, dic.Get<I0>("b").Func(3));
+
+        }
+
+        [TestMethod]
         public void NewTest_I1()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
+            dic.Register<I1, C1_other>("name", DiLifecycle.Transient);
 
             // 引数のない人はそのまんま生成される
             var i1 = dic.New<I1>();
             Assert.AreEqual(10, i1.Func(4, 6));
+
+            var i2 = dic.New<I1>("name");
+            Assert.AreEqual(-2, i2.Func(4, 6));
         }
 
         [TestMethod]
@@ -354,7 +441,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 #endif
 
-#region nest
+        #region nest
 
         interface INest1
         {
@@ -469,7 +556,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.IsTrue(root.Nest4 == root.Nest1.Nest2.Nest3.Nest4);
         }
 
-#endregion
+        #endregion
 
         class CScopeA : I1
         {
@@ -596,9 +683,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 #pragma warning disable 169, 649
         class D2 : ID2
         {
-            [Injection]
+            [Inject]
             public I1? I1_1;
-            [Injection]
+            [Inject]
 #pragma warning disable CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
 #pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
             public I1 I1_2 { get; set; }
@@ -618,7 +705,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
 #pragma warning restore 169, 649
 
         [TestMethod]
-        public void MakeTest()
+        public void BuildTest()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
@@ -627,7 +714,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             dic.DirtyRegister<D2, I1>("I1_3");
             dic.DirtyRegister<D2, I1>(nameof(D1.I1_4));
 
-            var d = (D2)dic.Make<ID2>();
+            var d = (D2)dic.Build<ID2>();
             Assert.IsNotNull(d.I1_1);
             Assert.IsNotNull(d.I1_2);
             Assert.IsNotNull(d.I1_3);
@@ -635,5 +722,75 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.IsNull(d.I1_5);
             Assert.IsNull(d.I1_6);
         }
+
+        class Wrap
+        {
+            public Wrap(string s) => S = s;
+            public string S { get; set; } = string.Empty;
+
+        }
+
+        class NamedClass
+        {
+            [Inject]
+            public Wrap A { get; set; } = new Wrap(string.Empty);
+            [Inject("name")]
+            public Wrap B { get; set; } = new Wrap(string.Empty);
+            //BUGS: A とおなじ扱いでいいんだけどなんかむずいぞ
+            //[Inject("notfound")]
+            //public Wrap C { get; set; } = new Wrap(string.Empty);
+        }
+
+
+        [TestMethod]
+        public void Inject_Name_Test()
+        {
+            var dic = new DiContainer();
+            dic.Register<Wrap, Wrap>(new Wrap("a"));
+            dic.Register<Wrap, Wrap>("name", new Wrap("b"));
+
+            var nc = dic.New<NamedClass>();
+            Assert.AreEqual(string.Empty, nc.A.S);
+            Assert.AreEqual(string.Empty, nc.B.S);
+            //Assert.AreEqual(string.Empty, nc.C.S);
+
+            dic.Inject(nc);
+            Assert.AreEqual("a", nc.A.S);
+            Assert.AreEqual("b", nc.B.S);
+            //Assert.AreEqual("a", nc.C.S);
+
+            var nc2 = dic.Build<NamedClass>();
+            Assert.AreEqual("a", nc2.A.S);
+            Assert.AreEqual("b", nc2.B.S);
+            //Assert.AreEqual("a", nc2.C.S);
+
+        }
+
+        class NamedClass2
+        {
+            public NamedClass2(string a, [Inject("named")] string b, [Inject("notfound")] string c)
+            {
+                A = a;
+                B = b;
+                C = c;
+            }
+
+            public string A { get; } = string.Empty;
+            public string B { get; } = string.Empty;
+            public string C { get; } = string.Empty;
+        }
+        [TestMethod]
+        public void New_Name_Test()
+        {
+            var dic = new DiContainer();
+            dic.Register<string, string>("a");
+            dic.Register<string, string>("named", "b");
+
+            var nc = dic.New<NamedClass2>();
+            Assert.AreEqual("a", nc.A);
+            Assert.AreEqual("b", nc.B);
+            Assert.AreEqual("a", nc.C);
+        }
+
     }
 }

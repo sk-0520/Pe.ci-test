@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -140,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                     .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
-                using(var windowManager = new WindowManager(diContainer, CultureService.Current, diContainer.Get<ILoggerFactory>())) {
+                using(var windowManager = new WindowManager(diContainer, CultureService.Instance, diContainer.Get<ILoggerFactory>())) {
                     using var acceptModel = diContainer.Build<Element.Accept.AcceptElement>();
                     acceptModel.Initialize();
                     var view = diContainer.Build<Views.Accept.AcceptWindow>();
@@ -336,7 +337,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         WindowManager SetupWindowManager(IDiRegisterContainer diContainer)
         {
-            var manager = diContainer.Build<WindowManager>(CultureService.Current);
+            var manager = diContainer.Build<WindowManager>(CultureService.Instance);
 
             return manager;
         }
@@ -352,7 +353,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         */
         NotifyManager SetupNotifyManager(IDiRegisterContainer diContainer)
         {
-            var manager = diContainer.Make<NotifyManager>();
+            var manager = diContainer.Build<NotifyManager>();
 
             return manager;
         }
@@ -493,7 +494,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             ClipboardManager = SetupClipboardManager(DiContainer);
             UserAgentManager = SetupUserAgentManager(DiContainer);
 
-            var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Current, WindowManager);
+            var cultureServiceChanger = DiContainer.Build<CultureServiceChanger>(CultureService.Instance, WindowManager);
             cultureServiceChanger.ChangeCulture();
 
             if(acceptResult != null) {

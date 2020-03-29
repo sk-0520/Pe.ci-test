@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Views._Debug_
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Views._Debug_
             InitializeComponent();
         }
 
-        [Injection]
+        [Inject]
         ILogger? Logger { get; set; }
     }
 }

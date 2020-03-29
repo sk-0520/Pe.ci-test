@@ -32,7 +32,7 @@
     <SolidColorBrush Color="{Binding BackgroundColor}" />
   </Window.Background>
   <Window.Title>
-    <Binding Path="Resources.String_Screen_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+    <Binding Path="Resources.String_Screen_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
 
   <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -47,7 +47,7 @@
             <Setter Property="TextAlignment" Value="Center" />
             <Style.Triggers>
               <DataTrigger Binding="{Binding IsPrimaryScreen}" Value="True">
-                <Setter Property="Text" Value="{Binding Resources.String_Screen_Primary, Source={x:Static app_main:CultureService.Current}}" />
+                <Setter Property="Text" Value="{Binding Resources.String_Screen_Primary, Source={x:Static app_main:CultureService.Instance}}" />
               </DataTrigger>
             </Style.Triggers>
           </Style>
@@ -55,7 +55,7 @@
       </TextBlock>
     </StackPanel>
 
-    <TextBlock Text="{Binding Resources.String_Screen_Close_Message, Source={x:Static app_main:CultureService.Current}}" />
+    <TextBlock Text="{Binding Resources.String_Screen_Close_Message, Source={x:Static app_main:CultureService.Instance}}" />
 
   </StackPanel>
 

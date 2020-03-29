@@ -35,7 +35,7 @@
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </Window.Resources>
   <Window.Title>
-    <Binding Path="Resources.String_About_Caption" Source="{x:Static app_main:CultureService.Current}" Converter="{StaticResource TitleConverter}" />
+    <Binding Path="Resources.String_About_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
   <Grid>
     <Grid.RowDefinitions>
@@ -64,51 +64,51 @@
             <Button Command="{Binding OpenForumUriCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Web}" />
-                <AccessText Text="{Binding Resources.String_About_OpenForumUri_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_OpenForumUri_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
             <Button Command="{Binding OpenProjectUriCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Web}" />
-                <AccessText Text="{Binding Resources.String_About_OpenProjectUri_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_OpenProjectUri_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
 
             <Button Command="{Binding CopyShortInformationCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Clipboard-Copy}" />
-                <AccessText Text="{Binding Resources.String_About_CopyShortInformation_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_CopyShortInformation_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
             <Button Command="{Binding CopyLongInformationCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Clipboard-Copy}" />
-                <AccessText Text="{Binding Resources.String_About_CopyLongInformation_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_CopyLongInformation_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
 
             <Button Command="{Binding OpenApplicationDirectoryCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Directory}" />
-                <AccessText Text="{Binding Resources.String_About_OpenApplicationDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_OpenApplicationDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
             <Button Command="{Binding OpenUserDirectoryCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Directory}" />
-                <AccessText Text="{Binding Resources.String_About_OpenUserDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_OpenUserDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
             <Button Command="{Binding OpenMachineDirectoryCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Directory}" />
-                <AccessText Text="{Binding Resources.String_About_OpenMachineDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_OpenMachineDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
             <Button Command="{Binding OpenTemporaryDirectoryCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Directory}" />
-                <AccessText Text="{Binding Resources.String_About_OpenTemporaryDirectory_A, Source={x:Static app_main:CultureService.Current}}" />
+                <AccessText Text="{Binding Resources.String_About_OpenTemporaryDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
           </StackPanel>
@@ -170,7 +170,7 @@
     </Grid>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">
-      <Button IsDefault="True" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Current}}" Command="{Binding CloseCommand, ElementName=root}" />
+      <Button IsDefault="True" Content="{Binding Resources.String_Common_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CloseCommand, ElementName=root}" />
     </UniformGrid>
 
   </Grid>

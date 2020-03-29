@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;

@@ -30,9 +30,8 @@ namespace ContentTypeTextNet.Pe.Main
 
         /// <summary>
         /// TODO: あまり使わない方針で行きたい
-        /// あと名前が悪い
         /// </summary>
-        public static CultureService Current { get; private set; } = null!;
+        public static CultureService Instance { get; private set; } = null!;
 
         public Properties.Resources Resources { get; } = new Properties.Resources();
 
@@ -91,12 +90,12 @@ namespace ContentTypeTextNet.Pe.Main
 
         internal static void Initialize(CultureService cultureService)
         {
-            if(Current != null) {
+            if(Instance != null) {
                 throw new InvalidOperationException();
             }
 
-            Current = cultureService;
-            Current.ChangeAutoCulture();
+            Instance = cultureService;
+            Instance.ChangeAutoCulture();
         }
 
         #endregion

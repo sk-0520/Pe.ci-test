@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Views
         public CrashReportWindow()
         {
             InitializeComponent();
-            Language = CultureService.Current.GetXmlLanguage();
+            Language = CultureService.Instance.GetXmlLanguage();
         }
 
         #region property

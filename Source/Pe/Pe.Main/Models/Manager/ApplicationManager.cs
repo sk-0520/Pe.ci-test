@@ -59,6 +59,7 @@ using System.Text.Json;
 using System.Reflection;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
 
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
-            OrderManager = ApplicationDiContainer.Make<OrderManagerImpl>(); //initializer.OrderManager;
+            OrderManager = ApplicationDiContainer.Build<OrderManagerImpl>(); //initializer.OrderManager;
             NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
             StatusManagerImpl = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
@@ -257,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 foreach(var stopping in stoppings) {
                     stopping.Dispose();
                 }
-                var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Current);
+                var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Instance);
                 cultureServiceChanger.ChangeCulture();
 
                 Logger.LogInformation("設定適用のため各要素生成");
@@ -298,7 +299,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModels.Startup.StartupViewModel, Views.Startup.StartupWindow>()
                 ;
                 var startupModel = diContainer.New<Element.Startup.StartupElement>();
-                var view = diContainer.Make<Views.Startup.StartupWindow>();
+                var view = diContainer.Build<Views.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
                 windowManager.Register(new WindowItem(WindowKind.Startup, startupModel, view));
@@ -326,7 +327,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var model = diContainer.New<Element.About.AboutElement>();
                 model.Initialize();
 
-                var view = diContainer.Make<Views.About.AboutWindow>();
+                var view = diContainer.Build<Views.About.AboutWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
                 windowManager.Register(new WindowItem(WindowKind.About, model, view));
@@ -587,12 +588,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         IReadOnlyList<LauncherGroupElement> CreateLauncherGroupElements()
         {
-            var barrier = ApplicationDiContainer.Make<IMainDatabaseBarrier>();
-            var statementLoader = ApplicationDiContainer.Make<IDatabaseStatementLoader>();
+            var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
             IList<Guid> launcherGroupIds;
             using(var commander = barrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Make<LauncherGroupsEntityDao>(new object[] { commander, commander.Implementation });
+                var dao = ApplicationDiContainer.Build<LauncherGroupsEntityDao>(commander, commander.Implementation);
                 launcherGroupIds = dao.SelectAllLauncherGroupIds().ToList();
             }
 
@@ -620,12 +621,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         IReadOnlyList<NoteElement> CreateNoteElements()
         {
-            var barrier = ApplicationDiContainer.Make<IMainDatabaseBarrier>();
-            var statementLoader = ApplicationDiContainer.Make<IDatabaseStatementLoader>();
+            var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
             IList<Guid> noteIds;
             using(var commander = barrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Make<NotesEntityDao>(new object[] { commander, commander.Implementation });
+                var dao = ApplicationDiContainer.Build<NotesEntityDao>(commander, commander.Implementation);
                 noteIds = dao.SelectAllNoteIds().ToList();
             }
 
@@ -641,7 +642,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> GetLauncherNotifyCollection()
         {
             var collection = new ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel>(LauncherToolbarElements) {
-                ToViewModel = m => ApplicationDiContainer.Make<LauncherToolbarNotifyAreaViewModel>(new[] { m })
+                ToViewModel = m => ApplicationDiContainer.Build<LauncherToolbarNotifyAreaViewModel>(m)
             };
             return collection;
         }
@@ -649,7 +650,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> GetNoteCollection()
         {
             var collection = new ActionModelViewModelObservableCollectionManager<NoteElement, NoteNotifyAreaViewModel>(NoteElements) {
-                ToViewModel = m => ApplicationDiContainer.Make<NoteNotifyAreaViewModel>(new[] { m })
+                ToViewModel = m => ApplicationDiContainer.Build<NoteNotifyAreaViewModel>(m)
             };
             return collection;
         }
@@ -1164,7 +1165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             ExceptionWrapper(() => {
                 rawData.UserId = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
-                    var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
+                    var appExecuteSettingEntityDao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(c, c.Implementation);
                     var userIdManager = new UserIdManager(LoggerFactory);
                     return userIdManager.SafeGetOrCreateUserId(appExecuteSettingEntityDao);
                 });
@@ -1221,7 +1222,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ;
 
             var autoSend = ApplicationDiContainer.Get<IMainDatabaseBarrier>().ReadData(c => {
-                var appExecuteSettingEntityDao = ApplicationDiContainer.Make<AppExecuteSettingEntityDao>(new object[] { c, c.Implementation });
+                var appExecuteSettingEntityDao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(c, c.Implementation);
                 var setting = appExecuteSettingEntityDao.SelectSettingExecuteSetting();
                 return setting.IsEnabledTelemetry;
             });
