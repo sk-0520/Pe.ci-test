@@ -91,66 +91,27 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.92.001",
+		"date": "2020/03/29",
+		"version": "0.93.000",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "a82b25c30e9cd2a702590408b71d9dfb3da5c195",
 						"subject": "標準入出力死んでるやん！"
 					},
 					{
-						"revision": "",
+						"revision": "ec1b8821431a945b0b9eb9da894e5ced9aec0580",
 						"subject": "#589: ヘルプドキュメントのメニュー部が使いにくい"
 					},
 					{
-						"revision": "",
+						"revision": "fc9cb7ba7427b6569c3274ee4a6fa1b75c0c1e94",
 						"subject": "#590: フィードバックのプレビューでインターネット世界に旅立てる"
 					},
 					{
-						"revision": "",
+						"revision": "52aa2db9d89786a503100b46d4caaf85c8baa156",
 						"subject": "#587: 非実行可能アイテムを指定して実行で標準入出力を受け取ると死ぬ"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -158,22 +119,21 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
-						"subject": "#493: DI に名前付きがほしい"
+						"revision": "d2118258ba9baadc7d3130b7a8a98b95728b3eb4",
+						"subject": "#493: DI に名前付きがほしい",
+						"comments": [
+							"恐らく使うことはない"
+						]
 					},
 					{
-						"revision": "",
+						"revision": "02306f920cce8f2357205f1202fd97651eb2e2bb",
 						"class": "nuget",
 						"subject": "Microsoft.Extensions.* 更新",
-						"Comments": [
+						"comments": [
 							"Microsoft.Extensions.Configuration.Json 3.1.2 -> 3.1.3",
 							"Microsoft.Extensions.Logging 3.1.2 -> 3.1.3",
 							"Microsoft.Extensions.Logging.Abstractions 3.1.2 -> 3.1.3"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
