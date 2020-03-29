@@ -146,6 +146,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#587: 非実行可能アイテムを指定して実行で標準入出力を受け取ると死ぬ"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
