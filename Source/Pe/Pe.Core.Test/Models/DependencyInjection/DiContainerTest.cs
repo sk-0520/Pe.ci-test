@@ -723,31 +723,46 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             Assert.IsNull(d.I1_6);
         }
 
+        class Wrap
+        {
+            public Wrap(string s) => S = s;
+            public string S { get; set; } = string.Empty;
+
+        }
+
         class NamedClass
         {
             [Inject]
-            public string A { get; set; } = string.Empty;
+            public Wrap A { get; set; } = new Wrap(string.Empty);
             [Inject("name")]
-            public string B { get; set; } = string.Empty;
+            public Wrap B { get; set; } = new Wrap(string.Empty);
+            //BUGS: A とおなじ扱いでいいんだけどなんかむずいぞ
+            //[Inject("notfound")]
+            //public Wrap C { get; set; } = new Wrap(string.Empty);
         }
+
 
         [TestMethod]
         public void Inject_Name_Test()
         {
             var dic = new DiContainer();
-            dic.Register<string, string>("a");
-            dic.Register<string, string>("name", "b");
+            dic.Register<Wrap, Wrap>(new Wrap("a"));
+            dic.Register<Wrap, Wrap>("name", new Wrap("b"));
+
             var nc = dic.New<NamedClass>();
-            Assert.AreEqual(string.Empty, nc.A);
-            Assert.AreEqual(string.Empty, nc.B);
+            Assert.AreEqual(string.Empty, nc.A.S);
+            Assert.AreEqual(string.Empty, nc.B.S);
+            //Assert.AreEqual(string.Empty, nc.C.S);
 
             dic.Inject(nc);
-            Assert.AreEqual("a", nc.A);
-            Assert.AreEqual("b", nc.B);
+            Assert.AreEqual("a", nc.A.S);
+            Assert.AreEqual("b", nc.B.S);
+            //Assert.AreEqual("a", nc.C.S);
 
             var nc2 = dic.Build<NamedClass>();
-            Assert.AreEqual("a", nc2.A);
-            Assert.AreEqual("b", nc2.B);
+            Assert.AreEqual("a", nc2.A.S);
+            Assert.AreEqual("b", nc2.B.S);
+            //Assert.AreEqual("a", nc2.C.S);
 
         }
 

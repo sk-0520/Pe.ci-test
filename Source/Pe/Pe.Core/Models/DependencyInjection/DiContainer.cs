@@ -68,7 +68,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         protected virtual void RegisterFactoryCore(Type interfaceType, Type objectType, string name, DiLifecycle lifecycle, DiCreator creator)
         {
-
             Mapping[name].TryAdd(interfaceType, objectType);
             Factory[name].TryAdd(interfaceType, new DiFactoryWorker(lifecycle, creator, this));
         }
@@ -192,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 } else if(Factory[name].TryGetValue(parameterInfo.ParameterType, out var factoryWorker)) {
                     arguments[i] = factoryWorker.Create();
                 } else {
-                    if(name == string.Empty) {
+                    if(name != string.Empty) {
                         if(ObjectPool[string.Empty].TryGetValue(parameterInfo.ParameterType, out var namelessPoolValue)) {
                             arguments[i] = namelessPoolValue;
                             continue;
