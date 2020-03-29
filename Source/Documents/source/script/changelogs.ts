@@ -159,7 +159,13 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Microsoft.Extensions.* 更新",
+						"Comments": [
+							"Microsoft.Extensions.Configuration.Json 3.1.2 -> 3.1.3",
+							"Microsoft.Extensions.Logging 3.1.2 -> 3.1.3",
+							"Microsoft.Extensions.Logging.Abstractions 3.1.2 -> 3.1.3"
+						]
 					},
 					{
 						"revision": "",
