@@ -142,7 +142,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#590: フィードバックのプレビューでインターネット世界に旅立てる"
 					},
 					{
 						"revision": "",
