@@ -155,7 +155,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#569: @appsettings.debug.json 消していいでしょ"
 					},
 					{
 						"revision": "",
