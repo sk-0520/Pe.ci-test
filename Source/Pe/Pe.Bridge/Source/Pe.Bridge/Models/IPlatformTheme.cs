@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     }
 
     /// <summary>
+    /// OSテーマ情報。
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPlatformTheme

@@ -4,10 +4,24 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// 永続データのデータフォーマット。
+    /// </summary>
     public enum PluginPersistentFormat
     {
+        /// <summary>
+        /// JSON形式。
+        /// </summary>
         Json,
-        Xml,
+        /// <summary>
+        /// XML形式。
+        /// <seealso cref="System.Xml.Serialization.XmlSerializer"/>
+        /// </summary>
+        SimleXml,
+        /// <summary>
+        /// XML形式。
+        /// <seealso cref="System.Runtime.Serialization.DataContractSerializer"/>
+        /// </summary>
         DataXml,
     }
 

@@ -4,6 +4,10 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// プラグインID。
+    /// <para>変更は考慮していない。</para>
+    /// </summary>
     public sealed class PluginId
     {
         public PluginId(Guid id, string name)
