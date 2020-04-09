@@ -53,6 +53,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return File.Exists(path);
         }
 
+        /// <inheritdoc cref="IPluginFileStorage.Rename(string, string, bool)"/>
+        public void Rename(string sourceName, string destinationName, bool overwrite)
+        {
+            if(sourceName == destinationName) {
+                throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
+            }
+
+            var tunedSourceFileName = TuneFileName(sourceName);
+            var tunedDestinationFileName = TuneFileName(destinationName);
+
+            var tunedSourceFilePath = Path.Combine(DirectoryInfo.FullName, tunedSourceFileName);
+            var tunedDestinationFilePath = Path.Combine(DirectoryInfo.FullName, tunedDestinationFileName);
+
+            File.Move(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
+        }
+
         #endregion
     }
 

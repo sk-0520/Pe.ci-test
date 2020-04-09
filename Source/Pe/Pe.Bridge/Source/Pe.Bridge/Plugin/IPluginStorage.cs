@@ -41,6 +41,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <returns>存在すれば真。</returns>
         bool Exists(string name);
 
+        /// <summary>
+        /// 指定ファイル名を変更する。
+        /// </summary>
+        /// <param name="sourceName">元ファイル名。</param>
+        /// <param name="destinationName">変更ファイル名。</param>
+        /// <param name="overwrite">上書きを行うか。</param>
+        void Rename(string sourceName, string destinationName, bool overwrite);
+
         #endregion
     }
 
