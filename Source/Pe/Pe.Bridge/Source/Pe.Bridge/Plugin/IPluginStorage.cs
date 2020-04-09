@@ -34,6 +34,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region function
 
+        /// <summary>
+        /// 指定ファイル名が存在するか。
+        /// </summary>
+        /// <param name="name">ファイル名として有効な名前。</param>
+        /// <returns>存在すれば真。</returns>
+        bool Exists(string name);
+
         #endregion
     }
 

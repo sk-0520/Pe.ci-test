@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 
@@ -19,7 +20,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #endregion
 
+        #region function
+
+        private string TuneFileName(string name)
+        {
+            if(name == null) {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if(string.IsNullOrWhiteSpace(name)) {
+                throw new ArgumentException(nameof(name));
+            }
+
+            var s = name.Trim();
+            var cs = Path.GetInvalidFileNameChars();
+            if(s.Any(i => cs.Any(cc => cc == i))) {
+                throw new ArgumentException(nameof(name));
+            }
+
+            return s;
+        }
+
+        #endregion
+
         #region IPluginFileStorage
+
+        /// <inheritdoc cref="IPluginFileStorage.Exists(string)"/>
+        public bool Exists(string name)
+        {
+            var tunedFileName = TuneFileName(name);
+            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            return File.Exists(path);
+        }
 
         #endregion
     }
