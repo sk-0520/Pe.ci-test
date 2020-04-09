@@ -69,6 +69,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             File.Move(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
         }
 
+        /// <inheritdoc cref="IPluginFileStorage.Copy(string, string, bool)"/>
+        public void Copy(string sourceName, string destinationName, bool overwrite)
+        {
+            if(sourceName == destinationName) {
+                throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
+            }
+
+            var tunedSourceFileName = TuneFileName(sourceName);
+            var tunedDestinationFileName = TuneFileName(destinationName);
+
+            var tunedSourceFilePath = Path.Combine(DirectoryInfo.FullName, tunedSourceFileName);
+            var tunedDestinationFilePath = Path.Combine(DirectoryInfo.FullName, tunedDestinationFileName);
+
+            File.Copy(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
+        }
+
         /// <inheritdoc cref="IPluginFileStorage.Delete(string)"/>
         public void Delete(string name)
         {

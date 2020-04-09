@@ -50,6 +50,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         void Rename(string sourceName, string destinationName, bool overwrite);
 
         /// <summary>
+        /// 指定ファイル名を複製する。
+        /// </summary>
+        /// <param name="sourceName">元ファイル名。</param>
+        /// <param name="destinationName">コピー先ファイル名。</param>
+        /// <param name="overwrite">上書きを行うか。</param>
+        void Copy(string sourceName, string destinationName, bool overwrite);
+
+        /// <summary>
         /// 指定ファイル名を削除する。
         /// </summary>
         /// <param name="name">ファイル名として有効な名前。</param>
