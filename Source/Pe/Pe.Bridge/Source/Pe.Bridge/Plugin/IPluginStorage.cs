@@ -49,6 +49,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <param name="overwrite">上書きを行うか。</param>
         void Rename(string sourceName, string destinationName, bool overwrite);
 
+        /// <summary>
+        /// 指定ファイル名を削除する。
+        /// </summary>
+        /// <param name="name">ファイル名として有効な名前。</param>
+        void Delete(string name);
+
         #endregion
     }
 

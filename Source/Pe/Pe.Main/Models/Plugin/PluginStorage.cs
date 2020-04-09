@@ -69,6 +69,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             File.Move(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
         }
 
+        /// <inheritdoc cref="IPluginFileStorage.Delete(string)"/>
+        public void Delete(string name)
+        {
+            var tunedFileName = TuneFileName(name);
+            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            File.Delete(path);
+        }
+
+
         #endregion
     }
 
