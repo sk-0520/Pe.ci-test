@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// XML形式。
         /// <seealso cref="System.Xml.Serialization.XmlSerializer"/>
         /// </summary>
-        SimleXml,
+        SimpleXml,
         /// <summary>
         /// XML形式。
         /// <seealso cref="System.Runtime.Serialization.DataContractSerializer"/>
