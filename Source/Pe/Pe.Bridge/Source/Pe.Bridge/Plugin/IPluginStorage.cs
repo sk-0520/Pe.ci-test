@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
@@ -62,6 +63,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// </summary>
         /// <param name="name">ファイル名として有効な名前。</param>
         void Delete(string name);
+
+        /// <summary>
+        /// 指定ファイル名を開く。
+        /// </summary>
+        /// <param name="name">ファイル名として有効な名前。</param>
+        /// <param name="fileMode"><see cref="System.IO.FileMode"/></param>
+        /// <returns>ストリーム。</returns>
+        Stream Open(string name, FileMode fileMode);
 
         #endregion
     }

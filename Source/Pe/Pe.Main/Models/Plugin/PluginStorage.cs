@@ -93,6 +93,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             File.Delete(path);
         }
 
+        /// <inheritdoc cref="IPluginFileStorage.Open(string, FileMode)"/>
+        public Stream Open(string name, FileMode fileMode)
+        {
+            var tunedFileName = TuneFileName(name);
+            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            var stream = new FileStream(path, fileMode, FileAccess.ReadWrite, FileShare.Read);
+            return stream;
+        }
 
         #endregion
     }
