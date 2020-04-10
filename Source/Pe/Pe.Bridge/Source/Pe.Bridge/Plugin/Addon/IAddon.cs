@@ -30,6 +30,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         #region function
 
+        bool IsSupport(AddonKind addonKind);
+
+        ICommandFinder BuildCommandFinder(IAddonParameter parameter);
+
 
         #endregion
     }
