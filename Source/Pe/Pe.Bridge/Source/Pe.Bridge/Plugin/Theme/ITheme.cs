@@ -4,6 +4,32 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
+    /// <summary>
+    /// テーマ種別。
+    /// </summary>
+    public enum ThemeKind
+    {
+        /// <summary>
+        /// 基本。
+        /// </summary>
+        General,
+        /// <summary>
+        /// ランチャーグループ。
+        /// </summary>
+        LauncherGroup,
+        /// <summary>
+        /// ランチャーツールバー。
+        /// </summary>
+        LauncherToolbar,
+        /// <summary>
+        /// ノート。
+        /// </summary>
+        Note,
+        /// <summary>
+        /// コマンド。
+        /// </summary>
+        Command,
+    }
 
     public readonly struct ColorPair<T>
     {
@@ -43,6 +69,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     public interface ITheme : IPlugin
     {
         #region function
+
+        bool IsSupport(ThemeKind themeKind);
+
 
         IGeneralTheme BuildGeneralTheme(IThemeParameter parameter);
         ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter);

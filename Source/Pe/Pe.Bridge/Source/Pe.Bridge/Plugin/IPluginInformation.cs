@@ -5,6 +5,9 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// プラグインバージョン。
+    /// </summary>
     public interface IPluginVersions
     {
         #region property
@@ -73,9 +76,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
     }
 
+    /// <summary>
+    /// プラグイン作者情報。
+    /// </summary>
     public interface IPluginAuthors
     {
+        /// <summary>
+        /// プラグイン作者。
+        /// </summary>
         IAuthor PluginAuthor { get; }
+        /// <summary>
+        /// プラグイン情報。
+        /// </summary>
         string PluginLicense { get; }
     }
 
@@ -104,12 +116,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     }
 
 
+    /// <summary>
+    /// プラグイン情報。
+    /// </summary>
     public interface IPluginInformations
     {
+        /// <summary>
+        /// バージョン情報。
+        /// </summary>
         IPluginVersions PluginVersions { get; }
+        /// <summary>
+        /// 作者情報。
+        /// </summary>
         IPluginAuthors PluginAuthors { get; }
     }
 
+    /// <inheritdoc cref="IPluginInformations"/>
     public class PluginInformations : IPluginInformations
     {
         public PluginInformations(IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
@@ -120,8 +142,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         #region IPluginInformations
 
+        /// <inheritdoc cref="IPluginInformations.PluginVersions"/>
         public IPluginVersions PluginVersions { get; }
 
+        /// <inheritdoc cref="IPluginInformations.PluginAuthors"/>
         public IPluginAuthors PluginAuthors { get; }
 
         #endregion
