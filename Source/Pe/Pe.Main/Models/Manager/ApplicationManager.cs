@@ -206,8 +206,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             container
                 .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
+                .Register<INotifyManager, NotifyManager>(new NotifyManager(container, LoggerFactory))
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
             ;
+
 
             var settingElement = container.Build<SettingContainerElement>();
             settingElement.Initialize();
