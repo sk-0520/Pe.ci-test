@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -46,9 +47,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public abstract class SettingEditorElementBase : ElementBase
     {
-        public SettingEditorElementBase(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            SettingNotifyManager = settingNotifyManager;
             ClipboardManager = clipboardManager;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -60,6 +62,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
         #region property
+
+        protected ISettingNotifyManager SettingNotifyManager { get; }
         protected IClipboardManager ClipboardManager { get; }
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
