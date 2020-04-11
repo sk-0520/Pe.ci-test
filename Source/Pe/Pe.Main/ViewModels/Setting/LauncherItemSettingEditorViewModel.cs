@@ -43,5 +43,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         }
 
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Icon.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
     }
 }

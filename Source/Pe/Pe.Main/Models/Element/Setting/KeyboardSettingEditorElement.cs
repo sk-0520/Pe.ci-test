@@ -160,6 +160,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in ReplaceJobEditors) {
+                        item.Dispose();
+                    }
+                    ReplaceJobEditors.Clear();
+
+                    foreach(var item in DisableJobEditors) {
+                        item.Dispose();
+                    }
+                    DisableJobEditors.Clear();
+
+                    foreach(var item in PressedJobEditors) {
+                        item.Dispose();
+                    }
+                    PressedJobEditors.Clear();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
         #endregion
     }

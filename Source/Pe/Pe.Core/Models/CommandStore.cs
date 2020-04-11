@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public class CommandStore
+    public class CommandStore : DisposerBase
     {
         #region property
 
@@ -44,6 +44,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                CommandCache.Clear();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 
     public class ElementCommandStore : CommandStore
@@ -61,6 +74,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region property
 
         FrameworkElement? View { get; set; }
+
+        #endregion
+
+        #region CommandStore
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(View != null) {
+                    View.Loaded -= View_Loaded;
+                    View.Unloaded -= View_Unloaded;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
 

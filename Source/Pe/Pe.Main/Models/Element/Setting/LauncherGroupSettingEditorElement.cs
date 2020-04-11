@@ -124,6 +124,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in LauncherItems) {
+                        item.Dispose();
+                    }
+                    LauncherItems.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
 

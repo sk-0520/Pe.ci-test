@@ -254,6 +254,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             LoadLauncherItem();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    TagItems.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         #region ILauncherItemId

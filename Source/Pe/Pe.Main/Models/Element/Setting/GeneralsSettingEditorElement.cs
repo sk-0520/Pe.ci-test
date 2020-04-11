@@ -66,6 +66,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var editor in Editors) {
+                        editor.Dispose();
+                    }
+                    Editors.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 }

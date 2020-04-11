@@ -293,6 +293,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 
@@ -356,6 +367,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
@@ -423,6 +445,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }

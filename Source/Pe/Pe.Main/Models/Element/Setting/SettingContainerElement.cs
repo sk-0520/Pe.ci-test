@@ -152,6 +152,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var editor in Editors) {
+                        editor.Dispose();
+                    }
+                    foreach(var item in AllLauncherGroups) {
+                        item.Dispose();
+                    }
+                    AllLauncherGroups.Clear();
+
+                    foreach(var item in AllLauncherItems) {
+                        item.Dispose();
+                    }
+                    AllLauncherItems.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 }

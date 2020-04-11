@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public interface ISettingEditorViewModel: IFlushable
+    public interface ISettingEditorViewModel: IFlushable, IDisposable
     {
         #region property
 

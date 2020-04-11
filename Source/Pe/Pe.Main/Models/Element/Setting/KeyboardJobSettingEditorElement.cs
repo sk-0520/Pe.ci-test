@@ -118,6 +118,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             keyActionsEntityDao.DeleteKeyAciton(KeyActionId);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in Mappings) {
+                        item.Dispose();
+                    }
+                    Mappings.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
     }

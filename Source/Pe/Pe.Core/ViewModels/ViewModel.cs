@@ -397,6 +397,12 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 #if PROPERTY_CACHE
             PropertyCacher.Clear();
 #endif
+            ErrorsContainer.ClearErrors();
+            PropertyChangedEventArgsCache.Clear();
+
+            if(disposing) {
+                CommandStore.Dispose();
+            }
 
             if(disposing) {
                 GC.SuppressFinalize(this);

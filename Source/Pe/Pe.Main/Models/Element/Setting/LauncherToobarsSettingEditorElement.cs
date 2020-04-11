@@ -83,6 +83,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in Toolbars) {
+                        item.Dispose();
+                    }
+                    Toolbars.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 }

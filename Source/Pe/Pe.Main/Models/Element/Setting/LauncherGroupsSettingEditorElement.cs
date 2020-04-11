@@ -132,6 +132,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in LauncherItems) {
+                        item.Dispose();
+                    }
+                    LauncherItems.Clear();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
         protected override void ReceiveLauncherItemRemoved(Guid launcherItemId)
         {
             base.ReceiveLauncherItemRemoved(launcherItemId);

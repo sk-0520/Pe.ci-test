@@ -22,7 +22,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public interface IGeneralSettingEditor
+    public interface IGeneralSettingEditor: IDisposable
     {
         #region property
 
@@ -302,6 +302,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }
@@ -368,6 +379,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 
@@ -427,6 +450,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.BuildChildren();
 
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
