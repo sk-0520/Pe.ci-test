@@ -132,6 +132,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void ReceiveLauncherItemRemoved(Guid launcherItemId)
+        {
+            base.ReceiveLauncherItemRemoved(launcherItemId);
+
+            foreach(var grouItem in GroupItems) {
+                var targetItems = grouItem.LauncherItems.Where(i => i.Data == launcherItemId).ToList();
+                foreach(var targetItem in targetItems) {
+                    grouItem.LauncherItems.Remove(targetItem);
+                }
+            }
+        }
+
         #endregion
     }
 

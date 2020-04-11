@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             IdFactory = idFactory;
             DispatcherWrapper = dispatcherWrapper;
+
+            SettingNotifyManager.LauncherItemRemoved += SettingNotifyManager_LauncherItemRemoved;
         }
 
         #region property
@@ -101,6 +103,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SaveImpl(commandPack);
         }
 
+        protected virtual void ReceiveLauncherItemRemoved(Guid launcherItemId)
+        { }
+
         #endregion
 
 
@@ -111,8 +116,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //NOTE: 設定処理では初期かではなくページ切り替え処理であれこれ頑張る
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                SettingNotifyManager.LauncherItemRemoved -= SettingNotifyManager_LauncherItemRemoved;
+            }
+
+            base.Dispose(disposing);
+        }
+
 
         #endregion
+
+        private void SettingNotifyManager_LauncherItemRemoved(object? sender, LauncherItemRemovedEventArgs e)
+        {
+            ReceiveLauncherItemRemoved(e.LauncherItemId);
+        }
+
 
     }
 }

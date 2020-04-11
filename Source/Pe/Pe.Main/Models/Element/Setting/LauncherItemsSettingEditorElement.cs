@@ -72,6 +72,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                 commander.Commit();
             }
+
+            SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
         public Guid AddNewItem(LauncherItemKind kind)
