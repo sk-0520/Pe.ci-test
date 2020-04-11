@@ -98,6 +98,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             return DispatcherWrapper.Get(() => CurrentTheme.BuildCommandTheme(CreateParameter()));
         }
 
+        public INotifyTheme GetNotifyTheme()
+        {
+            if(CurrentTheme == null) {
+                throw new InvalidOperationException();
+            }
+            return DispatcherWrapper.Get(() => CurrentTheme.BuildNotifyTheme(CreateParameter()));
+        }
+
         #endregion
     }
 }

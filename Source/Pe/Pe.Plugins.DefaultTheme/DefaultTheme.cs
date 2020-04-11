@@ -121,6 +121,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             return new CommandTheme(parameter);
         }
 
+        public INotifyTheme BuildNotifyTheme(IThemeParameter parameter)
+        {
+            return new NotifyTheme(parameter);
+        }
+
         #endregion
     }
 }

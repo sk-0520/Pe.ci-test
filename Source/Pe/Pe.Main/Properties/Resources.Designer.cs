@@ -3542,6 +3542,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   通知 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Notify_Caption {
+            get {
+                return ResourceManager.GetString("String_Notify_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ver 0.83.0 からコンバート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_OldVersionConverter {

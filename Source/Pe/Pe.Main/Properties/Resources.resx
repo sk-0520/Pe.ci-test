@@ -1647,4 +1647,7 @@
   <data name="String_Feedback_SourceOpen" xml:space="preserve">
     <value>ソースコードを参照</value>
   </data>
+  <data name="String_Notify_Caption" xml:space="preserve">
+    <value>通知</value>
+  </data>
 </root>
