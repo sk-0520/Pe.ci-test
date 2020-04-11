@@ -60,6 +60,7 @@ using System.Reflection;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -206,8 +207,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             container
                 .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
+                .Register<ISettingNotifyManager, SettingNotifyManager>(DiLifecycle.Singleton)
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
             ;
+
 
             var settingElement = container.Build<SettingContainerElement>();
             settingElement.Initialize();

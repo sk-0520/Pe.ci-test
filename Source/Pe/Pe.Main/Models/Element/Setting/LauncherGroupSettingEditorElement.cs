@@ -124,6 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
         }
 
+
         #endregion
 
         #region ILauncherGroupId

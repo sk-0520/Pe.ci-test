@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#566: 設定でランチャーアイテムからアイテムを削除した場合にグループ内に該当ランチャーアイテムが残ってる"
 					},
 					{
 						"revision": "",
