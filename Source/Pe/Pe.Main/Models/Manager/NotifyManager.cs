@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class NotifyManager : ManagerBase, INotifyManager
+    internal class NotifyManager : ManagerBase, INotifyManager
     {
         public NotifyManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)

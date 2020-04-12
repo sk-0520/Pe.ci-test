@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
     public partial class ApplicationManager : DisposerBase, IOrderManager
     {
-        public ApplicationManager(ApplicationInitializer initializer)
+        internal ApplicationManager(ApplicationInitializer initializer)
         {
             Logging = initializer.Logging ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Logging));
             Logger = Logging.Factory.CreateLogger(GetType());

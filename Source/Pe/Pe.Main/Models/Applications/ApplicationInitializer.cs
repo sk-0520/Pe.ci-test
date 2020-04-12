@@ -23,7 +23,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationInitializer
+    internal class ApplicationInitializer
     {
         #region define
 
