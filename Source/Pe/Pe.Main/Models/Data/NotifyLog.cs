@@ -52,18 +52,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         public NotifyMessage(NotifyLogKind kind, string header, string content)
         {
+            if(!(kind == NotifyLogKind.Normal || kind == NotifyLogKind.Topmost)) {
+                throw new ArgumentException(nameof(kind));
+            }
+
             Kind = kind;
-            Header = header;
-            Content = content;
+            Header = string.IsNullOrWhiteSpace(header) ? header : throw new ArgumentException(nameof(header));
+            Content = string.IsNullOrWhiteSpace(content) ? header : throw new ArgumentException(nameof(content)); ;
             Command = EmptyCommand;
         }
 
         public NotifyMessage(NotifyLogKind kind, string header, string content, ICommand command)
         {
+            if(!(kind == NotifyLogKind.Platform || kind == NotifyLogKind.Undo || kind == NotifyLogKind.Command)) {
+                throw new ArgumentException(nameof(kind));
+            }
+
             Kind = kind;
-            Header = header;
-            Content = content;
-            Command = command;
+            Header = string.IsNullOrWhiteSpace(header) ? header : throw new ArgumentException(nameof(header));
+            Content = string.IsNullOrWhiteSpace(content) ? header : throw new ArgumentException(nameof(content)); ;
+            Command = command ?? throw new ArgumentNullException(nameof(command));
         }
 
         #region property
