@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -106,6 +107,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
+    internal class NotifyLogEventArgs : NotifyEventArgs
+    {
+        internal NotifyLogEventArgs(NotifyLog log)
+        {
+            NotifyMessageId = log.Id;
+            NotifyMessage = log.Message;
+        }
+
+        #region proeprty
+
+        public Guid NotifyMessageId { get; }
+        public NotifyMessage NotifyMessage { get; }
+
+        #endregion
+    }
+
+    internal class NotifyLog
+    {
+        public NotifyLog(Guid notifyMessageId, NotifyMessage notifyMessage)
+        {
+            Id = notifyMessageId;
+            Message = notifyMessage;
+        }
+        #region property
+
+        public Guid Id { get; }
+        public NotifyMessage Message { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// アプリケーションからの通知を発行する。
     /// </summary>
@@ -159,9 +191,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     internal class NotifyManager : ManagerBase, INotifyManager
     {
+        #region event
+
+        internal event EventHandler<NotifyLogEventArgs>? NotifyLog;
+
+        #endregion
+
         public NotifyManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         { }
+
+        #region property
+
+        public ObservableCollection<NotifyLog> TopmostNotifyLogs { get; } = new ObservableCollection<NotifyLog>();
+        public ObservableCollection<NotifyLog> UnTopmostNotifyLogs { get; } = new ObservableCollection<NotifyLog>();
+
+        #endregion
 
         #region function
 
@@ -211,6 +256,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var e = new FullScreenEventArgs(screen, isFullScreen, hWnd);
             FullScreenChanged?.Invoke(this, e);
         }
+
+        void OnNotifyLog(Guid notifyMessageId, NotifyMessage notifyMessage)
+        { }
 
         #endregion
 
