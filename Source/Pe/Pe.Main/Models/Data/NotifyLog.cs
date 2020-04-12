@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// 通知表示位置。
     /// </summary>
-    public enum NotifyPosition
+    public enum NotifyLogPosition
     {
         /// <summary>
         /// カーソル位置。
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// 通知種別。
     /// </summary>
-    public enum NotifyKind
+    public enum NotifyLogKind
     {
         /// <summary>
         /// 通常メッセージ。

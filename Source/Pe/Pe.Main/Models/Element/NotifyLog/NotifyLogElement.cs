@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.Notify
+namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 {
-    public class NotifyElement : ElementBase
+    public class NotifyLogElement : ElementBase
     {
-        public NotifyElement(ILoggerFactory loggerFactory)
+        public NotifyLogElement(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
         }

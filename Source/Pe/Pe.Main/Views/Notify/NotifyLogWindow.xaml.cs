@@ -16,14 +16,14 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Views.Notify
+namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
 {
     /// <summary>
-    /// NotifyWindow.xaml の相互作用ロジック
+    /// NotifyLogWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NotifyWindow : Window, IDpiScaleOutputor
+    public partial class NotifyLogWindow : Window, IDpiScaleOutputor
     {
-        public NotifyWindow()
+        public NotifyLogWindow()
         {
             InitializeComponent();
         }
