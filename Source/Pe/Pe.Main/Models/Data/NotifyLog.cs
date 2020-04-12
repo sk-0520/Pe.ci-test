@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
@@ -25,6 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     public enum NotifyLogKind
     {
         /// <summary>
+        /// プラットフォーム固有。
+        /// </summary>
+        Platform,
+        /// <summary>
         /// 通常メッセージ。
         /// </summary>
         Normal,
@@ -44,6 +50,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class NotifyMessage
     {
+        public NotifyMessage(NotifyLogKind kind, string header, string content)
+        {
+            Kind = kind;
+            Header = header;
+            Content = content;
+            Command = EmptyCommand;
+        }
 
+        public NotifyMessage(NotifyLogKind kind, string header, string content, ICommand command)
+        {
+            Kind = kind;
+            Header = header;
+            Content = content;
+            Command = command;
+        }
+
+        #region property
+
+        private static ICommand EmptyCommand { get; } = new DelegateCommand(() => { });
+
+        public NotifyLogKind Kind { get; }
+        public string Header { get; } = string.Empty;
+        public string Content { get; } = string.Empty;
+        public ICommand Command { get; }
+
+        #endregion
     }
 }

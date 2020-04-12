@@ -5,6 +5,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
@@ -134,6 +135,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int index);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
+        /// <summary>
+        /// 通知ログ。
+        /// </summary>
+        /// <param name="notifyMessage"></param>
+        /// <returns></returns>
+        Guid SendLog(NotifyMessage notifyMessage);
+        /// <summary>
+        ///通知ログ置き換え。
+        /// </summary>
+        /// <param name="notifyMessageId"></param>
+        /// <param name="content"></param>
+        void ReplaceLog(Guid notifyMessageId, string content);
+        /// <summary>
+        /// 通知ログクリア。
+        /// </summary>
+        /// <param name="notifyMessageId"></param>
+        /// <param name="content"></param>
+        void ClearLog(Guid notifyMessageId);
+
         #endregion
     }
 
@@ -223,6 +243,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             OnCustomizeLauncherItemExited(launcherItemId);
         }
 
+        /// <inheritdoc cref="INotifyManager.SendLog(NotifyMessage)" />
+        public Guid SendLog(NotifyMessage notifyMessage)
+        {
+            throw new NotImplementedException();
+        }
+        /// <inheritdoc cref="INotifyManager.ReplaceLog(Guid, string)" />
+        public void ReplaceLog(Guid notifyMessageId, string content)
+        {
+            throw new NotImplementedException();
+        }
+        /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />
+        public void ClearLog(Guid notifyMessageId)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }
