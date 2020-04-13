@@ -48,7 +48,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Topmost,
     }
 
-    public class NotifyMessage
+    public interface IReadOnlyNotifyMessage
+    {
+        #region property
+
+        NotifyLogKind Kind { get; }
+        string Header { get; }
+        string Content { get; }
+        Action Callback { get; }
+
+        #endregion
+    }
+
+    public class NotifyMessage: IReadOnlyNotifyMessage
     {
         public NotifyMessage(NotifyLogKind kind, string header, string content)
         {
@@ -59,10 +71,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             Kind = kind;
             Header = string.IsNullOrWhiteSpace(header) ? header : throw new ArgumentException(nameof(header));
             Content = string.IsNullOrWhiteSpace(content) ? header : throw new ArgumentException(nameof(content)); ;
-            Command = EmptyCommand;
+            Callback = EmptyCallback;
         }
 
-        public NotifyMessage(NotifyLogKind kind, string header, string content, ICommand command)
+        public NotifyMessage(NotifyLogKind kind, string header, string content, Action callback)
         {
             if(!(kind == NotifyLogKind.Platform || kind == NotifyLogKind.Undo || kind == NotifyLogKind.Command)) {
                 throw new ArgumentException(nameof(kind));
@@ -71,17 +83,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             Kind = kind;
             Header = string.IsNullOrWhiteSpace(header) ? header : throw new ArgumentException(nameof(header));
             Content = string.IsNullOrWhiteSpace(content) ? header : throw new ArgumentException(nameof(content)); ;
-            Command = command ?? throw new ArgumentNullException(nameof(command));
+            Callback = callback ?? throw new ArgumentNullException(nameof(callback));
         }
 
-        #region property
+        #region function
 
-        private static ICommand EmptyCommand { get; } = new DelegateCommand(() => { });
+        private static void EmptyCallback() { }
+
+        #endregion
+
+        #region IReadOnlyNotifyMessage
 
         public NotifyLogKind Kind { get; }
         public string Header { get; } = string.Empty;
         public string Content { get; } = string.Empty;
-        public ICommand Command { get; }
+        public Action Callback { get; }
 
         #endregion
     }

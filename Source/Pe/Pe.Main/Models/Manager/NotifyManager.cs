@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,6 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
@@ -107,37 +109,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    internal class NotifyLogEventArgs : NotifyEventArgs
-    {
-        internal NotifyLogEventArgs(NotifyLog log)
-        {
-            NotifyMessageId = log.Id;
-            NotifyMessage = log.Message;
-        }
-
-        #region proeprty
-
-        public Guid NotifyMessageId { get; }
-        public NotifyMessage NotifyMessage { get; }
-
-        #endregion
-    }
-
-    internal class NotifyLog
-    {
-        public NotifyLog(Guid notifyMessageId, NotifyMessage notifyMessage)
-        {
-            Id = notifyMessageId;
-            Message = notifyMessage;
-        }
-        #region property
-
-        public Guid Id { get; }
-        public NotifyMessage Message { get; }
-
-        #endregion
-    }
-
     /// <summary>
     /// アプリケーションからの通知を発行する。
     /// </summary>
@@ -168,23 +139,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
         /// <summary>
-        /// 通知ログ。
+        /// 通知ログ追加。
         /// </summary>
         /// <param name="notifyMessage"></param>
         /// <returns></returns>
-        Guid SendLog(NotifyMessage notifyMessage);
+        Guid AppendLog(NotifyMessage notifyMessage);
         /// <summary>
         ///通知ログ置き換え。
         /// </summary>
-        /// <param name="notifyMessageId"></param>
+        /// <param name="notifyLogId"></param>
         /// <param name="content"></param>
-        void ReplaceLog(Guid notifyMessageId, string content);
+        void ReplaceLog(Guid notifyLogId, string content);
         /// <summary>
         /// 通知ログクリア。
         /// </summary>
-        /// <param name="notifyMessageId"></param>
+        /// <param name="notifyLogId"></param>
         /// <param name="content"></param>
-        void ClearLog(Guid notifyMessageId);
+        bool ClearLog(Guid notifyLogId);
 
         #endregion
     }
@@ -192,19 +163,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     internal class NotifyManager : ManagerBase, INotifyManager
     {
         #region event
-
-        internal event EventHandler<NotifyLogEventArgs>? NotifyLog;
-
         #endregion
 
         public NotifyManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
-        { }
+        {
+            TopmostNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
+            UnTopmostNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
+            TopmostNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(TopmostNotifyLogsImpl);
+            UnTopmostNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(UnTopmostNotifyLogsImpl);
+        }
 
         #region property
 
-        public ObservableCollection<NotifyLog> TopmostNotifyLogs { get; } = new ObservableCollection<NotifyLog>();
-        public ObservableCollection<NotifyLog> UnTopmostNotifyLogs { get; } = new ObservableCollection<NotifyLog>();
+        private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
+        private ObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogsImpl { get; }
+
+        public ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
+        public ReadOnlyObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogs { get; }
+
+        private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
 
         #endregion
 
@@ -257,9 +235,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             FullScreenChanged?.Invoke(this, e);
         }
 
-        void OnNotifyLog(Guid notifyMessageId, NotifyMessage notifyMessage)
-        { }
-
         #endregion
 
         #region INotifyManager
@@ -291,20 +266,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             OnCustomizeLauncherItemExited(launcherItemId);
         }
 
-        /// <inheritdoc cref="INotifyManager.SendLog(NotifyMessage)" />
-        public Guid SendLog(NotifyMessage notifyMessage)
+        /// <inheritdoc cref="INotifyManager.AppendLog(NotifyMessage)" />
+        public Guid AppendLog(NotifyMessage notifyMessage)
         {
-            throw new NotImplementedException();
+            if(notifyMessage == null) {
+                throw new ArgumentNullException(nameof(notifyMessage));
+            }
+
+            var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
+            NotifyLogs.Add(element);
+            return element.NotifyLogId;
         }
         /// <inheritdoc cref="INotifyManager.ReplaceLog(Guid, string)" />
-        public void ReplaceLog(Guid notifyMessageId, string content)
+        public void ReplaceLog(Guid notifyLogId, string content)
         {
-            throw new NotImplementedException();
+            if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
+                throw new KeyNotFoundException(notifyLogId.ToString());
+            }
+            if(element.Kind != NotifyLogKind.Topmost) {
+                throw new Exception($"{nameof(element.Kind)}: not {nameof(NotifyLogKind.Topmost)}");
+            }
+
+            element.ChangeContent(content);
         }
         /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />
-        public void ClearLog(Guid notifyMessageId)
+        public bool ClearLog(Guid notifyLogId)
         {
-            throw new NotImplementedException();
+            if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
+                throw new KeyNotFoundException(notifyLogId.ToString());
+            }
+
+            return NotifyLogs.Remove(notifyLogId);
         }
 
         #endregion
