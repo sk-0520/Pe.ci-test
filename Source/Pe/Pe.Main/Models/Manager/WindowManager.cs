@@ -78,6 +78,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// フィードバック。
         /// </summary>
         Feedback,
+        /// <summary>
+        /// 通知ログ。
+        /// </summary>
+        NotifyLog,
     }
 
     public class WindowItem

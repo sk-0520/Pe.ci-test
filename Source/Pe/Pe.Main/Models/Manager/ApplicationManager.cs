@@ -61,6 +61,7 @@ using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -100,6 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+            NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
 
             var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
             LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
@@ -129,6 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
         CommandElement CommandElement { get; }
+        NotifyLogElement NotifyLogElement { get; }
         //FeedbackElement? FeedbackElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
@@ -167,6 +170,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(CommandElement.ViewCreated) {
                 CommandElement.HideView(true);
+            }
+            if(NotifyLogElement.ViewCreated) {
+                NotifyLogElement.HideView(true);
             }
 
             var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
@@ -1409,6 +1415,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return windowItem;
         }
+
+        public WindowItem CreateNotifyLogWindow(NotifyLogElement element)
+        {
+            var windowItem = OrderManager.CreateNotifyLogWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
 
         public WindowItem CreateSettingWindow(SettingContainerElement element)
         {

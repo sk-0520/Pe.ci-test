@@ -109,6 +109,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
+    public class NotifyLogEventArgs : NotifyEventArgs
+    {
+        public NotifyLogEventArgs(NotifyEventKind kind, IReadOnlyNotifyMessage message)
+        {
+            Kind = kind;
+            Message = message;
+        }
+
+        #region property
+
+        public NotifyEventKind Kind { get; }
+        public IReadOnlyNotifyMessage Message { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// アプリケーションからの通知を発行する。
     /// </summary>
@@ -122,6 +138,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
         event EventHandler<FullScreenEventArgs>? FullScreenChanged;
+
+        event EventHandler<NotifyLogEventArgs>? NotifyLogChanged;
+
+        #endregion
+
+        #region property
+
+        ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
+        ReadOnlyObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogs { get; }
 
         #endregion
 
@@ -178,10 +203,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
         private ObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogsImpl { get; }
-
-        public ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
-        public ReadOnlyObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogs { get; }
-
         private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
 
         #endregion
@@ -235,6 +256,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             FullScreenChanged?.Invoke(this, e);
         }
 
+        void OnNotifyEventChanged(NotifyEventKind kind, IReadOnlyNotifyMessage message)
+        {
+            var e = new NotifyLogEventArgs(kind, message);
+            NotifyLogChanged?.Invoke(this, e);
+        }
+
         #endregion
 
         #region INotifyManager
@@ -246,6 +273,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public event EventHandler<FullScreenEventArgs>? FullScreenChanged;
 
+        public event EventHandler<NotifyLogEventArgs>? NotifyLogChanged;
+
+        public ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
+        public ReadOnlyObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogs { get; }
 
         public void SendLauncherItemChanged(Guid launcherItemId)
         {
@@ -275,6 +306,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
             NotifyLogs.Add(element);
+            OnNotifyEventChanged(NotifyEventKind.Add, element);
             return element.NotifyLogId;
         }
         /// <inheritdoc cref="INotifyManager.ReplaceLog(Guid, string)" />
@@ -288,6 +320,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             element.ChangeContent(content);
+            OnNotifyEventChanged(NotifyEventKind.Change, element);
         }
         /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />
         public bool ClearLog(Guid notifyLogId)
@@ -296,7 +329,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 throw new KeyNotFoundException(notifyLogId.ToString());
             }
 
-            return NotifyLogs.Remove(notifyLogId);
+            if(NotifyLogs.Remove(notifyLogId)) {
+                OnNotifyEventChanged(NotifyEventKind.Clear, element);
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

@@ -48,6 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Topmost,
     }
 
+    public enum NotifyEventKind
+    {
+        Add,
+        Change,
+        Clear,
+    }
+
     public interface IReadOnlyNotifyMessage
     {
         #region property
