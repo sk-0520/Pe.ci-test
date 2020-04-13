@@ -52,6 +52,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         public void ChangeContent(string content)
         {
+            if(content == null) {
+                throw new ArgumentNullException(nameof(content));
+            }
+
             ContentHistoriesImpl.Add(content);
             Content = content;
         }
