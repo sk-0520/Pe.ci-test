@@ -71,6 +71,7 @@ namespace ContentTypeTextNet.Pe.Main
 
                         Dispatcher.BeginInvoke(new Action<Stopwatch>(sw => {
                             Logger.LogInformation("つかえるよ！ 所要時間: {0}", sw.Elapsed);
+                            ApplicationManager.NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "TEST", new NotifyLogContent("使用可能")));
                             ApplicationManager.DelayCheckUpdateAsync().ConfigureAwait(false);
                         }), System.Windows.Threading.DispatcherPriority.SystemIdle, stopwatch);
                     }

@@ -319,7 +319,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 throw new Exception($"{nameof(element.Kind)}: not {nameof(NotifyLogKind.Topmost)}");
             }
 
-            element.ChangeContent(content);
+            element.ChangeContent(new NotifyLogContent(content, DateTime.UtcNow));
             OnNotifyEventChanged(NotifyEventKind.Change, element);
         }
         /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />

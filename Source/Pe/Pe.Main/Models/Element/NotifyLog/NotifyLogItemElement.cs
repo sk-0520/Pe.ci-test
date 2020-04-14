@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 {
-    public class NotifyLogItemElement : ElementBase, IReadOnlyNotifyMessage
+    public class NotifyLogItemElement : ElementBase, IReadOnlyNotifyMessage, INotifyLogId
     {
         #region variable
 
-        string _content;
+        IReadOnlyNotifyLogContent _content;
 
         #endregion
         public NotifyLogItemElement(Guid notifyLogId, NotifyMessage message, ILoggerFactory loggerFactory)
@@ -21,15 +22,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             Message = message;
             this._content = Message.Content;
 
-            ContentHistoriesImpl = new ObservableCollection<string>(new[] { this._content });
-            ContentHistories = new ReadOnlyObservableCollection<string>(ContentHistoriesImpl);
+            ContentHistoriesImpl = new ObservableCollection<NotifyLogContent>(new[] { Message.Content });
+            ContentHistories = new ReadOnlyObservableCollection<NotifyLogContent>(ContentHistoriesImpl);
         }
 
         #region property
 
         NotifyMessage Message { get; }
-        ObservableCollection<string> ContentHistoriesImpl { get; }
-        public ReadOnlyObservableCollection<string> ContentHistories { get; }
+        ObservableCollection<NotifyLogContent> ContentHistoriesImpl { get; }
+        public ReadOnlyObservableCollection<NotifyLogContent> ContentHistories { get; }
 
         #endregion
 
@@ -38,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public NotifyLogKind Kind => Message.Kind;
 
         public string Header => Message.Header;
-        public string Content
+        public IReadOnlyNotifyLogContent Content
         {
             get => this._content;
             private set => SetProperty(ref this._content, value);
@@ -50,14 +51,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         #region function
 
-        public void ChangeContent(string content)
+        public void ChangeContent(NotifyLogContent notifyContent)
         {
-            if(content == null) {
-                throw new ArgumentNullException(nameof(content));
+            if(notifyContent == null) {
+                throw new ArgumentNullException(nameof(notifyContent));
             }
 
-            ContentHistoriesImpl.Add(content);
-            Content = content;
+            ContentHistoriesImpl.Add(notifyContent);
+            Content = notifyContent;
         }
 
         #endregion

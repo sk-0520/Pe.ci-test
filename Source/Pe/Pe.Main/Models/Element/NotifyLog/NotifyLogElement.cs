@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 {
-    public class NotifyLogElement : ElementBase, IViewShowStarter
+    public class NotifyLogElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         public NotifyLogElement(INotifyManager notifyManager, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public void HideView(bool force)
         {
             Debug.Assert(ViewCreated);
-            WindowManager.GetWindowItems(WindowKind.Command).First().Window.Hide();
+            WindowManager.GetWindowItems(WindowKind.NotifyLog).First().Window.Hide();
         }
 
         #endregion
@@ -83,6 +83,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         }
 
         #endregion
+
+        #region IViewCloseReceiver
+
+        public bool ReceiveViewUserClosing()
+        {
+            return false;
+        }
+        public bool ReceiveViewClosing()
+        {
+            return true;
+        }
+
+        public void ReceiveViewClosed()
+        {
+            ViewCreated = false;
+        }
+
+
+        #endregion
+
 
         private void NotifyManager_NotifyLogChanged(object? sender, NotifyLogEventArgs e)
         {

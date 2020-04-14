@@ -65,7 +65,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public partial class ApplicationManager : DisposerBase, IOrderManager
+    internal partial class ApplicationManager : DisposerBase, IOrderManager
     {
         internal ApplicationManager(ApplicationInitializer initializer)
         {
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer.Build<OrderManagerImpl>(); //initializer.OrderManager;
-            NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
+            NotifyManagerImpl = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
             StatusManagerImpl = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
-            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
+            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManagerImpl);
             ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManagerImpl);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
@@ -118,9 +118,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         WindowManager WindowManager { get; set; }
         OrderManagerImpl OrderManager { get; set; }
-        NotifyManager NotifyManager { get; set; }
+        NotifyManager NotifyManagerImpl { get; set; }
+        public INotifyManager NotifyManager => NotifyManagerImpl;
         StatusManager StatusManagerImpl { get; set; }
-        internal IStatusManager StatusManager => StatusManagerImpl;
+        public IStatusManager StatusManager => StatusManagerImpl;
         ClipboardManager ClipboardManager { get; set; }
         UserAgentManager UserAgentManager { get; set; }
 
@@ -149,8 +150,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public bool CanCallNotifyAreaMenu { get; private set; }
 
-        internal bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
-        internal bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
+        public bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
+        public bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
 
         private bool ResetWaiting { get; set; }
         private LazyAction LazyScreenElementReset { get; }
@@ -1463,7 +1464,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     //});
                     MessageWindowHandleSource?.Dispose();
 
-                    NotifyManager.Dispose();
+                    NotifyManagerImpl.Dispose();
                     OrderManager.Dispose();
 
                     WindowManager.Dispose();

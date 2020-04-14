@@ -33,6 +33,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         #region function
 
+        private void HideView()
+        {
+            Model.HideView(false);
+        }
+
         #endregion
 
         #region IViewLifecycleReceiver
@@ -46,13 +51,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         { }
 
         public void ReceiveViewUserClosing(CancelEventArgs e)
-        { }
+        {
+            e.Cancel = !Model.ReceiveViewUserClosing();
+            HideView();
+        }
 
         public void ReceiveViewClosing(CancelEventArgs e)
-        { }
+        {
+            e.Cancel = !Model.ReceiveViewClosing();
+        }
 
         public void ReceiveViewClosed()
-        { }
+        {
+            Model.ReceiveViewClosed();
+        }
 
         #endregion
 

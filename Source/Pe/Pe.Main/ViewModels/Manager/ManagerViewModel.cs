@@ -25,7 +25,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 {
-    public class ManagerViewModel : ViewModelBase, IBuildStatus
+    internal class ManagerViewModel : ViewModelBase, IBuildStatus
     {
         #region variable
 
