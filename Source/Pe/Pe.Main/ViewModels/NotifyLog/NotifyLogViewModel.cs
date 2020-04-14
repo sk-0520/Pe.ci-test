@@ -14,15 +14,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 {
     public class NotifyLogViewModel : ElementViewModelBase<NotifyLogElement>, IViewLifecycleReceiver
     {
-        public NotifyLogViewModel(NotifyLogElement model, INotifyTheme notifyTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NotifyLogViewModel(NotifyLogElement model, INotifyLogTheme notifyLogTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
-            NotifyTheme = notifyTheme;
+            NotifyLogTheme = notifyLogTheme;
         }
 
         #region property
 
-        INotifyTheme NotifyTheme { get; }
+        INotifyLogTheme NotifyLogTheme { get; }
 
         IDpiScaleOutputor? DpiScaleOutputor { get; set; }
         #endregion

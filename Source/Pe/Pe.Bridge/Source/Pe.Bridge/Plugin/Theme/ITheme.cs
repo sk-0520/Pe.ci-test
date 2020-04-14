@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         INoteTheme BuildNoteTheme(IThemeParameter parameter);
         ICommandTheme BuildCommandTheme(IThemeParameter parameter);
 
-        INotifyTheme BuildNotifyTheme(IThemeParameter parameter);
+        INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter);
 
         #endregion
     }

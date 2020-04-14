@@ -98,12 +98,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             return DispatcherWrapper.Get(() => CurrentTheme.BuildCommandTheme(CreateParameter()));
         }
 
-        public INotifyTheme GetNotifyTheme()
+        public INotifyLogTheme GetNotifyTheme()
         {
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return DispatcherWrapper.Get(() => CurrentTheme.BuildNotifyTheme(CreateParameter()));
+            return DispatcherWrapper.Get(() => CurrentTheme.BuildNotifyLogTheme(CreateParameter()));
         }
 
         #endregion
