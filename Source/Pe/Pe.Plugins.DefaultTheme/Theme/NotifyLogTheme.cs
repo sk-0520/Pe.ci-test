@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
@@ -19,39 +21,44 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         /// <inheritdoc cref="INotifyLogTheme.GetViewBorderThickness"/>
         public Thickness GetViewBorderThickness()
         {
-            throw new NotImplementedException();
+            return new Thickness(4);
         }
         /// <inheritdoc cref="INotifyLogTheme.GetViewBorderBrush"/>
         public Brush GetViewBorderBrush()
         {
-            throw new NotImplementedException();
+            var colors = PlatformTheme.GetTaskbarColor();
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors));
         }
+
         /// <inheritdoc cref="INotifyLogTheme.GetViewBorderCornerRadius"/>
         public CornerRadius GetViewBorderCornerRadius()
         {
-            throw new NotImplementedException();
+            return new CornerRadius(2);
         }
 
         /// <inheritdoc cref="INotifyLogTheme.GetViewBackgroundBrush"/>
         public Brush GetViewBackgroundBrush()
         {
-            throw new NotImplementedException();
+            var colors = PlatformTheme.GetTaskbarColor();
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors));
         }
         /// <inheritdoc cref="INotifyLogTheme.GetViewPaddingThickness"/>
         public Thickness GetViewPaddingThickness()
         {
-            throw new NotImplementedException();
+            return new Thickness(2);
         }
 
         /// <inheritdoc cref="INotifyLogTheme.GetHeaderForegroundBrush(bool)"/>
         public Brush GetHeaderForegroundBrush(bool isTopmost)
         {
-            throw new NotImplementedException();
+            var color = PlatformTheme.GetTaskbarColor();
+            return new SolidColorBrush(MediaUtility.GetAutoColor(color));
         }
         /// <inheritdoc cref="INotifyLogTheme.GetContentForegroundBrush(bool)"/>
         public Brush GetContentForegroundBrush(bool isTopmost)
         {
-            throw new NotImplementedException();
+            var color = PlatformTheme.GetTaskbarColor();
+            return new SolidColorBrush(MediaUtility.GetAutoColor(color));
         }
 
         #endregion
