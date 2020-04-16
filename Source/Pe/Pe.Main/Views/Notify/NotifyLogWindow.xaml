@@ -1,13 +1,22 @@
 <Window
+  x:Name="root"
   x:Class="ContentTypeTextNet.Pe.Main.Views.NotifyLog.NotifyLogWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_viewmodes_notifylog="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog"
 
   Height="450"
   Width="800"
+  AllowsTransparency="True"
+  Topmost="True"
+  WindowStyle="None"
+  ResizeMode="CanResize"
+  Background="Transparent"
+  SizeToContent="Height"
+  ShowInTaskbar="False"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -20,7 +29,72 @@
   <Window.Title>
     <Binding Path="Resources.String_Notify_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
-  <Grid>
 
-  </Grid>
+  <Border
+    BorderThickness="{Binding ViewBorderThickness}"
+    BorderBrush="{Binding ViewBorderBrush}"
+    CornerRadius="{Binding ViewBorderCornerRadius}"
+    Background="{Binding ViewBackgroundBrush}"
+    Padding="{Binding ViewPaddingThickness}"
+  >
+    <Grid>
+      <Grid.Resources>
+        <Style x:Key="Header" TargetType="TextBlock">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding Kind}" Value="Topmost">
+              <Setter Property="Foreground" Value="{Binding DataContext.TopmostHeaderForegroundBrush, ElementName=root}" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Foreground" Value="{Binding DataContext.StreamHeaderForegroundBrush, ElementName=root}" />
+        </Style>
+        <Style x:Key="Content" TargetType="TextBlock">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding Kind}" Value="Topmost">
+              <Setter Property="Foreground" Value="{Binding DataContext.TopmostContentForegroundBrush, ElementName=root}" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, ElementName=root}" />
+        </Style>
+
+        <Style x:Key="LogItems" TargetType="ItemsControl">
+          <Setter Property="ItemsPanel">
+            <Setter.Value>
+              <ItemsPanelTemplate>
+                <StackPanel />
+              </ItemsPanelTemplate>
+            </Setter.Value>
+          </Setter>
+          <Setter Property="ItemTemplate">
+            <Setter.Value>
+              <DataTemplate DataType="{x:Type app_main_viewmodes_notifylog:NotifyLogItemViewModel}">
+                <Grid Grid.IsSharedSizeScope="True" HorizontalAlignment="Stretch">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Header" Width="Auto" />
+                    <ColumnDefinition SharedSizeGroup="Timestamp" Width="*" />
+                    <ColumnDefinition SharedSizeGroup="Message" Width="*" />
+                    <ColumnDefinition SharedSizeGroup="Undo" Width="Auto" />
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="{Binding Header}" />
+
+                  <TextBlock Grid.Column="1" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
+                  <TextBlock Grid.Column="2" Style="{StaticResource Content}" Text="{Binding Content.Message}" />
+                  <TextBlock Grid.Column="3" Style="{StaticResource Content}" Text="undo" />
+                </Grid>
+              </DataTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </Grid.Resources>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <ItemsControl Grid.Row="0" ItemsSource="{Binding TopmostNotifyLogItems}" Style="{StaticResource LogItems}" />
+      <Separator Grid.Row="1" />
+      <ItemsControl Grid.Row="2" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
+    </Grid>
+  </Border>
 </Window>

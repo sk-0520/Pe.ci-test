@@ -3,7 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Timers;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
@@ -146,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region property
 
         ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
-        ReadOnlyObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogs { get; }
+        ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs { get; }
 
         #endregion
 
@@ -194,15 +197,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             : base(diContainer, loggerFactory)
         {
             TopmostNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
-            UnTopmostNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
+            StreamNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
             TopmostNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(TopmostNotifyLogsImpl);
-            UnTopmostNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(UnTopmostNotifyLogsImpl);
+            StreamNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(StreamNotifyLogsImpl);
+
+            StreamTimer = new Timer() {
+                Interval = TimeSpan.FromSeconds(1).TotalMilliseconds,
+                AutoReset = true,
+            };
+            StreamTimer.Elapsed += StreamTimer_Elapsed;
+            StreamTimer.Start();
         }
 
         #region property
 
+        Timer StreamTimer { get; }
+
         private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
-        private ObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogsImpl { get; }
+        private ObservableCollection<NotifyLogItemElement> StreamNotifyLogsImpl { get; }
         private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
 
         #endregion
@@ -276,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public event EventHandler<NotifyLogEventArgs>? NotifyLogChanged;
 
         public ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
-        public ReadOnlyObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogs { get; }
+        public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs { get; }
 
         public void SendLauncherItemChanged(Guid launcherItemId)
         {
@@ -305,8 +317,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
+
             NotifyLogs.Add(element);
+            if(element.Kind == NotifyLogKind.Topmost) {
+                TopmostNotifyLogsImpl.Add(element);
+            } else {
+                StreamNotifyLogsImpl.Add(element);
+            }
+
             OnNotifyEventChanged(NotifyEventKind.Add, element);
+
             return element.NotifyLogId;
         }
         /// <inheritdoc cref="INotifyManager.ReplaceLog(Guid, string)" />
@@ -320,6 +340,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             element.ChangeContent(new NotifyLogContent(content, DateTime.UtcNow));
+
             OnNotifyEventChanged(NotifyEventKind.Change, element);
         }
         /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />
@@ -330,7 +351,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(NotifyLogs.Remove(notifyLogId)) {
+                if(element.Kind == NotifyLogKind.Topmost) {
+                    TopmostNotifyLogsImpl.Remove(element);
+                } else {
+                    StreamNotifyLogsImpl.Remove(element);
+                }
+
                 OnNotifyEventChanged(NotifyEventKind.Clear, element);
+                element.Dispose();
+
                 return true;
             }
 
@@ -338,5 +367,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
         #endregion
+
+        private void StreamTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var removeLogs = StreamNotifyLogsImpl
+                .Where(i => i.Content.Timestamp + TimeSpan.FromSeconds(3) <= DateTime.UtcNow)
+                .Select(i => i.NotifyLogId)
+                .ToList()
+            ;
+            if(removeLogs.Any()) {
+                DiContainer.Get<IDispatcherWrapper>().Begin(items => {
+                    foreach(var removeLog in items) {
+                        ClearLog(removeLog);
+                    }
+                }, removeLogs, System.Windows.Threading.DispatcherPriority.Normal);
+            }
+        }
+
     }
 }

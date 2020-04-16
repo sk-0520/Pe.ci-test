@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         private IWindowManager WindowManager { get; }
 
         public ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs => NotifyManager.TopmostNotifyLogs;
-        public ReadOnlyObservableCollection<NotifyLogItemElement> UnTopmostNotifyLogs => NotifyManager.UnTopmostNotifyLogs;
+        public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs => NotifyManager.StreamNotifyLogs;
         public bool ViewCreated { get; private set; }
 
         #endregion
@@ -106,8 +106,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         private void NotifyManager_NotifyLogChanged(object? sender, NotifyLogEventArgs e)
         {
-            if(CanStartShowView) {
-                StartView();
+            switch(e.Kind) {
+                case Data.NotifyEventKind.Add:
+                case Data.NotifyEventKind.Change:
+                    if(CanStartShowView) {
+                        StartView();
+                    }
+                    break;
+
+                case Data.NotifyEventKind.Clear:
+                    if(ViewCreated && TopmostNotifyLogs.Count == 0 && StreamNotifyLogs.Count == 0) {
+                        HideView(false);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
         }
 

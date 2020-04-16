@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        string Content { get; }
+        string Message { get; }
         DateTime Timestamp { get; }
 
         #endregion
@@ -84,13 +84,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public NotifyLogContent(string content, [Timestamp(DateTimeKind.Utc)] DateTime timestamp)
         {
-            Content = content;
+            Message = content;
             Timestamp = timestamp;
         }
 
         #region IReadOnlyNotifyLogContent
 
-        public string Content { get; }
+        public string Message { get; }
         [Timestamp(DateTimeKind.Utc)]
         public DateTime Timestamp { get; }
 
