@@ -67,19 +67,19 @@
           <Setter Property="ItemTemplate">
             <Setter.Value>
               <DataTemplate DataType="{x:Type app_main_viewmodes_notifylog:NotifyLogItemViewModel}">
-                <Grid Grid.IsSharedSizeScope="True" HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch" Background="Red">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition SharedSizeGroup="Header" Width="Auto" />
-                    <ColumnDefinition SharedSizeGroup="Timestamp" Width="*" />
+                    <ColumnDefinition SharedSizeGroup="Timestamp" Width="Auto" />
                     <ColumnDefinition SharedSizeGroup="Message" Width="*" />
                     <ColumnDefinition SharedSizeGroup="Undo" Width="Auto" />
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="{Binding Header}" />
+                  <TextBlock Grid.Column="0" Background="MistyRose" Style="{StaticResource Header}" Text="{Binding Header}" />
 
-                  <TextBlock Grid.Column="1" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
-                  <TextBlock Grid.Column="2" Style="{StaticResource Content}" Text="{Binding Content.Message}" />
-                  <TextBlock Grid.Column="3" Style="{StaticResource Content}" Text="undo" />
+                  <TextBlock Grid.Column="1" Background="Lime" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
+                  <TextBlock Grid.Column="2" Background="Yellow" HorizontalAlignment="Stretch" Style="{StaticResource Content}" Text="{Binding Content.Message}" />
+                  <TextBlock Grid.Column="3" Background="Orange" HorizontalAlignment="Right" Style="{StaticResource Content}" Text="undo" />
                 </Grid>
               </DataTemplate>
             </Setter.Value>
@@ -92,9 +92,9 @@
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
-      <ItemsControl Grid.Row="0" ItemsSource="{Binding TopmostNotifyLogItems}" Style="{StaticResource LogItems}" />
+      <ItemsControl Grid.Row="0" Grid.IsSharedSizeScope="True" ItemsSource="{Binding TopmostNotifyLogItems}" Style="{StaticResource LogItems}" />
       <Separator Grid.Row="1" />
-      <ItemsControl Grid.Row="2" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
+      <ItemsControl Grid.Row="2" Grid.IsSharedSizeScope="True" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
     </Grid>
   </Border>
 </Window>
