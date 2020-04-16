@@ -193,9 +193,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region event
         #endregion
 
-        public NotifyManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        public NotifyManager(IDiContainer diContainer, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
+            DispatcherWrapper = dispatcherWrapper;
             TopmostNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
             StreamNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
             TopmostNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(TopmostNotifyLogsImpl);
@@ -212,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region property
 
         Timer StreamTimer { get; }
-
+        IDispatcherWrapper DispatcherWrapper { get; }
         private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
         private ObservableCollection<NotifyLogItemElement> StreamNotifyLogsImpl { get; }
         private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
@@ -318,14 +319,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
 
-            NotifyLogs.Add(element);
-            if(element.Kind == NotifyLogKind.Topmost) {
-                TopmostNotifyLogsImpl.Add(element);
-            } else {
-                StreamNotifyLogsImpl.Add(element);
-            }
+            DispatcherWrapper.Begin(() => {
+                NotifyLogs.Add(element);
+                if(element.Kind == NotifyLogKind.Topmost) {
+                    TopmostNotifyLogsImpl.Add(element);
+                } else {
+                    StreamNotifyLogsImpl.Add(element);
+                }
 
-            OnNotifyEventChanged(NotifyEventKind.Add, element);
+                OnNotifyEventChanged(NotifyEventKind.Add, element);
+            });
 
             return element.NotifyLogId;
         }
@@ -339,9 +342,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 throw new Exception($"{nameof(element.Kind)}: not {nameof(NotifyLogKind.Topmost)}");
             }
 
-            element.ChangeContent(new NotifyLogContent(content, DateTime.UtcNow));
-
-            OnNotifyEventChanged(NotifyEventKind.Change, element);
+            DispatcherWrapper.Begin(() => {
+                element.ChangeContent(new NotifyLogContent(content, DateTime.UtcNow));
+                OnNotifyEventChanged(NotifyEventKind.Change, element);
+            });
         }
         /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />
         public bool ClearLog(Guid notifyLogId)
@@ -351,14 +355,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(NotifyLogs.Remove(notifyLogId)) {
-                if(element.Kind == NotifyLogKind.Topmost) {
-                    TopmostNotifyLogsImpl.Remove(element);
-                } else {
-                    StreamNotifyLogsImpl.Remove(element);
-                }
+                DispatcherWrapper.Begin(() => {
+                    if(element.Kind == NotifyLogKind.Topmost) {
+                        TopmostNotifyLogsImpl.Remove(element);
+                    } else {
+                        StreamNotifyLogsImpl.Remove(element);
+                    }
 
-                OnNotifyEventChanged(NotifyEventKind.Clear, element);
-                element.Dispose();
+                    OnNotifyEventChanged(NotifyEventKind.Clear, element);
+                    element.Dispose();
+                });
 
                 return true;
             }
@@ -376,11 +382,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 .ToList()
             ;
             if(removeLogs.Any()) {
-                DiContainer.Get<IDispatcherWrapper>().Begin(items => {
-                    foreach(var removeLog in items) {
-                        ClearLog(removeLog);
-                    }
-                }, removeLogs, System.Windows.Threading.DispatcherPriority.Normal);
+                foreach(var removeLog in removeLogs) {
+                    ClearLog(removeLog);
+                }
             }
         }
 

@@ -77,9 +77,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         public void StartView()
         {
-            var windowItem = OrderManager.CreateNotifyLogWindow(this);
-            windowItem.Window.Show();
-            ViewCreated = true;
+            if(!ViewCreated) {
+                var windowItem = OrderManager.CreateNotifyLogWindow(this);
+                windowItem.Window.Show();
+                ViewCreated = true;
+            } else {
+                var windowItem = WindowManager.GetWindowItems(WindowKind.NotifyLog).First();
+                if(windowItem.Window.IsVisible) {
+                    //windowItem.Window.Activate();
+                } else {
+                    windowItem.Window.Show();
+                }
+            }
         }
 
         #endregion
@@ -109,9 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             switch(e.Kind) {
                 case Data.NotifyEventKind.Add:
                 case Data.NotifyEventKind.Change:
-                    if(CanStartShowView) {
-                        StartView();
-                    }
+                    StartView();
                     break;
 
                 case Data.NotifyEventKind.Clear:

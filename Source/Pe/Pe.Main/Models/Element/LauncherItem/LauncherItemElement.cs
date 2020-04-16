@@ -144,6 +144,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         {
             ThrowIfDisposed();
 
+            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "ランチャーアイテム起動", new NotifyLogContent(Name)));
+
             try {
                 ILauncherExecuteResult result;
                 switch(Kind) {
