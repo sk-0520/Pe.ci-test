@@ -362,7 +362,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool ClearLog(Guid notifyLogId)
         {
             if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
-                throw new KeyNotFoundException(notifyLogId.ToString());
+                return false;
             }
 
             if(NotifyLogs.Remove(notifyLogId)) {

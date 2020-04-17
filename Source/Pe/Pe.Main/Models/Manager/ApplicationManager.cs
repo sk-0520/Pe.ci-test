@@ -176,6 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(NotifyLogElement.ViewCreated) {
                 NotifyLogElement.HideView(true);
             }
+            using var _silent_ = NotifyLogElement.ToSilent();
 
             var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 

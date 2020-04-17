@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -46,7 +47,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public bool ViewCreated { get; private set; }
 
         public NotifyLogPosition Position { get; private set; }
-        public bool CanShowView => true;
+
+        private bool NowSilent { get; set; }
 
         #endregion
 
@@ -56,6 +58,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         {
             Debug.Assert(ViewCreated);
             WindowManager.GetWindowItems(WindowKind.NotifyLog).First().Window.Hide();
+        }
+
+        public IDisposable ToSilent()
+        {
+            if(NowSilent) {
+                throw new InvalidOperationException(nameof(NowSilent));
+            }
+
+            NowSilent = true;
+            return new ActionDisposer(d => {
+                NowSilent = false;
+
+                if(TopmostNotifyLogs.Any() || StreamNotifyLogs.Any()) {
+                    StartView();
+                }
+            });
         }
 
         private void RefreshSetting()
@@ -139,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         {
             get
             {
-                if(!CanShowView) {
+                if(NowSilent) {
                     return false;
                 }
 
@@ -193,7 +211,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         private void NotifyManager_NotifyLogChanged(object? sender, NotifyLogEventArgs e)
         {
-            if(!CanShowView) {
+            if(NowSilent) {
                 return;
             }
 

@@ -55,7 +55,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         public ICollectionView StreamNotifyLogItems { get; }
 
         public NotifyLogPosition Position => Model.Position;
-        public bool CanShowView => Model.CanShowView;
 
 
         #region theme
