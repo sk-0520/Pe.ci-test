@@ -72,18 +72,18 @@
           <Style x:Key="Header" TargetType="TextBlock">
             <Style.Triggers>
               <DataTrigger Binding="{Binding Kind}" Value="Topmost">
-                <Setter Property="Foreground" Value="{Binding DataContext.TopmostHeaderForegroundBrush, ElementName=root}" />
+                <Setter Property="Foreground" Value="{Binding DataContext.TopmostHeaderForegroundBrush, Source={x:Reference root}}" />
               </DataTrigger>
             </Style.Triggers>
-            <Setter Property="Foreground" Value="{Binding DataContext.StreamHeaderForegroundBrush, ElementName=root}" />
+            <Setter Property="Foreground" Value="{Binding DataContext.StreamHeaderForegroundBrush, Source={x:Reference root}}" />
           </Style>
           <Style x:Key="Content" TargetType="TextBlock">
             <Style.Triggers>
               <DataTrigger Binding="{Binding Kind}" Value="Topmost">
-                <Setter Property="Foreground" Value="{Binding DataContext.TopmostContentForegroundBrush, ElementName=root}" />
+                <Setter Property="Foreground" Value="{Binding DataContext.TopmostContentForegroundBrush, Source={x:Reference root}}" />
               </DataTrigger>
             </Style.Triggers>
-            <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, ElementName=root}" />
+            <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, Source={x:Reference root}}" />
           </Style>
 
           <Style x:Key="LogItems" TargetType="ItemsControl">
