@@ -155,6 +155,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 NotifyManager.ClearLog (id);
             });
             NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "@ランチャーアイテム起動", new NotifyLogContent(Name)));
+            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, "@Command", new NotifyLogContent(Name), () => { Logger.LogInformation("command"); }));
+            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Undo, "@Undo", new NotifyLogContent(Name), () => { Logger.LogInformation("undo"); }));
 #endif
 
             try {

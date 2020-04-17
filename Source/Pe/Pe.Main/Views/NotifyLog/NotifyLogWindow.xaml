@@ -39,6 +39,7 @@
   >
     <Grid Grid.IsSharedSizeScope="True" >
       <Grid.Resources>
+        <Thickness x:Key="LogItemMargin">1,1,2,1</Thickness>
         <Style x:Key="Header" TargetType="TextBlock">
           <Style.Triggers>
             <DataTrigger Binding="{Binding Kind}" Value="Topmost">
@@ -75,10 +76,54 @@
                     <ColumnDefinition SharedSizeGroup="Undo" Width="Auto" />
                   </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" Style="{StaticResource Header}" Text="{Binding Header}" />
-                  <TextBlock Grid.Column="1" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
-                  <TextBlock Grid.Column="2" Style="{StaticResource Content}" Text="{Binding Content.Message}" />
-                  <TextBlock Grid.Column="3" Style="{StaticResource Content}" Text="undo" />
+                  <TextBlock Grid.Column="0" MinWidth="120" MaxWidth="180" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
+
+                  <TextBlock Grid.Column="1" MinWidth="120" MaxWidth="180" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Header}" Text="{Binding Header}" />
+
+                  <ContentControl Grid.Column="2"  Margin="{StaticResource LogItemMargin}">
+                    <ContentControl.Style>
+                      <Style TargetType="ContentControl">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding Kind}" Value="Undo">
+                            <Setter Property="Grid.ColumnSpan" Value="1" />
+                          </DataTrigger>
+                          <DataTrigger Binding="{Binding Kind}" Value="Command">
+                            <Setter Property="Content">
+                              <Setter.Value>
+                                <TextBlock>
+                                  <Hyperlink>
+                                    <Run Text="{Binding Content.Message, Mode=OneWay}" />
+                                  </Hyperlink>
+                                </TextBlock>
+                              </Setter.Value>
+                            </Setter>
+                          </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="Content">
+                          <Setter.Value>
+                            <TextBlock Style="{StaticResource Content}" Text="{Binding Content.Message, Mode=OneWay}" />
+                          </Setter.Value>
+                        </Setter>
+                        <Setter Property="Grid.ColumnSpan" Value="2" />
+                      </Style>
+                    </ContentControl.Style>
+                  </ContentControl>
+
+                  <TextBlock Grid.Column="3" MinWidth="80" MaxWidth="120" TextAlignment="Right" Margin="{StaticResource LogItemMargin}">
+                    <TextBlock.Style>
+                      <Style TargetType="TextBlock" BasedOn="{StaticResource Content}">
+                        <Style.Triggers>
+                          <DataTrigger Binding="{Binding Kind}" Value="Undo">
+                            <Setter Property="Visibility" Value="Visible" />
+                          </DataTrigger>
+                        </Style.Triggers>
+                        <Setter Property="Visibility" Value="Collapsed" />
+                      </Style>
+                    </TextBlock.Style>
+                    <Hyperlink>
+                      <Run Text="undo" />
+                    </Hyperlink>
+                  </TextBlock>
                 </Grid>
               </DataTemplate>
             </Setter.Value>
@@ -88,12 +133,10 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
       <ItemsControl Grid.Row="0" ItemsSource="{Binding TopmostNotifyLogItems}" Style="{StaticResource LogItems}" />
-      <Separator Grid.Row="1" />
-      <ItemsControl Grid.Row="2" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
+      <ItemsControl Grid.Row="1" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
     </Grid>
   </Border>
 </Window>
