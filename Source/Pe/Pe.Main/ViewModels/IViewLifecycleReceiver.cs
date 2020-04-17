@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
         /// ウィンドウが閉じられた。
         /// <para>設定状態によるけど基本的にdatacontextは空っぽ。</para>
         /// </summary>
-        void ReceiveViewClosed();
+        void ReceiveViewClosed(Window window);
 
         #endregion
     }

@@ -323,7 +323,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed()
+        public void ReceiveViewClosed(Window window)
         {
             if(Terminal != null) {
                 Terminal.TextChanged -= Terminal_TextChanged;

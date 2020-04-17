@@ -355,7 +355,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                viewLifecycleReceiver.ReceiveViewClosed();
+                viewLifecycleReceiver.ReceiveViewClosed(item.Window);
             }
 
             if(item.CloseToDispose) {

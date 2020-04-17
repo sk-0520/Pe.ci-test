@@ -983,7 +983,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed()
+        public void ReceiveViewClosed(Window window)
         {
             Model.ReceiveViewClosed();
 

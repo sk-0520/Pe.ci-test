@@ -128,7 +128,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public void ReceiveViewClosing(CancelEventArgs e)
         { }
 
-        public void ReceiveViewClosed()
+        public void ReceiveViewClosed(Window window)
         { }
 
         #endregion
