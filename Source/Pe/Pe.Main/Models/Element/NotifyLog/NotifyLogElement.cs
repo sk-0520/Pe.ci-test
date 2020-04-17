@@ -8,7 +8,10 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -17,9 +20,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 {
     public class NotifyLogElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
-        public NotifyLogElement(INotifyManager notifyManager, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
+        public NotifyLogElement(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, INotifyManager notifyManager, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            StatementLoader = statementLoader;
             NotifyManager = notifyManager;
             OrderManager = orderManager;
             WindowManager = windowManager;
@@ -29,6 +34,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         #region property
 
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader StatementLoader { get; }
+
         private INotifyManager NotifyManager { get; }
         private IOrderManager OrderManager { get; }
         private IWindowManager WindowManager { get; }
@@ -37,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs => NotifyManager.StreamNotifyLogs;
         public bool ViewCreated { get; private set; }
 
-        public NotifyLogPosition Position => NotifyLogPosition.RightBottom;
+        public NotifyLogPosition Position { get; private set; }
         public bool CanShowView => true;
 
         #endregion
@@ -55,7 +63,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         #region ElementBase
 
         protected override void InitializeImpl()
-        { }
+        {
+            var setting = MainDatabaseBarrier.ReadData(c => {
+                var dao = new AppNotifyLogSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                return dao.SelectSettingNotifyLogSetting();
+            });
+            Position = setting.Position;
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -328,6 +328,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
+            element.Initialize();
 
             DispatcherWrapper.Begin(() => {
                 NotifyLogs.Add(element);
