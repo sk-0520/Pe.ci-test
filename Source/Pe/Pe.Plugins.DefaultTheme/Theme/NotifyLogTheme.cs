@@ -61,6 +61,17 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return new SolidColorBrush(MediaUtility.GetAutoColor(color));
         }
 
+        /// <inheritdoc cref="INotifyLogTheme.GetHyperlinkForegroundBrush(HyperlinkState)"/>
+        public Brush GetHyperlinkForegroundBrush(bool isMouseOver)
+        {
+            var color = isMouseOver
+                ? Colors.Lime
+                : Colors.Green
+            ;
+            return new SolidColorBrush(color);
+        }
+
+
         #endregion
     }
 }

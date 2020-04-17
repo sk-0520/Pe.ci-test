@@ -78,6 +78,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         public Brush StreamHeaderForegroundBrush => NotifyLogTheme.GetHeaderForegroundBrush(false);
         [ThemeProperty]
         public Brush StreamContentForegroundBrush => NotifyLogTheme.GetContentForegroundBrush(false);
+        [ThemeProperty]
+        public Brush HyperLinkNormalForegroundBrush => NotifyLogTheme.GetHyperlinkForegroundBrush(false);
+        public Brush HyperLinkOverForegroundBrush => NotifyLogTheme.GetHyperlinkForegroundBrush(true);
 
         #endregion
 

@@ -54,6 +54,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <returns></returns>
         Brush GetContentForegroundBrush(bool isTopmost);
 
+        Brush GetHyperlinkForegroundBrush(bool isMouseOver);
+
         #endregion
     }
 }

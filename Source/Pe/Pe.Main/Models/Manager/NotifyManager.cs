@@ -202,6 +202,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             TopmostNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(TopmostNotifyLogsImpl);
             StreamNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(StreamNotifyLogsImpl);
 
+            NotifyLogLifeTimes = new Dictionary<NotifyLogKind, TimeSpan>() {
+                [NotifyLogKind.Normal] = TimeSpan.FromSeconds(4),
+                [NotifyLogKind.Command] = TimeSpan.FromSeconds(8),
+                [NotifyLogKind.Undo] = TimeSpan.FromSeconds(12),
+                [NotifyLogKind.Topmost] = TimeSpan.Zero, // つかわんですたい
+                //[NotifyLogKind.Platform] = TimeSpan.Zero,
+            };
+
             StreamTimer = new Timer() {
                 Interval = TimeSpan.FromSeconds(1).TotalMilliseconds,
                 AutoReset = true,
@@ -213,6 +221,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region property
 
         Timer StreamTimer { get; }
+        IReadOnlyDictionary<NotifyLogKind, TimeSpan> NotifyLogLifeTimes { get; }
+
         IDispatcherWrapper DispatcherWrapper { get; }
         private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
         private ObservableCollection<NotifyLogItemElement> StreamNotifyLogsImpl { get; }
@@ -377,7 +387,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void StreamTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var removeLogs = StreamNotifyLogsImpl
-                .Where(i => i.Content.Timestamp + TimeSpan.FromSeconds(3) <= DateTime.UtcNow)
+                .Where(i => i.Content.Timestamp + NotifyLogLifeTimes[i.Kind] <= DateTime.UtcNow)
                 .Select(i => i.NotifyLogId)
                 .ToList()
             ;

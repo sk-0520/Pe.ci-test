@@ -86,6 +86,28 @@
             <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, Source={x:Reference root}}" />
           </Style>
 
+          <Style x:Key="Link" TargetType="Hyperlink">
+            <Style.Resources>
+              <Style TargetType="TextBlock">
+                <Style.Triggers>
+                  <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.8" />
+                  </Trigger>
+                </Style.Triggers>
+              </Style>
+            </Style.Resources>
+            <Style.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{Binding DataContext.HyperLinkOverForegroundBrush, Source={x:Reference root}}" />
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Cursor" Value="Hand" />
+              </Trigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding DataContext.HyperLinkNormalForegroundBrush, Source={x:Reference root}}" />
+            <Setter Property="TextDecorations" Value="Underline" />
+          </Style>
+
           <Style x:Key="LogItems" TargetType="ItemsControl">
             <Setter Property="ItemsPanel">
               <Setter.Value>
@@ -120,9 +142,9 @@
                               <Setter Property="Content">
                                 <Setter.Value>
                                   <TextBlock>
-                                  <Hyperlink>
-                                    <Run Text="{Binding Content.Message, Mode=OneWay}" />
-                                  </Hyperlink>
+                                    <Hyperlink Style="{StaticResource Link}">
+                                      <TextBlock Text="{Binding Content.Message, Mode=OneWay}" />
+                                    </Hyperlink>
                                   </TextBlock>
                                 </Setter.Value>
                               </Setter>
@@ -149,9 +171,9 @@
                           <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
                       </TextBlock.Style>
-                    <Hyperlink>
-                      <Run Text="undo" />
-                    </Hyperlink>
+                      <Hyperlink Style="{StaticResource Link}">
+                        <TextBlock Text="undo" />
+                      </Hyperlink>
                     </TextBlock>
                   </Grid>
                 </DataTemplate>
