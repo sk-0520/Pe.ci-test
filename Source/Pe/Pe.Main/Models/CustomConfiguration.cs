@@ -184,6 +184,25 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class NotifyLogConfiguration : ConfigurationBase
+    {
+        public NotifyLogConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            NormalLogDisplayTime = section.GetValue<TimeSpan>("normal_log_display_time");
+            UndoLogDisplayTime = section.GetValue<TimeSpan>("undo_log_display_time");
+            CommandLogDisplayTime = section.GetValue<TimeSpan>("command_log_display_time");
+        }
+
+        #region property
+
+        public TimeSpan NormalLogDisplayTime { get; }
+        public TimeSpan UndoLogDisplayTime { get; }
+        public TimeSpan CommandLogDisplayTime { get; }
+
+        #endregion
+    }
+
     public class LauncherToolbarConfiguration : ConfigurationBase
     {
         public LauncherToolbarConfiguration(IConfigurationSection section)
@@ -291,6 +310,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
+            NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
@@ -306,6 +326,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public BackupConfiguration Backup { get; }
         public FileConfiguration File { get; }
         public DisplayConfiguration Display { get; }
+        public NotifyLogConfiguration NotifyLog { get; }
         public LauncherToolbarConfiguration LauncherToobar { get; }
         public LauncherGroupConfiguration LauncherGroup { get; }
         public NoteConfiguration Note { get; }

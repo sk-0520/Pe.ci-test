@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #region event
         #endregion
 
-        public NotifyManager(IDiContainer diContainer, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NotifyManager(IDiContainer diContainer, NotifyLogConfiguration notifyLogConfiguration, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;
@@ -203,9 +203,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StreamNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(StreamNotifyLogsImpl);
 
             NotifyLogLifeTimes = new Dictionary<NotifyLogKind, TimeSpan>() {
-                [NotifyLogKind.Normal] = TimeSpan.FromSeconds(4),
-                [NotifyLogKind.Command] = TimeSpan.FromSeconds(8),
-                [NotifyLogKind.Undo] = TimeSpan.FromSeconds(12),
+                [NotifyLogKind.Normal] = notifyLogConfiguration.NormalLogDisplayTime,
+                [NotifyLogKind.Command] = notifyLogConfiguration.CommandLogDisplayTime,
+                [NotifyLogKind.Undo] = notifyLogConfiguration.UndoLogDisplayTime,
                 [NotifyLogKind.Topmost] = TimeSpan.Zero, // つかわんですたい
                 //[NotifyLogKind.Platform] = TimeSpan.Zero,
             };
