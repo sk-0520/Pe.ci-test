@@ -30,113 +30,143 @@
     <Binding Path="Resources.String_Notify_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
 
-  <Border
-    BorderThickness="{Binding ViewBorderThickness}"
-    BorderBrush="{Binding ViewBorderBrush}"
-    CornerRadius="{Binding ViewBorderCornerRadius}"
-    Background="{Binding ViewBackgroundBrush}"
-    Padding="{Binding ViewPaddingThickness}"
-  >
-    <Grid Grid.IsSharedSizeScope="True" >
-      <Grid.Resources>
-        <Thickness x:Key="LogItemMargin">1,1,2,1</Thickness>
-        <Style x:Key="Header" TargetType="TextBlock">
+  <Grid x:Name="parent" Margin="18" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+    <Border
+      BorderThickness="{Binding ViewBorderThickness}"
+      BorderBrush="{Binding ViewBorderBrush}"
+      CornerRadius="{Binding ViewBorderCornerRadius}"
+      Background="{Binding ViewBackgroundBrush}"
+      Padding="{Binding ViewPaddingThickness}"
+      MaxWidth="{Binding ActualWidth, ElementName=parent}"
+      MaxHeight="{Binding ActualHeight, ElementName=parent}"
+    >
+      <Border.Style>
+        <Style TargetType="Border">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding Kind}" Value="Topmost">
-              <Setter Property="Foreground" Value="{Binding DataContext.TopmostHeaderForegroundBrush, ElementName=root}" />
+            <DataTrigger Binding="{Binding Position}" Value="Center">
+              <Setter Property="VerticalAlignment" Value="Center" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="LeftTop">
+              <Setter Property="VerticalAlignment" Value="Top" />
+              <Setter Property="HorizontalAlignment" Value="Left" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="RightTop">
+              <Setter Property="VerticalAlignment" Value="Top" />
+              <Setter Property="HorizontalAlignment" Value="Right" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="LeftBottom">
+              <Setter Property="VerticalAlignment" Value="Bottom" />
+              <Setter Property="HorizontalAlignment" Value="Left" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="RightBottom">
+              <Setter Property="VerticalAlignment" Value="Bottom" />
+              <Setter Property="HorizontalAlignment" Value="Right" />
             </DataTrigger>
           </Style.Triggers>
-          <Setter Property="Foreground" Value="{Binding DataContext.StreamHeaderForegroundBrush, ElementName=root}" />
         </Style>
-        <Style x:Key="Content" TargetType="TextBlock">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding Kind}" Value="Topmost">
-              <Setter Property="Foreground" Value="{Binding DataContext.TopmostContentForegroundBrush, ElementName=root}" />
-            </DataTrigger>
-          </Style.Triggers>
-          <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, ElementName=root}" />
-        </Style>
+      </Border.Style>
+      <Grid Grid.IsSharedSizeScope="True" >
+        <Grid.Resources>
+          <Thickness x:Key="LogItemMargin">1,1,2,1</Thickness>
+          <Style x:Key="Header" TargetType="TextBlock">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding Kind}" Value="Topmost">
+                <Setter Property="Foreground" Value="{Binding DataContext.TopmostHeaderForegroundBrush, ElementName=root}" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding DataContext.StreamHeaderForegroundBrush, ElementName=root}" />
+          </Style>
+          <Style x:Key="Content" TargetType="TextBlock">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding Kind}" Value="Topmost">
+                <Setter Property="Foreground" Value="{Binding DataContext.TopmostContentForegroundBrush, ElementName=root}" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, ElementName=root}" />
+          </Style>
 
-        <Style x:Key="LogItems" TargetType="ItemsControl">
-          <Setter Property="ItemsPanel">
-            <Setter.Value>
-              <ItemsPanelTemplate>
-                <StackPanel/>
-              </ItemsPanelTemplate>
-            </Setter.Value>
-          </Setter>
-          <Setter Property="ItemTemplate">
-            <Setter.Value>
-              <DataTemplate DataType="{x:Type app_main_viewmodes_notifylog:NotifyLogItemViewModel}">
-                <Grid>
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition SharedSizeGroup="Header" Width="Auto" />
-                    <ColumnDefinition SharedSizeGroup="Timestamp" Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition SharedSizeGroup="Undo" Width="Auto" />
-                  </Grid.ColumnDefinitions>
+          <Style x:Key="LogItems" TargetType="ItemsControl">
+            <Setter Property="ItemsPanel">
+              <Setter.Value>
+                <ItemsPanelTemplate>
+                  <StackPanel/>
+                </ItemsPanelTemplate>
+              </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+              <Setter.Value>
+                <DataTemplate DataType="{x:Type app_main_viewmodes_notifylog:NotifyLogItemViewModel}">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition SharedSizeGroup="Header" Width="Auto" />
+                      <ColumnDefinition SharedSizeGroup="Timestamp" Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition SharedSizeGroup="Undo" Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                  <TextBlock Grid.Column="0" MinWidth="120" MaxWidth="180" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
+                    <TextBlock Grid.Column="0" Width="120" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
 
-                  <TextBlock Grid.Column="1" MinWidth="120" MaxWidth="180" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Header}" Text="{Binding Header}" />
+                    <TextBlock Grid.Column="1" Width="130" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Header}" Text="{Binding Header}" />
 
-                  <ContentControl Grid.Column="2"  Margin="{StaticResource LogItemMargin}">
-                    <ContentControl.Style>
-                      <Style TargetType="ContentControl">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding Kind}" Value="Undo">
-                            <Setter Property="Grid.ColumnSpan" Value="1" />
-                          </DataTrigger>
-                          <DataTrigger Binding="{Binding Kind}" Value="Command">
-                            <Setter Property="Content">
-                              <Setter.Value>
-                                <TextBlock>
+                    <ContentControl Grid.Column="2"  Margin="{StaticResource LogItemMargin}">
+                      <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Kind}" Value="Undo">
+                              <Setter Property="Grid.ColumnSpan" Value="1" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Command">
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <TextBlock>
                                   <Hyperlink>
                                     <Run Text="{Binding Content.Message, Mode=OneWay}" />
                                   </Hyperlink>
-                                </TextBlock>
-                              </Setter.Value>
-                            </Setter>
-                          </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="Content">
-                          <Setter.Value>
-                            <TextBlock Style="{StaticResource Content}" Text="{Binding Content.Message, Mode=OneWay}" />
-                          </Setter.Value>
-                        </Setter>
-                        <Setter Property="Grid.ColumnSpan" Value="2" />
-                      </Style>
-                    </ContentControl.Style>
-                  </ContentControl>
+                                  </TextBlock>
+                                </Setter.Value>
+                              </Setter>
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <TextBlock Style="{StaticResource Content}" Text="{Binding Content.Message, Mode=OneWay}" />
+                            </Setter.Value>
+                          </Setter>
+                          <Setter Property="Grid.ColumnSpan" Value="2" />
+                        </Style>
+                      </ContentControl.Style>
+                    </ContentControl>
 
-                  <TextBlock Grid.Column="3" MinWidth="80" MaxWidth="120" TextAlignment="Right" Margin="{StaticResource LogItemMargin}">
-                    <TextBlock.Style>
-                      <Style TargetType="TextBlock" BasedOn="{StaticResource Content}">
-                        <Style.Triggers>
-                          <DataTrigger Binding="{Binding Kind}" Value="Undo">
-                            <Setter Property="Visibility" Value="Visible" />
-                          </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="Visibility" Value="Collapsed" />
-                      </Style>
-                    </TextBlock.Style>
+                    <TextBlock Grid.Column="3" Width="80" TextAlignment="Right" Margin="{StaticResource LogItemMargin}">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource Content}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Kind}" Value="Undo">
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                      </TextBlock.Style>
                     <Hyperlink>
                       <Run Text="undo" />
                     </Hyperlink>
-                  </TextBlock>
-                </Grid>
-              </DataTemplate>
-            </Setter.Value>
-          </Setter>
-        </Style>
-      </Grid.Resources>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
+                    </TextBlock>
+                  </Grid>
+                </DataTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-      <ItemsControl Grid.Row="0" ItemsSource="{Binding TopmostNotifyLogItems}" Style="{StaticResource LogItems}" />
-      <ItemsControl Grid.Row="1" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
-    </Grid>
-  </Border>
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding TopmostNotifyLogItems}" Style="{StaticResource LogItems}" />
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
+      </Grid>
+    </Border>
+  </Grid>
 </Window>

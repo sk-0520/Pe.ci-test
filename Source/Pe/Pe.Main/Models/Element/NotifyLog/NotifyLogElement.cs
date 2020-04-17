@@ -4,8 +4,13 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
@@ -32,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs => NotifyManager.StreamNotifyLogs;
         public bool ViewCreated { get; private set; }
 
-        public NotifyLogPosition Position => NotifyLogPosition.Center;
+        public NotifyLogPosition Position => NotifyLogPosition.RightBottom;
         public bool CanShowView => true;
 
         #endregion
@@ -63,12 +68,43 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             base.Dispose(disposing);
         }
 
-        void MoveView()
+        void MoveView(WindowItem windowItem)
         {
             Debug.Assert(ViewCreated);
 
-            var windowItem = WindowManager.GetWindowItems(WindowKind.NotifyLog).First();
+            NativeMethods.GetCursorPos(out var podDevicePoint);
+            var screen = Screen.FromDevicePoint(new Point(podDevicePoint.X, podDevicePoint.Y));
+            var deviceArea = screen.DeviceWorkingArea;
+            NativeMethods.GetWindowRect(HandleUtility.GetWindowHandle(windowItem.Window), out var deviceWindowRect);
+            var deviceWindowLocation = new Point();
+            switch(Position) {
+                case NotifyLogPosition.Center:
+                    deviceWindowLocation.X = deviceArea.X + (deviceArea.Width / 2) - (deviceWindowRect.Width / 2);
+                    deviceWindowLocation.Y = deviceArea.Y + (deviceArea.Height / 2) - (deviceWindowRect.Height / 2);
+                    break;
 
+                case NotifyLogPosition.LeftTop:
+                    deviceWindowLocation.X = deviceArea.X;
+                    deviceWindowLocation.Y = deviceArea.Y;
+                    break;
+
+                case NotifyLogPosition.RightTop:
+                    deviceWindowLocation.X = deviceArea.X + deviceArea.Width - deviceWindowRect.Width;
+                    deviceWindowLocation.Y = deviceArea.Y;
+                    break;
+
+                case NotifyLogPosition.LeftBottom:
+                    deviceWindowLocation.X = deviceArea.X;
+                    deviceWindowLocation.Y = deviceArea.Y + deviceArea.Height - deviceWindowRect.Height;
+                    break;
+
+                case NotifyLogPosition.RightBottom:
+                    deviceWindowLocation.X = deviceArea.X + deviceArea.Width - deviceWindowRect.Width;
+                    deviceWindowLocation.Y = deviceArea.Y + deviceArea.Height - deviceWindowRect.Height;
+                    break;
+
+            }
+            NativeMethods.SetWindowPos(HandleUtility.GetWindowHandle(windowItem.Window), IntPtr.Zero, (int)deviceWindowLocation.X, (int)deviceWindowLocation.Y, 0, 0, SWP.SWP_NOSIZE);
         }
 
         #endregion
@@ -97,11 +133,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                 var windowItem = OrderManager.CreateNotifyLogWindow(this);
                 windowItem.Window.Show();
                 ViewCreated = true;
+                MoveView(windowItem);
             } else {
                 var windowItem = WindowManager.GetWindowItems(WindowKind.NotifyLog).First();
                 if(windowItem.Window.IsVisible) {
-                    //windowItem.Window.Activate();
+                    MoveView(windowItem);
                 } else {
+                    MoveView(windowItem);
                     windowItem.Window.Show();
                 }
             }

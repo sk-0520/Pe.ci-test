@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -52,6 +53,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         public ICollectionView TopmostNotifyLogItems { get; }
         ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> StreamNotifyLogCollection { get; }
         public ICollectionView StreamNotifyLogItems { get; }
+
+        public NotifyLogPosition Position => Model.Position;
+        public bool CanShowView => Model.CanShowView;
+
 
         #region theme
 
