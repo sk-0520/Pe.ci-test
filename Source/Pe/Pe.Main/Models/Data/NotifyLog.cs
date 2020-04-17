@@ -18,9 +18,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// </summary>
         Cursor,
         /// <summary>
-        /// デスクトップ固定。
+        /// 中央表示。
+        /// <para>デスクトップ固定。</para>
         /// </summary>
-        Desktop,
+        Center,
+        /// <summary>
+        /// 左上。
+        /// <para>デスクトップ固定。</para>
+        /// </summary>
+        LeftTop,
+        /// <summary>
+        /// 右上。
+        /// <para>デスクトップ固定。</para>
+        /// </summary>
+        RightTop,
+        /// <summary>
+        /// 左下。
+        /// <para>デスクトップ固定。</para>
+        /// </summary>
+        LeftBottom,
+        /// <summary>
+        /// 右下。
+        /// <para>デスクトップ固定。</para>
+        /// </summary>
+        RightBottom,
     }
 
     /// <summary>
@@ -76,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
     }
-    public class NotifyLogContent: IReadOnlyNotifyLogContent
+    public class NotifyLogContent : IReadOnlyNotifyLogContent
     {
         public NotifyLogContent(string content)
             : this(content, DateTime.UtcNow)

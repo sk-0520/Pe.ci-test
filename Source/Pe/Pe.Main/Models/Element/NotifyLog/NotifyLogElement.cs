@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -30,6 +31,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs => NotifyManager.TopmostNotifyLogs;
         public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs => NotifyManager.StreamNotifyLogs;
         public bool ViewCreated { get; private set; }
+
+        public NotifyLogPosition Position => NotifyLogPosition.Center;
+        public bool CanShowView => true;
 
         #endregion
 
@@ -67,6 +71,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         {
             get
             {
+                if(!CanShowView) {
+                    return false;
+                }
+
                 if(ViewCreated) {
                     return false;
                 }
@@ -115,6 +123,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         private void NotifyManager_NotifyLogChanged(object? sender, NotifyLogEventArgs e)
         {
+            if(!CanShowView) {
+                return;
+            }
+
             switch(e.Kind) {
                 case Data.NotifyEventKind.Add:
                 case Data.NotifyEventKind.Change:
