@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 using Prism.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
+namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 {
     public class NotifyLogContentViewModel : ViewModelBase
     {
