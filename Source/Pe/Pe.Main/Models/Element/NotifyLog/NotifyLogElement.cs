@@ -63,6 +63,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             base.Dispose(disposing);
         }
 
+        void MoveView()
+        {
+            Debug.Assert(ViewCreated);
+
+            var windowItem = WindowManager.GetWindowItems(WindowKind.NotifyLog).First();
+
+        }
+
         #endregion
 
         #region IViewShowStarter
