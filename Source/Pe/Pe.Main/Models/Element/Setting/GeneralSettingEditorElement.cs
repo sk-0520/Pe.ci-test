@@ -233,6 +233,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
+    public class AppNotifyLogSettingEditorElement : GeneralSettingEditorElementBase
+    {
+        public AppNotifyLogSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
+        { }
+
+        #region property
+
+        public NotifyLogPosition Position { get; set; }
+
+        #endregion
+
+        #region function
+        #endregion
+
+        #region GeneralSettingEditorBase
+
+        protected override void InitializeImpl()
+        {
+            var setting = MainDatabaseBarrier.ReadData(c => {
+                var dao = new AppNotifyLogSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                return dao.SelectSettingNotifyLogSetting();
+            });
+
+            Position = setting.Position;
+        }
+
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
+            var appNotifyLogSettingEntityDao = new AppNotifyLogSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppNotifyLogSettingData() {
+                Position = Position,
+            };
+            appNotifyLogSettingEntityDao.UpdateSettingNotifyLogSetting(data, commandPack.CommonStatus);
+        }
+
+        #endregion
+    }
 
 
     public class AppCommandSettingEditorElement : GeneralSettingEditorElementBase

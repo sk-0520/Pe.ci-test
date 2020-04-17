@@ -58,17 +58,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             WindowManager.GetWindowItems(WindowKind.NotifyLog).First().Window.Hide();
         }
 
-        #endregion
-
-        #region ElementBase
-
-        protected override void InitializeImpl()
+        private void RefreshSetting()
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
                 var dao = new AppNotifyLogSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 return dao.SelectSettingNotifyLogSetting();
             });
             Position = setting.Position;
+        }
+
+        public void Refresh()
+        {
+            RefreshSetting();
+        }
+
+        #endregion
+
+        #region ElementBase
+
+        protected override void InitializeImpl()
+        {
+            Refresh();
         }
 
         protected override void Dispose(bool disposing)

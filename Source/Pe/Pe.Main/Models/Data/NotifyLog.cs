@@ -16,31 +16,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// カーソル位置。
         /// </summary>
+        [EnumResource]
         Cursor,
         /// <summary>
         /// 中央表示。
         /// <para>デスクトップ固定。</para>
         /// </summary>
+        [EnumResource]
         Center,
         /// <summary>
         /// 左上。
         /// <para>デスクトップ固定。</para>
         /// </summary>
+        [EnumResource]
         LeftTop,
         /// <summary>
         /// 右上。
         /// <para>デスクトップ固定。</para>
         /// </summary>
+        [EnumResource]
         RightTop,
         /// <summary>
         /// 左下。
         /// <para>デスクトップ固定。</para>
         /// </summary>
+        [EnumResource]
         LeftBottom,
         /// <summary>
         /// 右下。
         /// <para>デスクトップ固定。</para>
         /// </summary>
+        [EnumResource]
         RightBottom,
     }
 

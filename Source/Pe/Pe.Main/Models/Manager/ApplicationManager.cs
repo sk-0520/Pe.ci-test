@@ -276,6 +276,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 RebuildHook();
                 ExecuteElements();
                 CommandElement.Refresh();
+                NotifyLogElement.Refresh();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
             }
