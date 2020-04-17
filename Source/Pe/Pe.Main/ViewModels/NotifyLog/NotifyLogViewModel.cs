@@ -97,7 +97,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         {
             if(!IsDisposed) {
                 if(disposing) {
-
+                    TopmostNotifyLogCollection.Dispose();
+                    StreamNotifyLogCollection.Dispose();
                 }
                 DpiScaleOutputor = null;
                 PlatformTheme.Changed -= PlatformTheme_Changed;
