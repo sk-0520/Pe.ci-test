@@ -205,7 +205,7 @@ insert into
 /* FirstTimestamp        */ @CreatedTimestamp,
 /* LastVersion           */ '0.84.0',
 /* LastTimestamp         */ @CreatedTimestamp,
-/* ExecuteCount          */ 1,
+/* ExecuteCount          */ 0,
 /* UserId                */ '',
 /* IsEnabledTelemetry    */ false,
 

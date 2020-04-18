@@ -154,9 +154,16 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#596: 実行回数記録されてなくない？"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
-
 				]
 			},
 			{
