@@ -172,7 +172,7 @@
                         </Style>
                       </TextBlock.Style>
                       <Hyperlink Style="{StaticResource Link}" Command="{Binding DataContext.ExecuteLogCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
-                        <TextBlock Text="undo" />
+                        <TextBlock Text="{Binding Resources.String_Notify_Undo, Source={x:Static app_main:CultureService.Instance}}" />
                       </Hyperlink>
                     </TextBlock>
                   </Grid>

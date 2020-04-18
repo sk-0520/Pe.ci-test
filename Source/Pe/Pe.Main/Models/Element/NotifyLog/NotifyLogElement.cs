@@ -147,6 +147,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                     deviceWindowLocation.Y = deviceArea.Y + deviceArea.Height - deviceWindowRect.Height;
                     break;
 
+                case NotifyLogPosition.Cursor:
+                    deviceWindowLocation.X = Math.Clamp(podDevicePoint.X, deviceArea.X, deviceArea.Right - deviceWindowRect.Width);
+                    deviceWindowLocation.Y = Math.Clamp(podDevicePoint.Y, deviceArea.Y, deviceArea.Bottom - deviceWindowRect.Height);
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
             NativeMethods.SetWindowPos(HandleUtility.GetWindowHandle(windowItem.Window), IntPtr.Zero, (int)deviceWindowLocation.X, (int)deviceWindowLocation.Y, 0, 0, SWP.SWP_NOSIZE);
         }
@@ -251,8 +258,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                     break;
 
                 case Data.NotifyEventKind.Clear:
-                    if(ViewCreated && TopmostNotifyLogs.Count == 0 && StreamNotifyLogs.Count == 0) {
-                        HideView(false);
+                    if(ViewCreated) {
+                        if(TopmostNotifyLogs.Count == 0 && StreamNotifyLogs.Count == 0) {
+                            HideView(false);
+                        } else {
+                            var windowItem = WindowManager.GetWindowItems(WindowKind.NotifyLog).First();
+                            MoveView(windowItem);
+                        }
                     }
                     break;
 

@@ -16,18 +16,35 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             : base(parameter)
         { }
 
+        #region property
+
+        byte BaseAlplha { get; } = 180;
+
+        #endregion
+
+        #region function
+
+        Color ToBaseColor(Color color)
+        {
+            color.A = BaseAlplha;
+            return color;
+        }
+
+        #endregion
+
         #region INotifyTheme
 
         /// <inheritdoc cref="INotifyLogTheme.GetViewBorderThickness"/>
         public Thickness GetViewBorderThickness()
         {
-            return new Thickness(4);
+            return new Thickness(2);
         }
         /// <inheritdoc cref="INotifyLogTheme.GetViewBorderBrush"/>
         public Brush GetViewBorderBrush()
         {
-            var colors = PlatformTheme.GetTaskbarColor();
-            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors));
+            var color = PlatformTheme.GetTaskbarColor();
+            color.A = 255;
+            return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
         }
 
         /// <inheritdoc cref="INotifyLogTheme.GetViewBorderCornerRadius"/>
@@ -52,21 +69,22 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         public Brush GetHeaderForegroundBrush(bool isTopmost)
         {
             var color = PlatformTheme.GetTaskbarColor();
-            return new SolidColorBrush(MediaUtility.GetAutoColor(color));
+            return new SolidColorBrush(ToBaseColor(MediaUtility.GetAutoColor(color)));
         }
         /// <inheritdoc cref="INotifyLogTheme.GetContentForegroundBrush(bool)"/>
         public Brush GetContentForegroundBrush(bool isTopmost)
         {
             var color = PlatformTheme.GetTaskbarColor();
-            return new SolidColorBrush(MediaUtility.GetAutoColor(color));
+            return new SolidColorBrush(ToBaseColor(MediaUtility.GetAutoColor(color)));
         }
 
         /// <inheritdoc cref="INotifyLogTheme.GetHyperlinkForegroundBrush(HyperlinkState)"/>
         public Brush GetHyperlinkForegroundBrush(bool isMouseOver)
         {
-            var color = isMouseOver
-                ? Colors.Lime
-                : Colors.Green
+            var color = MediaUtility.GetAutoColor(PlatformTheme.GetTaskbarColor());
+            color.A = isMouseOver
+                ? (byte)255
+                : (byte)BaseAlplha
             ;
             return new SolidColorBrush(color);
         }

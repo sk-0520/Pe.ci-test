@@ -3661,6 +3661,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   元に戻す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Notify_Undo {
+            get {
+                return ResourceManager.GetString("String_Notify_Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ver 0.83.0 からコンバート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_OldVersionConverter {

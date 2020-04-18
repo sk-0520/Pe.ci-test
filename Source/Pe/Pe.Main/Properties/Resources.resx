@@ -1701,4 +1701,7 @@
   <data name="String_Setting_Generals_NotifyLog_Visible_A" xml:space="preserve">
     <value>表示</value>
   </data>
+  <data name="String_Notify_Undo" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
 </root>
