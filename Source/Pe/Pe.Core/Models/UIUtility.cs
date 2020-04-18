@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -254,6 +255,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 style &= ~(int)ws;
                 WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_STYLE, (IntPtr)style);
             }
+        }
+
+        public static void ChangeTransparent(Window window, bool isTransparent)
+        {
+            var hWnd = HandleUtility.GetWindowHandle(window);
+
+            int exStyle = (int)WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
+            if(isTransparent) {
+                exStyle |= (int)WS_EX.WS_EX_TRANSPARENT;
+            } else {
+                exStyle &= ~(int)WS_EX.WS_EX_TRANSPARENT;
+            }
+            WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
         }
 
         public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes, Type[] disableElementTypes)

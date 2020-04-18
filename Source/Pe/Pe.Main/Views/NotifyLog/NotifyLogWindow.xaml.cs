@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -14,6 +15,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
@@ -34,6 +36,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
         [Inject]
         ILogger? Logger { get; set; }
 
+
+        #endregion
+
+        #region function
         #endregion
 
         #region Window
@@ -43,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
             base.OnSourceInitialized(e);
 
             UIUtility.SetToolWindowStyle(this, false, false);
+            //UIUtility.ChangeTransparent(this, true);
         }
 
         #endregion
@@ -53,6 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
         public IScreen GetOwnerScreen() => Screen.FromHandle(HandleUtility.GetWindowHandle(this));
 
         #endregion
+
 
     }
 }
