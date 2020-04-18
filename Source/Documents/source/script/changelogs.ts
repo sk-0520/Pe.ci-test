@@ -185,6 +185,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#597: CURRENT_TIMESTAMP を使わずにアプリ側から時刻を設定する"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

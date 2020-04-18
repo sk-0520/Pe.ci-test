@@ -4,7 +4,7 @@ update
 set
 	ExecuteCount  = ExecuteCount + 1,
 	LastVersion   = @ExecuteVersion,
-	LastTimestamp = CURRENT_TIMESTAMP,
+	LastTimestamp = @UpdatedTimestamp,
 	Accepted      = true, -- いつかの未来に丸投げする
 
 	UpdatedTimestamp = @UpdatedTimestamp,

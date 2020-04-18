@@ -1,4 +1,4 @@
-﻿insert into
+insert into
 	LauncherItemIcons
 	(
 		[LauncherItemId],
@@ -18,7 +18,7 @@
 /* Sequence                 */ @Sequence,
 /* Image                    */ @Image,
 
-/* CreatedTimestamp         */ CURRENT_TIMESTAMP,
+/* CreatedTimestamp         */ @CreatedTimestamp,
 /* CreatedAccount           */ @CreatedAccount,
 /* CreatedProgramName       */ @CreatedProgramName,
 /* CreatedProgramVersion    */ @CreatedProgramVersion
