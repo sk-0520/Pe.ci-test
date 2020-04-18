@@ -50,6 +50,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
 
             UIUtility.SetToolWindowStyle(this, false, false);
             //UIUtility.ChangeTransparent(this, true);
+
+            // アクティブなるのを抑制
+            var hWnd = HandleUtility.GetWindowHandle(this);
+            var exStyle = NativeMethods.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
+            NativeMethods.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, exStyle | (int)WS_EX.WS_EX_NOACTIVATE);
         }
 
         #endregion

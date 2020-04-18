@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
+    /// <summary>
+    /// NOTE: テーマというかただの色設定マシーンになってる。CSSみたいにほいほい表示位置変えられる仕組みほしいなぁ。
+    /// </summary>
     public interface INotifyLogTheme
     {
         #region property

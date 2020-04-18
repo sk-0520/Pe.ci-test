@@ -17,6 +17,7 @@
   ResizeMode="NoResize"
   ShowInTaskbar="False"
   WindowStartupLocation="CenterScreen"
+  ShowActivated="False"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
@@ -44,6 +45,10 @@
       <Border.Style>
         <Style TargetType="Border">
           <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Opacity" Value="1" />
+            </Trigger>
+
             <DataTrigger Binding="{Binding Position}" Value="Cursor">
               <Setter Property="VerticalAlignment" Value="{Binding CursorVerticalAlignment}" />
               <Setter Property="HorizontalAlignment" Value="{Binding CursorHorizontalAlignment}" />
@@ -69,6 +74,7 @@
               <Setter Property="HorizontalAlignment" Value="Right" />
             </DataTrigger>
           </Style.Triggers>
+          <Setter Property="Opacity" Value="0.85" />
         </Style>
       </Border.Style>
       <Grid Grid.IsSharedSizeScope="True" >
