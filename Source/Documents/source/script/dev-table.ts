@@ -334,7 +334,10 @@ class Entity {
 			var selectedElement: HTMLOptionElement | null = null;
 			var defaultElement: HTMLOptionElement | null = null;
 			for (var optionElement of optionElements) {
-				var clrValues = ClrMap.get(logicalDataElement.value)!;
+				var clrValues = ClrMap.get(logicalDataElement.value);
+				if(!clrValues) {
+					throw "clrValues が取得できない, たぶん 論理型 が不明";
+				}
 				optionElement.disabled = !clrValues.some(i => i === optionElement.value);
 				if (!optionElement.disabled && !defaultElement) {
 					if(clrValues[0] === optionElement.value) {

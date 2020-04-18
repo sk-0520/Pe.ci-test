@@ -108,7 +108,7 @@ ___
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                      |
 |    | o  |              | 横幅                     | Width                 | real         | System.Double   |              |                      |
 |    | o  |              | 非表示待機時間           | HideWaitTime          | text         | System.TimeSpan |              |                      |
-|    | o  |              | タグ検索                 | FindTag               |              | System.Boolean  |              |                      |
+|    | o  |              | タグ検索                 | FindTag               | boolean      | System.Boolean  |              |                      |
 
 ### index
 
@@ -139,7 +139,7 @@ ___
 |    | o  |              | 位置種別                 | LayoutKind            | text         | System.String   |              |                      |
 |    | o  |              | 前景色                   | ForegroundColor       | text         | System.String   |              | #AARRGGBB            |
 |    | o  |              | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB            |
-|    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |                      |
+|    | o  |              | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                      |
 
 ### index
 
