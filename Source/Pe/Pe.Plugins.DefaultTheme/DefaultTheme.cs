@@ -121,6 +121,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             return new CommandTheme(parameter);
         }
 
+        /// <inheritdoc cref="ITheme.BuildNotifyLogTheme(IThemeParameter)"/>
+        public INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
+        {
+            return new NotifyLogTheme(parameter);
+        }
+
         #endregion
     }
 }

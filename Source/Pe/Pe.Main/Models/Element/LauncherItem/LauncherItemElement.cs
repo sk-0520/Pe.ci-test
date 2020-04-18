@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -143,6 +145,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         public ILauncherExecuteResult Execute(IScreen screen)
         {
             ThrowIfDisposed();
+
+//#if DEBUG
+//            var id = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, "@テスト", new NotifyLogContent(Name)));
+//            Task.Run(() => {
+//                Thread.Sleep(TimeSpan.FromSeconds(5));
+//                NotifyManager.ReplaceLog(id, "@うんこー");
+//                Thread.Sleep(TimeSpan.FromSeconds(5));
+//                NotifyManager.ClearLog (id);
+//            });
+//            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "@ランチャーアイテム起動", new NotifyLogContent(Name)));
+//            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, "@Command", new NotifyLogContent(Name), () => { Logger.LogInformation("command"); }));
+//            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Undo, "@Undo", new NotifyLogContent(Name), () => { Logger.LogInformation("undo"); }));
+//#endif
 
             try {
                 ILauncherExecuteResult result;

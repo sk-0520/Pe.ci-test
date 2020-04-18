@@ -23,7 +23,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationInitializer
+    internal class ApplicationInitializer
     {
         #region define
 
@@ -301,6 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<BackupConfiguration, BackupConfiguration>(environmentParameters.Configuration.Backup)
                 .Register<FileConfiguration, FileConfiguration>(environmentParameters.Configuration.File)
                 .Register<DisplayConfiguration, DisplayConfiguration>(environmentParameters.Configuration.Display)
+                .Register<NotifyLogConfiguration, NotifyLogConfiguration>(environmentParameters.Configuration.NotifyLog)
                 .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.Configuration.LauncherToobar)
                 .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.Configuration.LauncherGroup)
                 .Register<NoteConfiguration, NoteConfiguration>(environmentParameters.Configuration.Note)

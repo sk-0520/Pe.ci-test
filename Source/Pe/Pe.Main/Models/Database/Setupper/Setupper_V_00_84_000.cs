@@ -32,6 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         {
             var fc = new FontConverter(Logger);
 
+            //BUGS: FirstVersion おかしくね？
+
             var parameters = new Dictionary<string, object>() {
                 // NoteDefault
                 ["NoteDefaultFontId"] = IdFactory.CreateFontId(),

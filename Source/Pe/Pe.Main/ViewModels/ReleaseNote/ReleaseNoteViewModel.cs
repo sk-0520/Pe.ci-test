@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
         { }
 
 
-        public void ReceiveViewClosed()
+        public void ReceiveViewClosed(Window window)
         { }
 
         #endregion

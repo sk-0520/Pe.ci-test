@@ -1647,4 +1647,61 @@
   <data name="String_Feedback_SourceOpen" xml:space="preserve">
     <value>ソースコードを参照</value>
   </data>
+  <data name="String_Notify_Caption" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center_A" xml:space="preserve">
+    <value>中央(_C)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor" xml:space="preserve">
+    <value>カーソル位置</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor_A" xml:space="preserve">
+    <value>カーソル位置(_P)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom" xml:space="preserve">
+    <value>左下</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom_A" xml:space="preserve">
+    <value>左下(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop" xml:space="preserve">
+    <value>左上</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop_A" xml:space="preserve">
+    <value>左上(_L)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom" xml:space="preserve">
+    <value>右下</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom_A" xml:space="preserve">
+    <value>右下(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop" xml:space="preserve">
+    <value>右上</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop_A" xml:space="preserve">
+    <value>右上(_T)</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_Header" xml:space="preserve">
+    <value>通知ログ</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_Position_A" xml:space="preserve">
+    <value>表示位置</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_VisibleIsEnabled_A" xml:space="preserve">
+    <value>通知があれば表示する(_V)</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_VisibleRemark" xml:space="preserve">
+    <value>表示しない場合、戻し処理や通知ログからの処理実行は行えません。</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_Visible_A" xml:space="preserve">
+    <value>表示</value>
+  </data>
+  <data name="String_Notify_Undo" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
 </root>

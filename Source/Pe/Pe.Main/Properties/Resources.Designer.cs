@@ -1537,6 +1537,116 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   中央 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Center {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中央(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Center_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   カーソル位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Cursor {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   カーソル位置(_P) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Cursor_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftBottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左下(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftBottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom_A" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftTop {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左上(_L) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftTop_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightBottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右下(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightBottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom_" +
+                        "A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightTop {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右上(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightTop_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateKind_Auto {
@@ -3542,6 +3652,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   通知 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Notify_Caption {
+            get {
+                return ResourceManager.GetString("String_Notify_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   元に戻す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Notify_Undo {
+            get {
+                return ResourceManager.GetString("String_Notify_Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ver 0.83.0 からコンバート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_OldVersionConverter {
@@ -3898,6 +4026,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Generals_Note_Topmost_A {
             get {
                 return ResourceManager.GetString("String_Setting_Generals_Note_Topmost_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通知ログ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_Position_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_Position_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_Visible_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_Visible_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通知があれば表示する(_V) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_VisibleIsEnabled_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_VisibleIsEnabled_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示しない場合、戻し処理や通知ログからの処理実行は行えません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_VisibleRemark {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_VisibleRemark", resourceCulture);
             }
         }
         

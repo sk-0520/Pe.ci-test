@@ -44,6 +44,9 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Main.ViewModels.Feedback;
 using ContentTypeTextNet.Pe.Main.Views.Feedback;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
+using ContentTypeTextNet.Pe.Main.Views.NotifyLog;
+using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -102,6 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         WindowItem CreateNoteWindow(NoteElement element);
         WindowItem CreateCommandWindow(CommandElement element);
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
+        WindowItem CreateNotifyLogWindow(NotifyLogElement element);
         WindowItem CreateSettingWindow(SettingContainerElement element);
 
         #endregion
@@ -295,6 +299,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 window.DataContext = viewModel;
 
                 return new WindowItem(WindowKind.StandardInputOutput, element, window);
+            }
+
+            public WindowItem CreateNotifyLogWindow(NotifyLogElement element)
+            {
+                var viewModel = DiContainer.UsingTemporaryContainer(c => {
+                    return c.Build<NotifyLogViewModel>(element);
+                });
+                var window = DiContainer.BuildView<NotifyLogWindow>();
+                window.DataContext = viewModel;
+
+                return new WindowItem(WindowKind.NotifyLog, element, window);
             }
 
             public WindowItem CreateSettingWindow(SettingContainerElement element)

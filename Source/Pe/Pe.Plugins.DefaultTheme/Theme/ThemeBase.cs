@@ -79,6 +79,13 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
 
+        protected TValue GetResourceValue<TValue>(string interfaceName, string methodName)
+        {
+            var key = interfaceName + '.' + methodName;
+            return (TValue)Application.Current.Resources[key];
+
+        }
+
         #endregion
     }
 }

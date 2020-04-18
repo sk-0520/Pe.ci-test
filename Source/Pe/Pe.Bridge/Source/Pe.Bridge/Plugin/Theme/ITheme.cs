@@ -29,6 +29,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// コマンド。
         /// </summary>
         Command,
+        /// <summary>
+        /// 通知UI。
+        /// </summary>
+        Notify,
     }
 
     public readonly struct ColorPair<T>
@@ -78,6 +82,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter);
         INoteTheme BuildNoteTheme(IThemeParameter parameter);
         ICommandTheme BuildCommandTheme(IThemeParameter parameter);
+
+        INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter);
 
         #endregion
     }

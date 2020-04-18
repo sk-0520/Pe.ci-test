@@ -78,6 +78,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// フィードバック。
         /// </summary>
         Feedback,
+        /// <summary>
+        /// 通知ログ。
+        /// </summary>
+        NotifyLog,
     }
 
     public class WindowItem
@@ -351,7 +355,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                viewLifecycleReceiver.ReceiveViewClosed();
+                viewLifecycleReceiver.ReceiveViewClosed(item.Window);
             }
 
             if(item.CloseToDispose) {
