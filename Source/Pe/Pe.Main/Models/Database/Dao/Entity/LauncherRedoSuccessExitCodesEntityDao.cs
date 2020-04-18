@@ -7,20 +7,20 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherRedoItemsDto: CommonDtoBase
+    internal class LauncherRedoSuccessExitCodesDto : CommonDtoBase
     {
         #region property
 
         public Guid LauncherItemId { get; set; }
         public bool IsEnabled { get; set; }
-        public TimeSpan WaitTime { get; set; }
+        public long SuccessExitCode { get; set; }
 
         #endregion
     }
 
-    public class LauncherRedoItemsEntityDao: EntityDaoBase
+    public class LauncherRedoSuccessExitCodesEntityDao : EntityDaoBase
     {
-        public LauncherRedoItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherRedoSuccessExitCodesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 
