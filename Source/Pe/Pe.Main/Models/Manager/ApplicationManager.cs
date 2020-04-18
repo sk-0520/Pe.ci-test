@@ -312,6 +312,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModels.Startup.StartupViewModel, Views.Startup.StartupWindow>()
                 ;
                 var startupModel = diContainer.New<Element.Startup.StartupElement>();
+                startupModel.Initialize();
                 var view = diContainer.Build<Views.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();

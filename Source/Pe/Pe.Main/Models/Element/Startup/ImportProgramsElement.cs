@@ -88,6 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ;
 
             foreach(var element in elements) {
+                element.Initialize();
                 ProgramItems.Add(element);
             }
 
