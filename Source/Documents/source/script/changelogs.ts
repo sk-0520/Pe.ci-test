@@ -168,7 +168,13 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Dapper 2.0.30 -> 2.0.35"
+					},
+					{
+						"revision": "",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.112 -> 1.0.112.1"
 					},
 					{
 						"revision": "",
