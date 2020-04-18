@@ -1,4 +1,5 @@
 select
+	AppNotifyLogSetting.IsVisible,
 	AppNotifyLogSetting.Position
 from
 	AppNotifyLogSetting

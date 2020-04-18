@@ -10,6 +10,7 @@ create table [AppNotifyLogSetting] (
 	[UpdatedProgramName] text not null /* 更新プログラム名  */,
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[IsVisible] boolean not null /* 表示  */,
 	[Position] text not null /* 表示位置  */,
 	primary key(
 		[Generation]

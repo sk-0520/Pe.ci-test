@@ -1692,4 +1692,13 @@
   <data name="String_Setting_Generals_NotifyLog_Position_A" xml:space="preserve">
     <value>表示位置</value>
   </data>
+  <data name="String_Setting_Generals_NotifyLog_VisibleIsEnabled_A" xml:space="preserve">
+    <value>通知があれば表示する(_V)</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_VisibleRemark" xml:space="preserve">
+    <value>表示しない場合、戻し処理や通知ログからの処理実行は行えません。</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_Visible_A" xml:space="preserve">
+    <value>表示</value>
+  </data>
 </root>

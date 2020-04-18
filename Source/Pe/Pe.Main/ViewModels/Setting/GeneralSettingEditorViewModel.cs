@@ -243,6 +243,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public bool IsVisible
+        {
+            get => Model.IsVisible;
+            set => SetModelValue(value);
+        }
+
+
         public NotifyLogPosition Position
         {
             get => Model.Position;

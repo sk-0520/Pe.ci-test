@@ -241,6 +241,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
+        public bool IsVisible { get; set; }
         public NotifyLogPosition Position { get; set; }
 
         #endregion
@@ -257,6 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 return dao.SelectSettingNotifyLogSetting();
             });
 
+            IsVisible = setting.IsVisible;
             Position = setting.Position;
         }
 
@@ -264,6 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             var appNotifyLogSettingEntityDao = new AppNotifyLogSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppNotifyLogSettingData() {
+                IsVisible = IsVisible,
                 Position = Position,
             };
             appNotifyLogSettingEntityDao.UpdateSettingNotifyLogSetting(data, commandPack.CommonStatus);

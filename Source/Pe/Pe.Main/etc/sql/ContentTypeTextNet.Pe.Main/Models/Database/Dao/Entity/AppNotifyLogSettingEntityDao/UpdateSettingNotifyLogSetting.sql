@@ -1,6 +1,7 @@
 update
 	AppNotifyLogSetting
 set
+	IsVisible             = @IsVisible,
 	Position              = @Position,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,

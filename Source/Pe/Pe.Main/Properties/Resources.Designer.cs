@@ -4039,6 +4039,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_Visible_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_Visible_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通知があれば表示する(_V) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_VisibleIsEnabled_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_VisibleIsEnabled_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示しない場合、戻し処理や通知ログからの処理実行は行えません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_VisibleRemark {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_VisibleRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   標準エラー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_StandardInputOutput_ErrorColor_A {

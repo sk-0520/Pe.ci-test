@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs => NotifyManager.StreamNotifyLogs;
         public bool ViewCreated { get; private set; }
 
+        public bool IsVisible { get; private set; }
         public NotifyLogPosition Position { get; private set; }
 
         private bool NowSilent { get; set; }
@@ -82,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                 var dao = new AppNotifyLogSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 return dao.SelectSettingNotifyLogSetting();
             });
+            IsVisible = setting.IsVisible;
             Position = setting.Position;
         }
 
@@ -171,6 +173,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 
         public void StartView()
         {
+            if(!IsVisible) {
+                Logger.LogTrace("通知ログは非表示設定");
+                return;
+            }
+
             if(!ViewCreated) {
                 var windowItem = OrderManager.CreateNotifyLogWindow(this);
                 windowItem.Window.Show();

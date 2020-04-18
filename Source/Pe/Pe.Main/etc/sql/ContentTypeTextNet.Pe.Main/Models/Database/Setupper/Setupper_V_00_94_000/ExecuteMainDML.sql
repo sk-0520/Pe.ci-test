@@ -2,6 +2,7 @@
 insert into
 	AppNotifyLogSetting
 	(
+		IsVisible,
 		Position,
 
 		CreatedTimestamp,
@@ -16,6 +17,7 @@ insert into
 	)
 	values
 	(
+/* IsVisible             */ true,
 /* Position              */ 'right-bottom',
 
 /* CreatedTimestamp      */ @CreatedTimestamp,

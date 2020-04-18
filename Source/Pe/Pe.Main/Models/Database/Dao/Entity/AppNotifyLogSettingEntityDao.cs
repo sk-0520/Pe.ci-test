@@ -11,6 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
     {
         #region property
 
+        public bool IsVisible { get; set; }
         public string Position { get; set; } = string.Empty;
 
         #endregion
@@ -44,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var dto = Commander.QueryFirst<AppNotifyLogSettingEntityDto>(statement);
             var data = new SettingAppNotifyLogSettingData() {
+                IsVisible = dto.IsVisible,
                 Position = notifyLogPositionTransfer.ToEnum(dto.Position),
             };
             return data;
@@ -55,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var statement = LoadStatement();
             var dto = new AppNotifyLogSettingEntityDto() {
+                IsVisible = data.IsVisible,
                 Position = notifyLogPositionTransfer.ToString(data.Position),
             };
             commonStatus.WriteCommon(dto);

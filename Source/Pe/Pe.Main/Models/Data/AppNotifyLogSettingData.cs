@@ -9,6 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
+        public bool IsVisible { get; set; }
         public NotifyLogPosition Position { get; set; }
 
         #endregion
