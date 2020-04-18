@@ -151,6 +151,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             NativeMethods.SetWindowPos(HandleUtility.GetWindowHandle(windowItem.Window), IntPtr.Zero, (int)deviceWindowLocation.X, (int)deviceWindowLocation.Y, 0, 0, SWP.SWP_NOSIZE);
         }
 
+        public void ExecuteLogById(Guid notifyLogId)
+        {
+            var logItem = StreamNotifyLogs.FirstOrDefault(i => i.NotifyLogId == notifyLogId);
+            if(logItem == null) {
+                // タイミングによっては可能性あり
+                Logger.LogWarning("指定ログなし: {0}", notifyLogId);
+                return;
+            }
+
+            if(!(logItem.Kind == NotifyLogKind.Command || logItem.Kind == NotifyLogKind.Undo)) {
+                Logger.LogError("指定ログは実行不可: {0}, {1}", notifyLogId, logItem.Kind);
+                return;
+            }
+
+            try {
+                logItem.Callback();
+                NotifyManager.ClearLog(logItem.NotifyLogId);
+            } catch(Exception ex) {
+                Logger.LogError(ex, "ログ実行失敗: [{0}] {1], {2}", ex.Message, notifyLogId, logItem.Kind);
+            }
+        }
+
         #endregion
 
         #region IViewShowStarter

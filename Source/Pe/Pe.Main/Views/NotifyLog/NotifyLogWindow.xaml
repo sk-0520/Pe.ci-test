@@ -142,7 +142,7 @@
                               <Setter Property="Content">
                                 <Setter.Value>
                                   <TextBlock>
-                                    <Hyperlink Style="{StaticResource Link}">
+                                    <Hyperlink Style="{StaticResource Link}" Command="{Binding DataContext.ExecuteLogCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                                       <TextBlock Text="{Binding Content.Message, Mode=OneWay}" />
                                     </Hyperlink>
                                   </TextBlock>
@@ -171,7 +171,7 @@
                           <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
                       </TextBlock.Style>
-                      <Hyperlink Style="{StaticResource Link}">
+                      <Hyperlink Style="{StaticResource Link}" Command="{Binding DataContext.ExecuteLogCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                         <TextBlock Text="undo" />
                       </Hyperlink>
                     </TextBlock>

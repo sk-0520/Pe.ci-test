@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -14,6 +15,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 {
@@ -86,6 +88,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         #endregion
 
         #region command
+
+        public ICommand ExecuteLogCommand => GetOrCreateCommand(() => new DelegateCommand<NotifyLogItemViewModel>(
+            vm => {
+                Model.ExecuteLogById(vm.NotifyLogId);
+            }
+        ));
 
         #endregion
 
