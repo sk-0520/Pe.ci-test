@@ -330,6 +330,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
             element.Initialize();
 
+            Logger.LogDebug("[{0}] {1}: {2}, {3}", notifyMessage.Header, notifyMessage.Kind, notifyMessage.Content.Message, element.NotifyLogId);
+
             DispatcherWrapper.Begin(() => {
                 NotifyLogs.Add(element);
                 if(element.Kind == NotifyLogKind.Topmost) {
@@ -352,6 +354,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(element.Kind != NotifyLogKind.Topmost) {
                 throw new Exception($"{nameof(element.Kind)}: not {nameof(NotifyLogKind.Topmost)}");
             }
+
+            Logger.LogDebug("[{0}] 変更: {1}, {2}", element.Header, content, element.NotifyLogId);
 
             DispatcherWrapper.Begin(() => {
                 element.ChangeContent(new NotifyLogContent(content, DateTime.UtcNow));
@@ -387,12 +391,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void StreamTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            var time = DateTime.UtcNow;
             var removeLogs = StreamNotifyLogsImpl
-                .Where(i => i.Content.Timestamp + NotifyLogLifeTimes[i.Kind] <= DateTime.UtcNow)
+                .Where(i => i.Content.Timestamp + NotifyLogLifeTimes[i.Kind] < time)
                 .Select(i => i.NotifyLogId)
                 .ToList()
             ;
-            if(removeLogs.Any()) {
+            if(0 < removeLogs.Count) {
                 foreach(var removeLog in removeLogs) {
                     ClearLog(removeLog);
                 }
