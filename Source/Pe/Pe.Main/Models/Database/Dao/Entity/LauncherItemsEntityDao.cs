@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool SelectExistsLauncherLauncherItem(Guid launcherItemId)
+        public bool SelectExistsLauncherItem(Guid launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
