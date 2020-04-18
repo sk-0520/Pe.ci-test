@@ -87,6 +87,7 @@
               </DataTrigger>
             </Style.Triggers>
             <Setter Property="Foreground" Value="{Binding DataContext.StreamHeaderForegroundBrush, Source={x:Reference root}}" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
           </Style>
           <Style x:Key="Content" TargetType="TextBlock">
             <Style.Triggers>
@@ -95,6 +96,7 @@
               </DataTrigger>
             </Style.Triggers>
             <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, Source={x:Reference root}}" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
           </Style>
 
           <Style x:Key="Link" TargetType="Hyperlink">
@@ -105,6 +107,7 @@
                     <Setter Property="Opacity" Value="0.8" />
                   </Trigger>
                 </Style.Triggers>
+                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
               </Style>
             </Style.Resources>
             <Style.Triggers>
@@ -131,6 +134,24 @@
               <Setter.Value>
                 <DataTemplate DataType="{x:Type app_main_viewmodes_notifylog:NotifyLogItemViewModel}">
                   <Grid>
+                    <Grid.Style>
+                      <Style TargetType="Grid">
+                        <Style.Triggers>
+                          <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                              <Storyboard>
+                                <DoubleAnimation
+                                  Storyboard.TargetProperty="Opacity"
+                                  Duration="00:00:00.250"
+                                  From="0"
+                                  To="1"
+                                />
+                              </Storyboard>
+                            </BeginStoryboard>
+                          </EventTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Grid.Style>
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition SharedSizeGroup="Header" Width="Auto" />
                       <ColumnDefinition SharedSizeGroup="Timestamp" Width="Auto" />
@@ -140,7 +161,7 @@
 
                     <TextBlock Grid.Column="0" Width="120" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
 
-                    <TextBlock Grid.Column="1" Width="130" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Header}" Text="{Binding Header}" />
+                    <TextBlock Grid.Column="1" MinWidth="60" MaxWidth="160" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Header}" Text="{Binding Header}" />
 
                     <ContentControl Grid.Column="2"  Margin="{StaticResource LogItemMargin}">
                       <ContentControl.Style>
@@ -163,7 +184,7 @@
                           </Style.Triggers>
                           <Setter Property="Content">
                             <Setter.Value>
-                              <TextBlock Style="{StaticResource Content}" Text="{Binding Content.Message, Mode=OneWay}" />
+                              <TextBlock TextWrapping="Wrap" LineStackingStrategy="MaxHeight" Style="{StaticResource Content}" Text="{Binding Content.Message, Mode=OneWay}" />
                             </Setter.Value>
                           </Setter>
                           <Setter Property="Grid.ColumnSpan" Value="2" />
