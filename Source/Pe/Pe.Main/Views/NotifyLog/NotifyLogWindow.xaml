@@ -171,7 +171,7 @@
                       </ContentControl.Style>
                     </ContentControl>
 
-                    <TextBlock Grid.Column="3" Width="80" TextAlignment="Right" Margin="{StaticResource LogItemMargin}">
+                    <TextBlock Grid.Column="3" TextAlignment="Right" Padding="{StaticResource LeftMargin}" Margin="{StaticResource LogItemMargin}">
                       <TextBlock.Style>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource Content}">
                           <Style.Triggers>
