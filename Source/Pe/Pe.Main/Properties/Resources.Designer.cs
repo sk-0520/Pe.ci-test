@@ -780,7 +780,9 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   送信済みクラッシュレポートは自動削除されません 云々 に類似しているローカライズされた文字列を検索します。
+        ///   ユーザー側でいつでも確認できるようにするため、
+        ///送信済みクラッシュレポートは自動削除されません。
+        ///完全に不要と判断した場合は手動で削除してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_SaveFileDescription {
             get {

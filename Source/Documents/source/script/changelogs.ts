@@ -142,7 +142,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#595: クラッシュレポートの云々ってなんやねん"
 					},
 					{
 						"revision": "",

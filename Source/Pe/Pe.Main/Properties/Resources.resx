@@ -1537,7 +1537,9 @@
     <value>再送信</value>
   </data>
   <data name="String_CrashReport_SaveFileDescription" xml:space="preserve">
-    <value>送信済みクラッシュレポートは自動削除されません 云々</value>
+    <value>ユーザー側でいつでも確認できるようにするため、
+送信済みクラッシュレポートは自動削除されません。
+完全に不要と判断した場合は手動で削除してください。</value>
   </data>
   <data name="String_CrashReport_SaveFilePath" xml:space="preserve">
     <value>送信済みクラッシュレポート</value>
