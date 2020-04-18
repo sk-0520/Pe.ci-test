@@ -117,7 +117,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#593: 通知用UIの作成"
 					},
 					{
 						"revision": "",
