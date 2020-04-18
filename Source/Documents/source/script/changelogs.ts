@@ -138,7 +138,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#594: 初回仕様バージョンの記録が 0.84.0 固定になってる"
 					},
 					{
 						"revision": "",

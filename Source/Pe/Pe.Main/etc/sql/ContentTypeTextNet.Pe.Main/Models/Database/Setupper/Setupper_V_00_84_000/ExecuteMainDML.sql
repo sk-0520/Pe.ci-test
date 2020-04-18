@@ -201,7 +201,7 @@ insert into
 	values
 	(
 /* Accepted              */ true,
-/* FirstVersion          */ '0.84.0',
+/* FirstVersion          */ @CreatedProgramVersion,
 /* FirstTimestamp        */ @CreatedTimestamp,
 /* LastVersion           */ '0.84.0',
 /* LastTimestamp         */ @CreatedTimestamp,
