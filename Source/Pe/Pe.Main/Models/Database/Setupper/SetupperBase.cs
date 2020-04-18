@@ -28,6 +28,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         protected IDatabaseStatementLoader StatementLoader { get; }
         protected ILogger Logger { get; }
 
+        /// <summary>
+        /// 対象バージョン。
+        /// <para>最終実行バージョンがこのバージョン未満であれば処理実行対象となる。</para>
+        /// </summary>
         public abstract Version Version { get; }
 
         const string TitleMark = "--//";

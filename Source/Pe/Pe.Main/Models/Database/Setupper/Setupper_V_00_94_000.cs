@@ -21,10 +21,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         #region SetupBase
 
+
+        /// <inheritdoc cref="SetupperBase.Version"/>
+        public override Version Version { get; } =
 #if DEBUG
-        public override Version Version { get; } = new Version(0, 93, 2);
+            new Version(0, 93, 2);
 #else
-        public override Version Version { get; } = new Version(0, 94, 0);
+            new Version(0, 94, 0);
 #endif
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
