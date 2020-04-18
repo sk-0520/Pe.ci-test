@@ -21,6 +21,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
 {
     public class NotifyLogElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
+        #region variable
+
+        HorizontalAlignment _cursorHorizontalAlignment = HorizontalAlignment.Left;
+        VerticalAlignment _cursorVerticalAlignment = VerticalAlignment.Top;
+
+        #endregion
         public NotifyLogElement(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, INotifyManager notifyManager, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -50,6 +56,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public NotifyLogPosition Position { get; private set; }
 
         private bool NowSilent { get; set; }
+
+        public HorizontalAlignment CursorHorizontalAlignment
+        {
+            get => this._cursorHorizontalAlignment;
+            set => SetProperty(ref this._cursorHorizontalAlignment, value);
+        }
+        public VerticalAlignment CursorVerticalAlignment
+        {
+            get => this._cursorVerticalAlignment;
+            set => SetProperty(ref this._cursorVerticalAlignment, value);
+        }
 
         #endregion
 
@@ -122,6 +139,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             NativeMethods.GetWindowRect(HandleUtility.GetWindowHandle(windowItem.Window), out var deviceWindowRect);
             var deviceWindowLocation = new Point();
             switch(Position) {
+                case NotifyLogPosition.Cursor:
+                    deviceWindowLocation.X = Math.Clamp(podDevicePoint.X, deviceArea.X, deviceArea.Right - deviceWindowRect.Width);
+                    deviceWindowLocation.Y = Math.Clamp(podDevicePoint.Y, deviceArea.Y, deviceArea.Bottom - deviceWindowRect.Height);
+
+                    CursorHorizontalAlignment= podDevicePoint.X <= deviceWindowLocation.X
+                        ? HorizontalAlignment.Left
+                        : HorizontalAlignment.Right
+                    ;
+                    CursorVerticalAlignment = podDevicePoint.Y <= deviceWindowLocation.Y
+                        ? VerticalAlignment.Top
+                        : VerticalAlignment.Bottom
+                    ;
+                    break;
+
                 case NotifyLogPosition.Center:
                     deviceWindowLocation.X = deviceArea.X + (deviceArea.Width / 2) - (deviceWindowRect.Width / 2);
                     deviceWindowLocation.Y = deviceArea.Y + (deviceArea.Height / 2) - (deviceWindowRect.Height / 2);
@@ -145,11 +176,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                 case NotifyLogPosition.RightBottom:
                     deviceWindowLocation.X = deviceArea.X + deviceArea.Width - deviceWindowRect.Width;
                     deviceWindowLocation.Y = deviceArea.Y + deviceArea.Height - deviceWindowRect.Height;
-                    break;
-
-                case NotifyLogPosition.Cursor:
-                    deviceWindowLocation.X = Math.Clamp(podDevicePoint.X, deviceArea.X, deviceArea.Right - deviceWindowRect.Width);
-                    deviceWindowLocation.Y = Math.Clamp(podDevicePoint.Y, deviceArea.Y, deviceArea.Bottom - deviceWindowRect.Height);
                     break;
 
                 default:

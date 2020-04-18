@@ -27,6 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
             NotifyLogTheme = notifyLogTheme;
             PlatformTheme = platformTheme;
 
+            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+            PropertyChangedHooker.AddHook(nameof(Model.CursorHorizontalAlignment), nameof(CursorHorizontalAlignment));
+            PropertyChangedHooker.AddHook(nameof(Model.CursorVerticalAlignment), nameof(CursorVerticalAlignment));
+
             ThemeProperties = new ThemeProperties(this);
 
             PlatformTheme.Changed += PlatformTheme_Changed;
@@ -50,6 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         IDpiScaleOutputor? DpiScaleOutputor { get; set; }
 
         ThemeProperties ThemeProperties { get; }
+        PropertyChangedHooker PropertyChangedHooker { get; }
 
         ModelViewModelObservableCollectionManagerBase<NotifyLogItemElement, NotifyLogItemViewModel> TopmostNotifyLogCollection { get; }
         public ICollectionView TopmostNotifyLogItems { get; }
@@ -58,6 +63,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         public NotifyLogPosition Position => Model.Position;
 
+        public HorizontalAlignment CursorHorizontalAlignment => Model.CursorHorizontalAlignment;
+        public VerticalAlignment CursorVerticalAlignment => Model.CursorVerticalAlignment;
 
         #region theme
 
@@ -107,6 +114,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         #endregion
 
         #region ElementViewModelBase
+
+        protected override void AttachModelEventsImpl()
+        {
+            base.AttachModelEventsImpl();
+
+            Model.PropertyChanged += Model_PropertyChanged;
+        }
+
+        protected override void DetachModelEventsImpl()
+        {
+            base.DetachModelEventsImpl();
+
+            Model.PropertyChanged -= Model_PropertyChanged;
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -162,6 +183,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
                     RaisePropertyChanged(themePropertyName);
                 }
             }, this, DispatcherPriority.Render);
+        }
+
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
         }
 
     }
