@@ -340,6 +340,35 @@ ___
 
 ___
 
+## LauncherRedoItems
+
+### layout
+
+| PK | NN | FK                           | 論理カラム名               | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:-----------------------------|:---------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID       | LauncherItemId        | text         | System.Guid     |              |          |
+|    | o  |                              | 作成タイムスタンプ         | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 作成ユーザー名             | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラム名           | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラムバージョン   | CreatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新タイムスタンプ         | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 更新ユーザー名             | UpdatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラム名           | UpdatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラムバージョン   | UpdatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新回数                   | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |                              | 有効                       | IsEnabled             | boolean      | System.Boolean  |              |          |
+|    | o  |                              | 待機時間                   | WaitTime              | text         | System.TimeSpan |              |          |
+|    | o  |                              | 正常終了コード             | SuccessExitCodeRange  | text         | System.String   |              | CSV、-で範囲 |
+
+
+### index
+
+*NONE*
+
+
+
+___
+
 ## LauncherStoreApps
 
 ### layout
