@@ -144,6 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        [Obsolete]
         internal bool InsertOldToolbar(LauncherToolbarsOldData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();

@@ -332,6 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     }
 
+    [Obsolete]
     internal class LauncherToolbarsOldData : LauncherToolbarsDisplayData
     {
         public IScreen? Screen { get; set; }
@@ -350,4 +351,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public LauncherFileData File { get; }
         #endregion
     }
+
+    public class LauncherRedoData
+    {
+        public LauncherRedoData(bool isEnabled, TimeSpan waitTime, IReadOnlyCollection<int> successExitCodes)
+        {
+            IsEnabled = isEnabled;
+            WaitTime = waitTime;
+            SuccessExitCodes = successExitCodes;
+        }
+
+        #region property
+
+        public bool IsEnabled { get; }
+        public TimeSpan WaitTime { get; }
+        public IReadOnlyCollection<int> SuccessExitCodes { get; }
+
+        #endregion
+    }
+
 }
