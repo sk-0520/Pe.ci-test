@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:app_code_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_code_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
@@ -15,6 +16,7 @@
   d:DesignHeight="450"
 >
   <UserControl.Resources>
+    <app_code_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
     <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
@@ -36,10 +38,10 @@
 
         <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_RedoWait_A, Source={x:Static app_main:CultureService.Instance}}"  />
         <WrapPanel Grid.Column="1" VerticalAlignment="Center">
-          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.None}}" />
-          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.Timeout}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Timeout}}" />
-          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Count}}" />
-          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.TimeoutAndCount}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.TimeoutAndCount}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoWait.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.None}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}"  Content="{Binding Source={x:Static app_main_models_data:RedoWait.Timeout}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Timeout}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}"  Content="{Binding Source={x:Static app_main_models_data:RedoWait.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Count}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}"  Content="{Binding Source={x:Static app_main_models_data:RedoWait.TimeoutAndCount}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.TimeoutAndCount}}" />
         </WrapPanel>
       </Grid>
 
@@ -49,19 +51,19 @@
           <ColumnDefinition Style="{StaticResource ContentDefinition}" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
-        <app_code_views:NumericUpDown Grid.Column="1" Value="{Binding WaitTimeSeconds, ElementName=root}" Minimum="{Binding MinimumWaitTimeSeconds, ElementName=root}" Maximum="{Binding MaximumWaitTimeSeconds, ElementName=root}" />
+        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_WaitAndRetryTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+          <Label Content="{Binding Resources.String_RedoEditor_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
+          <app_code_views:NumericUpDown VerticalContentAlignment="Center" Value="{Binding WaitTimeSeconds, ElementName=root}" Minimum="{Binding MinimumWaitTimeSeconds, ElementName=root}" Maximum="{Binding MaximumWaitTimeSeconds, ElementName=root}" />
+
+          <Separator Style="{StaticResource Normal-Indent}" />
+
+          <Label Content="{Binding Resources.String_RedoEditor_RetryCount_A, Source={x:Static app_main:CultureService.Instance}}"  />
+          <app_code_views:NumericUpDown VerticalContentAlignment="Center" Value="{Binding RetryCount, ElementName=root}"  Minimum="{Binding MinimumRetryCount, ElementName=root}" Maximum="{Binding MaximumRetryCount, ElementName=root}" />
+
+        </StackPanel>
       </Grid>
 
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Style="{StaticResource LabelDefinition}" />
-          <ColumnDefinition Style="{StaticResource ContentDefinition}" />
-        </Grid.ColumnDefinitions>
-
-        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_RetryCount_A, Source={x:Static app_main:CultureService.Instance}}"  />
-        <app_code_views:NumericUpDown Grid.Column="1" Value="{Binding RetryCount, ElementName=root}"  Minimum="{Binding MinimumRetryCount, ElementName=root}" Maximum="{Binding MaximumRetryCount, ElementName=root}" />
-      </Grid>
 
       <Grid>
         <Grid.ColumnDefinitions>

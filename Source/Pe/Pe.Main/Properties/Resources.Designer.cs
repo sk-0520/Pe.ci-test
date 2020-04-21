@@ -3213,6 +3213,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   再試行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_RedoEditor_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_RedoEditor_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ストアアプリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_StoreApp_Header {
@@ -3786,6 +3795,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_RedoEditor_SuccessExitCodesRemark {
             get {
                 return ResourceManager.GetString("String_RedoEditor_SuccessExitCodesRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機処理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_WaitAndRetryTime_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_WaitAndRetryTime_A", resourceCulture);
             }
         }
         

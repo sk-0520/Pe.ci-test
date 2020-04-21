@@ -393,14 +393,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class LauncherRedoData: DataBase, IReadOnlyLauncherRedoData
     {
-        #region define
-
-        private sealed class DisableLauncherRedoData: LauncherRedoData
-        { }
-
-        #endregion
-
-
         #region IReadOnlyLauncherRedoData
 
         public RedoWait RedoWait { get; set; }
@@ -413,9 +405,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region function
 
-        public static LauncherRedoData GetDisable() => new DisableLauncherRedoData() {
+        public static LauncherRedoData GetDisable() => new LauncherRedoData() {
             RedoWait = RedoWait.None,
-            RetryCount = 0,
+            RetryCount = 1,
             WaitTime = TimeSpan.Zero,
         };
 

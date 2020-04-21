@@ -1730,6 +1730,9 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Timeout_A" xml:space="preserve">
     <value>時間(_T)</value>
   </data>
+  <data name="String_LauncherItemCustomizeControl_RedoEditor_Header" xml:space="preserve">
+    <value>再試行</value>
+  </data>
   <data name="String_RedoEditor_RedoWait_A" xml:space="preserve">
     <value>再実施待機方法</value>
   </data>
@@ -1742,6 +1745,9 @@
   </data>
   <data name="String_RedoEditor_SuccessExitCodes_A" xml:space="preserve">
     <value>正常終了コード</value>
+  </data>
+  <data name="String_RedoEditor_WaitAndRetryTime_A" xml:space="preserve">
+    <value>待機処理</value>
   </data>
   <data name="String_RedoEditor_WaitTime_A" xml:space="preserve">
     <value>待機時間(秒)</value>

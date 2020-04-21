@@ -48,6 +48,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             set => SetProperty(ref this._successExitCodes, value);
         }
 
+        public int MinimumWaitTimeSeconds => 1;
+        public int MaximumWaitTimeSeconds => 300;
+        public int MinimumRetryCount => 1;
+        public int MaximumRetryCount => 10;
+
         #endregion
 
         #region LauncherItemCustomizeDetailViewModelBase

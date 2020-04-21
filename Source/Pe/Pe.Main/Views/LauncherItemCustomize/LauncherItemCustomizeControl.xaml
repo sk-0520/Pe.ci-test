@@ -328,7 +328,20 @@
 
       <!--#region 再実行 -->
       <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeRedoViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_RedoEditor_Header, Source={x:Static app_main:CultureService.Instance}}" >
+          <app_main_views_launcher_item_customize:RedoEditor
 
+            RedoWait="{Binding RedoWait}"
+
+            WaitTimeSeconds="{Binding WaitTimeSeconds}"
+            MinimumWaitTimeSeconds="{Binding MinimumWaitTimeSeconds}"
+            MaximumWaitTimeSeconds="{Binding MaximumWaitTimeSeconds}"
+
+            RetryCount="{Binding RetryCount}"
+            MinimumRetryCount="{Binding MinimumRetryCount}"
+            MaximumRetryCount="{Binding MaximumRetryCount}"
+          />
+        </GroupBox>
       </DataTemplate>
       <!--#endregion -->
 
