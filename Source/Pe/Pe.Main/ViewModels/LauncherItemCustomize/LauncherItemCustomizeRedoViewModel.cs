@@ -14,9 +14,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
     {
         #region variable
 
-        RedoWait _redoWait;
-        int _waitTimeSeconds;
-        int _retryCount;
+        RedoWait _redoWait = RedoWait.None;
+        int _waitTimeSeconds = 1;
+        int _retryCount = 1;
         string _successExitCodes = string.Empty;
 
         #endregion
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public int MinimumWaitTimeSeconds => 1;
         public int MaximumWaitTimeSeconds => 300;
         public int MinimumRetryCount => 1;
-        public int MaximumRetryCount => 10;
+        public int MaximumRetryCount => 100;
 
         #endregion
 

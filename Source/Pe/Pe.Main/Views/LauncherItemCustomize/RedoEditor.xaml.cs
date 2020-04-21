@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             typeof(int),
             typeof(RedoEditor),
             new PropertyMetadata(
-                0,
+                1,
                 OnWaitTimeSecondsChanged
             )
         );
@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             typeof(int),
             typeof(RedoEditor),
             new PropertyMetadata(
-                0,
+                1,
                 OnRetryCountChanged
             )
         );
