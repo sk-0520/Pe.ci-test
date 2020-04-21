@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherExecutePathParameter : ILauncherExecutePathParameter
+    public class LauncherExecutePathParameter: ILauncherExecutePathParameter
     {
         public LauncherExecutePathParameter(string path, string option, string workDirectoryPath)
         {
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherExecutePathData : DataBase, ILauncherExecutePathParameter
+    public class LauncherExecutePathData: DataBase, ILauncherExecutePathParameter
     {
         #region ILauncherExecutePathParameter
 
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherFileData : LauncherExecutePathData, ILauncherExecuteCustomParameter
+    public class LauncherFileData: LauncherExecutePathData, ILauncherExecuteCustomParameter
     {
         #region ILauncherExecuteCustomParameter
 
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherEnvironmentVariableData : DataBase
+    public class LauncherEnvironmentVariableData: DataBase
     {
         #region property
 
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherIconData : DataBase
+    public class LauncherIconData: DataBase
     {
         #region property
 
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class StandardStreamData : DataBase
+    public class StandardStreamData: DataBase
     {
         #region proeprty
 
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
 
-    public class LauncherGroupData : DataBase, ILauncherGroupId
+    public class LauncherGroupData: DataBase, ILauncherGroupId
     {
         #region property
 
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherItemData : DataBase
+    public class LauncherItemData: DataBase
     {
         #region property
 
@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    internal class LauncherItemOldImportData : LauncherItemData
+    internal class LauncherItemOldImportData: LauncherItemData
     {
         #region property
 
@@ -262,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     public abstract class LauncherDetailDataBase
     { }
 
-    public class LauncherFileDetailData : LauncherDetailDataBase
+    public class LauncherFileDetailData: LauncherDetailDataBase
     {
         #region property
 
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsScreenData : DataBase, ILauncherToolbarId, IScreenData
+    public class LauncherToolbarsScreenData: DataBase, ILauncherToolbarId, IScreenData
     {
         #region ILauncherToolbarId
 
@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsDisplayData : DataBase, ILauncherToolbarId
+    public class LauncherToolbarsDisplayData: DataBase, ILauncherToolbarId
     {
         #region property
 
@@ -333,7 +333,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     [Obsolete]
-    internal class LauncherToolbarsOldData : LauncherToolbarsDisplayData
+    internal class LauncherToolbarsOldData: LauncherToolbarsDisplayData
     {
         public IScreen? Screen { get; set; }
     }
@@ -354,6 +354,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class LauncherRedoData
     {
+        #region define
+
+        private sealed class DisableLauncherRedoData: LauncherRedoData
+        {
+            public DisableLauncherRedoData()
+                : base(false, TimeSpan.Zero, new int[0])
+            { }
+        }
+
+        #endregion
+
         public LauncherRedoData(bool isEnabled, TimeSpan waitTime, IReadOnlyCollection<int> successExitCodes)
         {
             IsEnabled = isEnabled;
@@ -368,6 +379,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public IReadOnlyCollection<int> SuccessExitCodes { get; }
 
         #endregion
+
+        #region function
+
+        public static LauncherRedoData GetDisable() => new DisableLauncherRedoData();
+        #endregion
     }
+
 
 }
