@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -87,6 +88,21 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Assert.AreEqual(result, actual);
         }
 
+        [TestMethod]
+        [DataRow(new int[0], "")]
+        [DataRow(new int[0], " ")]
+        [DataRow(new[] { 1, 2 }, "1, 2")]
+        [DataRow(new[] { -1, 1, 2, 4 }, "1, 2, 4, -1")]
+        [DataRow(new[] { -3, -2, -1 }, "-3--1")]
+        [DataRow(new[] { 1, 2, 3, 4, 5 }, "1-5")]
+        [DataRow(new[] { -5, -4, -3, 0, 2, 3, 4, 5 }, "-5--3, 0, 2-5")]
+        [DataRow(new[] { 1, 2, 3, 4, 5 }, "+1-+5")]
+        public void ParseTest(int[] result, string values)
+        {
+            var nr = new NumericRange();
+            var actual = nr.Parse(values).ToList();
+            CollectionAssert.AreEqual(result, actual);
+        }
 
         #endregion
     }
