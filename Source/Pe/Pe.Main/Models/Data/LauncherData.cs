@@ -352,6 +352,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// 再実施方法。
+    /// </summary>
+    public enum RedoWait
+    {
+        /// <summary>
+        /// 再実施しない。
+        /// </summary>
+        [EnumResource]
+        None,
+        /// <summary>
+        /// 一定時間繰り返す。
+        /// </summary>
+        [EnumResource]
+        Timeout,
+        /// <summary>
+        /// 指定回数繰り返す。
+        /// </summary>
+        [EnumResource]
+        Count,
+        /// <summary>
+        /// 一定時間内で指定回数繰り返す。
+        /// </summary>
+        [EnumResource]
+        TimeoutAndCount,
+    }
+
     public class LauncherRedoData
     {
         #region define
@@ -359,23 +386,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         private sealed class DisableLauncherRedoData: LauncherRedoData
         {
             public DisableLauncherRedoData()
-                : base(false, TimeSpan.Zero, new int[0])
+                : base(RedoWait.None, TimeSpan.Zero, 0, new int[0])
             { }
         }
 
         #endregion
 
-        public LauncherRedoData(bool isEnabled, TimeSpan waitTime, IReadOnlyCollection<int> successExitCodes)
+        public LauncherRedoData(RedoWait redoWait, TimeSpan waitTime, int retryCount, IReadOnlyCollection<int> successExitCodes)
         {
-            IsEnabled = isEnabled;
+            RedoWait = redoWait;
             WaitTime = waitTime;
+            RetryCount = retryCount;
             SuccessExitCodes = successExitCodes;
         }
 
         #region property
 
-        public bool IsEnabled { get; }
+        public RedoWait RedoWait { get; }
         public TimeSpan WaitTime { get; }
+        public int RetryCount { get; }
         public IReadOnlyCollection<int> SuccessExitCodes { get; }
 
         #endregion
@@ -383,6 +412,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region function
 
         public static LauncherRedoData GetDisable() => new DisableLauncherRedoData();
+
         #endregion
     }
 

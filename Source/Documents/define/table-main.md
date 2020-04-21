@@ -356,8 +356,9 @@ ___
 |    | o  |                              | 更新プログラム名           | UpdatedProgramName    | text         | System.String   |              |          |
 |    | o  |                              | 更新プログラムバージョン   | UpdatedProgramVersion | text         | System.Version  |              |          |
 |    | o  |                              | 更新回数                   | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
-|    | o  |                              | 有効                       | IsEnabled             | boolean      | System.Boolean  |              |          |
+|    | o  |                              | 再実施待機方法             | RedoWait              | text         | System.Version  |              |          |
 |    | o  |                              | 待機時間                   | WaitTime              | text         | System.TimeSpan |              |          |
+|    | o  |                              | 再実行回数                 | RetryCount            | integer      | System.Int64    |              |          |
 
 
 ### index

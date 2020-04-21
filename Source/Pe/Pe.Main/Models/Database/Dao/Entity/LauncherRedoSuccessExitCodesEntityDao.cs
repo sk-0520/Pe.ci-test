@@ -7,17 +7,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherRedoSuccessExitCodesDto : CommonDtoBase
-    {
-        #region property
-
-        public Guid LauncherItemId { get; set; }
-        public bool IsEnabled { get; set; }
-        public long SuccessExitCode { get; set; }
-
-        #endregion
-    }
-
     public class LauncherRedoSuccessExitCodesEntityDao : EntityDaoBase
     {
         public LauncherRedoSuccessExitCodesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)

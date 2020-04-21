@@ -12,8 +12,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region property
 
         public Guid LauncherItemId { get; set; }
-        public bool IsEnabled { get; set; }
+        public string RedoWait { get; set; } = string.Empty;
         public TimeSpan WaitTime { get; set; }
+        public long RetryCount { get; set; }
 
         #endregion
     }

@@ -30,8 +30,9 @@ create table [LauncherRedoItems] (
 	[UpdatedProgramName] text not null /* 更新プログラム名  */,
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[IsEnabled] boolean not null /* 有効  */,
+	[RedoWait] text not null /* 再実施待機方法  */,
 	[WaitTime] text not null /* 待機時間  */,
+	[RetryCount] integer not null /* 再実行回数  */,
 	primary key(
 		[LauncherItemId]
 	),
@@ -54,4 +55,3 @@ create table [LauncherRedoSuccessExitCodes] (
 	foreign key([LauncherItemId]) references [LauncherItems]([LauncherItemId])
 )
 ;
-

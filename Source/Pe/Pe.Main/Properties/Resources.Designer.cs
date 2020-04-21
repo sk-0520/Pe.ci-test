@@ -1649,6 +1649,78 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_Count {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   回数(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_Count_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Count_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_None {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_None_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.None_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_Timeout {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_Timeout_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Timeout_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間と回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_TimeoutAndCount {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.TimeoutAndCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間と回数(_A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoWait_TimeoutAndCount_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.TimeoutAndCount_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateKind_Auto {
