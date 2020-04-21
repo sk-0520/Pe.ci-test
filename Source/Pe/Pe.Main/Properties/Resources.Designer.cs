@@ -3753,6 +3753,52 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   再実施待機方法 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_RedoWait_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_RedoWait_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_RetryCount_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_RetryCount_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了コード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_SuccessExitCodes_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_SuccessExitCodes_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了コードはカンマ区切り(数値, 数値)で指定してください。
+        ///範囲を指定する場合はハイフン(数値-数値)で指定できます。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_SuccessExitCodesRemark {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_SuccessExitCodesRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機時間(秒) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_WaitTime_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_WaitTime_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   バックグラウンドでアップデート中のためウィンドウを閉じても問題ありません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ReleaseNote_CanClose {

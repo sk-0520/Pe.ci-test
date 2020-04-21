@@ -4,12 +4,77 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
+  xmlns:app_code_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
   d:DesignWidth="800"
   d:DesignHeight="450"
 >
+  <UserControl.Resources>
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+
+    <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
+      <Setter Property="Width" Value="Auto" />
+      <Setter Property="SharedSizeGroup" Value="CustomizeLauncherItemHeader" />
+    </Style>
+    <Style x:Key="ContentDefinition" TargetType="ColumnDefinition">
+      <Setter Property="Width" Value="*" />
+    </Style>
+  </UserControl.Resources>
   <Grid>
 
+    <StackPanel>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+          <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_RedoWait_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <WrapPanel Grid.Column="1" VerticalAlignment="Center">
+          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.None}}" />
+          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.Timeout}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Timeout}}" />
+          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Count}}" />
+          <RadioButton Content="{Binding Source={x:Static app_main_models_data:RedoWait.TimeoutAndCount}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.TimeoutAndCount}}" />
+        </WrapPanel>
+      </Grid>
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+          <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <app_code_views:NumericUpDown Grid.Column="1" Value="{Binding WaitTimeSeconds, ElementName=root}" Minimum="{Binding MinimumWaitTimeSeconds, ElementName=root}" Maximum="{Binding MaximumWaitTimeSeconds, ElementName=root}" />
+      </Grid>
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+          <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_RetryCount_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <app_code_views:NumericUpDown Grid.Column="1" Value="{Binding RetryCount, ElementName=root}"  Minimum="{Binding MinimumRetryCount, ElementName=root}" Maximum="{Binding MaximumRetryCount, ElementName=root}" />
+      </Grid>
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+          <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_SuccessExitCodes_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <StackPanel Grid.Column="1">
+          <TextBox Text="{Binding SuccessExitCodes, ElementName=root, UpdateSourceTrigger=PropertyChanged}" />
+          <TextBlock Text="{Binding Resources.String_RedoEditor_SuccessExitCodesRemark, Source={x:Static app_main:CultureService.Instance}}"  />
+        </StackPanel>
+      </Grid>
+    </StackPanel>
   </Grid>
 </UserControl>

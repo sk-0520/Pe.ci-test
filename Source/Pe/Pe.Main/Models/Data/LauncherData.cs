@@ -353,7 +353,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
     /// <summary>
-    /// 再実施方法。
+    /// 再実施待機方法。
     /// </summary>
     public enum RedoWait
     {

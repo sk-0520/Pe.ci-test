@@ -1730,4 +1730,20 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Timeout_A" xml:space="preserve">
     <value>時間(_T)</value>
   </data>
+  <data name="String_RedoEditor_RedoWait_A" xml:space="preserve">
+    <value>再実施待機方法</value>
+  </data>
+  <data name="String_RedoEditor_RetryCount_A" xml:space="preserve">
+    <value>再試行回数</value>
+  </data>
+  <data name="String_RedoEditor_SuccessExitCodesRemark" xml:space="preserve">
+    <value>正常終了コードはカンマ区切り(数値, 数値)で指定してください。
+範囲を指定する場合はハイフン(数値-数値)で指定できます。</value>
+  </data>
+  <data name="String_RedoEditor_SuccessExitCodes_A" xml:space="preserve">
+    <value>正常終了コード</value>
+  </data>
+  <data name="String_RedoEditor_WaitTime_A" xml:space="preserve">
+    <value>待機時間(秒)</value>
+  </data>
 </root>
