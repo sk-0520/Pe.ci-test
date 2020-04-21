@@ -28,13 +28,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
-        public bool SelectExistsLauncherRedoItem(Guid launcherItemId)
+        public IEnumerable<int> SelectRedoSuccessExitCodes(Guid launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.QueryFirst<bool>(statement, parameter);
+            return Commander.Query<int>(statement, parameter);
         }
 
         #endregion

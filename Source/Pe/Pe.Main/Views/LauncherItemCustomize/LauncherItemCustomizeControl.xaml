@@ -326,6 +326,12 @@
       </DataTemplate>
       <!--#endregion -->
 
+      <!--#region 再実行 -->
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeRedoViewModel}">
+
+      </DataTemplate>
+      <!--#endregion -->
+
       <!--#region タグ -->
       <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeTagViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Tag_Header, Source={x:Static app_main:CultureService.Instance}}" >

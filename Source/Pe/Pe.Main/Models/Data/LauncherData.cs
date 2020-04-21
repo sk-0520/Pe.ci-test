@@ -379,39 +379,45 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         TimeoutAndCount,
     }
 
-    public class LauncherRedoData
+    public interface IReadOnlyLauncherRedoData
+    {
+        #region property
+
+        RedoWait RedoWait { get; }
+        TimeSpan WaitTime { get; }
+        int RetryCount { get; }
+        IReadOnlyCollection<int> SuccessExitCodes { get; }
+
+        #endregion
+    }
+
+    public class LauncherRedoData: DataBase, IReadOnlyLauncherRedoData
     {
         #region define
 
         private sealed class DisableLauncherRedoData: LauncherRedoData
-        {
-            public DisableLauncherRedoData()
-                : base(RedoWait.None, TimeSpan.Zero, 0, new int[0])
-            { }
-        }
+        { }
 
         #endregion
 
-        public LauncherRedoData(RedoWait redoWait, TimeSpan waitTime, int retryCount, IReadOnlyCollection<int> successExitCodes)
-        {
-            RedoWait = redoWait;
-            WaitTime = waitTime;
-            RetryCount = retryCount;
-            SuccessExitCodes = successExitCodes;
-        }
 
-        #region property
+        #region IReadOnlyLauncherRedoData
 
-        public RedoWait RedoWait { get; }
-        public TimeSpan WaitTime { get; }
-        public int RetryCount { get; }
-        public IReadOnlyCollection<int> SuccessExitCodes { get; }
+        public RedoWait RedoWait { get; set; }
+        public TimeSpan WaitTime { get; set; }
+        public int RetryCount { get; set; }
+        public List<int> SuccessExitCodes { get; set; } = new List<int>();
+        IReadOnlyCollection<int> IReadOnlyLauncherRedoData.SuccessExitCodes => SuccessExitCodes;
 
         #endregion
 
         #region function
 
-        public static LauncherRedoData GetDisable() => new DisableLauncherRedoData();
+        public static LauncherRedoData GetDisable() => new DisableLauncherRedoData() {
+            RedoWait = RedoWait.None,
+            RetryCount = 0,
+            WaitTime = TimeSpan.Zero,
+        };
 
         #endregion
     }

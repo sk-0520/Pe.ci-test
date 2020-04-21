@@ -45,8 +45,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         #region file
 
         public LauncherFileData? File { get; private set; }
-        public LauncherStoreAppData? StoreApp { get; private set; }
         public ObservableCollection<LauncherEnvironmentVariableData>? EnvironmentVariableItems { get; private set; }
+        public LauncherRedoData? Redo { get; private set; }
+        #endregion
+
+        #region storeapp
+
+        public LauncherStoreAppData? StoreApp { get; private set; }
 
         #endregion
 
@@ -82,6 +87,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                             var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
                             EnvironmentVariableItems = new ObservableCollection<LauncherEnvironmentVariableData>(environmentVariableItems);
+
+                            var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            if(launcherRedoItemsEntityDao.SelectExistsLauncherRedoItem(LauncherItemId)) {
+                                var redoData = launcherRedoItemsEntityDao.SelectLauncherRedoItem(LauncherItemId);
+                                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                                var exitCodes = launcherRedoSuccessExitCodesEntityDao.SelectRedoSuccessExitCodes(LauncherItemId);
+                                redoData.SuccessExitCodes.SetRange(exitCodes);
+                                Redo = redoData;
+                            } else {
+                                Redo = LauncherRedoData.GetDisable();
+                            }
                         }
                         break;
 

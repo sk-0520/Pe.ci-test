@@ -40,6 +40,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        LauncherRedoData ConvertFromDto(LauncherRedoItemsDto dto)
+        {
+            var redoWaitTransfer = new EnumTransfer<RedoWait>();
+
+            return new LauncherRedoData() {
+                RedoWait = redoWaitTransfer.ToEnum(dto.RedoWait),
+                RetryCount = ToInt(dto.RetryCount),
+                WaitTime = dto.WaitTime,
+            };
+        }
+
         public bool SelectExistsLauncherRedoItem(Guid launcherItemId)
         {
             var statement = LoadStatement();
@@ -47,6 +58,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
             };
             return Commander.QueryFirst<bool>(statement, parameter);
+        }
+
+        public LauncherRedoData SelectLauncherRedoItem(Guid launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            var dto = Commander.QueryFirst<LauncherRedoItemsDto>(statement, parameter);
+            return ConvertFromDto(dto);
         }
 
         #endregion
