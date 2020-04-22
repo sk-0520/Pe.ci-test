@@ -30,8 +30,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(RedoWait),
             typeof(RedoWait),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 RedoWait.None,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnRedoWaitChanged
             )
         );
@@ -57,8 +58,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(WaitTimeSeconds),
             typeof(int),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 1,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnWaitTimeSecondsChanged
             )
         );
@@ -84,8 +86,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(MinimumWaitTimeSeconds),
             typeof(int),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 1,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnMinimumWaitTimeSecondsChanged
             )
         );
@@ -111,8 +114,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(MaximumWaitTimeSeconds),
             typeof(int),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 300,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnMaximumWaitTimeSecondsChanged
             )
         );
@@ -138,8 +142,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(RetryCount),
             typeof(int),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 1,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnRetryCountChanged
             )
         );
@@ -165,8 +170,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(MinimumRetryCount),
             typeof(int),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 1,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnMinimumRetryCountChanged
             )
         );
@@ -192,8 +198,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(MaximumRetryCount),
             typeof(int),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 int.MaxValue,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnMaximumRetryCountChanged
             )
         );
@@ -219,8 +226,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             nameof(SuccessExitCodes),
             typeof(string),
             typeof(RedoEditor),
-            new PropertyMetadata(
+            new FrameworkPropertyMetadata(
                 string.Empty,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 OnSuccessExitCodesChanged
             )
         );

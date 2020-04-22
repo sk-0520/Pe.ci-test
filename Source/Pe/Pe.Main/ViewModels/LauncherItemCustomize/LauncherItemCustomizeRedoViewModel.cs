@@ -10,37 +10,38 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeRedoViewModel: LauncherItemCustomizeDetailViewModelBase
+    public class LauncherItemCustomizeRedoViewModel: LauncherItemCustomizeDetailViewModelBase, IFlushable
     {
         #region variable
 
-        RedoWait _redoWait = RedoWait.None;
-        int _waitTimeSeconds = 1;
-        int _retryCount = 1;
         string _successExitCodes = string.Empty;
 
         #endregion
 
         public LauncherItemCustomizeRedoViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        { }
+        {
+            Redo = Model.Redo ?? throw new InvalidOperationException(nameof(Model.Redo));
+        }
 
         #region property
 
+        LauncherRedoData Redo { get; }
+
         public RedoWait RedoWait
         {
-            get => this._redoWait;
-            set => SetProperty(ref this._redoWait, value);
+            get => Redo.RedoWait;
+            set => SetPropertyValue(Redo, value);
         }
         public int WaitTimeSeconds
         {
-            get => this._waitTimeSeconds;
-            set => SetProperty(ref this._waitTimeSeconds, value);
+            get => (int)Redo.WaitTime.TotalSeconds;
+            set => SetPropertyValue(Redo, TimeSpan.FromSeconds(value), nameof(Redo.WaitTime));
         }
         public int RetryCount
         {
-            get => this._retryCount;
-            set => SetProperty(ref this._retryCount, value);
+            get => Redo.RetryCount;
+            set => SetPropertyValue(Redo, value);
         }
         public string SuccessExitCodes
         {
@@ -59,14 +60,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
-            Debug.Assert(Model.Redo != null);
-
             var numericRange = new NumericRange();
+            SuccessExitCodes = numericRange.ToString(Redo.SuccessExitCodes);
+        }
 
-            RedoWait = Model.Redo.RedoWait;
-            WaitTimeSeconds = (int)Model.Redo.WaitTime.TotalSeconds;
-            RetryCount = Model.Redo.RetryCount;
-            SuccessExitCodes = numericRange.ToString(Model.Redo.SuccessExitCodes);
+        #endregion
+
+        #region IFlushable
+
+        public void Flush()
+        {
+            var numericRange = new NumericRange();
+            if(numericRange.TryParse(SuccessExitCodes, out var values)) {
+                Redo.SuccessExitCodes.SetRange(values);
+            }
         }
 
         #endregion

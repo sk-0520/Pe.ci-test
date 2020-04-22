@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
-        public bool TryParse(string? s, List<int> result)
+        public bool TryParse(string? s, out List<int> result)
         {
             return ParseCore(s, out result, out _);
         }

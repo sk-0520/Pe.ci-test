@@ -176,12 +176,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 case LauncherItemKind.File: {
                         Debug.Assert(File != null);
                         Debug.Assert(EnvironmentVariableItems != null);
+                        Debug.Assert(Redo != null);
 
                         var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
                         var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
                         var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+                        var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
 
                         launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, databaseCommonStatus);
+                        launcherRedoItemsEntityDao.UpdateRedoItem(itemData.LauncherItemId, Redo, databaseCommonStatus);
+
+                        launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(itemData.LauncherItemId);
+                        launcherRedoSuccessExitCodesEntityDao.InsertSuccessExitCodes(itemData.LauncherItemId, Redo.SuccessExitCodes, databaseCommonStatus);
 
                         launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(itemData.LauncherItemId);
                         launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, databaseCommonStatus);

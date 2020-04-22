@@ -39,9 +39,9 @@
         <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_RedoWait_A, Source={x:Static app_main:CultureService.Instance}}"  />
         <WrapPanel Grid.Column="1" VerticalAlignment="Center">
           <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoWait.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.None}}" />
-          <RadioButton Style="{StaticResource Horizontal-RadioButton}"  Content="{Binding Source={x:Static app_main_models_data:RedoWait.Timeout}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Timeout}}" />
-          <RadioButton Style="{StaticResource Horizontal-RadioButton}"  Content="{Binding Source={x:Static app_main_models_data:RedoWait.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Count}}" />
-          <RadioButton Style="{StaticResource Horizontal-RadioButton}"  Content="{Binding Source={x:Static app_main_models_data:RedoWait.TimeoutAndCount}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.TimeoutAndCount}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoWait.Timeout}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Timeout}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoWait.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.Count}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoWait.TimeoutAndCount}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoWait, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoWait.TimeoutAndCount}}" />
         </WrapPanel>
       </Grid>
 
@@ -54,12 +54,12 @@
         <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_WaitAndRetryTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
           <Label Content="{Binding Resources.String_RedoEditor_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
-          <app_code_views:NumericUpDown VerticalContentAlignment="Center" Width="100" Value="{Binding WaitTimeSeconds, ElementName=root}" Minimum="{Binding MinimumWaitTimeSeconds, ElementName=root}" Maximum="{Binding MaximumWaitTimeSeconds, ElementName=root}" />
+          <app_code_views:NumericUpDown VerticalContentAlignment="Center" Width="100" Value="{Binding WaitTimeSeconds, ElementName=root, Mode=TwoWay}" Minimum="{Binding MinimumWaitTimeSeconds, ElementName=root}" Maximum="{Binding MaximumWaitTimeSeconds, ElementName=root}" />
 
           <Separator Style="{StaticResource Normal-Indent}" />
 
           <Label Content="{Binding Resources.String_RedoEditor_RetryCount_A, Source={x:Static app_main:CultureService.Instance}}"  />
-          <app_code_views:NumericUpDown VerticalContentAlignment="Center" Width="100" Value="{Binding RetryCount, ElementName=root}"  Minimum="{Binding MinimumRetryCount, ElementName=root}" Maximum="{Binding MaximumRetryCount, ElementName=root}" />
+          <app_code_views:NumericUpDown VerticalContentAlignment="Center" Width="100" Value="{Binding RetryCount, ElementName=root, Mode=TwoWay}" Minimum="{Binding MinimumRetryCount, ElementName=root}" Maximum="{Binding MaximumRetryCount, ElementName=root}" />
 
         </StackPanel>
       </Grid>
@@ -73,7 +73,7 @@
 
         <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_SuccessExitCodes_A, Source={x:Static app_main:CultureService.Instance}}"  />
         <StackPanel Grid.Column="1">
-          <TextBox Text="{Binding SuccessExitCodes, ElementName=root, UpdateSourceTrigger=PropertyChanged}" />
+          <TextBox Text="{Binding SuccessExitCodes, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
           <TextBlock Text="{Binding Resources.String_RedoEditor_SuccessExitCodesRemark, Source={x:Static app_main:CultureService.Instance}}"  />
         </StackPanel>
       </Grid>

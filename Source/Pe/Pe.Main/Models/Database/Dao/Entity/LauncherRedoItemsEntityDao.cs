@@ -51,6 +51,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
         }
 
+        LauncherRedoItemsDto ConvertFromData(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
+        {
+            var redoWaitTransfer = new EnumTransfer<RedoWait>();
+
+            var dto = new LauncherRedoItemsDto() {
+                LauncherItemId = launcherItemId,
+                RedoWait = redoWaitTransfer.ToString(data.RedoWait),
+                RetryCount = ToInt(data.RetryCount),
+                WaitTime = data.WaitTime,
+            };
+            commonStatus.WriteCommon(dto);
+
+            return dto;
+        }
+
         public bool SelectExistsLauncherRedoItem(Guid launcherItemId)
         {
             var statement = LoadStatement();
@@ -68,6 +83,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             var dto = Commander.QueryFirst<LauncherRedoItemsDto>(statement, parameter);
             return ConvertFromDto(dto);
+        }
+
+        public bool UpdateRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(launcherItemId, data, commonStatus);
+            return Commander.Execute(statement, dto) == 1;
         }
 
         #endregion

@@ -340,6 +340,8 @@
             RetryCount="{Binding RetryCount, Mode=TwoWay}"
             MinimumRetryCount="{Binding MinimumRetryCount, Mode=OneWay}"
             MaximumRetryCount="{Binding MaximumRetryCount, Mode=OneWay}"
+
+            SuccessExitCodes="{Binding SuccessExitCodes, Mode=TwoWay}"
           />
         </GroupBox>
       </DataTemplate>
