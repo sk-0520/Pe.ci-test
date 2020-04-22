@@ -100,6 +100,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, dto) == 1;
         }
 
+        public bool DeleteRedoItemByLauncherItemId(Guid launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
         #endregion
     }
 }

@@ -67,6 +67,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 launcherTagsEntityDao.DeleteTagByLauncherItemId(launcherItemId);
 
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherRedoItemsEntityDao.DeleteRedoItemByLauncherItemId(launcherItemId);
+
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(launcherItemId);
+
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 launcherItemsEntityDao.DeleteLauncherItem(launcherItemId);
 
