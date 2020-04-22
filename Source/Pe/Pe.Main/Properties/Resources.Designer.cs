@@ -2783,6 +2783,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   再実施 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Redo_A {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Redo_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_WorkDirectory_A {

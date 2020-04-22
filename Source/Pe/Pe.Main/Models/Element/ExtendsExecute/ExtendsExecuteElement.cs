@@ -6,6 +6,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -24,12 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #endregion
 
-        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, LauncherRedoData launcherRedoData, IScreen screen, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             CaptionName = captionName;
             LauncherFileData = launcherFileData;
             EnvironmentVariables = launcherEnvironmentVariables;
+            LauncherRedoData = launcherRedoData;
             Screen = screen;
 
             OrderManager = orderManager;
@@ -42,6 +44,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         public IReadOnlyList<LauncherEnvironmentVariableData> EnvironmentVariables { get; protected set; }
         public IReadOnlyList<LauncherHistoryData> HistoryOptions { get; protected set; } = new List<LauncherHistoryData>();
         public IReadOnlyList<LauncherHistoryData> HistoryWorkDirectories { get; protected set; } = new List<LauncherHistoryData>();
+
+        public LauncherRedoData LauncherRedoData { get; protected set; }
+
         public IScreen Screen { get; }
 
         IOrderManager OrderManager { get; }
@@ -134,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
     public sealed class LauncherExtendsExecuteElement : ExtendsExecuteElement, ILauncherItemId
     {
         public LauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), screen, orderManager, dispatcherWrapper, loggerFactory)
+            : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), new LauncherRedoData(), screen, orderManager, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -184,22 +189,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             LauncherFileData fileData;
             IEnumerable<LauncherEnvironmentVariableData> envItems;
             IEnumerable<LauncherHistoryData> histories;
+            LauncherRedoData launcherRedoData;
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherItemHistoriesEntityDao = new LauncherItemHistoriesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 launcherItem = launcherItemsEntityDao.SelectLauncherItem(LauncherItemId);
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
                 envItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId);
                 histories = launcherItemHistoriesEntityDao.SelectHistories(LauncherItemId);
+
+                if(launcherRedoItemsEntityDao.SelectExistsLauncherRedoItem(LauncherItemId)) {
+                    launcherRedoData = launcherRedoItemsEntityDao.SelectLauncherRedoItem(LauncherItemId);
+                    var values = launcherRedoSuccessExitCodesEntityDao.SelectRedoSuccessExitCodes(LauncherItemId);
+                    launcherRedoData.SuccessExitCodes.SetRange(values);
+                } else {
+                    launcherRedoData = LauncherRedoData.GetDisable();
+                }
             }
 
             LauncherFileData = fileData;
             EnvironmentVariables = envItems.ToList();
-
+            LauncherRedoData = launcherRedoData;
             CaptionName = launcherItem.Name; // ?? launcherItem.Code ?? Path.GetFileNameWithoutExtension(LauncherFileData.Path) ?? LauncherItemId.ToString("D");
 
             var histories2 = histories.ToList();

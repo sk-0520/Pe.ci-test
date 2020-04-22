@@ -1752,4 +1752,7 @@
   <data name="String_RedoEditor_WaitTime_A" xml:space="preserve">
     <value>待機時間(秒)</value>
   </data>
+  <data name="String_ExtendsExecute_Redo_A" xml:space="preserve">
+    <value>再実施</value>
+  </data>
 </root>

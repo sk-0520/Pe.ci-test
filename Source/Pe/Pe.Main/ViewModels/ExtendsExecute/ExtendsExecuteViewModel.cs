@@ -24,7 +24,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 {
-    public class ExtendsExecuteViewModel : ElementViewModelBase<ExtendsExecuteElement>, IViewLifecycleReceiver
+    public class ExtendsExecuteViewModel: ElementViewModelBase<ExtendsExecuteElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -38,6 +38,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         bool _isEnabledStandardInputOutput;
         Encoding _standardInputOutputEncoding;
         bool _runAdministrator;
+
+        RedoWait _redoWait;
+        int _waitTimeSeconds;
+        int _retryCount;
+        string _successExitCodes = string.Empty;
+
         #endregion
 
         public ExtendsExecuteViewModel(ExtendsExecuteElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -66,6 +72,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 if(element.CustomOption != null) {
                     this._option = element.CustomOption;
                 }
+            }
+
+            RedoWait = Model.LauncherRedoData.RedoWait;
+            WaitTimeSeconds = (int)Model.LauncherRedoData.WaitTime.TotalSeconds;
+            RetryCount = Model.LauncherRedoData.RetryCount;
+            if(Model.LauncherRedoData.SuccessExitCodes.Any()) {
+                var numericRange = new NumericRange();
+                SuccessExitCodes = numericRange.ToString(Model.LauncherRedoData.SuccessExitCodes);
+            } else {
+                SuccessExitCodes = "0";
             }
         }
 
@@ -138,6 +154,32 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         public ObservableCollection<string> MergeErros { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> RemoveErros { get; } = new ObservableCollection<string>();
+
+
+        public RedoWait RedoWait
+        {
+            get => this._redoWait;
+            set => SetProperty(ref this._redoWait, value);
+        }
+        public int WaitTimeSeconds
+        {
+            get => this._waitTimeSeconds;
+            set => SetProperty(ref this._waitTimeSeconds, value);
+        }
+        public int RetryCount
+        {
+            get => this._retryCount;
+            set => SetProperty(ref this._retryCount, value);
+        }
+        public string SuccessExitCodes
+        {
+            get => this._successExitCodes;
+            set => SetProperty(ref this._successExitCodes, value);
+        }
+        public int MinimumWaitTimeSeconds => 1;
+        public int MaximumWaitTimeSeconds => 300;
+        public int MinimumRetryCount => 1;
+        public int MaximumRetryCount => 100;
 
         #endregion
 
@@ -223,6 +265,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 envItems = new List<LauncherEnvironmentVariableData>();
             }
 
+            var redo = new LauncherRedoData() {
+                RedoWait = RedoWait,
+                RetryCount = RetryCount,
+                WaitTime = TimeSpan.FromSeconds(WaitTimeSeconds)
+            };
+            if(redo.RedoWait != RedoWait.None) {
+                var numericRange = new NumericRange();
+                if(numericRange.TryParse(SuccessExitCodes, out var values)) {
+                    redo.SuccessExitCodes.SetRange(values);
+                } else {
+                    Logger.LogError("終了コードが分解できず: {0}", SuccessExitCodes);
+                    redo.RedoWait = RedoWait.None;
+                }
+            }
+
             var screen = DpiScaleOutputor.GetOwnerScreen();
 
             Model.Execute(launcherFileData, envItems, screen);
@@ -235,6 +292,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         protected override void ValidateDomain()
         {
             ThrowIfDisposed();
+
+            //if(RedoWait != RedoWait.None) {
+            //    var numericRange = new NumericRange();
+            //    if(!numericRange.TryParse(SuccessExitCodes, out _)) {
+            //        AddError(nameof(NumericRange), nameof(SuccessExitCodes));
+            //    }
+            //}
 
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
 
