@@ -85,10 +85,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool UpdateRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
+        public bool InsertRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, DatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
-            var dto = ConvertFromData(launcherItemId, data, commonStatus);
+            var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
+            return Commander.Execute(statement, dto) == 1;
+        }
+
+
+        public bool UpdateRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
             return Commander.Execute(statement, dto) == 1;
         }
 

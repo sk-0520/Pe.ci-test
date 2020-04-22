@@ -155,6 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Commander.Execute(statement, dto);
         }
 
+        [Obsolete]
         internal void InsertOldLauncherItem(LauncherItemOldImportData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();

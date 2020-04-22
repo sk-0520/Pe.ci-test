@@ -229,6 +229,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    [Obsolete]
     internal class LauncherItemOldImportData: LauncherItemData
     {
         #region property
