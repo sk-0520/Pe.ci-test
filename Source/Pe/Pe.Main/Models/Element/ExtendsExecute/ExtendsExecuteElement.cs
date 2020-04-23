@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #endregion
 
-        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, LauncherRedoData launcherRedoData, IScreen screen, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, LauncherRedoData launcherRedoData, IScreen screen, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             CaptionName = captionName;
@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             Screen = screen;
 
             OrderManager = orderManager;
+            NotifyManager = notifyManager;
             DispatcherWrapper = dispatcherWrapper;
         }
 
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
         public IScreen Screen { get; }
 
         IOrderManager OrderManager { get; }
+        INotifyManager NotifyManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
         bool ViewCreated { get; set; }
@@ -66,13 +68,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
         #region function
 
-        public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IScreen screen)
+        public virtual ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             ThrowIfDisposed();
 
             try {
-                var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
-                var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, screen);
+                var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+                var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, redoData, screen);
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
@@ -138,8 +140,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
 
     public sealed class LauncherExtendsExecuteElement : ExtendsExecuteElement, ILauncherItemId
     {
-        public LauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), new LauncherRedoData(), screen, orderManager, dispatcherWrapper, loggerFactory)
+        public LauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(string.Empty, new LauncherFileData(), new List<LauncherEnvironmentVariableData>(), new LauncherRedoData(), screen, orderManager, notifyManager, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -223,9 +225,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             HistoryWorkDirectories = histories2.Where(i => i.Kind == LauncherHistoryKind.WorkDirectory).ToList();
         }
 
-        public override ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IScreen screen)
+        public override ILauncherExecuteResult Execute(LauncherFileData fileData, IReadOnlyList<LauncherEnvironmentVariableData> environmentVariables, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
-            var result = base.Execute(fileData, environmentVariables, screen);
+            var result = base.Execute(fileData, environmentVariables, redoData, screen);
 
             if(result.Success) {
                 using(var commander = MainDatabaseBarrier.WaitWrite()) {

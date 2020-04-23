@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
             var screen = DpiScaleOutputor.GetOwnerScreen();
 
-            Model.Execute(launcherFileData, envItems, screen);
+            Model.Execute(launcherFileData, envItems, redo, screen);
         }
 
         #endregion
