@@ -54,8 +54,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(firstResult.Process == null) {
                 throw new ArgumentException($"{nameof(firstResult)}.{nameof(firstResult.Process)}");
             }
-            if(parameter.RedoData.RedoWait == RedoWait.None) {
-                throw new ArgumentException($"{nameof(parameter)}.{nameof(parameter.RedoData)}.{nameof(parameter.RedoData.RedoWait)}");
+            if(parameter.RedoData.RedoMode == RedoMode.None) {
+                throw new ArgumentException($"{nameof(parameter)}.{nameof(parameter.RedoData)}.{nameof(parameter.RedoData.RedoMode)}");
             }
 
             Logger = loggerFactory.CreateLogger(GetType());
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Parameter = parameter;
             NotifyManager = notifyManager;
 
-            if(Parameter.RedoData.RedoWait == RedoWait.Timeout || Parameter.RedoData.RedoWait == RedoWait.TimeoutAndCount) {
+            if(Parameter.RedoData.RedoMode == RedoMode.Timeout || Parameter.RedoData.RedoMode == RedoMode.TimeoutOrCount) {
                 Stopwatch = Stopwatch.StartNew();
                 WaitEndTimer = new Timer() {
                     Interval = (int)(Parameter.RedoData.WaitTime + Stopwatch.Elapsed).TotalMilliseconds,
@@ -195,8 +195,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 return false;
             }
 
-            switch(Parameter.RedoData.RedoWait) {
-                case RedoWait.Timeout:
+            switch(Parameter.RedoData.RedoMode) {
+                case RedoMode.Timeout:
                     if(IsTimeout()) {
                         PutNotifyLog(true, Properties.Resources.String_RedoExecutor_Timeout);
                         Logger.LogInformation("タイムアウト");
@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     }
                     break;
 
-                case RedoWait.Count:
+                case RedoMode.Count:
                     if(IsMaxRetry()) {
                         PutNotifyLog(true, Properties.Resources.String_RedoExecutor_CountMax);
                         Logger.LogInformation("試行回数超過");
@@ -212,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     }
                     break;
 
-                case RedoWait.TimeoutAndCount:
+                case RedoMode.TimeoutOrCount:
                     if(IsTimeout() || IsMaxRetry()) {
                         PutNotifyLog(true, Properties.Resources.String_RedoExecutor_TimeoutOrCountMax);
                         Logger.LogInformation("タイムアウト/試行回数超過");
@@ -220,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     }
                     break;
 
-                case RedoWait.None:
+                case RedoMode.None:
                 default:
                     throw new NotImplementedException();
             }
@@ -233,23 +233,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         string CreateRedoNotifyLogMessage()
         {
             //var message = "@再試行";
-            var message = Parameter.RedoData.RedoWait switch
+            var message = Parameter.RedoData.RedoMode switch
             {
-                RedoWait.Timeout => TextUtility.ReplaceFromDictionary(
+                RedoMode.Timeout => TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_RedoExecutor_Retry_Timout_Format,
                     new Dictionary<string, string>() {
                         ["NOW-TIME"] = Stopwatch!.Elapsed.ToString(),
                         ["MAX-TIME"] = Parameter.RedoData.WaitTime.ToString(),
                     }
                 ),
-                RedoWait.Count => TextUtility.ReplaceFromDictionary(
+                RedoMode.Count => TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_RedoExecutor_Retry_CountMax_Format,
                     new Dictionary<string, string>() {
                         ["NOW-COUNT"] = RetryCount.ToString(),
                         ["MAX-COUNT"] = Parameter.RedoData.RetryCount.ToString(),
                     }
                 ),
-                RedoWait.TimeoutAndCount => TextUtility.ReplaceFromDictionary(
+                RedoMode.TimeoutOrCount => TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_RedoExecutor_Retry_TimeoutOrCountMax_Format,
                     new Dictionary<string, string>() {
                         ["NOW-TIME"] = Stopwatch!.Elapsed.ToString(),

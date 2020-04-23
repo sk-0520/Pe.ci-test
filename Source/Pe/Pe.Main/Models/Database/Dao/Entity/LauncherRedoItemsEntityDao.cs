@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region property
 
         public Guid LauncherItemId { get; set; }
-        public string RedoWait { get; set; } = string.Empty;
+        public string RedoMode { get; set; } = string.Empty;
         public TimeSpan WaitTime { get; set; }
         public long RetryCount { get; set; }
 
@@ -42,10 +42,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         LauncherRedoData ConvertFromDto(LauncherRedoItemsDto dto)
         {
-            var redoWaitTransfer = new EnumTransfer<RedoWait>();
+            var redoModeTransfer = new EnumTransfer<RedoMode>();
 
             return new LauncherRedoData() {
-                RedoWait = redoWaitTransfer.ToEnum(dto.RedoWait),
+                RedoMode = redoModeTransfer.ToEnum(dto.RedoMode),
                 RetryCount = ToInt(dto.RetryCount),
                 WaitTime = dto.WaitTime,
             };
@@ -53,11 +53,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         LauncherRedoItemsDto ConvertFromData(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus commonStatus)
         {
-            var redoWaitTransfer = new EnumTransfer<RedoWait>();
+            var redoModeTransfer = new EnumTransfer<RedoMode>();
 
             var dto = new LauncherRedoItemsDto() {
                 LauncherItemId = launcherItemId,
-                RedoWait = redoWaitTransfer.ToString(data.RedoWait),
+                RedoMode = redoModeTransfer.ToString(data.RedoMode),
                 RetryCount = ToInt(data.RetryCount),
                 WaitTime = data.WaitTime,
             };

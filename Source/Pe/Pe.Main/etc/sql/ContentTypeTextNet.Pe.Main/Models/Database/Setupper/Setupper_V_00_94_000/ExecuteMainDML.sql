@@ -37,7 +37,7 @@ insert into
 	LauncherRedoItems
 	(
 		LauncherItemId,
-		RedoWait,
+		RedoMode,
 		WaitTime,
 		RetryCount,
 

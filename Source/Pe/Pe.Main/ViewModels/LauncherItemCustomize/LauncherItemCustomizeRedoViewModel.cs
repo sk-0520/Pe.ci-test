@@ -29,9 +29,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         LauncherRedoData Redo { get; }
 
-        public RedoWait RedoWait
+        public RedoMode RedoMode
         {
-            get => Redo.RedoWait;
+            get => Redo.RedoMode;
             set => SetPropertyValue(Redo, value);
         }
         public int WaitTimeSeconds

@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 Process = process,
             };
             RedoExecutor? redoExecutor = null;
-            if(redoData.RedoWait != RedoWait.None) {
+            if(redoData.RedoMode != RedoMode.None) {
                 redoExecutor = new RedoExecutor(
                     new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory),
                     result,

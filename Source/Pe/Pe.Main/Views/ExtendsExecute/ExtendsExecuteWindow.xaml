@@ -186,7 +186,7 @@
           <app_main_views_launcher_item_customize:RedoEditor
             Grid.Column="1"
 
-            RedoWait="{Binding RedoWait, Mode=TwoWay}"
+            RedoMode="{Binding RedoMode, Mode=TwoWay}"
 
             WaitTimeSeconds="{Binding WaitTimeSeconds, Mode=TwoWay}"
             MinimumWaitTimeSeconds="{Binding MinimumWaitTimeSeconds, Mode=OneWay}"

@@ -1,7 +1,7 @@
 update
 	LauncherRedoItems
 set
-	RedoWait              = @RedoWait,
+	RedoMode              = @RedoMode,
 	WaitTime              = @WaitTime,
 	RetryCount            = @RetryCount,
 

@@ -1,6 +1,6 @@
 select
 	LauncherRedoItems.LauncherItemId,
-	LauncherRedoItems.RedoWait,
+	LauncherRedoItems.RedoMode,
 	LauncherRedoItems.WaitTime,
 	LauncherRedoItems.RetryCount
 from

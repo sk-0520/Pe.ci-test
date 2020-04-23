@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         Encoding _standardInputOutputEncoding;
         bool _runAdministrator;
 
-        RedoWait _redoWait;
+        RedoMode _redoMode;
         int _waitTimeSeconds;
         int _retryCount;
         string _successExitCodes = string.Empty;
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
                 }
             }
 
-            RedoWait = Model.LauncherRedoData.RedoWait;
+            RedoMode = Model.LauncherRedoData.RedoMode;
             WaitTimeSeconds = (int)Model.LauncherRedoData.WaitTime.TotalSeconds;
             RetryCount = Model.LauncherRedoData.RetryCount;
             if(Model.LauncherRedoData.SuccessExitCodes.Any()) {
@@ -156,10 +156,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public ObservableCollection<string> RemoveErros { get; } = new ObservableCollection<string>();
 
 
-        public RedoWait RedoWait
+        public RedoMode RedoMode
         {
-            get => this._redoWait;
-            set => SetProperty(ref this._redoWait, value);
+            get => this._redoMode;
+            set => SetProperty(ref this._redoMode, value);
         }
         public int WaitTimeSeconds
         {
@@ -266,17 +266,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             }
 
             var redo = new LauncherRedoData() {
-                RedoWait = RedoWait,
+                RedoMode = RedoMode,
                 RetryCount = RetryCount,
                 WaitTime = TimeSpan.FromSeconds(WaitTimeSeconds)
             };
-            if(redo.RedoWait != RedoWait.None) {
+            if(redo.RedoMode != RedoMode.None) {
                 var numericRange = new NumericRange();
                 if(numericRange.TryParse(SuccessExitCodes, out var values)) {
                     redo.SuccessExitCodes.SetRange(values);
                 } else {
                     Logger.LogError("終了コードが分解できず: {0}", SuccessExitCodes);
-                    redo.RedoWait = RedoWait.None;
+                    redo.RedoMode = RedoMode.None;
                 }
             }
 

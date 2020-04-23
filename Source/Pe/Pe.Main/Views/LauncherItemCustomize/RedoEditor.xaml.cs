@@ -24,29 +24,29 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize
             InitializeComponent();
         }
 
-        #region RedoWaitProperty
+        #region RedoModeProperty
 
-        public static readonly DependencyProperty RedoWaitProperty = DependencyProperty.Register(
-            nameof(RedoWait),
-            typeof(RedoWait),
+        public static readonly DependencyProperty RedoModeProperty = DependencyProperty.Register(
+            nameof(RedoMode),
+            typeof(RedoMode),
             typeof(RedoEditor),
             new FrameworkPropertyMetadata(
-                RedoWait.None,
+                RedoMode.None,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                OnRedoWaitChanged
+                OnRedoModeChanged
             )
         );
 
-        public RedoWait RedoWait
+        public RedoMode RedoMode
         {
-            get { return (RedoWait)GetValue(RedoWaitProperty); }
-            set { SetValue(RedoWaitProperty, value); }
+            get { return (RedoMode)GetValue(RedoModeProperty); }
+            set { SetValue(RedoModeProperty, value); }
         }
 
-        private static void OnRedoWaitChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnRedoModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if(d is RedoEditor control) {
-                control.RedoWait = (RedoWait)e.NewValue;
+                control.RedoMode = (RedoMode)e.NewValue;
             }
         }
 

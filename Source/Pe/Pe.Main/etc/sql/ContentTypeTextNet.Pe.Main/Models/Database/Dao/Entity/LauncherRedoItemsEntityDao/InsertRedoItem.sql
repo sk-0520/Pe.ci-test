@@ -2,7 +2,7 @@ insert into
 	LauncherRedoItems
 	(
 		LauncherItemId,
-		RedoWait,
+		RedoMode,
 		WaitTime,
 		RetryCount,
 
@@ -19,7 +19,7 @@ insert into
 	values
 	(
 /* LauncherItemId           */ @LauncherItemId,
-/* RedoWait                 */ @RedoWait,
+/* RedoMode                 */ @RedoMode,
 /* WaitTime                 */ @WaitTime,
 /* RetryCount               */ @RetryCount,
 /*                          */

@@ -1706,34 +1706,34 @@
   <data name="String_Notify_Undo" xml:space="preserve">
     <value>元に戻す</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Count" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count" xml:space="preserve">
     <value>回数</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Count_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count_A" xml:space="preserve">
     <value>回数(_C)</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.None" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None" xml:space="preserve">
     <value>なし</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.None_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None_A" xml:space="preserve">
     <value>なし(_N)</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Timeout" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout" xml:space="preserve">
     <value>時間</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.TimeoutAndCount" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount" xml:space="preserve">
     <value>時間と回数</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.TimeoutAndCount_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount_A" xml:space="preserve">
     <value>時間と回数(_A)</value>
   </data>
-  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoWait.Timeout_A" xml:space="preserve">
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout_A" xml:space="preserve">
     <value>時間(_T)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_RedoEditor_Header" xml:space="preserve">
     <value>再試行</value>
   </data>
-  <data name="String_RedoEditor_RedoWait_A" xml:space="preserve">
+  <data name="String_RedoEditor_RedoMode_A" xml:space="preserve">
     <value>再実施待機方法</value>
   </data>
   <data name="String_RedoEditor_RetryCount_A" xml:space="preserve">

@@ -356,7 +356,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// <summary>
     /// 再実施待機方法。
     /// </summary>
-    public enum RedoWait
+    public enum RedoMode
     {
         /// <summary>
         /// 再実施しない。
@@ -377,14 +377,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// 一定時間内で指定回数繰り返す。
         /// </summary>
         [EnumResource]
-        TimeoutAndCount,
+        TimeoutOrCount,
     }
 
     public interface IReadOnlyLauncherRedoData
     {
         #region property
 
-        RedoWait RedoWait { get; }
+        RedoMode RedoMode { get; }
         TimeSpan WaitTime { get; }
         int RetryCount { get; }
         IReadOnlyCollection<int> SuccessExitCodes { get; }
@@ -396,7 +396,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region IReadOnlyLauncherRedoData
 
-        public RedoWait RedoWait { get; set; }
+        public RedoMode RedoMode { get; set; }
         public TimeSpan WaitTime { get; set; }
         public int RetryCount { get; set; }
         public List<int> SuccessExitCodes { get; set; } = new List<int>();
@@ -407,7 +407,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region function
 
         public static LauncherRedoData GetDisable() => new LauncherRedoData() {
-            RedoWait = RedoWait.None,
+            RedoMode = RedoMode.None,
             RetryCount = 1,
             WaitTime = TimeSpan.FromSeconds(1),
         };
