@@ -6,6 +6,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #endregion
     }
 
-    public class RedoExecutor
+    public class RedoExecutor: DisposerBase
     {
         #region event
 
@@ -65,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 WaitEndTimer.Elapsed += WaitEndTimer_Elapsed;
             }
 
-            PreExecute(FirstResult.Process);
+            Watching(FirstResult.Process, false);
         }
 
 
@@ -97,13 +98,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             IsExited = true;
             Exited?.Invoke(this, EventArgs.Empty);
+
+            Dispose();
         }
 
-        void PreExecute(Process process)
+        void Watching(Process process, bool isContinue)
         {
             CurrentProcess = process;
+            CurrentProcess.EnableRaisingEvents = true;
 
-            if(CurrentProcess.HasExited) {
+            if(isContinue && CurrentProcess.HasExited) {
                 if(Check(CurrentProcess)) {
                     Execute();
                 } else {
@@ -167,7 +171,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             var result = Executor.Execute(FirstResult.Kind, Parameter.PathParameter, Parameter.CustomParameter, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
             RetryCount += 1;
-            PreExecute(result.Process!);
+            Watching(result.Process!, true);
+        }
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(WaitEndTimer != null) {
+                    WaitEndTimer.Elapsed -= WaitEndTimer_Elapsed;
+                    if(disposing) {
+                        WaitEndTimer.Dispose();
+                    }
+                }
+
+                if(CurrentProcess != null) {
+                    CurrentProcess.Exited -= Process_Exited;
+                }
+
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

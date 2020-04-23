@@ -141,7 +141,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             public void AddRedoItem(RedoExecutor redoExecutor)
             {
-                RedoItems.Add(redoExecutor);
+                if(!redoExecutor.IsExited) {
+                    redoExecutor.Exited += RedoExecutor_Exited;
+                    RedoItems.Add(redoExecutor);
+                }
             }
 
             public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)
@@ -344,6 +347,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             #endregion
+
+            private void RedoExecutor_Exited(object? sender, EventArgs e)
+            {
+                var redoExecutor = (RedoExecutor)sender!;
+                redoExecutor.Exited -= RedoExecutor_Exited;
+                RedoItems.Remove(redoExecutor);
+            }
 
         }
     }

@@ -142,6 +142,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 Kind = kind,
                 Process = process,
             };
+            RedoExecutor? redoExecutor = null;
+            if(redoData.RedoWait != RedoWait.None) {
+                redoExecutor = new RedoExecutor(
+                    this,
+                    result,
+                    new RedoParameter(pathParameter, customParameter, environmentVariableItems as IReadOnlyCollection<LauncherEnvironmentVariableData> ?? environmentVariableItems.ToList(), redoData, screen),
+                    LoggerFactory
+                );
+            }
 
             StandardInputOutputElement? stdioElement = null;
             if(streamWatch) {
@@ -155,13 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             result.Success = process.Start();
 
-            if(redoData.RedoWait != RedoWait.None) {
-                var redoExecutor = new RedoExecutor(
-                    this,
-                    result,
-                    new RedoParameter(pathParameter, customParameter, environmentVariableItems as IReadOnlyCollection<LauncherEnvironmentVariableData> ?? environmentVariableItems.ToList(), redoData, screen),
-                    LoggerFactory
-                );
+            if(redoExecutor != null) {
                 OrderManager.AddRedoItem(redoExecutor);
             }
 
@@ -171,7 +174,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 DispatcherWrapper.Begin(element => {
                     element.StartView();
                     element.PreparateReceiver();
-                    element.RunReceiver();
+                    if(element.PreparatedReceive) {
+                        element.RunReceiver();
+                    } else {
+                        Logger.LogError("受信準備完了せず");
+                    }
                 }, stdioElement, DispatcherPriority.Send);
             }
 
