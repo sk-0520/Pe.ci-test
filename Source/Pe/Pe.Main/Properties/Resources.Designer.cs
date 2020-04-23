@@ -3835,11 +3835,83 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   再試行監視終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_CancelWatch {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_CancelWatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   再試行中: ${CAPTION} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoExecutor_Caption_Format {
             get {
                 return ResourceManager.GetString("String_RedoExecutor_Caption_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   試行回数超過 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_CountMax {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_CountMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-COUNT}/${MAX-COUNT} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_CountMax_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_CountMax_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-TIME}/${MAX-TIME}, ${NOW-COUNT}/${MAX-COUNT} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_TimeoutOrCountMax_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_TimeoutOrCountMax_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-TIME}/${MAX-TIME} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_Timout_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_Timout_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_SuccessExit {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_SuccessExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイムアウト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Timeout {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイムアウト/試行回数超過 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_TimeoutOrCountMax {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_TimeoutOrCountMax", resourceCulture);
             }
         }
         

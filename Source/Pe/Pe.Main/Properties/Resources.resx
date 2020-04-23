@@ -1755,10 +1755,34 @@
   <data name="String_ExtendsExecute_Redo_A" xml:space="preserve">
     <value>再実施</value>
   </data>
+  <data name="String_RedoExecutor_CancelWatch" xml:space="preserve">
+    <value>再試行監視終了</value>
+  </data>
   <data name="String_RedoExecutor_Cancel_Format" xml:space="preserve">
     <value>${MESSAGE} (クリックでキャンセル)</value>
   </data>
   <data name="String_RedoExecutor_Caption_Format" xml:space="preserve">
     <value>再試行中: ${CAPTION}</value>
+  </data>
+  <data name="String_RedoExecutor_CountMax" xml:space="preserve">
+    <value>試行回数超過</value>
+  </data>
+  <data name="String_RedoExecutor_Retry_CountMax_Format" xml:space="preserve">
+    <value>${NOW-COUNT}/${MAX-COUNT}</value>
+  </data>
+  <data name="String_RedoExecutor_Retry_TimeoutOrCountMax_Format" xml:space="preserve">
+    <value>${NOW-TIME}/${MAX-TIME}, ${NOW-COUNT}/${MAX-COUNT}</value>
+  </data>
+  <data name="String_RedoExecutor_Retry_Timout_Format" xml:space="preserve">
+    <value>${NOW-TIME}/${MAX-TIME}</value>
+  </data>
+  <data name="String_RedoExecutor_SuccessExit" xml:space="preserve">
+    <value>正常終了</value>
+  </data>
+  <data name="String_RedoExecutor_Timeout" xml:space="preserve">
+    <value>タイムアウト</value>
+  </data>
+  <data name="String_RedoExecutor_TimeoutOrCountMax" xml:space="preserve">
+    <value>タイムアウト/試行回数超過</value>
   </data>
 </root>

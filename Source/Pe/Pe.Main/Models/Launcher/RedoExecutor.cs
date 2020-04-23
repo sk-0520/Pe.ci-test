@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(Parameter.RedoData.SuccessExitCodes.Any(i => i == process.ExitCode)) {
                 Logger.LogInformation("正常終了コードのため再試行不要: {0}", process.ExitCode);
                 if(NotifyLogId != Guid.Empty) {
-                    PutNotifyLog(true, "@正常終了");
+                    PutNotifyLog(true, Properties.Resources.String_RedoExecutor_SuccessExit);
                 }
 
                 return false;
@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             switch(Parameter.RedoData.RedoWait) {
                 case RedoWait.Timeout:
                     if(IsTimeout()) {
-                        PutNotifyLog(true, "@タイムアウト");
+                        PutNotifyLog(true, Properties.Resources.String_RedoExecutor_Timeout);
                         Logger.LogInformation("タイムアウト");
                         return false;
                     }
@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoWait.Count:
                     if(IsMaxRetry()) {
-                        PutNotifyLog(true, "@試行回数超過");
+                        PutNotifyLog(true, Properties.Resources.String_RedoExecutor_CountMax);
                         Logger.LogInformation("試行回数超過");
                         return false;
                     }
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoWait.TimeoutAndCount:
                     if(IsTimeout() || IsMaxRetry()) {
-                        PutNotifyLog(true, "@タイムアウト/試行回数超過");
+                        PutNotifyLog(true, Properties.Resources.String_RedoExecutor_TimeoutOrCountMax);
                         Logger.LogInformation("タイムアウト/試行回数超過");
                         return false;
                     }
@@ -232,7 +232,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         string CreateRedoNotifyLogMessage()
         {
-            var message = "@再試行";
+            //var message = "@再試行";
+            var message = Parameter.RedoData.RedoWait switch
+            {
+                RedoWait.Timeout => TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_RedoExecutor_Retry_Timout_Format,
+                    new Dictionary<string, string>() {
+                        ["NOW-TIME"] = Stopwatch!.Elapsed.ToString(),
+                        ["MAX-TIME"] = Parameter.RedoData.WaitTime.ToString(),
+                    }
+                ),
+                RedoWait.Count => TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_RedoExecutor_Retry_CountMax_Format,
+                    new Dictionary<string, string>() {
+                        ["NOW-COUNT"] = RetryCount.ToString(),
+                        ["MAX-COUNT"] = Parameter.RedoData.RetryCount.ToString(),
+                    }
+                ),
+                RedoWait.TimeoutAndCount => TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_RedoExecutor_Retry_TimeoutOrCountMax_Format,
+                    new Dictionary<string, string>() {
+                        ["NOW-TIME"] = Stopwatch!.Elapsed.ToString(),
+                        ["MAX-TIME"] = Parameter.RedoData.WaitTime.ToString(),
+                        ["NOW-COUNT"] = RetryCount.ToString(),
+                        ["MAX-COUNT"] = Parameter.RedoData.RetryCount.ToString(),
+                    }
+                ),
+                _ => throw new NotImplementedException(),
+            };
 
             return TextUtility.ReplaceFromDictionary(
                 Properties.Resources.String_RedoExecutor_Cancel_Format,
@@ -295,7 +322,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Debug.Assert(WaitEndTimer != null);
 
             if(NotifyLogId != Guid.Empty) {
-                PutNotifyLog(true, "@監視終了");
+                PutNotifyLog(true, Properties.Resources.String_RedoExecutor_CancelWatch);
             }
 
             OnExited();
