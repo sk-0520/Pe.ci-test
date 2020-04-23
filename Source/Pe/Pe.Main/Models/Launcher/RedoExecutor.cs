@@ -14,10 +14,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     public class RedoParameter
     {
-        public RedoParameter(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IReadOnlyCollection<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public RedoParameter(ILauncherExecutePathParameter path, ILauncherExecuteCustomParameter custom, IReadOnlyCollection<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
-            PathParameter = pathParameter;
-            CustomParameter = customParameter;
+            Path = path;
+            Custom = custom;
             EnvironmentVariableItems = environmentVariableItems;
             RedoData = redoData;
             Screen = screen;
@@ -25,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region property
 
-        public ILauncherExecutePathParameter PathParameter { get; }
-        public ILauncherExecuteCustomParameter CustomParameter { get; }
+        public ILauncherExecutePathParameter Path { get; }
+        public ILauncherExecuteCustomParameter Custom { get; }
         public IReadOnlyCollection<LauncherEnvironmentVariableData> EnvironmentVariableItems { get; }
         public IReadOnlyLauncherRedoData RedoData { get; }
         public IScreen Screen { get; }
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         void Execute()
         {
-            var result = Executor.Execute(FirstResult.Kind, Parameter.PathParameter, Parameter.CustomParameter, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
+            var result = Executor.Execute(FirstResult.Kind, Parameter.Path, Parameter.Custom, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
             RetryCount += 1;
             Watching(result.Process!, true);
         }

@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
             fileData.Caption = Name;
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, redoData, screen);
 
             return result;
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
 
             return result;
@@ -249,7 +249,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
 
             return result;
@@ -344,7 +344,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
             launcherExecutor.ShowProperty(pathData);
         }
 
