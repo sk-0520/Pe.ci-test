@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -61,7 +62,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         protected override void InitializeImpl()
         {
             var numericRange = new NumericRange();
-            SuccessExitCodes = numericRange.ToString(Redo.SuccessExitCodes);
+            if(Redo.SuccessExitCodes.Any()) {
+                SuccessExitCodes = numericRange.ToString(Redo.SuccessExitCodes);
+            } else {
+                SuccessExitCodes = "0";
+            }
         }
 
         #endregion
@@ -73,6 +78,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             var numericRange = new NumericRange();
             if(numericRange.TryParse(SuccessExitCodes, out var values)) {
                 Redo.SuccessExitCodes.SetRange(values);
+            } else {
+                Redo.SuccessExitCodes.SetRange(new[] { 0 });
             }
         }
 
