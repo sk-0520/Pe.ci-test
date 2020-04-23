@@ -66,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     AutoReset = false,
                 };
                 WaitEndTimer.Elapsed += WaitEndTimer_Elapsed;
+                WaitEndTimer.Start();
             }
 
             Watching(FirstResult.Process, false);
@@ -141,8 +142,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(Parameter.RedoData.SuccessExitCodes.Any(i => i == process.ExitCode)) {
                 Logger.LogInformation("正常終了コードのため再試行不要: {0}", process.ExitCode);
                 if(NotifyLogId != Guid.Empty) {
-                    NotifyManager.ReplaceLog(NotifyLogId, "OK");
+                    NotifyManager.ReplaceLog(NotifyLogId, "正常終了");
                 }
+
                 return false;
             }
 
@@ -242,10 +244,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Debug.Assert(CurrentProcess != null);
             Debug.Assert(WaitEndTimer != null);
 
-            CurrentProcess.Exited -= Process_Exited;
-            WaitEndTimer.Elapsed -= WaitEndTimer_Elapsed;
-            WaitEndTimer.Dispose();
+            if(NotifyLogId != Guid.Empty) {
+                NotifyManager.ReplaceLog(NotifyLogId, "監視終了");
+            }
+            OnExited();
         }
-
     }
 }
