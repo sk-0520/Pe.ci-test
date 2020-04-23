@@ -47,6 +47,7 @@ using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Views.NotifyLog;
 using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -83,6 +84,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         #region function
 
+        void AddRedoItem(RedoExecutor redoExecutor);
+
         void StartUpdate(UpdateTarget target, UpdateProcess process);
 
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
@@ -113,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
     partial class ApplicationManager
     {
-        class OrderManagerImpl : ManagerBase, IOrderManager
+        class OrderManagerImpl: ManagerBase, IOrderManager
         {
             public OrderManagerImpl(IDiContainer diContainer, ILoggerFactory loggerFactory)
                 : base(diContainer, loggerFactory)
@@ -122,6 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             #region property
 
             ConcurrentDictionary<Guid, LauncherItemElement> LauncherItems { get; } = new ConcurrentDictionary<Guid, LauncherItemElement>();
+            ISet<RedoExecutor> RedoItems { get; } = new HashSet<RedoExecutor>();
 
             #endregion
 
@@ -133,6 +137,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             public void StartUpdate(UpdateTarget target, UpdateProcess process)
             {
                 throw new NotSupportedException();
+            }
+
+            public void AddRedoItem(RedoExecutor redoExecutor)
+            {
+                RedoItems.Add(redoExecutor);
             }
 
             public LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId)

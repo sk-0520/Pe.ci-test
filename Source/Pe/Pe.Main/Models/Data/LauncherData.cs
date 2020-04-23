@@ -409,7 +409,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public static LauncherRedoData GetDisable() => new LauncherRedoData() {
             RedoWait = RedoWait.None,
             RetryCount = 1,
-            WaitTime = TimeSpan.Zero,
+            WaitTime = TimeSpan.FromSeconds(1),
         };
 
         #endregion

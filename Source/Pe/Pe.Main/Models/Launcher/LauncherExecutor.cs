@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
-    public interface ILauncherExecuteResult : IResultFailureValue<Exception>
+    public interface ILauncherExecuteResult: IResultFailureValue<Exception>
     {
         #region property
 
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #endregion
     }
 
-    public class LauncherExecuteResult : ILauncherExecuteResult
+    public class LauncherExecuteResult: ILauncherExecuteResult
     {
         #region function
 
@@ -63,7 +63,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
     {
         public LauncherExecutor(IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             OrderManager = orderManager;
             NotifyManager = notifyManager;
             DispatcherWrapper = dispatcherWrapper;
@@ -74,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
         #endregion
@@ -82,7 +84,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
-
             var process = new Process();
             var startInfo = process.StartInfo;
 
@@ -153,6 +154,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             result.Success = process.Start();
+
+            if(redoData.RedoWait != RedoWait.None) {
+                var redoExecutor = new RedoExecutor(
+                    this,
+                    result,
+                    new RedoParameter(pathParameter, customParameter, environmentVariableItems as IReadOnlyCollection<LauncherEnvironmentVariableData> ?? environmentVariableItems.ToList(), redoData, screen),
+                    LoggerFactory
+                );
+                OrderManager.AddRedoItem(redoExecutor);
+            }
+
             if(streamWatch) {
                 Debug.Assert(stdioElement != null);
                 // 受信前に他の処理を終わらせるため少し待つ
@@ -166,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return result;
         }
 
-        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        public ILauncherExecuteResult Execute(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IReadOnlyCollection<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
