@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             ThrowIfDisposed();
 
             try {
-                var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
+                var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
                 var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, redoData, screen);
                 return result;
             } catch(Exception ex) {

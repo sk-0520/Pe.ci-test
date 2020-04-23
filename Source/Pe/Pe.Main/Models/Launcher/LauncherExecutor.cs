@@ -61,17 +61,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
     public class LauncherExecutor
     {
-        public LauncherExecutor(IOrderManager orderManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherExecutor(IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             OrderManager = orderManager;
+            NotifyManager = notifyManager;
             DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
 
         IOrderManager OrderManager { get; }
+        INotifyManager NotifyManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
@@ -143,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             RedoExecutor? redoExecutor = null;
             if(redoData.RedoWait != RedoWait.None) {
                 redoExecutor = new RedoExecutor(
-                    new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory),
+                    new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory),
                     result,
                     new RedoParameter(
                         pathParameter,
@@ -152,6 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                         redoData,
                         screen
                     ),
+                    NotifyManager,
                     LoggerFactory
                 );
             }

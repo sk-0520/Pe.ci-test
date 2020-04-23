@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -184,6 +185,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <param name="notifyLogId"></param>
         /// <param name="content"></param>
         bool ClearLog(Guid notifyLogId);
+        void FadeoutLog(Guid notifyLogId);
 
         #endregion
     }
@@ -385,6 +387,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             return false;
+        }
+
+        public void FadeoutLog(Guid notifyLogId)
+        {
+            if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
+                return;
+            }
+
+            if(element.Kind != NotifyLogKind.Topmost) {
+                throw new Exception($"{nameof(element.Kind)}: not {nameof(NotifyLogKind.Topmost)}");
+            }
+
+            Task.Delay(NotifyLogLifeTimes[NotifyLogKind.Normal]).ContinueWith(t => {
+                ClearLog(notifyLogId);
+            });
         }
 
         #endregion

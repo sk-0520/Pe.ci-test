@@ -8,6 +8,7 @@ using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
@@ -42,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #endregion
 
-        public RedoExecutor(LauncherExecutor executor, ILauncherExecuteResult firstResult, RedoParameter parameter, ILoggerFactory loggerFactory)
+        public RedoExecutor(LauncherExecutor executor, ILauncherExecuteResult firstResult, RedoParameter parameter, INotifyManager notifyManager, ILoggerFactory loggerFactory)
         {
             if(firstResult.Process == null) {
                 throw new ArgumentException($"{nameof(firstResult)}.{nameof(firstResult.Process)}");
@@ -56,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Executor = executor;
             FirstResult = firstResult;
             Parameter = parameter;
+            NotifyManager = notifyManager;
 
             if(Parameter.RedoData.RedoWait == RedoWait.Timeout || Parameter.RedoData.RedoWait == RedoWait.TimeoutAndCount) {
                 Stopwatch = Stopwatch.StartNew();
@@ -74,9 +76,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         ILogger Logger { get; }
 
+        Guid NotifyLogId { get; set; }
+
         ILauncherExecuteResult FirstResult { get; }
         LauncherExecutor Executor { get; }
         RedoParameter Parameter { get; }
+
+        INotifyManager NotifyManager { get; }
 
         Stopwatch? Stopwatch { get; }
 
@@ -98,6 +104,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             IsExited = true;
             Exited?.Invoke(this, EventArgs.Empty);
+
+            NotifyManager.FadeoutLog(NotifyLogId);
 
             Dispose();
         }
@@ -132,12 +140,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             if(Parameter.RedoData.SuccessExitCodes.Any(i => i == process.ExitCode)) {
                 Logger.LogInformation("正常終了コードのため再試行不要: {0}", process.ExitCode);
+                if(NotifyLogId != Guid.Empty) {
+                    NotifyManager.ReplaceLog(NotifyLogId, "OK");
+                }
                 return false;
             }
 
             switch(Parameter.RedoData.RedoWait) {
                 case RedoWait.Timeout:
                     if(IsTimeout()) {
+                        NotifyManager.ReplaceLog(NotifyLogId, "タイムアウト");
                         Logger.LogInformation("タイムアウト");
                         return false;
                     }
@@ -145,6 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoWait.Count:
                     if(IsMaxRetry()) {
+                        NotifyManager.ReplaceLog(NotifyLogId, "試行回数超過");
                         Logger.LogInformation("試行回数超過");
                         return false;
                     }
@@ -152,6 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoWait.TimeoutAndCount:
                     if(IsTimeout() || IsMaxRetry()) {
+                        NotifyManager.ReplaceLog(NotifyLogId, "タイムアウト/試行回数超過");
                         Logger.LogInformation("タイムアウト/試行回数超過");
                         return false;
                     }
@@ -167,8 +181,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return true;
         }
 
+        string CreateRedoNotifyLogMessage()
+        {
+            return "@再実施";
+        }
+
         void Execute()
         {
+            if(NotifyLogId == Guid.Empty) {
+                NotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, Parameter.Custom.Caption, new NotifyLogContent(CreateRedoNotifyLogMessage())));
+            } else {
+                NotifyManager.ReplaceLog(NotifyLogId, CreateRedoNotifyLogMessage());
+            }
+
             var result = Executor.Execute(FirstResult.Kind, Parameter.Path, Parameter.Custom, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
             RetryCount += 1;
             Watching(result.Process!, true);
