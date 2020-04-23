@@ -168,6 +168,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
         /// <summary>
+        /// 通知ログは存在するか。
+        /// </summary>
+        /// <param name="notifyLogId"></param>
+        /// <returns></returns>
+        bool ExistsLog(Guid notifyLogId);
+
+        /// <summary>
         /// 通知ログ追加。
         /// </summary>
         /// <param name="notifyMessage"></param>
@@ -323,6 +330,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public void SendCustomizeLauncherItemExited(Guid launcherItemId)
         {
             OnCustomizeLauncherItemExited(launcherItemId);
+        }
+
+
+        /// <inheritdoc cref="INotifyManager.ExistsLog(Guid)" />
+        public bool ExistsLog(Guid notifyLogId)
+        {
+            return NotifyLogs.Contains(notifyLogId);
         }
 
         /// <inheritdoc cref="INotifyManager.AppendLog(NotifyMessage)" />

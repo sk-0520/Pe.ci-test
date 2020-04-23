@@ -1755,4 +1755,10 @@
   <data name="String_ExtendsExecute_Redo_A" xml:space="preserve">
     <value>再実施</value>
   </data>
+  <data name="String_RedoExecutor_Cancel_Format" xml:space="preserve">
+    <value>${MESSAGE} (クリックでキャンセル)</value>
+  </data>
+  <data name="String_RedoExecutor_Caption_Format" xml:space="preserve">
+    <value>再試行中: ${CAPTION}</value>
+  </data>
 </root>

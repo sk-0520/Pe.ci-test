@@ -3826,6 +3826,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ${MESSAGE} (クリックでキャンセル) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Cancel_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Cancel_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行中: ${CAPTION} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Caption_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Caption_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   バックグラウンドでアップデート中のためウィンドウを閉じても問題ありません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ReleaseNote_CanClose {

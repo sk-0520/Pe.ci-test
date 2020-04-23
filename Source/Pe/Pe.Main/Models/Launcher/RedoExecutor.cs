@@ -43,6 +43,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #endregion
 
+        #region variable
+
+        string? _notifyLogHeader;
+
+        #endregion
+
         public RedoExecutor(LauncherExecutor executor, ILauncherExecuteResult firstResult, RedoParameter parameter, INotifyManager notifyManager, ILoggerFactory loggerFactory)
         {
             if(firstResult.Process == null) {
@@ -88,15 +94,49 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         Stopwatch? Stopwatch { get; }
 
         Process? CurrentProcess { get; set; }
-        Timer? WaitEndTimer { get; }
+        Timer? WaitEndTimer { get; set; }
 
         int RetryCount { get; set; }
 
         public bool IsExited { get; private set; }
 
+        string NotifyLogHeader
+        {
+            get
+            {
+                return this._notifyLogHeader ??= TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_RedoExecutor_Caption_Format,
+                    new Dictionary<string, string>() {
+                        ["CAPTION"] = Parameter.Custom.Caption
+                    }
+                );
+            }
+        }
+
         #endregion
 
         #region function
+
+        void PutNotifyLog(bool isComplete, string message)
+        {
+            if(isComplete) {
+                if(NotifyLogId != Guid.Empty) {
+                    NotifyManager.ClearLog(NotifyLogId);
+                }
+                NotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, NotifyLogHeader, new NotifyLogContent(message)));
+            } else {
+                if(NotifyLogId == Guid.Empty) {
+                    NotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, NotifyLogHeader, new NotifyLogContent(message), StopWatch));
+                } else {
+                    if(NotifyManager.ExistsLog(NotifyLogId)) {
+                        NotifyManager.ReplaceLog(NotifyLogId, message);
+                    } else {
+                        NotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, NotifyLogHeader, new NotifyLogContent(message), StopWatch));
+                    }
+                }
+            }
+        }
+
 
         bool IsTimeout() => Stopwatch != null && Parameter.RedoData.WaitTime < Stopwatch.Elapsed;
         bool IsMaxRetry() => Parameter.RedoData.RetryCount <= RetryCount;
@@ -106,10 +146,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             IsExited = true;
             Exited?.Invoke(this, EventArgs.Empty);
 
-            NotifyManager.FadeoutLog(NotifyLogId);
+            //NotifyManager.FadeoutLog(NotifyLogId);
 
             Dispose();
         }
+
+        void StopWatch()
+        {
+            Logger.LogInformation("{0}: 再試行中断", Parameter.Custom.Caption);
+            Dispose();
+        }
+
 
         void Watching(Process process, bool isContinue)
         {
@@ -142,7 +189,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             if(Parameter.RedoData.SuccessExitCodes.Any(i => i == process.ExitCode)) {
                 Logger.LogInformation("正常終了コードのため再試行不要: {0}", process.ExitCode);
                 if(NotifyLogId != Guid.Empty) {
-                    NotifyManager.ReplaceLog(NotifyLogId, "正常終了");
+                    PutNotifyLog(true, "@正常終了");
                 }
 
                 return false;
@@ -151,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             switch(Parameter.RedoData.RedoWait) {
                 case RedoWait.Timeout:
                     if(IsTimeout()) {
-                        NotifyManager.ReplaceLog(NotifyLogId, "タイムアウト");
+                        PutNotifyLog(true, "@タイムアウト");
                         Logger.LogInformation("タイムアウト");
                         return false;
                     }
@@ -159,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoWait.Count:
                     if(IsMaxRetry()) {
-                        NotifyManager.ReplaceLog(NotifyLogId, "試行回数超過");
+                        PutNotifyLog(true, "@試行回数超過");
                         Logger.LogInformation("試行回数超過");
                         return false;
                     }
@@ -167,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
                 case RedoWait.TimeoutAndCount:
                     if(IsTimeout() || IsMaxRetry()) {
-                        NotifyManager.ReplaceLog(NotifyLogId, "タイムアウト/試行回数超過");
+                        PutNotifyLog(true, "@タイムアウト/試行回数超過");
                         Logger.LogInformation("タイムアウト/試行回数超過");
                         return false;
                     }
@@ -185,16 +232,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         string CreateRedoNotifyLogMessage()
         {
-            return "@再実施";
+            var message = "@再試行";
+
+            return TextUtility.ReplaceFromDictionary(
+                Properties.Resources.String_RedoExecutor_Cancel_Format,
+                new Dictionary<string, string>() {
+                    ["MESSAGE"] = message,
+                }
+            );
         }
 
         void Execute()
         {
-            if(NotifyLogId == Guid.Empty) {
-                NotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, Parameter.Custom.Caption, new NotifyLogContent(CreateRedoNotifyLogMessage())));
-            } else {
-                NotifyManager.ReplaceLog(NotifyLogId, CreateRedoNotifyLogMessage());
-            }
+            PutNotifyLog(false, CreateRedoNotifyLogMessage());
 
             var result = Executor.Execute(FirstResult.Kind, Parameter.Path, Parameter.Custom, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
             RetryCount += 1;
@@ -245,8 +295,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             Debug.Assert(WaitEndTimer != null);
 
             if(NotifyLogId != Guid.Empty) {
-                NotifyManager.ReplaceLog(NotifyLogId, "監視終了");
+                PutNotifyLog(true, "@監視終了");
             }
+
             OnExited();
         }
     }
