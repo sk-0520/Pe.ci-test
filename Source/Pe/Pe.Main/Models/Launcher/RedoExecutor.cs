@@ -245,7 +245,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 RedoMode.Count => TextUtility.ReplaceFromDictionary(
                     Properties.Resources.String_RedoExecutor_Retry_CountMax_Format,
                     new Dictionary<string, string>() {
-                        ["NOW-COUNT"] = RetryCount.ToString(),
+                        ["NOW-COUNT"] = (RetryCount + 1).ToString(),
                         ["MAX-COUNT"] = Parameter.RedoData.RetryCount.ToString(),
                     }
                 ),
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     new Dictionary<string, string>() {
                         ["NOW-TIME"] = Stopwatch!.Elapsed.ToString(),
                         ["MAX-TIME"] = Parameter.RedoData.WaitTime.ToString(),
-                        ["NOW-COUNT"] = RetryCount.ToString(),
+                        ["NOW-COUNT"] = (RetryCount + 1).ToString(),
                         ["MAX-COUNT"] = Parameter.RedoData.RetryCount.ToString(),
                     }
                 ),
