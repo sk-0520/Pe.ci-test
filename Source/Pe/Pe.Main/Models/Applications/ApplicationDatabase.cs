@@ -28,11 +28,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             ConnectionString = builder.ToString();
         }
 
-        public ApplicationDatabaseFactory(FileInfo file, bool isReadOnly)
+        public ApplicationDatabaseFactory(FileInfo file, bool foreignKeys, bool isReadOnly)
         {
             var builder = CreateConnectionBuilder();
             builder.DataSource = ToSafeFile(file).FullName;
-            builder.ForeignKeys = true;
+            builder.ForeignKeys = foreignKeys;
             if(isReadOnly) {
                 builder.ReadOnly = isReadOnly;
             }

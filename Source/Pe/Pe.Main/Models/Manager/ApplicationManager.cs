@@ -208,8 +208,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
             var factory = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(settings.Main, false),
-                new ApplicationDatabaseFactory(settings.File, false),
+                new ApplicationDatabaseFactory(settings.Main, true, false),
+                new ApplicationDatabaseFactory(settings.File, true, false),
                 new ApplicationDatabaseFactory()
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
