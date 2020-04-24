@@ -158,6 +158,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#598: ツールバーで登録したてのアイテムを編集したら死ぬ疑惑"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{

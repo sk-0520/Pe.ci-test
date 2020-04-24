@@ -10,7 +10,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
     public interface ICommandFinder: IDisposable
     {
+        #region property
+
+        bool IsInitialize { get; }
+
+        #endregion
+
         #region function
+
+        void Initialize();
 
         /// <summary>
         /// 現在状態を更新。

@@ -243,6 +243,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         protected override void InitializeImpl()
         {
+            foreach(var commandFinder in CommandFinders) {
+                commandFinder.Initialize();
+            }
+
             Refresh();
         }
 

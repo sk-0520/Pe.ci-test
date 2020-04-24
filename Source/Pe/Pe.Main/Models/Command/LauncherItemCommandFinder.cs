@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,9 +30,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             StatementLoader = statementLoader;
             OrderManager = orderManager;
             NotifyManager = notifyManager;
-
-            NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
-            NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
         }
 
         #region property
@@ -90,8 +88,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region ICommandFinder
 
+        public bool IsInitialize { get; private set; }
+
+        public void Initialize()
+        {
+            if(IsInitialize) {
+                throw new InvalidOperationException(nameof(IsInitialize));
+            }
+
+            NotifyManager.LauncherItemChanged += NotifyManager_LauncherItemChanged;
+            NotifyManager.LauncherItemRegistered += NotifyManager_LauncherItemRegistered;
+
+            IsInitialize = true;
+        }
+
         public void Refresh()
         {
+            if(!IsInitialize) {
+                throw new InvalidOperationException(nameof(IsInitialize));
+            }
+
             IReadOnlyList<Guid> ids;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
@@ -131,6 +147,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
+            if(!IsInitialize) {
+                throw new InvalidOperationException(nameof(IsInitialize));
+            }
+
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 var items = LauncherItemElements
                     .Select(i => new LauncherCommandItemElement(i, LoggerFactory))
@@ -189,6 +209,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         private void NotifyManager_LauncherItemChanged(object? sender, LauncherItemChangedEventArgs e)
         {
+            Debug.Assert(IsInitialize);
+
             var element = LauncherItemElements.FirstOrDefault(i => i.LauncherItemId == e.LauncherItemId);
             if(element != null) {
                 element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
@@ -201,6 +223,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         private void NotifyManager_LauncherItemRegistered(object? sender, LauncherItemRegisteredEventArgs e)
         {
+            Debug.Assert(IsInitialize);
+
             var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
             if(element.IsEnabledCommandLauncher) {
                 Logger.LogInformation("コマンドランチャーへ新規ランチャーアイテムの追加: {0}", element.LauncherItemId);
