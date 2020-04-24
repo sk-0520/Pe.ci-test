@@ -358,7 +358,7 @@ ___
 |    | o  |                              | 更新回数                   | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
 |    | o  |                              | 再実施待機方法             | RedoMode              | text         | System.Version  |              |          |
 |    | o  |                              | 待機時間                   | WaitTime              | text         | System.TimeSpan |              |          |
-|    | o  |                              | 再実行回数                 | RetryCount            | integer      | System.Int64    |              |          |
+|    | o  |                              | 再試行回数                 | RetryCount            | integer      | System.Int64    |              |          |
 
 
 ### index

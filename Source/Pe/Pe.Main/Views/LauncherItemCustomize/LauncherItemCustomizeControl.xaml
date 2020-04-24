@@ -326,7 +326,7 @@
       </DataTemplate>
       <!--#endregion -->
 
-      <!--#region 再実行 -->
+      <!--#region 再試行 -->
       <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeRedoViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_RedoEditor_Header, Source={x:Static app_main:CultureService.Instance}}" >
           <app_main_views_launcher_item_customize:RedoEditor

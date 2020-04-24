@@ -32,7 +32,7 @@ create table [LauncherRedoItems] (
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[RedoMode] text not null /* 再実施待機方法  */,
 	[WaitTime] text not null /* 待機時間  */,
-	[RetryCount] integer not null /* 再実行回数  */,
+	[RetryCount] integer not null /* 再実施回数  */,
 	primary key(
 		[LauncherItemId]
 	),

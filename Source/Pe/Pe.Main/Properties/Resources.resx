@@ -1734,14 +1734,15 @@
     <value>再試行</value>
   </data>
   <data name="String_RedoEditor_RedoMode_A" xml:space="preserve">
-    <value>再実施待機方法</value>
+    <value>再試行待機方法</value>
   </data>
   <data name="String_RedoEditor_RetryCount_A" xml:space="preserve">
     <value>再試行回数</value>
   </data>
   <data name="String_RedoEditor_SuccessExitCodesRemark" xml:space="preserve">
     <value>正常終了コードはカンマ区切り(数値, 数値)で指定してください。
-範囲を指定する場合はハイフン(数値-数値)で指定できます。</value>
+範囲を指定する場合はハイフン(数値-数値)で指定できます。
+例: 0, 20, 100-110</value>
   </data>
   <data name="String_RedoEditor_SuccessExitCodes_A" xml:space="preserve">
     <value>正常終了コード</value>

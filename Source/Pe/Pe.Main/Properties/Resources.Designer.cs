@@ -3771,7 +3771,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   再実施待機方法 に類似しているローカライズされた文字列を検索します。
+        ///   再試行待機方法 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_RedoMode_A {
             get {
@@ -3799,7 +3799,8 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         
         /// <summary>
         ///   正常終了コードはカンマ区切り(数値, 数値)で指定してください。
-        ///範囲を指定する場合はハイフン(数値-数値)で指定できます。 に類似しているローカライズされた文字列を検索します。
+        ///範囲を指定する場合はハイフン(数値-数値)で指定できます。
+        ///例: 0, 20, 100-110 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_SuccessExitCodesRemark {
             get {
