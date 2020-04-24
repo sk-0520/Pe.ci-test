@@ -1,5 +1,5 @@
 
---// table: AppNotifyLogSetting
+--// [#593] table: AppNotifyLogSetting
 create table [AppNotifyLogSetting] (
 	[Generation] integer not null /* 世代 最大のものを使用する */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
@@ -19,7 +19,7 @@ create table [AppNotifyLogSetting] (
 )
 ;
 
---// table: LauncherRedoItems
+--// [#592] table: LauncherRedoItems
 create table [LauncherRedoItems] (
 	[LauncherItemId] text not null /* ランチャーアイテムID  */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
@@ -41,7 +41,7 @@ create table [LauncherRedoItems] (
 )
 ;
 
---// table: LauncherRedoSuccessExitCodes
+--// [#592] table: LauncherRedoSuccessExitCodes
 create table [LauncherRedoSuccessExitCodes] (
 	[LauncherItemId] text not null /* ランチャーアイテムID  */,
 	[SuccessExitCode] integer not null /* 正常終了コード  */,
@@ -58,7 +58,7 @@ create table [LauncherRedoSuccessExitCodes] (
 ;
 
 
---//
+--// [#591] 退避用テーブル Notes2 を現行テーブル Notes から生成
 create table
 	Notes2
 as
@@ -68,10 +68,10 @@ as
 		Notes
 ;
 
---//
+--// [#591] 現行テーブル Notes 破棄
 drop table Notes;
 
---// table: Notes
+--// [#591] table: Notes
 create table [Notes] (
 	[NoteId] text not null /* ノートID  */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
@@ -103,7 +103,7 @@ create table [Notes] (
 )
 ;
 
---//
+--// [#591] 退避用テーブル Note2 から Note へデータ移送
 insert into
 	Notes
 	(
@@ -138,6 +138,6 @@ insert into
 		Notes2
 ;
 
---//
+--// [#591] 退避用テーブル Note2 の破棄
 drop table Notes2;
 
