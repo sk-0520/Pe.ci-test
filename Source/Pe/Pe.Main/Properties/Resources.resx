@@ -1786,4 +1786,22 @@
   <data name="String_RedoExecutor_TimeoutOrCountMax" xml:space="preserve">
     <value>タイムアウト/試行回数超過</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind_A" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact_A" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None_A" xml:space="preserve">
+    <value />
+  </data>
 </root>
