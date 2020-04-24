@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         bool _isLink;
         string _title = string.Empty;
         IScreen? _dockScreen;
+        NoteHiddenMode _hiddenMode;
 
         NoteLayoutKind _layoutKind;
         NoteContentKind _contentKind;
@@ -157,6 +158,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             set => SetProperty(ref this._isVisible, value);
         }
 
+        public NoteHiddenMode HiddenMode
+        {
+            get => this._hiddenMode;
+            set => SetProperty(ref this._hiddenMode, value);
+        }
+
         public NoteContentElement? ContentElement
         {
             get => this._contentElement;
@@ -201,6 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 //LayoutKind = NoteLayoutKind.Absolute,
                 TextWrap = true,
                 ContentKind = NoteContentKind.Plain,
+                HiddenMode = NoteHiddenMode.None,
             };
 
             /*
@@ -296,6 +304,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ContentKind = noteData.ContentKind;
             ForegroundColor = noteData.ForegroundColor;
             BackgroundColor = noteData.BackgroundColor;
+            HiddenMode = noteData.HiddenMode;
 
             FontElement = OrderManager.CreateFontElement(DefaultFontKind.Note, noteData.FontId, UpdateFontId);
             var oldContentElement = ContentElement;
@@ -596,6 +605,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateVisible(NoteId, IsVisible, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeHiddenModeDelaySave(NoteHiddenMode hiddenMode)
+        {
+            ThrowIfDisposed();
+
+            HiddenMode = hiddenMode;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                notesEntityDao.UpdateHiddenMode(NoteId, HiddenMode, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 
