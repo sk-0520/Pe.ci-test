@@ -121,7 +121,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#592: 起動失敗アイテムを頑張って起動させる"
 					},
 					{
 						"revision": "",

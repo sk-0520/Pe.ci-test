@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var launcherItemIds = LauncherItems
                 .Select(i => i.Data)
                 // こんなとこでSQL発行するとか業務じゃむり
-                .Where(i => launcherItemsEntityDao.SelectExistsLauncherLauncherItem(i))
+                .Where(i => launcherItemsEntityDao.SelectExistsLauncherItem(i))
                 .ToList()
             ;
 

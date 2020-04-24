@@ -65,7 +65,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    internal partial class ApplicationManager : DisposerBase, IOrderManager
+    internal partial class ApplicationManager: DisposerBase, IOrderManager
     {
         internal ApplicationManager(ApplicationInitializer initializer)
         {
@@ -1269,6 +1269,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
 
         #region IOrderManager
+
+        public void AddRedoItem(RedoExecutor redoExecutor) => OrderManager.AddRedoItem(redoExecutor);
 
         public void StartUpdate(UpdateTarget target, UpdateProcess process)
         {

@@ -23,7 +23,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 {
-    public class LauncherItemElement : ElementBase, ILauncherItemId
+    public class LauncherItemElement: ElementBase, ILauncherItemId
     {
         #region variable
 
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        IList<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        List<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
 
@@ -124,20 +124,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             LauncherFileData fileData;
-            IList<LauncherEnvironmentVariableData> envItems;
+            List<LauncherEnvironmentVariableData> envItems;
+            LauncherRedoData redoData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
                 if(fileData.IsEnabledCustomEnvironmentVariable) {
                     envItems = GetMergeEnvironmentVariableItems(commander, commander.Implementation);
                 } else {
                     envItems = new List<LauncherEnvironmentVariableData>();
                 }
+
+                redoData = launcherRedoItemsEntityDao.SelectLauncherRedoItem(LauncherItemId);
+                var exitCodes = launcherRedoSuccessExitCodesEntityDao.SelectRedoSuccessExitCodes(LauncherItemId);
+                redoData.SuccessExitCodes.SetRange(exitCodes);
+            }
+            if(!redoData.SuccessExitCodes.Any()) {
+                redoData.SuccessExitCodes.Add(0);
             }
             fileData.Caption = Name;
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
-            var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, screen);
+            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, redoData, screen);
 
             return result;
         }
@@ -146,18 +157,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         {
             ThrowIfDisposed();
 
-//#if DEBUG
-//            var id = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, "@テスト", new NotifyLogContent(Name)));
-//            Task.Run(() => {
-//                Thread.Sleep(TimeSpan.FromSeconds(5));
-//                NotifyManager.ReplaceLog(id, "@うんこー");
-//                Thread.Sleep(TimeSpan.FromSeconds(5));
-//                NotifyManager.ClearLog (id);
-//            });
-//            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "@ランチャーアイテム起動", new NotifyLogContent(Name)));
-//            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, "@Command", new NotifyLogContent(Name), () => { Logger.LogInformation("command"); }));
-//            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Undo, "@Undo", new NotifyLogContent(Name), () => { Logger.LogInformation("undo"); }));
-//#endif
+            //#if DEBUG
+            //            var id = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, "@テスト", new NotifyLogContent(Name)));
+            //            Task.Run(() => {
+            //                Thread.Sleep(TimeSpan.FromSeconds(5));
+            //                NotifyManager.ReplaceLog(id, "@うんこー");
+            //                Thread.Sleep(TimeSpan.FromSeconds(5));
+            //                NotifyManager.ClearLog (id);
+            //            });
+            //            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "@ランチャーアイテム起動", new NotifyLogContent(Name)));
+            //            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, "@Command", new NotifyLogContent(Name), () => { Logger.LogInformation("command"); }));
+            //            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Undo, "@Undo", new NotifyLogContent(Name), () => { Logger.LogInformation("undo"); }));
+            //#endif
 
             try {
                 ILauncherExecuteResult result;
@@ -225,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
 
             return result;
@@ -241,7 +252,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
 
             return result;
@@ -336,7 +347,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             launcherExecutor.ShowProperty(pathData);
         }
 

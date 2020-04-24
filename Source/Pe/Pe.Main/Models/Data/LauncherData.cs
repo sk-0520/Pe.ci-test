@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherExecutePathParameter : ILauncherExecutePathParameter
+    public class LauncherExecutePathParameter: ILauncherExecutePathParameter
     {
         public LauncherExecutePathParameter(string path, string option, string workDirectoryPath)
         {
@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherExecutePathData : DataBase, ILauncherExecutePathParameter
+    public class LauncherExecutePathData: DataBase, ILauncherExecutePathParameter
     {
         #region ILauncherExecutePathParameter
 
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherFileData : LauncherExecutePathData, ILauncherExecuteCustomParameter
+    public class LauncherFileData: LauncherExecutePathData, ILauncherExecuteCustomParameter
     {
         #region ILauncherExecuteCustomParameter
 
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherEnvironmentVariableData : DataBase
+    public class LauncherEnvironmentVariableData: DataBase
     {
         #region property
 
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherIconData : DataBase
+    public class LauncherIconData: DataBase
     {
         #region property
 
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class StandardStreamData : DataBase
+    public class StandardStreamData: DataBase
     {
         #region proeprty
 
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     }
 
 
-    public class LauncherGroupData : DataBase, ILauncherGroupId
+    public class LauncherGroupData: DataBase, ILauncherGroupId
     {
         #region property
 
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherItemData : DataBase
+    public class LauncherItemData: DataBase
     {
         #region property
 
@@ -229,7 +229,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    internal class LauncherItemOldImportData : LauncherItemData
+    [Obsolete]
+    internal class LauncherItemOldImportData: LauncherItemData
     {
         #region property
 
@@ -262,7 +263,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     public abstract class LauncherDetailDataBase
     { }
 
-    public class LauncherFileDetailData : LauncherDetailDataBase
+    public class LauncherFileDetailData: LauncherDetailDataBase
     {
         #region property
 
@@ -283,7 +284,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsScreenData : DataBase, ILauncherToolbarId, IScreenData
+    public class LauncherToolbarsScreenData: DataBase, ILauncherToolbarId, IScreenData
     {
         #region ILauncherToolbarId
 
@@ -306,7 +307,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class LauncherToolbarsDisplayData : DataBase, ILauncherToolbarId
+    public class LauncherToolbarsDisplayData: DataBase, ILauncherToolbarId
     {
         #region property
 
@@ -332,7 +333,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     }
 
-    internal class LauncherToolbarsOldData : LauncherToolbarsDisplayData
+    [Obsolete]
+    internal class LauncherToolbarsOldData: LauncherToolbarsDisplayData
     {
         public IScreen? Screen { get; set; }
     }
@@ -350,4 +352,68 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public LauncherFileData File { get; }
         #endregion
     }
+
+    /// <summary>
+    /// 再実施待機方法。
+    /// </summary>
+    public enum RedoMode
+    {
+        /// <summary>
+        /// 再実施しない。
+        /// </summary>
+        [EnumResource]
+        None,
+        /// <summary>
+        /// 一定時間繰り返す。
+        /// </summary>
+        [EnumResource]
+        Timeout,
+        /// <summary>
+        /// 指定回数繰り返す。
+        /// </summary>
+        [EnumResource]
+        Count,
+        /// <summary>
+        /// 一定時間内で指定回数繰り返す。
+        /// </summary>
+        [EnumResource]
+        TimeoutOrCount,
+    }
+
+    public interface IReadOnlyLauncherRedoData
+    {
+        #region property
+
+        RedoMode RedoMode { get; }
+        TimeSpan WaitTime { get; }
+        int RetryCount { get; }
+        IReadOnlyCollection<int> SuccessExitCodes { get; }
+
+        #endregion
+    }
+
+    public class LauncherRedoData: DataBase, IReadOnlyLauncherRedoData
+    {
+        #region IReadOnlyLauncherRedoData
+
+        public RedoMode RedoMode { get; set; }
+        public TimeSpan WaitTime { get; set; }
+        public int RetryCount { get; set; }
+        public List<int> SuccessExitCodes { get; set; } = new List<int>();
+        IReadOnlyCollection<int> IReadOnlyLauncherRedoData.SuccessExitCodes => SuccessExitCodes;
+
+        #endregion
+
+        #region function
+
+        public static LauncherRedoData GetDisable() => new LauncherRedoData() {
+            RedoMode = RedoMode.None,
+            RetryCount = 1,
+            WaitTime = TimeSpan.FromSeconds(1),
+        };
+
+        #endregion
+    }
+
+
 }

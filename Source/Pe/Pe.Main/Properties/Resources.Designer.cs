@@ -1649,6 +1649,78 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Count {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   回数(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Count_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_None {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_None_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Timeout {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Timeout_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間と回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_TimeoutOrCount {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間と回数(_A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_TimeoutOrCount_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_UpdateKind_Auto {
@@ -2711,6 +2783,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   再実施 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Redo_A {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Redo_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_WorkDirectory_A {
@@ -3137,6 +3218,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_LauncherItemCustomizeControl_File_WorkDirectory_A {
             get {
                 return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_WorkDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_RedoEditor_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_RedoEditor_Header", resourceCulture);
             }
         }
         
@@ -3677,6 +3767,152 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_OldVersionConverter {
             get {
                 return ResourceManager.GetString("String_OldVersionConverter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行待機方法 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_RedoMode_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_RedoMode_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_RetryCount_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_RetryCount_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了コード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_SuccessExitCodes_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_SuccessExitCodes_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了コードはカンマ区切り(数値, 数値)で指定してください。
+        ///範囲を指定する場合はハイフン(数値-数値)で指定できます。
+        ///例: 0, 20, 100-110 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_SuccessExitCodesRemark {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_SuccessExitCodesRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機処理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_WaitAndRetryTime_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_WaitAndRetryTime_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機時間(秒) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_WaitTime_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_WaitTime_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${MESSAGE} (クリックでキャンセル) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Cancel_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Cancel_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行監視終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_CancelWatch {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_CancelWatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行中: ${CAPTION} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Caption_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Caption_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   試行回数超過 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_CountMax {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_CountMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-COUNT}/${MAX-COUNT} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_CountMax_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_CountMax_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-TIME}/${MAX-TIME}, ${NOW-COUNT}/${MAX-COUNT} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_TimeoutOrCountMax_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_TimeoutOrCountMax_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-TIME}/${MAX-TIME} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_Timout_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_Timout_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_SuccessExit {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_SuccessExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイムアウト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Timeout {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイムアウト/試行回数超過 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_TimeoutOrCountMax {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_TimeoutOrCountMax", resourceCulture);
             }
         }
         

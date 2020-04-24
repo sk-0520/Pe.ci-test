@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -167,6 +168,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
         /// <summary>
+        /// 通知ログは存在するか。
+        /// </summary>
+        /// <param name="notifyLogId"></param>
+        /// <returns></returns>
+        bool ExistsLog(Guid notifyLogId);
+
+        /// <summary>
         /// 通知ログ追加。
         /// </summary>
         /// <param name="notifyMessage"></param>
@@ -176,14 +184,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ///通知ログ置き換え。
         /// </summary>
         /// <param name="notifyLogId"></param>
-        /// <param name="content"></param>
-        void ReplaceLog(Guid notifyLogId, string content);
+        /// <param name="contentMessage"></param>
+        void ReplaceLog(Guid notifyLogId, string contentMessage);
         /// <summary>
         /// 通知ログクリア。
         /// </summary>
         /// <param name="notifyLogId"></param>
-        /// <param name="content"></param>
         bool ClearLog(Guid notifyLogId);
+        /// <summary>
+        /// 通知ログを時間差で破棄。
+        /// </summary>
+        /// <param name="notifyLogId"></param>
+        void FadeoutLog(Guid notifyLogId);
 
         #endregion
     }
@@ -206,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 [NotifyLogKind.Normal] = notifyLogConfiguration.NormalLogDisplayTime,
                 [NotifyLogKind.Command] = notifyLogConfiguration.CommandLogDisplayTime,
                 [NotifyLogKind.Undo] = notifyLogConfiguration.UndoLogDisplayTime,
-                [NotifyLogKind.Topmost] = TimeSpan.Zero, // つかわんですたい
+                [NotifyLogKind.Topmost] = notifyLogConfiguration.FadeoutTime,
                 //[NotifyLogKind.Platform] = TimeSpan.Zero,
             };
 
@@ -320,6 +332,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             OnCustomizeLauncherItemExited(launcherItemId);
         }
 
+
+        /// <inheritdoc cref="INotifyManager.ExistsLog(Guid)" />
+        public bool ExistsLog(Guid notifyLogId)
+        {
+            return NotifyLogs.Contains(notifyLogId);
+        }
+
         /// <inheritdoc cref="INotifyManager.AppendLog(NotifyMessage)" />
         public Guid AppendLog(NotifyMessage notifyMessage)
         {
@@ -346,19 +365,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return element.NotifyLogId;
         }
         /// <inheritdoc cref="INotifyManager.ReplaceLog(Guid, string)" />
-        public void ReplaceLog(Guid notifyLogId, string content)
+        public void ReplaceLog(Guid notifyLogId, string contentMessage)
         {
             if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
                 throw new KeyNotFoundException(notifyLogId.ToString());
             }
-            if(element.Kind != NotifyLogKind.Topmost) {
-                throw new Exception($"{nameof(element.Kind)}: not {nameof(NotifyLogKind.Topmost)}");
-            }
 
-            Logger.LogDebug("[{0}] 変更: {1}, {2}", element.Header, content, element.NotifyLogId);
+            Logger.LogDebug("[{0}] 変更: {1}, {2}", element.Header, contentMessage, element.NotifyLogId);
 
             DispatcherWrapper.Begin(() => {
-                element.ChangeContent(new NotifyLogContent(content, DateTime.UtcNow));
+                element.ChangeContent(new NotifyLogContent(contentMessage, DateTime.UtcNow));
                 OnNotifyEventChanged(NotifyEventKind.Change, element);
             });
         }
@@ -385,6 +401,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             return false;
+        }
+
+        /// <inheritdoc cref="INotifyManager.FadeoutLog(Guid)" />
+        public void FadeoutLog(Guid notifyLogId)
+        {
+            if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
+                return;
+            }
+
+            Task.Delay(NotifyLogLifeTimes[element.Kind]).ContinueWith(t => {
+                ClearLog(notifyLogId);
+            });
         }
 
         #endregion

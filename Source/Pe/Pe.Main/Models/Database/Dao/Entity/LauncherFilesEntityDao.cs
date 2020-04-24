@@ -136,6 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        [Obsolete]
         public bool InsertFileWithCustom(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
         {
             var encodingConverter = new EncodingConverter(LoggerFactory);

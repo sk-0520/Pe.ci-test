@@ -45,8 +45,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         #region file
 
         public LauncherFileData? File { get; private set; }
-        public LauncherStoreAppData? StoreApp { get; private set; }
         public ObservableCollection<LauncherEnvironmentVariableData>? EnvironmentVariableItems { get; private set; }
+        public LauncherRedoData? Redo { get; private set; }
+        #endregion
+
+        #region storeapp
+
+        public LauncherStoreAppData? StoreApp { get; private set; }
 
         #endregion
 
@@ -82,6 +87,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                             var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                             var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
                             EnvironmentVariableItems = new ObservableCollection<LauncherEnvironmentVariableData>(environmentVariableItems);
+
+                            var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            if(launcherRedoItemsEntityDao.SelectExistsLauncherRedoItem(LauncherItemId)) {
+                                var redoData = launcherRedoItemsEntityDao.SelectLauncherRedoItem(LauncherItemId);
+                                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                                var exitCodes = launcherRedoSuccessExitCodesEntityDao.SelectRedoSuccessExitCodes(LauncherItemId);
+                                redoData.SuccessExitCodes.SetRange(exitCodes);
+                                Redo = redoData;
+                            } else {
+                                Redo = LauncherRedoData.GetDisable();
+                            }
                         }
                         break;
 
@@ -160,11 +176,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 case LauncherItemKind.File: {
                         Debug.Assert(File != null);
                         Debug.Assert(EnvironmentVariableItems != null);
+                        Debug.Assert(Redo != null);
 
                         var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
                         var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+                        var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+                        var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
 
                         launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, databaseCommonStatus);
+                        launcherRedoItemsEntityDao.UpdateRedoItem(itemData.LauncherItemId, Redo, databaseCommonStatus);
+
+                        launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(itemData.LauncherItemId);
+                        launcherRedoSuccessExitCodesEntityDao.InsertSuccessExitCodes(itemData.LauncherItemId, Redo.SuccessExitCodes, databaseCommonStatus);
 
                         launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(itemData.LauncherItemId);
                         launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, databaseCommonStatus);

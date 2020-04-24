@@ -33,9 +33,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 case LauncherItemKind.File: {
                         var file = new LauncherItemCustomizeFileViewModel(Model, FileSelectRequest, DispatcherWrapper, LoggerFactory);
                         var env = new LauncherItemCustomizeEnvironmentVariableViewModel(Model, DispatcherWrapper, LoggerFactory);
+                        var redo = new LauncherItemCustomizeRedoViewModel(Model, DispatcherWrapper, LoggerFactory);
 
                         items.Add(file);
                         items.Add(env);
+                        items.Add(redo);
                     }
                     break;
 
