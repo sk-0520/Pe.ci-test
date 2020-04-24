@@ -276,7 +276,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("設定適用のため各要素生成");
                 RebuildHook();
                 ExecuteElements();
-                CommandElement.Refresh();
+                if(CommandElement.IsInitialized) {
+                    CommandElement.Refresh();
+                }
                 NotifyLogElement.Refresh();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
