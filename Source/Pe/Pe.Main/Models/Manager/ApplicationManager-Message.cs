@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     NotifyManager.ClearLog(KeyboardNotifyLogId);
                     KeyboardNotifyLogId = Guid.Empty;
                 }
-                NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "keyboard", new NotifyLogContent(message)));
+                NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(message)));
             }
 
             switch(job) {
@@ -283,7 +283,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 if(!pressedJob.IsAllHit) {
                                     Logger.LogTrace("待機中: {0}", job.CommonData.KeyActionId);
                                     if(KeyboardNotifyLogId == Guid.Empty) {
-                                        KeyboardNotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, "キー入力待ち", new NotifyLogContent(localModifierKeyStatus.ToString())));
+                                        KeyboardNotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(localModifierKeyStatus.ToString())));
                                     } else {
                                         NotifyManager.ReplaceLog(KeyboardNotifyLogId, localModifierKeyStatus.ToString());
                                     }
@@ -479,7 +479,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogTrace("キー入力該当なし");
                     NotifyManager.ClearLog(KeyboardNotifyLogId);
                     KeyboardNotifyLogId = Guid.Empty;
-                    NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "ki-nyuuryoku", new NotifyLogContent("キー該当なし")));
+                    NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(Properties.Resources.String_Hook_Keyboard_NotFound)));
                 }
             }
         }

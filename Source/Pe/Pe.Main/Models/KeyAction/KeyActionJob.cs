@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #region property
 
         public KeyActionCommonData CommonData { get; }
-        protected IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
+        public IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
 
         #endregion
 

@@ -3029,6 +3029,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   キーボード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Header {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無効なキーの組み合わせ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_NotFound {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ,  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Separator {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Separator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ランチャーアイテム取り込み に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ImportPrograms_Caption {

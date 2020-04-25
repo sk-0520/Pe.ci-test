@@ -1807,4 +1807,13 @@
   <data name="String_Note_Status_HiddenMode_A" xml:space="preserve">
     <value>自動的に隠す方法</value>
   </data>
+  <data name="String_Hook_Keyboard_Header" xml:space="preserve">
+    <value>キーボード</value>
+  </data>
+  <data name="String_Hook_Keyboard_NotFound" xml:space="preserve">
+    <value>無効なキーの組み合わせ</value>
+  </data>
+  <data name="String_Hook_Keyboard_Separator" xml:space="preserve">
+    <value>, </value>
+  </data>
 </root>
