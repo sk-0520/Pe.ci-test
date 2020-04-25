@@ -3762,7 +3762,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   隠し方 に類似しているローカライズされた文字列を検索します。
+        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_HiddenMode_A {
             get {

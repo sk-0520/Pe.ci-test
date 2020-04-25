@@ -95,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
+            PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), nameof(IsVisibleBlind));
         }
 
         #region property
@@ -343,6 +344,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
+        public bool IsVisibleBlind => Model.IsVisibleBlind;
+
         #region theme
 
         [ThemeProperty]
@@ -478,6 +481,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             },
             o => TitleEditMode
         ));
+
+        public ICommand ViewActivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+            o => {
+                Model.StopHidden(true);
+            }
+        ));
+        public ICommand ViewDeactivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+            o => {
+                if(o.IsVisible) {
+                    if(!IsCompact && Model.HiddenMode != NoteHiddenMode.None) {
+                        Model.StartHidden();
+                    }
+                }
+            }
+        ));
+
 
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {

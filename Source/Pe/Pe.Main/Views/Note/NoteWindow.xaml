@@ -82,7 +82,12 @@
   <i:Interaction.Triggers>
     <i:EventTrigger EventName="Deactivated">
       <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
+      <i:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}" CommandParameter="{Binding ElementName=root}" />
     </i:EventTrigger>
+    <i:EventTrigger EventName="Activated">
+      <i:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
+    </i:EventTrigger>
+
     <app_core_view:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
       <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>
@@ -335,6 +340,11 @@
                   <DataTrigger Binding="{Binding IsCompact}" Value="False">
                     <Setter Property="Content" Value="{Binding Content}" />
                   </DataTrigger>
+                  <!--
+                  <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
+                  </DataTrigger>
+                  -->
                   <DataTrigger Binding="{Binding ShowContentKindChangeConfim}" Value="True">
                     <Setter Property="IsEnabled" Value="False" />
                   </DataTrigger>
@@ -349,8 +359,34 @@
             <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
         </Grid>
+        <ContentControl Grid.Row="1" IsHitTestVisible="False">
+          <ContentControl.Style>
+            <Style TargetType="ContentControl">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
+                  <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                      <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0.00:00:00.250" />
+                      </Storyboard>
+                    </BeginStoryboard>
+                  </DataTrigger.EnterActions>
+                  <Setter Property="Visibility" Value="Visible" />
+                  <Setter Property="Content">
+                    <Setter.Value>
+                      <Border Background="#80ff0000" />
+                    </Setter.Value>
+                  </Setter>
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+          </ContentControl.Style>
+        </ContentControl>
+
       </Grid>
     </Border>
+
     <Border
       VerticalAlignment="Bottom"
       HorizontalAlignment="Right"

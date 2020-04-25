@@ -1805,6 +1805,6 @@
     <value>隠さない(_O)</value>
   </data>
   <data name="String_Note_Status_HiddenMode_A" xml:space="preserve">
-    <value>隠し方</value>
+    <value>自動的に隠す</value>
   </data>
 </root>

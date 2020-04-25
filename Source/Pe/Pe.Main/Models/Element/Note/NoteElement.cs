@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -50,9 +51,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         NoteContentElement? _contentElement;
 
+        bool _isVisibleBlind;
         #endregion
 
-        public NoteElement(Guid noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
@@ -62,6 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
+            NoteConfiguration = noteConfiguration;
             DispatcherWrapper = dispatcherWrapper;
             NoteTheme = noteTheme;
 
@@ -71,6 +74,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         #region property
 
         public Guid NoteId { get; }
+
+        NoteConfiguration NoteConfiguration { get; }
+        Timer? HideWaitTimer { get; set; }
 
         /// <summary>
         /// DB から取得して設定したりそれでも保存しなかったりするまさに変数。
@@ -158,6 +164,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             set => SetProperty(ref this._isVisible, value);
         }
 
+        public bool IsVisibleBlind
+        {
+            get => this._isVisibleBlind;
+            private set => SetProperty(ref this._isVisibleBlind, value);
+        }
         public NoteHiddenMode HiddenMode
         {
             get => this._hiddenMode;
@@ -651,6 +662,56 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
+        public void StartHidden() {
+            if(HiddenMode == NoteHiddenMode.None) {
+                throw new InvalidOperationException(nameof(HiddenMode));
+            }
+
+            StopHidden(true);
+            var waitTime = HiddenMode switch
+            {
+                NoteHiddenMode.Blind => NoteConfiguration.HiddenBlindWaitTime,
+                NoteHiddenMode.Compact => NoteConfiguration.HiddenCompactWaitTime,
+                _ => throw new NotImplementedException()
+            };
+
+            HideWaitTimer = new Timer() {
+                Interval = (int)waitTime.TotalMilliseconds,
+                AutoReset = false,
+            };
+            HideWaitTimer.Elapsed += HideWaitTimer_Elapsed;
+            HideWaitTimer.Start();
+        }
+
+        public void StopHidden(bool restore) {
+            if(HideWaitTimer != null) {
+                HideWaitTimer.Elapsed -= HideWaitTimer_Elapsed;
+                HideWaitTimer.Stop();
+                HideWaitTimer.Dispose();
+                HideWaitTimer = null;
+            }
+
+            if(restore) {
+                IsVisibleBlind = false;
+            }
+        }
+
+        void Hide()
+        {
+            Logger.LogInformation("自動的に隠す");
+            switch(HiddenMode) {
+                case NoteHiddenMode.Blind:
+                    IsVisibleBlind = true;
+                    break;
+
+                case NoteHiddenMode.Compact:
+                    break;
+
+                case NoteHiddenMode.None:
+                default:
+                    throw new NotImplementedException();
+            }
+        }
 
         #endregion
 
@@ -668,6 +729,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 if(disposing) {
                     FontElement?.Dispose();
                     ContentElement?.Dispose();
+                    StopHidden(false);
                 }
             }
 
@@ -729,5 +791,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
 
         #endregion
+
+        private void HideWaitTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            StopHidden(false);
+            Hide();
+        }
+
     }
 }
