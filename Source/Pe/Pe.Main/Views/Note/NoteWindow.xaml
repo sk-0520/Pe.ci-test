@@ -393,6 +393,7 @@
                 </Style.Triggers>
               </Style>
             </StackPanel.Style>
+            <!--#region 書式-->
             <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Format_Header, Source={x:Static app_main:CultureService.Instance}}">
               <StackPanel Grid.IsSharedSizeScope="True">
                 <Grid>
@@ -684,9 +685,11 @@
 
               </StackPanel>
             </GroupBox>
+            <!--#endregion-->
 
+            <!--#region 状態-->
             <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Status_Header, Source={x:Static app_main:CultureService.Instance}}">
-              <StackPanel>
+              <StackPanel  Grid.IsSharedSizeScope="True">
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -698,6 +701,7 @@
                   <CheckBox Grid.Column="1" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Compact_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsCompact, Mode=OneWay}" Command="{Binding ToggleCompactCommand}" />
                   <CheckBox Grid.Column="2" Style="{StaticResource Horizontal-CheckBox}" Content="{Binding Resources.String_Note_Status_Topmost_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" />
                 </Grid>
+
                 <CheckBox Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_WordWrap_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding TextWrap, Mode=OneWay}" Command="{Binding ToggleTextWrapCommand}">
                   <CheckBox.Style>
                     <Style TargetType="CheckBox" BasedOn="{StaticResource Vertical-CheckBox}">
@@ -709,10 +713,39 @@
                     </Style>
                   </CheckBox.Style>
                 </CheckBox>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="StatusLabel" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Status_HiddenMode_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <ComboBox x:Name="listFont" Grid.Column="1" SelectedItem="{Binding SelectedHiddenMode}" ItemsSource="{Binding HiddenModeItems}">
+                    <ComboBox.ItemsPanel>
+                      <ItemsPanelTemplate>
+                        <VirtualizingStackPanel
+                          VirtualizingStackPanel.IsVirtualizing="True"
+                          VirtualizingStackPanel.VirtualizationMode="Recycling"
+                          ScrollUnit="Item"
+                        >
+                        </VirtualizingStackPanel>
+                      </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumToCultureConverter}}" />
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+                </Grid>
+
                 <Button Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding LinkChangeCommand}" />
               </StackPanel>
             </GroupBox>
+            <!--#endregion-->
 
+            <!--#region 操作-->
             <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_Note_Operation_Header, Source={x:Static app_main:CultureService.Instance}}">
               <StackPanel>
                 <Grid>
@@ -738,6 +771,7 @@
 
               </StackPanel>
             </GroupBox>
+            <!--#endregion-->
           </StackPanel>
           <!--#endregion -->
 

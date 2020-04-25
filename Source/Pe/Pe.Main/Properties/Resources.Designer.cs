@@ -1503,7 +1503,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   ブラインド に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Blind {
             get {
@@ -1512,7 +1512,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   ブラインド(_B) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Blind_A {
             get {
@@ -1521,7 +1521,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   最小化 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Compact {
             get {
@@ -1530,7 +1530,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   最小化(_N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Compact_A {
             get {
@@ -1539,7 +1539,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   隠さない に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_None {
             get {
@@ -1548,7 +1548,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   隠さない(_O) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_None_A {
             get {
@@ -3758,6 +3758,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Note_Status_Header {
             get {
                 return ResourceManager.GetString("String_Note_Status_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   隠し方 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_HiddenMode_A {
+            get {
+                return ResourceManager.GetString("String_Note_Status_HiddenMode_A", resourceCulture);
             }
         }
         

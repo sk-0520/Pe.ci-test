@@ -330,6 +330,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set => SetProperty(ref this._isPopupRemoveNote, value);
         }
 
+        public IReadOnlyList<NoteHiddenMode> HiddenModeItems { get; } = EnumUtility.GetMembers<NoteHiddenMode>().OrderBy(i => i).ToList();
+
+        public NoteHiddenMode SelectedHiddenMode
+        {
+            get => Model.HiddenMode;
+            set
+            {
+                if(SelectedHiddenMode != value) {
+                    Model.ChangeHiddenModeDelaySave(value);
+                }
+            }
+        }
+
         #region theme
 
         [ThemeProperty]

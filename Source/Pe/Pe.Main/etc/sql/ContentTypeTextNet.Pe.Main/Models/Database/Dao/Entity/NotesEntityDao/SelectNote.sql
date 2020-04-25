@@ -1,4 +1,4 @@
-﻿select
+select
 	Notes.NoteId,
 	Notes.Title,
 	Notes.ScreenName,
@@ -11,7 +11,8 @@
 	Notes.IsTopmost,
 	Notes.IsCompact,
 	Notes.TextWrap,
-	Notes.ContentKind
+	Notes.ContentKind,
+	Notes.HiddenMode
 from
 	Notes
 where

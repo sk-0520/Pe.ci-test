@@ -1787,21 +1787,24 @@
     <value>タイムアウト/試行回数超過</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind" xml:space="preserve">
-    <value />
+    <value>ブラインド</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind_A" xml:space="preserve">
-    <value />
+    <value>ブラインド(_B)</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact" xml:space="preserve">
-    <value />
+    <value>最小化</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact_A" xml:space="preserve">
-    <value />
+    <value>最小化(_N)</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None" xml:space="preserve">
-    <value />
+    <value>隠さない</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None_A" xml:space="preserve">
-    <value />
+    <value>隠さない(_O)</value>
+  </data>
+  <data name="String_Note_Status_HiddenMode_A" xml:space="preserve">
+    <value>隠し方</value>
   </data>
 </root>
