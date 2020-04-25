@@ -2738,6 +2738,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   Alt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Alt {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Alt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CTRL に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Control {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_None {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shift に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Shift {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Win に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Windows {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Windows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   変更 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_EnvironmentValieableEditor_Merge_A {
@@ -3025,6 +3070,114 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Feedback_Warning {
             get {
                 return ResourceManager.GetString("String_Feedback_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンドランチャー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Command_Show {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Command_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定して実行: ${ITEM} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_LauncherItem_Extends_Format {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_LauncherItem_Extends_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテム起動: ${ITEM} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_LauncherItem_Normal_Format {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_LauncherItem_Normal_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Note_Create {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Note_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート最後面移動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Note_Z_Bottom {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Note_Z_Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート最前面移動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Note_Z_Top {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Note_Z_Top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー表示抑制 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Toolbar_Hidden {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Toolbar_Hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キーボード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Header {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    +  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Join {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Join", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${KEY}(${MOD}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_ModifierFormat {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_ModifierFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無効なキーの組み合わせ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_NotFound {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   → に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Separator {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Separator", resourceCulture);
             }
         }
         

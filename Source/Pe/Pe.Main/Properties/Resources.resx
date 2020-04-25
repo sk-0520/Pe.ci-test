@@ -1807,4 +1807,55 @@
   <data name="String_Note_Status_HiddenMode_A" xml:space="preserve">
     <value>自動的に隠す方法</value>
   </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Control" xml:space="preserve">
+    <value>CTRL</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.None" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Windows" xml:space="preserve">
+    <value>Win</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Command_Show" xml:space="preserve">
+    <value>コマンドランチャー</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_LauncherItem_Extends_Format" xml:space="preserve">
+    <value>指定して実行: ${ITEM}</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_LauncherItem_Normal_Format" xml:space="preserve">
+    <value>アイテム起動: ${ITEM}</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Note_Create" xml:space="preserve">
+    <value>ノート作成</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Note_Z_Bottom" xml:space="preserve">
+    <value>ノート最後面移動</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Note_Z_Top" xml:space="preserve">
+    <value>ノート最前面移動</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Toolbar_Hidden" xml:space="preserve">
+    <value>ツールバー表示抑制</value>
+  </data>
+  <data name="String_Hook_Keyboard_Header" xml:space="preserve">
+    <value>キーボード</value>
+  </data>
+  <data name="String_Hook_Keyboard_Join" xml:space="preserve">
+    <value> + </value>
+  </data>
+  <data name="String_Hook_Keyboard_ModifierFormat" xml:space="preserve">
+    <value>${KEY}(${MOD})</value>
+  </data>
+  <data name="String_Hook_Keyboard_NotFound" xml:space="preserve">
+    <value>無効なキーの組み合わせ</value>
+  </data>
+  <data name="String_Hook_Keyboard_Separator" xml:space="preserve">
+    <value>→</value>
+  </data>
 </root>

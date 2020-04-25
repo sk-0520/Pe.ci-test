@@ -238,6 +238,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
+        public IEnumerable<IReadOnlyKeyMappingData> GetCurrentMappings()
+        {
+            return Mappings.Take(NextIndex);
+        }
+
         #endregion
 
         #region KeyActionJobBase
