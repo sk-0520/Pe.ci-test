@@ -80,7 +80,7 @@ create table [AppCommandSetting] (
 	[IconBox] text not null /* アイコンサイズ  */,
 	[Width] real not null /* 横幅  */,
 	[HideWaitTime] text not null /* 非表示待機時間  */,
-	[FindTag] boolean not null /* タグ検索  */,
+	[FindTag]  not null /* タグ検索  */,
 	primary key(
 		[Generation]
 	),
@@ -105,7 +105,7 @@ create table [AppNoteSetting] (
 	[LayoutKind] text not null /* 位置種別  */,
 	[ForegroundColor] text not null /* 前景色 #AARRGGBB */,
 	[BackgroundColor] text not null /* 背景色 #AARRGGBB */,
-	[IsTopmost] boolean not null /* 最前面  */,
+	[IsTopmost]  not null /* 最前面  */,
 	primary key(
 		[Generation]
 	),

@@ -166,6 +166,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#600: 初回起動時に作成される表のうち型指定していないものがある"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{

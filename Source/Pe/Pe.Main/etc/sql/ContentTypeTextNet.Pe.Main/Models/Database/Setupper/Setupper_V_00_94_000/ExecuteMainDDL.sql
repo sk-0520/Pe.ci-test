@@ -141,3 +141,106 @@ insert into
 --// [#591] 退避用テーブル Note2 の破棄
 drop table Notes2;
 
+
+--// [#600] 退避用テーブル AppCommandSetting2 の作成
+create table
+	AppCommandSetting2
+as
+	select
+		*
+	from
+		AppCommandSetting
+;
+
+--// [#591] 現行テーブル AppCommandSetting 破棄
+drop table AppCommandSetting;
+
+--// [#600] table: AppCommandSetting
+create table [AppCommandSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[IconBox] text not null /* アイコンサイズ  */,
+	[Width] real not null /* 横幅  */,
+	[HideWaitTime] text not null /* 非表示待機時間  */,
+	[FindTag] boolean not null /* タグ検索  */,
+	primary key(
+		[Generation]
+	),
+	foreign key([FontId]) references [Fonts]([FontId])
+)
+;
+
+--// [#600] 退避用テーブル AppCommandSetting2 から AppCommandSetting へデータ移送
+insert into
+	AppCommandSetting
+select
+	*
+from
+	AppCommandSetting2
+;
+
+--// [#600] 退避用テーブル AppCommandSetting2 の破棄
+drop table AppCommandSetting2;
+
+
+
+--// [#600] 退避用テーブル AppNoteSetting2 の作成
+create table
+	AppNoteSetting2
+as
+	select
+		*
+	from
+		AppNoteSetting
+;
+
+--// [#591] 現行テーブル AppNoteSetting 破棄
+drop table AppNoteSetting;
+
+--// [#600] table: AppNoteSetting
+create table [AppNoteSetting] (
+	[Generation] integer not null /* 世代 最大のものを使用する */,
+	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
+	[CreatedAccount] text not null /* 作成ユーザー名  */,
+	[CreatedProgramName] text not null /* 作成プログラム名  */,
+	[CreatedProgramVersion] text not null /* 作成プログラムバージョン  */,
+	[UpdatedTimestamp] datetime not null /* 更新タイムスタンプ UTC */,
+	[UpdatedAccount] text not null /* 更新ユーザー名  */,
+	[UpdatedProgramName] text not null /* 更新プログラム名  */,
+	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
+	[UpdatedCount] integer not null /* 更新回数 0始まり */,
+	[FontId] text not null /* フォント  */,
+	[TitleKind] text not null /* タイトル設定  */,
+	[LayoutKind] text not null /* 位置種別  */,
+	[ForegroundColor] text not null /* 前景色 #AARRGGBB */,
+	[BackgroundColor] text not null /* 背景色 #AARRGGBB */,
+	[IsTopmost] boolean not null /* 最前面  */,
+	primary key(
+		[Generation]
+	),
+	foreign key([FontId]) references [Fonts]([FontId])
+)
+;
+
+--// [#600] 退避用テーブル AppNoteSetting2 から AppNoteSetting へデータ移送
+insert into
+	AppNoteSetting
+select
+	*
+from
+	AppNoteSetting2
+;
+
+--// [#600] 退避用テーブル AppNoteSetting2 の破棄
+drop table AppNoteSetting2;
+
+
