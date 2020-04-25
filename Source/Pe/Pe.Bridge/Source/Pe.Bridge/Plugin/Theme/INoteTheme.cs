@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
@@ -46,6 +47,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         DependencyObject GetResizeGripImage(ColorPair<Color> baseColor);
 
         DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, ColorPair<Color> baseColor);
+
+        Effect GetBlindEffect(ColorPair<Color> baseColor);
 
         #endregion
     }

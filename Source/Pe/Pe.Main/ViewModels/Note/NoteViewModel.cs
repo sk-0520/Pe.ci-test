@@ -386,6 +386,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
 
+        public DependencyObject BlindEffect => NoteTheme.GetBlindEffect(GetColorPair());
 
         #endregion
 

@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -203,6 +204,14 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             var box = CreateBox(baseColor.Foreground, baseColor.Background, size);
             return box;
         }
+
+        /// <inheritdoc cref="INoteTheme.GetBlindEffect(ColorPair{Color})"/>
+        public Effect GetBlindEffect(ColorPair<Color> baseColor)
+        {
+            var content = GetResourceValue<Effect>(nameof(INoteTheme), nameof(GetBlindEffect));
+            return content;
+        }
+
 
         #endregion
     }
