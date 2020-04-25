@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, ColorPair<Color> baseColor);
 
         Effect GetBlindEffect(ColorPair<Color> baseColor);
+        DependencyObject GetBlindContent(ColorPair<Color> baseColor);
 
         #endregion
     }

@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
+using IO = System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -210,6 +215,37 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         {
             var content = GetResourceValue<Effect>(nameof(INoteTheme), nameof(GetBlindEffect));
             return content;
+        }
+
+        /// <inheritdoc cref="INoteTheme.GetBlindContent(ColorPair{Color})"/>
+        public DependencyObject GetBlindContent(ColorPair<Color> baseColor)
+        {
+            var srcContent = GetResourceValue<DependencyObject>(nameof(INoteTheme), nameof(GetBlindContent));
+
+            using var srcContentStream = new IO.MemoryStream();
+            using(var keepStream = new KeepStream(srcContentStream)) {
+                XamlWriter.Save(srcContent, keepStream);
+            }
+
+            using var srcContentReader = new XmlTextReader(srcContentStream);
+
+            var xmlNamespaceManager = new XmlNamespaceManager(srcContentReader.NameTable);
+            var xamlNamespace = "theme";
+            xmlNamespaceManager.AddNamespace(xamlNamespace, "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
+
+            var newContentXml = XDocument.Load(srcContentReader);
+            var penElement = newContentXml.XPathSelectElement("//*/" + xamlNamespace + ":Pen", xmlNamespaceManager);
+            penElement.SetAttributeValue(Pen.BrushProperty.Name, baseColor.Foreground.ToString());
+
+            using var newContentStream = new IO.MemoryStream();
+            using(var keepStream = new KeepStream(newContentStream)) {
+                newContentXml.Save(keepStream);
+            }
+
+            using var newContentReader = XmlReader.Create(newContentStream);
+            var newContent = (Border)XamlReader.Load(newContentReader);
+
+            return newContent;
         }
 
 

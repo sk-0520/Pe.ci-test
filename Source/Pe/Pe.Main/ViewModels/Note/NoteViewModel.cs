@@ -96,6 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
             PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), nameof(IsVisibleBlind));
+            PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), () => ApplyTheme());
         }
 
         #region property
@@ -386,7 +387,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
 
-        public DependencyObject BlindEffect => NoteTheme.GetBlindEffect(GetColorPair());
+        [ThemeProperty]
+        public System.Windows.Media.Effects.Effect BlindEffect => NoteTheme.GetBlindEffect(GetColorPair());
+        [ThemeProperty]
+        public DependencyObject BlindContent => NoteTheme.GetBlindContent(GetColorPair());
 
         #endregion
 
@@ -864,6 +868,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
+        void ApplyBlind()
+        {
+            DispatcherWrapper.VerifyAccess();
+
+            var propertyNames = new[] {
+                nameof(BlindEffect),
+                nameof(BlindContent),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
         void ApplyTheme()
         {
             ThrowIfDisposed();
@@ -876,6 +893,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 vm.ApplyCaption();
                 vm.ApplyBorder();
                 vm.ApplyContent();
+                if(IsVisibleBlind) {
+                    vm.ApplyBlind();
+                }
             }, this, DispatcherPriority.Render);
         }
 

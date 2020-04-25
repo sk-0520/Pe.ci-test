@@ -359,7 +359,7 @@
             <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
         </Grid>
-        <!--<ContentControl Grid.Row="1" IsHitTestVisible="False">
+        <ContentControl Grid.Row="1" IsHitTestVisible="False">
           <ContentControl.Style>
             <Style TargetType="ContentControl">
               <Style.Triggers>
@@ -378,7 +378,7 @@
               <Setter Property="Visibility" Value="Collapsed" />
             </Style>
           </ContentControl.Style>
-        </ContentControl>-->
+        </ContentControl>
 
       </Grid>
     </Border>
