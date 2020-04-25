@@ -167,9 +167,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
         {
+            void PutNotifyLog(string message) {
+                if(KeyboardNotifyLogId != Guid.Empty) {
+                    NotifyManager.ClearLog(KeyboardNotifyLogId);
+                    KeyboardNotifyLogId = Guid.Empty;
+                }
+                NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "keyboard", new NotifyLogContent(message)));
+            }
+
             switch(job) {
                 case KeyActionCommandJob commandJob: {
                         Logger.LogInformation("キーからの起動: コマンドランチャー");
+                        PutNotifyLog("コマンドランチャー");
                         ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                             ShowCommandView();
                         });
@@ -185,9 +194,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
                         switch(launcherItemJob.PressedData.LauncherItemKind) {
                             case KeyActionContentLauncherItem.Execute:
+                                PutNotifyLog("ランチャーアイテム起動");
                                 element.Execute(screen);
                                 break;
                             case KeyActionContentLauncherItem.ExtendsExecute:
+                                PutNotifyLog("ランチャーアイテム指定して実行");
                                 element.OpenExtendsExecuteView(screen);
                                 break;
                             default:
@@ -197,6 +208,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     break;
 
                 case KeyActionLauncherToolbarJob launcherToolbarJob: {
+                        PutNotifyLog("ツールバー非表示");
+
                         ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                             var windowItems = WindowManager.GetWindowItems(WindowKind.LauncherToolbar);
                             foreach(var windowItem in windowItems) {
@@ -210,6 +223,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 case KeyActionNoteJob noteJob: {
                         switch(noteJob.PressedData.NoteKind) {
                             case KeyActionContentNote.Create:
+                                PutNotifyLog("ノート作成");
+
                                 var deviceCursorPos = MouseUtility.GetDevicePosition();
                                 var screen = Screen.FromDevicePoint(deviceCursorPos);
                                 var noteElement = CreateNote(screen, NoteStartupPosition.CursorPosition);
@@ -220,12 +235,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 break;
 
                             case KeyActionContentNote.ZOrderTop:
+                                PutNotifyLog("全ノート最前面移動");
+
                                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                                     MoveZOrderAllNotes(true);
                                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                                 break;
 
                             case KeyActionContentNote.ZOrderBottom:
+                                PutNotifyLog("全ノート最後面移動");
+
                                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                                     MoveZOrderAllNotes(false);
                                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
@@ -270,14 +289,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                     }
                                     break;
                                 }
+
                                 pressedJob.Reset();
                                 ExecuteKeyPressedJob(pressedJob);
-
-                                if(KeyboardNotifyLogId != Guid.Empty) {
-                                    NotifyManager.ReplaceLog(KeyboardNotifyLogId, $"{pressedJob.CommonData.KeyActionKind}: {pressedJob.CommonData.KeyActionId}");
-                                    NotifyManager.FadeoutLog(KeyboardNotifyLogId);
-                                    KeyboardNotifyLogId = Guid.Empty;
-                                }
 
                                 break;
                             } else {
@@ -460,6 +474,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(0 < jobs.Count) {
                 e.Handled = !IsThroughSystem(jobs);
                 ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
+            } else {
+                if(KeyboardNotifyLogId != Guid.Empty) {
+                    Logger.LogTrace("キー入力該当なし");
+                    NotifyManager.ClearLog(KeyboardNotifyLogId);
+                    KeyboardNotifyLogId = Guid.Empty;
+                    NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "ki-nyuuryoku", new NotifyLogContent("キー該当なし")));
+                }
             }
         }
 
