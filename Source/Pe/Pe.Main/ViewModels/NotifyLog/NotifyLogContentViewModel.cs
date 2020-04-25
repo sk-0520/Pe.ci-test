@@ -25,6 +25,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         [Timestamp(DateTimeKind.Utc)]
         public DateTime Timestamp => Content.Timestamp;
 
+        [Timestamp(DateTimeKind.Local)]
+        public DateTime LocalTimestamp => Content.Timestamp.ToLocalTime();
+
         #endregion
 
         #region command

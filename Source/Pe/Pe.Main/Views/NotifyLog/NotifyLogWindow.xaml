@@ -159,7 +159,7 @@
                       <ColumnDefinition SharedSizeGroup="Undo" Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Width="120" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Content}" Text="{Binding Content.Timestamp}" />
+                    <TextBlock Grid.Column="0" Width="120" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Content}" Text="{Binding Content.LocalTimestamp}" />
 
                     <TextBlock Grid.Column="1" MinWidth="60" MaxWidth="160" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Header}" Text="{Binding Header}" />
 
@@ -173,7 +173,7 @@
                             <DataTrigger Binding="{Binding Kind}" Value="Command">
                               <Setter Property="Content">
                                 <Setter.Value>
-                                  <TextBlock>
+                                  <TextBlock ToolTip="{Binding Content.Message, Mode=OneWay}">
                                     <Hyperlink Style="{StaticResource Link}" Command="{Binding DataContext.ExecuteLogCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
                                       <TextBlock Text="{Binding Content.Message, Mode=OneWay}" />
                                     </Hyperlink>
