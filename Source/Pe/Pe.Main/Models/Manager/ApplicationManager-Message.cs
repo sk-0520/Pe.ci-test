@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             switch(job) {
                 case KeyActionCommandJob commandJob: {
                         Logger.LogInformation("キーからの起動: コマンドランチャー");
-                        PutNotifyLog("コマンドランチャー");
+                        PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Command_Show);
                         ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                             ShowCommandView();
                         });
@@ -193,13 +193,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         var deviceCursorLocation = PodStructUtility.Convert(podPoint);
                         var screen = Screen.FromDevicePoint(deviceCursorLocation);
                         var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
+                        var map = new Dictionary<string, string>() {
+                            ["ITEM"] = element.Name,
+                        };
                         switch(launcherItemJob.PressedData.LauncherItemKind) {
                             case KeyActionContentLauncherItem.Execute:
-                                PutNotifyLog("ランチャーアイテム起動");
+                                PutNotifyLog(TextUtility.ReplaceFromDictionary(Properties.Resources.String_Hook_Keyboard_Execute_LauncherItem_Normal_Format, map));
                                 element.Execute(screen);
                                 break;
                             case KeyActionContentLauncherItem.ExtendsExecute:
-                                PutNotifyLog("ランチャーアイテム指定して実行");
+                                PutNotifyLog(TextUtility.ReplaceFromDictionary(Properties.Resources.String_Hook_Keyboard_Execute_LauncherItem_Extends_Format, map));
                                 element.OpenExtendsExecuteView(screen);
                                 break;
                             default:
@@ -209,7 +212,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     break;
 
                 case KeyActionLauncherToolbarJob launcherToolbarJob: {
-                        PutNotifyLog("ツールバー非表示");
+                        PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Toolbar_Hidden);
 
                         ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                             var windowItems = WindowManager.GetWindowItems(WindowKind.LauncherToolbar);
@@ -224,7 +227,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 case KeyActionNoteJob noteJob: {
                         switch(noteJob.PressedData.NoteKind) {
                             case KeyActionContentNote.Create:
-                                PutNotifyLog("ノート作成");
+                                PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Create);
 
                                 var deviceCursorPos = MouseUtility.GetDevicePosition();
                                 var screen = Screen.FromDevicePoint(deviceCursorPos);
@@ -236,7 +239,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 break;
 
                             case KeyActionContentNote.ZOrderTop:
-                                PutNotifyLog("全ノート最前面移動");
+                                PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Z_Top);
 
                                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                                     MoveZOrderAllNotes(true);
@@ -244,7 +247,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 break;
 
                             case KeyActionContentNote.ZOrderBottom:
-                                PutNotifyLog("全ノート最後面移動");
+                                PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Z_Bottom);
 
                                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                                     MoveZOrderAllNotes(false);
