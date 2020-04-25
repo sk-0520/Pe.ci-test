@@ -711,7 +711,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         void Hide()
         {
-            Logger.LogInformation("自動的に隠す");
+            Logger.LogInformation("自動的に隠す: {0}, {1}", HiddenMode, NoteId);
+
             switch(HiddenMode) {
                 case NoteHiddenMode.Blind:
                     IsVisibleBlind = true;

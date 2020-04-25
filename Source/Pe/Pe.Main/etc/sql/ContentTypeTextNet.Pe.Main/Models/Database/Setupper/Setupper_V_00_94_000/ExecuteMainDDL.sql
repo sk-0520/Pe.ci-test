@@ -95,7 +95,7 @@ create table [Notes] (
 	[IsCompact] boolean not null /* 最小化  */,
 	[TextWrap] boolean not null /* 文字列の折り返し  */,
 	[ContentKind] text not null /* ノート内容種別 プレーン文字列 RTF */,
-	[HiddenMode] text not null /* ノート内容種別 プレーン文字列 RTF */,
+	[HiddenMode] text not null /* 隠し方 */,
 	primary key(
 		[NoteId]
 	),
