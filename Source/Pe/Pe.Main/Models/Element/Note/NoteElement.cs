@@ -24,6 +24,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Note;
+using ContentTypeTextNet.Pe.Main.ViewModels.Note;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
@@ -52,6 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         NoteContentElement? _contentElement;
 
         bool _isVisibleBlind;
+        bool _hiddenCompact;
         #endregion
 
         public NoteElement(Guid noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
@@ -168,6 +170,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             get => this._isVisibleBlind;
             private set => SetProperty(ref this._isVisibleBlind, value);
+        }
+        internal bool HiddenCompact
+        {
+            get => this._hiddenCompact;
+            private set => SetProperty(ref this._hiddenCompact, value);
         }
         public NoteHiddenMode HiddenMode
         {
@@ -336,11 +343,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             IsCompact = !IsCompact;
+            if(IsCompact) {
+                HiddenCompact = false;
+            }
+
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateCompact(NoteId, IsCompact, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
+
         public void ToggleTopmostDelaySave()
         {
             ThrowIfDisposed();
@@ -693,6 +705,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             if(restore) {
                 IsVisibleBlind = false;
+                HiddenCompact = false;
             }
         }
 
@@ -705,6 +718,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                     break;
 
                 case NoteHiddenMode.Compact:
+                    if(!IsCompact) {
+                        HiddenCompact = true;
+                    }
                     break;
 
                 case NoteHiddenMode.None:

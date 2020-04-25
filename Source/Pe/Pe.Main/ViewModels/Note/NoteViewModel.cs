@@ -37,7 +37,7 @@ using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteViewModel : ElementViewModelBase<NoteElement>, IViewLifecycleReceiver, IFlushable
+    public class NoteViewModel: ElementViewModelBase<NoteElement>, IViewLifecycleReceiver, IFlushable
     {
         #region variable
 
@@ -97,6 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
             PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), nameof(IsVisibleBlind));
             PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), () => ApplyTheme());
+            PropertyChangedHooker.AddHook(nameof(Model.HiddenCompact), () => HideCompact());
         }
 
         #region property
@@ -440,17 +441,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand ToggleCompactCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                if(!IsCompact) {
-                    NormalWindowHeight = WindowHeight;
-                }
-                Model.ToggleCompactDelaySave();
-                // レイアウト変更(高さ)通知を抑制
-                if(!IsCompact) {
-                    this._windowHeight = NormalWindowHeight;
-                } else {
-                    this._windowHeight = 0;
-                }
-                RaisePropertyChanged(nameof(WindowHeight));
+                ToggleCompact();
             }
         ));
         public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -615,6 +606,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #endregion
 
         #region function
+
+        void ToggleCompact()
+        {
+            if(!IsCompact) {
+                NormalWindowHeight = WindowHeight;
+            }
+            Model.ToggleCompactDelaySave();
+            // レイアウト変更(高さ)通知を抑制
+            if(!IsCompact) {
+                this._windowHeight = NormalWindowHeight;
+            } else {
+                this._windowHeight = 0;
+            }
+            RaisePropertyChanged(nameof(WindowHeight));
+        }
+
+        void HideCompact()
+        {
+            if(Model.HiddenCompact && !IsCompact) {
+                ToggleCompact();
+            }
+        }
 
         NoteLinkChangeRequestParameter CreateLinkParameter(bool isOpen)
         {
