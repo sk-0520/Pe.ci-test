@@ -125,6 +125,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#591: ノートの内容を時間経過で非表示にするとか視認性を悪くする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
