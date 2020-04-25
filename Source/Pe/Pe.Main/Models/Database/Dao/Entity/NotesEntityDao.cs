@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public bool IsCompact { get; set; }
         public bool TextWrap { get; set; }
         public string ContentKind { get; set; } = string.Empty;
+        public string HiddenMode { get; set; } = string.Empty;
 
         #endregion
     }
@@ -56,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string ContentKind { get; } = "ContentKind";
             public static string LayoutKind { get; } = "LayoutKind";
             public static string ScreenName { get; } = "ScreenName";
+            public static string HiddenMode { get; } = "HiddenMode";
 
             #endregion
         }
@@ -68,6 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
             var contentKindTransfer = new EnumTransfer<NoteContentKind>();
+            var hiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
 
             var data = new NoteData() {
                 NoteId = dto.NoteId,
@@ -76,17 +79,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LayoutKind = noteLayoutKindTransfer.ToEnum(dto.LayoutKind),
                 IsVisible = dto.IsVisible,
                 FontId = dto.FontId,
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 ForegroundColor = ToColor(dto.ForegroundColor),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
                 BackgroundColor = ToColor(dto.BackgroundColor),
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
                 IsLocked = dto.IsLocked,
                 IsTopmost = dto.IsTopmost,
                 IsCompact = dto.IsCompact,
                 TextWrap = dto.TextWrap,
                 ContentKind = contentKindTransfer.ToEnum(dto.ContentKind),
+                HiddenMode = hiddenModeTransfer.ToEnum(dto.HiddenMode),
             };
 
             return data;
@@ -96,6 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
             var contentKindTransfer = new EnumTransfer<NoteContentKind>();
+            var hiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
 
             var result = new NotesEntityDto() {
                 NoteId = data.NoteId,
@@ -111,6 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IsCompact = data.IsCompact,
                 TextWrap = data.TextWrap,
                 ContentKind = contentKindTransfer.ToString(data.ContentKind),
+                HiddenMode = hiddenModeTransfer.ToString(data.HiddenMode),
             };
 
             commonStatus.WriteCommon(result);
@@ -264,6 +266,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.NoteId] = noteId;
             param[Column.IsVisible] = isVisible;
+            return Commander.Execute(statement, param) == 1;
+        }
+
+        public bool UpdateHiddenMode(Guid noteId, NoteHiddenMode hiddenMode, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var hiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
+
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.HiddenMode] = hiddenModeTransfer.ToString(hiddenMode);
             return Commander.Execute(statement, param) == 1;
         }
 

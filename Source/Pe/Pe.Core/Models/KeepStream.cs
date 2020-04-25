@@ -10,20 +10,37 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <para>他のストリーム使用処理へ渡した後 閉じられると困る場合にこいつをかませて閉じないようにすることが目的。</para>
     /// <para>用途が用途なので <see cref="KeepStream.Dispose"/> しても <see cref="KeepStream.BaseStream"/> は何もケアされない、つまりはひらきっっぱなことに注意。</para>
     /// </summary>
-    public class KeepStream : Stream
+    public class KeepStream: Stream
     {
         /// <summary>
-        ///
+        /// <inheritdoc cref="KeepStream(Stream, bool)"/>
+        /// <para>位置も戻る</para>
+        /// </summary>
+        /// <param name="stream"><inheritdoc cref="KeepStream(Stream, bool)"/></param>
+        public KeepStream(Stream stream)
+            :this(stream, true)
+        { }
+
+        /// <summary>
+        /// ストリームを閉じないストリーム。
         /// </summary>
         /// <param name="stream">閉じたくないストリーム。</param>
-        public KeepStream(Stream stream)
+        /// <param name="keepPosition"><see cref="Stream.Dispose"/> 時に <see cref="Stream.Position"/> を初期状態に戻すか</param>
+        public KeepStream(Stream stream, bool keepPosition)
         {
             BaseStream = stream;
+            KeepPosition = keepPosition;
+            if(KeepPosition) {
+                BaseStream.Position = RestorePosition;
+            }
         }
 
         #region proeprty
 
         Stream BaseStream { get; set; }
+
+        bool KeepPosition { get; }
+        long RestorePosition { get; }
 
         #endregion
 
@@ -55,9 +72,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         protected override void Dispose(bool disposing)
         {
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-            BaseStream = null;
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+            if(KeepPosition) {
+                if(BaseStream != null) {
+                    BaseStream.Position = RestorePosition;
+                }
+            }
+            BaseStream = null!;
 
             base.Dispose(disposing);
         }

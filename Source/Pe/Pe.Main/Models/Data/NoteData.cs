@@ -52,6 +52,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Screen = 0b0000_0100,
     }
 
+    /// <summary>
+    /// ノートの隠し方。
+    /// </summary>
+    public enum NoteHiddenMode
+    {
+        /// <summary>
+        /// 隠さない。
+        /// </summary>
+        [EnumResource]
+        None,
+        /// <summary>
+        /// メクラ判。
+        /// <para>テーマに依存。</para>
+        /// </summary>
+        [EnumResource]
+        Blind,
+        /// <summary>
+        /// 最小化。
+        /// <para>設定値が変動する。</para>
+        /// </summary>
+        [EnumResource]
+        Compact,
+    }
+
     public class NoteData : DataBase
     {
         #region property
@@ -70,6 +94,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public bool IsCompact { get; set; }
         public bool TextWrap { get; set; }
         public NoteContentKind ContentKind { get; set; }
+        public NoteHiddenMode HiddenMode { get; set; }
+
         #endregion
     }
 

@@ -37,7 +37,7 @@ using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteViewModel : ElementViewModelBase<NoteElement>, IViewLifecycleReceiver, IFlushable
+    public class NoteViewModel: ElementViewModelBase<NoteElement>, IViewLifecycleReceiver, IFlushable
     {
         #region variable
 
@@ -95,6 +95,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
             PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
+            PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), nameof(IsVisibleBlind));
+            PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), () => ApplyTheme());
+            PropertyChangedHooker.AddHook(nameof(Model.HiddenCompact), () => HideCompact());
         }
 
         #region property
@@ -330,6 +333,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             set => SetProperty(ref this._isPopupRemoveNote, value);
         }
 
+        public IReadOnlyList<NoteHiddenMode> HiddenModeItems { get; } = EnumUtility.GetMembers<NoteHiddenMode>().OrderBy(i => i).ToList();
+
+        public NoteHiddenMode SelectedHiddenMode
+        {
+            get => Model.HiddenMode;
+            set
+            {
+                if(SelectedHiddenMode != value) {
+                    Model.ChangeHiddenModeDelaySave(value);
+                }
+            }
+        }
+
+        public bool IsVisibleBlind => Model.IsVisibleBlind;
+
         #region theme
 
         [ThemeProperty]
@@ -370,6 +388,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
 
+        [ThemeProperty]
+        public System.Windows.Media.Effects.Effect BlindEffect => NoteTheme.GetBlindEffect(GetColorPair());
+        [ThemeProperty]
+        public DependencyObject BlindContent => NoteTheme.GetBlindContent(GetColorPair());
 
         #endregion
 
@@ -419,17 +441,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public ICommand ToggleCompactCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
-                if(!IsCompact) {
-                    NormalWindowHeight = WindowHeight;
-                }
-                Model.ToggleCompactDelaySave();
-                // レイアウト変更(高さ)通知を抑制
-                if(!IsCompact) {
-                    this._windowHeight = NormalWindowHeight;
-                } else {
-                    this._windowHeight = 0;
-                }
-                RaisePropertyChanged(nameof(WindowHeight));
+                ToggleCompact();
             }
         ));
         public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -465,6 +477,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             },
             o => TitleEditMode
         ));
+
+        public ICommand ViewActivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+            o => {
+                Model.StopHidden(true);
+            }
+        ));
+        public ICommand ViewDeactivatedCommand => GetOrCreateCommand(() => new DelegateCommand<Window>(
+            o => {
+                if(o.IsVisible) {
+                    if(!IsCompact && Model.HiddenMode != NoteHiddenMode.None) {
+                        Model.StartHidden();
+                    }
+                }
+            }
+        ));
+
 
         public ICommand ContentKindChangeConvertCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -578,6 +606,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         #endregion
 
         #region function
+
+        void ToggleCompact()
+        {
+            if(!IsCompact) {
+                NormalWindowHeight = WindowHeight;
+            }
+            Model.ToggleCompactDelaySave();
+            // レイアウト変更(高さ)通知を抑制
+            if(!IsCompact) {
+                this._windowHeight = NormalWindowHeight;
+            } else {
+                this._windowHeight = 0;
+            }
+            RaisePropertyChanged(nameof(WindowHeight));
+        }
+
+        void HideCompact()
+        {
+            if(Model.HiddenCompact && !IsCompact) {
+                ToggleCompact();
+            }
+        }
 
         NoteLinkChangeRequestParameter CreateLinkParameter(bool isOpen)
         {
@@ -831,6 +881,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
+        void ApplyBlind()
+        {
+            DispatcherWrapper.VerifyAccess();
+
+            var propertyNames = new[] {
+                nameof(BlindEffect),
+                nameof(BlindContent),
+            };
+            foreach(var propertyName in propertyNames) {
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
         void ApplyTheme()
         {
             ThrowIfDisposed();
@@ -843,6 +906,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 vm.ApplyCaption();
                 vm.ApplyBorder();
                 vm.ApplyContent();
+                if(IsVisibleBlind) {
+                    vm.ApplyBlind();
+                }
             }, this, DispatcherPriority.Render);
         }
 

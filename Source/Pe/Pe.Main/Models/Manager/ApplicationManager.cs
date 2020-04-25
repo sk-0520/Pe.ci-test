@@ -208,8 +208,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
             var factory = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(settings.Main, false),
-                new ApplicationDatabaseFactory(settings.File, false),
+                new ApplicationDatabaseFactory(settings.Main, true, false),
+                new ApplicationDatabaseFactory(settings.File, true, false),
                 new ApplicationDatabaseFactory()
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
@@ -276,7 +276,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("設定適用のため各要素生成");
                 RebuildHook();
                 ExecuteElements();
-                CommandElement.Refresh();
+                if(CommandElement.IsInitialized) {
+                    CommandElement.Refresh();
+                }
                 NotifyLogElement.Refresh();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");

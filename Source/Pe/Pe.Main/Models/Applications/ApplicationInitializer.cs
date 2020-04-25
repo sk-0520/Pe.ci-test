@@ -178,11 +178,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
-        ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, ILogger logger)
+        ApplicationDatabaseFactoryPack CreateDatabaseFactoryPack(EnvironmentParameters environmentParameters, bool foreignKeys, ILogger logger)
         {
             return new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(environmentParameters.MainFile, false),
-                new ApplicationDatabaseFactory(environmentParameters.FileFile, false),
+                new ApplicationDatabaseFactory(environmentParameters.MainFile, foreignKeys, false),
+                new ApplicationDatabaseFactory(environmentParameters.FileFile, foreignKeys, false),
                 new ApplicationDatabaseFactory()
             );
         }
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
             if(environmentParameters.SqlStatementAccessorFile.Exists) {
-                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true), loggerFactory);
+                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true, true), loggerFactory);
             }
 
             return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory);
@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             var idFactory = new IdFactory(loggerFactory);
-            using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger))
+            using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, false, logger))
             using(var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
                 var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
                 using var statementLoaderDisposer = statementLoader as IDisposable;
@@ -230,8 +230,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         {
             logger.LogInformation("DBセットアップ");
 
-            var factoryPack = CreateDatabaseFactoryPack(environmentParameters, logger);
-            var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
+            using var factoryPack = CreateDatabaseFactoryPack(environmentParameters, false, logger);
+            using var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
 
             var idFactory = new IdFactory(loggerFactory);
 
@@ -246,16 +246,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 logger.LogError("last version is null");
                 logger.LogWarning("restart initialize");
 
-                accessorPack.Dispose();
-                factoryPack.Dispose();
                 pack = default((ApplicationDatabaseFactoryPack factory, ApplicationDatabaseAccessorPack accessor));
                 return false;
             }
 
             databaseSetupper.Migrate(accessorPack, lastVersion);
 
-            pack.factory = factoryPack;
-            pack.accessor = accessorPack;
+            pack.factory = CreateDatabaseFactoryPack(environmentParameters, true, logger);
+            pack.accessor = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
+
+            foreach(var accessor in pack.accessor.Items) {
+                databaseSetupper.CheckForeignKey(pack.accessor.Main);
+            }
+
             return true;
         }
 
@@ -286,7 +289,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
             if(environmentParameters.SqlStatementAccessorFile.Exists) {
-                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true), loggerFactory);
+                statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true, true), loggerFactory);
             }
 
             container

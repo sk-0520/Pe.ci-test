@@ -689,6 +689,7 @@ ___
 |    | o  |              | 最小化                   | IsCompact             | boolean      | System.Boolean  |              |                    |
 |    | o  |              | 文字列の折り返し         | TextWrap              | boolean      | System.Boolean  |              |                    |
 |    | o  |              | ノート内容種別           | ContentKind           | text         | System.String   |              | プレーン文字列 RTF |
+|    | o  |              | 隠し方                   | HiddenMode            | text         | System.String   |              |                    |
 
 ### index
 

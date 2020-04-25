@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class GeneralConfiguration : ConfigurationBase
+    public class GeneralConfiguration: ConfigurationBase
     {
         public GeneralConfiguration(IConfigurationSection section) : base(section)
         {
@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class ApiConfiguration : ConfigurationBase
+    public class ApiConfiguration: ConfigurationBase
     {
         public ApiConfiguration(IConfigurationSection section)
             : base(section)
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class WebConfiguration : ConfigurationBase
+    public class WebConfiguration: ConfigurationBase
     {
         public WebConfiguration(IConfigurationSection section)
             : base(section)
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class BackupConfiguration : ConfigurationBase
+    public class BackupConfiguration: ConfigurationBase
     {
         public BackupConfiguration(IConfigurationSection section)
             : base(section)
@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class FileConfiguration : ConfigurationBase
+    public class FileConfiguration: ConfigurationBase
     {
         public FileConfiguration(IConfigurationSection section)
             : base(section)
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class DisplayConfiguration : ConfigurationBase
+    public class DisplayConfiguration: ConfigurationBase
     {
         public DisplayConfiguration(IConfigurationSection section)
             : base(section)
@@ -184,7 +184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class NotifyLogConfiguration : ConfigurationBase
+    public class NotifyLogConfiguration: ConfigurationBase
     {
         public NotifyLogConfiguration(IConfigurationSection section)
             : base(section)
@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class LauncherToolbarConfiguration : ConfigurationBase
+    public class LauncherToolbarConfiguration: ConfigurationBase
     {
         public LauncherToolbarConfiguration(IConfigurationSection section)
             : base(section)
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class LauncherGroupConfiguration : ConfigurationBase
+    public class LauncherGroupConfiguration: ConfigurationBase
     {
         public LauncherGroupConfiguration(IConfigurationSection section)
             : base(section)
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class NoteConfiguration : ConfigurationBase
+    public class NoteConfiguration: ConfigurationBase
     {
         public NoteConfiguration(IConfigurationSection section)
             : base(section)
@@ -241,6 +241,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
             LayoutAbsoluteSize = GetSize(section, "layout_absolute_size");
             LayoutRelativeSize = GetSize(section, "layout_relative_size");
             FontSize = GetMinMaxDefault<double>(section, "font_size");
+
+
+            HiddenCompactWaitTime = section.GetValue<TimeSpan>("hidden_compact_wait_time");
+            HiddenBlindWaitTime = section.GetValue<TimeSpan>("hidden_blind_wait_time");
         }
 
         #region property
@@ -249,10 +253,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Size LayoutRelativeSize { get; }
         public MinMaxDefault<double> FontSize { get; }
 
+        public TimeSpan HiddenCompactWaitTime { get; }
+        public TimeSpan HiddenBlindWaitTime { get; }
+
         #endregion
     }
 
-    public class CommandConfiguration : ConfigurationBase
+    public class CommandConfiguration: ConfigurationBase
     {
         public CommandConfiguration(IConfigurationSection section)
             : base(section)
@@ -269,7 +276,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
-    public class PlatformConfiguration : ConfigurationBase
+    public class PlatformConfiguration: ConfigurationBase
     {
         public PlatformConfiguration(IConfigurationSection section)
             : base(section)
