@@ -36,6 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsDisabledSystemIdle => HeartBeatSender != null;
         public bool IsSupportedExplorer => ExplorerSupporter != null;
 
+        Guid KeyboardNotifyLogId { get; set; }
+
         #endregion
 
         #region function
@@ -261,10 +263,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             if(job is KeyActionPressedJobBase pressedJob) {
                                 if(!pressedJob.IsAllHit) {
                                     Logger.LogTrace("待機中: {0}", job.CommonData.KeyActionId);
+                                    if(KeyboardNotifyLogId == Guid.Empty) {
+                                        KeyboardNotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, "キー入力待ち", new NotifyLogContent(localModifierKeyStatus.ToString())));
+                                    } else {
+                                        NotifyManager.ReplaceLog(KeyboardNotifyLogId, localModifierKeyStatus.ToString());
+                                    }
                                     break;
                                 }
                                 pressedJob.Reset();
                                 ExecuteKeyPressedJob(pressedJob);
+
+                                if(KeyboardNotifyLogId != Guid.Empty) {
+                                    NotifyManager.ReplaceLog(KeyboardNotifyLogId, $"{pressedJob.CommonData.KeyActionKind}: {pressedJob.CommonData.KeyActionId}");
+                                    NotifyManager.FadeoutLog(KeyboardNotifyLogId);
+                                    KeyboardNotifyLogId = Guid.Empty;
+                                }
+
                                 break;
                             } else {
                                 throw new NotImplementedException();
