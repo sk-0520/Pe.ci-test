@@ -129,6 +129,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#507: キーボード入力待ちの通知を行う"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
