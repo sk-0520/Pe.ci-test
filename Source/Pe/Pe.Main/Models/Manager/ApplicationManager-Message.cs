@@ -167,7 +167,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
         {
-            void PutNotifyLog(string message) {
+            void PutNotifyLog(string message)
+            {
                 if(KeyboardNotifyLogId != Guid.Empty) {
                     NotifyManager.ClearLog(KeyboardNotifyLogId);
                     KeyboardNotifyLogId = Guid.Empty;
@@ -266,6 +267,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var localModifierKeyStatus = modifierKeyStatus;
             return Task.Run(() => {
+                KeyActionPressedJobBase? firstWaitingPressedJob = null;
+
                 foreach(var job in jobs) {
                     switch(job.CommonData.KeyActionKind) {
                         case KeyActionKind.Replace: {
@@ -282,11 +285,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             if(job is KeyActionPressedJobBase pressedJob) {
                                 if(!pressedJob.IsAllHit) {
                                     Logger.LogTrace("待機中: {0}", job.CommonData.KeyActionId);
-                                    if(KeyboardNotifyLogId == Guid.Empty) {
-                                        KeyboardNotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(localModifierKeyStatus.ToString())));
-                                    } else {
-                                        NotifyManager.ReplaceLog(KeyboardNotifyLogId, localModifierKeyStatus.ToString());
-                                    }
+                                    firstWaitingPressedJob = pressedJob;
                                     break;
                                 }
 
@@ -297,6 +296,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             } else {
                                 throw new NotImplementedException();
                             }
+                    }
+                }
+
+                if(firstWaitingPressedJob != null) {
+                    var factory = new KeyMappingFactory();
+                    var cultureService = ApplicationDiContainer.Get<CultureService>();
+                    var keyMessages = firstWaitingPressedJob.GetCurrentMappings().Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
+                    var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
+
+                    if(KeyboardNotifyLogId == Guid.Empty) {
+                        var logContent = new NotifyLogContent(keyMessage);
+                        KeyboardNotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, Properties.Resources.String_Hook_Keyboard_Header, logContent));
+                    } else {
+                        NotifyManager.ReplaceLog(KeyboardNotifyLogId, keyMessage);
                     }
                 }
             });
@@ -476,10 +489,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
             } else {
                 if(KeyboardNotifyLogId != Guid.Empty) {
-                    Logger.LogTrace("キー入力該当なし");
-                    NotifyManager.ClearLog(KeyboardNotifyLogId);
-                    KeyboardNotifyLogId = Guid.Empty;
-                    NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(Properties.Resources.String_Hook_Keyboard_NotFound)));
+                    if(!e.Key.IsModifierKey()) {
+                        Logger.LogTrace("キー入力該当なし");
+                        NotifyManager.ClearLog(KeyboardNotifyLogId);
+                        KeyboardNotifyLogId = Guid.Empty;
+                        NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(Properties.Resources.String_Hook_Keyboard_NotFound)));
+                    }
                 }
             }
         }

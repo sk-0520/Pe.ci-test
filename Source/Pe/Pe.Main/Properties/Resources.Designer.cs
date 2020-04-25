@@ -2738,6 +2738,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   Alt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Alt {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Alt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CTRL に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Control {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_None {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shift に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Shift {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Win に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Windows {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Windows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   変更 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_EnvironmentValieableEditor_Merge_A {
@@ -3034,6 +3079,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Hook_Keyboard_Header {
             get {
                 return ResourceManager.GetString("String_Hook_Keyboard_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    +  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Join {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Join", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${KEY}($MOD) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_ModifierFormat {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_ModifierFormat", resourceCulture);
             }
         }
         

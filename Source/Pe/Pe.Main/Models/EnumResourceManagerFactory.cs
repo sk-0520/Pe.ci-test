@@ -19,7 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 .Register<Bridge.Models.Data.IconBox>()
                 .Register<Bridge.Models.Data.CommandItemKind>()
                 .Register<Key>()
-                //.Register<Key>(GetKeys())
+                .Register<ModifierKeys>()
+            //.Register<Key>(GetKeys())
             ;
 
 

@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #region property
 
         public KeyActionCommonData CommonData { get; }
-        public IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
+        protected IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
 
         #endregion
 
@@ -237,6 +237,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
 
         #region function
+
+        public IEnumerable<IReadOnlyKeyMappingData> GetCurrentMappings()
+        {
+            return Mappings.Take(NextIndex);
+        }
 
         #endregion
 
