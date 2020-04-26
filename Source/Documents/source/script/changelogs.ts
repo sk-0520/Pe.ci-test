@@ -91,49 +91,27 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.93.001",
+		"date": "2020/04/26",
+		"version": "0.94.000",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "cd37c118ca03deac74f2d1209b34e2f9fc8d6373",
 						"subject": "#593: 通知用UIの作成"
 					},
 					{
-						"revision": "",
+						"revision": "ca412643b2736bd7516fd54e74d62ee9a396a42b",
 						"subject": "#592: 起動失敗アイテムを頑張って起動させる"
 					},
 					{
-						"revision": "",
+						"revision": "257ffd2248c278c8b20213174213c3220e9c5105",
 						"subject": "#591: ノートの内容を時間経過で非表示にするとか視認性を悪くする"
 					},
 					{
-						"revision": "",
+						"revision": "770ddd944acf0b890984182408fd86b96e71be60",
 						"subject": "#507: キーボード入力待ちの通知を行う"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -141,11 +119,11 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "596bd618c738a3d4e72d0fb0064748066472fe1d",
 						"subject": "#566: 設定でランチャーアイテムからアイテムを削除した場合にグループ内に該当ランチャーアイテムが残ってる"
 					},
 					{
-						"revision": "",
+						"revision": "55720ff987110c7ffc911a3adc546ca51d4ebf99",
 						"subject": "#594: 初回仕様バージョンの記録が 0.84.0 固定になってる"
 					},
 					{
@@ -153,7 +131,7 @@ const changelogs = [
 						"subject": "#595: クラッシュレポートの云々ってなんやねん"
 					},
 					{
-						"revision": "",
+						"revision": "af523ee7a9269ea3e926116b65731e9015d08aef",
 						"subject": "型名設定できてなかった",
 						"comments": [
 							"型変更に table 作り直ししか手がなさそうなので一応初期構築には正しい型を設定したうえで、既存は無視する",
@@ -161,24 +139,16 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
+						"revision": "e5a16c180de56c3d56c4787e616ac7791b36af5d",
 						"subject": "#596: 実行回数記録されてなくない？"
 					},
 					{
-						"revision": "",
+						"revision": "47d0cc577b7406ce4d7e6399f3ec8e5d0fe1d992",
 						"subject": "#598: ツールバーで登録したてのアイテムを編集したら死ぬ疑惑"
 					},
 					{
-						"revision": "",
+						"revision": "717833705217355c2cfd79647ec8382ef5b54194",
 						"subject": "#600: 初回起動時に作成される表のうち型指定していないものがある"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -186,26 +156,22 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "112bcd3a2badbc13afc0f1583fc9c9d4bf87b523",
 						"subject": "#569: @appsettings.debug.json 消していいでしょ"
 					},
 					{
-						"revision": "",
+						"revision": "e544ddd1b040286eaf0dab17fa5ceb1667ad09a4",
 						"class": "nuget",
 						"subject": "Dapper 2.0.30 -> 2.0.35"
 					},
 					{
-						"revision": "",
+						"revision": "e544ddd1b040286eaf0dab17fa5ceb1667ad09a4",
 						"class": "nuget",
 						"subject": "System.Data.SQLite.Core 1.0.112 -> 1.0.112.1"
 					},
 					{
-						"revision": "",
+						"revision": "350e11430b8e0c7665d630fce7957e057210b5ed",
 						"subject": "#597: CURRENT_TIMESTAMP を使わずにアプリ側から時刻を設定する"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
