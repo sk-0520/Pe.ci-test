@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             ThrowIfDisposed();
 
             if(Process.HasExited) {
-                Logger.LogWarning("既に終了したプロセス: id = {0}, name = {1}, exit coe = {2}, exit time = {3}", Process.Id, Process.ProcessName, Process.ExitCode, Process.ExitTime);
+                Logger.LogWarning("既に終了したプロセス: id = {0}, exit code = {1}, exit time = {2}", Process.Id, Process.ExitCode, Process.ExitTime);
                 return;
             }
 
@@ -221,8 +221,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         private void Process_Exited(object? sender, EventArgs e)
         {
             ProcessExited = true;
-            OutputStreamReceiver!.Dispose();
-            ErrorStreamReceiver!.Dispose();
+            OutputStreamReceiver?.Dispose();
+            ErrorStreamReceiver?.Dispose();
         }
 
 

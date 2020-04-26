@@ -128,8 +128,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public void ReceiveViewClosing(CancelEventArgs e)
         { }
 
-        public void ReceiveViewClosed()
+        public void ReceiveViewClosed(Window window)
         { }
+
+        #endregion
+
+        #region ElementViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var editor in EditorItems) {
+                        editor.Dispose();
+                    }
+
+                    foreach(var item in AllLauncherGroupCollection.ViewModels) {
+                        item.Dispose();
+                    }
+                    AllLauncherGroupCollection.Dispose();
+
+                    foreach(var item in AllLauncherItemCollection.ViewModels) {
+                        item.Dispose();
+                    }
+                    AllLauncherItemCollection.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
 

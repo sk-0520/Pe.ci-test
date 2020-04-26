@@ -107,18 +107,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, parameter) == 1;
         }
 
-        internal bool UpdateOldExecuteSetting(Version version, DateTime timestamp, int executeCount, IDatabaseCommonStatus commonStatus)
-        {
-            var statement = LoadStatement();
-            var parameter = commonStatus.CreateCommonDtoMapping();
-            parameter[Column.FirstVersion] = version;
-            parameter[Column.FirstTimestamp] = timestamp.ToUniversalTime();
-            parameter[Column.ExecuteCount] = executeCount;
-
-            return Commander.Execute(statement, parameter) == 1;
-        }
-
-
         #endregion
     }
 }

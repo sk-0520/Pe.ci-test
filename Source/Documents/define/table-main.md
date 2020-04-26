@@ -108,7 +108,7 @@ ___
 |    | o  |              | アイコンサイズ           | IconBox               | text         | System.String   |              |                      |
 |    | o  |              | 横幅                     | Width                 | real         | System.Double   |              |                      |
 |    | o  |              | 非表示待機時間           | HideWaitTime          | text         | System.TimeSpan |              |                      |
-|    | o  |              | タグ検索                 | FindTag               |              | System.Boolean  |              |                      |
+|    | o  |              | タグ検索                 | FindTag               | boolean      | System.Boolean  |              |                      |
 
 ### index
 
@@ -139,7 +139,7 @@ ___
 |    | o  |              | 位置種別                 | LayoutKind            | text         | System.String   |              |                      |
 |    | o  |              | 前景色                   | ForegroundColor       | text         | System.String   |              | #AARRGGBB            |
 |    | o  |              | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB            |
-|    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |                      |
+|    | o  |              | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                      |
 
 ### index
 
@@ -242,6 +242,36 @@ ___
 
 ___
 
+
+## AppNotifyLogSetting
+
+### layout
+
+| PK | NN | FK | 論理カラム名                   | 物理カラム名            | 論理データ型 | マッピング型    | チェック制約 | コメント             |
+|:--:|:--:|:---|:-------------------------------|:------------------------|:-------------|:----------------|:-------------|:---------------------|
+| o  | o  |    | 世代                           | Generation              | integer      | System.Int64    |              | 最大のものを使用する |
+|    | o  |    | 作成タイムスタンプ             | CreatedTimestamp        | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 作成ユーザー名                 | CreatedAccount          | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラム名               | CreatedProgramName      | text         | System.String   |              |                      |
+|    | o  |    | 作成プログラムバージョン       | CreatedProgramVersion   | text         | System.Version  |              |                      |
+|    | o  |    | 更新タイムスタンプ             | UpdatedTimestamp        | datetime     | System.DateTime |              | UTC                  |
+|    | o  |    | 更新ユーザー名                 | UpdatedAccount          | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラム名               | UpdatedProgramName      | text         | System.String   |              |                      |
+|    | o  |    | 更新プログラムバージョン       | UpdatedProgramVersion   | text         | System.Version  |              |                      |
+|    | o  |    | 更新回数                       | UpdatedCount            | integer      | System.Int64    |              | 0始まり              |
+|    | o  |    | 表示                           | IsVisible               | boolean      | System.Boolean  |              |                      |
+|    | o  |    | 表示位置                       | Position                | text         | System.String   |              |                      |
+
+### index
+
+*NONE*
+
+
+
+___
+
+
+
 ## LauncherItems
 
 ### layout
@@ -309,6 +339,59 @@ ___
 
 
 ___
+
+## LauncherRedoItems
+
+### layout
+
+| PK | NN | FK                           | 論理カラム名               | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:-----------------------------|:---------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID       | LauncherItemId        | text         | System.Guid     |              |          |
+|    | o  |                              | 作成タイムスタンプ         | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 作成ユーザー名             | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラム名           | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラムバージョン   | CreatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新タイムスタンプ         | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 更新ユーザー名             | UpdatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラム名           | UpdatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 更新プログラムバージョン   | UpdatedProgramVersion | text         | System.Version  |              |          |
+|    | o  |                              | 更新回数                   | UpdatedCount          | integer      | System.Int64    |              | 0始まり  |
+|    | o  |                              | 再実施待機方法             | RedoMode              | text         | System.Version  |              |          |
+|    | o  |                              | 待機時間                   | WaitTime              | text         | System.TimeSpan |              |          |
+|    | o  |                              | 再試行回数                 | RetryCount            | integer      | System.Int64    |              |          |
+
+
+### index
+
+*NONE*
+
+
+
+___
+
+
+## LauncherRedoSuccessExitCodes
+
+### layout
+
+| PK | NN | FK                           | 論理カラム名               | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント |
+|:--:|:--:|:-----------------------------|:---------------------------|:----------------------|:-------------|:----------------|:-------------|:---------|
+| o  | o  | LauncherItems.LauncherItemId | ランチャーアイテムID       | LauncherItemId        | text         | System.Guid     |              |          |
+| o  | o  |                              | 正常終了コード             | SuccessExitCode       | integer      | System.Int64    |              |          |
+|    | o  |                              | 作成タイムスタンプ         | CreatedTimestamp      | datetime     | System.DateTime |              | UTC      |
+|    | o  |                              | 作成ユーザー名             | CreatedAccount        | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラム名           | CreatedProgramName    | text         | System.String   |              |          |
+|    | o  |                              | 作成プログラムバージョン   | CreatedProgramVersion | text         | System.Version  |              |          |
+
+
+### index
+
+*NONE*
+
+
+
+___
+
 
 ## LauncherStoreApps
 
@@ -606,6 +689,7 @@ ___
 |    | o  |              | 最小化                   | IsCompact             | boolean      | System.Boolean  |              |                    |
 |    | o  |              | 文字列の折り返し         | TextWrap              | boolean      | System.Boolean  |              |                    |
 |    | o  |              | ノート内容種別           | ContentKind           | text         | System.String   |              | プレーン文字列 RTF |
+|    | o  |              | 隠し方                   | HiddenMode            | text         | System.String   |              |                    |
 
 ### index
 

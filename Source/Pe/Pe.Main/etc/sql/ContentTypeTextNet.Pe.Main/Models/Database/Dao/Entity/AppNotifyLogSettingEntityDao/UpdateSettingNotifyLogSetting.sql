@@ -1,9 +1,8 @@
 update
-	AppExecuteSetting
+	AppNotifyLogSetting
 set
-	FirstVersion         = @FirstVersion,
-	FirstTimestamp       = @FirstTimestamp,
-	ExecuteCount         = @ExecuteCount,
+	IsVisible             = @IsVisible,
+	Position              = @Position,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,
@@ -11,9 +10,9 @@ set
 	UpdatedProgramVersion = @UpdatedProgramVersion,
 	UpdatedCount          = UpdatedCount + 1
 where
-	AppExecuteSetting.Generation = (
+	AppNotifyLogSetting.Generation = (
 		select
-			MAX(AppExecuteSetting.Generation)
+			MAX(AppNotifyLogSetting.Generation)
 		from
-			AppExecuteSetting
+			AppNotifyLogSetting
 	)

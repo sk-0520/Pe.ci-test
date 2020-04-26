@@ -132,6 +132,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         #region ILauncherToolbarId

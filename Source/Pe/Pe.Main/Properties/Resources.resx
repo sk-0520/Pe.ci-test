@@ -1537,7 +1537,9 @@
     <value>再送信</value>
   </data>
   <data name="String_CrashReport_SaveFileDescription" xml:space="preserve">
-    <value>送信済みクラッシュレポートは自動削除されません 云々</value>
+    <value>ユーザー側でいつでも確認できるようにするため、
+送信済みクラッシュレポートは自動削除されません。
+完全に不要と判断した場合は手動で削除してください。</value>
   </data>
   <data name="String_CrashReport_SaveFilePath" xml:space="preserve">
     <value>送信済みクラッシュレポート</value>
@@ -1646,5 +1648,214 @@
   </data>
   <data name="String_Feedback_SourceOpen" xml:space="preserve">
     <value>ソースコードを参照</value>
+  </data>
+  <data name="String_Notify_Caption" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center_A" xml:space="preserve">
+    <value>中央(_C)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor" xml:space="preserve">
+    <value>カーソル位置</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor_A" xml:space="preserve">
+    <value>カーソル位置(_P)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom" xml:space="preserve">
+    <value>左下</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom_A" xml:space="preserve">
+    <value>左下(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop" xml:space="preserve">
+    <value>左上</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop_A" xml:space="preserve">
+    <value>左上(_L)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom" xml:space="preserve">
+    <value>右下</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom_A" xml:space="preserve">
+    <value>右下(_R)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop" xml:space="preserve">
+    <value>右上</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop_A" xml:space="preserve">
+    <value>右上(_T)</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_Header" xml:space="preserve">
+    <value>通知ログ</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_Position_A" xml:space="preserve">
+    <value>表示位置</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_VisibleIsEnabled_A" xml:space="preserve">
+    <value>通知があれば表示する(_V)</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_VisibleRemark" xml:space="preserve">
+    <value>表示しない場合、戻し処理や通知ログからの処理実行は行えません。</value>
+  </data>
+  <data name="String_Setting_Generals_NotifyLog_Visible_A" xml:space="preserve">
+    <value>表示</value>
+  </data>
+  <data name="String_Notify_Undo" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count" xml:space="preserve">
+    <value>回数</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count_A" xml:space="preserve">
+    <value>回数(_C)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None_A" xml:space="preserve">
+    <value>なし(_N)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount" xml:space="preserve">
+    <value>時間と回数</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount_A" xml:space="preserve">
+    <value>時間と回数(_A)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout_A" xml:space="preserve">
+    <value>時間(_T)</value>
+  </data>
+  <data name="String_LauncherItemCustomizeControl_RedoEditor_Header" xml:space="preserve">
+    <value>再試行</value>
+  </data>
+  <data name="String_RedoEditor_RedoMode_A" xml:space="preserve">
+    <value>再試行待機方法</value>
+  </data>
+  <data name="String_RedoEditor_RetryCount_A" xml:space="preserve">
+    <value>再試行回数</value>
+  </data>
+  <data name="String_RedoEditor_SuccessExitCodesRemark" xml:space="preserve">
+    <value>正常終了コードはカンマ区切り(数値, 数値)で指定してください。
+範囲を指定する場合はハイフン(数値-数値)で指定できます。
+例: 0, 20, 100-110</value>
+  </data>
+  <data name="String_RedoEditor_SuccessExitCodes_A" xml:space="preserve">
+    <value>正常終了コード</value>
+  </data>
+  <data name="String_RedoEditor_WaitAndRetryTime_A" xml:space="preserve">
+    <value>待機処理</value>
+  </data>
+  <data name="String_RedoEditor_WaitTime_A" xml:space="preserve">
+    <value>待機時間(秒)</value>
+  </data>
+  <data name="String_ExtendsExecute_Redo_A" xml:space="preserve">
+    <value>再実施</value>
+  </data>
+  <data name="String_RedoExecutor_CancelWatch" xml:space="preserve">
+    <value>再試行監視終了</value>
+  </data>
+  <data name="String_RedoExecutor_Cancel_Format" xml:space="preserve">
+    <value>${MESSAGE} (クリックでキャンセル)</value>
+  </data>
+  <data name="String_RedoExecutor_Caption_Format" xml:space="preserve">
+    <value>再試行中: ${CAPTION}</value>
+  </data>
+  <data name="String_RedoExecutor_CountMax" xml:space="preserve">
+    <value>試行回数超過</value>
+  </data>
+  <data name="String_RedoExecutor_Retry_CountMax_Format" xml:space="preserve">
+    <value>${NOW-COUNT}/${MAX-COUNT}</value>
+  </data>
+  <data name="String_RedoExecutor_Retry_TimeoutOrCountMax_Format" xml:space="preserve">
+    <value>${NOW-TIME}/${MAX-TIME}, ${NOW-COUNT}/${MAX-COUNT}</value>
+  </data>
+  <data name="String_RedoExecutor_Retry_Timout_Format" xml:space="preserve">
+    <value>${NOW-TIME}/${MAX-TIME}</value>
+  </data>
+  <data name="String_RedoExecutor_SuccessExit" xml:space="preserve">
+    <value>正常終了</value>
+  </data>
+  <data name="String_RedoExecutor_Timeout" xml:space="preserve">
+    <value>タイムアウト</value>
+  </data>
+  <data name="String_RedoExecutor_TimeoutOrCountMax" xml:space="preserve">
+    <value>タイムアウト/試行回数超過</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind" xml:space="preserve">
+    <value>ブラインド</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind_A" xml:space="preserve">
+    <value>ブラインド(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact" xml:space="preserve">
+    <value>最小化</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact_A" xml:space="preserve">
+    <value>最小化(_N)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None" xml:space="preserve">
+    <value>隠さない</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None_A" xml:space="preserve">
+    <value>隠さない(_O)</value>
+  </data>
+  <data name="String_Note_Status_HiddenMode_A" xml:space="preserve">
+    <value>自動的に隠す方法</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Control" xml:space="preserve">
+    <value>CTRL</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.None" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="String:Enum-System.Windows.Input.ModifierKeys.Windows" xml:space="preserve">
+    <value>Win</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Command_Show" xml:space="preserve">
+    <value>コマンドランチャー</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_LauncherItem_Extends_Format" xml:space="preserve">
+    <value>指定して実行: ${ITEM}</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_LauncherItem_Normal_Format" xml:space="preserve">
+    <value>アイテム起動: ${ITEM}</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Note_Create" xml:space="preserve">
+    <value>ノート作成</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Note_Z_Bottom" xml:space="preserve">
+    <value>ノート最後面移動</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Note_Z_Top" xml:space="preserve">
+    <value>ノート最前面移動</value>
+  </data>
+  <data name="String_Hook_Keyboard_Execute_Toolbar_Hidden" xml:space="preserve">
+    <value>ツールバー表示抑制</value>
+  </data>
+  <data name="String_Hook_Keyboard_Header" xml:space="preserve">
+    <value>キーボード</value>
+  </data>
+  <data name="String_Hook_Keyboard_Join" xml:space="preserve">
+    <value> + </value>
+  </data>
+  <data name="String_Hook_Keyboard_ModifierFormat" xml:space="preserve">
+    <value>${KEY}(${MOD})</value>
+  </data>
+  <data name="String_Hook_Keyboard_NotFound" xml:space="preserve">
+    <value>無効なキーの組み合わせ</value>
+  </data>
+  <data name="String_Hook_Keyboard_Separator" xml:space="preserve">
+    <value>→</value>
   </data>
 </root>

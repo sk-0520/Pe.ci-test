@@ -93,7 +93,7 @@ rem ping 127.0.0.1
 test
 echo end
             ", Encoding.GetEncoding("shift_jis"));
-            var launcherExecutor = new LauncherExecutor(OrderManager, new ApplicationDispatcherWrapper(), LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, new ApplicationDispatcherWrapper(), LoggerFactory);
             var data = new LauncherFileData() {
                 //Path = batchPath,
                 Path = "cmd",
@@ -101,7 +101,7 @@ echo end
                 IsEnabledStandardInputOutput = true,
             };
             var env = new List<LauncherEnvironmentVariableData>();
-            var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, Screen.PrimaryScreen);
+            var result = launcherExecutor.Execute(LauncherItemKind.File, data, data, env, LauncherRedoData.GetDisable(), Screen.PrimaryScreen);
         }
 
         KeyboradHooker? dbgKeyboradHooker { get; set; }

@@ -76,6 +76,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         {
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Editor.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         #region ILauncherItemId

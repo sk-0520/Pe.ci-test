@@ -41,6 +41,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
         #endregion
 
+        #region LauncherItemCustomizeEditorElement
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Icon.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
         #region ILauncherItemSettingEditor
 
         public LauncherIconElement Icon { get; }

@@ -129,6 +129,18 @@ try {
 				robocopy /MIR /PURGE /R:3 /S "$src" "$dst"
 			}
 
+			# 構成ファイル(appsettings.*.json)の整理
+			$appSettingRootDir = "Output/Release/$platform/Pe/etc"
+			if($BuildType -ne "BETA") {
+				Remove-Item -Path (Join-Path $appSettingRootDir "appsettings.beta.json")  -Force
+			}
+			Remove-Item -Path (Join-Path $appSettingRootDir "@appsettings.debug.json")  -Force
+			# ローカルでビルドする場合は高確率で debug.json がいるので対応しておく
+			$debugAppSettingPath = Join-Path $appSettingRootDir "appsettings.debug.json"
+			if(Test-Path $debugAppSettingPath) {
+				Remove-Item -Path $debugAppSettingPath -Force
+			}
+
 			# ライブラリの移送
 			robocopy /R:3 /S /E "Resource\Library\" "Output\Release\$platform\Pe\bin\lib\"
 		}

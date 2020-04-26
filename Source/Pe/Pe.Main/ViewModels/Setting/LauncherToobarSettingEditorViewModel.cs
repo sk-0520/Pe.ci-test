@@ -208,6 +208,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 }

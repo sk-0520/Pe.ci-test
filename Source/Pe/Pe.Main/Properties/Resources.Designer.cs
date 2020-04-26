@@ -780,7 +780,9 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   送信済みクラッシュレポートは自動削除されません 云々 に類似しているローカライズされた文字列を検索します。
+        ///   ユーザー側でいつでも確認できるようにするため、
+        ///送信済みクラッシュレポートは自動削除されません。
+        ///完全に不要と判断した場合は手動で削除してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_CrashReport_SaveFileDescription {
             get {
@@ -1501,6 +1503,60 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ブラインド に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Blind {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ブラインド(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Blind_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Blind_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Compact {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最小化(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_Compact_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.Compact_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   隠さない に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_None {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   隠さない(_O) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteHiddenMode_None_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteHiddenMode.None_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   絶対座標 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteLayoutKind_Absolute {
@@ -1533,6 +1589,188 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NoteLayoutKind_Relative_A {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NoteLayoutKind.Relative_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中央 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Center {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   中央(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Center_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Center_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   カーソル位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Cursor {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   カーソル位置(_P) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_Cursor_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.Cursor_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftBottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左下(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftBottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftBottom_A" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftTop {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   左上(_L) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_LeftTop_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.LeftTop_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightBottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右下(_R) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightBottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightBottom_" +
+                        "A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightTop {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   右上(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_NotifyLogPosition_RightTop_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.NotifyLogPosition.RightTop_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Count {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   回数(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Count_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Count_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_None {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし(_N) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_None_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.None_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Timeout {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_Timeout_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.Timeout_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間と回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_TimeoutOrCount {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   時間と回数(_A) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_RedoMode_TimeoutOrCount_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.RedoMode.TimeoutOrCount_A", resourceCulture);
             }
         }
         
@@ -2500,6 +2738,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   Alt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Alt {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Alt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CTRL に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Control {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Control", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_None {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shift に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Shift {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Shift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Win に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_System_Windows_Input_ModifierKeys_Windows {
+            get {
+                return ResourceManager.GetString("String:Enum-System.Windows.Input.ModifierKeys.Windows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   変更 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_EnvironmentValieableEditor_Merge_A {
@@ -2595,6 +2878,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_ExtendsExecute_Others_StandardInputOutput_A {
             get {
                 return ResourceManager.GetString("String_ExtendsExecute_Others_StandardInputOutput_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再実施 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ExtendsExecute_Redo_A {
+            get {
+                return ResourceManager.GetString("String_ExtendsExecute_Redo_A", resourceCulture);
             }
         }
         
@@ -2778,6 +3070,114 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Feedback_Warning {
             get {
                 return ResourceManager.GetString("String_Feedback_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   コマンドランチャー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Command_Show {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Command_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定して実行: ${ITEM} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_LauncherItem_Extends_Format {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_LauncherItem_Extends_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   アイテム起動: ${ITEM} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_LauncherItem_Normal_Format {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_LauncherItem_Normal_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート作成 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Note_Create {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Note_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート最後面移動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Note_Z_Bottom {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Note_Z_Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート最前面移動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Note_Z_Top {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Note_Z_Top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ツールバー表示抑制 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Execute_Toolbar_Hidden {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Execute_Toolbar_Hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   キーボード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Header {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    +  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Join {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Join", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${KEY}(${MOD}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_ModifierFormat {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_ModifierFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無効なキーの組み合わせ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_NotFound {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   → に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Hook_Keyboard_Separator {
+            get {
+                return ResourceManager.GetString("String_Hook_Keyboard_Separator", resourceCulture);
             }
         }
         
@@ -3025,6 +3425,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_LauncherItemCustomizeControl_File_WorkDirectory_A {
             get {
                 return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_WorkDirectory_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_RedoEditor_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_RedoEditor_Header", resourceCulture);
             }
         }
         
@@ -3506,6 +3915,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   自動的に隠す方法 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_HiddenMode_A {
+            get {
+                return ResourceManager.GetString("String_Note_Status_HiddenMode_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   リンク に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_Link_A {
@@ -3542,11 +3960,175 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   通知 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Notify_Caption {
+            get {
+                return ResourceManager.GetString("String_Notify_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   元に戻す に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Notify_Undo {
+            get {
+                return ResourceManager.GetString("String_Notify_Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ver 0.83.0 からコンバート に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_OldVersionConverter {
             get {
                 return ResourceManager.GetString("String_OldVersionConverter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行待機方法 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_RedoMode_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_RedoMode_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行回数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_RetryCount_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_RetryCount_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了コード に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_SuccessExitCodes_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_SuccessExitCodes_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了コードはカンマ区切り(数値, 数値)で指定してください。
+        ///範囲を指定する場合はハイフン(数値-数値)で指定できます。
+        ///例: 0, 20, 100-110 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_SuccessExitCodesRemark {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_SuccessExitCodesRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機処理 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_WaitAndRetryTime_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_WaitAndRetryTime_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   待機時間(秒) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoEditor_WaitTime_A {
+            get {
+                return ResourceManager.GetString("String_RedoEditor_WaitTime_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${MESSAGE} (クリックでキャンセル) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Cancel_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Cancel_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行監視終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_CancelWatch {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_CancelWatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再試行中: ${CAPTION} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Caption_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Caption_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   試行回数超過 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_CountMax {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_CountMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-COUNT}/${MAX-COUNT} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_CountMax_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_CountMax_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-TIME}/${MAX-TIME}, ${NOW-COUNT}/${MAX-COUNT} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_TimeoutOrCountMax_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_TimeoutOrCountMax_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${NOW-TIME}/${MAX-TIME} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Retry_Timout_Format {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Retry_Timout_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正常終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_SuccessExit {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_SuccessExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイムアウト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_Timeout {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイムアウト/試行回数超過 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_RedoExecutor_TimeoutOrCountMax {
+            get {
+                return ResourceManager.GetString("String_RedoExecutor_TimeoutOrCountMax", resourceCulture);
             }
         }
         
@@ -3898,6 +4480,51 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Generals_Note_Topmost_A {
             get {
                 return ResourceManager.GetString("String_Setting_Generals_Note_Topmost_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通知ログ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_Position_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_Position_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_Visible_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_Visible_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   通知があれば表示する(_V) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_VisibleIsEnabled_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_VisibleIsEnabled_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示しない場合、戻し処理や通知ログからの処理実行は行えません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_NotifyLog_VisibleRemark {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_NotifyLog_VisibleRemark", resourceCulture);
             }
         }
         

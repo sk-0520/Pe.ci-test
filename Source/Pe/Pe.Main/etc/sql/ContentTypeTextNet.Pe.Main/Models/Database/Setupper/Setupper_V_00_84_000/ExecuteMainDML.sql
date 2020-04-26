@@ -201,11 +201,11 @@ insert into
 	values
 	(
 /* Accepted              */ true,
-/* FirstVersion          */ '0.84.0',
+/* FirstVersion          */ @CreatedProgramVersion,
 /* FirstTimestamp        */ @CreatedTimestamp,
 /* LastVersion           */ '0.84.0',
 /* LastTimestamp         */ @CreatedTimestamp,
-/* ExecuteCount          */ 1,
+/* ExecuteCount          */ 0,
 /* UserId                */ '',
 /* IsEnabledTelemetry    */ false,
 

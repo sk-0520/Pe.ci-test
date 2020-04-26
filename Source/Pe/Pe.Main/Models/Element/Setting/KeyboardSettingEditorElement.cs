@@ -11,14 +11,15 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class KeyboardSettingEditorElement : SettingEditorElementBase
     {
-        public KeyboardSettingEditorElement(IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
+        public KeyboardSettingEditorElement(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
@@ -159,6 +160,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in ReplaceJobEditors) {
+                        item.Dispose();
+                    }
+                    ReplaceJobEditors.Clear();
+
+                    foreach(var item in DisableJobEditors) {
+                        item.Dispose();
+                    }
+                    DisableJobEditors.Clear();
+
+                    foreach(var item in PressedJobEditors) {
+                        item.Dispose();
+                    }
+                    PressedJobEditors.Clear();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
         #endregion
     }

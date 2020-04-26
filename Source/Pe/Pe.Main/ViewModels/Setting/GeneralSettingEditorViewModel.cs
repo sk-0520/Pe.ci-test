@@ -22,7 +22,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public interface IGeneralSettingEditor
+    public interface IGeneralSettingEditor: IDisposable
     {
         #region property
 
@@ -235,6 +235,42 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
+    public sealed class AppNotifyLogSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppNotifyLogSettingEditorElement>
+    {
+        public AppNotifyLogSettingEditorViewModel(AppNotifyLogSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
+        { }
+
+        #region property
+
+        public bool IsVisible
+        {
+            get => Model.IsVisible;
+            set => SetModelValue(value);
+        }
+
+
+        public NotifyLogPosition Position
+        {
+            get => Model.Position;
+            set => SetModelValue(value);
+        }
+
+
+        #endregion
+
+        #region command
+        #endregion
+
+        #region function
+        #endregion
+
+        #region GeneralSettingEditorViewModelBase
+
+        public override string Header => Properties.Resources.String_Setting_Generals_NotifyLog_Header;
+
+        #endregion
+    }
 
     public sealed class AppCommandSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppCommandSettingEditorElement>
     {
@@ -302,6 +338,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }
@@ -368,6 +415,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 
@@ -427,6 +486,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.BuildChildren();
 
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                    Font = null;
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

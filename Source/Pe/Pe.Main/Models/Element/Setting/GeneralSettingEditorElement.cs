@@ -233,6 +233,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
+    public class AppNotifyLogSettingEditorElement : GeneralSettingEditorElementBase
+    {
+        public AppNotifyLogSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
+        { }
+
+        #region property
+
+        public bool IsVisible { get; set; }
+        public NotifyLogPosition Position { get; set; }
+
+        #endregion
+
+        #region function
+        #endregion
+
+        #region GeneralSettingEditorBase
+
+        protected override void InitializeImpl()
+        {
+            var setting = MainDatabaseBarrier.ReadData(c => {
+                var dao = new AppNotifyLogSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                return dao.SelectSettingNotifyLogSetting();
+            });
+
+            IsVisible = setting.IsVisible;
+            Position = setting.Position;
+        }
+
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
+            var appNotifyLogSettingEntityDao = new AppNotifyLogSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            var data = new SettingAppNotifyLogSettingData() {
+                IsVisible = IsVisible,
+                Position = Position,
+            };
+            appNotifyLogSettingEntityDao.UpdateSettingNotifyLogSetting(data, commandPack.CommonStatus);
+        }
+
+        #endregion
+    }
 
 
     public class AppCommandSettingEditorElement : GeneralSettingEditorElementBase
@@ -291,6 +332,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
@@ -358,6 +410,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
     }
 
@@ -423,6 +486,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Font?.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
 
         #endregion
     }

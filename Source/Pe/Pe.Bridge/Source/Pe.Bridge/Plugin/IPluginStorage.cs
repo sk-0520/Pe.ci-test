@@ -1,13 +1,28 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// 永続データのデータフォーマット。
+    /// </summary>
     public enum PluginPersistentFormat
     {
+        /// <summary>
+        /// JSON形式。
+        /// </summary>
         Json,
-        Xml,
+        /// <summary>
+        /// XML形式。
+        /// <seealso cref="System.Xml.Serialization.XmlSerializer"/>
+        /// </summary>
+        SimpleXml,
+        /// <summary>
+        /// XML形式。
+        /// <seealso cref="System.Runtime.Serialization.DataContractSerializer"/>
+        /// </summary>
         DataXml,
     }
 
@@ -19,6 +34,43 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     public interface IPluginFileStorage
     {
         #region function
+
+        /// <summary>
+        /// 指定ファイル名が存在するか。
+        /// </summary>
+        /// <param name="name">ファイル名として有効な名前。</param>
+        /// <returns>存在すれば真。</returns>
+        bool Exists(string name);
+
+        /// <summary>
+        /// 指定ファイル名を変更する。
+        /// </summary>
+        /// <param name="sourceName">元ファイル名。</param>
+        /// <param name="destinationName">変更ファイル名。</param>
+        /// <param name="overwrite">上書きを行うか。</param>
+        void Rename(string sourceName, string destinationName, bool overwrite);
+
+        /// <summary>
+        /// 指定ファイル名を複製する。
+        /// </summary>
+        /// <param name="sourceName">元ファイル名。</param>
+        /// <param name="destinationName">コピー先ファイル名。</param>
+        /// <param name="overwrite">上書きを行うか。</param>
+        void Copy(string sourceName, string destinationName, bool overwrite);
+
+        /// <summary>
+        /// 指定ファイル名を削除する。
+        /// </summary>
+        /// <param name="name">ファイル名として有効な名前。</param>
+        void Delete(string name);
+
+        /// <summary>
+        /// 指定ファイル名を開く。
+        /// </summary>
+        /// <param name="name">ファイル名として有効な名前。</param>
+        /// <param name="fileMode"><see cref="System.IO.FileMode"/></param>
+        /// <returns>ストリーム。</returns>
+        Stream Open(string name, FileMode fileMode);
 
         #endregion
     }

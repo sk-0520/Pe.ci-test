@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var launcherItemIds = LauncherItems
                 .Select(i => i.Data)
                 // こんなとこでSQL発行するとか業務じゃむり
-                .Where(i => launcherItemsEntityDao.SelectExistsLauncherLauncherItem(i))
+                .Where(i => launcherItemsEntityDao.SelectExistsLauncherItem(i))
                 .ToList()
             ;
 
@@ -122,6 +122,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ImageColor = data.ImageColor;
             Sequence = data.Sequence;
             LauncherItems.SetRange(launcherItemIds.Select(i => WrapModel.Create(i, LoggerFactory)));
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in LauncherItems) {
+                        item.Dispose();
+                    }
+                    LauncherItems.Clear();
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion

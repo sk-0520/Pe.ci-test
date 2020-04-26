@@ -15,14 +15,15 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherItemsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
+        public LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, ISettingNotifyManager settingNotifyManager,IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             AllLauncherItems = allLauncherItems;
         }
@@ -66,11 +67,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 launcherTagsEntityDao.DeleteTagByLauncherItemId(launcherItemId);
 
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherRedoItemsEntityDao.DeleteRedoItemByLauncherItemId(launcherItemId);
+
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(launcherItemId);
+
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 launcherItemsEntityDao.DeleteLauncherItem(launcherItemId);
 
                 commander.Commit();
             }
+
+            SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
         public Guid AddNewItem(LauncherItemKind kind)
@@ -98,10 +107,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 switch(kind) {
                     case LauncherItemKind.File: {
                             var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                             var file = new LauncherFileData();
                             launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
                             launcherFilesDao.InsertFile(item.LauncherItemId, file, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherRedoItemsEntityDao.InsertRedoItem(item.LauncherItemId, LauncherRedoData.GetDisable(), DatabaseCommonStatus.CreateCurrentAccount());
                         }
                         break;
 
@@ -153,6 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var launcherTagsDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherGroupItemsDao = new LauncherGroupItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 var codes = launcherItemsDao.SelectFuzzyCodes(data.Item.Code).ToList();
                 data.Item.Code = launcherFactory.GetUniqueCode(data.Item.Code, codes);
@@ -160,6 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 launcherItemsDao.InsertLauncherItem(data.Item, DatabaseCommonStatus.CreateCurrentAccount());
                 launcherFilesDao.InsertFile(data.Item.LauncherItemId, data.File, DatabaseCommonStatus.CreateCurrentAccount());
                 launcherTagsDao.InsertTags(data.Item.LauncherItemId, tags, DatabaseCommonStatus.CreateCurrentAccount());
+                launcherRedoItemsEntityDao.InsertRedoItem(data.Item.LauncherItemId, LauncherRedoData.GetDisable(), DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
             }

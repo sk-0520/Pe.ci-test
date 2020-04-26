@@ -88,6 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             ;
 
             foreach(var element in elements) {
+                element.Initialize();
                 ProgramItems.Add(element);
             }
 
@@ -129,6 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherTagsDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var launcherFilesDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 //TODO: db 今現在グループが一つでランチャーアイテムが登録されていなければ消してしまって
 
@@ -143,6 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     switch(importItem.Data.Item.Kind) {
                         case LauncherItemKind.File:
                             launcherFilesDao.InsertFile(importItem.Data.Item.LauncherItemId, importItem.Data.File, DatabaseCommonStatus.CreateCurrentAccount());
+                            launcherRedoItemsEntityDao.InsertRedoItem(importItem.Data.Item.LauncherItemId, LauncherRedoData.GetDisable(), DatabaseCommonStatus.CreateCurrentAccount());
                             break;
 
                         default:

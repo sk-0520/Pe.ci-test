@@ -30,21 +30,27 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #region ITheme
 
+        /// <inheritdoc cref="IPlugin.PluginId"/>
         public PluginId PluginId => Id;
 
-        public IPluginInformations IPluginInformations => throw new NotImplementedException();
+        /// <inheritdoc cref="IPlugin.PluginInformations"/>
+        public IPluginInformations PluginInformations => throw new NotImplementedException();
 
+        /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }
 
+        /// <inheritdoc cref="IPlugin.Initialize(IPluginInitializeContext)"/>
         public void Initialize(IPluginInitializeContext pluginInitializeContext)
         {
             IsInitialized = true;
         }
+        /// <inheritdoc cref="IPlugin.Uninitialize"/>
         public void Uninitialize()
         {
             IsInitialized = false;
         }
 
+        /// <inheritdoc cref="IPlugin.Load(PluginKind, IPluginContext)"/>
         public void Load(PluginKind pluginKind, IPluginContext pluginContext)
         {
             if(pluginKind != PluginKind.Theme) {
@@ -61,6 +67,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             }
         }
 
+        /// <inheritdoc cref="IPlugin.Unload(PluginKind)"/>
         public void Unload(PluginKind pluginKind)
         {
             if(IsThemeLoaded) {
@@ -71,6 +78,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             }
         }
 
+        /// <inheritdoc cref="IPlugin.IsLoaded(PluginKind)"/>
         public bool IsLoaded(PluginKind pluginKind)
         {
             if(pluginKind == PluginKind.Theme) {
@@ -80,30 +88,43 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             return false;
         }
 
+        /// <inheritdoc cref="ITheme.IsSupport(ThemeKind)"/>
+        public bool IsSupport(ThemeKind themeKind) => true;
 
+        /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
         public IGeneralTheme BuildGeneralTheme(IThemeParameter parameter)
         {
             return new GeneralTheme(parameter);
         }
 
+        /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
         public ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter)
         {
             return new LauncherGroupTheme(parameter);
         }
 
+        /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {
             return new LauncherToolbarTheme(parameter);
         }
 
+        /// <inheritdoc cref="ITheme.BuildNoteTheme(IThemeParameter)"/>
         public INoteTheme BuildNoteTheme(IThemeParameter parameter)
         {
             return new NoteTheme(parameter);
         }
 
+        /// <inheritdoc cref="ITheme.BuildCommandTheme(IThemeParameter)"/>
         public ICommandTheme BuildCommandTheme(IThemeParameter parameter)
         {
             return new CommandTheme(parameter);
+        }
+
+        /// <inheritdoc cref="ITheme.BuildNotifyLogTheme(IThemeParameter)"/>
+        public INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
+        {
+            return new NotifyLogTheme(parameter);
         }
 
         #endregion

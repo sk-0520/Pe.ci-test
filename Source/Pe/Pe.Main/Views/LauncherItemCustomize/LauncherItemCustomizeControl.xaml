@@ -326,6 +326,27 @@
       </DataTemplate>
       <!--#endregion -->
 
+      <!--#region 再試行 -->
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeRedoViewModel}">
+        <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_RedoEditor_Header, Source={x:Static app_main:CultureService.Instance}}" >
+          <app_main_views_launcher_item_customize:RedoEditor
+
+            RedoMode="{Binding RedoMode, Mode=TwoWay}"
+
+            WaitTimeSeconds="{Binding WaitTimeSeconds, Mode=TwoWay}"
+            MinimumWaitTimeSeconds="{Binding MinimumWaitTimeSeconds, Mode=OneWay}"
+            MaximumWaitTimeSeconds="{Binding MaximumWaitTimeSeconds, Mode=OneWay}"
+
+            RetryCount="{Binding RetryCount, Mode=TwoWay}"
+            MinimumRetryCount="{Binding MinimumRetryCount, Mode=OneWay}"
+            MaximumRetryCount="{Binding MaximumRetryCount, Mode=OneWay}"
+
+            SuccessExitCodes="{Binding SuccessExitCodes, Mode=TwoWay}"
+          />
+        </GroupBox>
+      </DataTemplate>
+      <!--#endregion -->
+
       <!--#region タグ -->
       <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeTagViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Tag_Header, Source={x:Static app_main:CultureService.Instance}}" >

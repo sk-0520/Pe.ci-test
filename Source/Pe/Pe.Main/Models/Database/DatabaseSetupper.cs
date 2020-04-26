@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -98,6 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             var dto = CreateSetupDto(lastVersion);
 
             var setuppers = new SetupperBase[] {
+                new Setupper_V_00_94_000(IdFactory, StatementLoader, LoggerFactory),
                 // これ最後
                 new Setupper_V_99_99_999(IdFactory, StatementLoader, LoggerFactory),
             };
@@ -152,6 +154,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             Analyze(commander);
         }
 
+        public void CheckForeignKey(IDatabaseCommander commander)
+        {
+            var statement = StatementLoader.LoadStatementByCurrent(GetType());
+            var table = commander.GetDataTable(statement);
+            if(table.Rows.Count == 0) {
+                return;
+            }
+
+            // データ不整合, さようなら！
+            var errors = new StringBuilder();
+            errors.AppendJoin(", ", table.Columns.Cast<DataColumn>().Select(i => i.ColumnName));
+            errors.AppendLine();
+            foreach(var row in table.AsEnumerable()) {
+                errors.AppendJoin(", ", row.ItemArray);
+                errors.AppendLine();
+            }
+            var error = errors.ToString();
+            Logger.LogError(error);
+
+            throw new Exception("CheckForeignKey") {
+                Source = error
+            };
+
+        }
 
         #endregion
     }

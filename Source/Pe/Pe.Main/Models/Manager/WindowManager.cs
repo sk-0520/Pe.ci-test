@@ -78,6 +78,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// フィードバック。
         /// </summary>
         Feedback,
+        /// <summary>
+        /// 通知ログ。
+        /// </summary>
+        NotifyLog,
     }
 
     public class WindowItem
@@ -342,9 +346,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(item.CloseToDataContextNull) {
                 ClearUnsafeElements(item.Window);
                 item.Window.DataContext = null;
+                var dataContextChildren = UIUtility.FindChildren<FrameworkElement>(item.Window)
+                    .Where(i => i.DataContext != null)
+                    .ToList()
+                ;
+                foreach(var child in dataContextChildren) {
+                    child.DataContext = null;
+                }
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                viewLifecycleReceiver.ReceiveViewClosed();
+                viewLifecycleReceiver.ReceiveViewClosed(item.Window);
             }
 
             if(item.CloseToDispose) {

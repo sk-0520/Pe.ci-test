@@ -60,12 +60,14 @@ using System.Reflection;
 using ContentTypeTextNet.Pe.Main.CrashReport.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public partial class ApplicationManager : DisposerBase, IOrderManager
+    internal partial class ApplicationManager: DisposerBase, IOrderManager
     {
-        public ApplicationManager(ApplicationInitializer initializer)
+        internal ApplicationManager(ApplicationInitializer initializer)
         {
             Logging = initializer.Logging ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.Logging));
             Logger = Logging.Factory.CreateLogger(GetType());
@@ -77,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer.Build<OrderManagerImpl>(); //initializer.OrderManager;
-            NotifyManager = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
+            NotifyManagerImpl = initializer.NotifyManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.NotifyManager));
             StatusManagerImpl = initializer.StatusManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.StatusManager));
             ClipboardManager = initializer.ClipboardManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.ClipboardManager));
             UserAgentManager = initializer.UserAgentManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.UserAgentManager));
@@ -85,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             ApplicationDiContainer.Register<IWindowManager, WindowManager>(WindowManager);
             ApplicationDiContainer.Register<IOrderManager, IOrderManager>(this);
-            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManager);
+            ApplicationDiContainer.Register<INotifyManager, NotifyManager>(NotifyManagerImpl);
             ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManagerImpl);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
@@ -99,6 +101,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             CommandElement = ApplicationDiContainer.Build<CommandElement>();
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+            NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
+            NotifyLogElement.Initialize();
 
             var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
             LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
@@ -115,9 +119,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         WindowManager WindowManager { get; set; }
         OrderManagerImpl OrderManager { get; set; }
-        NotifyManager NotifyManager { get; set; }
+        NotifyManager NotifyManagerImpl { get; set; }
+        public INotifyManager NotifyManager => NotifyManagerImpl;
         StatusManager StatusManagerImpl { get; set; }
-        internal IStatusManager StatusManager => StatusManagerImpl;
+        public IStatusManager StatusManager => StatusManagerImpl;
         ClipboardManager ClipboardManager { get; set; }
         UserAgentManager UserAgentManager { get; set; }
 
@@ -128,6 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
         CommandElement CommandElement { get; }
+        NotifyLogElement NotifyLogElement { get; }
         //FeedbackElement? FeedbackElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
         //IDispatcherWapper? MessageWindowDispatcherWapper { get; set; }
@@ -145,8 +151,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public bool CanCallNotifyAreaMenu { get; private set; }
 
-        internal bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
-        internal bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
+        public bool CanSendCrashReport => ApplicationDiContainer.Get<GeneralConfiguration>().CanSendCrashReport;
+        public bool UnhandledExceptionHandled => ApplicationDiContainer.Get<GeneralConfiguration>().UnhandledExceptionHandled;
 
         private bool ResetWaiting { get; set; }
         private LazyAction LazyScreenElementReset { get; }
@@ -167,6 +173,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(CommandElement.ViewCreated) {
                 CommandElement.HideView(true);
             }
+            if(NotifyLogElement.ViewCreated) {
+                NotifyLogElement.HideView(true);
+            }
+            using var _silent_ = NotifyLogElement.ToSilent();
 
             var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
 
@@ -198,16 +208,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // DIを設定処理用に付け替え
             var container = ApplicationDiContainer.Scope();
             var factory = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(settings.Main, false),
-                new ApplicationDatabaseFactory(settings.File, false),
+                new ApplicationDatabaseFactory(settings.Main, true, false),
+                new ApplicationDatabaseFactory(settings.File, true, false),
                 new ApplicationDatabaseFactory()
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
 
             container
                 .Register<IDiContainer, DiContainer>((DiContainer)container) // むりやりぃ
+                .Register<ISettingNotifyManager, SettingNotifyManager>(DiLifecycle.Singleton)
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
             ;
+
 
             var settingElement = container.Build<SettingContainerElement>();
             settingElement.Initialize();
@@ -264,7 +276,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("設定適用のため各要素生成");
                 RebuildHook();
                 ExecuteElements();
-                CommandElement.Refresh();
+                if(CommandElement.IsInitialized) {
+                    CommandElement.Refresh();
+                }
+                NotifyLogElement.Refresh();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
             }
@@ -299,6 +314,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     .RegisterMvvm<Element.Startup.StartupElement, ViewModels.Startup.StartupViewModel, Views.Startup.StartupWindow>()
                 ;
                 var startupModel = diContainer.New<Element.Startup.StartupElement>();
+                startupModel.Initialize();
                 var view = diContainer.Build<Views.Startup.StartupWindow>();
 
                 var windowManager = diContainer.Get<IWindowManager>();
@@ -398,6 +414,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
             ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
             ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
+            ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
 
         }
 
@@ -1255,6 +1272,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region IOrderManager
 
+        public void AddRedoItem(RedoExecutor redoExecutor) => OrderManager.AddRedoItem(redoExecutor);
+
         public void StartUpdate(UpdateTarget target, UpdateProcess process)
         {
             Debug.Assert(target == UpdateTarget.Application);
@@ -1406,6 +1425,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return windowItem;
         }
 
+        public WindowItem CreateNotifyLogWindow(NotifyLogElement element)
+        {
+            var windowItem = OrderManager.CreateNotifyLogWindow(element);
+
+            WindowManager.Register(windowItem);
+
+            return windowItem;
+        }
+
+
         public WindowItem CreateSettingWindow(SettingContainerElement element)
         {
             var windowItem = OrderManager.CreateSettingWindow(element);
@@ -1443,7 +1472,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     //});
                     MessageWindowHandleSource?.Dispose();
 
-                    NotifyManager.Dispose();
+                    NotifyManagerImpl.Dispose();
                     OrderManager.Dispose();
 
                     WindowManager.Dispose();

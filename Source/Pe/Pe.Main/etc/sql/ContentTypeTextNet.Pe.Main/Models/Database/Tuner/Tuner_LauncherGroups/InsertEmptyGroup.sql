@@ -1,4 +1,4 @@
-﻿insert into
+insert into
 	LauncherGroups
 	(
 		[LauncherGroupId],
@@ -27,11 +27,11 @@
 /* ImageColor               */ '#ff000000',
 /* Sequence                 */ 10,
 /*                          */
-/* CreatedTimestamp         */ CURRENT_TIMESTAMP,
+/* CreatedTimestamp         */ @CreatedTimestamp,
 /* CreatedAccount           */ @CreatedAccount,
 /* CreatedProgramName       */ @CreatedProgramName,
 /* CreatedProgramVersion    */ @CreatedProgramVersion,
-/* UpdatedTimestamp         */ CURRENT_TIMESTAMP,
+/* UpdatedTimestamp         */ @UpdatedTimestamp,
 /* UpdatedAccount           */ @UpdatedAccount,
 /* UpdatedProgramName       */ @UpdatedProgramName,
 /* UpdatedProgramVersion    */ @UpdatedProgramVersion,

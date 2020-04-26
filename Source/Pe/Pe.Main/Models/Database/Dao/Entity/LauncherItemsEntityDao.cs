@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public bool SelectExistsLauncherLauncherItem(Guid launcherItemId)
+        public bool SelectExistsLauncherItem(Guid launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -155,6 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Commander.Execute(statement, dto);
         }
 
+        [Obsolete]
         internal void InsertOldLauncherItem(LauncherItemOldImportData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();

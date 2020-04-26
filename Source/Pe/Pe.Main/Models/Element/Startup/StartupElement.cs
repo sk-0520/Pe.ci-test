@@ -57,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     .RegisterMvvm<ImportProgramsElement, ImportProgramsViewModel, ImportProgramsWindow>()
                 ;
                 var importProgramsModel = diContainer.New<ImportProgramsElement>();
+                importProgramsModel.Initialize();
                 var view = diContainer.Build<ImportProgramsWindow>();
 
                 WindowManager.Register(new WindowItem(WindowKind.ImportPrograms, importProgramsModel, view));

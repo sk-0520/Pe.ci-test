@@ -9,6 +9,7 @@ insert into
 		IsCompact,
 		TextWrap,
 		ContentKind,
+		HiddenMode,
 
 		Title,
 		LayoutKind,
@@ -36,6 +37,7 @@ insert into
 /* IsCompact             */ @IsCompact,
 /* TextWrap              */ @TextWrap,
 /* ContentKind           */ @ContentKind,
+/* HiddenMode            */ @HiddenMode,
 
 /* Title                 */
 		case AppNoteSetting.TitleKind

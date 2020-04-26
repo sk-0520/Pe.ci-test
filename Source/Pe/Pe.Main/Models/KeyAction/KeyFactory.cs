@@ -224,5 +224,53 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public int MappingStep { get; } = 10;
 
         #endregion
+
+        #region function
+
+        public string ToString(CultureService cultureService, ModifierKeys key, ModifierKey modifierKey)
+        {
+            if(modifierKey == ModifierKey.None) {
+                return string.Empty;
+            }
+
+            if(modifierKey == ModifierKey.Any) {
+                return cultureService.GetString(key, ResourceNameKind.Normal, true);
+            }
+
+            return TextUtility.ReplaceFromDictionary(
+                Properties.Resources.String_Hook_Keyboard_ModifierFormat,
+                new Dictionary<string, string>() {
+                    ["KEY"] = cultureService.GetString(key, ResourceNameKind.Normal, true),
+                    ["MOD"] = cultureService.GetString(modifierKey, ResourceNameKind.Normal, true)
+                }
+            );
+        }
+
+        public string ToString(CultureService cultureService, IReadOnlyKeyMappingData data, string join)
+        {
+            var key = cultureService.GetString(data.Key, ResourceNameKind.Normal, true);
+
+            var mods = new (ModifierKeys key, ModifierKey modifier)[] {
+                (key: ModifierKeys.Control, modifier: data.Control),
+                (key: ModifierKeys.Shift, modifier: data.Shift),
+                (key: ModifierKeys.Alt, modifier: data.Alt),
+                (key: ModifierKeys.Windows, modifier: data.Super),
+            };
+
+            var sb = new StringBuilder();
+
+            foreach(var mod in mods) {
+                if(mod.modifier != ModifierKey.None) {
+                    sb.Append(ToString(cultureService, mod.key, mod.modifier));
+                    sb.Append(join);
+                }
+            }
+
+            sb.Append(key);
+
+            return sb.ToString();
+        }
+
+        #endregion
     }
 }

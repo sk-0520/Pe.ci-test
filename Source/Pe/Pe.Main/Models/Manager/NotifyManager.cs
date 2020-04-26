@@ -1,10 +1,18 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Timers;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
@@ -105,6 +113,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
+    public class NotifyLogEventArgs : NotifyEventArgs
+    {
+        public NotifyLogEventArgs(NotifyEventKind kind, IReadOnlyNotifyMessage message)
+        {
+            Kind = kind;
+            Message = message;
+        }
+
+        #region property
+
+        public NotifyEventKind Kind { get; }
+        public IReadOnlyNotifyMessage Message { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// アプリケーションからの通知を発行する。
     /// </summary>
@@ -118,6 +142,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
         event EventHandler<FullScreenEventArgs>? FullScreenChanged;
+
+        event EventHandler<NotifyLogEventArgs>? NotifyLogChanged;
+
+        #endregion
+
+        #region property
+
+        ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
+        ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs { get; }
 
         #endregion
 
@@ -134,14 +167,80 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int index);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
+        /// <summary>
+        /// 通知ログは存在するか。
+        /// </summary>
+        /// <param name="notifyLogId"></param>
+        /// <returns></returns>
+        bool ExistsLog(Guid notifyLogId);
+
+        /// <summary>
+        /// 通知ログ追加。
+        /// </summary>
+        /// <param name="notifyMessage"></param>
+        /// <returns></returns>
+        Guid AppendLog(NotifyMessage notifyMessage);
+        /// <summary>
+        ///通知ログ置き換え。
+        /// </summary>
+        /// <param name="notifyLogId"></param>
+        /// <param name="contentMessage"></param>
+        void ReplaceLog(Guid notifyLogId, string contentMessage);
+        /// <summary>
+        /// 通知ログクリア。
+        /// </summary>
+        /// <param name="notifyLogId"></param>
+        bool ClearLog(Guid notifyLogId);
+        /// <summary>
+        /// 通知ログを時間差で破棄。
+        /// </summary>
+        /// <param name="notifyLogId"></param>
+        void FadeoutLog(Guid notifyLogId);
+
         #endregion
     }
 
-    public class NotifyManager : ManagerBase, INotifyManager
+    internal class NotifyManager : ManagerBase, INotifyManager
     {
-        public NotifyManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        #region event
+        #endregion
+
+        public NotifyManager(IDiContainer diContainer, NotifyLogConfiguration notifyLogConfiguration, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
-        { }
+        {
+            DispatcherWrapper = dispatcherWrapper;
+            TopmostNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
+            StreamNotifyLogsImpl = new ObservableCollection<NotifyLogItemElement>();
+            TopmostNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(TopmostNotifyLogsImpl);
+            StreamNotifyLogs = new ReadOnlyObservableCollection<NotifyLogItemElement>(StreamNotifyLogsImpl);
+
+            NotifyLogLifeTimes = new Dictionary<NotifyLogKind, TimeSpan>() {
+                [NotifyLogKind.Normal] = notifyLogConfiguration.NormalLogDisplayTime,
+                [NotifyLogKind.Command] = notifyLogConfiguration.CommandLogDisplayTime,
+                [NotifyLogKind.Undo] = notifyLogConfiguration.UndoLogDisplayTime,
+                [NotifyLogKind.Topmost] = notifyLogConfiguration.FadeoutTime,
+                //[NotifyLogKind.Platform] = TimeSpan.Zero,
+            };
+
+            StreamTimer = new Timer() {
+                Interval = TimeSpan.FromSeconds(1).TotalMilliseconds,
+                AutoReset = true,
+            };
+            StreamTimer.Elapsed += StreamTimer_Elapsed;
+            StreamTimer.Start();
+        }
+
+        #region property
+
+        Timer StreamTimer { get; }
+        IReadOnlyDictionary<NotifyLogKind, TimeSpan> NotifyLogLifeTimes { get; }
+
+        IDispatcherWrapper DispatcherWrapper { get; }
+        private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
+        private ObservableCollection<NotifyLogItemElement> StreamNotifyLogsImpl { get; }
+        private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
+
+        #endregion
 
         #region function
 
@@ -192,6 +291,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             FullScreenChanged?.Invoke(this, e);
         }
 
+        void OnNotifyEventChanged(NotifyEventKind kind, IReadOnlyNotifyMessage message)
+        {
+            var e = new NotifyLogEventArgs(kind, message);
+            NotifyLogChanged?.Invoke(this, e);
+        }
+
         #endregion
 
         #region INotifyManager
@@ -203,6 +308,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public event EventHandler<FullScreenEventArgs>? FullScreenChanged;
 
+        public event EventHandler<NotifyLogEventArgs>? NotifyLogChanged;
+
+        public ReadOnlyObservableCollection<NotifyLogItemElement> TopmostNotifyLogs { get; }
+        public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs { get; }
 
         public void SendLauncherItemChanged(Guid launcherItemId)
         {
@@ -224,6 +333,104 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
 
 
+        /// <inheritdoc cref="INotifyManager.ExistsLog(Guid)" />
+        public bool ExistsLog(Guid notifyLogId)
+        {
+            return NotifyLogs.Contains(notifyLogId);
+        }
+
+        /// <inheritdoc cref="INotifyManager.AppendLog(NotifyMessage)" />
+        public Guid AppendLog(NotifyMessage notifyMessage)
+        {
+            if(notifyMessage == null) {
+                throw new ArgumentNullException(nameof(notifyMessage));
+            }
+
+            var element = DiContainer.Build<NotifyLogItemElement>(Guid.NewGuid(), notifyMessage);
+            element.Initialize();
+
+            Logger.LogDebug("[{0}] {1}: {2}, {3}", notifyMessage.Header, notifyMessage.Kind, notifyMessage.Content.Message, element.NotifyLogId);
+
+            DispatcherWrapper.Begin(() => {
+                NotifyLogs.Add(element);
+                if(element.Kind == NotifyLogKind.Topmost) {
+                    TopmostNotifyLogsImpl.Add(element);
+                } else {
+                    StreamNotifyLogsImpl.Add(element);
+                }
+
+                OnNotifyEventChanged(NotifyEventKind.Add, element);
+            });
+
+            return element.NotifyLogId;
+        }
+        /// <inheritdoc cref="INotifyManager.ReplaceLog(Guid, string)" />
+        public void ReplaceLog(Guid notifyLogId, string contentMessage)
+        {
+            if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
+                throw new KeyNotFoundException(notifyLogId.ToString());
+            }
+
+            Logger.LogDebug("[{0}] 変更: {1}, {2}", element.Header, contentMessage, element.NotifyLogId);
+
+            DispatcherWrapper.Begin(() => {
+                element.ChangeContent(new NotifyLogContent(contentMessage, DateTime.UtcNow));
+                OnNotifyEventChanged(NotifyEventKind.Change, element);
+            });
+        }
+        /// <inheritdoc cref="INotifyManager.ClearLog(Guid)" />
+        public bool ClearLog(Guid notifyLogId)
+        {
+            if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
+                return false;
+            }
+
+            if(NotifyLogs.Remove(notifyLogId)) {
+                DispatcherWrapper.Begin(() => {
+                    if(element.Kind == NotifyLogKind.Topmost) {
+                        TopmostNotifyLogsImpl.Remove(element);
+                    } else {
+                        StreamNotifyLogsImpl.Remove(element);
+                    }
+
+                    OnNotifyEventChanged(NotifyEventKind.Clear, element);
+                    element.Dispose();
+                });
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc cref="INotifyManager.FadeoutLog(Guid)" />
+        public void FadeoutLog(Guid notifyLogId)
+        {
+            if(!NotifyLogs.TryGetValue(notifyLogId, out var element)) {
+                return;
+            }
+
+            Task.Delay(NotifyLogLifeTimes[element.Kind]).ContinueWith(t => {
+                ClearLog(notifyLogId);
+            });
+        }
+
         #endregion
+
+        private void StreamTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            var time = DateTime.UtcNow;
+            var removeLogs = StreamNotifyLogsImpl
+                .Where(i => i.Content.Timestamp + NotifyLogLifeTimes[i.Kind] < time)
+                .Select(i => i.NotifyLogId)
+                .ToList()
+            ;
+            if(0 < removeLogs.Count) {
+                foreach(var removeLog in removeLogs) {
+                    ClearLog(removeLog);
+                }
+            }
+        }
+
     }
 }

@@ -36,6 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsDisabledSystemIdle => HeartBeatSender != null;
         public bool IsSupportedExplorer => ExplorerSupporter != null;
 
+        Guid KeyboardNotifyLogId { get; set; }
+
         #endregion
 
         #region function
@@ -112,6 +114,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyboradHooker.KeyDown += KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp += KeyboradHooker_KeyUp;
 
+            MouseHooker.MouseMove += MouseHooker_MouseMove;
+
             RebuildHook();
         }
 
@@ -128,6 +132,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyboradHooker.KeyDown -= KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp -= KeyboradHooker_KeyUp;
 
+            MouseHooker.MouseMove -= MouseHooker_MouseMove;
+
             KeyboradHooker.Dispose();
             MouseHooker.Dispose();
         }
@@ -140,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 hooked = true;
             }
             //TODO: キー入力待ちでクリックされたら入力待ち解除したい
-            //MouseHooker.Register();
+            MouseHooker.Register();
 
             IsEnabledHook = hooked;
         }
@@ -165,9 +171,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void ExecuteKeyPressedJob(KeyActionPressedJobBase job)
         {
+            void PutNotifyLog(string message)
+            {
+                if(KeyboardNotifyLogId != Guid.Empty) {
+                    NotifyManager.ClearLog(KeyboardNotifyLogId);
+                    KeyboardNotifyLogId = Guid.Empty;
+                }
+                NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(message)));
+            }
+
             switch(job) {
                 case KeyActionCommandJob commandJob: {
                         Logger.LogInformation("キーからの起動: コマンドランチャー");
+                        PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Command_Show);
                         ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                             ShowCommandView();
                         });
@@ -181,11 +197,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         var deviceCursorLocation = PodStructUtility.Convert(podPoint);
                         var screen = Screen.FromDevicePoint(deviceCursorLocation);
                         var element = GetOrCreateLauncherItemElement(launcherItemJob.PressedData.LauncherItemId);
+                        var map = new Dictionary<string, string>() {
+                            ["ITEM"] = element.Name,
+                        };
                         switch(launcherItemJob.PressedData.LauncherItemKind) {
                             case KeyActionContentLauncherItem.Execute:
+                                PutNotifyLog(TextUtility.ReplaceFromDictionary(Properties.Resources.String_Hook_Keyboard_Execute_LauncherItem_Normal_Format, map));
                                 element.Execute(screen);
                                 break;
                             case KeyActionContentLauncherItem.ExtendsExecute:
+                                PutNotifyLog(TextUtility.ReplaceFromDictionary(Properties.Resources.String_Hook_Keyboard_Execute_LauncherItem_Extends_Format, map));
                                 element.OpenExtendsExecuteView(screen);
                                 break;
                             default:
@@ -195,6 +216,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     break;
 
                 case KeyActionLauncherToolbarJob launcherToolbarJob: {
+                        PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Toolbar_Hidden);
+
                         ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                             var windowItems = WindowManager.GetWindowItems(WindowKind.LauncherToolbar);
                             foreach(var windowItem in windowItems) {
@@ -208,6 +231,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 case KeyActionNoteJob noteJob: {
                         switch(noteJob.PressedData.NoteKind) {
                             case KeyActionContentNote.Create:
+                                PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Create);
+
                                 var deviceCursorPos = MouseUtility.GetDevicePosition();
                                 var screen = Screen.FromDevicePoint(deviceCursorPos);
                                 var noteElement = CreateNote(screen, NoteStartupPosition.CursorPosition);
@@ -218,12 +243,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 break;
 
                             case KeyActionContentNote.ZOrderTop:
+                                PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Z_Top);
+
                                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                                     MoveZOrderAllNotes(true);
                                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                                 break;
 
                             case KeyActionContentNote.ZOrderBottom:
+                                PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Note_Z_Bottom);
+
                                 ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                                     MoveZOrderAllNotes(false);
                                 }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
@@ -245,6 +274,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var localModifierKeyStatus = modifierKeyStatus;
             return Task.Run(() => {
+                KeyActionPressedJobBase? firstWaitingPressedJob = null;
+
                 foreach(var job in jobs) {
                     switch(job.CommonData.KeyActionKind) {
                         case KeyActionKind.Replace: {
@@ -261,14 +292,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             if(job is KeyActionPressedJobBase pressedJob) {
                                 if(!pressedJob.IsAllHit) {
                                     Logger.LogTrace("待機中: {0}", job.CommonData.KeyActionId);
+                                    firstWaitingPressedJob = pressedJob;
                                     break;
                                 }
+
                                 pressedJob.Reset();
                                 ExecuteKeyPressedJob(pressedJob);
+
                                 break;
                             } else {
                                 throw new NotImplementedException();
                             }
+                    }
+                }
+
+                if(firstWaitingPressedJob != null) {
+                    var factory = new KeyMappingFactory();
+                    var cultureService = ApplicationDiContainer.Get<CultureService>();
+                    var keyMessages = firstWaitingPressedJob.GetCurrentMappings().Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
+                    var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
+
+                    if(KeyboardNotifyLogId == Guid.Empty) {
+                        var logContent = new NotifyLogContent(keyMessage);
+                        KeyboardNotifyLogId = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, Properties.Resources.String_Hook_Keyboard_Header, logContent));
+                    } else {
+                        NotifyManager.ReplaceLog(KeyboardNotifyLogId, keyMessage);
                     }
                 }
             });
@@ -446,6 +494,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             if(0 < jobs.Count) {
                 e.Handled = !IsThroughSystem(jobs);
                 ExecuteKeyDownJobsAsync(jobs, e.modifierKeyStatus).ConfigureAwait(false);
+            } else {
+                if(KeyboardNotifyLogId != Guid.Empty) {
+                    if(!e.Key.IsModifierKey()) {
+                        Logger.LogTrace("キー入力該当なし");
+                        NotifyManager.ClearLog(KeyboardNotifyLogId);
+                        KeyboardNotifyLogId = Guid.Empty;
+                        NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, Properties.Resources.String_Hook_Keyboard_Header, new NotifyLogContent(Properties.Resources.String_Hook_Keyboard_NotFound)));
+                    }
+                }
             }
         }
 
@@ -454,6 +511,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);
         }
+
+        private void MouseHooker_MouseMove(object? sender, MouseHookEventArgs e)
+        {
+            if(NotifyLogElement.NowShowing && NotifyLogElement.Position == NotifyLogPosition.Cursor) {
+                NotifyLogElement.StartView();
+            }
+        }
+
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {

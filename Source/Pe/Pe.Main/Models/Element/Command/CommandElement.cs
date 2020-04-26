@@ -28,7 +28,7 @@ using Timer = System.Timers.Timer;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
-    public class CommandElement : ElementBase, IViewShowStarter, IFlushable
+    public class CommandElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
         public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -243,6 +243,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         protected override void InitializeImpl()
         {
+            foreach(var commandFinder in CommandFinders) {
+                commandFinder.Initialize();
+            }
+
             Refresh();
         }
 

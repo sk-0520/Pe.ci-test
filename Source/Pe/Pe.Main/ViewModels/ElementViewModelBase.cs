@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -15,6 +16,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
         public ElementViewModelBase(TElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            // 初期化完了済みかはデバッグ時に検知すべし
+            Debug.Assert(Model.IsInitialized);
+
             UserTracker = userTracker;
             DispatcherWrapper = dispatcherWrapper;
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 
@@ -19,7 +20,87 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #endregion
 
+        #region function
+
+        private string TuneFileName(string name)
+        {
+            if(name == null) {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if(string.IsNullOrWhiteSpace(name)) {
+                throw new ArgumentException(nameof(name));
+            }
+
+            var s = name.Trim();
+            var cs = Path.GetInvalidFileNameChars();
+            if(s.Any(i => cs.Any(cc => cc == i))) {
+                throw new ArgumentException(nameof(name));
+            }
+
+            return s;
+        }
+
+        #endregion
+
         #region IPluginFileStorage
+
+        /// <inheritdoc cref="IPluginFileStorage.Exists(string)"/>
+        public bool Exists(string name)
+        {
+            var tunedFileName = TuneFileName(name);
+            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            return File.Exists(path);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Rename(string, string, bool)"/>
+        public void Rename(string sourceName, string destinationName, bool overwrite)
+        {
+            if(sourceName == destinationName) {
+                throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
+            }
+
+            var tunedSourceFileName = TuneFileName(sourceName);
+            var tunedDestinationFileName = TuneFileName(destinationName);
+
+            var tunedSourceFilePath = Path.Combine(DirectoryInfo.FullName, tunedSourceFileName);
+            var tunedDestinationFilePath = Path.Combine(DirectoryInfo.FullName, tunedDestinationFileName);
+
+            File.Move(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Copy(string, string, bool)"/>
+        public void Copy(string sourceName, string destinationName, bool overwrite)
+        {
+            if(sourceName == destinationName) {
+                throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
+            }
+
+            var tunedSourceFileName = TuneFileName(sourceName);
+            var tunedDestinationFileName = TuneFileName(destinationName);
+
+            var tunedSourceFilePath = Path.Combine(DirectoryInfo.FullName, tunedSourceFileName);
+            var tunedDestinationFilePath = Path.Combine(DirectoryInfo.FullName, tunedDestinationFileName);
+
+            File.Copy(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Delete(string)"/>
+        public void Delete(string name)
+        {
+            var tunedFileName = TuneFileName(name);
+            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            File.Delete(path);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Open(string, FileMode)"/>
+        public Stream Open(string name, FileMode fileMode)
+        {
+            var tunedFileName = TuneFileName(name);
+            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            var stream = new FileStream(path, fileMode, FileAccess.ReadWrite, FileShare.Read);
+            return stream;
+        }
 
         #endregion
     }

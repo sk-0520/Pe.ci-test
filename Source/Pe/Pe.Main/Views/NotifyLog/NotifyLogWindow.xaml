@@ -1,0 +1,227 @@
+<Window
+  x:Name="root"
+  x:Class="ContentTypeTextNet.Pe.Main.Views.NotifyLog.NotifyLogWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
+  xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_viewmodes_notifylog="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog"
+
+  Height="200"
+  Width="500"
+  Topmost="True"
+  AllowsTransparency="True"
+  WindowStyle="None"
+  Background="Transparent"
+  ResizeMode="NoResize"
+  ShowInTaskbar="False"
+  WindowStartupLocation="CenterScreen"
+  ShowActivated="False"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+>
+  <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
+    <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
+  </Window.Resources>
+  <Window.Title>
+    <Binding Path="Resources.String_Notify_Caption" Source="{x:Static app_main:CultureService.Instance}" Converter="{StaticResource TitleConverter}" />
+  </Window.Title>
+
+  <Grid x:Name="parent" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+    <Border
+      x:Name="content"
+      BorderThickness="{Binding ViewBorderThickness}"
+      BorderBrush="{Binding ViewBorderBrush}"
+      CornerRadius="{Binding ViewBorderCornerRadius}"
+      Background="{Binding ViewBackgroundBrush}"
+      Padding="{Binding ViewPaddingThickness}"
+      MaxWidth="{Binding ActualWidth, ElementName=parent}"
+      MaxHeight="{Binding ActualHeight, ElementName=parent}"
+    >
+      <Border.Style>
+        <Style TargetType="Border">
+          <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Opacity" Value="1" />
+            </Trigger>
+
+            <DataTrigger Binding="{Binding Position}" Value="Cursor">
+              <Setter Property="VerticalAlignment" Value="{Binding CursorVerticalAlignment}" />
+              <Setter Property="HorizontalAlignment" Value="{Binding CursorHorizontalAlignment}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="Center">
+              <Setter Property="VerticalAlignment" Value="Center" />
+              <Setter Property="HorizontalAlignment" Value="Center" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="LeftTop">
+              <Setter Property="VerticalAlignment" Value="Top" />
+              <Setter Property="HorizontalAlignment" Value="Left" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="RightTop">
+              <Setter Property="VerticalAlignment" Value="Top" />
+              <Setter Property="HorizontalAlignment" Value="Right" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="LeftBottom">
+              <Setter Property="VerticalAlignment" Value="Bottom" />
+              <Setter Property="HorizontalAlignment" Value="Left" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position}" Value="RightBottom">
+              <Setter Property="VerticalAlignment" Value="Bottom" />
+              <Setter Property="HorizontalAlignment" Value="Right" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="Opacity" Value="0.85" />
+        </Style>
+      </Border.Style>
+      <Grid Grid.IsSharedSizeScope="True" >
+        <Grid.Resources>
+          <Thickness x:Key="LogItemMargin">1,1,2,1</Thickness>
+          <Style x:Key="Header" TargetType="TextBlock">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding Kind}" Value="Topmost">
+                <Setter Property="Foreground" Value="{Binding DataContext.TopmostHeaderForegroundBrush, Source={x:Reference root}}" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding DataContext.StreamHeaderForegroundBrush, Source={x:Reference root}}" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+          </Style>
+          <Style x:Key="Content" TargetType="TextBlock">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding Kind}" Value="Topmost">
+                <Setter Property="Foreground" Value="{Binding DataContext.TopmostContentForegroundBrush, Source={x:Reference root}}" />
+              </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding DataContext.StreamContentForegroundBrush, Source={x:Reference root}}" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+          </Style>
+
+          <Style x:Key="Link" TargetType="Hyperlink">
+            <Style.Resources>
+              <Style TargetType="TextBlock">
+                <Style.Triggers>
+                  <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.8" />
+                  </Trigger>
+                </Style.Triggers>
+                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+              </Style>
+            </Style.Resources>
+            <Style.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{Binding DataContext.HyperLinkOverForegroundBrush, Source={x:Reference root}}" />
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Cursor" Value="Hand" />
+              </Trigger>
+            </Style.Triggers>
+            <Setter Property="Foreground" Value="{Binding DataContext.HyperLinkNormalForegroundBrush, Source={x:Reference root}}" />
+            <Setter Property="TextDecorations" Value="Underline" />
+          </Style>
+
+          <Style x:Key="LogItems" TargetType="ItemsControl">
+            <Setter Property="ItemsPanel">
+              <Setter.Value>
+                <ItemsPanelTemplate>
+                  <StackPanel/>
+                </ItemsPanelTemplate>
+              </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+              <Setter.Value>
+                <DataTemplate DataType="{x:Type app_main_viewmodes_notifylog:NotifyLogItemViewModel}">
+                  <Grid>
+                    <Grid.Style>
+                      <Style TargetType="Grid">
+                        <Style.Triggers>
+                          <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                              <Storyboard>
+                                <DoubleAnimation
+                                  Storyboard.TargetProperty="Opacity"
+                                  Duration="00:00:00.250"
+                                  From="0"
+                                  To="1"
+                                />
+                              </Storyboard>
+                            </BeginStoryboard>
+                          </EventTrigger>
+                        </Style.Triggers>
+                      </Style>
+                    </Grid.Style>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition SharedSizeGroup="Header" Width="Auto" />
+                      <ColumnDefinition SharedSizeGroup="Timestamp" Width="Auto" />
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition SharedSizeGroup="Undo" Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Width="120" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Content}" Text="{Binding Content.LocalTimestamp}" />
+
+                    <TextBlock Grid.Column="1" MinWidth="60" MaxWidth="160" Margin="{StaticResource LogItemMargin}" Style="{StaticResource Header}" Text="{Binding Header}" />
+
+                    <ContentControl Grid.Column="2"  Margin="{StaticResource LogItemMargin}">
+                      <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Kind}" Value="Undo">
+                              <Setter Property="Grid.ColumnSpan" Value="1" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Kind}" Value="Command">
+                              <Setter Property="Content">
+                                <Setter.Value>
+                                  <TextBlock ToolTip="{Binding Content.Message, Mode=OneWay}">
+                                    <Hyperlink Style="{StaticResource Link}" Command="{Binding DataContext.ExecuteLogCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+                                      <TextBlock Text="{Binding Content.Message, Mode=OneWay}" />
+                                    </Hyperlink>
+                                  </TextBlock>
+                                </Setter.Value>
+                              </Setter>
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Content">
+                            <Setter.Value>
+                              <TextBlock TextWrapping="Wrap" LineStackingStrategy="MaxHeight" Style="{StaticResource Content}" Text="{Binding Content.Message, Mode=OneWay}" />
+                            </Setter.Value>
+                          </Setter>
+                          <Setter Property="Grid.ColumnSpan" Value="2" />
+                        </Style>
+                      </ContentControl.Style>
+                    </ContentControl>
+
+                    <TextBlock Grid.Column="3" TextAlignment="Right" Padding="{StaticResource LeftMargin}" Margin="{StaticResource LogItemMargin}">
+                      <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource Content}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Kind}" Value="Undo">
+                              <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                      </TextBlock.Style>
+                      <Hyperlink Style="{StaticResource Link}" Command="{Binding DataContext.ExecuteLogCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+                        <TextBlock Text="{Binding Resources.String_Notify_Undo, Source={x:Static app_main:CultureService.Instance}}" />
+                      </Hyperlink>
+                    </TextBlock>
+                  </Grid>
+                </DataTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding TopmostNotifyLogItems}" Style="{StaticResource LogItems}" />
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding StreamNotifyLogItems}" Style="{StaticResource LogItems}" />
+      </Grid>
+    </Border>
+
+  </Grid>
+</Window>

@@ -15,22 +15,20 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherGroupsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherGroupsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, INotifyManager notifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
+        public LauncherGroupsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             GroupItems = allLauncherGroups;
-            NotifyManager = notifyManager;
         }
 
         #region property
-
-        INotifyManager NotifyManager { get; }
 
         public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; }
         public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
@@ -131,6 +129,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             foreach(var group in GroupItems) {
                 group.Save(commandPack);
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    foreach(var item in LauncherItems) {
+                        item.Dispose();
+                    }
+                    LauncherItems.Clear();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        protected override void ReceiveLauncherItemRemoved(Guid launcherItemId)
+        {
+            base.ReceiveLauncherItemRemoved(launcherItemId);
+
+            foreach(var grouItem in GroupItems) {
+                var targetItems = grouItem.LauncherItems.Where(i => i.Data == launcherItemId).ToList();
+                foreach(var targetItem in targetItems) {
+                    grouItem.LauncherItems.Remove(targetItem);
+                }
             }
         }
 
