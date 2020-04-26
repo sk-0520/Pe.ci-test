@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
     {
         #region variable
 
+        NotifyLogPosition _position;
         HorizontalAlignment _cursorHorizontalAlignment = HorizontalAlignment.Left;
         VerticalAlignment _cursorVerticalAlignment = VerticalAlignment.Top;
 
@@ -53,7 +54,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public bool ViewCreated { get; private set; }
 
         public bool IsVisible { get; private set; }
-        public NotifyLogPosition Position { get; private set; }
+        public NotifyLogPosition Position
+        {
+            get => this._position;
+            private set => SetProperty(ref this._position, value);
+        }
 
         private bool NowSilent { get; set; }
 

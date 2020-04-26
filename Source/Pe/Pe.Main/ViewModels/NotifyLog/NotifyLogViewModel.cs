@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
             PlatformTheme = platformTheme;
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+            PropertyChangedHooker.AddHook(nameof(Model.Position), nameof(Position));
             PropertyChangedHooker.AddHook(nameof(Model.CursorHorizontalAlignment), nameof(CursorHorizontalAlignment));
             PropertyChangedHooker.AddHook(nameof(Model.CursorVerticalAlignment), nameof(CursorVerticalAlignment));
 
