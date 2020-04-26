@@ -114,6 +114,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyboradHooker.KeyDown += KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp += KeyboradHooker_KeyUp;
 
+            MouseHooker.MouseMove += MouseHooker_MouseMove;
+
             RebuildHook();
         }
 
@@ -130,6 +132,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyboradHooker.KeyDown -= KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp -= KeyboradHooker_KeyUp;
 
+            MouseHooker.MouseMove -= MouseHooker_MouseMove;
+
             KeyboradHooker.Dispose();
             MouseHooker.Dispose();
         }
@@ -142,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 hooked = true;
             }
             //TODO: キー入力待ちでクリックされたら入力待ち解除したい
-            //MouseHooker.Register();
+            MouseHooker.Register();
 
             IsEnabledHook = hooked;
         }
@@ -507,6 +511,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);
         }
+
+        private void MouseHooker_MouseMove(object? sender, MouseHookEventArgs e)
+        {
+            if(NotifyLogElement.NowShowing && NotifyLogElement.Position == NotifyLogPosition.Cursor) {
+                NotifyLogElement.StartView();
+            }
+        }
+
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {

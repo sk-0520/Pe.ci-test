@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public ReadOnlyObservableCollection<NotifyLogItemElement> StreamNotifyLogs => NotifyManager.StreamNotifyLogs;
         public bool ViewCreated { get; private set; }
 
-        public bool IsVisible { get; private set; }
+        bool IsVisible { get; set; }
         public NotifyLogPosition Position
         {
             get => this._position;
@@ -73,6 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             set => SetProperty(ref this._cursorVerticalAlignment, value);
         }
 
+        public bool NowShowing { get; private set; }
+
         #endregion
 
         #region function
@@ -80,6 +82,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         public void HideView(bool force)
         {
             Debug.Assert(ViewCreated);
+            NowShowing = false;
+
             WindowManager.GetWindowItems(WindowKind.NotifyLog).First().Window.Hide();
         }
 
@@ -237,6 +241,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
                 Logger.LogTrace("通知ログは非表示設定");
                 return;
             }
+
+            NowShowing = true;
 
             if(!ViewCreated) {
                 var windowItem = OrderManager.CreateNotifyLogWindow(this);

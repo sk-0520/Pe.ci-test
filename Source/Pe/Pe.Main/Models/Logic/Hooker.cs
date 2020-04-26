@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -268,26 +271,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     public class MouseHookEventArgs : EventArgs
     {
         #region variable
+
         public readonly MSLLHOOKSTRUCT msll;
 
         #endregion
+
         public MouseHookEventArgs(IntPtr lParam)
         {
             this.msll = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT))!;
+
+            DeviceLocation = PodStructUtility.Convert(this.msll.pt);
         }
+
+        #region property
+
+        [PixelKind(Px.Device)]
+        public Point DeviceLocation { get; }
+
+        #endregion
     }
 
     public class MouseHooker : HookerBase
     {
         #region event
 
-        //public event EventHandler<MouseHookEventArgs>? MouseMove;
+        public event EventHandler<MouseHookEventArgs>? MouseMove;
 
         #endregion
 
         public MouseHooker(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
+
+        #region function
+
+        #endregion
 
         #region HookerBase
 
@@ -299,9 +317,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
             if(code == (int)HC.HC_ACTION) {
-                var e = new MouseHookEventArgs(lParam);
-                if(wParam.ToInt32() == (int)WM.WM_MOUSEMOVE) {
-                    Logger.LogInformation("(X,Y) = ({0},{1})", e.msll.pt.X, e.msll.pt.Y);
+                switch(wParam.ToInt32()) {
+                    case (int)WM.WM_MOUSEMOVE: {
+                            var mouseMove = MouseMove;
+                            if(mouseMove != null) {
+                                var e = new MouseHookEventArgs(lParam);
+                                MouseMove?.Invoke(this, e);
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
             }
 
