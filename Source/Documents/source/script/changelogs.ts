@@ -134,7 +134,10 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#601: コマンド型ランチャーの横幅が保存されてない",
+						"comments": [
+							"正確には保存されてたんだけど保存値がちょっと頭おかしかった"
+						]
 					},
 					{
 						"revision": "",

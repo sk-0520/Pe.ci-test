@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 hooked = true;
             }
             //TODO: キー入力待ちでクリックされたら入力待ち解除したい
-            MouseHooker.Register();
+            //MouseHooker.Register();
 
             IsEnabledHook = hooked;
         }
@@ -186,7 +186,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         PutNotifyLog(Properties.Resources.String_Hook_Keyboard_Execute_Command_Show);
                         ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
                             ShowCommandView();
-                        });
+                        }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                     }
                     break;
 
@@ -224,7 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 var viewModel = (ViewModels.LauncherToolbar.LauncherToolbarViewModel)windowItem.ViewModel;
                                 viewModel.HideAndShowWaiting();
                             }
-                        });
+                        }, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
                     }
                     break;
 
