@@ -68,6 +68,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Models\Logic\MouseHooker.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MouseHooker.tt</DependentUpon>
+    </None>
     <None Include="Resources\File\Accept\AcceptDocument.xaml">
       <Generator></Generator>
     </None>
@@ -78,6 +83,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Models\Logic\MouseHooker.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MouseHooker.tt</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -105,6 +115,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Models\Logic\MouseHooker.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MouseHooker.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="C:\Users\abcde\.nuget\packages\microsoft.ui.xaml\2.2.190917002\buildTransitive\DensityStyles\Compact.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,6 +137,10 @@
     <Reference Update="CefSharp.Wpf">
       <Private>true</Private>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" etc_4appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
