@@ -1,0 +1,114 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+// [T4] build <#= DateTime.UtcNow.ToString("u") #>(UTC)
+using System;
+using System.Diagnostics;
+using System.Windows.Input;
+using System.Runtime.InteropServices;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
+using Microsoft.Extensions.Logging;
+
+namespace ContentTypeTextNet.Pe.Main.Models.Logic
+{
+    partial class MouseHooker
+    {
+        protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
+        {
+            if(IsSkipCode(code)) {
+                return CallNextProcedure(code, wParam, lParam);
+            }
+
+            if(code != (int)HC.HC_ACTION) {
+                return CallNextProcedure(code, wParam, lParam);
+            }
+
+            MouseHookEventArgs? e = null;
+            EventHandler<MouseHookEventArgs>? target = null;
+
+            <#
+            var buttonEvents = new [] {
+                new { Message = "WM_LBUTTONDOWN", Event = "MouseDown",  MouseButton = "Left", ButtonState = "Pressed" },
+                new { Message = "WM_RBUTTONDOWN", Event = "MouseDown",  MouseButton = "Right", ButtonState = "Pressed" },
+                new { Message = "WM_MBUTTONDOWN", Event = "MouseDown",  MouseButton = "Middle", ButtonState = "Pressed" },
+                new { Message = "WM_LBUTTONUP", Event = "MouseUp",  MouseButton = "Left", ButtonState = "Released" },
+                new { Message = "WM_RBUTTONUP", Event = "MouseUp",  MouseButton = "Right", ButtonState = "Released" },
+                new { Message = "WM_MBUTTONUP", Event = "MouseUp",  MouseButton = "Middle", ButtonState = "Released" },
+            };
+
+            var xButtonEvents = new [] {
+                new { Message = "WM_XBUTTONDOWN", Event = "MouseUp", ButtonState = "Pressed" },
+                new { Message = "WM_XBUTTONUP", Event = "MouseUp", ButtonState = "Released" },
+            };
+
+            #>
+
+            switch(wParam.ToInt32()) {
+                case (int)WM.WM_MOUSEMOVE:
+                    target = MouseMove;
+                    if(target != null) {
+                        e = new MouseHookEventArgs(lParam);
+                    }
+                    break;
+
+                #region 機械生成
+                #region 通常ボタン
+                <# foreach(var buttonEvent in buttonEvents) { #>
+
+                case (int)WM.<#= buttonEvent.Message #>:
+                    target = <#= buttonEvent.Event #>;
+                    if(target != null) {
+                        e = new MouseHookEventArgs(MouseButton.<#= buttonEvent.MouseButton #>, MouseButtonState.<#= buttonEvent.ButtonState #>, lParam);
+                    }
+                    break;
+
+                <# } #>
+
+                #endregion
+
+                #region Xボタン
+                <# foreach(var buttonEvent in xButtonEvents) { #>
+
+                case (int)WM.<#= buttonEvent.Message #>: {
+                        var msll = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT))!;
+                        var xbutton = WindowsUtility.HIWORD(msll.mouseData);
+                        if(xbutton == (int)XBUTTON.XBUTTON1) {
+                            target = <#= buttonEvent.Event #>;
+                            if(target != null) {
+                                e = new MouseHookEventArgs(1, MouseButtonState.<#= buttonEvent.ButtonState #>, msll);
+                            }
+                        } else if (xbutton == (int)XBUTTON.XBUTTON2) {
+                            target = <#= buttonEvent.Event #>;
+                            if(target != null) {
+                                e = new MouseHookEventArgs(2, MouseButtonState.<#= buttonEvent.ButtonState #>, msll);
+                            }
+                        }
+                    }
+                    break;
+
+                <# } #>
+
+                #endregion
+
+                #endregion
+
+                default:
+                    break;
+            }
+
+            if(target != null) {
+                Debug.Assert(e != null);
+                target.Invoke(this, e);
+                if(e.Handled) {
+                    return new IntPtr(1);
+                }
+            }
+            return CallNextProcedure(code, wParam, lParam);
+        }
+    }
+}
+

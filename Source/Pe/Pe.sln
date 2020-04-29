@@ -30,6 +30,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[doc]", "[doc]", "{C963971D-A95D-4948-B9C2-8549094B62CA}"
 	ProjectSection(SolutionItems) = preProject
 		..\Documents\source\script\changelogs.ts = ..\Documents\source\script\changelogs.ts
+		Pe.Main\Pe.Main.csproj = Pe.Main\Pe.Main.csproj
 	EndProjectSection
 EndProject
 Global
@@ -147,7 +148,7 @@ Global
 		{7497BE4A-60A7-4473-9F38-52DA76295F99} = {000DF07E-ADB7-4D21-96B7-74F0CBED2840}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_NeutralResourcesLanguage = ja-JP
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 	EndGlobalSection
 EndGlobal

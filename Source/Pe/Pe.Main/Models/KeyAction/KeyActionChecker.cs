@@ -141,6 +141,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return result;
         }
 
+        public void Reset()
+        {
+            foreach(var job in PressedJobs) {
+                job.Reset();
+            }
+        }
+
         #endregion
     }
 }
