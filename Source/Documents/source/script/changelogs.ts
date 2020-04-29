@@ -158,7 +158,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "フック処理の登録処理を初期化から若干ずらした"
 					},
 					{
 						"revision": "",

@@ -784,7 +784,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             InitializeHook();
 
             StartPlatform();
-            StartHook();
 
             ExecuteElements();
 #if DEBUG
@@ -1266,6 +1265,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("path: {0}", commandPath);
             Logger.LogInformation("args: {0}", arg);
             systemExecutor.ExecuteFile(commandPath, arg);
+        }
+
+        internal void StartupEnd()
+        {
+            StartHook();
+            DelayCheckUpdateAsync().ConfigureAwait(false);
         }
 
         #endregion
