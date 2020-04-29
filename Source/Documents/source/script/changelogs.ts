@@ -117,7 +117,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#603: マウスクリックでキーボード入力待機を解除する"
 					},
 					{
 						"revision": "",
