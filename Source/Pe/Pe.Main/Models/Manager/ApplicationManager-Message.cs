@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 hooked = true;
             }
             //TODO: キー入力待ちでクリックされたら入力待ち解除したい
-            //MouseHooker.Register();
+            MouseHooker.Register();
 
             IsEnabledHook = hooked;
         }

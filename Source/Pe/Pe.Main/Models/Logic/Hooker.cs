@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public abstract class HookerBase : DisposerBase
+    public abstract class HookerBase: DisposerBase
     {
         public HookerBase(ILoggerFactory loggerFactory)
         {
@@ -46,6 +46,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             NativeMethods.UnhookWindowsHookEx(HookHandle);
             HookHandle = IntPtr.Zero;
+        }
+
+        protected bool IsSkipCode(int code)
+        {
+            if(code < 0) {
+                return true;
+            }
+
+            if(code == (int)HC.HC_NOREMOVE) {
+                return true;
+            }
+
+            return false;
         }
 
         protected abstract IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam);
@@ -167,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     }
 
-    public class KeyboardHookEventArgs : EventArgs
+    public class KeyboardHookEventArgs: EventArgs
     {
         #region variable
 
@@ -198,7 +211,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     }
 
-    public class KeyboradHooker : HookerBase
+    public class KeyboradHooker: HookerBase
     {
         #region event
 
@@ -227,7 +240,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
-            if(0 <= code) {
+            if(!IsSkipCode(code)) {
                 var message = wParam.ToInt32();
                 var isDown = message == (int)WM.WM_KEYDOWN || message == (int)WM.WM_SYSKEYDOWN;
                 var isUp = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
@@ -262,13 +275,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                 }
             }
+
             return CallNextProcedure(code, wParam, lParam);
         }
 
         #endregion
     }
 
-    public class MouseHookEventArgs : EventArgs
+    public class MouseHookEventArgs: EventArgs
     {
         #region variable
 
@@ -288,10 +302,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         [PixelKind(Px.Device)]
         public Point DeviceLocation { get; }
 
+        /// <summary>
+        /// 処理したか。
+        /// </summary>
+        public bool Handled { get; set; }
+
         #endregion
     }
 
-    public class MouseHooker : HookerBase
+    public class MouseHooker: HookerBase
     {
         #region event
 
@@ -316,22 +335,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
-            if(code == (int)HC.HC_ACTION) {
-                switch(wParam.ToInt32()) {
-                    case (int)WM.WM_MOUSEMOVE: {
-                            var mouseMove = MouseMove;
-                            if(mouseMove != null) {
-                                var e = new MouseHookEventArgs(lParam);
-                                MouseMove?.Invoke(this, e);
-                            }
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
+            if(IsSkipCode(code)) {
+                return CallNextProcedure(code, wParam, lParam);
             }
 
+            if(code != (int)HC.HC_ACTION) {
+                return CallNextProcedure(code, wParam, lParam);
+            }
+
+            MouseHookEventArgs? e = null;
+            EventHandler<MouseHookEventArgs>? target = null;
+
+            switch(wParam.ToInt32()) {
+                case (int)WM.WM_MOUSEMOVE:
+                    target = MouseMove;
+                    if(target != null) {
+                        e = new MouseHookEventArgs(lParam);
+                    }
+                    break;
+
+                case (int)WM.WM_LBUTTONDOWN:
+                case (int)WM.WM_LBUTTONUP:
+                case (int)WM.WM_RBUTTONDOWN:
+                case (int)WM.WM_RBUTTONUP:
+                case (int)WM.WM_MBUTTONDOWN:
+                case (int)WM.WM_MBUTTONUP:
+                case (int)WM.WM_XBUTTONUP:
+                case (int)WM.WM_XBUTTONDOWN:
+
+                    Logger.LogInformation("{0}", (WM)wParam.ToInt32());
+                    break;
+                default:
+                    break;
+            }
+
+            if(target != null) {
+                Debug.Assert(e != null);
+                target.Invoke(this, e);
+                if(e.Handled) {
+                    return new IntPtr(1);
+                }
+            }
             return CallNextProcedure(code, wParam, lParam);
         }
 
