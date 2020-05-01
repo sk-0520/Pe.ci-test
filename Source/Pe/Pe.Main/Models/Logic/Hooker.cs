@@ -65,9 +65,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected IntPtr CallNextProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
-#if DEBUG
-            Logger.LogTrace("code = {0}, wParam = {1}, lParam = {2}", code, wParam, lParam);
-#endif
             return NativeMethods.CallNextHookEx(HookHandle, code, wParam, lParam);
         }
 
