@@ -249,24 +249,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         if(logging) {
                             stopwatch = new Stopwatch();
                             stopwatch.Start();
-                            Logger.LogTrace("キーボード {0} フック 実装部 開始", isUp ? nameof(KeyDown) : nameof(KeyUp));
                         }
+                        try {
 
-                        var modifierKeyStatus = ModifierKeyStatus.Create();
-                        var e = new KeyboardHookEventArgs(isDown, lParam, modifierKeyStatus);
-                        keyEvent.Invoke(this, e);
-                        if(e.Handled) {
-                            Logger.LogTrace("入力制御: {0}, {1}, {2}", isUp ? nameof(KeyDown) : nameof(KeyUp), e.Key, e.modifierKeyStatus);
-                            return new IntPtr(1);
-                        }
-
-                        if(logging) {
-                            Debug.Assert(stopwatch != null);
-                            stopwatch.Stop();
-                            if(TimeSpan.FromMilliseconds(300) < stopwatch.Elapsed) {
-                                Logger.LogWarning("キーボード {0} フック 実装部 終了: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
-                            } else {
-                                Logger.LogTrace("キーボード {0} フック 実装部 終了: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
+                            var modifierKeyStatus = ModifierKeyStatus.Create();
+                            var e = new KeyboardHookEventArgs(isDown, lParam, modifierKeyStatus);
+                            keyEvent.Invoke(this, e);
+                            if(e.Handled) {
+                                Logger.LogInformation("キーボード入力制御: {0}, {1}, {2}", isUp ? nameof(KeyDown) : nameof(KeyUp), e.Key, e.modifierKeyStatus);
+                                return new IntPtr(1);
+                            }
+                        } finally {
+                            if(logging) {
+                                Debug.Assert(stopwatch != null);
+                                stopwatch.Stop();
+                                if(TimeSpan.FromMilliseconds(300) < stopwatch.Elapsed) {
+                                    Logger.LogWarning("キーボード {0} フック 実装部 所要時間長期: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
+                                }
                             }
                         }
                     }

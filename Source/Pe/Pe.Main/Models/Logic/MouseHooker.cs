@@ -1,4 +1,4 @@
-// [T4] build 2020-04-29 09:14:59Z(UTC)
+// [T4] build 2020-05-01 13:32:17Z(UTC)
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -25,7 +25,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             EventHandler<MouseHookEventArgs>? target = null;
 
             
-            switch(wParam.ToInt32()) {
+            var wParamValue = wParam.ToInt32();
+
+            switch(wParamValue) {
                 case (int)WM.WM_MOUSEMOVE:
                     target = MouseMove;
                     if(target != null) {
@@ -133,10 +135,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
 
             if(target != null) {
-                Debug.Assert(e != null);
-                target.Invoke(this, e);
-                if(e.Handled) {
-                    return new IntPtr(1);
+                Stopwatch? stopwatch = null;
+                var logging = Logger.IsEnabled(LogLevel.Trace) || Logger.IsEnabled(LogLevel.Warning);
+                if(logging) {
+                    stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                }
+                try {
+                    Debug.Assert(e != null);
+                    target.Invoke(this, e);
+                    if(e.Handled) {
+                        Logger.LogInformation("マウス入力制御: {0}", (WM)wParamValue);
+                        return new IntPtr(1);
+                    }
+                } finally {
+                    if(logging) {
+                        Debug.Assert(stopwatch != null);
+                        stopwatch.Stop();
+                        if(TimeSpan.FromMilliseconds(300) < stopwatch.Elapsed) {
+                            Logger.LogWarning("マウス {0} フック 実装部 所要時間長期: {1}", (WM)wParamValue, stopwatch.Elapsed);
+                        }
+                    }
                 }
             }
             return CallNextProcedure(code, wParam, lParam);
