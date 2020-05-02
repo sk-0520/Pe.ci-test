@@ -18,7 +18,7 @@
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
 
-    <ContentControl Grid.Column="0" Content="{Binding Icon, ElementName=root}" Margin="{Binding IconMargin, ElementName=root}">
+    <ContentControl Grid.Column="0" Content="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="{Binding IconMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <ContentControl.Resources>
         <DataTemplate DataType="{x:Type app_main_viewmode_iv:IconViewerViewModel}">
           <app_main_view:ImageViewerControl IconViewer="{Binding Content, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
@@ -29,10 +29,10 @@
       <TextBlock.Style>
         <Style TargetType="TextBlock">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding IsIconOnly, ElementName=root}" Value="False">
+            <DataTrigger Binding="{Binding IsIconOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
               <Setter Property="Visibility" Value="Visible" />
-              <Setter Property="Width" Value="{Binding TextWidth, ElementName=root}" />
-              <Setter Property="Text" Value="{Binding Title, ElementName=root}" />
+              <Setter Property="Width" Value="{Binding TextWidth, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+              <Setter Property="Text" Value="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" />
             </DataTrigger>
           </Style.Triggers>
           <Setter Property="Visibility" Value="Collapsed" />
