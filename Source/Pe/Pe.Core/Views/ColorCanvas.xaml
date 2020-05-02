@@ -43,14 +43,14 @@
     </Style>
   </UserControl.Resources>
 
-  <Grid Width="{Binding ActualWidth, ElementName=root}">
+  <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <StackPanel>
 
-      <ItemsControl Margin="10,0,10,0" ItemsSource="{Binding DefaultColorItemsSource, ElementName=root}">
+      <ItemsControl Margin="10,0,10,0" ItemsSource="{Binding DefaultColorItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <ItemsControl.Style>
           <Style TargetType="ItemsControl">
             <Style.Triggers>
-              <DataTrigger Binding="{Binding DefaultColorsColumns, ElementName=root}" Value="0">
+              <DataTrigger Binding="{Binding DefaultColorsColumns, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0">
                 <Setter Property="Visibility" Value="Collapsed" />
               </DataTrigger>
             </Style.Triggers>
@@ -58,12 +58,12 @@
         </ItemsControl.Style>
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <UniformGrid Columns="{Binding DefaultColorsColumns, ElementName=root}" />
+            <UniformGrid Columns="{Binding DefaultColorsColumns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <Button Click="Button_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Tag="{Binding}" Height="{Binding FontSize, ElementName=root, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=1.5}" >
+            <Button Click="Button_Click" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Tag="{Binding}" Height="{Binding FontSize, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource DoubleToParameterPercentConverter}, ConverterParameter=1.5}" >
               <Button.Template>
                 <ControlTemplate>
                   <Border CornerRadius="2" Margin="1" BorderThickness="1" BorderBrush="#88000000">
@@ -102,7 +102,7 @@
         </Border.Background>
         <Border>
           <Border.Background>
-            <SolidColorBrush Color="{Binding SelectedColor, ElementName=root}" />
+            <SolidColorBrush Color="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}" />
           </Border.Background>
         </Border>
       </Border>
@@ -120,20 +120,20 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="0" Grid.Column="0" Background="#ff0000" Style="{StaticResource ColorElementLabel}" />
-        <Slider Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Red, ElementName=root}" />
-        <app_core_views:NumericUpDown Grid.Row="0" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Red, ElementName=root, Mode=TwoWay}" />
+        <Slider Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Red, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <app_core_views:NumericUpDown Grid.Row="0" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Red, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
 
         <Border Grid.Row="1" Grid.Column="0" Background="#00ff00" Style="{StaticResource ColorElementLabel}" />
-        <Slider Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Green, ElementName=root}" />
-        <app_core_views:NumericUpDown Grid.Row="1" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Green, ElementName=root, Mode=TwoWay}" />
+        <Slider Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Green, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <app_core_views:NumericUpDown Grid.Row="1" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Green, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
 
         <Border Grid.Row="2" Grid.Column="0" Background="#0000ff" Style="{StaticResource ColorElementLabel}" />
-        <Slider Grid.Row="2" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Blue, ElementName=root}" />
-        <app_core_views:NumericUpDown Grid.Row="2" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Blue, ElementName=root, Mode=TwoWay}" />
+        <Slider Grid.Row="2" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Blue, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <app_core_views:NumericUpDown Grid.Row="2" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Blue, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
 
-        <Border Grid.Row="3" Grid.Column="0" Background="#ffffff" Style="{StaticResource ColorElementLabel}" Visibility="{Binding HasAlpha, ElementName=root, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <Slider Grid.Row="3" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Alpha, ElementName=root}" Visibility="{Binding HasAlpha, ElementName=root, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <app_core_views:NumericUpDown Grid.Row="3" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Alpha, ElementName=root, Mode=TwoWay}" Visibility="{Binding HasAlpha, ElementName=root, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Border Grid.Row="3" Grid.Column="0" Background="#ffffff" Style="{StaticResource ColorElementLabel}" Visibility="{Binding HasAlpha, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Slider Grid.Row="3" Grid.Column="1" Style="{StaticResource ColorElementSlider}" Value="{Binding Alpha, RelativeSource={RelativeSource AncestorType=UserControl}}" Visibility="{Binding HasAlpha, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <app_core_views:NumericUpDown Grid.Row="3" Grid.Column="2" Style="{StaticResource ColorElementValue}" Value="{Binding Alpha, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" Visibility="{Binding HasAlpha, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource BooleanToVisibilityConverter}}" />
       </Grid>
 
     </StackPanel>

@@ -162,7 +162,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#608: UserControl のバインド周りを調整"
 					},
 					{
 						"revision": "",

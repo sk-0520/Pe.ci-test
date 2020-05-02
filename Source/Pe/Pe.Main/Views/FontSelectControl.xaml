@@ -20,7 +20,7 @@
     <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
   </UserControl.Resources>
   <StackPanel Orientation="Vertical">
-    <ComboBox x:Name="listFont" SelectedValuePath="Source" SelectedValue="{Binding SelectedFontFamily, ElementName=root}" ItemsSource="{Binding ItemsSource, ElementName=root}">
+    <ComboBox x:Name="listFont" SelectedValuePath="Source" SelectedValue="{Binding SelectedFontFamily, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <ComboBox.ItemsPanel>
         <ItemsPanelTemplate>
           <VirtualizingStackPanel
@@ -47,15 +47,15 @@
       </ComboBox.ItemTemplate>
     </ComboBox>
     <DockPanel HorizontalAlignment="Stretch" Width="Auto">
-      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsBold, ElementName=root}" IsEnabled="{Binding IsEnabledBold, ElementName=root}">
+      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsBold, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledBold, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Bold}" />
       </ToggleButton>
-      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, ElementName=root}" IsEnabled="{Binding IsEnabledItalic, ElementName=root}">
+      <ToggleButton DockPanel.Dock="Left" IsChecked="{Binding IsItalic, RelativeSource={RelativeSource AncestorType=UserControl}}" IsEnabled="{Binding IsEnabledItalic, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Font-Italic}" />
       </ToggleButton>
-      <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, ElementName=root}" />
-      <!--<xctk:DoubleUpDown Minimum="{Binding SizeMinimum, ElementName=root}" Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, ElementName=root}" />-->
-      <app_core_views:NumericUpDown Minimum="{Binding SizeMinimum, ElementName=root}"  Maximum="{Binding SizeMaximum, ElementName=root}" Value="{Binding Size, Mode=TwoWay, ElementName=root}" />
+      <ContentControl DockPanel.Dock="Left" Content="{Binding CustomContent, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+      <!--<xctk:DoubleUpDown Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}" Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, RelativeSource={RelativeSource AncestorType=UserControl}}" />-->
+      <app_core_views:NumericUpDown Minimum="{Binding SizeMinimum, RelativeSource={RelativeSource AncestorType=UserControl}}"  Maximum="{Binding SizeMaximum, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{Binding Size, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </DockPanel>
   </StackPanel>
 </UserControl>

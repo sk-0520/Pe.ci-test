@@ -20,14 +20,14 @@
   d:DesignHeight="450"
 >
   <i:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollSelectedItemRequest, ElementName=root}">
-      <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, ElementName=root}" />
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollSelectedItemRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollToTopCustomizeRequest, ElementName=root}">
-      <prism:InvokeCommandAction Command="{Binding ScrollToTopCustomizeCommand, ElementName=root}" />
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ScrollToTopCustomizeRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <prism:InvokeCommandAction Command="{Binding ScrollToTopCustomizeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </app_core_views:RequestTrigger>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ExpandShortcutFileRequest, ElementName=root}">
-      <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ExpandShortcutFileRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
     </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
   <UserControl.Resources>
@@ -61,32 +61,32 @@
 
           <!--
           <Grid Grid.Column="0">
-            <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, ElementName=root}" Content="+" />
+            <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="+" />
             <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
               <Border Style="{StaticResource PopupMenuBorder}">
                 <StackPanel>
-                  <MenuItem Header="file" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" />
-                  <MenuItem Header="store" Command="{Binding Editor.AddNewStoreAppItemCommand, ElementName=root}" />
-                  <MenuItem Header="addin" Command="{Binding Editor.AddNewAddonItemCommand, ElementName=root}" />
+                  <MenuItem Header="file" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                  <MenuItem Header="store" Command="{Binding Editor.AddNewStoreAppItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                  <MenuItem Header="addin" Command="{Binding Editor.AddNewAddonItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 </StackPanel>
               </Border>
             </Popup>
           </Grid>
           -->
-          <Button Grid.Column="0" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, ElementName=root}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button Grid.Column="0" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
           </Button>
-          <Button Grid.Column="1" ToolTip="{Binding Resources.String_Setting_LauncherItems_Remove, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveItemCommand, ElementName=root}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button Grid.Column="1" ToolTip="{Binding Resources.String_Setting_LauncherItems_Remove, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
           </Button>
-          <TextBox Grid.Column="2" Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
+          <TextBox Grid.Column="2" Text="{Binding Editor.NameFilterQuery, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
         </Grid>
 
       </ToolBar>
 
-      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedItem, ElementName=root, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, ElementName=root}">
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedItem, RelativeSource={RelativeSource AncestorType=UserControl}, Delay=50}" ItemsSource="{Binding Editor.AllLauncherItemItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <i:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, ElementName=root}" />
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.DragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
@@ -111,7 +111,7 @@
 
     <Grid Grid.Column="2">
       <ScrollViewer x:Name="customize" Padding="{StaticResource AllMargin}">
-        <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor.SelectedItem, ElementName=root}" />
+        <app_main_views_launcher_item_customize:LauncherItemCustomizeControl Editor="{Binding Editor.SelectedItem, RelativeSource={RelativeSource AncestorType=UserControl}}" />
       </ScrollViewer>
     </Grid>
 
