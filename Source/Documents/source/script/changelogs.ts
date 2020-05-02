@@ -141,7 +141,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#607: ヘルプのメニュースクロール位置がリンク遷移時にリセットされる"
 					},
 					{
 						"revision": "",
