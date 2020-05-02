@@ -33,7 +33,7 @@
 
   <Grid>
     <ScrollViewer>
-      <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.EditorItems, ElementName=root}">
+      <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.EditorItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <ItemsControl.Resources>
 
           <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
@@ -96,7 +96,7 @@
             <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
               <i:Interaction.Triggers>
                 <app_core_views:RequestTrigger SourceObject="{Binding UserBackupDirectorySelecteRequest}">
-                  <prism:InvokeCommandAction Command="{Binding FileSelectCommand, ElementName=root}" />
+                  <prism:InvokeCommandAction Command="{Binding FileSelectCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                 </app_core_views:RequestTrigger>
               </i:Interaction.Triggers>
               <StackPanel>
