@@ -166,6 +166,15 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core: 1.0.112.1 -> 1.0.112.2"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
@@ -6032,7 +6041,7 @@ const changelogs = [
 ];/*--------RELEASE TAIL--------*/
 
 window.addEventListener('load', () => {
-	const changelogTypeMap: { [key: string]: string; } = {
+	const changelogTypeMap: { [key: string]: string } = {
 		'features': '機能',
 		'fixes': '修正',
 		'developer': '開発',
