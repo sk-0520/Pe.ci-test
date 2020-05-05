@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             get
             {
                 return TextUtility.ReplaceFromDictionary(
-                    Properties.Resources.String_ExtendsExecute_Caption,
+                    Properties.Resources.String_ExtendsExecute_Caption_Format,
                     new Dictionary<string, string>() {
                         ["ITEM"] = Model.CaptionName,
                     }

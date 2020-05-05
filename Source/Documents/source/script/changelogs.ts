@@ -149,6 +149,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#604: 文言をもうちっと分かり易くする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

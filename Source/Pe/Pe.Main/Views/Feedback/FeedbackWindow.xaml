@@ -87,17 +87,17 @@
           <Separator Style="{StaticResource Vertical-Padding}" />
         </StackPanel>
 
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Subject_A, Source={x:Static app_main:CultureService.Instance}}" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Subject, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="1" Grid.Column="0" Target="{Binding ElementName=inputSubject}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Subject_A, Source={x:Static app_main:CultureService.Instance}}" />
+        <TextBox x:Name="inputSubject" Grid.Row="1" Grid.Column="1" Text="{Binding Subject, UpdateSourceTrigger=PropertyChanged}" />
 
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Kind_A, Source={x:Static app_main:CultureService.Instance}}" />
+        <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=inputKindSet}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Kind_A, Source={x:Static app_main:CultureService.Instance}}" />
         <Grid Grid.Row="2" Grid.Column="1" >
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
           </Grid.ColumnDefinitions>
-          <ComboBox Grid.Column="0" SelectedItem="{Binding SelectedFeedbackKind}" ItemsSource="{Binding FeedbackKindItems}">
+          <ComboBox x:Name="inputKindSet" Grid.Column="0" SelectedItem="{Binding SelectedFeedbackKind}" ItemsSource="{Binding FeedbackKindItems}">
             <ComboBox.ItemTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding Converter={StaticResource EnumToCultureConverter}}" />
@@ -108,7 +108,7 @@
           <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{Binding Resources.String_Feedback_KindSetWarning, Source={x:Static app_main:CultureService.Instance}}" />
         </Grid>
 
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Comment_A, Source={x:Static app_main:CultureService.Instance}}" />
+        <Label Grid.Row="3" Grid.Column="0" Target="{Binding ElementName=inputContent}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Feedback_Comment_A, Source={x:Static app_main:CultureService.Instance}}" />
         <Grid Grid.Row="3" Grid.Column="1" >
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -126,6 +126,7 @@
           <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
           <sharpdevelop_avalonedit:TextEditor
+            x:Name="inputContent"
             Grid.Row="1"
             Grid.Column="0"
             ShowLineNumbers="True"

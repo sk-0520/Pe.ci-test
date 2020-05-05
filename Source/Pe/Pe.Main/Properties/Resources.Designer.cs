@@ -338,7 +338,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   バージョン情報(_V) に類似しているローカライズされた文字列を検索します。
+        ///   バージョン情報(_V) ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_About_Version_A {
             get {
@@ -455,7 +455,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   システム に類似しているローカライズされた文字列を検索します。
+        ///   システム(_M) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_System_A {
             get {
@@ -464,7 +464,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   フック状態切り替え に類似しているローカライズされた文字列を検索します。
+        ///   フック状態切り替え(_F) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_System_Hook_A {
             get {
@@ -473,7 +473,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   システムアイドルを抑制 に類似しているローカライズされた文字列を検索します。
+        ///   システムアイドルを抑制(_S) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_System_IsDisabledSystemIdle_A {
             get {
@@ -482,7 +482,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   Explorer 補正 に類似しているローカライズされた文字列を検索します。
+        ///   Explorer 補正(_E) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_System_IsSupportedExplorer_A {
             get {
@@ -847,9 +847,9 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   {0:0.00} {1} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Download_Seconds_Format {
+        public static string String_Download_Seconds_Format_DOTNET {
             get {
-                return ResourceManager.GetString("String_Download_Seconds_Format", resourceCulture);
+                return ResourceManager.GetString("String_Download_Seconds_Format_DOTNET", resourceCulture);
             }
         }
         
@@ -2783,7 +2783,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   変更 に類似しているローカライズされた文字列を検索します。
+        ///   変更(_G) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_EnvironmentValieableEditor_Merge_A {
             get {
@@ -2792,7 +2792,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   削除 に類似しているローカライズされた文字列を検索します。
+        ///   削除(_V) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_EnvironmentValieableEditor_Remove_A {
             get {
@@ -2803,14 +2803,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   ${ITEM} を指定して実行 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Caption {
+        public static string String_ExtendsExecute_Caption_Format {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Caption", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Caption_Format", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   コマンド に類似しているローカライズされた文字列を検索します。
+        ///   コマンド(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_Command_A {
             get {
@@ -2819,25 +2819,25 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   実行 に類似しているローカライズされた文字列を検索します。
+        ///   実行(_E) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Command_Execute {
+        public static string String_ExtendsExecute_Command_Execute_A {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Command_Execute", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Command_Execute_A", resourceCulture);
             }
         }
         
         /// <summary>
         ///   環境変数 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_EnvironmentVariables_A {
+        public static string String_ExtendsExecute_EnvironmentVariables {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_EnvironmentVariables_A", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_EnvironmentVariables", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   編集 に類似しているローカライズされた文字列を検索します。
+        ///   編集(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_EnvironmentVariables_Edit_A {
             get {
@@ -2846,7 +2846,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   オプション に類似しているローカライズされた文字列を検索します。
+        ///   オプション(_P) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_Options_A {
             get {
@@ -2857,14 +2857,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   その他 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Others_A {
+        public static string String_ExtendsExecute_Others {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Others_A", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Others", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   管理者実行 に類似しているローカライズされた文字列を検索します。
+        ///   管理者実行(_A) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_Others_RunAdmin_A {
             get {
@@ -2873,7 +2873,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   標準入出力 に類似しているローカライズされた文字列を検索します。
+        ///   標準入出力(_S) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_Others_StandardInputOutput_A {
             get {
@@ -2884,14 +2884,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   再実施 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ExtendsExecute_Redo_A {
+        public static string String_ExtendsExecute_Redo {
             get {
-                return ResourceManager.GetString("String_ExtendsExecute_Redo_A", resourceCulture);
+                return ResourceManager.GetString("String_ExtendsExecute_Redo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
+        ///   作業ディレクトリ(_W) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ExtendsExecute_WorkDirectory_A {
             get {
@@ -2909,7 +2909,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   コメント に類似しているローカライズされた文字列を検索します。
+        ///   コメント(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Comment_A {
             get {
@@ -3011,7 +3011,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   種類 に類似しているローカライズされた文字列を検索します。
+        ///   種類(_K) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Kind_A {
             get {
@@ -3020,7 +3020,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   テンプレートを設定 に類似しているローカライズされた文字列を検索します。
+        ///   テンプレートを設定(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_KindSet_A {
             get {
@@ -3056,7 +3056,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   件名 に類似しているローカライズされた文字列を検索します。
+        ///   件名(_J) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Subject_A {
             get {
@@ -3257,7 +3257,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   コード に類似しているローカライズされた文字列を検索します。
+        ///   コード(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_Common_Code_A {
             get {
@@ -3286,23 +3286,23 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   ID に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Id_A {
+        public static string String_LauncherItemCustomizeControl_Common_Id {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Id_A", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Id", resourceCulture);
             }
         }
         
         /// <summary>
         ///   種別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Kind_A {
+        public static string String_LauncherItemCustomizeControl_Common_Kind {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Kind_A", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Kind", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   名前 に類似しているローカライズされた文字列を検索します。
+        ///   名前(_N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_Common_Name_A {
             get {
@@ -3313,14 +3313,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   その他 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_Common_Others_A {
+        public static string String_LauncherItemCustomizeControl_Common_Others {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Others_A", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_Common_Others", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   コマンドランチャーで使用 に類似しているローカライズされた文字列を検索します。
+        ///   コマンドランチャーで使用(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_Common_Others_UseCommandLauncher_A {
             get {
@@ -3356,7 +3356,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   標準入出力を使用する に類似しているローカライズされた文字列を検索します。
+        ///   標準入出力を使用する(_S) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu {
             get {
@@ -3365,7 +3365,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   環境変数を編集する に類似しているローカライズされた文字列を検索します。
+        ///   環境変数を編集する(_E) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_Command_IsEnabled_CustomEnvironmentVariable {
             get {
@@ -3375,7 +3375,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   管理者として実行 に類似しているローカライズされた文字列を検索します。
+        ///   管理者として実行(_A) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_Command_RunAdministrator {
             get {
@@ -3393,7 +3393,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   オプション に類似しているローカライズされた文字列を検索します。
+        ///   オプション(_O) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_Options_A {
             get {
@@ -3404,14 +3404,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   その他 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_LauncherItemCustomizeControl_File_Others_A {
+        public static string String_LauncherItemCustomizeControl_File_Others {
             get {
-                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Others_A", resourceCulture);
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_File_Others", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   パス に類似しているローカライズされた文字列を検索します。
+        ///   パス(_P) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_Path_A {
             get {
@@ -3420,7 +3420,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
+        ///   作業ディレクトリ(_W) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_File_WorkDirectory_A {
             get {
@@ -3447,7 +3447,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   オプション に類似しているローカライズされた文字列を検索します。
+        ///   オプション(_O) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_StoreApp_Options_A {
             get {
@@ -3456,7 +3456,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   プロトコル/エイリアス に類似しているローカライズされた文字列を検索します。
+        ///   プロトコル/エイリアス(_P) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeControl_StoreApp_ProtocolAlias_A {
             get {
@@ -3483,7 +3483,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   自動的に隠す に類似しているローカライズされた文字列を検索します。
+        ///   自動的に隠す(_A) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_AppMenu_AutoHide_A {
             get {
@@ -3492,7 +3492,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   非表示 に類似しているローカライズされた文字列を検索します。
+        ///   非表示(_H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_AppMenu_Close_A {
             get {
@@ -3519,7 +3519,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        ///   最前面(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_AppMenu_Topmost_A {
             get {
@@ -3537,7 +3537,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   オプション に類似しているローカライズされた文字列を検索します。
+        ///   オプション(_I) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Copy_Options_A {
             get {
@@ -3546,7 +3546,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   親ディレクトリ に類似しているローカライズされた文字列を検索します。
+        ///   親ディレクトリ(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Copy_ParentDirectory_A {
             get {
@@ -3555,7 +3555,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   パス に類似しているローカライズされた文字列を検索します。
+        ///   パス(_P) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Copy_Path_A {
             get {
@@ -3564,7 +3564,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
+        ///   作業ディレクトリ(_W) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Copy_WorkDirectory_A {
             get {
@@ -3573,7 +3573,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   通常実行 に類似しているローカライズされた文字列を検索します。
+        ///   通常実行(_E) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Execute_Execute_A {
             get {
@@ -3582,7 +3582,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   指定して実行 に類似しているローカライズされた文字列を検索します。
+        ///   指定して実行(_R) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Execute_ExtendsExecute_A {
             get {
@@ -3618,7 +3618,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   親ディレクトリ に類似しているローカライズされた文字列を検索します。
+        ///   親ディレクトリ(_P) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Open_ParentDirectory_A {
             get {
@@ -3627,7 +3627,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   作業ディレクトリ に類似しているローカライズされた文字列を検索します。
+        ///   作業ディレクトリ(_W) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Open_WorkDirectory_A {
             get {
@@ -3636,7 +3636,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   編集 に類似しているローカライズされた文字列を検索します。
+        ///   編集(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Others_Customize_A {
             get {
@@ -3654,7 +3654,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   プロパティ に類似しているローカライズされた文字列を検索します。
+        ///   プロパティ(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Others_Property_A {
             get {
@@ -3663,7 +3663,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   削除？ に類似しているローカライズされた文字列を検索します。
+        ///   表示アイテムを削除(_V) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A {
             get {
@@ -3672,7 +3672,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   削除！ に類似しているローカライズされた文字列を検索します。
+        ///   削除実行(_R) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A {
             get {
@@ -3762,7 +3762,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   種別 に類似しているローカライズされた文字列を検索します。
+        ///   種別(_K) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Format_Kind_A {
             get {
@@ -3771,7 +3771,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   位置 に類似しているローカライズされた文字列を検索します。
+        ///   位置(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Format_Layout_A {
             get {
@@ -3782,9 +3782,9 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   ${FROM-KIND} から ${TO-KIND} への変換により一部情報が失われますがよろしいですか に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Note_KindChanging_Change {
+        public static string String_Note_KindChanging_Change_Format {
             get {
-                return ResourceManager.GetString("String_Note_KindChanging_Change", resourceCulture);
+                return ResourceManager.GetString("String_Note_KindChanging_Change_Format", resourceCulture);
             }
         }
         
@@ -3798,7 +3798,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ファイルを削除してリンク切断 に類似しているローカライズされた文字列を検索します。
+        ///   ファイルを削除してリンク切断(_D) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Link_Delete_A {
             get {
@@ -3825,7 +3825,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ファイルからリンク作成 に類似しているローカライズされた文字列を検索します。
+        ///   ファイルからリンク作成(_O) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Link_OpenLink_A {
             get {
@@ -3834,7 +3834,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   入力内容からリンク作成 に類似しているローカライズされた文字列を検索します。
+        ///   入力内容からリンク作成(_S) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Link_SaveLink_A {
             get {
@@ -3843,7 +3843,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   リンク切断 に類似しているローカライズされた文字列を検索します。
+        ///   リンク切断(_U) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Link_Unlink_A {
             get {
@@ -3852,7 +3852,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   閉じる に類似しているローカライズされた文字列を検索します。
+        ///   閉じる(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Operation_Close_A {
             get {
@@ -3861,7 +3861,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   コピー に類似しているローカライズされた文字列を検索します。
+        ///   コピー(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Operation_Copy_A {
             get {
@@ -3879,7 +3879,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   削除？ に類似しているローカライズされた文字列を検索します。
+        ///   削除(_D) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Operation_Remove_Confirm_A {
             get {
@@ -3888,7 +3888,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   削除！ に類似しているローカライズされた文字列を検索します。
+        ///   削除実行(_R) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Operation_Remove_Execute_A {
             get {
@@ -3897,7 +3897,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   最小化 に類似しているローカライズされた文字列を検索します。
+        ///   最小化(_X) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_Compact_A {
             get {
@@ -3915,7 +3915,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   自動的に隠す方法 に類似しているローカライズされた文字列を検索します。
+        ///   自動的に隠す方法(_H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_HiddenMode_A {
             get {
@@ -3924,7 +3924,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   リンク に類似しているローカライズされた文字列を検索します。
+        ///   リンク(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_Link_A {
             get {
@@ -3933,7 +3933,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   固定 に類似しているローカライズされた文字列を検索します。
+        ///   固定(_K) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_Lock_A {
             get {
@@ -3942,7 +3942,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   最前面 に類似しているローカライズされた文字列を検索します。
+        ///   最前面(_M) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_Topmost_A {
             get {
@@ -3951,7 +3951,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   右端で折り返す に類似しているローカライズされた文字列を検索します。
+        ///   右端で折り返す(_W) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_WordWrap_A {
             get {
@@ -3989,14 +3989,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   再試行待機方法 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_RedoEditor_RedoMode_A {
+        public static string String_RedoEditor_RedoMode {
             get {
-                return ResourceManager.GetString("String_RedoEditor_RedoMode_A", resourceCulture);
+                return ResourceManager.GetString("String_RedoEditor_RedoMode", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   再試行回数 に類似しているローカライズされた文字列を検索します。
+        ///   再試行回数(_R) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_RetryCount_A {
             get {
@@ -4005,7 +4005,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   正常終了コード に類似しているローカライズされた文字列を検索します。
+        ///   正常終了コード(_X) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_SuccessExitCodes_A {
             get {
@@ -4027,14 +4027,14 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   待機処理 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_RedoEditor_WaitAndRetryTime_A {
+        public static string String_RedoEditor_WaitAndRetryTime {
             get {
-                return ResourceManager.GetString("String_RedoEditor_WaitAndRetryTime_A", resourceCulture);
+                return ResourceManager.GetString("String_RedoEditor_WaitAndRetryTime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   待機時間(秒) に類似しているローカライズされた文字列を検索します。
+        ///   待機時間(秒)(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_RedoEditor_WaitTime_A {
             get {
@@ -4682,7 +4682,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   コマンド型ランチャー追加 に類似しているローカライズされた文字列を検索します。
+        ///   コマンド型ランチャー追加(_C) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Add_Command_A {
             get {
@@ -4691,7 +4691,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ランチャーアイテム追加 に類似しているローカライズされた文字列を検索します。
+        ///   ランチャーアイテム追加(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Add_LauncherItem_A {
             get {
@@ -4700,7 +4700,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ノート追加 に類似しているローカライズされた文字列を検索します。
+        ///   ノート追加(_N) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Add_Note_A {
             get {
@@ -4709,7 +4709,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   ツールバー非表示追加 に類似しているローカライズされた文字列を検索します。
+        ///   ツールバー非表示追加(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Add_Toolbar_A {
             get {
@@ -4736,7 +4736,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   永久 に類似しているローカライズされた文字列を検索します。
+        ///   永久に無視する に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_Forever_A {
             get {
@@ -4754,7 +4754,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   実行方法 に類似しているローカライズされた文字列を検索します。
+        ///   実行方法(_E) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_LauncherItem_Execute_A {
             get {
@@ -4781,7 +4781,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   システムへ通知 に類似しているローカライズされた文字列を検索します。
+        ///   システムへ通知(_T) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Keyboard_Pressed_ThroughSystem_A {
             get {

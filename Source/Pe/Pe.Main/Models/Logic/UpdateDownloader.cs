@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                             Properties.Resources.String_Download_Seconds_MB,
                             Properties.Resources.String_Download_Seconds_GB,
                         };
-                        var format = Properties.Resources.String_Download_Seconds_Format;
+                        var format = Properties.Resources.String_Download_Seconds_Format_DOTNET;
                         while(true) {
                             var donwloadSize = await networkStream.ReadAsync(downloadChunk, 0, downloadChunk.Length);
                             if(0 < donwloadSize) {
