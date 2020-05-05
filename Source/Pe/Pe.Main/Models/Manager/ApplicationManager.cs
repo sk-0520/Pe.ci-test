@@ -168,9 +168,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #if DEBUG
             Debug.Assert(CommandElement == null);
 #endif
-            return new ApplicationCommandParameter[] {
-                new ApplicationCommandParameter("header", "description", iconBox => "iconGetter", (screen, extention) => { }),
+            var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
+            var result = new ApplicationCommandParameter[] {
+                factory.CreateParameter(ApplicationCommand.Close, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.Exit, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.Shutdown, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.Reboot, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.About, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.Setting, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollection, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.CopyShortInformation, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.CopyLongInformation, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.Help, (screen, isExtend) => { }),
             };
+
+            return result;
         }
 
         /// <summary>

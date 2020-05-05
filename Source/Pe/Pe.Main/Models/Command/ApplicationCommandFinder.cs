@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -14,6 +16,48 @@ using NLog.Fluent;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
+    internal enum ApplicationCommand
+    {
+        /// <summary>
+        /// コマンドウィンドウを閉じる。
+        /// </summary>
+        Close,
+        /// <summary>
+        /// アプリケーションの終了。
+        /// <para>アップデートが可能であればアップデート行う</para>
+        /// </summary>
+        Exit,
+        /// <summary>
+        /// アプリケーションの終了。
+        /// <para>アップデートがあっても終了。</para>
+        /// </summary>
+        Shutdown,
+        /// <summary>
+        /// 再起動。
+        /// <para>アップデートがあっても再起動。</para>
+        /// </summary>
+        Reboot,
+        About,
+        Setting,
+        GarbageCollection,
+        GarbageCollectionFull,
+        CopyShortInformation,
+        CopyLongInformation,
+        Help,
+    }
+
+    internal class ApplicationCommandParameterFactory
+    {
+        #region function
+
+        public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<IScreen, bool> executor)
+        {
+            return new ApplicationCommandParameter("header:" + applicationCommand, "desc:" + applicationCommand, iconBox => "icon", executor);
+        }
+
+        #endregion
+    }
+
     public class ApplicationCommandParameter
     {
         public ApplicationCommandParameter(string header, string description, Func<IconBox, object> iconGetter, Action<IScreen, bool> executor)
