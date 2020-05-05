@@ -11,6 +11,26 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
+    sealed class ApplicationCommandParameter
+    {
+        public ApplicationCommandParameter(string header, string description, Action<IconBox> iconGetter, Action<IScreen, bool> executor)
+        {
+            Header = header ?? throw new ArgumentNullException(nameof(header));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            IconGetter = iconGetter ?? throw new ArgumentNullException(nameof(iconGetter));
+            Executor = executor ?? throw new ArgumentNullException(nameof(executor));
+        }
+
+        #region property
+
+        public string Header { get; }
+        public string Description { get; }
+        public Action<IconBox> IconGetter { get; }
+        public Action<IScreen, bool> Executor { get; }
+
+        #endregion
+    }
+
     sealed class ApplicationCommandFinder: DisposerBase, ICommandFinder
     {
         #region variable
@@ -19,14 +39,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #endregion
 
-        public ApplicationCommandFinder(ILoggerFactory loggerFactory)
+        public ApplicationCommandFinder(IReadOnlyList<ApplicationCommandParameter> parameters, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
+            Parameters = parameters;
         }
 
         #region property
 
         ILogger Logger { get; }
+
+        IReadOnlyList<ApplicationCommandParameter> Parameters { get; }
 
         #endregion
 
