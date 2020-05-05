@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        public CommandElement(ApplicationCommandFinder applicationCommandFinder, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -51,10 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             };
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
 
+            ApplicationCommandFinder = applicationCommandFinder;
             LauncherItemCommandFinder = new LauncherItemCommandFinder(MainDatabaseBarrier, StatementLoader, OrderManager, NotifyManager, LoggerFactory);
 
             var commandFinders = new List<ICommandFinder>() {
-                LauncherItemCommandFinder
+                LauncherItemCommandFinder,
+                ApplicationCommandFinder,
             };
             CommandFinders = commandFinders;
         }
@@ -81,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         Timer IconClearTimer { get; }
 
         LauncherItemCommandFinder LauncherItemCommandFinder { get; }
+        ApplicationCommandFinder ApplicationCommandFinder { get; }
         IReadOnlyCollection<ICommandFinder> CommandFinders { get; }
 
         #endregion

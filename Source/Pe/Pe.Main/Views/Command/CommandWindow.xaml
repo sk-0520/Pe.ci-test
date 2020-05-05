@@ -257,8 +257,8 @@
                     <RowDefinition Height="Auto" />
                   </Grid.RowDefinitions>
                   <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
+                    <ColumnDefinition Width="*" SharedSizeGroup="Text" />
                   </Grid.ColumnDefinitions>
 
                   <ContentControl Focusable="False" IsTabStop="False" Grid.Row="0" Grid.Column="0" Content="{Binding Icon}" />

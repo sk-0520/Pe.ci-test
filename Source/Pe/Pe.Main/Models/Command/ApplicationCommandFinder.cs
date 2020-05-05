@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using Microsoft.Extensions.Logging;
+using NLog.Fluent;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
-    sealed class ApplicationCommandParameter
+    public class ApplicationCommandParameter
     {
-        public ApplicationCommandParameter(string header, string description, Action<IconBox> iconGetter, Action<IScreen, bool> executor)
+        public ApplicationCommandParameter(string header, string description, Func<IconBox, object> iconGetter, Action<IScreen, bool> executor)
         {
             Header = header ?? throw new ArgumentNullException(nameof(header));
             Description = description ?? throw new ArgumentNullException(nameof(description));
@@ -25,13 +28,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public string Header { get; }
         public string Description { get; }
-        public Action<IconBox> IconGetter { get; }
+        public Func<IconBox, object> IconGetter { get; }
         public Action<IScreen, bool> Executor { get; }
 
         #endregion
     }
 
-    sealed class ApplicationCommandFinder: DisposerBase, ICommandFinder
+    public class ApplicationCommandFinder: DisposerBase, ICommandFinder
     {
         #region variable
 
@@ -41,12 +44,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public ApplicationCommandFinder(IReadOnlyList<ApplicationCommandParameter> parameters, ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             Parameters = parameters;
         }
 
         #region property
 
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
         IReadOnlyList<ApplicationCommandParameter> Parameters { get; }
@@ -100,7 +105,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 throw new InvalidOperationException(nameof(IsInitialize));
             }
 
-            throw new NotImplementedException();
+            if(string.IsNullOrWhiteSpace(inputValue)) {
+                foreach(var parameter in Parameters) {
+                    var element = new ApplicationCommandUtemElement(parameter, LoggerFactory);
+                    element.EditableScore = hitValuesCreator.GetScore(ScoreKind.Initial, hitValuesCreator.NoBonus) - 1;
+                    yield return element;
+                }
+            }
         }
 
         #endregion

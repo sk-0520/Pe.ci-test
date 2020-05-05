@@ -62,6 +62,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
+using ContentTypeTextNet.Pe.Main.Models.Command;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -99,7 +100,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            CommandElement = ApplicationDiContainer.Build<CommandElement>();
+            var applicationCommandFinder = ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters());
+            CommandElement = ApplicationDiContainer.Build<CommandElement>(applicationCommandFinder);
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
@@ -160,6 +162,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
 
         #region function
+
+        IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
+        {
+#if DEBUG
+            Debug.Assert(CommandElement == null);
+#endif
+            return new ApplicationCommandParameter[] {
+                new ApplicationCommandParameter("header", "description", iconBox => "iconGetter", (screen, extention) => { }),
+            };
+        }
 
         /// <summary>
         /// すべてここで完結する神の所業。

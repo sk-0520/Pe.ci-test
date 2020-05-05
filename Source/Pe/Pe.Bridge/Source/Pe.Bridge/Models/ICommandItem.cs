@@ -27,6 +27,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// ランチャーアイテムのタグに一致。
         /// </summary>
         LauncherItemTag,
+
+        /// <summary>
+        /// アプリケーション固有処理。
+        /// </summary>
+        ApplicationCommand,
+
         #endregion
         /// <summary>
         /// プラグイン処理により生成。
