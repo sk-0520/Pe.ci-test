@@ -153,6 +153,14 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#606: 毎月1日のクッソしょうもないアイコン切り替えが常時稼働状態だと切り替わらない"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
