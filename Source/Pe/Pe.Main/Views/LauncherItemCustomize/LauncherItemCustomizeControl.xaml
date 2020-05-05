@@ -29,7 +29,7 @@
   </UserControl.Resources>
 
 
-  <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.CustomizeItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+  <ItemsControl Grid.IsSharedSizeScope="True" IsTabStop="False" ItemsSource="{Binding Editor.CustomizeItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <ItemsControl.Resources>
       <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
         <Setter Property="Width" Value="Auto" />

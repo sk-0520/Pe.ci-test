@@ -71,7 +71,7 @@
       </Grid>
 
       <ScrollViewer Grid.Row="1">
-        <ContentControl Content="{Binding Editor.SelectedToolbar, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <ContentControl IsTabStop="False" Content="{Binding Editor.SelectedToolbar, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <ContentControl.Resources>
             <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
               <Setter Property="Width" Value="Auto" />

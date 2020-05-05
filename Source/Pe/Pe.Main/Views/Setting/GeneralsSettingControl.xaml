@@ -33,7 +33,7 @@
 
   <Grid>
     <ScrollViewer>
-      <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.EditorItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <ItemsControl Grid.IsSharedSizeScope="True" IsTabStop="False" ItemsSource="{Binding Editor.EditorItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <ItemsControl.Resources>
 
           <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">

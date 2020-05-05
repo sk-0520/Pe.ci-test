@@ -151,7 +151,7 @@
                   <ComboBox Grid.Column="0" Style="{StaticResource Vertical-ComboBox}" ItemsSource="{Binding Editor.GroupIconItems, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedValuePath="Value" SelectedValue="{Binding Editor.SelectedGroup.ImageName, RelativeSource={RelativeSource AncestorType=UserControl}}">
                     <ComboBox.ItemTemplate>
                       <DataTemplate>
-                        <ContentControl Content="{Binding Icon}" />
+                        <ContentControl IsTabStop="False" Content="{Binding Icon}" />
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>

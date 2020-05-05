@@ -145,7 +145,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#610: アイコンのあるコントロール系UIが二重のタブ移動対象になっている"
 					},
 					{
 						"revision": "",

@@ -234,22 +234,27 @@
   <Style x:Key="Image-Small" TargetType="Control">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Small}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Small}" />
+    <Setter Property="IsTabStop" Value="False" />
   </Style>
   <Style x:Key="Image-Normal" TargetType="Control">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Normal}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Normal}" />
+    <Setter Property="IsTabStop" Value="False" />
   </Style>
   <Style x:Key="Image-Big" TargetType="Control">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Big}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Big}" />
+    <Setter Property="IsTabStop" Value="False" />
   </Style>
   <Style x:Key="Image-Jumbo" TargetType="Control">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Jumbo}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Jumbo}" />
+    <Setter Property="IsTabStop" Value="False" />
   </Style>
   <Style x:Key="Image-Large" TargetType="Control">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Large}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Large}" />
+    <Setter Property="IsTabStop" Value="False" />
   </Style>
 
   <Style TargetType="MenuItem">
@@ -389,10 +394,10 @@
 
   <DataTemplate x:Key="Setting-LauncherGroups">
     <StackPanel Style="{StaticResource ImageLabel-Small}">
-      <Control>
+      <Control IsTabStop="False">
         <Control.Template>
           <ControlTemplate>
-            <ContentControl Content="{Binding GroupIcon}" />
+            <ContentControl IsTabStop="False" Content="{Binding GroupIcon}" />
           </ControlTemplate>
         </Control.Template>
       </Control>

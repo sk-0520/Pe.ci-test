@@ -171,7 +171,7 @@
         <ItemsControl ItemsSource="{Binding Editor.PressedJobEditors, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <ItemsControl.Resources>
             <StackPanel x:Key="Mappings" x:Shared="False">
-              <ItemsControl ItemsSource="{Binding MappingItems}">
+              <ItemsControl IsTabStop="False" ItemsSource="{Binding MappingItems}">
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
                     <Grid Margin="{StaticResource BottomMargin}">
@@ -198,7 +198,7 @@
                         </Button>
                       </Grid>
 
-                      <app_main_views_setting:KeyInputControl Grid.Column="1" KeyItemsSource="{Binding Editor.PressedKeyItems, RelativeSource={RelativeSource AncestorType=UserControl}}" Key="{Binding Key}" Shift="{Binding Shift}" Control="{Binding Control}" Alt="{Binding Alt}" Super="{Binding Super}" />
+                      <app_main_views_setting:KeyInputControl Grid.Column="1" IsTabStop="False" KeyItemsSource="{Binding Editor.PressedKeyItems, RelativeSource={RelativeSource AncestorType=UserControl}}" Key="{Binding Key}" Shift="{Binding Shift}" Control="{Binding Control}" Alt="{Binding Alt}" Super="{Binding Super}" />
                     </Grid>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -219,8 +219,8 @@
                   <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Command_Header, Source={x:Static app_main:CultureService.Instance}}" />
                 </Expander.Header>
                 <StackPanel>
-                  <ContentControl Content="{StaticResource Mappings}" />
-                  <ContentControl Content="{StaticResource Common}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Mappings}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Common}" />
                 </StackPanel>
               </Expander>
             </DataTemplate>
@@ -268,8 +268,8 @@
                       <RadioButton Content="{Binding Source={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding Content, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_modes_data:KeyActionContentLauncherItem.ExtendsExecute}}" />
                     </WrapPanel>
                   </Grid>
-                  <ContentControl Content="{StaticResource Mappings}" />
-                  <ContentControl Content="{StaticResource Common}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Mappings}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Common}" />
                 </StackPanel>
               </Expander>
             </DataTemplate>
@@ -280,8 +280,8 @@
                   <TextBlock Style="{StaticResource ExpanderHeaderInner}" Text="{Binding Resources.String_Setting_Keyboard_Pressed_Toolbar_Header, Source={x:Static app_main:CultureService.Instance}}" />
                 </Expander.Header>
                 <StackPanel>
-                  <ContentControl Content="{StaticResource Mappings}" />
-                  <ContentControl Content="{StaticResource Common}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Mappings}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Common}" />
                 </StackPanel>
               </Expander>
             </DataTemplate>
@@ -313,8 +313,8 @@
                   </Grid>
                 </Expander.Header>
                 <StackPanel>
-                  <ContentControl Content="{StaticResource Mappings}" />
-                  <ContentControl Content="{StaticResource Common}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Mappings}" />
+                  <ContentControl IsTabStop="False" Content="{StaticResource Common}" />
                 </StackPanel>
               </Expander>
             </DataTemplate>

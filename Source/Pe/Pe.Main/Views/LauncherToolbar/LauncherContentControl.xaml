@@ -18,7 +18,7 @@
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
 
-    <ContentControl Grid.Column="0" Content="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="{Binding IconMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <ContentControl Grid.Column="0" IsTabStop="False" Content="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="{Binding IconMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <ContentControl.Resources>
         <DataTemplate DataType="{x:Type app_main_viewmode_iv:IconViewerViewModel}">
           <app_main_view:ImageViewerControl IconViewer="{Binding Content, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
