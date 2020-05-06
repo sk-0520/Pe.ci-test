@@ -43,9 +43,12 @@
     <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
+    <!--#region アイコン表示部分-->
     <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconViewerViewModel}">
       <app_main_views:ImageViewerControl IconViewer="{Binding }" />
     </DataTemplate>
+
+    <!--#endregion-->
 
     <Style x:Key="HitValues" TargetType="ItemsControl">
       <Setter Property="ItemsPanel">
@@ -262,6 +265,7 @@
                   </Grid.ColumnDefinitions>
 
                   <ContentControl Focusable="False" IsTabStop="False" Grid.Row="0" Grid.Column="0" Content="{Binding Icon}" />
+
                   <ItemsControl Grid.Row="0" Grid.Column="1" ItemsSource="{Binding HeaderValues}" Style="{StaticResource HitValues}" />
 
                   <Grid Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">

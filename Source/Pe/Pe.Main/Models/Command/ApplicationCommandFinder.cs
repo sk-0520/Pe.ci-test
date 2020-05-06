@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -91,7 +95,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<IScreen, bool> executor)
         {
-            return new ApplicationCommandParameter(ToHeader(applicationCommand), ToDescription(applicationCommand), iconBox => "icon", executor);
+            return new ApplicationCommandParameter(ToHeader(applicationCommand), ToDescription(applicationCommand), iconBox => {
+
+                /*
+                var bitmap = BitmapFrame.Create(new Uri("pack://application:,,,/Pe.Main;component/Resources/Icon/App.ico", UriKind.RelativeOrAbsolute),BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnLoad);
+
+                var iconSize = new IconSize(iconBox);
+                var image = new System.Windows.Controls.Image() {
+                    Source = bitmap,
+                    Width = iconSize.Width,
+                    Height = iconSize.Height,
+                };
+
+                return image;
+                */
+                var template = (ControlTemplate)Application.Current.Resources["App-Image-Command"];
+                var control = new Control();
+                using(Initializer.Begin(control)) {
+                    control.Template = (ControlTemplate)Application.Current.Resources["App-Image-Command"];
+                    control.Style = iconBox switch
+                    {
+                        IconBox.Small => (Style)Application.Current.Resources["Image-Small"],
+                        IconBox.Normal => (Style)Application.Current.Resources["Image-Normal"],
+                        IconBox.Big => (Style)Application.Current.Resources["Image-Big"],
+                        IconBox.Large => (Style)Application.Current.Resources["Image-Large"],
+                        _ => throw new NotImplementedException()
+                    };
+                }
+                return control;
+
+            }, executor);
         }
 
         #endregion
@@ -125,10 +158,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #endregion
 
-        public ApplicationCommandFinder(IReadOnlyList<ApplicationCommandParameter> parameters, ILoggerFactory loggerFactory)
+        public ApplicationCommandFinder(IReadOnlyList<ApplicationCommandParameter> parameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+            DispatcherWrapper = dispatcherWrapper;
+
             Parameters = parameters;
         }
 
@@ -136,6 +171,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
 
         IReadOnlyList<ApplicationCommandParameter> Parameters { get; }
 
@@ -190,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 foreach(var parameter in Parameters) {
-                    var element = new ApplicationCommandUtemElement(parameter, LoggerFactory);
+                    var element = new ApplicationCommandUtemElement(parameter, DispatcherWrapper, LoggerFactory);
                     element.EditableScore = hitValuesCreator.GetScore(ScoreKind.Initial, hitValuesCreator.NoBonus) - 1;
                     yield return element;
                 }

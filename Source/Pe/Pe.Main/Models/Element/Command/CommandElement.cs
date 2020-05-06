@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(ApplicationCommandFinder applicationCommandFinder, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        public CommandElement(ApplicationCommandFinder applicationCommandFinder, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             OrderManager = orderManager;
             WindowManager = windowManager;
             NotifyManager = notifyManager;
+            DispatcherWrapper = dispatcherWrapper;
 
             IconClearTimer = new Timer() {
                 Interval = customConfiguration.Command.IconClearWaitTime.TotalMilliseconds,
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
 
             ApplicationCommandFinder = applicationCommandFinder;
-            LauncherItemCommandFinder = new LauncherItemCommandFinder(MainDatabaseBarrier, StatementLoader, OrderManager, NotifyManager, LoggerFactory);
+            LauncherItemCommandFinder = new LauncherItemCommandFinder(MainDatabaseBarrier, StatementLoader, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
 
             var commandFinders = new List<ICommandFinder>() {
                 LauncherItemCommandFinder,
@@ -70,6 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         IOrderManager OrderManager { get; }
         IWindowManager WindowManager { get; }
         INotifyManager NotifyManager { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
         public bool ViewCreated { get; private set; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
         public FontElement? Font { get; private set; }
