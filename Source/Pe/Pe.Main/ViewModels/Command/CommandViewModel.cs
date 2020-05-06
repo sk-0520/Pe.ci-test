@@ -354,8 +354,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private void HideView()
         {
-            Model.HideView(false);
-            SetCommandItems(new List<ICommandItem>());
+            if(!IsDisposed) {
+                Model.HideView(false);
+                SetCommandItems(new List<ICommandItem>());
+            }
         }
 
         private void SetCommandItems(IReadOnlyList<ICommandItem> commandItems)

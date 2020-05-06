@@ -165,22 +165,75 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
         {
-#if DEBUG
             Debug.Assert(CommandElement == null);
-#endif
+
             var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
+
             var result = new ApplicationCommandParameter[] {
-                factory.CreateParameter(ApplicationCommand.Close, p => { }),
-                factory.CreateParameter(ApplicationCommand.Exit, p => { }),
-                factory.CreateParameter(ApplicationCommand.Shutdown, p => { }),
-                factory.CreateParameter(ApplicationCommand.Reboot, p => { }),
-                factory.CreateParameter(ApplicationCommand.About, p => { }),
-                factory.CreateParameter(ApplicationCommand.Setting, p => { }),
-                factory.CreateParameter(ApplicationCommand.GarbageCollection, p => { }),
-                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, p => { }),
-                factory.CreateParameter(ApplicationCommand.CopyShortInformation, p => { }),
-                factory.CreateParameter(ApplicationCommand.CopyLongInformation, p => { }),
-                factory.CreateParameter(ApplicationCommand.Help, p => { }),
+                factory.CreateParameter(ApplicationCommand.Close, p => {
+                    CommandElement!.HideView(false);
+                }),
+                factory.CreateParameter(ApplicationCommand.Exit, p => {
+                    Exit(false);
+                }),
+                factory.CreateParameter(ApplicationCommand.Shutdown, p => {
+                    Exit(true);
+                }),
+                factory.CreateParameter(ApplicationCommand.Reboot, p => {
+                    //TODO: どうすっかなぁ
+                }),
+                factory.CreateParameter(ApplicationCommand.About, p => {
+                    CommandElement!.HideView(false);
+                    ShowAboutView();
+                }),
+                factory.CreateParameter(ApplicationCommand.Setting, p => {
+                    CommandElement!.HideView(false);
+                    ShowSettingView();
+                }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollection, p => {
+                    var old = GC.GetTotalMemory(false);
+                    GC.Collect(0);
+                    GC.Collect(1);
+                    var now = GC.GetTotalMemory(false);
+                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
+                    Logger.LogInformation(
+                        "GC: {0}({1}) -> {2}({3}), diff: {4}({5})",
+                        sizeConverter.ConvertHumanLikeByte(old), old,
+                        sizeConverter.ConvertHumanLikeByte(now), now,
+                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
+                    );
+                }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, p => {
+                    var old = GC.GetTotalMemory(false);
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                    var now = GC.GetTotalMemory(false);
+                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
+                    Logger.LogInformation(
+                        "GC(FULL): {0}({1}) -> {2}({3}), diff: {4}({5})",
+                        sizeConverter.ConvertHumanLikeByte(old), old,
+                        sizeConverter.ConvertHumanLikeByte(now), now,
+                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
+                    );
+                }),
+                factory.CreateParameter(ApplicationCommand.CopyShortInformation, p => {
+                    var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
+                    var s = infoCollector.GetShortInformation();
+                    var data = new DataObject();
+                    data.SetText(s, TextDataFormat.UnicodeText);
+                    ClipboardManager.Set(data);
+                }),
+                factory.CreateParameter(ApplicationCommand.CopyLongInformation, p => {
+                    var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
+                    var s = infoCollector.GetLongInformation();
+                    var data = new DataObject();
+                    data.SetText(s, TextDataFormat.UnicodeText);
+                    ClipboardManager.Set(data);
+                }),
+                factory.CreateParameter(ApplicationCommand.Help, p => {
+                    ShowHelp();
+                }),
             };
 
             return result;
