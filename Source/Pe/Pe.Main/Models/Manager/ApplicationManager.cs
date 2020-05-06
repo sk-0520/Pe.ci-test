@@ -170,17 +170,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
             var result = new ApplicationCommandParameter[] {
-                factory.CreateParameter(ApplicationCommand.Close, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.Exit, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.Shutdown, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.Reboot, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.About, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.Setting, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.GarbageCollection, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.CopyShortInformation, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.CopyLongInformation, (screen, isExtend) => { }),
-                factory.CreateParameter(ApplicationCommand.Help, (screen, isExtend) => { }),
+                factory.CreateParameter(ApplicationCommand.Close, p => { }),
+                factory.CreateParameter(ApplicationCommand.Exit, p => { }),
+                factory.CreateParameter(ApplicationCommand.Shutdown, p => { }),
+                factory.CreateParameter(ApplicationCommand.Reboot, p => { }),
+                factory.CreateParameter(ApplicationCommand.About, p => { }),
+                factory.CreateParameter(ApplicationCommand.Setting, p => { }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollection, p => { }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, p => { }),
+                factory.CreateParameter(ApplicationCommand.CopyShortInformation, p => { }),
+                factory.CreateParameter(ApplicationCommand.CopyLongInformation, p => { }),
+                factory.CreateParameter(ApplicationCommand.Help, p => { }),
             };
 
             return result;

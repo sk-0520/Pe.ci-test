@@ -93,23 +93,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             return Properties.Resources.ResourceManager.GetString(descriptionAttribute!.Description)!;
         }
 
-        public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<IScreen, bool> executor)
+        public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<ICommandExecuteParameter> executor)
         {
             return new ApplicationCommandParameter(ToHeader(applicationCommand), ToDescription(applicationCommand), iconBox => {
-
-                /*
-                var bitmap = BitmapFrame.Create(new Uri("pack://application:,,,/Pe.Main;component/Resources/Icon/App.ico", UriKind.RelativeOrAbsolute),BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnLoad);
-
-                var iconSize = new IconSize(iconBox);
-                var image = new System.Windows.Controls.Image() {
-                    Source = bitmap,
-                    Width = iconSize.Width,
-                    Height = iconSize.Height,
-                };
-
-                return image;
-                */
-                var template = (ControlTemplate)Application.Current.Resources["App-Image-Command"];
                 var control = new Control();
                 using(Initializer.Begin(control)) {
                     control.Template = (ControlTemplate)Application.Current.Resources["App-Image-Command"];
@@ -132,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
     public class ApplicationCommandParameter
     {
-        public ApplicationCommandParameter(string header, string description, Func<IconBox, object> iconGetter, Action<IScreen, bool> executor)
+        public ApplicationCommandParameter(string header, string description, Func<IconBox, object> iconGetter, Action<ICommandExecuteParameter> executor)
         {
             Header = header ?? throw new ArgumentNullException(nameof(header));
             Description = description ?? throw new ArgumentNullException(nameof(description));
@@ -145,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         public string Header { get; }
         public string Description { get; }
         public Func<IconBox, object> IconGetter { get; }
-        public Action<IScreen, bool> Executor { get; }
+        public Action<ICommandExecuteParameter> Executor { get; }
 
         #endregion
     }

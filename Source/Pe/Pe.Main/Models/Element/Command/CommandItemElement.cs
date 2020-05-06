@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         #region function
 
         protected abstract object GetIconImpl(IconBox iconBox);
-        protected abstract void ExecuteImpl(IScreen screen, bool isExtend);
+        protected abstract void ExecuteImpl(ICommandExecuteParameter parameter);
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
             return GetIconImpl(iconBox);
         }
-        public void Execute(IScreen screen, bool isExtend) => ExecuteImpl(screen, isExtend);
+        public void Execute(ICommandExecuteParameter parameter) => ExecuteImpl(parameter);
 
         #endregion
 
@@ -86,12 +86,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             return LauncherItemElement.Icon.IconImageLoaderPack.IconItems[iconBox];
         }
 
-        protected override void ExecuteImpl(IScreen screen, bool isExtend)
+        protected override void ExecuteImpl(ICommandExecuteParameter parameter)
         {
-            if(isExtend) {
-                LauncherItemElement.OpenExtendsExecuteView(screen);
+            if(parameter.IsExtend) {
+                LauncherItemElement.OpenExtendsExecuteView(parameter.Screen);
             } else {
-                LauncherItemElement.Execute(screen);
+                LauncherItemElement.Execute(parameter.Screen);
             }
         }
 
@@ -121,9 +121,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public override CommandItemKind Kind => CommandItemKind.ApplicationCommand;
 
-        protected override void ExecuteImpl(IScreen screen, bool isExtend)
+        protected override void ExecuteImpl(ICommandExecuteParameter parameter)
         {
-            Parameter.Executor(screen, isExtend);
+            Parameter.Executor(parameter);
         }
 
         protected override object GetIconImpl(IconBox iconBox)

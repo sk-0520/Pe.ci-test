@@ -6,6 +6,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
@@ -79,7 +80,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public void Execute(IScreen screen)
         {
             var isExtend = Keyboard.Modifiers == ModifierKeys.Shift;
-            Item.Execute(screen, isExtend);
+            var parameter = new CommandExecuteParameter(screen, isExtend);
+            Item.Execute(parameter);
         }
 
 
