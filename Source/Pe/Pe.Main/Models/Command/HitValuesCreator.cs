@@ -8,8 +8,6 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Pe.Core.Test")]
-
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
     internal class HitValuesCreator : IHitValuesCreator

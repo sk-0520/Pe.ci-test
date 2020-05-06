@@ -293,6 +293,105 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   バージョン情報 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_About {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   閉じる に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Close {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   長い情報のコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_CopyLongInformation {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyLongInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   短い情報のコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_CopyShortInformation {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyShortInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Exit {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   GC に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_GarbageCollection {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   GC (フル) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_GarbageCollectionFull {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollectionFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ヘルプ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Help {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再起動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Reboot {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Reboot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Setting {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Setting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   終了 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Shutdown {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Shutdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   情報(_A) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_About_A {

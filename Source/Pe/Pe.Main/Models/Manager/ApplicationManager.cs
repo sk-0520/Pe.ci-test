@@ -62,6 +62,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Feedback;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
+using ContentTypeTextNet.Pe.Main.Models.Command;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -99,7 +100,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            CommandElement = ApplicationDiContainer.Build<CommandElement>();
+            var applicationCommandFinder = ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters());
+            CommandElement = ApplicationDiContainer.Build<CommandElement>(applicationCommandFinder);
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
@@ -160,6 +162,82 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
 
         #region function
+
+        IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
+        {
+            Debug.Assert(CommandElement == null);
+
+            var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
+
+            var result = new ApplicationCommandParameter[] {
+                factory.CreateParameter(ApplicationCommand.Close, p => {
+                    CommandElement!.HideView(false);
+                }),
+                factory.CreateParameter(ApplicationCommand.Exit, p => {
+                    Exit(false);
+                }),
+                factory.CreateParameter(ApplicationCommand.Shutdown, p => {
+                    Exit(true);
+                }),
+                factory.CreateParameter(ApplicationCommand.Reboot, p => {
+                    Reboot();
+                }),
+                factory.CreateParameter(ApplicationCommand.About, p => {
+                    CommandElement!.HideView(false);
+                    ShowAboutView();
+                }),
+                factory.CreateParameter(ApplicationCommand.Setting, p => {
+                    CommandElement!.HideView(false);
+                    ShowSettingView();
+                }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollection, p => {
+                    var old = GC.GetTotalMemory(false);
+                    GC.Collect(0);
+                    GC.Collect(1);
+                    var now = GC.GetTotalMemory(false);
+                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
+                    Logger.LogInformation(
+                        "GC: {0}({1}) -> {2}({3}), diff: {4}({5})",
+                        sizeConverter.ConvertHumanLikeByte(old), old,
+                        sizeConverter.ConvertHumanLikeByte(now), now,
+                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
+                    );
+                }),
+                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, p => {
+                    var old = GC.GetTotalMemory(false);
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                    var now = GC.GetTotalMemory(false);
+                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
+                    Logger.LogInformation(
+                        "GC(FULL): {0}({1}) -> {2}({3}), diff: {4}({5})",
+                        sizeConverter.ConvertHumanLikeByte(old), old,
+                        sizeConverter.ConvertHumanLikeByte(now), now,
+                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
+                    );
+                }),
+                factory.CreateParameter(ApplicationCommand.CopyShortInformation, p => {
+                    var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
+                    var s = infoCollector.GetShortInformation();
+                    var data = new DataObject();
+                    data.SetText(s, TextDataFormat.UnicodeText);
+                    ClipboardManager.Set(data);
+                }),
+                factory.CreateParameter(ApplicationCommand.CopyLongInformation, p => {
+                    var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
+                    var s = infoCollector.GetLongInformation();
+                    var data = new DataObject();
+                    data.SetText(s, TextDataFormat.UnicodeText);
+                    ClipboardManager.Set(data);
+                }),
+                factory.CreateParameter(ApplicationCommand.Help, p => {
+                    ShowHelp();
+                }),
+            };
+
+            return result;
+        }
 
         /// <summary>
         /// すべてここで完結する神の所業。
@@ -898,6 +976,59 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             NLog.LogManager.Shutdown();
             Application.Current.Shutdown();
+        }
+
+        public void Reboot()
+        {
+            Logger.LogInformation("再起動開始");
+
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+
+            var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
+            var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
+            var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
+            var powershell = environmentExecuteFile.Get("powershell", executeFiles);
+
+            if(pwsh == null && powershell == null) {
+                Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
+                return;
+            }
+
+            var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
+
+            var psCommands = new List<string>() {
+                "-NoProfile",
+                "-ExecutionPolicy", "Unrestricted",
+                "-File", CommandLine.Escape(environmentParameters.EtcRebootScriptFile.FullName),
+                "-LogPath", CommandLine.Escape(environmentParameters.TemporaryRebootLogFile.FullName),
+                "-ProcessId", Process.GetCurrentProcess().Id.ToString(),
+                "-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString(),
+                "-ExecuteCommand", CommandLine.Escape(environmentParameters.RootApplication.FullName),
+            };
+            var currentCommands = Environment.GetCommandLineArgs()
+                .Skip(1)
+                .Select(i => CommandLine.Escape(i))
+                .ToList()
+            ;
+            if(0 < currentCommands.Count) {
+                psCommands.Add("-ExecuteArgument");
+                psCommands.Add(CommandLine.Escape(string.Join(" ", currentCommands)));
+            }
+
+            var psCommand = string.Join(" ", psCommands);
+
+            try {
+                var process = new Process();
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.FileName = ps;
+                process.StartInfo.Arguments = psCommand;
+                process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+                process.Start();
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
+            }
+
+            Exit(true);
         }
 
         public void ShowCommandView()

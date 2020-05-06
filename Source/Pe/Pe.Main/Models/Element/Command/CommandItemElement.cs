@@ -3,25 +3,41 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Views;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
-    public abstract class CommandItemElementBase : ElementBase, ICommandItem
+    public abstract class CommandItemElementBase: ElementBase, ICommandItem
     {
-        public CommandItemElementBase(ILoggerFactory loggerFactory)
+        public CommandItemElementBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
-        { }
+        {
+            DispatcherWrapper = dispatcherWrapper;
+        }
 
         #region property
 
+        protected IDispatcherWrapper DispatcherWrapper { get; }
+
         public List<HitValue> EditableHeaderValues { get; } = new List<HitValue>();
         public List<HitValue> EditableDescriptionValues { get; } = new List<HitValue>();
+        public int EditableScore { get; set; }
+
         public Action? ExecuteAction { get; set; }
+
+        #endregion
+
+        #region function
+
+        protected abstract object GetIconImpl(IconBox iconBox);
+        protected abstract void ExecuteImpl(ICommandExecuteParameter parameter);
 
         #endregion
 
@@ -32,18 +48,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public IReadOnlyList<HitValue> HeaderValues => EditableHeaderValues;
 
         public IReadOnlyList<HitValue> DescriptionValues => EditableDescriptionValues;
-        public abstract int Score { get; }
+        public int Score => EditableScore;
 
-        public abstract object GetIcon(IconBox iconBox);
-        public abstract void Execute(IScreen screen, bool isExtend);
+        public object GetIcon(IconBox iconBox)
+        {
+            DispatcherWrapper.VerifyAccess();
+
+            return GetIconImpl(iconBox);
+        }
+        public void Execute(ICommandExecuteParameter parameter) => ExecuteImpl(parameter);
 
         #endregion
 
     }
 
-    public sealed class LauncherCommandItemElement : CommandItemElementBase
+    public sealed class LauncherCommandItemElement: CommandItemElementBase
     {
-        public LauncherCommandItemElement(LauncherItemElement launcherItemElement, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public LauncherCommandItemElement(LauncherItemElement launcherItemElement, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         {
             LauncherItemElement = launcherItemElement;
             EditableHeaderValues.AddRange(new[] { new HitValue(LauncherItemElement.Name, false) });
@@ -53,26 +75,61 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         LauncherItemElement LauncherItemElement { get; }
         public CommandItemKind EditableKind { get; set; } = CommandItemKind.LauncherItem;
-        public int EditableScore { get; set; }
         #endregion
 
         #region CommandItemElementBase
 
         public override CommandItemKind Kind => EditableKind;
-        public override int Score => EditableScore;
 
-        public override object GetIcon(IconBox iconBox)
+        protected override object GetIconImpl(IconBox iconBox)
         {
             return LauncherItemElement.Icon.IconImageLoaderPack.IconItems[iconBox];
         }
 
-        public override void Execute(IScreen screen, bool isExtend)
+        protected override void ExecuteImpl(ICommandExecuteParameter parameter)
         {
-            if(isExtend) {
-                LauncherItemElement.OpenExtendsExecuteView(screen);
+            if(parameter.IsExtend) {
+                LauncherItemElement.OpenExtendsExecuteView(parameter.Screen);
             } else {
-                LauncherItemElement.Execute(screen);
+                LauncherItemElement.Execute(parameter.Screen);
             }
+        }
+
+        protected override void InitializeImpl()
+        { }
+
+        #endregion
+    }
+
+    public sealed class ApplicationCommandUtemElement: CommandItemElementBase
+    {
+        public ApplicationCommandUtemElement(ApplicationCommandParameter parameter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
+        {
+            Parameter = parameter;
+            EditableHeaderValues.AddRange(new[] { new HitValue(Parameter.Header, false) });
+            EditableDescriptionValues.AddRange(new[] { new HitValue(Parameter.Description, false) });
+        }
+
+        #region property
+
+        ApplicationCommandParameter Parameter { get; }
+
+        #endregion
+
+        #region CommandItemElementBase
+
+        public override CommandItemKind Kind => CommandItemKind.ApplicationCommand;
+
+        protected override void ExecuteImpl(ICommandExecuteParameter parameter)
+        {
+            Parameter.Executor(parameter);
+        }
+
+        protected override object GetIconImpl(IconBox iconBox)
+        {
+            return Parameter.IconGetter(iconBox);
+            //return Application.Current.Resources["pack://application:,,,/Pe.Main;component/Resources/Icon/App.ico"];
         }
 
         protected override void InitializeImpl()

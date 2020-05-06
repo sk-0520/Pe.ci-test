@@ -108,6 +108,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public FileInfo EtcUpdateScriptFile => CombineFile(EtcUpdateDirectory, "update-application.ps1");
         /// <summary>
+        /// 再起動スクリプトファイル。
+        /// </summary>
+        public FileInfo EtcRebootScriptFile => CombineFile(EtcScriptDirectory, "reboot.ps1");
+        /// <summary>
         /// SQL ディレクトリ。
         /// </summary>
         public DirectoryInfo SqlDirectory => CombineDirectory(EtcDirectory, "sql");
@@ -267,6 +271,10 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アップデート時ログファイル。
         /// </summary>
         public FileInfo TemporaryUpdateLogFile => CombineFile(TemporaryDirectory, "update.log");
+        /// <summary>
+        /// 再起動ログファイル。
+        /// </summary>
+        public FileInfo TemporaryRebootLogFile => CombineFile(TemporaryDirectory, "reboot.log");
         /// <summary>
         /// 生クラッシュレポート配置ディレクトリ。
         /// </summary>

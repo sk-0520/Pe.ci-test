@@ -35,9 +35,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// 悪い。
         /// </summary>
         Bad,
-
-        GoodBonus,
-
     }
 
     /// <summary>
