@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     /// <summary>
     /// <see cref="Dapper"/> で enum (の文字列)を扱えるように変換する。
     /// <para>キャッシュとかは気が向けば。。。</para>
-    /// <para>これ Core じゃなくて Main で持つべきだろ。。。</para>
+    /// <para>TODO: <see cref="ContentTypeTextNet.Pe.Core.Models.NameConveter.PascalToKebab(string)"/> への置き換え。</para>
     /// </summary>
     public class EnumTransfer<TEnum>
         where TEnum : struct, Enum

@@ -48,6 +48,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
     internal class ApplicationCommandParameterFactory
     {
+        public ApplicationCommandParameterFactory(CommandConfiguration commandConfiguration)
+        {
+            CommandConfiguration = commandConfiguration;
+        }
+
+        #region property
+
+        CommandConfiguration CommandConfiguration { get; }
+
+        #endregion
         #region function
 
         public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<IScreen, bool> executor)
