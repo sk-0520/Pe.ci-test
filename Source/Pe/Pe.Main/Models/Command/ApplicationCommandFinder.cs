@@ -144,13 +144,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #endregion
 
-        public ApplicationCommandFinder(IReadOnlyList<ApplicationCommandParameter> parameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ApplicationCommandFinder(IReadOnlyList<ApplicationCommandParameter> parameters, CommandConfiguration commandConfiguration, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             DispatcherWrapper = dispatcherWrapper;
 
             Parameters = parameters;
+            CommandConfiguration = commandConfiguration;
         }
 
         #region property
@@ -158,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
-
+        CommandConfiguration CommandConfiguration { get; }
         IReadOnlyList<ApplicationCommandParameter> Parameters { get; }
 
         #endregion
@@ -213,7 +214,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 foreach(var parameter in Parameters) {
                     var element = new ApplicationCommandUtemElement(parameter, DispatcherWrapper, LoggerFactory);
+                    element.Initialize();
                     element.EditableScore = hitValuesCreator.GetScore(ScoreKind.Initial, hitValuesCreator.NoBonus) - 1;
+                    yield return element;
+                }
+                yield break;
+            }
+
+
+            if(!inputValue.StartsWith(CommandConfiguration.ApplicationPrefix, StringComparison.Ordinal)) {
+                yield break;
+            }
+
+            foreach(var parameter in Parameters) {
+                var parameterMatches = hitValuesCreator.GetMatches(parameter.Header, inputRegex);
+                if(parameterMatches.Any()) {
+                    var ranges = hitValuesCreator.ConvertRanges(inputValue, parameterMatches);
+                    var hitValue = hitValuesCreator.ConvertHitValues(inputValue, parameter.Header, ranges);
+
+                    var element = new ApplicationCommandUtemElement(parameter, DispatcherWrapper, LoggerFactory);
+                    element.Initialize();
+
+                    element.EditableHeaderValues.SetRange(hitValue);
+                    element.EditableScore = hitValuesCreator.CalcScore(inputValue, parameter.Header, element.EditableHeaderValues);
                     yield return element;
                 }
             }
