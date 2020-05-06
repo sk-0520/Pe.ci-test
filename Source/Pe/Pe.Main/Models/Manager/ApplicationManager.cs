@@ -181,6 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }),
                 factory.CreateParameter(ApplicationCommand.Reboot, p => {
                     //TODO: どうすっかなぁ
+                    Reboot();
                 }),
                 factory.CreateParameter(ApplicationCommand.About, p => {
                     CommandElement!.HideView(false);
@@ -976,6 +977,59 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             NLog.LogManager.Shutdown();
             Application.Current.Shutdown();
+        }
+
+        public void Reboot()
+        {
+            Logger.LogInformation("再起動開始");
+
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+
+            var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
+            var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
+            var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
+            var powershell = environmentExecuteFile.Get("powershell", executeFiles);
+
+            if(pwsh == null && powershell == null) {
+                Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
+                return;
+            }
+
+            var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
+
+            var psCommands = new List<string>() {
+                "-NoProfile",
+                "-ExecutionPolicy", "Unrestricted",
+                "-File", CommandLine.Escape(environmentParameters.EtcRebootScriptFile.FullName),
+                "-LogPath", CommandLine.Escape(environmentParameters.TemporaryRebootLogFile.FullName),
+                "-ProcessId", Process.GetCurrentProcess().Id.ToString(),
+                "-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString(),
+                "-ExecuteCommand", CommandLine.Escape(environmentParameters.RootApplication.FullName),
+            };
+            var currentCommands = Environment.GetCommandLineArgs()
+                .Skip(1)
+                .Select(i => CommandLine.Escape(i))
+                .ToList()
+            ;
+            if(0 < currentCommands.Count) {
+                psCommands.Add("-ExecuteArgument");
+                psCommands.Add(CommandLine.Escape(string.Join(" ", currentCommands)));
+            }
+
+            var psCommand = string.Join(" ", psCommands);
+
+            try {
+                var process = new Process();
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.FileName = ps;
+                process.StartInfo.Arguments = psCommand;
+                process.StartInfo.WorkingDirectory = Environment.CurrentDirectory;
+                process.Start();
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
+            }
+
+            Exit(true);
         }
 
         public void ShowCommandView()
