@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,28 +24,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         /// <summary>
         /// コマンドウィンドウを閉じる。
         /// </summary>
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Close))]
         Close,
         /// <summary>
         /// アプリケーションの終了。
         /// <para>アップデートが可能であればアップデート行う</para>
         /// </summary>
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Exit))]
         Exit,
         /// <summary>
         /// アプリケーションの終了。
         /// <para>アップデートがあっても終了。</para>
         /// </summary>
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Shutdown))]
         Shutdown,
         /// <summary>
         /// 再起動。
         /// <para>アップデートがあっても再起動。</para>
         /// </summary>
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Reboot))]
         Reboot,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_About))]
         About,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Setting))]
         Setting,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_GarbageCollection))]
         GarbageCollection,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_GarbageCollectionFull))]
         GarbageCollectionFull,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyShortInformation))]
         CopyShortInformation,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyLongInformation))]
         CopyLongInformation,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Help))]
         Help,
     }
 
@@ -58,11 +72,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         CommandConfiguration CommandConfiguration { get; }
 
         #endregion
+
         #region function
+
+        string ToHeader(ApplicationCommand applicationCommand)
+        {
+            var rawValue = CommandConfiguration.ApplicationMapping[applicationCommand];
+            var joinedValue = string.Join(CommandConfiguration.ApplicationSeparator, rawValue.Split());
+            return CommandConfiguration.ApplicationPrefix + joinedValue;
+        }
+
+        string ToDescription(ApplicationCommand applicationCommand)
+        {
+            // テスト側でもろもろ担保
+            var descriptionAttribute = applicationCommand.GetType().GetField(applicationCommand.ToString())!.GetCustomAttribute<DescriptionAttribute>();
+            return Properties.Resources.ResourceManager.GetString(descriptionAttribute!.Description)!;
+        }
 
         public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<IScreen, bool> executor)
         {
-            return new ApplicationCommandParameter("header:" + applicationCommand, "desc:" + applicationCommand, iconBox => "icon", executor);
+            return new ApplicationCommandParameter(ToHeader(applicationCommand), ToDescription(applicationCommand), iconBox => "icon", executor);
         }
 
         #endregion

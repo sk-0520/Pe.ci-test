@@ -1861,4 +1861,37 @@
   <data name="String_Hook_Keyboard_Separator" xml:space="preserve">
     <value>→</value>
   </data>
+  <data name="String_ApplicationCommand_Description_About" xml:space="preserve">
+    <value>バージョン情報</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_CopyLongInformation" xml:space="preserve">
+    <value>長い情報のコピー</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_CopyShortInformation" xml:space="preserve">
+    <value>短い情報のコピー</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Exit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_GarbageCollection" xml:space="preserve">
+    <value>GC</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_GarbageCollectionFull" xml:space="preserve">
+    <value>GC (フル)</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Help" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Reboot" xml:space="preserve">
+    <value>再起動</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Setting" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Shutdown" xml:space="preserve">
+    <value>終了</value>
+  </data>
 </root>
