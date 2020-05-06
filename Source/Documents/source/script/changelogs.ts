@@ -121,7 +121,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#531: 本体用特別コマンドの実装",
+						"comments": [
+							"コマンド入力時に先頭が「.」の場合に本体用コマンドとして扱うようにした"
+						]
 					},
 					{
 						"revision": "",
