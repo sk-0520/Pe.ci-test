@@ -180,7 +180,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Exit(true);
                 }),
                 factory.CreateParameter(ApplicationCommand.Reboot, p => {
-                    //TODO: どうすっかなぁ
                     Reboot();
                 }),
                 factory.CreateParameter(ApplicationCommand.About, p => {
