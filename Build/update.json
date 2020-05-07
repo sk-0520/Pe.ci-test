@@ -1,31 +1,3 @@
 {
-	"items": [
-		{
-			"archive_kind":  "7z",
-			"minimum_version":  "0.83.0",
-			"release":  "2020-03-13T15:09:03",
-			"version":  "0.91.0",
-			"note_uri":  "https://bitbucket.org/sk_0520/pe/downloads/Pe_0-91-000.html",
-			"archive_hash_kind":  "SHA256",
-			"archive_size":  93958913,
-			"archive_uri":  "https://bitbucket.org/sk_0520/pe/downloads/Pe_0-91-000_x64.7z",
-			"revision":  "f5f4cbee87a753353e92f19a6f0ba26353b6d614",
-			"platform":  "x64",
-			"archive_hash_value":  "BA54FEB1AF91BE9AECD656E3A79DECD74DDF935C94AAE608DAE0AA8AB1FBD7EA"
-		},
-		{
-			"archive_kind":  "7z",
-			"minimum_version":  "0.83.0",
-			"release":  "2020-03-13T15:09:03",
-			"version":  "0.91.0",
-			"note_uri":  "https://bitbucket.org/sk_0520/pe/downloads/Pe_0-91-000.html",
-			"archive_hash_kind":  "SHA256",
-			"archive_size":  85962779,
-			"archive_uri":  "https://bitbucket.org/sk_0520/pe/downloads/Pe_0-91-000_x86.7z",
-			"revision":  "f5f4cbee87a753353e92f19a6f0ba26353b6d614",
-			"platform":  "x86",
-			"archive_hash_value":  "25924D1F966147D40F1D4ECF2BDF7B2DA3FAD79E5D26049D30E8B4677A6B5AFD"
-		}
-
-	]
+	"items": [ ]
 }

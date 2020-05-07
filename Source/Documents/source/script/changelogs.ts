@@ -190,7 +190,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#584: 0.95.000 公開時時に 0.83.0-0.90.000 からのアップデートサポートを破棄"
 					},
 					{
 						"revision": "",
