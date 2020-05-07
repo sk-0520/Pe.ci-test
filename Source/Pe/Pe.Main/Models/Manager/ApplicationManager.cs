@@ -220,16 +220,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 factory.CreateParameter(ApplicationCommand.CopyShortInformation, p => {
                     var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
                     var s = infoCollector.GetShortInformation();
-                    var data = new DataObject();
-                    data.SetText(s, TextDataFormat.UnicodeText);
-                    ClipboardManager.Set(data);
+                    ClipboardManager.CopyText(s, ClipboardNotify.User);
                 }),
                 factory.CreateParameter(ApplicationCommand.CopyLongInformation, p => {
                     var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
                     var s = infoCollector.GetLongInformation();
-                    var data = new DataObject();
-                    data.SetText(s, TextDataFormat.UnicodeText);
-                    ClipboardManager.Set(data);
+                    ClipboardManager.CopyText(s, ClipboardNotify.User);
                 }),
                 factory.CreateParameter(ApplicationCommand.Help, p => {
                     ShowHelp();

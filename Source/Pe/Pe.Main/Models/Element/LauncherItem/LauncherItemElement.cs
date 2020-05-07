@@ -264,10 +264,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             var pathData = GetExecutePath();
-            var data = new DataObject();
-            var value = pathData.Path;
-            data.SetText(value, TextDataFormat.UnicodeText);
-            ClipboardManager.Set(data);
+            ClipboardManager.CopyText(pathData.Path, ClipboardNotify.None);
         }
 
         public void CopyParentDirectory()
@@ -275,7 +272,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             var pathData = GetExecutePath();
-            var data = new DataObject();
             var value = Path.GetDirectoryName(pathData.Path);
             if(string.IsNullOrEmpty(value)) {
                 if(!PathUtility.IsNetworkDirectoryPath(pathData.Path)) {
@@ -289,8 +285,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 }
                 value = owner;
             }
-            data.SetText(value, TextDataFormat.UnicodeText);
-            ClipboardManager.Set(data);
+            ClipboardManager.CopyText(value, ClipboardNotify.None);
         }
 
         public void CopyOption()
@@ -298,10 +293,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             var pathData = GetExecutePath();
-            var data = new DataObject();
-            var value = pathData.Option;
-            data.SetText(value, TextDataFormat.UnicodeText);
-            ClipboardManager.Set(data);
+            ClipboardManager.CopyText(pathData.Option, ClipboardNotify.None);
         }
 
         public void CopyWorkingDirectory()
@@ -309,10 +301,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             var pathData = GetExecutePath();
-            var data = new DataObject();
-            var value = pathData.WorkDirectoryPath;
-            data.SetText(value, TextDataFormat.UnicodeText);
-            ClipboardManager.Set(data);
+            ClipboardManager.CopyText(pathData.WorkDirectoryPath, ClipboardNotify.None);
         }
 
         public void OpenCustomizeView(IScreen screen)
