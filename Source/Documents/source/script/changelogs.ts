@@ -128,6 +128,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#613: ノート内でタブを入力できるようにする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

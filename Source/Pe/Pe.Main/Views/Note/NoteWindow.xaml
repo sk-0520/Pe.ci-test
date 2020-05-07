@@ -246,6 +246,7 @@
               <Setter Property="Background" Value="Transparent" />
               <Setter Property="BorderThickness" Value="0" />
               <Setter Property="AcceptsReturn" Value="True" />
+              <Setter Property="AcceptsTab" Value="True" />
               <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
               <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, ElementName=root}" />
               <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, ElementName=root}" />
@@ -330,7 +331,7 @@
           <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
             <TextBlock>busy</TextBlock>
           </Grid>-->
-          <ContentControl x:Name="content">
+          <ContentControl x:Name="content" IsTabStop="False">
             <ContentControl.Style>
               <Style TargetType="ContentControl">
                 <Style.Triggers>
@@ -359,7 +360,7 @@
             <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
         </Grid>
-        <ContentControl Grid.Row="1" IsHitTestVisible="False" IsTabStop="False">
+        <ContentControl Grid.Row="1" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
           <ContentControl.Style>
             <Style TargetType="ContentControl">
               <Style.Triggers>
@@ -389,7 +390,7 @@
       WindowChrome.ResizeGripDirection="BottomRight"
       Background="Transparent"
     >
-      <ContentControl Content="{Binding ResizeGripImage}">
+      <ContentControl Focusable="False" Content="{Binding ResizeGripImage}">
         <ContentControl.Style>
           <Style TargetType="ContentControl" BasedOn="{StaticResource {x:Type ContentControl}}">
             <Style.Triggers>
