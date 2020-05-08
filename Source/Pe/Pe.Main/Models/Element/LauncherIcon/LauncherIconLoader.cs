@@ -166,11 +166,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 bool existIconState;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
-                    var launcherItemIconStatusEntityDao = new launcherItemIconStatusEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                     existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, IconBox);
                 }
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
-                    var launcherItemIconStatusEntityDao = new launcherItemIconStatusEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                     if(existIconState) {
                         launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {

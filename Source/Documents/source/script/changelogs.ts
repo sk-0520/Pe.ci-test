@@ -164,7 +164,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#614: ランチャーアイコンが保存されていない疑惑"
 					},
 					{
 						"revision": "",
