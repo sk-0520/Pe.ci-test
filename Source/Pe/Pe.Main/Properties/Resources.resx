@@ -153,7 +153,7 @@
     <value>ヘルプ(_H)</value>
   </data>
   <data name="String_AppManager_About_Version_A" xml:space="preserve">
-    <value>バージョン情報(_V)</value>
+    <value>バージョン情報(_V) ...</value>
   </data>
   <data name="String_AppManager_Command_A" xml:space="preserve">
     <value>コマンド(_C)</value>
@@ -219,40 +219,40 @@
     <value>上へ</value>
   </data>
   <data name="String_EnvironmentValieableEditor_Merge_A" xml:space="preserve">
-    <value>変更</value>
+    <value>変更(_G)</value>
   </data>
   <data name="String_EnvironmentValieableEditor_Remove_A" xml:space="preserve">
-    <value>削除</value>
+    <value>削除(_V)</value>
   </data>
-  <data name="String_ExtendsExecute_Caption" xml:space="preserve">
+  <data name="String_ExtendsExecute_Caption_Format" xml:space="preserve">
     <value>${ITEM} を指定して実行</value>
   </data>
-  <data name="String_ExtendsExecute_Command_Execute" xml:space="preserve">
-    <value>実行</value>
+  <data name="String_ExtendsExecute_Command_Execute_A" xml:space="preserve">
+    <value>実行(_E)</value>
   </data>
   <data name="String_ExtendsExecute_Command_A" xml:space="preserve">
-    <value>コマンド</value>
+    <value>コマンド(_C)</value>
   </data>
-  <data name="String_ExtendsExecute_EnvironmentVariables_A" xml:space="preserve">
+  <data name="String_ExtendsExecute_EnvironmentVariables" xml:space="preserve">
     <value>環境変数</value>
   </data>
   <data name="String_ExtendsExecute_EnvironmentVariables_Edit_A" xml:space="preserve">
-    <value>編集</value>
+    <value>編集(_T)</value>
   </data>
   <data name="String_ExtendsExecute_Options_A" xml:space="preserve">
-    <value>オプション</value>
+    <value>オプション(_P)</value>
   </data>
-  <data name="String_ExtendsExecute_Others_A" xml:space="preserve">
+  <data name="String_ExtendsExecute_Others" xml:space="preserve">
     <value>その他</value>
   </data>
   <data name="String_ExtendsExecute_Others_RunAdmin_A" xml:space="preserve">
-    <value>管理者実行</value>
+    <value>管理者実行(_A)</value>
   </data>
   <data name="String_ExtendsExecute_Others_StandardInputOutput_A" xml:space="preserve">
-    <value>標準入出力</value>
+    <value>標準入出力(_S)</value>
   </data>
   <data name="String_ExtendsExecute_WorkDirectory_A" xml:space="preserve">
-    <value>作業ディレクトリ</value>
+    <value>作業ディレクトリ(_W)</value>
   </data>
   <data name="String_ImportPrograms_Caption" xml:space="preserve">
     <value>ランチャーアイテム取り込み</value>
@@ -273,22 +273,22 @@
     <value>共通</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_Common_Code_A" xml:space="preserve">
-    <value>コード</value>
+    <value>コード(_C)</value>
   </data>
-  <data name="String_LauncherItemCustomizeControl_Common_Id_A" xml:space="preserve">
+  <data name="String_LauncherItemCustomizeControl_Common_Id" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="String_LauncherItemCustomizeControl_Common_Kind_A" xml:space="preserve">
+  <data name="String_LauncherItemCustomizeControl_Common_Kind" xml:space="preserve">
     <value>種別</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_Common_Name_A" xml:space="preserve">
-    <value>名前</value>
+    <value>名前(_N)</value>
   </data>
-  <data name="String_LauncherItemCustomizeControl_Common_Others_A" xml:space="preserve">
+  <data name="String_LauncherItemCustomizeControl_Common_Others" xml:space="preserve">
     <value>その他</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_Common_Others_UseCommandLauncher_A" xml:space="preserve">
-    <value>コマンドランチャーで使用</value>
+    <value>コマンドランチャーで使用(_L)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_Common_SelectIcon" xml:space="preserve">
     <value>アイコン選択</value>
@@ -300,37 +300,37 @@
     <value>環境変数</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_Command_IsEnabled_CustomEnvironmentVariable" xml:space="preserve">
-    <value>環境変数を編集する</value>
+    <value>環境変数を編集する(_E)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu" xml:space="preserve">
-    <value>標準入出力を使用する</value>
+    <value>標準入出力を使用する(_S)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_Command_RunAdministrator" xml:space="preserve">
-    <value>管理者として実行</value>
+    <value>管理者として実行(_A)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_Header" xml:space="preserve">
     <value>ファイル</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_Options_A" xml:space="preserve">
-    <value>オプション</value>
+    <value>オプション(_O)</value>
   </data>
-  <data name="String_LauncherItemCustomizeControl_File_Others_A" xml:space="preserve">
+  <data name="String_LauncherItemCustomizeControl_File_Others" xml:space="preserve">
     <value>その他</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_Path_A" xml:space="preserve">
-    <value>パス</value>
+    <value>パス(_P)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_File_WorkDirectory_A" xml:space="preserve">
-    <value>作業ディレクトリ</value>
+    <value>作業ディレクトリ(_W)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_StoreApp_Header" xml:space="preserve">
     <value>ストアアプリ</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_StoreApp_Options_A" xml:space="preserve">
-    <value>オプション</value>
+    <value>オプション(_O)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_StoreApp_ProtocolAlias_A" xml:space="preserve">
-    <value>プロトコル/エイリアス</value>
+    <value>プロトコル/エイリアス(_P)</value>
   </data>
   <data name="String_LauncherItemCustomizeControl_Tag_Header" xml:space="preserve">
     <value>タグ</value>
@@ -345,13 +345,13 @@
     <value>グループ</value>
   </data>
   <data name="String_LauncherToolbar_AppMenu_AutoHide_A" xml:space="preserve">
-    <value>自動的に隠す</value>
+    <value>自動的に隠す(_A)</value>
   </data>
   <data name="String_LauncherToolbar_AppMenu_Close_A" xml:space="preserve">
-    <value>非表示</value>
+    <value>非表示(_H)</value>
   </data>
   <data name="String_LauncherToolbar_AppMenu_Topmost_A" xml:space="preserve">
-    <value>最前面</value>
+    <value>最前面(_T)</value>
   </data>
   <data name="String_LauncherToolbar_AppMenu_Position_Header" xml:space="preserve">
     <value>ツールバー位置</value>
@@ -360,25 +360,25 @@
     <value>コピー</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Copy_Options_A" xml:space="preserve">
-    <value>オプション</value>
+    <value>オプション(_I)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Copy_ParentDirectory_A" xml:space="preserve">
-    <value>親ディレクトリ</value>
+    <value>親ディレクトリ(_T)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Copy_Path_A" xml:space="preserve">
-    <value>パス</value>
+    <value>パス(_P)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Copy_WorkDirectory_A" xml:space="preserve">
-    <value>作業ディレクトリ</value>
+    <value>作業ディレクトリ(_W)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Execute_Header" xml:space="preserve">
     <value>実行</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Execute_Execute_A" xml:space="preserve">
-    <value>通常実行</value>
+    <value>通常実行(_E)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Execute_ExtendsExecute_A" xml:space="preserve">
-    <value>指定して実行</value>
+    <value>指定して実行(_R)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Groups_Header" xml:space="preserve">
     <value>グループ</value>
@@ -387,25 +387,25 @@
     <value>ディレクトリ</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Open_ParentDirectory_A" xml:space="preserve">
-    <value>親ディレクトリ</value>
+    <value>親ディレクトリ(_P)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Open_WorkDirectory_A" xml:space="preserve">
-    <value>作業ディレクトリ</value>
+    <value>作業ディレクトリ(_W)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Others_Header" xml:space="preserve">
     <value>その他</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Others_Customize_A" xml:space="preserve">
-    <value>編集</value>
+    <value>編集(_C)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Others_Property_A" xml:space="preserve">
-    <value>プロパティ</value>
+    <value>プロパティ(_T)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A" xml:space="preserve">
-    <value>削除？</value>
+    <value>表示アイテムを削除(_V)</value>
   </data>
   <data name="String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A" xml:space="preserve">
-    <value>削除！</value>
+    <value>削除実行(_R)</value>
   </data>
   <data name="String_Note_Busy" xml:space="preserve">
     <value>処理中...</value>
@@ -424,36 +424,38 @@
   </data>
   <data name="String_Note_Format_Background_A" xml:space="preserve">
     <value>背景</value>
+    <comment>A だけどターゲット指定方法が分からん</comment>
   </data>
   <data name="String_Note_Format_Font_A" xml:space="preserve">
     <value>フォント</value>
   </data>
   <data name="String_Note_Format_Foreground_A" xml:space="preserve">
     <value>前景</value>
+    <comment>A だけどターゲット指定方法が分からん</comment>
   </data>
   <data name="String_Note_Format_Kind_A" xml:space="preserve">
-    <value>種別</value>
+    <value>種別(_K)</value>
   </data>
   <data name="String_Note_Format_Layout_A" xml:space="preserve">
-    <value>位置</value>
+    <value>位置(_L)</value>
   </data>
-  <data name="String_Note_KindChanging_Change" xml:space="preserve">
+  <data name="String_Note_KindChanging_Change_Format" xml:space="preserve">
     <value>${FROM-KIND} から ${TO-KIND} への変換により一部情報が失われますがよろしいですか</value>
   </data>
   <data name="String_Note_KindChanging_Convert_A" xml:space="preserve">
     <value>変換(_T)</value>
   </data>
   <data name="String_Note_Link_Delete_A" xml:space="preserve">
-    <value>ファイルを削除してリンク切断</value>
+    <value>ファイルを削除してリンク切断(_D)</value>
   </data>
   <data name="String_Note_Link_OpenLink_A" xml:space="preserve">
-    <value>ファイルからリンク作成</value>
+    <value>ファイルからリンク作成(_O)</value>
   </data>
   <data name="String_Note_Link_SaveLink_A" xml:space="preserve">
-    <value>入力内容からリンク作成</value>
+    <value>入力内容からリンク作成(_S)</value>
   </data>
   <data name="String_Note_Link_Unlink_A" xml:space="preserve">
-    <value>リンク切断</value>
+    <value>リンク切断(_U)</value>
   </data>
   <data name="String_Note_Link_Linking" xml:space="preserve">
     <value>リンクされています</value>
@@ -462,37 +464,37 @@
     <value>リンクされていません</value>
   </data>
   <data name="String_Note_Operation_Close_A" xml:space="preserve">
-    <value>閉じる</value>
+    <value>閉じる(_L)</value>
   </data>
   <data name="String_Note_Operation_Copy_A" xml:space="preserve">
-    <value>コピー</value>
+    <value>コピー(_C)</value>
   </data>
   <data name="String_Note_Operation_Remove_Confirm_A" xml:space="preserve">
-    <value>削除？</value>
+    <value>削除(_D)</value>
   </data>
   <data name="String_Note_Operation_Remove_Execute_A" xml:space="preserve">
-    <value>削除！</value>
+    <value>削除実行(_R)</value>
   </data>
   <data name="String_Note_Operation_Header" xml:space="preserve">
     <value>操作</value>
   </data>
   <data name="String_Note_Status_Link_A" xml:space="preserve">
-    <value>リンク</value>
+    <value>リンク(_L)</value>
   </data>
   <data name="String_Note_Status_Header" xml:space="preserve">
     <value>状態</value>
   </data>
   <data name="String_Note_Status_Compact_A" xml:space="preserve">
-    <value>最小化</value>
+    <value>最小化(_X)</value>
   </data>
   <data name="String_Note_Status_Lock_A" xml:space="preserve">
-    <value>固定</value>
+    <value>固定(_K)</value>
   </data>
   <data name="String_Note_Status_Topmost_A" xml:space="preserve">
-    <value>最前面</value>
+    <value>最前面(_M)</value>
   </data>
   <data name="String_Note_Status_WordWrap_A" xml:space="preserve">
-    <value>右端で折り返す</value>
+    <value>右端で折り返す(_W)</value>
   </data>
   <data name="String_Screen_Caption" xml:space="preserve">
     <value>ディスプレイ識別</value>
@@ -648,23 +650,23 @@
     <value>追加</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Add_Command_A" xml:space="preserve">
-    <value>コマンド型ランチャー追加</value>
+    <value>コマンド型ランチャー追加(_C)</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Add_LauncherItem_A" xml:space="preserve">
-    <value>ランチャーアイテム追加</value>
+    <value>ランチャーアイテム追加(_L)</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Add_Note_A" xml:space="preserve">
-    <value>ノート追加</value>
+    <value>ノート追加(_N)</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Add_Toolbar_A" xml:space="preserve">
-    <value>ツールバー非表示追加</value>
+    <value>ツールバー非表示追加(_T)</value>
     <comment>ツールバー処理増加に伴い内容変更の可能性あり</comment>
   </data>
   <data name="String_Setting_Keyboard_Pressed_ThroughSystem_A" xml:space="preserve">
-    <value>システムへ通知</value>
+    <value>システムへ通知(_T)</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_Forever_A" xml:space="preserve">
-    <value>永久</value>
+    <value>永久に無視する</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_LauncherItem_Header" xml:space="preserve">
     <value>ランチャーアイテム</value>
@@ -998,7 +1000,7 @@
     <value>通知のみ(_F)</value>
   </data>
   <data name="String_Setting_Keyboard_Pressed_LauncherItem_Execute_A" xml:space="preserve">
-    <value>実行方法</value>
+    <value>実行方法(_E)</value>
   </data>
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupKind.Normal" xml:space="preserve">
     <value>通常</value>
@@ -1289,16 +1291,16 @@
     <value>マッピング削除</value>
   </data>
   <data name="String_AppManager_System_A" xml:space="preserve">
-    <value>システム</value>
+    <value>システム(_M)</value>
   </data>
   <data name="String_AppManager_System_Hook_A" xml:space="preserve">
-    <value>フック状態切り替え</value>
+    <value>フック状態切り替え(_F)</value>
   </data>
   <data name="String_AppManager_System_IsDisabledSystemIdle_A" xml:space="preserve">
-    <value>システムアイドルを抑制</value>
+    <value>システムアイドルを抑制(_S)</value>
   </data>
   <data name="String_AppManager_System_IsSupportedExplorer_A" xml:space="preserve">
-    <value>Explorer 補正</value>
+    <value>Explorer 補正(_E)</value>
   </data>
   <data name="String_OldVersionConverter" xml:space="preserve">
     <value>Ver 0.83.0 からコンバート</value>
@@ -1399,9 +1401,10 @@
   <data name="String_Download_Seconds_Byte" xml:space="preserve">
     <value>byte/秒</value>
   </data>
-  <data name="String_Download_Seconds_Format" xml:space="preserve">
+  <data name="String_Download_Seconds_Format_DOTNET" xml:space="preserve">
     <value>{0:0.00} {1}</value>
-    <comment>0: サイズ, 1:単位</comment>
+    <comment>0: サイズ, 1:単位
+.NET String.Format 準拠</comment>
   </data>
   <data name="String_Download_Seconds_GB" xml:space="preserve">
     <value>GB/秒</value>
@@ -1569,7 +1572,7 @@
     <value>提案</value>
   </data>
   <data name="String_Feedback_Comment_A" xml:space="preserve">
-    <value>コメント</value>
+    <value>コメント(_C)</value>
   </data>
   <data name="String_Feedback_CommentContent" xml:space="preserve">
     <value>内容</value>
@@ -1614,13 +1617,13 @@
 課題を起票する際にも入力内容が引用として使用される可能性があります。</value>
   </data>
   <data name="String_Feedback_Kind_A" xml:space="preserve">
-    <value>種類</value>
+    <value>種類(_K)</value>
   </data>
   <data name="String_Feedback_KindSet_A" xml:space="preserve">
-    <value>テンプレートを設定</value>
+    <value>テンプレートを設定(_T)</value>
   </data>
   <data name="String_Feedback_Subject_A" xml:space="preserve">
-    <value>件名</value>
+    <value>件名(_J)</value>
   </data>
   <data name="String_Feedback_Warning" xml:space="preserve">
     <value>個人情報を含めないでください。</value>
@@ -1733,11 +1736,11 @@
   <data name="String_LauncherItemCustomizeControl_RedoEditor_Header" xml:space="preserve">
     <value>再試行</value>
   </data>
-  <data name="String_RedoEditor_RedoMode_A" xml:space="preserve">
+  <data name="String_RedoEditor_RedoMode" xml:space="preserve">
     <value>再試行待機方法</value>
   </data>
   <data name="String_RedoEditor_RetryCount_A" xml:space="preserve">
-    <value>再試行回数</value>
+    <value>再試行回数(_R)</value>
   </data>
   <data name="String_RedoEditor_SuccessExitCodesRemark" xml:space="preserve">
     <value>正常終了コードはカンマ区切り(数値, 数値)で指定してください。
@@ -1745,15 +1748,15 @@
 例: 0, 20, 100-110</value>
   </data>
   <data name="String_RedoEditor_SuccessExitCodes_A" xml:space="preserve">
-    <value>正常終了コード</value>
+    <value>正常終了コード(_X)</value>
   </data>
-  <data name="String_RedoEditor_WaitAndRetryTime_A" xml:space="preserve">
+  <data name="String_RedoEditor_WaitAndRetryTime" xml:space="preserve">
     <value>待機処理</value>
   </data>
   <data name="String_RedoEditor_WaitTime_A" xml:space="preserve">
-    <value>待機時間(秒)</value>
+    <value>待機時間(秒)(_T)</value>
   </data>
-  <data name="String_ExtendsExecute_Redo_A" xml:space="preserve">
+  <data name="String_ExtendsExecute_Redo" xml:space="preserve">
     <value>再実施</value>
   </data>
   <data name="String_RedoExecutor_CancelWatch" xml:space="preserve">
@@ -1805,7 +1808,7 @@
     <value>隠さない(_O)</value>
   </data>
   <data name="String_Note_Status_HiddenMode_A" xml:space="preserve">
-    <value>自動的に隠す方法</value>
+    <value>自動的に隠す方法(_H)</value>
   </data>
   <data name="String:Enum-System.Windows.Input.ModifierKeys.Alt" xml:space="preserve">
     <value>Alt</value>
@@ -1857,5 +1860,53 @@
   </data>
   <data name="String_Hook_Keyboard_Separator" xml:space="preserve">
     <value>→</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_About" xml:space="preserve">
+    <value>バージョン情報</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Close" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_CopyLongInformation" xml:space="preserve">
+    <value>長い情報のコピー</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_CopyShortInformation" xml:space="preserve">
+    <value>短い情報のコピー</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Exit" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_GarbageCollection" xml:space="preserve">
+    <value>GC</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_GarbageCollectionFull" xml:space="preserve">
+    <value>GC (フル)</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Help" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Reboot" xml:space="preserve">
+    <value>再起動</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Setting" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Shutdown" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="String_Setting_KeyInput_UserInput_A" xml:space="preserve">
+    <value>キー入力(_K)</value>
+  </data>
+  <data name="String_Common_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="String_Setting_KeyInput_Invalid" xml:space="preserve">
+    <value>無効なキー入力</value>
+  </data>
+  <data name="String_Setting_KeyInput_Join" xml:space="preserve">
+    <value> + </value>
+  </data>
+  <data name="String_Setting_KeyInput_UserInput" xml:space="preserve">
+    <value>割り当てるキーを入力してください</value>
   </data>
 </root>

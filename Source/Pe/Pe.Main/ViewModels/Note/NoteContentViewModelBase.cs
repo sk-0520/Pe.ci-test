@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public ICommand CopyCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 var data = GetClipbordContentData();
-                ClipboardManager.Set(data);
+                ClipboardManager.CopyData(data, ClipboardNotify.None);
             }
         ));
 

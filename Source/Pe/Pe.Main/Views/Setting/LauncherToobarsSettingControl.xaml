@@ -31,7 +31,7 @@
   </UserControl.Resources>
 
   <i:Interaction.Triggers>
-    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ShowAllScreensRequest, ElementName=root}">
+    <app_core_views:RequestTrigger SourceObject="{Binding Editor.ShowAllScreensRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <prism:InvokeCommandAction Command="{Binding DisplayAllScreensCommand,ElementName=root}" />
     </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
@@ -49,8 +49,8 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Screen_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.ShowAllScreensCommand, ElementName=root}" />
-        <ComboBox Grid.Column="1" ItemsSource="{Binding Editor.ToolbarItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedToolbar, ElementName=root}">
+        <Button Grid.Column="0" Content="{Binding Resources.String_Setting_LauncherToolbars_Screen_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.ShowAllScreensCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        <ComboBox Grid.Column="1" ItemsSource="{Binding Editor.ToolbarItems, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Editor.SelectedToolbar, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
               <TextBlock>
@@ -71,7 +71,7 @@
       </Grid>
 
       <ScrollViewer Grid.Row="1">
-        <ContentControl Content="{Binding Editor.SelectedToolbar, ElementName=root}">
+        <ContentControl IsTabStop="False" Content="{Binding Editor.SelectedToolbar, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <ContentControl.Resources>
             <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
               <Setter Property="Width" Value="Auto" />

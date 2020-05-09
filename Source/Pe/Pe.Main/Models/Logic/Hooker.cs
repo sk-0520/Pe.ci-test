@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public abstract class HookerBase : DisposerBase
+    public abstract class HookerBase: DisposerBase
     {
         public HookerBase(ILoggerFactory loggerFactory)
         {
@@ -48,13 +48,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             HookHandle = IntPtr.Zero;
         }
 
+        protected bool IsSkipCode(int code)
+        {
+            if(code < 0) {
+                return true;
+            }
+
+            if(code == (int)HC.HC_NOREMOVE) {
+                return true;
+            }
+
+            return false;
+        }
+
         protected abstract IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam);
 
         protected IntPtr CallNextProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
-#if DEBUG
-            Logger.LogTrace("code = {0}, wParam = {1}, lParam = {2}", code, wParam, lParam);
-#endif
             return NativeMethods.CallNextHookEx(HookHandle, code, wParam, lParam);
         }
 
@@ -167,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     }
 
-    public class KeyboardHookEventArgs : EventArgs
+    public class KeyboardHookEventArgs: EventArgs
     {
         #region variable
 
@@ -198,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     }
 
-    public class KeyboradHooker : HookerBase
+    public class KeyboradHooker: HookerBase
     {
         #region event
 
@@ -227,7 +237,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
         {
-            if(0 <= code) {
+            if(!IsSkipCode(code)) {
                 var message = wParam.ToInt32();
                 var isDown = message == (int)WM.WM_KEYDOWN || message == (int)WM.WM_SYSKEYDOWN;
                 var isUp = message == (int)WM.WM_KEYUP || message == (int)WM.WM_SYSKEYUP;
@@ -239,36 +249,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                         if(logging) {
                             stopwatch = new Stopwatch();
                             stopwatch.Start();
-                            Logger.LogTrace("キーボード {0} フック 実装部 開始", isUp ? nameof(KeyDown) : nameof(KeyUp));
                         }
+                        try {
 
-                        var modifierKeyStatus = ModifierKeyStatus.Create();
-                        var e = new KeyboardHookEventArgs(isDown, lParam, modifierKeyStatus);
-                        keyEvent.Invoke(this, e);
-                        if(e.Handled) {
-                            Logger.LogTrace("入力制御: {0}, {1}, {2}", isUp ? nameof(KeyDown) : nameof(KeyUp), e.Key, e.modifierKeyStatus);
-                            return new IntPtr(1);
-                        }
-
-                        if(logging) {
-                            Debug.Assert(stopwatch != null);
-                            stopwatch.Stop();
-                            if(TimeSpan.FromMilliseconds(300) < stopwatch.Elapsed) {
-                                Logger.LogWarning("キーボード {0} フック 実装部 終了: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
-                            } else {
-                                Logger.LogTrace("キーボード {0} フック 実装部 終了: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
+                            var modifierKeyStatus = ModifierKeyStatus.Create();
+                            var e = new KeyboardHookEventArgs(isDown, lParam, modifierKeyStatus);
+                            keyEvent.Invoke(this, e);
+                            if(e.Handled) {
+                                Logger.LogInformation("キーボード入力制御: {0}, {1}, {2}", isUp ? nameof(KeyDown) : nameof(KeyUp), e.Key, e.modifierKeyStatus);
+                                return new IntPtr(1);
+                            }
+                        } finally {
+                            if(logging) {
+                                Debug.Assert(stopwatch != null);
+                                stopwatch.Stop();
+                                if(TimeSpan.FromMilliseconds(300) < stopwatch.Elapsed) {
+                                    Logger.LogWarning("キーボード {0} フック 実装部 所要時間長期: {1}", isUp ? nameof(KeyDown) : nameof(KeyUp), stopwatch.Elapsed);
+                                }
                             }
                         }
                     }
                 }
             }
+
             return CallNextProcedure(code, wParam, lParam);
         }
 
         #endregion
     }
 
-    public class MouseHookEventArgs : EventArgs
+    public class MouseHookEventArgs: EventArgs
     {
         #region variable
 
@@ -281,21 +291,68 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             this.msll = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT))!;
 
             DeviceLocation = PodStructUtility.Convert(this.msll.pt);
+
+            IsButtonEvent = false;
+        }
+
+        public MouseHookEventArgs(MouseButton mouseButton, MouseButtonState mouseButtonState, IntPtr lParam)
+            : this(lParam)
+        {
+            Button = mouseButton;
+            ButtonState = mouseButtonState;
+
+            IsButtonEvent = true;
+        }
+
+        public MouseHookEventArgs(int buttonX, MouseButtonState mouseButtonState, in MSLLHOOKSTRUCT msll)
+        {
+            if(buttonX ==0) {
+                throw new ArgumentException(nameof(buttonX));
+            }
+
+            this.msll = msll;
+
+            Button = buttonX switch
+            {
+                1 => MouseButton.XButton1,
+                2 => MouseButton.XButton2,
+                _ => throw new NotImplementedException(),
+            };
+
+            ButtonState = mouseButtonState;
+            IsButtonEvent = false;
         }
 
         #region property
 
+        /// <summary>
+        /// マウスボタン系のイベントか。
+        /// <para>真の場合のみ、<see cref="Button"/>, <seealso cref="ButtonState"/> が有効な値となる。</para>
+        /// </summary>
+        public bool IsButtonEvent { get; }
+
         [PixelKind(Px.Device)]
         public Point DeviceLocation { get; }
+
+        public MouseButton Button { get; }
+        public MouseButtonState ButtonState { get; }
+
+        /// <summary>
+        /// 処理したか。
+        /// </summary>
+        public bool Handled { get; set; }
 
         #endregion
     }
 
-    public class MouseHooker : HookerBase
+
+    public partial class MouseHooker: HookerBase
     {
         #region event
 
         public event EventHandler<MouseHookEventArgs>? MouseMove;
+        public event EventHandler<MouseHookEventArgs>? MouseDown;
+        public event EventHandler<MouseHookEventArgs>? MouseUp;
 
         #endregion
 
@@ -314,26 +371,57 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return NativeMethods.SetWindowsHookEx(WH.WH_MOUSE_LL, hookProc, moduleHandle, 0);
         }
 
-        protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
-        {
-            if(code == (int)HC.HC_ACTION) {
-                switch(wParam.ToInt32()) {
-                    case (int)WM.WM_MOUSEMOVE: {
-                            var mouseMove = MouseMove;
-                            if(mouseMove != null) {
-                                var e = new MouseHookEventArgs(lParam);
-                                MouseMove?.Invoke(this, e);
-                            }
-                        }
-                        break;
+        //protected override IntPtr HookProcedure(int code, IntPtr wParam, IntPtr lParam)
+        //{
+        //    if(IsSkipCode(code)) {
+        //        return CallNextProcedure(code, wParam, lParam);
+        //    }
 
-                    default:
-                        break;
-                }
-            }
+        //    if(code != (int)HC.HC_ACTION) {
+        //        return CallNextProcedure(code, wParam, lParam);
+        //    }
 
-            return CallNextProcedure(code, wParam, lParam);
-        }
+        //    MouseHookEventArgs? e = null;
+        //    EventHandler<MouseHookEventArgs>? target = null;
+
+        //    switch(wParam.ToInt32()) {
+        //        case (int)WM.WM_MOUSEMOVE:
+        //            target = MouseMove;
+        //            if(target != null) {
+        //                e = new MouseHookEventArgs(lParam);
+        //            }
+        //            break;
+
+        //        case (int)WM.WM_LBUTTONDOWN:
+        //            target = MouseDownEvent;
+        //            if(target != null) {
+        //                e = new MouseHookEventArgs(MouseButton.Left, MouseButtonState.Pressed, lParam);
+        //            }
+        //            break;
+
+        //        case (int)WM.WM_LBUTTONUP:
+        //        case (int)WM.WM_RBUTTONDOWN:
+        //        case (int)WM.WM_RBUTTONUP:
+        //        case (int)WM.WM_MBUTTONDOWN:
+        //        case (int)WM.WM_MBUTTONUP:
+        //        case (int)WM.WM_XBUTTONUP:
+        //        case (int)WM.WM_XBUTTONDOWN:
+
+        //            Logger.LogInformation("{0}", (WM)wParam.ToInt32());
+        //            break;
+        //        default:
+        //            break;
+        //    }
+
+        //    if(target != null) {
+        //        Debug.Assert(e != null);
+        //        target.Invoke(this, e);
+        //        if(e.Handled) {
+        //            return new IntPtr(1);
+        //        }
+        //    }
+        //    return CallNextProcedure(code, wParam, lParam);
+        //}
 
         #endregion
     }

@@ -46,36 +46,36 @@
       <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
         <!--
         <Grid>
-          <ToggleButton x:Name="switchCreateGroup" IsChecked="{Binding Editor.IsPopupCreateGroupMenu, ElementName=root}" Content="+" />
+          <ToggleButton x:Name="switchCreateGroup" IsChecked="{Binding Editor.IsPopupCreateGroupMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" Content="+" />
           <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchCreateGroup}">
             <Border Style="{StaticResource PopupMenuBorder}">
               <StackPanel>
-                <MenuItem Header="file" Command="{Binding Editor.CreateNewNormalGroupCommand, ElementName=root}" />
+                <MenuItem Header="file" Command="{Binding Editor.CreateNewNormalGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
               </StackPanel>
             </Border>
           </Popup>
         </Grid>
         -->
-        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddGroup, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewNormalGroupCommand, ElementName=root}">
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddGroup, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewNormalGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
         </Button>
-        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_RemoveGroup, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveSelectedGroupCommand, ElementName=root}">
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_RemoveGroup, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveSelectedGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
         </Button>
 
         <Separator />
 
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.UpSelectedGroupCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.UpSelectedGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
         </RepeatButton>
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.DownSelectedGroupCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.DownSelectedGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
         </RepeatButton>
       </ToolBar>
 
-      <ListBox Grid.Row="1" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherGroups}" ItemsSource="{Binding Editor.GroupItems, ElementName=root}" SelectedItem="{Binding Editor.SelectedGroup, ElementName=root}">
+      <ListBox Grid.Row="1" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherGroups}" ItemsSource="{Binding Editor.GroupItems, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Editor.SelectedGroup, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <i:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, ElementName=root}" />
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </i:Interaction.Behaviors>
         <!--<ListBox.ItemTemplate>
           <DataTemplate>
@@ -92,7 +92,7 @@
       <GridSplitter Grid.Row="2" Style="{StaticResource Horizon-GridSplitter}" />
 
       <GroupBox Grid.Row="3" VerticalAlignment="Top" Header="{Binding Resources.String_Setting_LauncherGroups_Edit_Header, Source={x:Static app_main:CultureService.Instance}}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, ElementName=root}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <StackPanel>
             <StackPanel.Resources>
               <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
@@ -112,7 +112,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Id_A, Source={x:Static app_main:CultureService.Instance}}" />
-                <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding Editor.SelectedGroup.LauncherGroupId, ElementName=root, Mode=OneWay}" />
+                <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding Editor.SelectedGroup.LauncherGroupId, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />
               </Grid>
 
               <Grid>
@@ -122,7 +122,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Kind_A, Source={x:Static app_main:CultureService.Instance}}" />
-                <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding Editor.SelectedGroup.Kind, ElementName=root, Mode=OneWay, Converter={StaticResource EnumToCultureConverter}}" />
+                <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding Editor.SelectedGroup.Kind, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, Converter={StaticResource EnumToCultureConverter}}" />
               </Grid>
 
               <Grid>
@@ -132,7 +132,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_LauncherGroups_Edit_Name_A, Source={x:Static app_main:CultureService.Instance}}" />
-                <TextBox Grid.Column="1" Style="{StaticResource Vertical-TextBox}" Text="{Binding Editor.SelectedGroup.Name, ElementName=root}" />
+                <TextBox Grid.Column="1" Style="{StaticResource Vertical-TextBox}" Text="{Binding Editor.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=UserControl}}" />
               </Grid>
 
               <Grid>
@@ -148,15 +148,15 @@
                     <ColumnDefinition Width="*" />
                   </Grid.ColumnDefinitions>
 
-                  <ComboBox Grid.Column="0" Style="{StaticResource Vertical-ComboBox}" ItemsSource="{Binding Editor.GroupIconItems, ElementName=root}" SelectedValuePath="Value" SelectedValue="{Binding Editor.SelectedGroup.ImageName, ElementName=root}">
+                  <ComboBox Grid.Column="0" Style="{StaticResource Vertical-ComboBox}" ItemsSource="{Binding Editor.GroupIconItems, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedValuePath="Value" SelectedValue="{Binding Editor.SelectedGroup.ImageName, RelativeSource={RelativeSource AncestorType=UserControl}}">
                     <ComboBox.ItemTemplate>
                       <DataTemplate>
-                        <ContentControl Content="{Binding Icon}" />
+                        <ContentControl IsTabStop="False" Content="{Binding Icon}" />
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>
 
-                  <app_core_views:ColorCanvas Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Editor.SelectedGroup.ImageColor, ElementName=root, Mode=TwoWay}" />
+                  <app_core_views:ColorCanvas Grid.Column="1" VerticalAlignment="Center" Style="{StaticResource ColorPicker}" SelectedColor="{Binding Editor.SelectedGroup.ImageColor, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
                 </Grid>
               </Grid>
             </StackPanel>
@@ -169,30 +169,30 @@
 
     <GridSplitter Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
 
-    <Grid Grid.Column="2" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, ElementName=root}">
+    <Grid Grid.Column="2" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
 
       <ToolBar Grid.Row="0" Style="{StaticResource Horizontal-Toolbar}">
-        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_RemoveItem, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, ElementName=root}">
+        <Button ToolTip="{Binding Resources.String_Setting_LauncherGroups_RemoveItem, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
         </Button>
 
         <Separator />
 
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.UpSelectedLauncherItemCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Up, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.UpSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Up}" />
         </RepeatButton>
-        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.DownSelectedLauncherItemCommand, ElementName=root}">
+        <RepeatButton ToolTip="{Binding Resources.String_Common_Down, Source={x:Static app_main:CultureService.Instance}}"  Command="{Binding Editor.DownSelectedLauncherItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
           <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Down}" />
         </RepeatButton>
       </ToolBar>
 
-      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, ElementName=root}">
+      <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <i:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemDragAndDrop, ElementName=root}" />
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
@@ -215,7 +215,7 @@
 
     <GridSplitter Grid.Column="3" Style="{StaticResource Verical-GridSplitter}" />
 
-    <Grid Grid.Column="4" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, ElementName=root}">
+    <Grid Grid.Column="4" IsEnabled="{Binding Editor.IsEnabledSelectedGroup, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
@@ -229,17 +229,17 @@
         </ToolBar.Resources>
 
         <DockPanel HorizontalAlignment="Stretch">
-          <Button DockPanel.Dock="Left" ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddItem, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddSelectedLauncheritemCommand, ElementName=root}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button DockPanel.Dock="Left" ToolTip="{Binding Resources.String_Setting_LauncherGroups_AddItem, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddSelectedLauncheritemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
           </Button>
-          <TextBox Text="{Binding Editor.NameFilterQuery, ElementName=root, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
+          <TextBox Text="{Binding Editor.NameFilterQuery, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
         </DockPanel>
       </ToolBar>
 
 
-      <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedLauncherItem, ElementName=root}" ItemsSource="{Binding Editor.AllLauncherItems, ElementName=root}">
+      <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.AllLauncherItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <i:Interaction.Behaviors>
-          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemsDragAndDrop, ElementName=root}" />
+          <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
         </i:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>

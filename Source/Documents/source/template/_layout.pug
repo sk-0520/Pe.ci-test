@@ -47,11 +47,7 @@ html(lang='ja')
 							ul
 								li: a(href="./help.others-appsettings.pug") アプリケーション構成ファイル
 								li: a(href="./help.others-commandline.pug") コマンドライン引数
-						li
-							a(href="./help.changelogs.pug") 更新履歴
-							ul
-								li: a(href="./help.old-version.pug") 過去バージョン
-
+						li: a(href="./help.changelogs.pug") 更新履歴
 						li
 							a(href="./dev.index.pug") 開発
 							ul
@@ -60,6 +56,6 @@ html(lang='ja')
 								li: a(href="./dev.ci.pug") CI・リリース
 								li: a(href="./dev.table-main.pug") テーブル:Main
 								li: a(href="./dev.table-file.pug") テーブル:File
-
+		script(src="script/menu.ts")
 		block BLOCK_LAYOUT_TAIL_SCRIPT
 

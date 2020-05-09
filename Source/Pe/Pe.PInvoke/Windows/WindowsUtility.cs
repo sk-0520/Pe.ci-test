@@ -29,9 +29,17 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         {
             return unchecked((short)GetIntUnchecked(value));
         }
+        public static int LOWORD(int value)
+        {
+            return unchecked((short)value);
+        }
         public static int HIWORD(IntPtr value)
         {
             return unchecked((short)(((uint)GetIntUnchecked(value)) >> 16));
+        }
+        public static int HIWORD(int value)
+        {
+            return unchecked((short)(value >> 16));
         }
 
         #endregion

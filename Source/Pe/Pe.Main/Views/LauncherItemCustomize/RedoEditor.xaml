@@ -16,6 +16,7 @@
   d:DesignHeight="450"
 >
   <UserControl.Resources>
+    <app_code_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
     <app_code_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
 
@@ -36,12 +37,12 @@
           <ColumnDefinition Style="{StaticResource ContentDefinition}" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_RedoMode_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_RedoMode, Source={x:Static app_main:CultureService.Instance}, Converter={StaticResource EscapeAccessKeyConverter}}"  />
         <WrapPanel Grid.Column="1" VerticalAlignment="Center">
-          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.None}}" />
-          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.Timeout}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.Timeout}}" />
-          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.Count}}" />
-          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.TimeoutOrCount}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, ElementName=root, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.TimeoutOrCount}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.None}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.None}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.Timeout}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.Timeout}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.Count}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.Count}}" />
+          <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:RedoMode.TimeoutOrCount}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding RedoMode, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:RedoMode.TimeoutOrCount}}" />
         </WrapPanel>
       </Grid>
 
@@ -51,10 +52,11 @@
           <ColumnDefinition Style="{StaticResource ContentDefinition}" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_WaitAndRetryTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_WaitAndRetryTime, Source={x:Static app_main:CultureService.Instance}, Converter={StaticResource EscapeAccessKeyConverter}}"  />
         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-          <Label Content="{Binding Resources.String_RedoEditor_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
+          <Label Target="{Binding ElementName=inputWaitTimeSeconds}" Content="{Binding Resources.String_RedoEditor_WaitTime_A, Source={x:Static app_main:CultureService.Instance}}"  />
           <app_code_views:NumericUpDown
+            x:Name="inputWaitTimeSeconds"
             VerticalContentAlignment="Center"
             Width="100"
             Value="{Binding WaitTimeSeconds, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -64,8 +66,9 @@
 
           <Separator Style="{StaticResource Normal-Indent}" />
 
-          <Label Content="{Binding Resources.String_RedoEditor_RetryCount_A, Source={x:Static app_main:CultureService.Instance}}"  />
+          <Label Target="{Binding ElementName=inputRetryCount}" Content="{Binding Resources.String_RedoEditor_RetryCount_A, Source={x:Static app_main:CultureService.Instance}}"  />
           <app_code_views:NumericUpDown
+            x:Name="inputRetryCount"
             VerticalContentAlignment="Center"
             Width="100"
             Value="{Binding RetryCount, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -83,8 +86,8 @@
           <ColumnDefinition Style="{StaticResource ContentDefinition}" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Content="{Binding Resources.String_RedoEditor_SuccessExitCodes_A, Source={x:Static app_main:CultureService.Instance}}"  />
-        <TextBox Grid.Column="1" Text="{Binding SuccessExitCodes, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Column="0" Target="{Binding ElementName=inputSuccessExitCodes}" Content="{Binding Resources.String_RedoEditor_SuccessExitCodes_A, Source={x:Static app_main:CultureService.Instance}}"  />
+        <TextBox x:Name="inputSuccessExitCodes" Grid.Column="1" Text="{Binding SuccessExitCodes, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
       </Grid>
     </StackPanel>
   </Grid>

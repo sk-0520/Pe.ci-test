@@ -91,6 +91,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherGroupElement CreateLauncherGroupElement(Guid launcherGroupId);
         LauncherToolbarElement CreateLauncherToolbarElement(IScreen dockScreen, ReadOnlyObservableCollection<LauncherGroupElement> launcherGroups);
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
+        void RefreshLauncherItemElement(Guid launcherItemId);
+
         LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement);
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen);
@@ -176,6 +178,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     launcherItemElement.Initialize();
                     return launcherItemElement;
                 });
+            }
+
+            /// <inheritdoc cref="IOrderManager.RefreshLauncherItemElement(Guid)"/>
+            public void RefreshLauncherItemElement(Guid launcherItemId)
+            {
+                if(LauncherItems.TryGetValue(launcherItemId, out var element)) {
+                    element.Refresh();
+                }
             }
 
             public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)

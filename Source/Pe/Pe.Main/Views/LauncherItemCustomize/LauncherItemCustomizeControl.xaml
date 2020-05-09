@@ -24,12 +24,13 @@
   d:DesignHeight="450" d:DesignWidth="800"
 >
   <UserControl.Resources>
+    <app_core_views_converter:EscapeAccessKeyConverter x:Key="EscapeAccessKeyConverter" />
     <app_core_views_converter:DoubleToParameterPercentConverter x:Key="DoubleToParameterPercentConverter" />
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </UserControl.Resources>
 
 
-  <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Editor.CustomizeItems, ElementName=root}">
+  <ItemsControl Grid.IsSharedSizeScope="True" IsTabStop="False" ItemsSource="{Binding Editor.CustomizeItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <ItemsControl.Resources>
       <Style x:Key="LabelDefinition" TargetType="ColumnDefinition">
         <Setter Property="Width" Value="Auto" />
@@ -53,7 +54,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Id_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Id, Source={x:Static app_main:CultureService.Instance}, Converter={StaticResource EscapeAccessKeyConverter}}" />
               <TextBox Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding LauncherItemId, Mode=OneWay}" IsReadOnly="True" />
             </Grid>
 
@@ -63,7 +64,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Kind_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Kind, Source={x:Static app_main:CultureService.Instance}, Converter={StaticResource EscapeAccessKeyConverter}}" />
               <TextBox Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Kind, Mode=OneWay, Converter={StaticResource EnumToCultureConverter}}" IsReadOnly="True" />
             </Grid>
 
@@ -73,8 +74,8 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Name_A, Source={x:Static app_main:CultureService.Instance}}" />
-              <TextBox Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Name}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=inputName}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Name_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <TextBox x:Name="inputName" Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Name}" />
             </Grid>
 
             <Grid>
@@ -83,8 +84,8 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Code_A, Source={x:Static app_main:CultureService.Instance}}" />
-              <TextBox Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Code}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=inputCode}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Code_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <TextBox x:Name="inputCode" Grid.Column="1" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Code}" />
 
             </Grid>
 
@@ -94,7 +95,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Icon_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=commandSelectIconFile}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Icon_A, Source={x:Static app_main:CultureService.Instance}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -103,11 +104,11 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox  Style="{StaticResource Horizontal-TextBox}" Grid.Column="0" IsReadOnly="True" Text="{Binding IconPath, Mode=OneWay}" />
+                <TextBox Style="{StaticResource Horizontal-TextBox}" Grid.Column="0" IsReadOnly="True" Text="{Binding IconPath, Mode=OneWay}" />
                 <Button Grid.Column="1" Command="{Binding IconClearSelectCommand}" ToolTip="{Binding Resources.String_Common_Clear, Source={x:Static app_main:CultureService.Instance}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
                 </Button>
-                <Button Grid.Column="2" Command="{Binding IconFileSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_SelectIcon, Source={x:Static app_main:CultureService.Instance}}">
+                <Button x:Name="commandSelectIconFile" Grid.Column="2" Command="{Binding IconFileSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_SelectIcon, Source={x:Static app_main:CultureService.Instance}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Icon}" />
                 </Button>
                 <Button Grid.Column="3" Command="{Binding IconImageSelectCommand}" ToolTip="{Binding Resources.String_LauncherItemCustomizeControl_Common_SelectImage, Source={x:Static app_main:CultureService.Instance}}">
@@ -122,7 +123,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Others_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Others, Source={x:Static app_main:CultureService.Instance}, Converter={StaticResource EscapeAccessKeyConverter}}" />
               <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <CheckBox IsChecked="{Binding IsEnabledCommandLauncher}" Content="{Binding Resources.String_LauncherItemCustomizeControl_Common_Others_UseCommandLauncher_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
@@ -144,7 +145,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Path_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=inputPath}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Path_A, Source={x:Static app_main:CultureService.Instance}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -152,7 +153,7 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Grid.Column="0" ScrollViewer.CanContentScroll="True" IsEditable="True" Style="{StaticResource Horizontal-ComboBox}" Text="{Binding Path}" ItemsSource="{Binding PathItems}" IsDropDownOpen="{Binding IsDropDownPathItems}" >
+                <ComboBox x:Name="inputPath" Grid.Column="0" ScrollViewer.CanContentScroll="True" IsEditable="True" Style="{StaticResource Horizontal-ComboBox}" Text="{Binding Path}" ItemsSource="{Binding PathItems}" IsDropDownOpen="{Binding IsDropDownPathItems}" >
                   <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                       <VirtualizingStackPanel
@@ -197,7 +198,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Options_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=inputOption}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Options_A, Source={x:Static app_main:CultureService.Instance}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -206,7 +207,7 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Option}" />
+                <TextBox x:Name="inputOption" Grid.Column="0" Style="{StaticResource Horizontal-TextBox}" Text="{Binding Option}" />
                 <Button Grid.Column="1" Command="{Binding OptionClearCommand}" ToolTip="{Binding Resources.String_Common_Clear, Source={x:Static app_main:CultureService.Instance}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
                 </Button>
@@ -226,7 +227,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_WorkDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=inputWorkingDirectoryPath}" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_WorkDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
               <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />
@@ -234,7 +235,7 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" Style="{StaticResource Horizontal-TextBox}" Text="{Binding WorkingDirectoryPath}" />
+                <TextBox x:Name="inputWorkingDirectoryPath" Grid.Column="0" Style="{StaticResource Horizontal-TextBox}" Text="{Binding WorkingDirectoryPath}" />
                 <Button Grid.Column="1" Command="{Binding WorkingDirectoryClearCommand}" ToolTip="{Binding Resources.String_Common_Clear, Source={x:Static app_main:CultureService.Instance}}">
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clear}" />
                 </Button>
@@ -251,7 +252,7 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Others_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <Label Grid.Column="0" VerticalAlignment="Top" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Others, Source={x:Static app_main:CultureService.Instance}, Converter={StaticResource EscapeAccessKeyConverter}}" />
               <WrapPanel Grid.Column="1" VerticalAlignment="Center">
                 <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding IsEnabledStandardInputOutput}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Command_IsEnable_StandardInputOutpu, Source={x:Static app_main:CultureService.Instance}}" />
                 <CheckBox Style="{StaticResource Horizontal-CheckBox}" IsChecked="{Binding RunAdministrator}" Content="{Binding Resources.String_LauncherItemCustomizeControl_File_Command_RunAdministrator, Source={x:Static app_main:CultureService.Instance}}" />
@@ -274,8 +275,8 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_ProtocolAlias_A, Source={x:Static app_main:CultureService.Instance}}" />
-              <TextBox Grid.Column="1" Text="{Binding ProtocolAlias}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=inputProtocolAlias}" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_ProtocolAlias_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <TextBox x:Name="inputProtocolAlias" Grid.Column="1" Text="{Binding ProtocolAlias}" />
 
             </Grid>
 
@@ -285,8 +286,8 @@
                 <ColumnDefinition Style="{StaticResource ContentDefinition}" />
               </Grid.ColumnDefinitions>
 
-              <Label Grid.Column="0" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Options_A, Source={x:Static app_main:CultureService.Instance}}" />
-              <TextBox Grid.Column="1" Text="{Binding Option}" />
+              <Label Grid.Column="0" Target="{Binding ElementName=inputOption}" Content="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Options_A, Source={x:Static app_main:CultureService.Instance}}" />
+              <TextBox x:Name="inputOption" Grid.Column="1" Text="{Binding Option}" />
             </Grid>
 
 
@@ -385,13 +386,13 @@
       <ItemsPanelTemplate>
         <StackPanel>
           <i:Interaction.Triggers>
-            <app_core_views:RequestTrigger SourceObject="{Binding Editor.IconSelectRequest, ElementName=root}">
+            <app_core_views:RequestTrigger SourceObject="{Binding Editor.IconSelectRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
               <prism:InvokeCommandAction Command="{Binding IconSelectCommand ,ElementName=root}" />
             </app_core_views:RequestTrigger>
-            <app_core_views:RequestTrigger SourceObject="{Binding Editor.ImageSelectRequest, ElementName=root}">
+            <app_core_views:RequestTrigger SourceObject="{Binding Editor.ImageSelectRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
               <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
             </app_core_views:RequestTrigger>
-            <app_core_views:RequestTrigger SourceObject="{Binding Editor.FileSelectRequest, ElementName=root}">
+            <app_core_views:RequestTrigger SourceObject="{Binding Editor.FileSelectRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
               <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
             </app_core_views:RequestTrigger>
           </i:Interaction.Triggers>

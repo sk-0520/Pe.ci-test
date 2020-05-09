@@ -17,7 +17,7 @@
   WindowStartupLocation="CenterScreen"
   Width="300"
   Height="450"
-  
+
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
   BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
@@ -57,6 +57,7 @@
       </ListBox.ItemsPanel>
       <ListBox.ItemTemplate>
         <DataTemplate>
+          <!-- TODO: ListBoxItem 選択時にスペースでチェックどうこうしたいなぁ -->
           <CheckBox IsChecked="{Binding IsImport}">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
               <app_main_views:ImageViewerControl IconViewer="{Binding IconViewer}" Width="16" />

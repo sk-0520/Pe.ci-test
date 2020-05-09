@@ -25,7 +25,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 {
-    internal class ManagerViewModel : ViewModelBase, IBuildStatus
+    internal class ManagerViewModel: ViewModelBase, IBuildStatus
     {
         #region variable
 
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         #region property
 
         // 月初だけ windows アイコンを古くする(理由はない)
-        public bool ShowOldVersion => DateTime.Now.Day == 1;
+        public bool ShowPlatformOldVersion => DateTime.Now.Day == 1;
 
         ApplicationManager ApplicationManager { get; }
         IUserTracker UserTracker { get; }
@@ -103,7 +103,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             get => this._isOpenContextMenu;
             set
             {
-                SetProperty(ref this._isOpenContextMenu, value);
+                if(SetProperty(ref this._isOpenContextMenu, value)) {
+                    if(IsOpenContextMenu) {
+                        RaisePropertyChanged(nameof(ShowPlatformOldVersion));
+                    }
+                }
                 Logger.LogDebug("[#530調査] IsOpenContextMenu: {0}", IsOpenContextMenu);
             }
         }

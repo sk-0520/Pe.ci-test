@@ -418,7 +418,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             get
             {
                 return TextUtility.ReplaceFromDictionary(
-                    Properties.Resources.String_Note_KindChanging_Change,
+                    Properties.Resources.String_Note_KindChanging_Change_Format,
                     new Dictionary<string, string>() {
                         ["FROM-KIND"] = CultureService.Instance.GetString(ContentKind, Models.ResourceNameKind.Normal),
                         ["TO-KIND"] = CultureService.Instance.GetString(ChangingContentKind, Models.ResourceNameKind.Normal),

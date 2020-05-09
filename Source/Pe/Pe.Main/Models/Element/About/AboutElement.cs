@@ -92,24 +92,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             OpenUri(CustomConfiguration.General.ProjectRepositoryUri);
         }
 
-        private void Copy(string s)
-        {
-            var data = new DataObject();
-            data.SetText(s, TextDataFormat.UnicodeText);
-            ClipboardManager.Set(data);
-        }
-
         public void CopyShortInformation()
         {
             var infoCollector = new ApplicationInformationCollector(EnvironmentParameters);
             var s = infoCollector.GetShortInformation();
-            Copy(s);
+            ClipboardManager.CopyText(s, ClipboardNotify.User);
         }
         public void CopyLongInformation()
         {
             var infoCollector = new ApplicationInformationCollector(EnvironmentParameters);
             var s = infoCollector.GetLongInformation();
-            Copy(s);
+            ClipboardManager.CopyText(s, ClipboardNotify.User);
         }
 
         private void OpenDirectory(DirectoryInfo directory)

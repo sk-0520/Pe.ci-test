@@ -477,7 +477,7 @@
           </Style.Triggers>
         </Style>
       </ScrollViewer.Style>
-      <ItemsControl ItemsSource="{Binding LauncherItems}">
+      <ItemsControl IsTabStop="False" ItemsSource="{Binding LauncherItems}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
             <DockPanel LastChildFill="False">

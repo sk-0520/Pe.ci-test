@@ -116,7 +116,7 @@
       <MenuItem.Style>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding ShowOldVersion, Mode=OneTime}" Value="True">
+            <DataTrigger Binding="{Binding ShowPlatformOldVersion}" Value="True">
               <Setter Property="Icon">
                 <Setter.Value>
                   <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Windows-2}" />

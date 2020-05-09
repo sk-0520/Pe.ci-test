@@ -27,11 +27,33 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// ランチャーアイテムのタグに一致。
         /// </summary>
         LauncherItemTag,
+
+        /// <summary>
+        /// アプリケーション固有処理。
+        /// </summary>
+        ApplicationCommand,
+
         #endregion
         /// <summary>
         /// プラグイン処理により生成。
         /// </summary>
         Plugin,
+
+        #endregion
+    }
+
+    public interface ICommandExecuteParameter
+    {
+        #region property
+
+        /// <summary>
+        /// コマンドランチャーの所在地。
+        /// </summary>
+        IScreen Screen { get; }
+        /// <summary>
+        /// 拡張機能(コマンドアイテム依存)を用いるか。
+        /// </summary>
+        bool IsExtend { get; }
 
         #endregion
     }
@@ -75,9 +97,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// コマンドアイテムの実行。
         /// </summary>
-        /// <param name="screen">コマンドランチャーの所在地。</param>
-        /// <param name="isExtend">拡張機能(コマンドアイテム依存)を用いるか。</param>
-        void Execute(IScreen screen, bool isExtend);
+        /// <param name="parameter">実行パラメータ。</param>
+        void Execute(ICommandExecuteParameter parameter);
 
         #endregion
     }

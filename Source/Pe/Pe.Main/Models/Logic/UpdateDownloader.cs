@@ -96,9 +96,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 //NOTE: long が使えない！
                 int totalDownloadedSize = 0;
                 const int downloadChunkSize = 1024 * 4;
-                var octetPerTime = new OctetPerTime(TimeSpan.FromSeconds(1));
+                var sizePerTime = new SizePerTime(TimeSpan.FromSeconds(1));
 
-                octetPerTime.Start();
+                sizePerTime.Start();
 
                 using(var networkStream = await content.Content.ReadAsStreamAsync()) {
                     using(var localStream = donwloadFile.Create()) {
@@ -110,14 +110,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                             Properties.Resources.String_Download_Seconds_MB,
                             Properties.Resources.String_Download_Seconds_GB,
                         };
-                        var format = Properties.Resources.String_Download_Seconds_Format;
+                        var format = Properties.Resources.String_Download_Seconds_Format_DOTNET;
                         while(true) {
                             var donwloadSize = await networkStream.ReadAsync(downloadChunk, 0, downloadChunk.Length);
                             if(0 < donwloadSize) {
                                 await localStream.WriteAsync(downloadChunk, 0, donwloadSize);
                                 totalDownloadedSize += donwloadSize;
-                                octetPerTime.Add(donwloadSize);
-                                var size = sizeConverter.ConvertHumanLikeByte(octetPerTime.Size, format, trems);
+                                sizePerTime.Add(donwloadSize);
+                                var size = sizeConverter.ConvertHumanLikeByte(sizePerTime.Size, format, trems);
                                 userNotifyProgress.Report(totalDownloadedSize / (double)updateItem.ArchiveSize, size);
                             } else {
                                 userNotifyProgress.End();

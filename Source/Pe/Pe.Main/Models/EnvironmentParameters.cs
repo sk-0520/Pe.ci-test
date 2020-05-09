@@ -86,31 +86,35 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 通常のプログラムディレクトリ。
         /// </summary>
-        public DirectoryInfo ApplicationDirectory => CombineDirectory(RootDirectory, "bin");
+        public DirectoryInfo ApplicationDirectory => CombineDirectory(false, RootDirectory, "bin");
         /// <summary>
         /// 特殊なプログラムディレクトリ。
         /// </summary>
-        public DirectoryInfo SystemApplicationDirectory => CombineDirectory(RootDirectory, "sbin");
+        public DirectoryInfo SystemApplicationDirectory => CombineDirectory(false, RootDirectory, "sbin");
         /// <summary>
         /// etc ディレクトリ。
         /// </summary>
         public DirectoryInfo EtcDirectory =>
 #if PRODUCT
-            CombineDirectory(RootDirectory, "etc");
+            CombineDirectory(false, RootDirectory, "etc");
 #else
-            CombineDirectory(ApplicationBaseDirectory, "etc");
+            CombineDirectory(false, ApplicationBaseDirectory, "etc");
 #endif
-        public DirectoryInfo EtcScriptDirectory => CombineDirectory(EtcDirectory, "script");
-        public DirectoryInfo EtcUpdateDirectory => CombineDirectory(EtcScriptDirectory, "update");
+        public DirectoryInfo EtcScriptDirectory => CombineDirectory(false, EtcDirectory, "script");
+        public DirectoryInfo EtcUpdateDirectory => CombineDirectory(false, EtcScriptDirectory, "update");
 
         /// <summary>
         /// アップデート時のローカル処理。
         /// </summary>
         public FileInfo EtcUpdateScriptFile => CombineFile(EtcUpdateDirectory, "update-application.ps1");
         /// <summary>
+        /// 再起動スクリプトファイル。
+        /// </summary>
+        public FileInfo EtcRebootScriptFile => CombineFile(EtcScriptDirectory, "reboot.ps1");
+        /// <summary>
         /// SQL ディレクトリ。
         /// </summary>
-        public DirectoryInfo SqlDirectory => CombineDirectory(EtcDirectory, "sql");
+        public DirectoryInfo SqlDirectory => CombineDirectory(false, EtcDirectory, "sql");
         /// <summary>
         /// 結合済みSQL。
         /// </summary>
@@ -118,20 +122,20 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// Pe の SQL ディレクトリ。
         /// </summary>
-        public DirectoryInfo MainSqlDirectory => CombineDirectory(SqlDirectory, "ContentTypeTextNet.Pe.Main");
+        public DirectoryInfo MainSqlDirectory => CombineDirectory(false, SqlDirectory, "ContentTypeTextNet.Pe.Main");
 
-        public DirectoryInfo WebViewTemplateDirectory => CombineDirectory(EtcDirectory, "web-view");
-        public DirectoryInfo WebViewThirdPartyDirectory => CombineDirectory(WebViewTemplateDirectory, "third-party");
+        public DirectoryInfo WebViewTemplateDirectory => CombineDirectory(false, EtcDirectory, "web-view");
+        public DirectoryInfo WebViewThirdPartyDirectory => CombineDirectory(false, WebViewTemplateDirectory, "third-party");
 
 
-        public DirectoryInfo WebViewScriptDirectory => CombineDirectory(WebViewTemplateDirectory, "script");
-        public DirectoryInfo WebViewJqueryDirectory => CombineDirectory(WebViewThirdPartyDirectory, "jquery");
+        public DirectoryInfo WebViewScriptDirectory => CombineDirectory(false, WebViewTemplateDirectory, "script");
+        public DirectoryInfo WebViewJqueryDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "jquery");
         public FileInfo WebViewJqueryScriptFile => CombineFile(WebViewJqueryDirectory, "jquery.js");
-        public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(WebViewThirdPartyDirectory, "Marked");
+        public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "Marked");
         public FileInfo WebViewMarkedScriptFile => CombineFile(WebViewMarkedDirectory, "marked.min.js");
-        public DirectoryInfo WebViewStyleDirectory => CombineDirectory(WebViewTemplateDirectory, "style");
+        public DirectoryInfo WebViewStyleDirectory => CombineDirectory(false, WebViewTemplateDirectory, "style");
         public FileInfo WebViewBasicStyleFile => CombineFile(WebViewStyleDirectory, "basic.css");
-        public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(WebViewTemplateDirectory, "feedback");
+        public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(false, WebViewTemplateDirectory, "feedback");
         public FileInfo WebViewFeedbackTemplateFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.html");
         public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");
         public FileInfo WebViewFeedbackScriptFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.js");
@@ -142,12 +146,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo DocumentDirectory =>
 #if PRODUCT
-            CombineDirectory(RootDirectory, "doc");
+            CombineDirectory(false, RootDirectory, "doc");
 #else
-            CombineDirectory(ApplicationBaseDirectory, "doc");
+            CombineDirectory(false, ApplicationBaseDirectory, "doc");
 #endif
 
-        public DirectoryInfo LicenseDirectory => CombineDirectory(DocumentDirectory, "license");
+        public DirectoryInfo LicenseDirectory => CombineDirectory(false, DocumentDirectory, "license");
 
         public FileInfo ComponentsFile => CombineFile(LicenseDirectory, "components.json");
         public FileInfo HelpFile => CombineFile(DocumentDirectory, "help.html");
@@ -161,21 +165,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// バックアップディレクトリ。
         /// </summary>
         [InitialDirectory]
-        public DirectoryInfo UserBackupDirectory => CombineDirectory(UserRoamingDirectory, "backups");
+        public DirectoryInfo UserBackupDirectory => CombineDirectory(true, UserRoamingDirectory, "backups");
         /// <summary>
         /// 設定ディレクトリ。
         /// </summary>
         [InitialDirectory]
-        public DirectoryInfo UserSettingDirectory => CombineDirectory(UserRoamingDirectory, "settings");
+        public DirectoryInfo UserSettingDirectory => CombineDirectory(true, UserRoamingDirectory, "settings");
         /// <summary>
         /// プラグインディレクトリ。
         /// </summary>
-        public DirectoryInfo UserPluginDirectory => CombineDirectory(UserSettingDirectory, "plugins");
+        public DirectoryInfo UserPluginDirectory => CombineDirectory(true, UserSettingDirectory, "plugins");
         /// <summary>
         /// プラグイン設定ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
         /// </summary>
-        public DirectoryInfo UserPluginDataDirectory => CombineDirectory(UserPluginDirectory, "data");
+        public DirectoryInfo UserPluginDataDirectory => CombineDirectory(true, UserPluginDirectory, "data");
 
         /// <summary>
         /// ユーザー端末配置ディレクトリ。
@@ -186,40 +190,40 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// アーカイブディレクトリ。
         /// </summary>
         [InitialDirectory]
-        public DirectoryInfo MachineArchiveDirectory => CombineDirectory(MachineDirectory, "archive");
+        public DirectoryInfo MachineArchiveDirectory => CombineDirectory(true, MachineDirectory, "archive");
         /// <summary>
         /// アプリケーションアップデート用アーカイブ配置ディレクトリ。
         /// </summary>
         [InitialDirectory]
-        public DirectoryInfo MachineUpdateArchiveDirectory => CombineDirectory(MachineArchiveDirectory, "application");
+        public DirectoryInfo MachineUpdateArchiveDirectory => CombineDirectory(true, MachineArchiveDirectory, "application");
         /// <summary>
         /// プラグインアップデート用アーカイブ配置ディレクトリ。
         /// </summary>
-        public DirectoryInfo MachineUpdatePluginDirectory => CombineDirectory(MachineArchiveDirectory, "plugins");
+        public DirectoryInfo MachineUpdatePluginDirectory => CombineDirectory(true, MachineArchiveDirectory, "plugins");
         /// <summary>
         /// ユーザー端末プラグインディレクトリ。
         /// </summary>
-        public DirectoryInfo MachinePluginDirectory => CombineDirectory(MachineDirectory, "plugins");
+        public DirectoryInfo MachinePluginDirectory => CombineDirectory(true, MachineDirectory, "plugins");
         /// <summary>
         /// ユーザー端末プラグイン設定ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
         /// </summary>
-        public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(MachinePluginDirectory, "data");
+        public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(true, MachinePluginDirectory, "data");
         /// <summary>
         /// プラグインモジュール配置ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
         /// </summary>
-        public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(MachinePluginDirectory, "modules");
+        public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(true, MachinePluginDirectory, "modules");
 
         /// <summary>
         /// WebViewの端末親ディレクトリ。
         /// </summary>
-        public DirectoryInfo MachineWebViewDirectory => CombineDirectory(MachineDirectory, "web-view");
-        public DirectoryInfo MachineWebViewUserDirectory => CombineDirectory(MachineWebViewDirectory, "user");
+        public DirectoryInfo MachineWebViewDirectory => CombineDirectory(true, MachineDirectory, "web-view");
+        public DirectoryInfo MachineWebViewUserDirectory => CombineDirectory(true, MachineWebViewDirectory, "user");
         /// <summary>
         /// 送信済みクラッシュレポート配置ディレクトリ。
         /// </summary>
-        public DirectoryInfo MachineCrashReportDirectory => CombineDirectory(MachineDirectory, "crash");
+        public DirectoryInfo MachineCrashReportDirectory => CombineDirectory(true, MachineDirectory, "crash");
 
 
         /// <summary>
@@ -231,46 +235,50 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 設定ファイル格納用一時ディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporarySettingDirectory => CombineDirectory(TemporaryDirectory, "setting");
+        public DirectoryInfo TemporarySettingDirectory => CombineDirectory(true, TemporaryDirectory, "setting");
         /// <summary>
         /// WebViewのユーザーディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(TemporaryDirectory, "plugins");
+        public DirectoryInfo TemporaryPluginDirectory => CombineDirectory(true, TemporaryDirectory, "plugins");
         /// <summary>
         /// 一時プラグイン設定ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
         /// </summary>
-        public DirectoryInfo TemporaryPluginDataDirectory => CombineDirectory(TemporaryPluginDirectory, "data");
+        public DirectoryInfo TemporaryPluginDataDirectory => CombineDirectory(true, TemporaryPluginDirectory, "data");
 
         /// <summary>
         /// アーカイブ展開ディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporaryExtractDirectory => CombineDirectory(TemporaryDirectory, "extract");
+        public DirectoryInfo TemporaryExtractDirectory => CombineDirectory(true, TemporaryDirectory, "extract");
         /// <summary>
         /// アプリケーション展開ディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "application");
+        public DirectoryInfo TemporaryApplicationExtractDirectory => CombineDirectory(true, TemporaryExtractDirectory, "application");
         /// <summary>
         /// プラグイン展開ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを作成して展開する。</para>
         /// </summary>
-        public DirectoryInfo TemporaryPluginExtractDirectory => CombineDirectory(TemporaryExtractDirectory, "plugins");
+        public DirectoryInfo TemporaryPluginExtractDirectory => CombineDirectory(true, TemporaryExtractDirectory, "plugins");
         /// <summary>
         /// WebViewの一時親ディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporaryWebViewDirectory => CombineDirectory(TemporaryDirectory, "web-view");
+        public DirectoryInfo TemporaryWebViewDirectory => CombineDirectory(true, TemporaryDirectory, "web-view");
         /// <summary>
         /// WebViewのキャッシュディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporaryWebViewCacheDirectory => CombineDirectory(TemporaryWebViewDirectory, "cache");
+        public DirectoryInfo TemporaryWebViewCacheDirectory => CombineDirectory(true, TemporaryWebViewDirectory, "cache");
         /// <summary>
         /// アップデート時ログファイル。
         /// </summary>
         public FileInfo TemporaryUpdateLogFile => CombineFile(TemporaryDirectory, "update.log");
         /// <summary>
+        /// 再起動ログファイル。
+        /// </summary>
+        public FileInfo TemporaryRebootLogFile => CombineFile(TemporaryDirectory, "reboot.log");
+        /// <summary>
         /// 生クラッシュレポート配置ディレクトリ。
         /// </summary>
-        public DirectoryInfo TemporaryCrashReportDirectory => CombineDirectory(TemporaryDirectory, "crash");
+        public DirectoryInfo TemporaryCrashReportDirectory => CombineDirectory(true, TemporaryDirectory, "crash");
 
         /// <summary>
         /// 設定格納DBファイル。
@@ -313,7 +321,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return path;
         }
 
-        private DirectoryInfo CombineDirectory(DirectoryInfo directory, params string[] directoryNames)
+        private DirectoryInfo CombineDirectory(bool isUserDirectory, DirectoryInfo directory, params string[] directoryNames)
         {
             var path = CombinePath(directory.FullName, directoryNames);
             var dir = new DirectoryInfo(path);

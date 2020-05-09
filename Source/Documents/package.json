@@ -4,7 +4,7 @@
 	"description": "Pe documents",
 	"main": "index.pug",
 	"scripts": {
-		"watch": "parcel watch --no-autoinstall  --out-dir ./build/ --public-url . ./source/index.pug",
+		"watch": "parcel watch --no-autoinstall  --out-dir ./build/ --public-url . ./source/index.pug --no-minify",
 		"build:clean": "rimraf ./build/*",
 		"build:output": "parcel build --no-autoinstall --no-source-maps --out-dir ./build/ --no-content-hash --public-url . ./source/index.pug",
 		"build": "npm run build:clean & npm run build:output",
@@ -20,7 +20,7 @@
 		"parcel-bundler": "^1.12.4",
 		"pug": "^2.0.4",
 		"rimraf": "^3.0.2",
-		"sass": "^1.26.3",
+		"sass": "^1.26.5",
 		"typescript": "^3.8.3"
 	}
 }

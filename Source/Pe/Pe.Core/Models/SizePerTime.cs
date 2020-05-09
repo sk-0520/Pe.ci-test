@@ -7,12 +7,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
     /// 時間単位でのオクテット使用量を算出。
-    /// <para>octet ってなってるけど byte 前提。</para>
     /// <para><see cref="Size"/>を使っておけば幸せになれる。</para>
+    /// <para>色々あったけど byte 基準。</para>
     /// </summary>
-    public class OctetPerTime
+    /// <example>
+    /// <code>
+    /// var sizePerTime = new SizePerTime(TimeSpan.FromSeconds(1));
+    /// sizePerTime.Start();
+    /// while(nowDownload) {
+    ///     var values = download();
+    ///     donwloadSize = values.Length;
+    ///     sizePerTime.Add(donwloadSize);
+    ///     Debug.WriteLine(sizePerTime.Size);
+    /// }
+    /// </code>
+    /// </example>
+    public class SizePerTime
     {
-        public OctetPerTime(TimeSpan baseTime)
+        public SizePerTime(TimeSpan baseTime)
         {
             BaseTime = baseTime;
         }
