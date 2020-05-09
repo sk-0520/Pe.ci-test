@@ -673,6 +673,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   OK に類似しているローカライズされた文字列を検索します。
         /// </summary>
+        public static string String_Common_Ok {
+            get {
+                return ResourceManager.GetString("String_Common_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OK に類似しているローカライズされた文字列を検索します。
+        /// </summary>
         public static string String_Common_Ok_A {
             get {
                 return ResourceManager.GetString("String_Common_Ok_A", resourceCulture);
@@ -4930,6 +4939,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Keyboard_Replace_To {
             get {
                 return ResourceManager.GetString("String_Setting_Keyboard_Replace_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無効なキー入力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_KeyInput_Invalid {
+            get {
+                return ResourceManager.GetString("String_Setting_KeyInput_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    +  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_KeyInput_Join {
+            get {
+                return ResourceManager.GetString("String_Setting_KeyInput_Join", resourceCulture);
             }
         }
         

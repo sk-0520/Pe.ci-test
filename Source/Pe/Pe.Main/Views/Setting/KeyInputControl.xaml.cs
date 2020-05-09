@@ -16,13 +16,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Setting
 {
     /// <summary>
     /// KeyInputControl.xaml の相互作用ロジック
     /// </summary>
-    public partial class KeyInputControl : UserControl
+    public partial class KeyInputControl: UserControl
     {
         public KeyInputControl()
         {
@@ -302,12 +303,59 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #endregion
 
+        #region property
+
+        Key InputUserKey { get; set; }
+        ModifierKeys InputUserModifierKeys { get; set; }
+
+        #endregion
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            this.inputKey.Text = string.Empty;
             this.popupKeyInput.IsOpen = true;
+            this.popupKeyInput.Dispatcher.BeginInvoke(
+                new Action(() => this.inputKey.Focus()),
+                System.Windows.Threading.DispatcherPriority.Normal
+            );
         }
 
         private void inputKey_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+
+            if(e.Key.IsModifierKey()) {
+                this.inputKey.Text = Properties.Resources.String_Setting_KeyInput_Invalid;
+                return;
+            }
+            if(!KeyItemsSource.Cast<Key>().Any(i => i == e.Key)) {
+                this.inputKey.Text = Properties.Resources.String_Setting_KeyInput_Invalid;
+                return;
+            }
+
+            InputUserKey = e.Key;
+
+            if(IsVisibleModifierKey) {
+                InputUserModifierKeys = Keyboard.Modifiers;
+            } else {
+                InputUserModifierKeys = ModifierKeys.None;
+            }
+
+            var keyText = CultureService.Instance.GetString(InputUserKey, Models.ResourceNameKind.Normal, true);
+            if(InputUserModifierKeys == ModifierKeys.None) {
+                this.inputKey.Text = keyText;
+            } else {
+                var mods = EnumUtility.GetMembers<ModifierKeys>()
+                    .Where(i => i != ModifierKeys.None)
+                    .Where(i => InputUserModifierKeys.HasFlag(i))
+                    .Select(i => CultureService.Instance.GetString(i, Models.ResourceNameKind.Normal))
+                ;
+                var modsText = string.Join(Properties.Resources.String_Setting_KeyInput_Join, mods);
+                this.inputKey.Text = modsText + Properties.Resources.String_Setting_KeyInput_Join + keyText;
+            }
+        }
+
+        private void inputKey_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             e.Handled = true;
         }

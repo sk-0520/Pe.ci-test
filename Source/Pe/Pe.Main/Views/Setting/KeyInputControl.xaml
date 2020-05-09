@@ -74,7 +74,7 @@
       <Border BorderBrush="Lime" BorderThickness="1">
         <StackPanel MinWidth="150">
           <TextBlock TextAlignment="Center" Text="input key" />
-          <TextBox x:Name="inputKey" PreviewKeyDown="inputKey_PreviewKeyDown" IsReadOnly="True" TextAlignment="Center" />
+          <TextBox x:Name="inputKey" PreviewKeyDown="inputKey_PreviewKeyDown" PreviewKeyUp="inputKey_PreviewKeyUp" TextAlignment="Center" />
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
@@ -82,8 +82,8 @@
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="{Binding Resources.String_Common_Cancel_A, Source={x:Static app_main:CultureService.Instance}}" />
-            <Button Grid.Column="2" Content="{Binding Resources.String_Common_Ok_A, Source={x:Static app_main:CultureService.Instance}}" />
+            <Button Grid.Column="0" Content="{Binding Resources.String_Common_Cancel, Source={x:Static app_main:CultureService.Instance}}" />
+            <Button Grid.Column="2" Content="{Binding Resources.String_Common_Ok, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
         </StackPanel>
       </Border>
