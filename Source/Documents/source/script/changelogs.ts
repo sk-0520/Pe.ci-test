@@ -218,7 +218,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "過去バージョンはもう tag から適当に再現してくれ"
 					}
 				]
 			}
