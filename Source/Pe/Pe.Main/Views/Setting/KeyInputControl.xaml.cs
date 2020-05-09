@@ -310,7 +310,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SetUserInputKey_Click(object sender, RoutedEventArgs e)
         {
             this.inputKey.Text = string.Empty;
             this.popupKeyInput.IsOpen = true;
@@ -358,6 +358,29 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         private void inputKey_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void CancelUserInputKey_Click(object sender, RoutedEventArgs e)
+        {
+            this.popupKeyInput.IsOpen = false;
+        }
+
+        private void SubmitUserInputKey_Click(object sender, RoutedEventArgs e)
+        {
+            this.popupKeyInput.IsOpen = false;
+
+            Key = InputUserKey;
+            if(IsVisibleModifierKey) {
+                Alt = InputUserModifierKeys.HasFlag(ModifierKeys.Alt) ? ModifierKey.Any : ModifierKey.None;
+                Control = InputUserModifierKeys.HasFlag(ModifierKeys.Control) ? ModifierKey.Any : ModifierKey.None;
+                Shift = InputUserModifierKeys.HasFlag(ModifierKeys.Shift) ? ModifierKey.Any : ModifierKey.None;
+                Super = InputUserModifierKeys.HasFlag(ModifierKeys.Windows) ? ModifierKey.Any : ModifierKey.None;
+            } else {
+                Alt = ModifierKey.None;
+                Control = ModifierKey.None;
+                Shift = ModifierKey.None;
+                Super = ModifierKey.None;
+            }
         }
     }
 }

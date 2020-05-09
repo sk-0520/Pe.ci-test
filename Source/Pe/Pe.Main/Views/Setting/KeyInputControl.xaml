@@ -66,7 +66,7 @@
         <Label Grid.Row="0" Grid.Column="3" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Super_A, Source={x:Static app_main:CultureService.Instance}}" />
         <ComboBox Grid.Row="1" Grid.Column="3" ItemsSource="{Binding ModifierKeyItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Super, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemTemplate="{StaticResource ModifierKey}" />
       </Grid>
-      <Button Click="Button_Click" HorizontalAlignment="Right" Margin="{StaticResource BitMargin}" Content="{Binding Resources.String_Setting_KeyInput_UserInput_A, Source={x:Static app_main:CultureService.Instance}}" />
+      <Button Click="SetUserInputKey_Click" HorizontalAlignment="Right" Margin="{StaticResource BitMargin}" Content="{Binding Resources.String_Setting_KeyInput_UserInput_A, Source={x:Static app_main:CultureService.Instance}}" />
     </StackPanel>
     <Border Background="#80cccccc" Visibility="{Binding IsOpen, ElementName=popupKeyInput, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
@@ -82,8 +82,8 @@
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Content="{Binding Resources.String_Common_Cancel, Source={x:Static app_main:CultureService.Instance}}" />
-            <Button Grid.Column="2" Content="{Binding Resources.String_Common_Ok, Source={x:Static app_main:CultureService.Instance}}" />
+            <Button Grid.Column="0" Click="CancelUserInputKey_Click" Content="{Binding Resources.String_Common_Cancel, Source={x:Static app_main:CultureService.Instance}}" />
+            <Button Grid.Column="2" Click="SubmitUserInputKey_Click" Content="{Binding Resources.String_Common_Ok, Source={x:Static app_main:CultureService.Instance}}" />
           </Grid>
         </StackPanel>
       </Border>
