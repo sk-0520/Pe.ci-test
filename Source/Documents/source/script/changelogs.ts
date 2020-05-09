@@ -176,6 +176,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "アイコン制御処理SQLが上手くいってなかった"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
