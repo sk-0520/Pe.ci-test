@@ -1894,4 +1894,7 @@
   <data name="String_ApplicationCommand_Description_Shutdown" xml:space="preserve">
     <value>終了</value>
   </data>
+  <data name="String_Setting_KeyInput_UserInput_A" xml:space="preserve">
+    <value>キー入力から設定(_K)</value>
+  </data>
 </root>

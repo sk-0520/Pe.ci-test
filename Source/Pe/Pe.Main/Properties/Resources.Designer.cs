@@ -4970,6 +4970,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   キー入力から設定(_K) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_KeyInput_UserInput_A {
+            get {
+                return ResourceManager.GetString("String_Setting_KeyInput_UserInput_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   グループを追加 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_LauncherGroups_AddGroup {
