@@ -172,6 +172,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#605: ランチャーアイテム修正時にコマンド型ランチャーに即時反映されない"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
