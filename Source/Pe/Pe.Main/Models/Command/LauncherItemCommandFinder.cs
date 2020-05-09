@@ -87,6 +87,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             return null;
         }
 
+
+        void AddItem(LauncherItemElement launcherItemElement)
+        {
+            LauncherItemElements.Add(launcherItemElement);
+            LauncherItemElementMap.Add(launcherItemElement.LauncherItemId, launcherItemElement);
+            if(FindTag) {
+                LoadTag(launcherItemElement.LauncherItemId);
+            }
+        }
+
         void LoadTag(Guid launcherItemId)
         {
             Debug.Assert(FindTag);
@@ -246,11 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             } else {
                 // 該当アイテムの投入
                 var newElement = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
-                LauncherItemElements.Add(newElement);
-                LauncherItemElementMap.Add(newElement.LauncherItemId, newElement);
-                if(FindTag) {
-                    LoadTag(e.LauncherItemId);
-                }
+                AddItem(newElement);
             }
         }
 
@@ -261,11 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
             if(element.IsEnabledCommandLauncher) {
                 Logger.LogInformation("コマンドランチャーへ新規ランチャーアイテムの追加: {0}", element.LauncherItemId);
-                LauncherItemElements.Add(element);
-                LauncherItemElementMap.Add(element.LauncherItemId, element);
-                if(FindTag) {
-                    LoadTag(e.LauncherItemId);
-                }
+                AddItem(element);
             }
         }
     }
