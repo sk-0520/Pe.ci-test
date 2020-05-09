@@ -168,6 +168,14 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#615: 本体ディレクトリ読み込み時に不要なディレクトリが作成される"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
