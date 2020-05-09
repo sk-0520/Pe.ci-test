@@ -340,6 +340,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             launcherExecutor.ShowProperty(pathData);
         }
 
+        internal void Refresh()
+        {
+            LoadLauncherItem();
+        }
+
         #endregion
 
         #region ElementBase

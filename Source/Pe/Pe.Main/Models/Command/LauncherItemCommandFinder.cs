@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
-    public class LauncherItemCommandFinder : DisposerBase, ICommandFinder
+    public class LauncherItemCommandFinder: DisposerBase, ICommandFinder
     {
         public LauncherItemCommandFinder(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
@@ -85,6 +85,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
 
             return null;
+        }
+
+
+        void AddItem(LauncherItemElement launcherItemElement)
+        {
+            LauncherItemElements.Add(launcherItemElement);
+            LauncherItemElementMap.Add(launcherItemElement.LauncherItemId, launcherItemElement);
+            if(FindTag) {
+                LoadTag(launcherItemElement.LauncherItemId);
+            }
+        }
+
+        void LoadTag(Guid launcherItemId)
+        {
+            Debug.Assert(FindTag);
+
+            // タグ情報再構築
+            Logger.LogTrace("タグ情報再構築");
+            var tags = MainDatabaseBarrier.ReadData(c => {
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                return launcherTagsEntityDao.SelectUniqueTags(launcherItemId).ToHashSet();
+            });
+            LauncherTags.Remove(launcherItemId);
+            if(tags.Any()) {
+                LauncherTags.Add(launcherItemId, tags);
+            }
         }
 
         #endregion
@@ -217,10 +243,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             var element = LauncherItemElements.FirstOrDefault(i => i.LauncherItemId == e.LauncherItemId);
             if(element != null) {
                 element.Icon.IconImageLoaderPack.IconItems[IconBox].ClearCache();
-                if(element.IsEnabledCommandLauncher) {
+                if(!element.IsEnabledCommandLauncher) {
                     Logger.LogInformation("コマンドランチャーから既存ランチャーアイテムの除外: {0}", element.LauncherItemId);
                     LauncherItemElements.Remove(element);
+                    LauncherItemElementMap.Remove(element.LauncherItemId);
+                    LauncherTags.Remove(element.LauncherItemId);
+                } else {
+                    if(FindTag) {
+                        LoadTag(e.LauncherItemId);
+                    }
                 }
+            } else {
+                // 該当アイテムの投入
+                var newElement = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
+                AddItem(newElement);
             }
         }
 
@@ -231,7 +267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             var element = OrderManager.GetOrCreateLauncherItemElement(e.LauncherItemId);
             if(element.IsEnabledCommandLauncher) {
                 Logger.LogInformation("コマンドランチャーへ新規ランチャーアイテムの追加: {0}", element.LauncherItemId);
-                LauncherItemElements.Add(element);
+                AddItem(element);
             }
         }
     }

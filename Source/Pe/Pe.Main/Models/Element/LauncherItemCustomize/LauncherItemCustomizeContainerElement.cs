@@ -65,6 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         public void Save()
         {
             Editor.Save();
+            OrderManager.RefreshLauncherItemElement(LauncherItemId);
             NotifyManager.SendLauncherItemChanged(LauncherItemId);
         }
 
