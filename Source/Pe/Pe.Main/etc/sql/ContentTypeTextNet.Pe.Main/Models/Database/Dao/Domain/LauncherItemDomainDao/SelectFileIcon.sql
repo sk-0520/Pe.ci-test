@@ -4,7 +4,7 @@ select
 	IFNULL(LauncherFiles.[File], '') as FilePath,
 	0 as CommandIndex,
 	LauncherItems.IconPath,
-	LauncherItems.IconINdex
+	LauncherItems.IconIndex
 from
 	LauncherItems
 	left join
