@@ -132,6 +132,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#602: キーボード設定をキー入力から行えるようにする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
