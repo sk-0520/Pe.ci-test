@@ -302,5 +302,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         #endregion
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.popupKeyInput.IsOpen = true;
+        }
+
+        private void inputKey_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
