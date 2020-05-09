@@ -262,6 +262,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(element.IsEnabledCommandLauncher) {
                 Logger.LogInformation("コマンドランチャーへ新規ランチャーアイテムの追加: {0}", element.LauncherItemId);
                 LauncherItemElements.Add(element);
+                LauncherItemElementMap.Add(element.LauncherItemId, element);
+                if(FindTag) {
+                    LoadTag(e.LauncherItemId);
+                }
             }
         }
     }
