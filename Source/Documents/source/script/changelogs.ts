@@ -210,6 +210,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#616: Dao と内部実装SQL読み込み処理に対する事故防止対策委員会"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
