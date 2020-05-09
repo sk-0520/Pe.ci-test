@@ -1437,6 +1437,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             return OrderManager.GetOrCreateLauncherItemElement(launcherItemId);
         }
+        public void RefreshLauncherItemElement(Guid launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
 
         public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
         {
