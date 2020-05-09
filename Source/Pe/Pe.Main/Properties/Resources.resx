@@ -1895,7 +1895,7 @@
     <value>終了</value>
   </data>
   <data name="String_Setting_KeyInput_UserInput_A" xml:space="preserve">
-    <value>キー入力から設定(_K)</value>
+    <value>キー入力(_K)</value>
   </data>
   <data name="String_Common_Ok" xml:space="preserve">
     <value>OK</value>
@@ -1905,5 +1905,8 @@
   </data>
   <data name="String_Setting_KeyInput_Join" xml:space="preserve">
     <value> + </value>
+  </data>
+  <data name="String_Setting_KeyInput_UserInput" xml:space="preserve">
+    <value>割り当てるキーを入力してください</value>
   </data>
 </root>

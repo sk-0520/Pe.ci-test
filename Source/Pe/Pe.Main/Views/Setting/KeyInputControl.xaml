@@ -66,20 +66,29 @@
         <Label Grid.Row="0" Grid.Column="3" Content="{Binding Resources.String_Setting_KeyInput_ModifierKey_Super_A, Source={x:Static app_main:CultureService.Instance}}" />
         <ComboBox Grid.Row="1" Grid.Column="3" ItemsSource="{Binding ModifierKeyItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Super, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemTemplate="{StaticResource ModifierKey}" />
       </Grid>
-      <Button Click="SetUserInputKey_Click" HorizontalAlignment="Right" Margin="{StaticResource BitMargin}" Content="{Binding Resources.String_Setting_KeyInput_UserInput_A, Source={x:Static app_main:CultureService.Instance}}" />
+      <Button Click="SetUserInputKey_Click" HorizontalAlignment="Right" Margin="{StaticResource BitMargin}">
+        <StackPanel Style="{StaticResource ImageLabel-Small}">
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Keyboard}" />
+          <AccessText Text="{Binding Resources.String_Setting_KeyInput_UserInput_A, Source={x:Static app_main:CultureService.Instance}}" />
+        </StackPanel>
+      </Button>
     </StackPanel>
     <Border Background="#80cccccc" Visibility="{Binding IsOpen, ElementName=popupKeyInput, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
     <Popup x:Name="popupKeyInput" AllowsTransparency="True" StaysOpen="False" PopupAnimation="Fade" Placement="Center" PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}" >
-      <Border BorderBrush="Lime" BorderThickness="1">
+      <Border CornerRadius="4" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Padding="{StaticResource BasePadding}">
+        <!--<Border.Effect>
+          <DropShadowEffect BlurRadius="15" Opacity="0.8"  ShadowDepth="10" Direction="-90" RenderingBias="Quality" />
+        </Border.Effect>-->
+
         <StackPanel MinWidth="150">
-          <TextBlock TextAlignment="Center" Text="input key" />
-          <TextBox x:Name="inputKey" PreviewKeyDown="inputKey_PreviewKeyDown" PreviewKeyUp="inputKey_PreviewKeyUp" TextAlignment="Center" />
+          <TextBlock TextAlignment="Center" Text="{Binding Resources.String_Setting_KeyInput_UserInput, Source={x:Static app_main:CultureService.Instance}}" />
+          <TextBox x:Name="inputKey" PreviewKeyDown="inputKey_PreviewKeyDown" PreviewKeyUp="inputKey_PreviewKeyUp" IsReadOnly="True" IsReadOnlyCaretVisible="True" TextAlignment="Center" Margin="{StaticResource AllMargin}" />
           <Grid>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition />
-              <ColumnDefinition />
-              <ColumnDefinition />
+              <ColumnDefinition Width="10*" />
+              <ColumnDefinition Width="2*" />
+              <ColumnDefinition Width="10*" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Click="CancelUserInputKey_Click" Content="{Binding Resources.String_Common_Cancel, Source={x:Static app_main:CultureService.Instance}}" />
