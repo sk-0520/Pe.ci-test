@@ -104,6 +104,21 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             CollectionAssert.AreEqual(result, actual);
         }
 
+        [TestMethod]
+        public void RandomTest()
+        {
+            var rnd = new Random();
+            foreach(var _ in Enumerable.Range(1, 1000)) {
+                var length = rnd.Next(1, 1000);
+                var values1 = Enumerable.Repeat(0, length).Select(_ => rnd.Next()).ToList();
+                var nr = new NumericRange();
+                var s1 = nr.ToString(values1);
+                var values2 = nr.Parse(s1);
+                var s2 = nr.ToString(values2);
+                Assert.AreEqual(s1, s2, $"{nameof(length)}: {length}");
+            }
+        }
+
         #endregion
     }
 }
