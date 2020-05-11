@@ -20,8 +20,14 @@ namespace ContentTypeTextNet.Pe.Main.Test
     {
         #region property
 
+        /// <summary>
+        /// テスト用ロガー。
+        /// </summary>
         public static ILoggerFactory LoggerFactory { get; set; } = new LoggerFactory();
 
+        /// <summary>
+        /// テスト用DIコンテナ。
+        /// </summary>
         public static IDiContainer DiContainer { get; set; } = null!;
 
         #endregion

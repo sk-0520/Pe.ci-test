@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Main.Test
 {
@@ -42,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Test
             foreach(var accessor in databaseAccessorPack.Items) {
                 accessor.Execute("pragma foreign_keys = false");
             }
-            databaseSetupper.Migrate(databaseAccessorPack, initVersion!);
+            databaseSetupper.Migrating(databaseAccessorPack, initVersion!);
             foreach(var accessor in databaseAccessorPack.Items) {
                 databaseSetupper.CheckForeignKey(accessor);
                 accessor.Execute("pragma foreign_keys = true");
@@ -54,10 +55,9 @@ namespace ContentTypeTextNet.Pe.Main.Test
                 new { Now = BuildStatus.Version.Minor, Init = lastVersion!.Minor},
                 new { Now = BuildStatus.Version.Build, Init = lastVersion!.Build},
             };
-            if(!vers.All(i => i.Now == i.Init)) {
-                throw new Exception("あかん");
-            }
+            Assert.IsTrue(vers.All(i => i.Now == i.Init));
         }
+
 
         #endregion
     }

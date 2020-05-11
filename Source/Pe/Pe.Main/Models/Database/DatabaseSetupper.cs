@@ -50,10 +50,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
         {
             if(accessor.DatabaseFactory.CreateImplementation().SupportedTransactionDDL) {
                 var result = accessor.Batch(commander => {
-                    Logger.LogInformation("DDL");
+                    Logger.LogDebug("DDL");
                     ddl(commander, dto);
 
-                    Logger.LogInformation("DML");
+                    Logger.LogDebug("DML");
                     dml(commander, dto);
 
                     return true;
@@ -63,10 +63,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                     throw result.FailureValue!;
                 }
             } else {
-                Logger.LogInformation("DDL");
+                Logger.LogDebug("DDL");
                 ddl(accessor, dto);
 
-                Logger.LogInformation("DML");
+                Logger.LogDebug("DML");
                 using(var tran = accessor.BeginTransaction()) {
                     dml(tran, dto);
                 }
@@ -75,13 +75,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         void Execute(IDatabaseAccessorPack accessorPack, IReadOnlySetupDto dto, SetupperBase setupper)
         {
-            Logger.LogInformation("SETUP: {0}, {1}", setupper.Version, setupper.GetType().Name);
+            Logger.LogInformation("セットアップ処理: バージョン{0}, {1}", setupper.Version, setupper.GetType().Name);
+            var start = DateTime.UtcNow;
 
             ExecuteCore(accessorPack.Main, dto, setupper.ExecuteMainDDL, setupper.ExecuteMainDML);
             ExecuteCore(accessorPack.File, dto, setupper.ExecuteFileDDL, setupper.ExecuteFileDML);
             ExecuteCore(accessorPack.Temporary, dto, setupper.ExecuteTemporaryDDL, setupper.ExecuteTemporaryDML);
+
+            var end = DateTime.UtcNow;
+            Logger.LogInformation("対象バージョンセットアップ完了: {0}, {1}", setupper.Version, end - start);
         }
 
+        /// <summary>
+        /// データベース初期化。
+        /// </summary>
+        /// <param name="accessorPack">DBアクセス処理群。</param>
         public void Initialize(IDatabaseAccessorPack accessorPack)
         {
             Logger.LogInformation("初期化処理実行");
@@ -92,7 +100,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             Execute(accessorPack, dto, setup);
         }
 
-        public void Migrate(IDatabaseAccessorPack accessorPack, Version lastVersion)
+        /// <summary>
+        /// データベースマイグレーション。
+        /// </summary>
+        /// <param name="accessorPack">DBアクセス処理群。</param>
+        /// <param name="lastVersion">最終使用バージョン。</param>
+        public void Migrating(IDatabaseAccessorPack accessorPack, Version lastVersion)
         {
             Logger.LogInformation("マイグレーション処理実行");
 
@@ -106,6 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             foreach(var setupper in setuppers) {
                 if(lastVersion < setupper.Version) {
+                    Logger.LogInformation("マイグレーション対象: {0} < {1}", lastVersion,setupper.Version);
                     Execute(accessorPack, dto, setupper);
                 }
             }
