@@ -18,8 +18,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void CreateGetterTest()
         {
             var gi = new Get();
-            var go = PropertyFactory.CreateOwner(gi);
-            var pgetter = PropertyFactory.CreateGetter<Get,int>(go, "Property");
+            var go = PropertyExpressionFactory.CreateOwner(gi);
+            var pgetter = PropertyExpressionFactory.CreateGetter<Get,int>(go, "Property");
             var gi1 = pgetter(gi);
             Assert.AreEqual(1, gi1);
         }
@@ -28,9 +28,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void CreateSetterTest()
         {
             var gsi = new GetSet();
-            var gso = PropertyFactory.CreateOwner(gsi);
-            var pgetter = PropertyFactory.CreateGetter<GetSet, int>(gso, "Property");
-            var psetter = PropertyFactory.CreateSetter<GetSet, int>(gso, "Property");
+            var gso = PropertyExpressionFactory.CreateOwner(gsi);
+            var pgetter = PropertyExpressionFactory.CreateGetter<GetSet, int>(gso, "Property");
+            var psetter = PropertyExpressionFactory.CreateSetter<GetSet, int>(gso, "Property");
             psetter(gsi, 10);
             var gi1 = pgetter(gsi);
             Assert.AreEqual(10, gi1);
@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void CreateObjectGetterSetterTest()
         {
             var gsi = new GetSet();
-            var gso = PropertyFactory.CreateOwner(gsi);
-            var pgetter = PropertyFactory.CreateGetter<GetSet, object>(gso, "Property");
-            var psetter = PropertyFactory.CreateSetter<GetSet, object>(gso, "Property");
+            var gso = PropertyExpressionFactory.CreateOwner(gsi);
+            var pgetter = PropertyExpressionFactory.CreateGetter<GetSet, object>(gso, "Property");
+            var psetter = PropertyExpressionFactory.CreateSetter<GetSet, object>(gso, "Property");
             psetter(gsi, 10);
             var gi1 = pgetter(gsi);
             Assert.AreEqual(10, gi1);
@@ -52,9 +52,9 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void CreateDelegateGetterSetterTest()
         {
             var gsi = new GetSet();
-            var gso = PropertyFactory.CreateOwner(gsi);
-            var pgetter = PropertyFactory.CreateGetter(gso, "Property");
-            var psetter = PropertyFactory.CreateSetter(gso, "Property");
+            var gso = PropertyExpressionFactory.CreateOwner(gsi);
+            var pgetter = PropertyExpressionFactory.CreateGetter(gso, "Property");
+            var psetter = PropertyExpressionFactory.CreateSetter(gso, "Property");
             psetter.DynamicInvoke(gsi, 10);
             var gi1 = pgetter.DynamicInvoke(gsi);
             Assert.AreEqual(10, gi1);

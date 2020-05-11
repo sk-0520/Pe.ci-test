@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
 
-    internal static class PropertyFactory
+    internal static class PropertyExpressionFactory
     {
         #region function
 
@@ -118,32 +118,35 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// 汎用プロパティアクセス処理。
+    /// </summary>
     public class PropertyAccesser : IPropertyGetter, IPropertySetter
     {
         public PropertyAccesser(ParameterExpression ownerExpression, PropertyInfo propertyInfo)
         {
             PropertyInfo = propertyInfo;
             if(PropertyInfo.CanWrite) {
-                Setter = PropertyFactory.CreateSetter(ownerExpression, propertyInfo.Name);
+                Setter = PropertyExpressionFactory.CreateSetter(ownerExpression, propertyInfo.Name);
             } else {
                 Setter = ThrowSetter;
             }
-            Getter = PropertyFactory.CreateGetter(ownerExpression, propertyInfo.Name);
+            Getter = PropertyExpressionFactory.CreateGetter(ownerExpression, propertyInfo.Name);
         }
         public PropertyAccesser(object owner, string propertyName)
         {
-            var ownerExpression = PropertyFactory.CreateOwner(owner);
+            var ownerExpression = PropertyExpressionFactory.CreateOwner(owner);
             var propertyInfo = ownerExpression.Type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if(propertyInfo == null) {
                 throw new ArgumentException($"{nameof(propertyName)}: {propertyName}");
             }
             PropertyInfo = propertyInfo;
             if(PropertyInfo.CanWrite) {
-                Setter = PropertyFactory.CreateSetter(ownerExpression, propertyName);
+                Setter = PropertyExpressionFactory.CreateSetter(ownerExpression, propertyName);
             } else {
                 Setter = ThrowSetter;
             }
-            Getter = PropertyFactory.CreateGetter(ownerExpression, propertyName);
+            Getter = PropertyExpressionFactory.CreateGetter(ownerExpression, propertyName);
         }
 
         #region property
@@ -164,29 +167,36 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region IPropertyGetter
 
+        /// <inheritdoc cref="IPropertyGetter.Get(object)"/>
         public object? Get(object owner) => Getter(owner);
 
         #endregion
 
         #region IPropertySetter
 
+        /// <inheritdoc cref="IPropertySetter.Set(object, object)"/>
         public void Set(object owner, object? value) => Setter(owner, value);
 
         #endregion
     }
 
+    /// <summary>
+    /// ジェネリック版プロパティアクセス処理。
+    /// </summary>
+    /// <typeparam name="TOwner"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     public class PropertyAccesser<TOwner, TValue> : PropertyAccesser, IPropertyGetter<TOwner, TValue>, IPropertySetter<TOwner, TValue>
     {
         public PropertyAccesser(TOwner owner, string propertyName)
             : base(owner!, propertyName)
         {
-            var ownerProperty = PropertyFactory.CreateOwner(owner!);
+            var ownerProperty = PropertyExpressionFactory.CreateOwner(owner!);
             if(PropertyInfo.CanWrite) {
-                Setter = PropertyFactory.CreateSetter<TOwner, TValue>(ownerProperty, propertyName);
+                Setter = PropertyExpressionFactory.CreateSetter<TOwner, TValue>(ownerProperty, propertyName);
             } else {
                 Setter = ThrowSetter;
             }
-            Getter = PropertyFactory.CreateGetter<TOwner, TValue>(ownerProperty, propertyName);
+            Getter = PropertyExpressionFactory.CreateGetter<TOwner, TValue>(ownerProperty, propertyName);
         }
 
         #region property
@@ -204,34 +214,60 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region IPropertyGetter
 
+        /// <inheritdoc cref="IPropertyGetter{TOwner, TValue}.Get(TOwner)"/>
         public TValue Get(TOwner owner) => Getter(owner);
 
         #endregion
 
         #region IPropertySetter
 
+        /// <inheritdoc cref="IPropertySetter{TOwner, TValue}.Set(TOwner, TValue)"/>
         public void Set(TOwner owner, TValue value) => Setter(owner, value);
 
         #endregion
 
     }
 
+    /// <summary>
+    /// プロパティアクセス処理生成。
+    /// </summary>
     public class PropertyAccesserFactory
     {
         #region function
 
+        /// <summary>
+        /// 汎用版を生成。
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         public static PropertyAccesser Create(object owner, string propertyName) => new PropertyAccesser(owner, propertyName);
+        /// <summary>
+        /// ジェネリック版を生成。
+        /// </summary>
+        /// <typeparam name="TOwner"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="owner"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
         public static PropertyAccesser<TOwner, TValue> Create<TOwner, TValue>(TOwner owner, string propertyName) => new PropertyAccesser<TOwner, TValue>(owner, propertyName);
 
         #endregion
     }
 
+    /// <summary>
+    /// プロパティアクセス処理キャッシュ。
+    /// </summary>
     public class PropertyCacher
     {
+        /// <summary>
+        /// 指定オブジェクトに対してプロパティアクセス処理のキャッシュを構築。
+        /// </summary>
+        /// <param name="owner">プロパティアクセスを行うオブジェクト。</param>
         public PropertyCacher(object owner)
         {
             Owner = owner;
-            OwnerExpression = PropertyFactory.CreateOwner(Owner);
+            OwnerExpression = PropertyExpressionFactory.CreateOwner(Owner);
             Properties = OwnerExpression.Type
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 .ToDictionary(
