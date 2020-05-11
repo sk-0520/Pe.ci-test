@@ -34,44 +34,10 @@ namespace ContentTypeTextNet.Pe.Main.Test
             var logger = LoggerFactory.CreateLogger(nameof(Test));
             logger.LogInformation("START Pe.Main.Test");
 
-            var factoryPack = new ApplicationDatabaseFactoryPack(
-                new ApplicationDatabaseFactory(true, false),
-                new ApplicationDatabaseFactory(true, false),
-                new ApplicationDatabaseFactory(true, false)
-            );
-            var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
-
-            var testAssemblyPath = Assembly.GetExecutingAssembly().Location;
-            var sqlRootDirPath = Path.Combine(Path.GetDirectoryName(testAssemblyPath)!, "etc", "sql", "ContentTypeTextNet.Pe.Main");
-
-            var diContainer = new ApplicationDiContainer();
-            diContainer
-                .Register<ILoggerFactory, ILoggerFactory>(LoggerFactory)
-                .RegisterDatabase(factoryPack, lazyWriterWaitTimePack, LoggerFactory)
-                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(new DirectoryInfo(sqlRootDirPath), TimeSpan.FromMinutes(6), null, false, LoggerFactory))
-                .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
-            ;
-
-            DiContainer = diContainer;
-
-            var databaseAccessorPack = DiContainer.Build<IDatabaseAccessorPack>();
-
-            var databaseSetupper = DiContainer.Build<DatabaseSetupper>();
-            databaseSetupper.Initialize(databaseAccessorPack);
-            var initVersion = databaseSetupper.GetLastVersion(databaseAccessorPack.Main);
-            foreach(var accessor in databaseAccessorPack.Items) {
-                accessor.Execute("pragma foreign_keys = false");
-            }
-            databaseSetupper.Migrate(databaseAccessorPack, initVersion!);
-            foreach(var accessor in databaseAccessorPack.Items) {
-                databaseSetupper.CheckForeignKey(accessor);
-                accessor.Execute("pragma foreign_keys = true");
-            }
-            var lastVersion = databaseSetupper.GetLastVersion(databaseAccessorPack.Main);
-            // 3桁バージョンってこうなってんのかよ
-            Assert.AreEqual(BuildStatus.Version.Major, lastVersion!.Major);
-            Assert.AreEqual(BuildStatus.Version.Minor, lastVersion!.Minor);
-            Assert.AreEqual(BuildStatus.Version.Build, lastVersion!.Build);
+            var testDiContainer = new TestDiContainer();
+            var diContainer = testDiContainer.CreateDiContainer(LoggerFactory);
+            var testDatabase = new TestDatabase();
+            testDatabase.Initialize(diContainer);
         }
 
         [AssemblyCleanup]

@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
+using Microsoft.Extensions.Logging;
+
+namespace ContentTypeTextNet.Pe.Main.Test
+{
+    class TestDiContainer
+    {
+        #region function
+
+        public DiContainer CreateDiContainer(ILoggerFactory loggerFactory)
+        {
+            var diContainer = new ApplicationDiContainer();
+            diContainer
+                .Register<ILoggerFactory, ILoggerFactory>(loggerFactory)
+                .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
+            ;
+
+            return diContainer;
+        }
+
+        #endregion
+    }
+}
