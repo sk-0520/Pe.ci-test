@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(environmentParameters.MainFile, foreignKeys, false),
                 new ApplicationDatabaseFactory(environmentParameters.FileFile, foreignKeys, false),
-                new ApplicationDatabaseFactory()
+                new ApplicationDatabaseFactory(true, false)
             );
         }
         IDatabaseStatementLoader GetStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
@@ -256,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             pack.accessor = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory);
 
             foreach(var accessor in pack.accessor.Items) {
-                databaseSetupper.CheckForeignKey(pack.accessor.Main);
+                databaseSetupper.CheckForeignKey(accessor);
             }
 
             return true;

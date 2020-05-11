@@ -19,11 +19,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #region define
         #endregion
 
-        public ApplicationDatabaseFactory()
+        public ApplicationDatabaseFactory(bool foreignKeys, bool isReadOnly)
         {
             var builder = CreateConnectionBuilder();
             builder.DataSource = ":memory:";
-            builder.ForeignKeys = true;
+            builder.ForeignKeys = foreignKeys;
+            if(isReadOnly) {
+                builder.ReadOnly = isReadOnly;
+            }
 
             ConnectionString = builder.ToString();
         }

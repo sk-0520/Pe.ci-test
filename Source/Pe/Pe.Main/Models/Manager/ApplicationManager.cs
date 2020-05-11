@@ -284,7 +284,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var factory = new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(settings.Main, true, false),
                 new ApplicationDatabaseFactory(settings.File, true, false),
-                new ApplicationDatabaseFactory()
+                new ApplicationDatabaseFactory(true, false)
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
 
