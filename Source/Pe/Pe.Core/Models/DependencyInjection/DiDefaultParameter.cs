@@ -22,17 +22,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region function
 
-        public KeyValuePair<Type, object> GetPair()
+        public KeyValuePair<Type, object?> GetPair()
         {
             if(Type.IsValueType) {
-#pragma warning disable CS8604 // Null 参照引数の可能性があります。
-                return new KeyValuePair<Type, object>(Type, Activator.CreateInstance(Type));
-#pragma warning restore CS8604 // Null 参照引数の可能性があります。
+                return KeyValuePair.Create(Type, Activator.CreateInstance(Type));
             }
 
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-            return new KeyValuePair<Type, object>(Type, null);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+            return new KeyValuePair<Type, object?>(Type, null);
         }
 
         public static DiDefaultParameter Create<T>()

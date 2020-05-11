@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
-                .Select(o => o.GetType() == typeof(DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object>(o.GetType(), o))
+                .Select(o => o.GetType() == typeof(DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
                 .ToList()
             ;
 
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 if(manualParameterItems.Count != 0) {
                     var item = manualParameterItems.FirstOrDefault(p => p.Key == parameterInfo.ParameterType || parameterInfo.ParameterType.IsAssignableFrom(p.Key));
                     if(item.Key != default(Type)) {
-                        arguments[i] = item.Value;
+                        arguments[i] = item.Value!; // 正しい null
                         manualParameterItems.Remove(item);
                         continue;
                     }
