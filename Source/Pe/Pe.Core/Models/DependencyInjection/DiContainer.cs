@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var fieldValue)) {
                         fieldInfo.SetValue(target, fieldValue);
                     } else {
-                        throw new DiException($"{fieldInfo}: create fail");
+                        throw new DiException($"{fieldInfo}: failed to create {valueType}");
                     }
                     break;
 
@@ -376,7 +376,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     if(TryGetInstance(valueType, name, Enumerable.Empty<object>(), out var propertyValue)) {
                         propertyInfo.SetValue(target, propertyValue);
                     } else {
-                        throw new DiException($"{propertyInfo}: create fail");
+                        throw new DiException($"{propertyInfo}: failed to create {valueType}");
                     }
                     break;
 

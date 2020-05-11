@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region function
 
         /// <summary>
-        /// 指定された値が範囲内にあるか・。
+        /// 指定された値が範囲内にあるか。
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>

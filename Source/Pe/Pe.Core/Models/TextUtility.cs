@@ -8,6 +8,9 @@ using System.Text.RegularExpressions;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 文字列適当操作処理。
+    /// </summary>
     public static class TextUtility
     {
         #region function
@@ -113,9 +116,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return ReplacePlaceholderFromDictionary(src, "${", "}", map);
         }
 
-
+        /// <summary>
+        /// 文字列から行毎に分割する。
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static IEnumerable<string> ReadLines(string text)
         {
+            if(text == null) {
+                throw new ArgumentNullException(nameof(text));
+            }
+
             using(var reader = new StringReader(text)) {
                 string? line;
                 while((line = reader.ReadLine()) != null) {
@@ -124,6 +135,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// リーダーから行毎に分割する。
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public static IEnumerable<string> ReadLines(TextReader reader)
         {
             if(reader == null) {
@@ -136,6 +152,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// 文字のなんちゃってな長さを取得。
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns>A: 1, ｱ: 1, あ: 1, 🐙: 1</returns>
         public static int TextWidth(string s)
         {
             if(s == null) {
@@ -146,6 +167,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return si.LengthInTextElements;
         }
 
+        /// <summary>
+        /// 文字列をなんちゃって一文字単位に分解。
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static IEnumerable<string> GetCharacters(string s)
         {
             var textElements = StringInfo.GetTextElementEnumerator(s);
@@ -154,6 +180,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// 安全に<see cref="string.Trim"/>を行う。
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string SafeTrim(string? s)
         {
             if(s == null) {

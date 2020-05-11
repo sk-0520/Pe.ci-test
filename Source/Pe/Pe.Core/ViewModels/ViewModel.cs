@@ -20,6 +20,9 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Core.ViewModels
 {
+    /// <summary>
+    /// 検証無視。
+    /// </summary>
     [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
     public sealed class IgnoreValidationAttribute : Attribute
     {
@@ -28,6 +31,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         { }
     }
 
+    /// <summary>
+    /// ViewModel の基底。
+    /// </summary>
     public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable, IDisposer
     {
         public ViewModelBase(ILoggerFactory loggerFactory)
@@ -44,21 +50,45 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
+        /// <summary>
+        /// ログ生成。
+        /// </summary>
         protected ILoggerFactory LoggerFactory { get; }
+        /// <summary>
+        /// ロガー。
+        /// </summary>
         protected ILogger Logger { get; }
         //IDictionary<string, ICommand> CommandCache { get; } = new Dictionary<string, ICommand>();
+        /// <summary>
+        /// コマンド一覧。
+        /// </summary>
         protected IEnumerable<ICommand> Commands => CommandStore.Commands;
         CommandStore CommandStore { get; } = new CommandStore();
 
 #if PROPERTY_CACHE
+        /// <summary>
+        /// プロパティアクセス処理キャッシュ。
+        /// </summary>
         ConcurrentDictionary<object, PropertyCacher> PropertyCacher { get; } = new ConcurrentDictionary<object, PropertyCacher>();
 #endif
+        /// <summary>
+        /// プロパティ変更時のイベントキャッシュ。
+        /// </summary>
         ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// オブジェクトのプロパティに値設定。
+        /// </summary>
+        /// <typeparam name="TValue">設定値のデータ。</typeparam>
+        /// <param name="obj">対象オブジェクト。</param>
+        /// <param name="value">設定値。</param>
+        /// <param name="targetMemberName">設定対象となる<paramref name="obj"/>のメンバ名。未設定で呼び出しメンバ名。</param>
+        /// <param name="notifyPropertyName">値設定後に通知するプロパティ名。未設定で呼び出しメンバ名。</param>
+        /// <returns>設定されたか。同一値の場合は設定しない。</returns>
         protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
 #if DEBUG
@@ -96,6 +126,16 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             return false;
         }
 
+        /// <summary>
+        /// コマンド生成。
+        /// <para>メモリ状態は知らんけどコマンドプロパティ記述位置でインスタンスを触りながら処理書きたいのよ。</para>
+        /// </summary>
+        /// <typeparam name="TCommand"></typeparam>
+        /// <param name="creator"></param>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerFilePath"></param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns></returns>
         protected TCommand GetOrCreateCommand<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
             where TCommand : ICommand
         {
@@ -422,6 +462,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         #endregion
     }
 
+    /// <summary>
+    /// model と対になる ViewModel の基底クラス。
+    /// </summary>
+    /// <typeparam name="TModel"></typeparam>
     public abstract class SingleModelViewModelBase<TModel> : ViewModelBase
         where TModel : INotifyPropertyChanged
     {
@@ -436,17 +480,33 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #region property
 
+        /// <summary>
+        /// 取り込んだモデル。
+        /// <para><see cref="Dispose(bool)"/>後は null が入るので注意ね。</para>
+        /// </summary>
         protected TModel Model { get; private set; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// <see cref="Model"/>のプロパティに対して値設定。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <param name="targetMemberName"></param>
+        /// <param name="notifyPropertyName"></param>
+        /// <returns></returns>
         protected bool SetModelValue<T>(T value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
         {
             return SetPropertyValue(Model, value, targetMemberName, notifyPropertyName);
         }
 
+        /// <summary>
+        /// モデルを取り込んだ際に一度だけ呼び出される処理。
+        /// <para>継承クラスでは一番最初に呼び出すこと。</para>
+        /// </summary>
         protected virtual void AttachModelEventsImpl()
         {
             ThrowIfDisposed();
@@ -462,6 +522,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
         }
 
+        /// <summary>
+        /// モデルとサヨナラするとき(<see cref="Dispose(bool)"/>とか)するときに一度だけ呼び出される。
+        /// <para>継承クラスでは一番最初に呼び出すこと。</para>
+        /// </summary>
         protected virtual void DetachModelEventsImpl()
         { }
 

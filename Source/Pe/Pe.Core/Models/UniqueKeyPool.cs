@@ -6,6 +6,10 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 呼び出し側で一意なオブジェクトを生成するヘルパー。
+    /// <para><see cref="Database.IDatabaseLazyWriter.Stock(Action{Database.IDatabaseTransaction}, object)"/>の使用のみに特化。</para>
+    /// </summary>
     public class UniqueKeyPool
     {
         public UniqueKeyPool()
@@ -19,6 +23,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
+        /// <summary>
+        /// 呼び出し箇所で一意なオブジェクトを生成。
+        /// <para>継承クラスにて一意なデータを取得できるように調整して使用することは想定していない。</para>
+        /// </summary>
+        /// <param name="callerMemberName"></param>
+        /// <param name="callerLineNumber"></param>
+        /// <returns></returns>
         public object Get([CallerMemberName] string callerMemberName = "", [CallerLineNumber] int callerLineNumber = -1)
         {
             var sb = new StringBuilder(callerMemberName.Length + 1 + "2147483647".Length);

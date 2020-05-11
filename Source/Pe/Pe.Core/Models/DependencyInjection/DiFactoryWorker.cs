@@ -23,15 +23,29 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #region property
 
+        /// <summary>
+        /// ライフサイクル。
+        /// </summary>
         public DiLifecycle Lifecycle { get; }
+        /// <summary>
+        /// 生成処理。
+        /// </summary>
         DiCreator Creator { get; }
 
+        /// <summary>
+        /// シングルトンデータとして作成されているか。
+        /// <para>シングルトンの場合に、<see cref="DiFactoryWorker"/>の<see cref="Dispose"/>時に対象が<see cref="IDisposable"/>を実装していれば<see cref="IDisposable.Dispose"/>を呼び出す。</para>
+        /// </summary>
         bool CreatedSingleton { get; set; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 生成。
+        /// </summary>
+        /// <returns></returns>
         public object Create()
         {
             var result = Creator();
