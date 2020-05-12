@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj">
       <Private>false</Private>
     </ProjectReference>
