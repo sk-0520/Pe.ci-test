@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeEnvironmentVariableViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper ,loggerFactory)
         {
-            EnvironmentVariableLazyChanger = new LazyAction("環境変数編集:" + Model.LauncherItemId, TimeSpan.FromSeconds(5), LoggerFactory);
+            EnvironmentVariableLazyChanger = new LazyAction("環境変数編集:" + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(5), LoggerFactory);
 
             var envItems = Model.EnvironmentVariableItems!;
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);

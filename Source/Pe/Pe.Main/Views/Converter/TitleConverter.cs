@@ -23,13 +23,33 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
                 _ => "[" + BuildStatus.BuildType.ToString() + "] ",
             };
 
-            var footer = BuildStatus.BuildType switch
-            {
-                BuildType.Release => string.Empty,
-                _ => " " + new VersionConverter().ConvertNormalVersion(BuildStatus.Version) + " APP:" +  ProcessArchitecture.ApplicationArchitecture + "/OS:" + ProcessArchitecture.PlatformArchitecture + " <" + BuildStatus.Revision + ">",
-            };
 
-            return header + caption + footer + " - " + BuildStatus.Name;
+            string footer;
+            if(BuildStatus.BuildType == BuildType.Release) {
+                footer = string.Empty;
+            } else {
+                footer = new StringBuilder()
+                    .Append(" ")
+                    .Append(new VersionConverter().ConvertNormalVersion(BuildStatus.Version))
+                    .Append(" APP:")
+                    .Append(ProcessArchitecture.ApplicationArchitecture)
+                    .Append("/OS:")
+                    .Append(ProcessArchitecture.PlatformArchitecture)
+                    .Append(" <")
+                    .Append(BuildStatus.Revision)
+                    .Append(">")
+                    .ToString()
+                ;
+            }
+
+            return new StringBuilder()
+                .Append(header)
+                .Append(caption)
+                .Append(footer)
+                .Append(" - ")
+                .Append(BuildStatus.Name)
+                .ToString()
+            ;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

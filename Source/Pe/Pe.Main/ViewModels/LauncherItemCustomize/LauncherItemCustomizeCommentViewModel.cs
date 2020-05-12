@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeCommentViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            CommentLazyChanger = new LazyAction("コメント編集: " + Model.LauncherItemId, TimeSpan.FromSeconds(3), LoggerFactory);
+            CommentLazyChanger = new LazyAction("コメント編集: " + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(3), LoggerFactory);
 
             CommentDocument = new TextDocument(Model.Comment);
             CommentDocument.TextChanged += CommentDocument_TextChanged;
