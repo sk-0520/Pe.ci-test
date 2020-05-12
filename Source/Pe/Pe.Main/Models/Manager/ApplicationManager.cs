@@ -63,6 +63,7 @@ using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Command;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -77,6 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
+            ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
 
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer.Build<OrderManagerImpl>(); //initializer.OrderManager;
@@ -93,6 +95,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
             ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+
+            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
+            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
+            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
+
+            ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
+            ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
+            ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
+            ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
+            ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
+            ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
 
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
@@ -145,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         KeyActionChecker KeyActionChecker { get; }
         KeyActionAssistant KeyActionAssistant { get; }
 
-        PluginContainer? PluginContainer { get; set; }
+        PluginContainer PluginContainer { get; }
 
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
@@ -469,27 +482,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.ApplicationIdle);
         }
 
-        private void RegisterPlugins()
+        private void LoadPlugins()
         {
-            Debug.Assert(ApplicationDiContainer != null);
-            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
-            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
-            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
-
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+
             foreach(var plugin in PluginContainer.GetPlugins()) {
                 plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginId));
                 PluginContainer.AddPlugin(plugin);
             }
-            PluginContainer.Theme.SetCurrentTheme(DefaultTheme.Id, pluginContextFactory);
+        }
 
-            ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
-            ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
-            ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
-            ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
-            ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
-            ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
+        private void ApplyCurrentTheme(in PluginId pluginId)
+        {
+            var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
+            PluginContainer.Theme.SetCurrentTheme(pluginId, pluginContextFactory);
+        }
+
+        private void RunAddons()
+        {
+            //TODTO: アドオンを実行していく
         }
 
         void SetStaticPlatformTheme()
@@ -644,7 +656,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //if(!initializer.Initialize(e.Args)) {
             //    return false;
             //}
-            ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
+            //ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
 
             //setting.UserId
 
@@ -654,8 +666,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //});
 
             MakeMessageWindow();
-            RegisterPlugins();
 
+            LoadPlugins();
+            ApplyCurrentTheme(DefaultTheme.Id);
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");
@@ -1397,6 +1410,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         internal void StartupEnd()
         {
             StartHook();
+            RunAddons();
             DelayCheckUpdateAsync().ConfigureAwait(false);
         }
 
