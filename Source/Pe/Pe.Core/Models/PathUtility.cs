@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static string GetTemporaryExtension(string role)
         {
-            return "." + GetCurrentTimestampFileName() + "." + role + "." + extensionTemporaryFile;
+            return $".{GetCurrentTimestampFileName()}.{role}.{extensionTemporaryFile}";
         }
 
         /// <summary>
