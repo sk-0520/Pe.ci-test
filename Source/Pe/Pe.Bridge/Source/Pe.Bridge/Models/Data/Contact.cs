@@ -45,9 +45,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
-    /// <summary>
     /// <inheritdoc cref="IContact" />
-    /// </summary>
     public class Contact : IContact
     {
         public Contact(string kind, string value)
@@ -58,14 +56,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #region IContact
 
-        /// <summary>
         /// <inheritdoc cref="IContact.ContactKind"/>
-        /// </summary>
         public string ContactKind { get; }
 
-        /// <summary>
         /// <inheritdoc cref="IContact.ContactValue"/>
-        /// </summary>
         public string ContactValue { get; }
 
         #endregion
