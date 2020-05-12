@@ -6,6 +6,8 @@
 #pragma warning disable CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
 #pragma warning disable IDE0009 // メンバー アクセスを修飾する必要があります。
 #pragma warning disable IDE0011 // 波かっこを追加します
+#pragma warning disable HAA0202 // Value type to reference type conversion allocation for string concatenation
+
 // hardcodet.net NotifyIcon for WPF
 // Copyright (c) 2009 - 2013 Philipp Sumi
 // Contact and Information: http://www.hardcodet.net
