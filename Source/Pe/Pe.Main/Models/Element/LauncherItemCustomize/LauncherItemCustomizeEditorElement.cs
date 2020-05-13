@@ -2,19 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeEditorElement : ElementBase, ILauncherItemId
+    public class LauncherItemCustomizeEditorElement: ElementBase, ILauncherItemId
     {
         public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -145,6 +147,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         //}
 
         /// <summary>
+        /// アイコンが変更されたか。
+        /// </summary>
+        /// <param name="iconData"></param>
+        /// <param name="kindIconValue">種別により異なる生アイコン情報。</param>
+        /// <param name="commander"></param>
+        /// <param name="implementation"></param>
+        /// <returns>真: アイコンが変更された。</returns>
+        private bool CheckIconChanged(LauncherIconData currentFileIcon, IconData iconData, string kindIconValue)
+        {
+            switch(Kind) {
+                case LauncherItemKind.File: {
+                        if(!PathUtility.IsEqual(currentFileIcon.Icon.Path, iconData.Path)) {
+                            return true;
+                        }
+                        if(currentFileIcon.Icon.Index != iconData.Index) {
+                            return true;
+                        }
+
+                        if(!PathUtility.IsEqual(currentFileIcon.Path.Path, kindIconValue)) {
+                            return true;
+                        }
+
+                        return false;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
         /// アイテム保存。
         /// </summary>
         /// <param name="commander"></param>
@@ -168,8 +201,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 },
             };
 
+            var iconChangedResult = false;
+
             var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
             var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
+            var launcherItemDomainDao = new LauncherItemDomainDao(commander, StatementLoader, implementation, LoggerFactory);
+            var currentFileIcon = launcherItemDomainDao.SelectFileIcon(LauncherItemId);
 
             launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, databaseCommonStatus);
             switch(Kind) {
@@ -177,6 +215,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                         Debug.Assert(File != null);
                         Debug.Assert(EnvironmentVariableItems != null);
                         Debug.Assert(Redo != null);
+
+                        iconChangedResult = CheckIconChanged(currentFileIcon, itemData.Icon, File.Path);
 
                         var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, implementation, LoggerFactory);
                         var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
@@ -209,7 +249,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             launcherTagsEntityDao.DeleteTagByLauncherItemId(itemData.LauncherItemId);
             launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, databaseCommonStatus);
 
-            return true;//TODO
+            return iconChangedResult;
         }
 
         public void ClearIcon(IDatabaseCommander commander, IDatabaseImplementation implementation)
@@ -217,19 +257,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             ThrowIfDisposed();
 
             var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+
             launcherItemIconsEntityDao.DeleteAllSizeImageBinary(LauncherItemId);
+            launcherItemIconStatusEntityDao.DeleteAllSizeLauncherItemIconState(LauncherItemId);
         }
 
         public void Save()
         {
             ThrowIfDisposed();
 
-            bool needsIconClear;
+            bool needToIconClear;
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                needsIconClear = SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+                needToIconClear = SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
                 commander.Commit();
             }
-            if(needsIconClear) {
+            if(needToIconClear) {
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     ClearIcon(commander, commander.Implementation);
                     commander.Commit();

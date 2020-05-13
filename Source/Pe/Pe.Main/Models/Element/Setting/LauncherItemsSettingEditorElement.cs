@@ -220,8 +220,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
             foreach(var item in AllLauncherItems) {
-                var needsClearIcon = item.SaveItem(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
-                if(needsClearIcon) {
+                var needToIconClear = item.SaveItem(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
+                if(needToIconClear) {
                     item.ClearIcon(commandPack.File.Commander, commandPack.File.Implementation);
                 }
             }

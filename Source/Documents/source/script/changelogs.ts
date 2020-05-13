@@ -146,6 +146,17 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#617: 本体設定完了時にランチャーアイテムのアイコンキャッシュが全部削除される既知の問題",
+						"comments": [
+							"調査の結果ランチャーアイテム変更時にも発生していた模様"
+						]
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
