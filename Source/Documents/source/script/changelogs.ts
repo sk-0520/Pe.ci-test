@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#622: 通知領域コンテキストメニューのフック状態の切り替えがチェック反映されていない"
 					},
 					{
 						"revision": "",

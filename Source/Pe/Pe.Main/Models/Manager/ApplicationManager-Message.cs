@@ -145,15 +145,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void StartHook()
         {
-            var hooked = false;
+            //var hooked = false;
             if(KeyActionChecker.HasJob) {
                 KeyboradHooker.Register();
-                hooked = true;
+                //hooked = true;
             }
-            //TODO: キー入力待ちでクリックされたら入力待ち解除したい
+
             MouseHooker.Register();
 
-            IsEnabledHook = hooked;
+            // マウスフックが必須状態なのでこいつは常に真
+            IsEnabledHook = true;
         }
 
         void StopHook()

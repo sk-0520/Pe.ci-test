@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         #region variable
 
         bool _isOpenNoteMenu;
+        bool _isOpenSystemMenu;
         bool _isOpenContextMenu;
         bool _isEnabledManager = true;
 
@@ -80,6 +81,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                         NoteVisibleItems.Refresh();
                         NoteHiddenItems.Refresh();
                     }
+                }
+            }
+        }
+
+        public bool IsOpenSystemMenu
+        {
+            get => this._isOpenSystemMenu;
+            set
+            {
+                SetProperty(ref this._isOpenSystemMenu, value);
+                if(IsOpenSystemMenu) {
+                    RaisePropertyChanged(nameof(IsEnabledHook));
                 }
             }
         }

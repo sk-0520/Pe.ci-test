@@ -112,7 +112,7 @@
 
     <Separator />
 
-    <MenuItem Header="{Binding Resources.String_AppManager_System_A, Source={x:Static app_main:CultureService.Instance}}">
+    <MenuItem IsSubmenuOpen="{Binding IsOpenSystemMenu, Mode=OneWayToSource}" Header="{Binding Resources.String_AppManager_System_A, Source={x:Static app_main:CultureService.Instance}}">
       <MenuItem.Style>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>
