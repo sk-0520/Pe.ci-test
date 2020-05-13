@@ -122,10 +122,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             get => this._isOpenContextMenu;
             set
             {
-                if(SetProperty(ref this._isOpenContextMenu, value)) {
-                    if(IsOpenContextMenu) {
-                        RaisePropertyChanged(nameof(ShowPlatformOldVersion));
-                    }
+                SetProperty(ref this._isOpenContextMenu, value);
+                if(IsOpenContextMenu) {
+                    RaisePropertyChanged(nameof(ShowPlatformOldVersion));
                 }
                 Logger.LogDebug("[#530調査] IsOpenContextMenu: {0}", IsOpenContextMenu);
             }

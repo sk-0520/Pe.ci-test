@@ -10,7 +10,7 @@
 
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Manager"
 >
-  <ContextMenu x:Key="ContextMenu" IsOpen="{Binding IsOpenContextMenu}">
+  <ContextMenu x:Key="ContextMenu" IsOpen="{Binding IsOpenContextMenu, Mode=OneWayToSource}">
     <ContextMenu.Resources>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 

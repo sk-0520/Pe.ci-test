@@ -138,7 +138,11 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#530: 通知領域右クリックが死んでるときがある。",
+						"comments": [
+							"たぶんね、たぶん",
+							"ダメだったら起票します。。。"
+						]
 					},
 					{
 						"revision": "",
