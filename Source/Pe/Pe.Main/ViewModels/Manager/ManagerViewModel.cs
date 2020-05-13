@@ -66,24 +66,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
         public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
-        public ICollectionView NoteVisibleItems { get; }
-        public ICollectionView NoteHiddenItems { get; }
 
+        #region ノート
 
         public bool IsOpenNoteMenu
         {
             get => this._isOpenNoteMenu;
             set
             {
-                if(SetProperty(ref this._isOpenNoteMenu, value)) {
-                    if(IsOpenNoteMenu) {
-                        NoteVisibleItems.Refresh();
-                        NoteHiddenItems.Refresh();
-                    }
+                SetProperty(ref this._isOpenNoteMenu, value);
+                if(IsOpenNoteMenu) {
+                    NoteVisibleItems.Refresh();
+                    NoteHiddenItems.Refresh();
                 }
             }
         }
+
+        ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
+        public ICollectionView NoteVisibleItems { get; }
+        public ICollectionView NoteHiddenItems { get; }
+
+        #endregion
+
+        #region システム
 
         public bool IsOpenSystemMenu
         {
@@ -93,17 +98,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
                 SetProperty(ref this._isOpenSystemMenu, value);
                 if(IsOpenSystemMenu) {
                     RaisePropertyChanged(nameof(IsEnabledHook));
+                    RaisePropertyChanged(nameof(IsDisabledSystemIdle));
+                    RaisePropertyChanged(nameof(IsSupportedExplorer));
                 }
             }
         }
 
-        public bool IsEnabledHook
-        {
-            get => ApplicationManager.IsEnabledHook;
-        }
-
+        public bool IsEnabledHook => ApplicationManager.IsEnabledHook;
         public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
         public bool IsSupportedExplorer => ApplicationManager.IsSupportedExplorer;
+
+        #endregion
+
 
         public bool IsEnabledManager
         {
@@ -127,10 +133,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
 
         public IReadOnlyUpdateInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
+
         #endregion
 
         #region command
-
 
         public ICommand CreateNoteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -200,20 +206,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
            () => {
                ApplicationManager.ToggleHook();
-               RaisePropertyChanged(nameof(IsEnabledHook));
            }
         ));
         public ICommand ToggleDisabledSystemIdleCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.ToggleDisableSystemIdle();
-                RaisePropertyChanged(nameof(IsDisabledSystemIdle));
             }
         ));
 
         public ICommand ToggleSupportExplorerCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.ToggleSupportExplorer();
-                RaisePropertyChanged(nameof(IsSupportedExplorer));
             }
         ));
 

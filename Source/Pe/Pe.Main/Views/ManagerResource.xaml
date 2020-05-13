@@ -67,7 +67,7 @@
         </Style>
       </MenuItem.ItemContainerStyle>-->
     </MenuItem>
-    <MenuItem Header="{Binding Resources.String_AppManager_Note_A, Source={x:Static app_main:CultureService.Instance}}" IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}">
+    <MenuItem IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}" Header="{Binding Resources.String_AppManager_Note_A, Source={x:Static app_main:CultureService.Instance}}">
       <MenuItem.Resources>
         <Style x:Key="NoteItemsMenu" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>
