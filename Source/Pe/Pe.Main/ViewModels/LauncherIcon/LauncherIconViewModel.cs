@@ -49,11 +49,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
 
         #region IIconPack
 
+        /// <inheritdoc cref="IIconPack.Small"/>
         public IconViewerViewModel Small { get; }
+        /// <inheritdoc cref="IIconPack.Normal"/>
         public IconViewerViewModel Normal { get; }
+        /// <inheritdoc cref="IIconPack.Big"/>
         public IconViewerViewModel Big { get; }
+        /// <inheritdoc cref="IIconPack.Large"/>
         public IconViewerViewModel Large { get; }
 
+        /// <inheritdoc cref="IIconPack.IconItems"/>
         public IReadOnlyDictionary<IconBox, IconViewerViewModel> IconItems => this._iconItems ??= new Dictionary<IconBox, IconViewerViewModel>() {
             [IconBox.Small] = Small,
             [IconBox.Normal] = Normal,

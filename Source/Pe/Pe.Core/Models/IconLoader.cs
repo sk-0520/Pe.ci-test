@@ -17,20 +17,31 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public interface IIconPack<TValue>
+    /// <summary>
+    /// アイコンのまとまり。
+    /// </summary>
+    /// <typeparam name="TIcon"></typeparam>
+    public interface IIconPack<TIcon>
     {
         #region property
 
-        TValue Small { get; }
-        TValue Normal { get; }
-        TValue Big { get; }
-        TValue Large { get; }
+        /// <inheritdoc cref="IconBox.Small"/>
+        TIcon Small { get; }
+        /// <inheritdoc cref="IconBox.Normal"/>
+        TIcon Normal { get; }
+        /// <inheritdoc cref="IconBox.Big"/>
+        TIcon Big { get; }
+        /// <inheritdoc cref="IconBox.Large"/>
+        TIcon Large { get; }
 
         #endregion
 
         #region function
 
-        IReadOnlyDictionary<IconBox, TValue> IconItems { get; }
+        /// <summary>
+        /// <see cref="IconBox"/> のマッピング。
+        /// </summary>
+        IReadOnlyDictionary<IconBox, TIcon> IconItems { get; }
 
         #endregion
     }
