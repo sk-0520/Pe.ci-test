@@ -162,12 +162,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         void FlushCore(LazyStockItem[] stockItems)
         {
-            using(var transaction = DatabaseBarrier.WaitWrite()) {
-                foreach(var stockItem in stockItems) {
-                    stockItem.Action(transaction);
-                }
-                transaction.Commit();
+            using var transaction = DatabaseBarrier.WaitWrite();
+            foreach(var stockItem in stockItems) {
+                stockItem.Action(transaction);
             }
+            transaction.Commit();
         }
 
 
@@ -250,6 +249,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             FlushCore(items);
         }
 
+        /// <inheritdoc cref="IFlushable.Flush"/>
         public void Flush()
         {
             Flush(true);
