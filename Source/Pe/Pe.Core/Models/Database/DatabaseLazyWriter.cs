@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region variable
 
-        object _timerLocker = new object();
+        readonly object _timerLocker = new object();
 
         #endregion
 
@@ -112,8 +112,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
         IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();
-
-        public bool IsPausing { get; private set; }
 
         #endregion
 
@@ -154,41 +152,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
-        public void Stock(Action<IDatabaseTransaction> action, object uniqueKey)
-        {
-            if(uniqueKey == null) {
-                throw new ArgumentNullException(nameof(uniqueKey));
-            }
-#if DEBUG
-            if(uniqueKey is UniqueKeyPool) {
-                Debug.Assert(false, $"完全な事故: {nameof(UniqueKeyPool)}.{nameof(UniqueKeyPool.Get)} を使用していない可能性あり");
-            }
-#endif
-
-            ThrowIfDisposed();
-
-            StockCore(action, uniqueKey);
-        }
-
-        public void Stock(Action<IDatabaseTransaction> action)
-        {
-            ThrowIfDisposed();
-            StockCore(action, null);
-        }
-
-        public void ClearStock()
-        {
-            ThrowIfDisposed();
-
-            lock(this._timerLocker) {
-                StopTimer();
-
-                StockItems.Clear();
-
-                StartTimer();
-            }
-        }
-
         void LazyCallback(object state)
         {
             if(IsPausing) {
@@ -207,6 +170,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
+
+        #endregion
+
+        #region IDatabaseLazyWriter
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.IsPausing"/>
+        public bool IsPausing { get; private set; }
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.Pause"/>
         public IDisposer Pause()
         {
             ThrowIfDisposed();
@@ -215,6 +187,44 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return new ActionDisposer(d => {
                 IsPausing = false;
             });
+        }
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.Stock(Action{IDatabaseTransaction}, object)"/>
+        public void Stock(Action<IDatabaseTransaction> action, object uniqueKey)
+        {
+            if(uniqueKey == null) {
+                throw new ArgumentNullException(nameof(uniqueKey));
+            }
+#if DEBUG
+            if(uniqueKey is UniqueKeyPool) {
+                Debug.Assert(false, $"完全な事故: {nameof(UniqueKeyPool)}.{nameof(UniqueKeyPool.Get)} を使用していない可能性あり");
+            }
+#endif
+
+            ThrowIfDisposed();
+
+            StockCore(action, uniqueKey);
+        }
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.Stock(Action{IDatabaseTransaction})"/>
+        public void Stock(Action<IDatabaseTransaction> action)
+        {
+            ThrowIfDisposed();
+            StockCore(action, null);
+        }
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.ClearStock"/>
+        public void ClearStock()
+        {
+            ThrowIfDisposed();
+
+            lock(this._timerLocker) {
+                StopTimer();
+
+                StockItems.Clear();
+
+                StartTimer();
+            }
         }
 
         #endregion
