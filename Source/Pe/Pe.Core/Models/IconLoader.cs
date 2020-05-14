@@ -46,22 +46,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-
+    /// <summary>
+    /// アイコンファイルの読み込み処理。
+    /// </summary>
     public class IconLoader
     {
         const int sizeofGRPICONDIR_idCount = 4;
         const int offsetGRPICONDIRENTRY_nID = 12;
         const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
-        static readonly int sizeofICONDIR;
-        static readonly int sizeofICONDIRENTRY;
-        static readonly int sizeofGRPICONDIRENTRY;
-
-        static IconLoader()
-        {
-            sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
-            sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
-            sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
-        }
+        static readonly int sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
+        static readonly int sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
+        static readonly int sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
 
         public IconLoader(ILogger logger)
         {
