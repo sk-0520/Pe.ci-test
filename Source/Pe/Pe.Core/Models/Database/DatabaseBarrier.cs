@@ -147,6 +147,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
+    /// <inheritdoc cref="IDatabaseBarrier" />
     public class DatabaseBarrier : IDatabaseBarrier
     {
         public DatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
@@ -167,10 +168,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         //public ReaderWriterLocker Locker { get; }
 
         /// <summary>
-        /// 既定の待機時間で書き込み処理を実施する。
+        /// <inheritdoc cref="IDatabaseBarrier.WaitWrite" />
         /// <para><see cref="Locker.WaitWriteByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
-        /// <returns></returns>
         public virtual IDatabaseTransaction WaitWrite()
         {
             var locker = Locker.WaitWriteByDefaultTimeout();
@@ -180,7 +180,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
         /// <summary>
-        /// 既定の待機時間で読み込み処理を実施する。
+        /// <inheritdoc cref="IDatabaseBarrier.WaitRead" />
         /// <para><see cref="Locker.WaitReadByDefaultTimeout()"/>が規定時間。</para>
         /// </summary>
         /// <returns></returns>
