@@ -117,7 +117,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#525: 環境変数編集機能の色付けを行う"
 					},
 					{
 						"revision": "",

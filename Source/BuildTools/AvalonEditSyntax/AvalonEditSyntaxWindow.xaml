@@ -1,0 +1,79 @@
+<Window
+  x:Class="AvalonEditSyntax.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+  xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+  Title="MainWindow"
+  Width="800"
+  Height="450"
+  WindowStartupLocation="CenterScreen"
+  ResizeMode="CanResizeWithGrip"
+
+  mc:Ignorable="d"
+>
+  <Window.Resources>
+    <Style TargetType="sharpdevelop_avalonedit:TextEditor">
+      <Setter Property="ShowLineNumbers" Value="True" />
+      <Setter Property="Options">
+        <Setter.Value>
+          <sharpdevelop_avalonedit:TextEditorOptions
+            ShowEndOfLine="True"
+            ShowSpaces="True"
+            ShowTabs="True"
+            HighlightCurrentLine="True"
+          />
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Grid Grid.Column="0" >
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <ToolBar Grid.Row="0">
+        <ComboBox x:Name="listDefines" SelectedIndex="0">
+          <ComboBoxItem Tag="env-merge" Content="環境変数 マージ" />
+          <ComboBoxItem Tag="env-remove" Content="環境変数 削除" />
+        </ComboBox>
+        <Button Content="読み込み" Click="Button_Click_1" />
+      </ToolBar>
+
+      <sharpdevelop_avalonedit:TextEditor x:Name="inputPreview" Grid.Row="1" />
+    </Grid>
+
+    <GridSplitter ResizeDirection="Columns" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+    <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="←反映" Click="Button_Click" />
+
+    <Grid Grid.Column="2">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="8*" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="2*" />
+      </Grid.RowDefinitions>
+
+      <ToolBar Grid.Row="0">
+        <Button Content="全コピー" Click="Button_Click_2" />
+        <Button Content="貼り付け" Click="Button_Click_3" />
+      </ToolBar>
+
+      <sharpdevelop_avalonedit:TextEditor x:Name="inputSyntax" Grid.Row="1" SyntaxHighlighting="XML" />
+      <GridSplitter Grid.Row="2" Height="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+      <TextBox x:Name="showError" Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" />
+    </Grid>
+
+  </Grid>
+</Window>
