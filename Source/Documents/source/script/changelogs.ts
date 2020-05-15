@@ -153,7 +153,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#626: ツールバーのハンバーガーメニュー表示をフェードさせる"
 					},
 					{
 						"revision": "",
