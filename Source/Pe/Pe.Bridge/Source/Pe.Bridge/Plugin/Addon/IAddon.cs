@@ -30,7 +30,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         #region function
 
-        bool IsSupport(AddonKind addonKind);
+        /// <summary>
+        /// 対象のアドオン種別がサポートされているか。
+        /// </summary>
+        /// <param name="addonKind"></param>
+        /// <returns></returns>
+        bool IsSupported(AddonKind addonKind);
 
         ICommandFinder BuildCommandFinder(IAddonParameter parameter);
 

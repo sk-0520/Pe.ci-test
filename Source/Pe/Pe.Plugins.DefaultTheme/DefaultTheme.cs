@@ -91,8 +91,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             return false;
         }
 
-        /// <inheritdoc cref="ITheme.IsSupport(ThemeKind)"/>
-        public bool IsSupport(ThemeKind themeKind) => true;
+        /// <inheritdoc cref="ITheme.IsSupported(ThemeKind)"/>
+        public bool IsSupported(ThemeKind themeKind) => true;
 
         /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
         public IGeneralTheme BuildGeneralTheme(IThemeParameter parameter)
