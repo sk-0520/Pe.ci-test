@@ -29,21 +29,51 @@ namespace AvalonEditSyntax
             InitializeComponent();
         }
 
-        #region Window
+        #region property
 
-        protected override void OnInitialized(EventArgs e)
-        {
-            base.OnInitialized(e);
+        IReadOnlyDictionary<string, string> Defines { get; } = new Dictionary<string, string>() {
+            #region docs
+            ["env-merge"] =
+@"KEY=VALUE
+KEY=
+=VALUE
+=
+TEXT
+KEY==VALUE
+KEY= VALUE
+KEY = VALUE
+KEY =VALUE
+",
+            ["env-remove"] =
+@"KEY=VALUE
+KEY=
+=VALUE
+=
+TEXT
+KEY==VALUE
+KEY= VALUE
+KEY = VALUE
+KEY =VALUE
+",
 
-            this.editSyntax.Text = @"<?xml version=""1.0"" encoding=""utf-8"" ?>
-<SyntaxDefinition xmlns=""http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"">
-</SyntaxDefinition>
-";
-        }
+            #endregion
+        };
 
         #endregion
 
         #region function
+
+        void LoadSelectedDefine()
+        {
+            var key = (string)((ListBoxItem)this.listDefines.SelectedItem).Tag;
+            LoadDefine(key);
+        }
+
+        void LoadDefine(string key)
+        {
+            var value = Defines[key];
+            this.inputPreview.Text = value;
+        }
 
         void ClearError()
         {
@@ -53,6 +83,11 @@ namespace AvalonEditSyntax
         void AddError(string message)
         {
             this.showError.Text += message + Environment.NewLine;
+        }
+
+        void ApplyCurrent()
+        {
+            Apply(this.inputSyntax.Text);
         }
 
         void Apply(string rawXml)
@@ -77,7 +112,7 @@ namespace AvalonEditSyntax
                 xmlDoc.Save(keep);
             }
             try {
-                AvalonEditHelper.SetSyntaxHighlightingDefault(this.editPreview, stream);
+                AvalonEditHelper.SetSyntaxHighlightingDefault(this.inputPreview, stream);
             } catch(Exception ex) {
                 AddError(ex.ToString());
                 return;
@@ -87,9 +122,46 @@ namespace AvalonEditSyntax
 
         #endregion
 
+        #region Window
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            LoadSelectedDefine();
+
+            this.inputSyntax.Text =
+@"<?xml version=""1.0"" encoding=""utf-8"" ?>
+<SyntaxDefinition xmlns=""http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"">
+</SyntaxDefinition>
+";
+            ApplyCurrent();
+        }
+
+        #endregion
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Apply(this.editSyntax.Text);
+            Apply(this.inputSyntax.Text);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            LoadSelectedDefine();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(this.inputSyntax.Text);
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            var text = Clipboard.GetText();
+            if(!string.IsNullOrEmpty(text)) {
+                this.inputSyntax.Text = text;
+                ApplyCurrent();
+            }
         }
     }
 }
