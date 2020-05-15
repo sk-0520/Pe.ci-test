@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     public class InjectAttribute : Attribute
     {
         /// <summary>
-        /// コンストラクタの限定、対象プロパティ(oe フィールド)をマーク。
+        /// コンストラクタの限定、対象プロパティ(or フィールド)をマーク。
         /// </summary>
         public InjectAttribute()
         {
@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         }
 
         /// <summary>
-        /// コンストラクタの限定、対象プロパティ(oe フィールド)を名前付きでマーク。
+        /// コンストラクタの限定、対象プロパティ(or フィールド)を名前付きでマーク。
         /// </summary>
         public InjectAttribute(string name)
         {
