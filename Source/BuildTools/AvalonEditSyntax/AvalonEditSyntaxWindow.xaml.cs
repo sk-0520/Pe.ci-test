@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Views;
 
 namespace AvalonEditSyntax
 {
@@ -31,9 +35,8 @@ namespace AvalonEditSyntax
         {
             base.OnInitialized(e);
 
-            this.editSyntax.Text = @"
-<?xml version=""1.0"" encoding =""utf-8"" ?>
-<SyntaxDefinition xmlns = ""http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"">
+            this.editSyntax.Text = @"<?xml version=""1.0"" encoding=""utf-8"" ?>
+<SyntaxDefinition xmlns=""http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008"">
 </SyntaxDefinition>
 ";
         }
@@ -61,7 +64,24 @@ namespace AvalonEditSyntax
                 return;
             }
 
-            //new System.Xml.XmlDocument()
+            var xmlDoc = new XmlDocument();
+            try {
+                xmlDoc.LoadXml(rawXml);
+            } catch(Exception ex) {
+                AddError(ex.ToString());
+                return;
+            }
+
+            var stream = new MemoryStream(rawXml.Length);
+            using(var keep = new KeepStream(stream)) {
+                xmlDoc.Save(keep);
+            }
+            try {
+                AvalonEditHelper.SetSyntaxHighlightingDefault(this.editPreview, stream);
+            } catch(Exception ex) {
+                AddError(ex.ToString());
+                return;
+            }
         }
 
 

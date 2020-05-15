@@ -10,6 +10,7 @@
   Title="MainWindow"
   Width="800"
   Height="450"
+  ResizeMode="CanResizeWithGrip"
   
   mc:Ignorable="d"
 >
@@ -42,12 +43,17 @@
 
     <Grid Grid.Column="2">
       <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
         <RowDefinition Height="8*" />
+        <RowDefinition Height="Auto" />
         <RowDefinition Height="2*" />
       </Grid.RowDefinitions>
-      
-      <sharpdevelop_avalonedit:TextEditor x:Name="editSyntax" Grid.Row="0" SyntaxHighlighting="XML" />
-      <TextBlock x:Name="showError" Grid.Row="1" />
+
+      <ToolBar Grid.Row="0" />
+
+      <sharpdevelop_avalonedit:TextEditor x:Name="editSyntax" Grid.Row="1" SyntaxHighlighting="XML" />
+      <GridSplitter Grid.Row="2" Height="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+      <TextBox x:Name="showError" Grid.Row="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" />
     </Grid>
 
   </Grid>
