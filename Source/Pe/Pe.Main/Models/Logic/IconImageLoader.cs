@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return bitmapSource;
         }
 
-        protected Task<BitmapSource?> GetIconImageAsync(IconData iconData, CancellationToken cancellationToken)
+        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -188,14 +188,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public class IconImageLoader : IconImageLoaderBase
     {
-        public IconImageLoader(IconData iconData, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(iconBox, dispatcherWrapper, loggerFactory)
+        public IconImageLoader(IReadOnlyIconData iconData, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(iconBox, dispatcherWrapper, loggerFactory)
         {
             IconData = iconData;
         }
 
         #region property
 
-        IconData IconData { get; }
+        IReadOnlyIconData IconData { get; }
 
         #endregion
 

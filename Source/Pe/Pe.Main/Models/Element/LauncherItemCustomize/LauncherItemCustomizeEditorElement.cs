@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         /// <param name="commander"></param>
         /// <param name="implementation"></param>
         /// <returns>真: アイコンが変更された。</returns>
-        private bool CheckIconChanged(LauncherIconData currentFileIcon, IconData iconData, string kindIconValue)
+        private bool CheckIconChanged(LauncherIconData currentFileIcon, IReadOnlyIconData iconData, string kindIconValue)
         {
             switch(Kind) {
                 case LauncherItemKind.File: {
