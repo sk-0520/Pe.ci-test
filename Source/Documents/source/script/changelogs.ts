@@ -175,7 +175,14 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Logging 3.1.3 -> 3.1.4",
+							"Microsoft.Extensions.Logging.Abstractions 3.1.3 -> 3.1.4",
+							"Microsoft.Extensions.Configuration.Json 3.1.3 -> 3.1.4",
+							"System.Text.Encoding.CodePages 4.7.0 -> 4.7.1"
+						]
 					},
 					{
 						"revision": "",
