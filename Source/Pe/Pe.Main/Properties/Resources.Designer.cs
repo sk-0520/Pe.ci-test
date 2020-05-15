@@ -87,17 +87,16 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Update&quot;&gt;
-        ///	&lt;!--TODO:キーと値で分離--&gt;
         ///
-        ///	&lt;!--
-        ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
-        ///	&lt;Color name=&quot;Variable&quot; foreground=&quot;Maroon&quot; /&gt;
-        ///	--&gt;
-        ///	&lt;Color name=&quot;Key&quot; /&gt;
-        ///	&lt;Color name=&quot;Variable&quot; /&gt;
-        ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
+        ///	&lt;Color name=&quot;Key&quot; foreground=&quot;Blue&quot; fontWeight=&quot;bold&quot; /&gt;
+        ///	&lt;Color name=&quot;Value&quot; foreground=&quot;Brown&quot; fontWeight=&quot;bold&quot;   /&gt;
+        ///
+        ///	&lt;RuleSet ignoreCase=&quot;false&quot;&gt;
         ///		&lt;Rule color=&quot;Key&quot;&gt;
-        ///			\w+
+        ///			^\s*[A-Za-z0-9]+\s*(?==\s*.*)
+        ///		&lt;/Rule&gt;
+        ///		&lt;Rule color=&quot;Value&quot;&gt;
+        ///			(?&amp;lt;=^\s*[A-Za-z0-9]+\s*=\s*).+
         ///		&lt;/Rule&gt;
         ///	&lt;/RuleSet&gt;
         ///
