@@ -27,10 +27,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region property
 
-        PluginId PluginId { get; }
-
+        /// <summary>
+        /// プラグイン情報。
+        /// <para>このプロパティ以下は<see cref="IsInitialized"/>の状態にかかわらず読み込み可能であること。</para>
+        /// </summary>
         IPluginInformations PluginInformations { get; }
 
+        /// <summary>
+        /// 初期化処理が行われたか。
+        /// <para><see cref="Initialize(IPluginInitializeContext)"/>が呼び出された後、プラグイン側で責任をもって真にすること。</para>
+        /// </summary>
         bool IsInitialized { get; }
 
         #endregion
@@ -43,10 +49,28 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// </summary>
         void Initialize(IPluginInitializeContext pluginContext);
 
+        /// <summary>
+        /// プラグイン終了。
+        /// <para>可能な限りプラグイン開放可能な状態になること。</para>
+        /// </summary>
         void Uninitialize();
 
+        /// <summary>
+        /// プラグイン機能を使用するための読み込み。
+        /// </summary>
+        /// <param name="pluginKind">対象機能ごとの読み込み指定。テーマだけ読み込んでアドオンはまだ、みたいな状態。</param>
+        /// <param name="pluginContext"></param>
         void Load(PluginKind pluginKind, IPluginContext pluginContext);
+        /// <summary>
+        /// プラグイン機能の使用を終了。
+        /// </summary>
+        /// <param name="pluginKind">対象機能。</param>
         void Unload(PluginKind pluginKind);
+        /// <summary>
+        /// プラグイン機能は読み込まれているか。
+        /// </summary>
+        /// <param name="pluginKind"></param>
+        /// <returns></returns>
         bool IsLoaded(PluginKind pluginKind);
 
         #endregion

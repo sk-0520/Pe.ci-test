@@ -23,12 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
-        string ConvertDirectoryName(PluginId pluginId)
+        string ConvertDirectoryName(IPluginIdentifiers pluginId)
         {
-            return pluginId.Id.ToString();
+            return pluginId.PluginId.ToString();
         }
 
-        PluginFile CreatePluginFile(in PluginId pluginId)
+        PluginFile CreatePluginFile(IPluginIdentifiers pluginId)
         {
             var dirName = ConvertDirectoryName(pluginId);
 
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginFile;
         }
 
-        PluginPersistent CrteatePluginPersistent(in PluginId pluginId)
+        PluginPersistent CrteatePluginPersistent(IPluginIdentifiers pluginId)
         {
             // DB渡す？ バリア渡す？ 遅延渡す？
             var pluginPersistent = new PluginPersistent(
@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginPersistent;
         }
 
-        PluginStorage CreatePluginStorage(in PluginId pluginId)
+        PluginStorage CreatePluginStorage(IPluginIdentifiers pluginId)
         {
             var pluginStorage = new PluginStorage(
                 CreatePluginFile(pluginId),
@@ -63,16 +63,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginStorage;
         }
 
-        public PluginInitializeContext CreateInitializeContext(PluginId pluginId)
+        public PluginInitializeContext CreateInitializeContext(IPluginIdentifiers pluginIdentifiers)
         {
-            var pluginStorage = CreatePluginStorage(pluginId);
-            return new PluginInitializeContext(pluginId, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginIdentifiers);
+            return new PluginInitializeContext(pluginIdentifiers, pluginStorage);
         }
 
-        public PluginContext CreateContext(in PluginId pluginId)
+        public PluginContext CreateContext(IPluginIdentifiers pluginIdentifiers)
         {
-            var pluginStorage = CreatePluginStorage(pluginId);
-            return new PluginContext(pluginId, pluginStorage, UserAgentManager);
+            var pluginStorage = CreatePluginStorage(pluginIdentifiers);
+            return new PluginContext(pluginIdentifiers, pluginStorage, UserAgentManager);
         }
 
         #endregion

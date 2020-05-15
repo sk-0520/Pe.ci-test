@@ -487,16 +487,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
             foreach(var plugin in PluginContainer.GetPlugins()) {
-                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginId));
+                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
                 PluginContainer.AddPlugin(plugin);
             }
         }
 
-        private void ApplyCurrentTheme(in PluginId pluginId)
+        private void ApplyCurrentTheme(IPluginIdentifiers pluginIdentifiers)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
-            PluginContainer.Theme.SetCurrentTheme(pluginId, pluginContextFactory);
+            PluginContainer.Theme.SetCurrentTheme(pluginIdentifiers, pluginContextFactory);
         }
 
         private void RunAddons()
@@ -668,7 +668,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MakeMessageWindow();
 
             LoadPlugins();
-            ApplyCurrentTheme(DefaultTheme.Id);
+            ApplyCurrentTheme(DefaultTheme.Informations.PluginIdentifiers);
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");

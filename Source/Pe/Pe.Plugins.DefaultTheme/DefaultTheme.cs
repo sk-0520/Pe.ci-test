@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
@@ -12,7 +14,11 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
     {
         #region define
 
-        public static readonly PluginId Id = new PluginId(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "default-theme");
+        public static readonly PluginInformations Informations = new PluginInformations(
+            new PluginIdentifiers(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "default-theme"),
+            new PluginVersions(Assembly.GetExecutingAssembly()!.GetName()!.Version!, new Version(0,0,0), new Version(0, 0, 0)),
+            new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2)
+        );
 
         #endregion
 
@@ -30,11 +36,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #region ITheme
 
-        /// <inheritdoc cref="IPlugin.PluginId"/>
-        public PluginId PluginId => Id;
-
         /// <inheritdoc cref="IPlugin.PluginInformations"/>
-        public IPluginInformations PluginInformations => throw new NotImplementedException();
+        public IPluginInformations PluginInformations => Informations;
 
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }

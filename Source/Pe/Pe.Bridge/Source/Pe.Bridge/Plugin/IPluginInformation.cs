@@ -5,6 +5,44 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    public interface IPluginIdentifiers
+    {
+        #region property
+
+        /// <summary>
+        /// プラグインの識別ID。
+        /// <para>重複してるとバグる。</para>
+        /// </summary>
+        public Guid PluginId { get; }
+
+        /// <summary>
+        /// プラグインを人が見て判断するための名前。
+        /// <para><see cref="PluginId"/>と異なり重複してもいいけどなるべく重複しない方針。</para>
+        /// <para>ローカライズは考えなくていい。</para>
+        /// </summary>
+        public string PluginName { get; }
+
+        #endregion
+    }
+
+    public class PluginIdentifiers: IPluginIdentifiers
+    {
+        public PluginIdentifiers(Guid pluginId, string pluginName)
+        {
+            PluginId = pluginId;
+            PluginName = pluginName;
+        }
+
+        #region IPluginIdentifiers
+
+        /// <inheritdoc cref="IPluginIdentifiers.PluginId"/>
+        public Guid PluginId { get; }
+        /// <inheritdoc cref="IPluginIdentifiers.PluginName"/>
+        public string PluginName { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// プラグインバージョン。
     /// </summary>
@@ -32,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     }
 
     /// <inheritdoc cref="IPluginVersions"/>
-    public class PluginVersions : IPluginVersions
+    public class PluginVersions: IPluginVersions
     {
         public PluginVersions(Version pluginVersion, Version minimumSupportVersion, Version maximumSupportVersion)
         {
@@ -85,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     }
 
     /// <inheritdoc cref="IPluginAuthors"/>
-    public class PluginAuthors : IPluginAuthors
+    public class PluginAuthors: IPluginAuthors
     {
         public PluginAuthors(IAuthor pluginAuthor, string pluginLicense)
         {
@@ -108,6 +146,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// </summary>
     public interface IPluginInformations
     {
+
+        /// <summary>
+        /// プラグインID。
+        /// </summary>
+        IPluginIdentifiers PluginIdentifiers { get; }
         /// <summary>
         /// バージョン情報。
         /// </summary>
@@ -119,15 +162,19 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     }
 
     /// <inheritdoc cref="IPluginInformations"/>
-    public class PluginInformations : IPluginInformations
+    public class PluginInformations: IPluginInformations
     {
-        public PluginInformations(IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
+        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
         {
+            PluginIdentifiers = pluginIdentifiers;
             PluginVersions = pluginVersions;
             PluginAuthors = pluginAuthors;
         }
 
         #region IPluginInformations
+
+        /// <inheritdoc cref="IPluginInformations.PluginIdentifiers"/>
+        public IPluginIdentifiers PluginIdentifiers { get; }
 
         /// <inheritdoc cref="IPluginInformations.PluginVersions"/>
         public IPluginVersions PluginVersions { get; }

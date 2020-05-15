@@ -10,15 +10,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public class PluginInitializeContext: IPluginInitializeContext
     {
-        public PluginInitializeContext(in PluginId pluginId, PluginStorage storage)
+        public PluginInitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
         {
-            PluginId = pluginId;
+            PluginIdentifiers = pluginIdentifiers;
             Storage = storage;
         }
 
         #region property
 
-        public PluginId PluginId { get; }
+        public IPluginIdentifiers PluginIdentifiers { get; }
 
         #endregion
 
@@ -32,16 +32,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
     public class PluginContext : IPluginContext
     {
-        public PluginContext(in PluginId pluginId, PluginStorage storage, IUserAgentFactory userAgentFactory)
+        public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
         {
-            PluginId = pluginId;
+            PluginIdentifiers = pluginIdentifiers;
             Storage = storage;
             UserAgentFactory = userAgentFactory;
         }
 
         #region property
 
-        public PluginId PluginId { get; }
+        public IPluginIdentifiers PluginIdentifiers { get; }
 
         #endregion
 
