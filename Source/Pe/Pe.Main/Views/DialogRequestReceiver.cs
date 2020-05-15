@@ -72,9 +72,10 @@ namespace ContentTypeTextNet.Pe.Main.Views
         public void ReceiveIconSelectDialogRequest(RequestEventArgs o)
         {
             var iconSelectParameter = (IconSelectDialogRequestParameter)o.Parameter;
-            var dialog = new IconDialog();
-            dialog.IconPath = iconSelectParameter.FileName;
-            dialog.IconIndex = iconSelectParameter.IconIndex;
+            var dialog = new IconDialog {
+                IconPath = iconSelectParameter.FileName,
+                IconIndex = iconSelectParameter.IconIndex
+            };
             if(dialog.ShowDialog().GetValueOrDefault()) {
                 o.Callback(new IconSelectDialogRequestResponse() {
                     ResponseIsCancel = false,
