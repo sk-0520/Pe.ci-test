@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         string StripDoubleQuotes(string s)
         {
-            if(s.Length > "\"\"".Length && s[0] == '"' && s[s.Length - 1] == '"') {
+            if(s.Length > "\"\"".Length && s[0] == '"' && s[^1] == '"') {
                 return s.Substring(1, s.Length - 1 - 1);
             }
 
