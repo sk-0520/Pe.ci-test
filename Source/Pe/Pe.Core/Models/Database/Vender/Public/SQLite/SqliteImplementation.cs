@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
                 return false;
             }
 
-            if(value.GetType() == typeof(bool)) {
+            if(value is bool) {
                 return (bool)value;
             }
 

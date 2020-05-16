@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
-                .Select(o => o.GetType() == typeof(DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
+                .Select(o => (o is DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
                 .ToList()
             ;
 
