@@ -143,6 +143,8 @@ dotnet_diagnostic.S4456.severity = warning
 dotnet_diagnostic.S3604.severity = none
 # S1168: Empty arrays and collections should be returned instead of null
 dotnet_diagnostic.S1168.severity = warning
+# S1118: Utility classes should not have public constructors
+dotnet_diagnostic.S1118.severity = warning
 
 [*.sh]
 end_of_line = lf
