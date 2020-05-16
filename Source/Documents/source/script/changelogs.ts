@@ -194,6 +194,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "SonarAnalyzer.CSharp の導入"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
