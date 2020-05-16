@@ -111,7 +111,8 @@ dotnet_diagnostic.S112.severity = silent
 dotnet_diagnostic.S3442.severity = warning
 # S1116: Empty statements should be removed
 dotnet_diagnostic.S1116.severity = warning
-
+# S1481: Unused local variables should be removed
+dotnet_diagnostic.S1481.severity = suggestion
 
 [*.sh]
 end_of_line = lf
