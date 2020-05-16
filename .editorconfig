@@ -115,6 +115,8 @@ dotnet_diagnostic.S1116.severity = warning
 dotnet_diagnostic.S1481.severity = suggestion
 # S1199: Nested code blocks should not be used
 dotnet_diagnostic.S1199.severity = none
+# S3241: Methods should not return values that are never used
+dotnet_diagnostic.S3241.severity = none
 
 [*.sh]
 end_of_line = lf
