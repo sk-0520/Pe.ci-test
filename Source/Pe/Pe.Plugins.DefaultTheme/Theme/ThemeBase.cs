@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     public abstract class ThemeBase
     {
-        public ThemeBase(IThemeParameter parameter)
+        protected ThemeBase(IThemeParameter parameter)
         {
             PlatformTheme = parameter.PlatformTheme;
             DispatcherWrapper = parameter.DispatcherWrapper;
