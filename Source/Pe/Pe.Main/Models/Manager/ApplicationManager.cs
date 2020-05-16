@@ -870,6 +870,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CefSharp.Cef.Shutdown();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="ignoreUpdate">アップデートを無視するか。</param>
         public void Exit(bool ignoreUpdate)
         {
             Logger.LogInformation("おわる！");

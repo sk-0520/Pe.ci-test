@@ -32,16 +32,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         Close,
         /// <summary>
         /// アプリケーションの終了。
-        /// <para>アップデートが可能であればアップデート行う</para>
+        /// <para>通常はアップデートが可能であればアップデート行う</para>
+        /// <para>拡張機能: アップデートがあっても終了する。</para>
         /// </summary>
         [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Exit))]
         Exit,
-        /// <summary>
-        /// アプリケーションの終了。
-        /// <para>アップデートがあっても終了。</para>
-        /// </summary>
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Shutdown))]
-        Shutdown,
         /// <summary>
         /// 再起動。
         /// <para>アップデートがあっても再起動。</para>

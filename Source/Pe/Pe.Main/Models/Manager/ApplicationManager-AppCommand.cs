@@ -24,10 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     CommandElement!.HideView(false);
                 }),
                 factory.CreateParameter(ApplicationCommand.Exit, p => {
-                    Exit(false);
-                }),
-                factory.CreateParameter(ApplicationCommand.Shutdown, p => {
-                    Exit(true);
+                    // 拡張機能としてアップデート無視
+                    Exit(p.IsExtend);
                 }),
                 factory.CreateParameter(ApplicationCommand.Reboot, p => {
                     Reboot();

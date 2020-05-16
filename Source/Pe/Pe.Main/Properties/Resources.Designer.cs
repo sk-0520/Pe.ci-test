@@ -383,15 +383,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   終了 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_ApplicationCommand_Description_Shutdown {
-            get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_Shutdown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   情報(_A) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_AppManager_About_A {
