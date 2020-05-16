@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security;
 using System.Text;
 using System.Windows;
@@ -97,6 +98,26 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             base.OnSourceInitialized(e);
 
             UIUtility.SetToolWindowStyle(this, false, false);
+
+#if DEBUG || BETA
+            var devElement = new System.Windows.Controls.Border() {
+                Background = new SolidColorBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff)),
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 0, 1, 0),
+                IsHitTestVisible = false,
+                Child = new System.Windows.Controls.TextBlock() {
+                    Text = Models.BuildStatus.BuildType.ToString(),
+                    Opacity = 0.9,
+                    FontSize = 7,
+                },
+            };
+
+            var grid = UIUtility.FindLogicalChildren<Grid>(this).First();
+            Grid.SetColumn(devElement, 2);
+            grid.Children.Add(devElement);
+#endif
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

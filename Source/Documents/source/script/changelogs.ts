@@ -186,7 +186,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "コマンドウィンドウにデバッグ・β版印を付与"
 					},
 					{
 						"revision": "",
