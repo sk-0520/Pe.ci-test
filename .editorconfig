@@ -101,6 +101,9 @@ dotnet_diagnostic.S1123.severity = suggestion
 dotnet_diagnostic.S927.severity = warning
 # S1075: URIs should not be hardcoded
 dotnet_diagnostic.S1075.severity = suggestion
+# S125: Sections of code should not be commented out
+dotnet_diagnostic.S125.severity = silent
+
 
 [*.sh]
 end_of_line = lf
