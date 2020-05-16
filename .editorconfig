@@ -103,7 +103,8 @@ dotnet_diagnostic.S927.severity = warning
 dotnet_diagnostic.S1075.severity = suggestion
 # S125: Sections of code should not be commented out
 dotnet_diagnostic.S125.severity = silent
-
+# S1066: Collapsible "if" statements should be merged
+dotnet_diagnostic.S1066.severity = none
 
 [*.sh]
 end_of_line = lf
