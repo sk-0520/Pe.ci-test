@@ -445,7 +445,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
 
             if(disposing) {
+#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
                 GC.SuppressFinalize(this);
+#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
             }
 
             IsDisposed = true;
