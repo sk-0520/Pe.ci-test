@@ -190,6 +190,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#620: Clr Heap Allocation Analyzer を VS 拡張機能から Nuget に移し替える"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
