@@ -149,7 +149,8 @@ dotnet_diagnostic.S1118.severity = warning
 dotnet_diagnostic.S1940.severity = warning
 # S3966: Objects should not be disposed more than once
 dotnet_diagnostic.S3966.severity = suggestion
-
+# S3923: All branches in a conditional structure should not have exactly the same implementation
+dotnet_diagnostic.S3923.severity = warning
 
 [*.sh]
 end_of_line = lf
