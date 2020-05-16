@@ -229,7 +229,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public ILauncherExecuteResult OpenParentDirectory()
         {
+#pragma warning disable S1940 // 増える可能性があるので抑制
             if(!(Kind == LauncherItemKind.File)) {
+#pragma warning restore S1940
                 throw new InvalidOperationException($"{Kind}");
             }
             ThrowIfDisposed();
@@ -245,7 +247,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public ILauncherExecuteResult OpenWorkingDirectory()
         {
+#pragma warning disable S1940 // 増える可能性があるので抑制
             if(!(Kind == LauncherItemKind.File)) {
+#pragma warning restore S1940
                 throw new InvalidOperationException($"{Kind}");
             }
             ThrowIfDisposed();
