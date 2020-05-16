@@ -95,6 +95,10 @@ dotnet_diagnostic.S1135.severity = silent
 dotnet_diagnostic.S4144.severity = suggestion
 # S1128: Unused "using" should be removed
 dotnet_diagnostic.S1128.severity = silent
+# S1123: "Obsolete" attributes should include explanations
+dotnet_diagnostic.S1123.severity = suggestion
+# S927: parameter names should match base declaration and other partial definitions
+dotnet_diagnostic.S927.severity = warning
 
 [*.sh]
 end_of_line = lf
