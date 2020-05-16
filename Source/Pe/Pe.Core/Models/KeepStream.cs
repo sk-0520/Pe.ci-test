@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             BaseStream = stream;
             KeepPosition = keepPosition;
             if(KeepPosition) {
-                BaseStream.Position = RestorePosition;
+                RestorePosition = BaseStream.Position;
             }
         }
 
