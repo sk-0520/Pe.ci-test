@@ -36,7 +36,8 @@ if (!$IgnoreChanged) {
 
 # リリース時のアナライザ系削除
 $removePackageTargets = @(
-	'ClrHeapAllocationAnalyzer'
+	'ClrHeapAllocationAnalyzer',
+	'SonarAnalyzer.CSharp'
 )
 
 try {
