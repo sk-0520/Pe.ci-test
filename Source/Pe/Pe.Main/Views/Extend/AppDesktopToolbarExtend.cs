@@ -794,7 +794,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if(ExtendData.IsDocking) {
-                switch((int)msg) {
+                switch(msg) {
                     case (int)WM.WM_DESTROY: {
                             UnregisterAppbar();
                             handled = true;

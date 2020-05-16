@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
 
         public object Icon
         {
-            get { return (object)GetValue(IconProperty); }
+            get { return GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
 
