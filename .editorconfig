@@ -133,7 +133,8 @@ dotnet_diagnostic.S2365.severity = warning
 dotnet_diagnostic.S3881.severity = warning
 # S3881: "IDisposable" should be implemented correctly
 dotnet_diagnostic.S3881.severity = silent
-
+# S1125: Boolean literals should not be redundant
+dotnet_diagnostic.S1125.severity = suggestion
 
 [*.sh]
 end_of_line = lf
