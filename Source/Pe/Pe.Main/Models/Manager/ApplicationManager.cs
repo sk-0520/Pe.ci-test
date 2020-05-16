@@ -1342,6 +1342,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DelayCheckUpdateAsync().ConfigureAwait(false);
         }
 
+        private void GarbageCollection(bool full)
+        {
+            var old = GC.GetTotalMemory(false);
+            if(full) {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            } else {
+                GC.Collect(0);
+                GC.Collect(1);
+            }
+            var now = GC.GetTotalMemory(false);
+            var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
+            Logger.LogInformation(
+                "GC(FULL:{0}): {1}({2}) -> {3}({4}), 差分: {5}({6})",
+                full,
+                sizeConverter.ConvertHumanLikeByte(old), old,
+                sizeConverter.ConvertHumanLikeByte(now), now,
+                sizeConverter.ConvertHumanLikeByte(old - now), old - now
+            );
+        }
+
         #endregion
 
         #region IOrderManager
