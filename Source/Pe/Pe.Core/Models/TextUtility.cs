@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="comparisonType">比較処理。</param>
         /// <param name="converter"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S907:\"goto\" statement should not be used")]
         public static string ToUnique(string target, IReadOnlyCollection<string> seq, StringComparison comparisonType, Func<string, int, string> converter)
         {
             if(target == null) {
