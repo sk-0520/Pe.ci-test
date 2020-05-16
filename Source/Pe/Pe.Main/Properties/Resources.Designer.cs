@@ -311,20 +311,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   長い情報のコピー に類似しているローカライズされた文字列を検索します。
+        ///   情報のコピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ApplicationCommand_Description_CopyLongInformation {
+        public static string String_ApplicationCommand_Description_CopyInformation {
             get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyLongInformation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   短い情報のコピー に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_ApplicationCommand_Description_CopyShortInformation {
-            get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyShortInformation", resourceCulture);
+                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyInformation", resourceCulture);
             }
         }
         
@@ -343,15 +334,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_ApplicationCommand_Description_GarbageCollection {
             get {
                 return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   GC (フル) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_ApplicationCommand_Description_GarbageCollectionFull {
-            get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollectionFull", resourceCulture);
             }
         }
         

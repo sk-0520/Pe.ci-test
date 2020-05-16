@@ -1867,20 +1867,14 @@
   <data name="String_ApplicationCommand_Description_Close" xml:space="preserve">
     <value>閉じる</value>
   </data>
-  <data name="String_ApplicationCommand_Description_CopyLongInformation" xml:space="preserve">
-    <value>長い情報のコピー</value>
-  </data>
-  <data name="String_ApplicationCommand_Description_CopyShortInformation" xml:space="preserve">
-    <value>短い情報のコピー</value>
+  <data name="String_ApplicationCommand_Description_CopyInformation" xml:space="preserve">
+    <value>情報のコピー</value>
   </data>
   <data name="String_ApplicationCommand_Description_Exit" xml:space="preserve">
     <value>終了</value>
   </data>
   <data name="String_ApplicationCommand_Description_GarbageCollection" xml:space="preserve">
     <value>GC</value>
-  </data>
-  <data name="String_ApplicationCommand_Description_GarbageCollectionFull" xml:space="preserve">
-    <value>GC (フル)</value>
   </data>
   <data name="String_ApplicationCommand_Description_Help" xml:space="preserve">
     <value>ヘルプ</value>

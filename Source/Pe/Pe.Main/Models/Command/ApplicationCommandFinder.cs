@@ -49,12 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         Setting,
         [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_GarbageCollection))]
         GarbageCollection,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_GarbageCollectionFull))]
-        GarbageCollectionFull,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyShortInformation))]
-        CopyShortInformation,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyLongInformation))]
-        CopyLongInformation,
+        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyInformation))]
+        CopyInformation,
         [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Help))]
         Help,
     }

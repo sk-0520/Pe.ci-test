@@ -39,40 +39,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ShowSettingView();
                 }),
                 factory.CreateParameter(ApplicationCommand.GarbageCollection, p => {
-                    var old = GC.GetTotalMemory(false);
-                    GC.Collect(0);
-                    GC.Collect(1);
-                    var now = GC.GetTotalMemory(false);
-                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
-                    Logger.LogInformation(
-                        "GC: {0}({1}) -> {2}({3}), diff: {4}({5})",
-                        sizeConverter.ConvertHumanLikeByte(old), old,
-                        sizeConverter.ConvertHumanLikeByte(now), now,
-                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
-                    );
+                    GarbageCollection(p.IsExtend);
                 }),
-                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, p => {
-                    var old = GC.GetTotalMemory(false);
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    var now = GC.GetTotalMemory(false);
-                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
-                    Logger.LogInformation(
-                        "GC(FULL): {0}({1}) -> {2}({3}), diff: {4}({5})",
-                        sizeConverter.ConvertHumanLikeByte(old), old,
-                        sizeConverter.ConvertHumanLikeByte(now), now,
-                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
-                    );
-                }),
-                factory.CreateParameter(ApplicationCommand.CopyShortInformation, p => {
+                factory.CreateParameter(ApplicationCommand.CopyInformation, p => {
                     var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
-                    var s = infoCollector.GetShortInformation();
-                    ClipboardManager.CopyText(s, ClipboardNotify.User);
-                }),
-                factory.CreateParameter(ApplicationCommand.CopyLongInformation, p => {
-                    var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
-                    var s = infoCollector.GetLongInformation();
+                    var s = p.IsExtend
+                        ? infoCollector.GetLongInformation()
+                        : infoCollector.GetShortInformation()
+                    ;
                     ClipboardManager.CopyText(s, ClipboardNotify.User);
                 }),
                 factory.CreateParameter(ApplicationCommand.Help, p => {
