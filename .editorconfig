@@ -141,7 +141,8 @@ dotnet_diagnostic.S3246.severity = warning
 dotnet_diagnostic.S4456.severity = warning
 # S3604: Member initializer values should not be redundant
 dotnet_diagnostic.S3604.severity = none
-
+# S1168: Empty arrays and collections should be returned instead of null
+dotnet_diagnostic.S1168.severity = warning
 
 [*.sh]
 end_of_line = lf
