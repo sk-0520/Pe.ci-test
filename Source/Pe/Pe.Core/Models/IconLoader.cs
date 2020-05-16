@@ -286,7 +286,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         BitmapSource? LoadLargeIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
         {
             //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
+            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             if(hasIcon) {
@@ -295,7 +295,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(iconIndex < iconList.Count) {
                         var binary = iconList[iconIndex];
                         iconList.Clear();
-                        var image = (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
+                        var image = DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
                         return image;
                     }
                 } catch(Exception ex) {

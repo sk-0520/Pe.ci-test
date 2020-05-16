@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return source;
             }
 
-            var builder = new StringBuilder((int)(source.Length));
+            var builder = new StringBuilder(source.Length);
             var lastUpperIndex = -1;
             for(var i = 0; i < source.Length; i++) {
                 var c = source[i];

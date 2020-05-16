@@ -133,7 +133,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected override void AddItemsImpl(IReadOnlyList<TModel> newItems)
         {
             var newViewModels = newItems
-                .Cast<TModel>()
                 .Select(m => ToViewModelImpl(m)!)
                 .ToList()
             ;
@@ -148,7 +147,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected override void InsertItemsImpl(int insertIndex, IReadOnlyList<TModel> newItems)
         {
             var newViewModels = newItems
-                .Cast<TModel>()
                 .Select(m => ToViewModelImpl(m)!)
                 .Counting(insertIndex)
                 .ToList()
