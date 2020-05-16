@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
             foreach(var member in members) {
                 var memberType = enumType.GetField(member.ToString());
                 Assert.IsNotNull(memberType);
-                Assert.IsNotNull(memberType!.GetCustomAttribute<CommandDescriptionAttribute>(), member.ToString());
+                Assert.IsNotNull(memberType!.GetCustomAttributes<CommandDescriptionAttribute>(), member.ToString());
             }
         }
 
