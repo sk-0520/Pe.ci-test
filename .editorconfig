@@ -151,6 +151,9 @@ dotnet_diagnostic.S1940.severity = warning
 dotnet_diagnostic.S3966.severity = suggestion
 # S3923: All branches in a conditional structure should not have exactly the same implementation
 dotnet_diagnostic.S3923.severity = warning
+# S3400: Methods should not return constants
+dotnet_diagnostic.S3400.severity = none
+
 
 [*.sh]
 end_of_line = lf
