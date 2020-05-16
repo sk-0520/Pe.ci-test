@@ -135,6 +135,8 @@ dotnet_diagnostic.S3881.severity = warning
 dotnet_diagnostic.S3881.severity = silent
 # S1125: Boolean literals should not be redundant
 dotnet_diagnostic.S1125.severity = suggestion
+# S3246: Generic type parameters should be co/contravariant when possible
+dotnet_diagnostic.S3246.severity = warning
 
 [*.sh]
 end_of_line = lf
