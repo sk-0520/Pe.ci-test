@@ -99,7 +99,7 @@ try {
 
 				$includeValue = $includeElement.Value
 
-				if($removeTargets.Contains($includeValue)) {
+				if($removePackageTargets.Contains($includeValue)) {
 					Write-Output "remove $includeValue"
 					$element.ParentNode.RemoveChild($element)
 				}
