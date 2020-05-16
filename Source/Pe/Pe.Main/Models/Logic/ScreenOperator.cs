@@ -83,7 +83,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     var id = DeviceToId(screen.DeviceName);
                     return string.Format("{0}. {1}", id, screem.Name);
                 }
-                break;
+                //[S1751]
+                //break;
             }
 
             var device = new DISPLAY_DEVICE();
