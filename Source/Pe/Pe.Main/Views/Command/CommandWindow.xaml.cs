@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,6 +42,36 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         ILogger? Logger { get; set; }
 
         #endregion
+
+        #region IsExtendProperty
+
+        public static readonly DependencyProperty IsExtendProperty = DependencyProperty.Register(
+            nameof(IsExtend),
+            typeof(bool),
+            typeof(CommandWindow),
+            new FrameworkPropertyMetadata(
+                default(bool),
+                FrameworkPropertyMetadataOptions.None,
+                new PropertyChangedCallback(OnIsExtendChanged)
+            )
+        );
+
+        public bool IsExtend
+        {
+            get { return (bool)GetValue(IsExtendProperty); }
+            set { SetValue(IsExtendProperty, value); }
+        }
+
+        static void OnIsExtendChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as CommandWindow;
+            if(ctrl != null) {
+                ctrl.IsExtend = (bool)e.NewValue;
+            }
+        }
+
+        #endregion
+
 
         #region IDpiScaleOutputor
 
@@ -100,7 +131,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
-            Logger.LogInformation("{0}", FocusManager.GetFocusedElement(this));
+
+            IsExtend = Keyboard.Modifiers == ModifierKeys.Shift;
+        }
+
+        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        {
+            base.OnPreviewKeyUp(e);
+
+            IsExtend = Keyboard.Modifiers == ModifierKeys.Shift;
         }
 
         #endregion

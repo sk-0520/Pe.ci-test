@@ -286,7 +286,18 @@
                       </TextBlock.Style>
                     </TextBlock>
 
-                    <ItemsControl Grid.Column="1" ItemsSource="{Binding DescriptionValues}" Style="{StaticResource HitValues}" />
+                    <ItemsControl Grid.Column="1">
+                      <ItemsControl.Style>
+                        <Style TargetType="ItemsControl" BasedOn="{StaticResource HitValues}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsExtend, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                              <Setter Property="ItemsSource" Value="{Binding ExtendDescriptionValues}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="ItemsSource" Value="{Binding DescriptionValues}" />
+                        </Style>
+                      </ItemsControl.Style>
+                    </ItemsControl>
 
                   </Grid>
                 </Grid>

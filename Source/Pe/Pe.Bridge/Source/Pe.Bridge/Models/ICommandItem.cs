@@ -78,6 +78,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// 追記文言。
         /// </summary>
         IReadOnlyList<HitValue> DescriptionValues { get; }
+        /// <summary>
+        /// 拡張機能としての追記文言。
+        /// </summary>
+        IReadOnlyList<HitValue> ExtendDescriptionValues { get; }
 
 
         int Score { get; }
