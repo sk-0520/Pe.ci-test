@@ -138,6 +138,7 @@ dotnet_diagnostic.S1125.severity = suggestion
 # S3246: Generic type parameters should be co/contravariant when possible
 dotnet_diagnostic.S3246.severity = warning
 
+
 [*.sh]
 end_of_line = lf
 

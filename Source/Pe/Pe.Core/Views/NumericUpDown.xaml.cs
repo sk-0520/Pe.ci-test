@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         {
             var ctrl = (NumericUpDown)d;
             if(ctrl.DecimalPlaces < 0) {
-                throw new ArgumentOutOfRangeException(nameof(DecimalPlaces));
+                throw new InvalidOperationException(nameof(DecimalPlaces));
             }
             ctrl.DecimalPlaces = (int)e.NewValue;
         }
