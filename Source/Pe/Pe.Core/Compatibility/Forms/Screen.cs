@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         /// <summary>
         /// システム上のすべてのディスプレイの配列を取得します。
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S2365:Properties should not make collection or array copies")]
         public static Screen[] AllScreens
         {
             get { return GetAllScreens().ToArray(); }
