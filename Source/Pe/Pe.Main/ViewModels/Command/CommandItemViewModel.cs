@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
             HeaderValues = Item.HeaderValues.Select(i => new HitValueItemViewModel(i, LoggerFactory)).ToList();
             DescriptionValues = Item.DescriptionValues.Select(i => new HitValueItemViewModel(i, LoggerFactory)).ToList();
+            ExtendDescriptionValues = Item.ExtendDescriptionValues.Select(i => new HitValueItemViewModel(i, LoggerFactory)).ToList();
         }
 
         #region property
@@ -41,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         public IReadOnlyList<HitValueItemViewModel> HeaderValues { get; }
         public IReadOnlyList<HitValueItemViewModel> DescriptionValues { get; }
+        public IReadOnlyList<HitValueItemViewModel> ExtendDescriptionValues { get; }
 
         public bool ShowDescription
         {

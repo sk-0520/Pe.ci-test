@@ -311,11 +311,20 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   情報のコピー に類似しているローカライズされた文字列を検索します。
+        ///   短い情報のコピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ApplicationCommand_Description_CopyInformation {
             get {
                 return ResourceManager.GetString("String_ApplicationCommand_Description_CopyInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   長い情報のコピー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_CopyInformation_Extend {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyInformation_Extend", resourceCulture);
             }
         }
         
@@ -329,11 +338,29 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   終了(アップデート無視) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Exit_Extend {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Exit_Extend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   GC に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ApplicationCommand_Description_GarbageCollection {
             get {
                 return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   GC(フル) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_GarbageCollection_Extend {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollection_Extend", resourceCulture);
             }
         }
         

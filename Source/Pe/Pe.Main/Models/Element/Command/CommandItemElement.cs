@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public List<HitValue> EditableHeaderValues { get; } = new List<HitValue>();
         public List<HitValue> EditableDescriptionValues { get; } = new List<HitValue>();
+        public List<HitValue> EditableExtendDescriptionValues { get; } = new List<HitValue>();
         public int EditableScore { get; set; }
 
         public Action? ExecuteAction { get; set; }
@@ -48,6 +49,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         public IReadOnlyList<HitValue> HeaderValues => EditableHeaderValues;
 
         public IReadOnlyList<HitValue> DescriptionValues => EditableDescriptionValues;
+        public virtual IReadOnlyList<HitValue> ExtendDescriptionValues
+        {
+            get
+            {
+                if(EditableExtendDescriptionValues.Count == 0) {
+                    return EditableDescriptionValues;
+                }
+                return EditableExtendDescriptionValues;
+            }
+        }
         public int Score => EditableScore;
 
         public object GetIcon(IconBox iconBox)
@@ -101,14 +112,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         #endregion
     }
 
-    public sealed class ApplicationCommandUtemElement: CommandItemElementBase
+    public sealed class ApplicationCommandItemElement: CommandItemElementBase
     {
-        public ApplicationCommandUtemElement(ApplicationCommandParameter parameter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ApplicationCommandItemElement(ApplicationCommandParameter parameter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(dispatcherWrapper, loggerFactory)
         {
             Parameter = parameter;
             EditableHeaderValues.AddRange(new[] { new HitValue(Parameter.Header, false) });
             EditableDescriptionValues.AddRange(new[] { new HitValue(Parameter.Description, false) });
+            EditableExtendDescriptionValues.AddRange(new[] { new HitValue(Parameter.ExtendDescription, false) });
         }
 
         #region property

@@ -1868,7 +1868,7 @@
     <value>閉じる</value>
   </data>
   <data name="String_ApplicationCommand_Description_CopyInformation" xml:space="preserve">
-    <value>情報のコピー</value>
+    <value>短い情報のコピー</value>
   </data>
   <data name="String_ApplicationCommand_Description_Exit" xml:space="preserve">
     <value>終了</value>
@@ -1899,5 +1899,14 @@
   </data>
   <data name="String_Setting_KeyInput_UserInput" xml:space="preserve">
     <value>割り当てるキーを入力してください</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_CopyInformation_Extend" xml:space="preserve">
+    <value>長い情報のコピー</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Exit_Extend" xml:space="preserve">
+    <value>終了(アップデート無視)</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_GarbageCollection_Extend" xml:space="preserve">
+    <value>GC(フル)</value>
   </data>
 </root>

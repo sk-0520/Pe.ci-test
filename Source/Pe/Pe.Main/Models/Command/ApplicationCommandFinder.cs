@@ -23,35 +23,60 @@ using NLog.Fluent;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    internal class CommandDescriptionAttribute: Attribute
+    {
+        public CommandDescriptionAttribute(string resourceName)
+            : this(resourceName, false)
+        { }
+
+
+        public CommandDescriptionAttribute(string resourceName, bool isExtend)
+        {
+            ResourceName = resourceName;
+            IsExtend = isExtend;
+        }
+
+        #region property
+
+        public string ResourceName { get; }
+        public bool IsExtend { get; }
+
+        #endregion
+    }
+
     internal enum ApplicationCommand
     {
         /// <summary>
         /// コマンドウィンドウを閉じる。
         /// </summary>
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Close))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Close))]
         Close,
         /// <summary>
         /// アプリケーションの終了。
         /// <para>通常はアップデートが可能であればアップデート行う</para>
         /// <para>拡張機能: アップデートがあっても終了する。</para>
         /// </summary>
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Exit))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Exit), false)]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Exit_Extend), true)]
         Exit,
         /// <summary>
         /// 再起動。
         /// <para>アップデートがあっても再起動。</para>
         /// </summary>
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Reboot))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Reboot))]
         Reboot,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_About))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_About))]
         About,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Setting))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Setting))]
         Setting,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_GarbageCollection))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_GarbageCollection), false)]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_GarbageCollection_Extend), true)]
         GarbageCollection,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyInformation))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyInformation), false)]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_CopyInformation_Extend), true)]
         CopyInformation,
-        [Description(nameof(Properties.Resources.String_ApplicationCommand_Description_Help))]
+        [CommandDescription(nameof(Properties.Resources.String_ApplicationCommand_Description_Help))]
         Help,
     }
 
@@ -77,16 +102,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             return CommandConfiguration.ApplicationPrefix + joinedValue;
         }
 
-        string ToDescription(ApplicationCommand applicationCommand)
+        (string narmal, string extend) ToDescriptions(ApplicationCommand applicationCommand)
         {
             // テスト側でもろもろ担保
-            var descriptionAttribute = applicationCommand.GetType().GetField(applicationCommand.ToString())!.GetCustomAttribute<DescriptionAttribute>();
-            return Properties.Resources.ResourceManager.GetString(descriptionAttribute!.Description)!;
+            var descriptionAttributes = applicationCommand.GetType().GetField(applicationCommand.ToString())!.GetCustomAttributes<CommandDescriptionAttribute>().ToList();
+            if(descriptionAttributes.Count == 1) {
+                var singleValue = Properties.Resources.ResourceManager.GetString(descriptionAttributes[0].ResourceName)!;
+                return (singleValue, singleValue);
+            } else {
+                var a = Properties.Resources.ResourceManager.GetString(descriptionAttributes[0].ResourceName)!;
+                var b = Properties.Resources.ResourceManager.GetString(descriptionAttributes[1].ResourceName)!;
+                if(descriptionAttributes[1].IsExtend) {
+                    return (a, b);
+                } else {
+                    return (b, a);
+                }
+            }
         }
 
         public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<ICommandExecuteParameter> executor)
         {
-            return new ApplicationCommandParameter(ToHeader(applicationCommand), ToDescription(applicationCommand), iconBox => {
+            var descriptions = ToDescriptions(applicationCommand);
+            return new ApplicationCommandParameter(ToHeader(applicationCommand), descriptions.narmal, descriptions.extend, iconBox => {
                 var control = new Control();
                 using(Initializer.Begin(control)) {
                     control.Template = (ControlTemplate)Application.Current.Resources["App-Image-Command"];
@@ -109,10 +146,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
     public class ApplicationCommandParameter
     {
-        public ApplicationCommandParameter(string header, string description, Func<IconBox, object> iconGetter, Action<ICommandExecuteParameter> executor)
+        public ApplicationCommandParameter(string header, string description, string extendDescription, Func<IconBox, object> iconGetter, Action<ICommandExecuteParameter> executor)
         {
             Header = header ?? throw new ArgumentNullException(nameof(header));
             Description = description ?? throw new ArgumentNullException(nameof(description));
+            ExtendDescription = extendDescription ?? throw new ArgumentNullException(nameof(extendDescription));
             IconGetter = iconGetter ?? throw new ArgumentNullException(nameof(iconGetter));
             Executor = executor ?? throw new ArgumentNullException(nameof(executor));
         }
@@ -121,6 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public string Header { get; }
         public string Description { get; }
+        public string ExtendDescription { get; }
         public Func<IconBox, object> IconGetter { get; }
         public Action<ICommandExecuteParameter> Executor { get; }
 
@@ -204,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 foreach(var parameter in Parameters) {
-                    var element = new ApplicationCommandUtemElement(parameter, DispatcherWrapper, LoggerFactory);
+                    var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
                     element.Initialize();
                     element.EditableScore = hitValuesCreator.GetScore(ScoreKind.Initial, hitValuesCreator.NoBonus) - 1;
                     yield return element;
@@ -223,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     var ranges = hitValuesCreator.ConvertRanges(inputValue, parameterMatches);
                     var hitValue = hitValuesCreator.ConvertHitValues(inputValue, parameter.Header, ranges);
 
-                    var element = new ApplicationCommandUtemElement(parameter, DispatcherWrapper, LoggerFactory);
+                    var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
                     element.Initialize();
 
                     element.EditableHeaderValues.SetRange(hitValue);
