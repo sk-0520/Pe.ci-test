@@ -119,6 +119,8 @@ dotnet_diagnostic.S1199.severity = none
 dotnet_diagnostic.S3241.severity = none
 # S3626: Jump statements should not be redundant
 dotnet_diagnostic.S3626.severity = none
+# S1185: Overriding members should do more than simply call the same member in the base class
+dotnet_diagnostic.S1185.severity = warning
 
 [*.sh]
 end_of_line = lf
