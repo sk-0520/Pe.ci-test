@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// <summary>
     /// ViewModel の基底。
     /// </summary>
-    public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable, IDisposer
+    public abstract class ViewModelBase: BindableBase, INotifyDataErrorInfo, IDisposer
     {
         public ViewModelBase(ILoggerFactory loggerFactory)
         {

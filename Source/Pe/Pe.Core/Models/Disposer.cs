@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// <see cref="IDisposable.Dispose"/>をサポートする基底クラス。
     /// </summary>
-    public abstract class DisposerBase : IDisposer, IDisposable
+    public abstract class DisposerBase: IDisposer
     {
         ~DisposerBase()
         {
