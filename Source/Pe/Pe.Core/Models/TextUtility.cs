@@ -122,6 +122,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4456:Parameter validation in yielding methods should be wrapped")]
         public static IEnumerable<string> ReadLines(string text)
         {
             if(text == null) {
@@ -129,26 +130,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             using var reader = new StringReader(text);
-            return ReadLinesCore(reader);
+            string? line;
+            while((line = reader.ReadLine()) != null) {
+                yield return line;
+            }
         }
+
 
         /// <summary>
         /// リーダーから行毎に分割する。
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4456:Parameter validation in yielding methods should be wrapped")]
         public static IEnumerable<string> ReadLines(TextReader reader)
         {
             if(reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
-
-            return ReadLinesCore(reader);
-        }
-
-        private static IEnumerable<string> ReadLinesCore(TextReader reader)
-        {
-            Debug.Assert(reader != null);
 
             string? line;
             while((line = reader.ReadLine()) != null) {
