@@ -55,6 +55,10 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="1.6.3" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.15" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.7.0.17535">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.DirectoryServices.AccountManagement" Version="4.7.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
   </ItemGroup>
