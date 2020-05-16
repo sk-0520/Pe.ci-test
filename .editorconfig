@@ -105,6 +105,8 @@ dotnet_diagnostic.S1075.severity = suggestion
 dotnet_diagnostic.S125.severity = silent
 # S1066: Collapsible "if" statements should be merged
 dotnet_diagnostic.S1066.severity = none
+# S112: General exceptions should never be thrown
+dotnet_diagnostic.S112.severity = silent
 
 [*.sh]
 end_of_line = lf
