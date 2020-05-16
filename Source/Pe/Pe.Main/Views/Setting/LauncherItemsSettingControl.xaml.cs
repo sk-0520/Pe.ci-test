@@ -63,15 +63,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
 
         public ICommand ScrollSelectedItemCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
-                var items = (ListBox)FindName("items");
-                items.ScrollIntoView(Editor.SelectedItem);
+                var listItems = (ListBox)FindName("items");
+                listItems.ScrollIntoView(Editor.SelectedItem);
             }
         ));
 
         public ICommand ScrollToTopCustomizeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {
-                var customize = (ScrollViewer)FindName("customize");
-                customize.ScrollToTop();
+                var scrollCustomize = (ScrollViewer)FindName("customize");
+                scrollCustomize.ScrollToTop();
             }
         ));
 

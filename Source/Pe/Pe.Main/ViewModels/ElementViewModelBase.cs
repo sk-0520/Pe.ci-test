@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
     public abstract class ElementViewModelBase<TElement> : SingleModelViewModelBase<TElement>
         where TElement : ElementBase
     {
-        public ElementViewModelBase(TElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected ElementViewModelBase(TElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             // 初期化完了済みかはデバッグ時に検知すべし

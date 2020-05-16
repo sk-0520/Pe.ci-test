@@ -152,11 +152,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"get error: {interfaceType} [{name}]");
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         object[]? CreateParameters(string name, IReadOnlyList<ParameterInfo> parameterInfos, IReadOnlyDictionary<ParameterInfo, InjectAttribute> parameterInjections, IEnumerable<object> manualParameters)
         {
             var manualParameterItems = manualParameters
                 .Where(o => o != null)
-                .Select(o => o.GetType() == typeof(DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
+                .Select(o => (o is DiDefaultParameter) ? ((DiDefaultParameter)o).GetPair() : new KeyValuePair<Type, object?>(o.GetType(), o))
                 .ToList()
             ;
 
@@ -660,14 +661,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return this;
         }
         /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string)"/>
-        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName)
+        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName)
         {
-            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), string.Empty);
+            return DirtyRegister(typeof(TBase), memberName, typeof(TObject), string.Empty);
         }
         /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string, string)"/>
-        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName, string name)
+        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName, string name)
         {
-            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), name);
+            return DirtyRegister(typeof(TBase), memberName, typeof(TObject), name);
         }
 
         /// <inheritdoc cref="IDiRegisterContainer.Unregister(Type)"/>

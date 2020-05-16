@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class UserAgentManager : ManagerBase, IUserAgentManager, IUserAgentFactory, IApplicationUserAgentFactory
+    public class UserAgentManager: ManagerBase, IUserAgentManager
     {
         public UserAgentManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)

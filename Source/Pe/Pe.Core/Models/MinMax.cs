@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public interface IReadOnlyMinMax<T>
+    public interface IReadOnlyMinMax<out T>
         where T : IComparable
     {
         #region property
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     }
 
-    public interface IReadOnlyMinMaxDefault<T>: IReadOnlyMinMax<T>
+    public interface IReadOnlyMinMaxDefault<out T>: IReadOnlyMinMax<T>
         where T : IComparable
     {
         #region property

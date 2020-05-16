@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 using var shellItem = ComWrapper.Create(iShellItem);
                 var size = iconSize.ToSize();
                 var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
-                var hResultBitmap = IntPtr.Zero;
+                IntPtr hResultBitmap;
                 using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
                     imageFactory.Com.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
                 }
@@ -105,6 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+
         /// <summary>
         /// http://hp.vector.co.jp/authors/VA016117/rsrc2icon.html
         /// </summary>
@@ -112,6 +113,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="name"></param>
         /// <param name="resType"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
@@ -286,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         BitmapSource? LoadLargeIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
         {
             //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
+            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             if(hasIcon) {
@@ -295,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(iconIndex < iconList.Count) {
                         var binary = iconList[iconIndex];
                         iconList.Clear();
-                        var image = (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
+                        var image = DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
                         return image;
                     }
                 } catch(Exception ex) {

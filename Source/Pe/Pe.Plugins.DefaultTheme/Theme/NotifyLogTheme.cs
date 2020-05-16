@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             var color = MediaUtility.GetAutoColor(PlatformTheme.GetTaskbarColor());
             color.A = isMouseOver
                 ? (byte)255
-                : (byte)BaseAlplha
+                : BaseAlplha
             ;
             return new SolidColorBrush(color);
         }

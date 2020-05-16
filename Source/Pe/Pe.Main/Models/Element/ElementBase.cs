@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
         bool _isInitialized;
 
         #endregion
-        public ElementBase(ILoggerFactory loggerFactory)
+        protected ElementBase(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
     /// </summary>
     public abstract class ContextElementBase : ElementBase
     {
-        public ContextElementBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        protected ContextElementBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             ServiceLocator = diContainer;

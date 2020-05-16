@@ -30,53 +30,53 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region IDatabaseTransaction
 
-        public int Execute(string statement, object? param = null)
+        public int Execute(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return Transaction.Execute(statement, param);
+            return Transaction.Execute(statement, parameter);
         }
 
-        public DataTable GetDataTable(string statement, object? param = null)
+        public DataTable GetDataTable(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return Transaction.GetDataTable(statement, param);
+            return Transaction.GetDataTable(statement, parameter);
         }
 
-        public IEnumerable<T> Query<T>(string statement, object? param = null, bool buffered = true)
+        public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
 
-            return Transaction.Query<T>(statement, param, buffered);
+            return Transaction.Query<T>(statement, parameter, buffered);
         }
 
-        public IEnumerable<dynamic> Query(string statement, object? param = null, bool buffered = true)
+        public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
 
-            return Transaction.Query(statement, param, buffered);
+            return Transaction.Query(statement, parameter, buffered);
         }
 
-        public T QueryFirst<T>(string statement, object? param = null)
+        public T QueryFirst<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return Transaction.QueryFirst<T>(statement, param);
+            return Transaction.QueryFirst<T>(statement, parameter);
         }
 
-        public T QueryFirstOrDefault<T>(string statement, object? param = null)
+        public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return Transaction.QueryFirstOrDefault<T>(statement, param);
+            return Transaction.QueryFirstOrDefault<T>(statement, parameter);
         }
 
-        public T QuerySingle<T>(string statement, object? param = null)
+        public T QuerySingle<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
 
-            return Transaction.QuerySingle<T>(statement, param);
+            return Transaction.QuerySingle<T>(statement, parameter);
         }
 
         public void Commit()

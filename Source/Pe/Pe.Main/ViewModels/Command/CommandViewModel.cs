@@ -124,6 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         CancellationTokenSource? InputCancellationTokenSource { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Bug", "S4275:Getters and setters should access the expected fields")]
         public string InputValue
         {
             get => this._inputValue;

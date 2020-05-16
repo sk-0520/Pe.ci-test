@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public static string CombinePath(IEnumerable<string> hierarchies)
         {
-            return hierarchies.Aggregate((left, right) => left.TrimEnd('/') + "/" + right.TrimStart('/')); ;
+            return hierarchies.Aggregate((left, right) => left.TrimEnd('/') + "/" + right.TrimStart('/'));
         }
 
         public static Uri CombineUri(string baseUri, IEnumerable<string> hierarchies)

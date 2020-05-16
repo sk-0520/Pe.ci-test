@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 {
     public abstract class ConfigurationBase
     {
-        public ConfigurationBase(IConfigurationSection section)
+        protected ConfigurationBase(IConfigurationSection section)
         { }
 
         #region function

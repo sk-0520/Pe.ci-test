@@ -247,11 +247,9 @@ namespace ContentTypeTextNet.Pe.Core.Views
                     currentGroup = null;
                 }
             }
+
             if(currentGroup != null) {
                 currentGroup.Close();
-#pragma warning disable IDE0059 // 値の不必要な割り当て
-                currentGroup = null;
-#pragma warning restore IDE0059 // 値の不必要な割り当て
             }
 
             IsBuilded = true;

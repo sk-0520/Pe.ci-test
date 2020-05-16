@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public abstract class CommandItemElementBase: ElementBase, ICommandItem
     {
-        public CommandItemElementBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected CommandItemElementBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;

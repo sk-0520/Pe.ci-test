@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     public abstract class KeyboardJobSettingEditorViewModelBase<TJobEditor> : SettingItemViewModelBase<TJobEditor>, IKeyActionId
         where TJobEditor : KeyboardJobSettingEditorElementBase
     {
-        public KeyboardJobSettingEditorViewModelBase(TJobEditor model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected KeyboardJobSettingEditorViewModelBase(TJobEditor model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
         }
@@ -197,7 +197,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public abstract class KeyboardPressedJobSettingEditorViewModelBase : KeyboardJobSettingEditorViewModelBase<KeyboardPressedJobSettingEditorElement>
     {
-        public KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             MappingCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<KeyMappingData>, KeyMappingEditorViewModel>(Model.Mappings) {
@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     public abstract class KeyboardPressedJobSettingEditorViewModelBase<TContent> : KeyboardPressedJobSettingEditorViewModelBase
     {
-        public KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected KeyboardPressedJobSettingEditorViewModelBase(KeyboardPressedJobSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         { }
 

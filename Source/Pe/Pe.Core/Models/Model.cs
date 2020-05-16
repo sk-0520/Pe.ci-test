@@ -11,9 +11,9 @@ using Prism.Mvvm;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public abstract class NotifyPropertyBase : BindableBase, IDisposable, IDisposer
+    public abstract class NotifyPropertyBase: BindableBase, IDisposer
     {
-        public NotifyPropertyBase()
+        protected NotifyPropertyBase()
         { }
 
         ~NotifyPropertyBase()
@@ -63,7 +63,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             if(disposing) {
+#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
                 GC.SuppressFinalize(this);
+#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
             }
 
             IsDisposed = true;
@@ -82,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public abstract class BindModelBase : NotifyPropertyBase
     {
-        public BindModelBase(ILoggerFactory loggerFactory)
+        protected BindModelBase(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             LoggerFactory = loggerFactory;

@@ -224,6 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             .ObservesProperty(() => SelectedGroup!.SelectedLauncherItem)
         );
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S2692:\"IndexOf\" checks should not be for positive numbers")]
         public ICommand UpSelectedLauncherItemCommand => GetOrCreateCommand(
             () => new DelegateCommand(
                 () => {

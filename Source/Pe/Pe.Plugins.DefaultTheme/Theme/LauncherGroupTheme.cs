@@ -83,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         #region ILauncherGroupTheme
 
+        /// <inheritdoc cref="ILauncherGroupTheme.GetGroupImage(LauncherGroupImageName, Color, IconBox, bool)"/>
         public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, bool isStrong)
         {
             return GetGroupImageCore(imageName, imageColor, iconBox, isStrong);

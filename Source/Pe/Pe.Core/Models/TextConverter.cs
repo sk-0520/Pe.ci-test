@@ -559,7 +559,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var skip = 0;
             if(currentText.Length == 1 && IsHalfwidthKatakana(currentText[0])) {
                 if(isLastIndex) {
-                    if(HalfwidthKatakanaDakutenRange.IsIn((char)currentText[0])) {
+                    if(HalfwidthKatakanaDakutenRange.IsIn(currentText[0])) {
                         switch(currentText[0]) {
                             case 'ﾞ':
                                 resultBuffer.Append('ﾞ');
@@ -573,9 +573,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
                                 throw new NotImplementedException();
                         }
                     } else {
-                        resultBuffer.Append(KatakanaHalfToFullMap[(char)currentText[0]]);
+                        resultBuffer.Append(KatakanaHalfToFullMap[currentText[0]]);
                     }
-                } else if(characterBlocks[currentIndex + 1].Length == 1 && HalfwidthKatakanaDakutenRange.IsIn((char)characterBlocks[currentIndex + 1][0])) {
+                } else if(characterBlocks[currentIndex + 1].Length == 1 && HalfwidthKatakanaDakutenRange.IsIn(characterBlocks[currentIndex + 1][0])) {
                     // 合体する必要あるかも！
                     switch(characterBlocks[currentIndex + 1][0]) {
                         case 'ﾟ':

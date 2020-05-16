@@ -150,8 +150,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 );
                 FreezableUtility.SafeFreeze(bitmapSource);
             }
-            int width = (int)bitmapSource.PixelWidth;
-            int height = (int)bitmapSource.PixelHeight;
+            int width = bitmapSource.PixelWidth;
+            int height = bitmapSource.PixelHeight;
             int stride = width * 4;
             var pixels = new byte[stride * height];
             bitmapSource.CopyPixels(pixels, stride, 0);

@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="UsingPreviewEvent"/> は false を使用する。
         /// </summary>
         /// <param name="logger"></param>
-        public DragAndDropBase(ILogger logger)
+        protected DragAndDropBase(ILogger logger)
         {
             UsingPreviewEvent = false;
             Logger = logger;
@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <see cref="UsingPreviewEvent"/> は false を使用する。
         /// </summary>
         /// <param name="loggerFactory"></param>
-        public DragAndDropBase(ILoggerFactory loggerFactory)
+        protected DragAndDropBase(ILoggerFactory loggerFactory)
         {
             UsingPreviewEvent = false;
             Logger = loggerFactory.CreateLogger(GetType());
@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="usingPreviewEvent"><see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用するか。</param>
         /// <param name="logger"></param>
-        public DragAndDropBase(bool usingPreviewEvent, ILogger logger)
+        protected DragAndDropBase(bool usingPreviewEvent, ILogger logger)
         {
             UsingPreviewEvent = usingPreviewEvent;
             Logger = logger;
@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="usingPreviewEvent"><see cref="UIElement.PreviewMouseMove"/> 的な Preview のイベントを使用するか。</param>
         /// <param name="loggerFactory"></param>
-        public DragAndDropBase(bool usingPreviewEvent, ILoggerFactory loggerFactory)
+        protected DragAndDropBase(bool usingPreviewEvent, ILoggerFactory loggerFactory)
         {
             UsingPreviewEvent = usingPreviewEvent;
             Logger = loggerFactory.CreateLogger(GetType());

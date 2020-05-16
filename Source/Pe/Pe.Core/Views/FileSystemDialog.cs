@@ -239,8 +239,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             IShellItem resultItem;
             FileDialog.Com.GetResult(out resultItem);
             cleaner.Add(ComWrapper.Create(resultItem));
-            IntPtr pszPath = IntPtr.Zero;
-            resultItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out pszPath);
+            resultItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out var pszPath);
             if(pszPath != IntPtr.Zero) {
                 var path = Marshal.PtrToStringAuto(pszPath);
                 Marshal.FreeCoTaskMem(pszPath);

@@ -34,9 +34,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// <summary>
     /// ViewModel の基底。
     /// </summary>
-    public abstract class ViewModelBase : BindableBase, INotifyDataErrorInfo, IDisposable, IDisposer
+    public abstract class ViewModelBase: BindableBase, INotifyDataErrorInfo, IDisposer
     {
-        public ViewModelBase(ILoggerFactory loggerFactory)
+        protected ViewModelBase(ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());
@@ -445,7 +445,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             }
 
             if(disposing) {
+#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
                 GC.SuppressFinalize(this);
+#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
             }
 
             IsDisposed = true;
@@ -469,7 +471,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     public abstract class SingleModelViewModelBase<TModel> : ViewModelBase
         where TModel : INotifyPropertyChanged
     {
-        public SingleModelViewModelBase(TModel model, ILoggerFactory loggerFactory)
+        protected SingleModelViewModelBase(TModel model, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Model = model;
@@ -572,15 +574,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         {
             get => this._data;
             set => SetProperty(ref this._data, value);
-        }
-
-        #endregion
-
-        #region ViewModelBase
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
         }
 
         #endregion

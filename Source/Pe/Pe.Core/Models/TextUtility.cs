@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="comparisonType">比較処理。</param>
         /// <param name="converter"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S907:\"goto\" statement should not be used")]
         public static string ToUnique(string target, IReadOnlyCollection<string> seq, StringComparison comparisonType, Func<string, int, string> converter)
         {
             if(target == null) {
@@ -121,25 +122,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4456:Parameter validation in yielding methods should be wrapped")]
         public static IEnumerable<string> ReadLines(string text)
         {
             if(text == null) {
                 throw new ArgumentNullException(nameof(text));
             }
 
-            using(var reader = new StringReader(text)) {
-                string? line;
-                while((line = reader.ReadLine()) != null) {
-                    yield return line;
-                }
+            using var reader = new StringReader(text);
+            string? line;
+            while((line = reader.ReadLine()) != null) {
+                yield return line;
             }
         }
+
 
         /// <summary>
         /// リーダーから行毎に分割する。
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4456:Parameter validation in yielding methods should be wrapped")]
         public static IEnumerable<string> ReadLines(TextReader reader)
         {
             if(reader == null) {

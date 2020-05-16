@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
     /// </summary>
     public abstract class DragAndDropGuidelineBase
     {
-        public DragAndDropGuidelineBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected DragAndDropGuidelineBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;
             Logger = loggerFactory.CreateLogger(GetType());

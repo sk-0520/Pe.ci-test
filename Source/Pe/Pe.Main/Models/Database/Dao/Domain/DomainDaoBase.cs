@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
     public abstract class DomainDaoBase : ApplicationDatabaseObjectBase
     {
-        public DomainDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        protected DomainDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 

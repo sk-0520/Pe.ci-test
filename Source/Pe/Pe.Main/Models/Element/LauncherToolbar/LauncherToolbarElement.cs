@@ -194,8 +194,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var screenToolbars = dao.SelectAllScreenToolbars().ToList();
-                var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
-                return LauncherToolbarId;
+                var launcherToolbarId = FindMaybeToolbarId(screenToolbars);
+                return launcherToolbarId;
             }
         }
 
