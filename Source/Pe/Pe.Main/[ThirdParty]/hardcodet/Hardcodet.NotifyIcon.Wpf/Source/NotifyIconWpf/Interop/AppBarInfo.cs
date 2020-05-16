@@ -4,6 +4,14 @@
 #pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
 #pragma warning disable CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
 #pragma warning disable IDE0009 // メンバー アクセスを修飾する必要があります。
+#pragma warning disable S125 // Sections of code should not be commented out
+#pragma warning disable S1066 // Collapsible "if" statements should be merged
+#pragma warning disable S3265 // Non-flags enums should not be used in bitwise operations
+#pragma warning disable S3881 // "IDisposable" should be implemented correctly
+#pragma warning disable S3963 // "static" fields should be initialized inline
+#pragma warning disable S112 // General exceptions should never be thrown
+#pragma warning disable S101 // Types should be named in PascalCase
+
 // Some interop code taken from Mike Marshall's AnyForm
 
 using System;
