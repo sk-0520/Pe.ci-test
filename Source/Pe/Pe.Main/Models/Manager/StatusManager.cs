@@ -136,13 +136,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return new Result(false);
             }
 
-            var newValue = statusProperty switch
-            {
-                StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu = value,
-                _ => throw new NotImplementedException(),
-            };
+            switch(statusProperty) {
+                case StatusProperty.CanCallNotifyAreaMenu:
+                    CanCallNotifyAreaMenu = value;
+                    break;
 
-            OnStatusChanged(StatusChangedMode.Changed, statusProperty, oldValue, newValue);
+                default:
+                    throw new NotImplementedException();
+            }
+
+            OnStatusChanged(StatusChangedMode.Changed, statusProperty, oldValue, value);
 
             return new Result(true);
         }
@@ -159,21 +162,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return ResultSuccessValue.Failure<IDisposable>();
             }
 
-            var newValue = statusProperty switch
-            {
-                StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu = value,
-                _ => throw new NotImplementedException(),
-            };
+            switch(statusProperty) {
+                case StatusProperty.CanCallNotifyAreaMenu:
+                    CanCallNotifyAreaMenu = value;
+                    break;
 
-            OnStatusChanged(StatusChangedMode.TemporaryChanged, statusProperty, oldValue, newValue);
+                default:
+                    throw new NotImplementedException();
+            }
+
+            OnStatusChanged(StatusChangedMode.TemporaryChanged, statusProperty, oldValue, value);
 
             return ResultSuccessValue.Success((IDisposable)new ActionDisposer(d => {
-                var restoreValue = statusProperty switch
-                {
-                    StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu = oldValue,
-                    _ => throw new NotImplementedException(),
-                };
-                OnStatusChanged(StatusChangedMode.TemporaryRestore, statusProperty, newValue, oldValue);
+                switch(statusProperty) {
+                    case StatusProperty.CanCallNotifyAreaMenu:
+                        CanCallNotifyAreaMenu = oldValue;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                OnStatusChanged(StatusChangedMode.TemporaryRestore, statusProperty, value, oldValue);
             }));
         }
 
