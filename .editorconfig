@@ -155,6 +155,8 @@ dotnet_diagnostic.S3923.severity = warning
 dotnet_diagnostic.S3400.severity = none
 # S1117: Local variables should not shadow class fields
 dotnet_diagnostic.S1117.severity = warning
+# S108: Nested blocks of code should not be left empty
+dotnet_diagnostic.S108.severity = suggestion
 
 [*.sh]
 end_of_line = lf
