@@ -113,6 +113,8 @@ dotnet_diagnostic.S3442.severity = warning
 dotnet_diagnostic.S1116.severity = warning
 # S1481: Unused local variables should be removed
 dotnet_diagnostic.S1481.severity = suggestion
+# S1199: Nested code blocks should not be used
+dotnet_diagnostic.S1199.severity = none
 
 [*.sh]
 end_of_line = lf
