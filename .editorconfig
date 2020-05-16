@@ -109,6 +109,9 @@ dotnet_diagnostic.S1066.severity = none
 dotnet_diagnostic.S112.severity = silent
 # S3442: "abstract" classes should not have "public" constructors
 dotnet_diagnostic.S3442.severity = warning
+# S1116: Empty statements should be removed
+dotnet_diagnostic.S1116.severity = warning
+
 
 [*.sh]
 end_of_line = lf
