@@ -121,7 +121,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#627: コマンドで二種類に分かれるアプリケーションコマンドは拡張キーで切り替える"
 					},
 					{
 						"revision": "",
