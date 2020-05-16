@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
     {
         #region define
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3925:\"ISerializable\" should be implemented correctly")]
         protected class WebViewTemplateDictionary : Dictionary<string, WebViewTemplateBase>
         {
             public WebViewTemplateDictionary()
