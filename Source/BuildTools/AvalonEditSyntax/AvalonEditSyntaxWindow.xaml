@@ -17,6 +17,7 @@
 >
   <Window.Resources>
     <Style TargetType="sharpdevelop_avalonedit:TextEditor">
+      <Setter Property="FontFamily" Value="Global Monospace" />
       <Setter Property="ShowLineNumbers" Value="True" />
       <Setter Property="Options">
         <Setter.Value>
