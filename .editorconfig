@@ -93,7 +93,8 @@ dotnet_diagnostic.S1172.severity = silent
 dotnet_diagnostic.S1135.severity = silent
 # S4144: Methods should not have identical implementations
 dotnet_diagnostic.S4144.severity = suggestion
-
+# S1128: Unused "using" should be removed
+dotnet_diagnostic.S1128.severity = silent
 
 [*.sh]
 end_of_line = lf
