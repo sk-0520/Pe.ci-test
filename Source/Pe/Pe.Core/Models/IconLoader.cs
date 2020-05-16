@@ -105,6 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+
         /// <summary>
         /// http://hp.vector.co.jp/authors/VA016117/rsrc2icon.html
         /// </summary>
@@ -112,6 +113,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="name"></param>
         /// <param name="resType"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
