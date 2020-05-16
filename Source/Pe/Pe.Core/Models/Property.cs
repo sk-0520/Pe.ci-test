@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// プロパティアクセス処理生成。
     /// </summary>
-    public class PropertyAccesserFactory
+    public static class PropertyAccesserFactory
     {
         #region function
 

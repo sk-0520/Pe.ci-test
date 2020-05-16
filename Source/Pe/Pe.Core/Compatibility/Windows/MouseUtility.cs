@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
 {
-    public class MouseUtility
+    public static class MouseUtility
     {
         /// <summary>
         /// マウスカーソルの現在位置を物理座標で取得。

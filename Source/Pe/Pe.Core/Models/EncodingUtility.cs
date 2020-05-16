@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// エンコーディング。。。
     /// <para>現状 規格上でも怪しいけど実運用上無視できない utf-8n のためだけのクラス。</para>
     /// </summary>
-    public class EncodingUtility
+    public static class EncodingUtility
     {
         #region property
 
