@@ -117,6 +117,9 @@ dotnet_diagnostic.S1481.severity = suggestion
 dotnet_diagnostic.S1199.severity = none
 # S3241: Methods should not return values that are never used
 dotnet_diagnostic.S3241.severity = none
+# S3626: Jump statements should not be redundant
+dotnet_diagnostic.S3626.severity = none
+
 
 [*.sh]
 end_of_line = lf
