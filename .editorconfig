@@ -107,6 +107,8 @@ dotnet_diagnostic.S125.severity = silent
 dotnet_diagnostic.S1066.severity = none
 # S112: General exceptions should never be thrown
 dotnet_diagnostic.S112.severity = silent
+# S3442: "abstract" classes should not have "public" constructors
+dotnet_diagnostic.S3442.severity = warning
 
 [*.sh]
 end_of_line = lf
