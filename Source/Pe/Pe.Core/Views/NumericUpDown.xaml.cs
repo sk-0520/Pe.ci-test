@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             var ctrl = (NumericUpDown)d;
             var minimum = (decimal)e.NewValue;
             if(ctrl.Maximum < minimum) {
-                throw new ArgumentOutOfRangeException($"{nameof(ctrl.Maximum)} < {nameof(minimum)}"); ;
+                throw new ArgumentOutOfRangeException($"{nameof(ctrl.Maximum)} < {nameof(minimum)}");
             }
             ctrl.Minimum = minimum;
         }
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             var ctrl = (NumericUpDown)d;
             var maximum = (decimal)e.NewValue;
             if(maximum < ctrl.Minimum) {
-                throw new ArgumentOutOfRangeException($"{nameof(maximum)} < {nameof(ctrl.Minimum)}"); ;
+                throw new ArgumentOutOfRangeException($"{nameof(maximum)} < {nameof(ctrl.Minimum)}");
             }
             ctrl.Maximum = maximum;
         }

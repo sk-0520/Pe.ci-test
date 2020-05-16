@@ -227,7 +227,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public abstract class KeyActionPressedDataBase : KeyActionCommonData
     {
-        public KeyActionPressedDataBase(Guid keyActionId, KeyActionKind keyActionKind)
+        protected KeyActionPressedDataBase(Guid keyActionId, KeyActionKind keyActionKind)
             : base(keyActionId, keyActionKind)
         { }
 

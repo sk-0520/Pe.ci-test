@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
         #endregion
 
 
-        public WebViewElementBase(IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        protected WebViewElementBase(IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             UserAgentManager = userAgentManager;

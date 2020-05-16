@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// <typeparam name="T"></typeparam>
     public abstract class UnmanagedWrapperBase<T> : RawModel<T>
     {
-        public UnmanagedWrapperBase(T rawObject)
+        protected UnmanagedWrapperBase(T rawObject)
             : base(rawObject)
         { }
     }
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// </summary>
     public abstract class UnmanagedHandleWrapper : UnmanagedWrapperBase<IntPtr>
     {
-        public UnmanagedHandleWrapper(IntPtr hHandle)
+        protected UnmanagedHandleWrapper(IntPtr hHandle)
             : base(hHandle)
         {
             if(hHandle == IntPtr.Zero) {

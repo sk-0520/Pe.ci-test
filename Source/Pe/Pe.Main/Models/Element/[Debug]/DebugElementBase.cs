@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element._Debug_
 {
     public abstract class DebugElementBase : ElementBase, IViewCloseReceiver
     {
-        public DebugElementBase(ILoggerFactory loggerFactory)
+        protected DebugElementBase(ILoggerFactory loggerFactory)
             : base(loggerFactory)
         { }
 

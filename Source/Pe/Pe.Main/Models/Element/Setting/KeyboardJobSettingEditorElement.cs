@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public abstract class KeyboardJobSettingEditorElementBase : ElementBase, IKeyActionId
     {
-        public KeyboardJobSettingEditorElementBase(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        protected KeyboardJobSettingEditorElementBase(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             ActionData = keyActionData;

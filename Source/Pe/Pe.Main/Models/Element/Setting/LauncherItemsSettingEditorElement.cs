@@ -197,11 +197,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             ThrowIfDisposed();
 
+            /* なにしたかったんだこれ
             IReadOnlyList<Guid> launcherItemIds;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
             }
+            */
 
             //Items.Clear();
             //foreach(var launcherItemId in launcherItemIds) {

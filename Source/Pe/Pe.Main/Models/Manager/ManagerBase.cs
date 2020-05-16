@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     /// </summary>
     public abstract class ManagerBase : DisposerBase
     {
-        public ManagerBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
+        protected ManagerBase(IDiContainer diContainer, ILoggerFactory loggerFactory)
         {
             DiContainer = diContainer;
             Logger = loggerFactory.CreateLogger(GetType());

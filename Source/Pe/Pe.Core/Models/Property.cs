@@ -20,11 +20,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IPropertyGetter<TOwner, TValue>
+    public interface IPropertyGetter<in TOwner, out TValue>
     {
         #region function
 
-        TValue Get(TOwner target);
+        TValue Get(TOwner owner);
 
         #endregion
     }
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IPropertySetter<TOwner, TValue>
+    public interface IPropertySetter<in TOwner, in TValue>
     {
         #region function
 

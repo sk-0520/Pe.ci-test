@@ -7,7 +7,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
     public abstract class TelemeterBase
     {
-        public TelemeterBase(ILoggerFactory loggerFactory)
+        protected TelemeterBase(ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());

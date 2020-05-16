@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     public abstract class GeneralSettingEditorViewModelBase<TModel> : SettingItemViewModelBase<TModel>, IGeneralSettingEditor
         where TModel : GeneralSettingEditorElementBase
     {
-        public GeneralSettingEditorViewModelBase(TModel model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected GeneralSettingEditorViewModelBase(TModel model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         { }
 

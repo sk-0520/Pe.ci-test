@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
     public abstract class DebugViewModelBase<TModel> : SingleModelViewModelBase<TModel>, IViewLifecycleReceiver
         where TModel : DebugElementBase
     {
-        public DebugViewModelBase(TModel model, ILoggerFactory loggerFactory)
+        protected DebugViewModelBase(TModel model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 

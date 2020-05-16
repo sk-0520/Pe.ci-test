@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             {
                 result = requestResponse;
                 waitEvent.Set();
-            };
+            }
 
             return Task.Run(() => {
                 using(waitEvent) {

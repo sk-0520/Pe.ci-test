@@ -128,12 +128,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 throw new ArgumentNullException(nameof(text));
             }
 
-            using(var reader = new StringReader(text)) {
-                string? line;
-                while((line = reader.ReadLine()) != null) {
-                    yield return line;
-                }
-            }
+            using var reader = new StringReader(text);
+            return ReadLinesCore(reader);
         }
 
         /// <summary>
@@ -146,6 +142,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
+
+            return ReadLinesCore(reader);
+        }
+
+        private static IEnumerable<string> ReadLinesCore(TextReader reader)
+        {
+            Debug.Assert(reader != null);
 
             string? line;
             while((line = reader.ReadLine()) != null) {

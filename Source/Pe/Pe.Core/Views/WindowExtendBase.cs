@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         where TWindow : Window
         where TExtendData : IExtendData
     {
-        public WindowExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
+        protected WindowExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)
         { }
 
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         where TWindow : Window
         where TExtendData : IExtendData
     {
-        public WndProcExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
+        protected WndProcExtendBase(TWindow view, TExtendData extendData, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)
         {
             if(View.IsLoaded) {

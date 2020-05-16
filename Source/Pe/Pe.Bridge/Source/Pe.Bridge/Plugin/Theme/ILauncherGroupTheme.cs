@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     {
         #region function
 
-        DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconBox iconSize, bool isStrong);
+        DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, bool isStrong);
 
         #endregion
     }

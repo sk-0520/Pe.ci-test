@@ -661,14 +661,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return this;
         }
         /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string)"/>
-        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName)
+        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName)
         {
-            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), string.Empty);
+            return DirtyRegister(typeof(TBase), memberName, typeof(TObject), string.Empty);
         }
         /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string, string)"/>
-        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string propertyName, string name)
+        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName, string name)
         {
-            return DirtyRegister(typeof(TBase), propertyName, typeof(TObject), name);
+            return DirtyRegister(typeof(TBase), memberName, typeof(TObject), name);
         }
 
         /// <inheritdoc cref="IDiRegisterContainer.Unregister(Type)"/>

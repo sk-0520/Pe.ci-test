@@ -17,8 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
         [return: PixelKind(Px.Device)]
         public static Point GetDevicePosition()
         {
-            var deviceCursolPosition = new POINT();
-            NativeMethods.GetCursorPos(out deviceCursolPosition);
+            NativeMethods.GetCursorPos(out var deviceCursolPosition);
 
             return PodStructUtility.Convert(deviceCursolPosition);
         }

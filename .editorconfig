@@ -107,8 +107,6 @@ dotnet_diagnostic.S125.severity = silent
 dotnet_diagnostic.S1066.severity = none
 # S112: General exceptions should never be thrown
 dotnet_diagnostic.S112.severity = silent
-# S3442: "abstract" classes should not have "public" constructors
-dotnet_diagnostic.S3442.severity = warning
 # S1116: Empty statements should be removed
 dotnet_diagnostic.S1116.severity = warning
 # S1481: Unused local variables should be removed
@@ -135,8 +133,6 @@ dotnet_diagnostic.S3881.severity = warning
 dotnet_diagnostic.S3881.severity = silent
 # S1125: Boolean literals should not be redundant
 dotnet_diagnostic.S1125.severity = suggestion
-# S3246: Generic type parameters should be co/contravariant when possible
-dotnet_diagnostic.S3246.severity = warning
 # S4456: Parameter validation in yielding methods should be wrapped
 dotnet_diagnostic.S4456.severity = warning
 # S3604: Member initializer values should not be redundant
@@ -153,8 +149,6 @@ dotnet_diagnostic.S3966.severity = suggestion
 dotnet_diagnostic.S3923.severity = warning
 # S3400: Methods should not return constants
 dotnet_diagnostic.S3400.severity = none
-# S1117: Local variables should not shadow class fields
-dotnet_diagnostic.S1117.severity = warning
 # S108: Nested blocks of code should not be left empty
 dotnet_diagnostic.S108.severity = suggestion
 

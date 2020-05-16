@@ -442,7 +442,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 if(hideWnd == IntPtr.Zero || hideWnd == WindowHandle) {
                     // 自動的に隠す
                     var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
-                    autoHideResult = result.ToInt32() != 0;
+                    //autoHideResult = result.ToInt32() != 0;
                     autoHideResult = true;
                 }
             }
@@ -713,6 +713,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 ExtendData.HiddenBarArea = UIUtility.ToLogicalPixel(logicalHideArea, View);
 
                 var deviceHideArea = UIUtility.ToDevicePixel(logicalHideArea, View);
+                /*
                 if(animation) {
                     //var animateTime = (int)ExtendData.HiddenAnimateTime.TotalMilliseconds;
                     //var animateFlag = ToAW(ExtendData.DockType, false);
@@ -722,6 +723,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 } else {
                     //NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
                 }
+                */
                 NativeMethods.MoveWindow(WindowHandle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
                 //View.Width = logicalHideArea.Width;
                 //View.Measure(logicalHideArea.Size);

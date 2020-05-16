@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public abstract class EntityRemoverBase
     {
-        public EntityRemoverBase(ILoggerFactory loggerFactory)
+        protected EntityRemoverBase(ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = loggerFactory.CreateLogger(GetType());

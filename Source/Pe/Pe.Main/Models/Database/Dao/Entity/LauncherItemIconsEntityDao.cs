@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
         #region function
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBox iconBox)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();

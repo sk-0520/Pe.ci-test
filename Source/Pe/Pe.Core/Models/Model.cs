@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 {
     public abstract class NotifyPropertyBase: BindableBase, IDisposer
     {
-        public NotifyPropertyBase()
+        protected NotifyPropertyBase()
         { }
 
         ~NotifyPropertyBase()
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public abstract class BindModelBase : NotifyPropertyBase
     {
-        public BindModelBase(ILoggerFactory loggerFactory)
+        protected BindModelBase(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             LoggerFactory = loggerFactory;

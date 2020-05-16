@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class HookerBase: DisposerBase
     {
-        public HookerBase(ILoggerFactory loggerFactory)
+        protected HookerBase(ILoggerFactory loggerFactory)
         {
             HookProc = HookProcedure;
             Logger = loggerFactory.CreateLogger(GetType());

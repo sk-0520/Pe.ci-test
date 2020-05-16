@@ -26,11 +26,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
         }
 
-        public ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection)
+        protected ObservableCollectionManagerBase(ReadOnlyObservableCollection<TValue> collection)
             : this(collection, collection)
         { }
 
-        public ObservableCollectionManagerBase(ObservableCollection<TValue> collection)
+        protected ObservableCollectionManagerBase(ObservableCollection<TValue> collection)
             : this(collection, collection)
         { }
 

@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 using var shellItem = ComWrapper.Create(iShellItem);
                 var size = iconSize.ToSize();
                 var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
-                var hResultBitmap = IntPtr.Zero;
+                IntPtr hResultBitmap;
                 using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
                     imageFactory.Com.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
                 }

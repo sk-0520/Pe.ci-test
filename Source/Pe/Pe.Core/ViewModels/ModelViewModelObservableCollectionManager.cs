@@ -35,13 +35,13 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection)
+        protected ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection)
             : base(collection)
         {
             EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
-        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection)
+        protected ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection)
             : base(collection)
         {
             EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
