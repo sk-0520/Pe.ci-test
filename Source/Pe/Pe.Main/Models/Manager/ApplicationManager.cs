@@ -1346,6 +1346,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DelayCheckUpdateAsync().ConfigureAwait(false);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1215:\"GC.Collect\" should not be called")]
         private void GarbageCollection(bool full)
         {
             var old = GC.GetTotalMemory(false);
