@@ -25,13 +25,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns>削除した数。ディレクトリが存在しない場合は -1 を返す。</returns>
         private int ExecuteCore(DirectoryInfo parentDirectory, Regex regex, int leaveCount, bool orderByDesc, Func<Exception, bool> exceptionCacther)
         {
-            try {
-                parentDirectory.Refresh();
-                if(!parentDirectory.Exists) {
-                    return -1;
-                }
-            } catch(Exception) {
-                throw;
+            parentDirectory.Refresh();
+            if(!parentDirectory.Exists) {
+                return -1;
             }
 
             var matchFiles = parentDirectory
