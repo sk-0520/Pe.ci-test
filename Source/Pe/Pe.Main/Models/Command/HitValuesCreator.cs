@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -56,7 +57,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             var result = new List<HitValue>();
 
-            var workMatches = hitRanges.ToDictionary(i => i.Start.Value, i => i.End.Value - i.Start.Value);
+            var workMatches = hitRanges
+                .Select(i => (value: i.Start.Value, length: i.End.Value - i.Start.Value))
+                .Where(i => 0 < i.length)
+                .ToDictionary(i => i.value, i => i.length);
             var i = 0;
             while(true) {
                 if(workMatches.TryGetValue(i, out var hitLength)) {
@@ -72,11 +76,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                         break;
                     }
                 } else {
-                    var minIndex = workMatches.Keys.Min();
-                    var value = source.Substring(i, minIndex - i);
-                    var item = new HitValue(value, false);
-                    result.Add(item);
-                    i = minIndex;
+                    if(workMatches.Count != 0) {
+                        var minIndex = workMatches.Keys.Min();
+                        var value = source.Substring(i, minIndex - i);
+                        var item = new HitValue(value, false);
+                        result.Add(item);
+                        i = minIndex;
+                    }
                 }
             }
 

@@ -186,6 +186,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#638: コマンド検索時の0件ヒット文字列表記をまともにする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
