@@ -75,6 +75,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger = Logging.Factory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
 
+#if DEBUG
+            IsDebugDevelopMode = initializer.IsDebugDevelopMode;
+#endif
+
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
@@ -129,6 +133,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ILoggerFactory LoggerFactory => Logging.Factory;
         ApplicationDiContainer ApplicationDiContainer { get; set; }
         bool IsFirstStartup { get; }
+
+#if DEBUG
+        bool IsDebugDevelopMode { get; }
+#endif
         ILogger Logger { get; set; }
         PlatformThemeLoader PlatformThemeLoader { get; }
 
@@ -346,6 +354,58 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             changing.SuccessValue?.Dispose();
         }
+
+#if DEBUG
+        async Task StartDebugDevelopModeAsync()
+        {
+            var importProgramsElement = ApplicationDiContainer.Build<Element.Startup.ImportProgramsElement>();
+            await importProgramsElement.LoadProgramsAsync();
+            await importProgramsElement.ImportAsync();
+
+            var mainBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            var idFactory = ApplicationDiContainer.Build<IIdFactory>();
+
+            var commandKeyActionData = new KeyActionData() {
+                KeyActionId = idFactory.CreateKeyActionId(),
+                KeyActionKind = KeyActionKind.Command,
+                KeyActionContent = string.Empty,
+                Comment = "debug-dev-mode",
+            };
+            var commandKeyMappings = new[] {
+                new KeyMappingData() {
+                    Alt = ModifierKey.None,
+                    Control = ModifierKey.Any,
+                    Shift = ModifierKey.Any,
+                    Super = ModifierKey.None,
+                    Key = System.Windows.Input.Key.Space,
+                }
+            };
+
+            var pressedOptionConverter = new PressedOptionConverter();
+
+            using(var commander = mainBarrier.WaitWrite()) {
+                var status = new DatabaseCommonStatus() {
+                    Account = "🍶",
+                    ProgramName = "🍻",
+                    ProgramVersion = BuildStatus.Version,
+                };
+
+                var aaa = ApplicationDiContainer.Build<KeyActionsEntityDao>(commander, commander.Implementation);
+
+                var keyActionsEntityDao = ApplicationDiContainer.Build<KeyActionsEntityDao>(commander, commander.Implementation);
+                var keyOptionsEntityDao = ApplicationDiContainer.Build<KeyOptionsEntityDao>(commander, commander.Implementation);
+                var keyMappingsEntityDao = ApplicationDiContainer.Build<KeyMappingsEntityDao>(commander, commander.Implementation);
+
+                keyActionsEntityDao.InsertKeyAction(commandKeyActionData, status);
+                keyOptionsEntityDao.InsertOption(commandKeyActionData.KeyActionId, KeyActionPresseOption.ThroughSystem.ToString(), false.ToString(), status);
+                foreach(var item in commandKeyMappings.Counting()) {
+                    keyMappingsEntityDao.InsertMapping(commandKeyActionData.KeyActionId, item.Value, item.Number, status);
+                }
+
+                commander.Commit();
+            }
+        }
+#endif
 
         public void ShowAboutView()
         {
@@ -603,7 +663,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(IsFirstStartup) {
                 // 初期登録の画面を表示
+#if DEBUG
+                if(IsDebugDevelopMode) {
+                    Task.Run(() => {
+                        return StartDebugDevelopModeAsync();
+                    }).Wait();
+                } else {
+                    ShowStartupView(true);
+                }
+#else
                 ShowStartupView(true);
+#endif
             }
 
             var tuner = ApplicationDiContainer.Build<DatabaseTuner>();
