@@ -12,9 +12,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class UniqueKeyPool
     {
-        public UniqueKeyPool()
-        { }
-
         #region property
 
         ConcurrentDictionary<string, object> Pool { get; } = new ConcurrentDictionary<string, object>();

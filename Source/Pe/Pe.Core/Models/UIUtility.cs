@@ -242,8 +242,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
-        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, IDpiScaleOutputor dpiScaleOutputor) => ToLogicalPixel(size, dpiScaleOutputor.GetDpiScale());
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, Visual visual) => ToLogicalPixel(size, GetDpiScale(visual));
 
