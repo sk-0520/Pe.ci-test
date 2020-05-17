@@ -1,4 +1,5 @@
 Param(
+	[switch] $NoInstall,
 	[parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
@@ -16,18 +17,34 @@ $rootDirectoryPath = Split-Path -Parent $currentDirPath
 $documentDirectoryPath = Join-Path $rootDirectoryPath 'Source\Documents'
 $buildOutputDirectoryPath = Join-Path $documentDirectoryPath 'build'
 
+$documentScriptDirectoryPath = Join-Path $documentDirectoryPath 'source\script'
+$changelogCurrentFilePath = Join-Path $documentScriptDirectoryPath 'changelogs.ts'
+$changelogArchiveFilePath = Join-Path $documentScriptDirectoryPath 'changelogs-archive.json'
 
-try{
+$changelogCurrentContent = Get-Content -Path $changelogCurrentFilePath -Raw -Encoding UTF8
+$changelogArchiveContent = Get-Content -Path $changelogArchiveFilePath -Raw -Encoding UTF8
+
+$embeddedMark = '/*--------BUILD-EMBEDDED-JSON--------*/'
+
+$embeddedScript = "Array.prototype.push.apply(changelogs, $changelogArchiveContent);"
+
+$changelogNewContent = $changelogCurrentContent.Replace($embeddedMark, $embeddedScript)
+Set-Content $changelogCurrentFilePath -Value $changelogNewContent -Encoding UTF8
+
+try {
 	Push-Location $documentDirectoryPath
-	Write-Output install
-	npm install --loglevel=error
+	if (! $NoInstall) {
+		Write-Output install
+		npm install --loglevel=error
+	}
 	Write-Output build
 	npm run build
 
-	foreach($platform in $Platforms) {
+	foreach ($platform in $Platforms) {
 		$outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$platform\Pe\doc\help"
 		robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
 	}
-} finally {
+}
+finally {
 	Pop-Location
 }
