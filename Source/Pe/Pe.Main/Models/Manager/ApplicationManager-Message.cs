@@ -145,22 +145,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void StartHook()
         {
-            //var hooked = false;
-            if(KeyActionChecker.HasJob) {
-                KeyboradHooker.Register();
-                //hooked = true;
+            var hookConfiguration = ApplicationDiContainer.Build<HookConfiguration>();
+
+            var hooked = false;
+            if(hookConfiguration.Keyboard) {
+                if(KeyActionChecker.HasJob) {
+                    KeyboradHooker.Register();
+                    hooked = true;
+                }
+            } else {
+                Logger.LogInformation("キーボードフックは無効");
             }
 
-            MouseHooker.Register();
+            if(hookConfiguration.Mouse) {
+                MouseHooker.Register();
+                hooked = true;
+            } else {
+                Logger.LogInformation("マウスフックは無効");
+            }
 
-            // マウスフックが必須状態なのでこいつは常に真
-            IsEnabledHook = true;
+            IsEnabledHook = hooked;
         }
 
         void StopHook()
         {
-            KeyboradHooker.Unregister();
-            MouseHooker.Unregister();
+            if(KeyboradHooker.IsEnabled) {
+                KeyboradHooker.Unregister();
+            }
+            if(MouseHooker.IsEnabled) {
+                MouseHooker.Unregister();
+            }
 
             IsEnabledHook = false;
         }

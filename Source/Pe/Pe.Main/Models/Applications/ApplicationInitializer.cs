@@ -285,6 +285,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<BackupConfiguration, BackupConfiguration>(environmentParameters.Configuration.Backup)
                 .Register<FileConfiguration, FileConfiguration>(environmentParameters.Configuration.File)
                 .Register<DisplayConfiguration, DisplayConfiguration>(environmentParameters.Configuration.Display)
+                .Register<HookConfiguration, HookConfiguration>(environmentParameters.Configuration.Hook)
                 .Register<NotifyLogConfiguration, NotifyLogConfiguration>(environmentParameters.Configuration.NotifyLog)
                 .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.Configuration.LauncherToobar)
                 .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.Configuration.LauncherGroup)

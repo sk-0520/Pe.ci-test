@@ -186,6 +186,29 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class HookConfiguration: ConfigurationBase
+    {
+        public HookConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            Keyboard = section.GetValue<bool>("keyboard");
+            Mouse = section.GetValue<bool>("mouse");
+        }
+
+        #region property
+
+        /// <summary>
+        /// キーボードを有効にするか。
+        /// </summary>
+        public bool Keyboard { get; }
+        /// <summary>
+        /// マウスフックを有効にするか。
+        /// </summary>
+        public bool Mouse { get; }
+
+        #endregion
+    }
+
     public class NotifyLogConfiguration: ConfigurationBase
     {
         public NotifyLogConfiguration(IConfigurationSection section)
@@ -333,6 +356,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
+            Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
@@ -349,6 +373,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public BackupConfiguration Backup { get; }
         public FileConfiguration File { get; }
         public DisplayConfiguration Display { get; }
+        public HookConfiguration Hook { get; }
         public NotifyLogConfiguration NotifyLog { get; }
         public LauncherToolbarConfiguration LauncherToobar { get; }
         public LauncherGroupConfiguration LauncherGroup { get; }
