@@ -389,12 +389,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     ProgramName = "🍻",
                     ProgramVersion = BuildStatus.Version,
                 };
-
-                var aaa = ApplicationDiContainer.Build<KeyActionsEntityDao>(commander, commander.Implementation);
-
+                var appExecuteSettingEntityDao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
                 var keyActionsEntityDao = ApplicationDiContainer.Build<KeyActionsEntityDao>(commander, commander.Implementation);
                 var keyOptionsEntityDao = ApplicationDiContainer.Build<KeyOptionsEntityDao>(commander, commander.Implementation);
                 var keyMappingsEntityDao = ApplicationDiContainer.Build<KeyMappingsEntityDao>(commander, commander.Implementation);
+
+                var userIdManager = ApplicationDiContainer.Build<UserIdManager>();
+                appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userIdManager.CreateFromRandom(), true, status);
 
                 keyActionsEntityDao.InsertKeyAction(commandKeyActionData, status);
                 keyOptionsEntityDao.InsertOption(commandKeyActionData.KeyActionId, KeyActionPresseOption.ThroughSystem.ToString(), false.ToString(), status);
