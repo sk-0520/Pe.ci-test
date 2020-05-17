@@ -517,6 +517,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         ));
 
+        public ICommand SilentCloseCommand => GetOrCreateCommand(() => new DelegateCommand(
+           () => {
+               IsPopupRemoveNote = false;
+               // Viewへの通知はユーザー操作に当たらないため明示的に非表示を設定
+               Model.ChangeVisibleDelaySave(false);
+               CloseRequest.Send();
+           }
+       ));
+
         public ICommand LinkChangeCancelCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ShowLinkChangeConfim = false;

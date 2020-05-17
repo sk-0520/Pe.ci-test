@@ -789,7 +789,7 @@
                   </Grid.ColumnDefinitions>
 
                   <Button Grid.Column="0" Content="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Content.CopyCommand}" />
-                  <Button Grid.Column="1" Content="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{x:Static SystemCommands.CloseWindowCommand}" />
+                  <Button Grid.Column="1" Content="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding SilentCloseCommand}" />
                   <Grid Grid.Column="2">
                     <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}" Content="{Binding Resources.String_Note_Operation_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}" />
                     <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchRemoveNote}">
