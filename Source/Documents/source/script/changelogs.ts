@@ -227,7 +227,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#637: 更新履歴の元ファイルがでかすぎるので分割したい"
 					}
 				]
 			}
