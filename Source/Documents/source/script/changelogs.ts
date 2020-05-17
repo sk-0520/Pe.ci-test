@@ -125,6 +125,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#625: ノートを非表示にした際に元に戻すをサポートする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
