@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,6 +44,36 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         #endregion
 
+        #region IsExtendProperty
+
+        public static readonly DependencyProperty IsExtendProperty = DependencyProperty.Register(
+            nameof(IsExtend),
+            typeof(bool),
+            typeof(CommandWindow),
+            new FrameworkPropertyMetadata(
+                default(bool),
+                FrameworkPropertyMetadataOptions.None,
+                new PropertyChangedCallback(OnIsExtendChanged)
+            )
+        );
+
+        public bool IsExtend
+        {
+            get { return (bool)GetValue(IsExtendProperty); }
+            set { SetValue(IsExtendProperty, value); }
+        }
+
+        static void OnIsExtendChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as CommandWindow;
+            if(ctrl != null) {
+                ctrl.IsExtend = (bool)e.NewValue;
+            }
+        }
+
+        #endregion
+
+
         #region IDpiScaleOutputor
 
         public Point GetDpiScale() => UIUtility.GetDpiScale(this);
@@ -66,6 +98,26 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             base.OnSourceInitialized(e);
 
             UIUtility.SetToolWindowStyle(this, false, false);
+
+#if DEBUG || BETA
+            var devElement = new System.Windows.Controls.Border() {
+                Background = new SolidColorBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff)),
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Margin = new Thickness(1),
+                Padding = new Thickness(1, 0, 1, 0),
+                IsHitTestVisible = false,
+                Child = new System.Windows.Controls.TextBlock() {
+                    Text = Models.BuildStatus.BuildType.ToString(),
+                    Opacity = 0.9,
+                    FontSize = 7,
+                },
+            };
+
+            var grid = UIUtility.FindLogicalChildren<Grid>(this).First();
+            Grid.SetColumn(devElement, 2);
+            grid.Children.Add(devElement);
+#endif
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -100,7 +152,15 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
-            Logger.LogInformation("{0}", FocusManager.GetFocusedElement(this));
+
+            IsExtend = Keyboard.Modifiers == ModifierKeys.Shift;
+        }
+
+        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        {
+            base.OnPreviewKeyUp(e);
+
+            IsExtend = Keyboard.Modifiers == ModifierKeys.Shift;
         }
 
         #endregion

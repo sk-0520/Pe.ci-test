@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SyntaxDefinition xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008" name="EnvVar_Update">
-	<!--TODO:キーと値で分離-->
 
-	<!--
-	<Color name="Key" fontWeight="bold" foreground="Blue" />
-	<Color name="Variable" foreground="Maroon" />
-	-->
-	<Color name="Key" />
-	<Color name="Variable" />
-	<RuleSet ignoreCase="true">
+	<Color name="Key" foreground="Blue" fontWeight="bold" />
+	<Color name="Value" foreground="Brown" fontWeight="bold"   />
+
+	<RuleSet ignoreCase="false">
 		<Rule color="Key">
-			\w+
+			^\s*[A-Za-z0-9_]+\s*(?==\s*.*)
+		</Rule>
+		<Rule color="Value">
+			(?&lt;=^\s*[A-Za-z0-9_]+\s*=\s*).+
 		</Rule>
 	</RuleSet>
 

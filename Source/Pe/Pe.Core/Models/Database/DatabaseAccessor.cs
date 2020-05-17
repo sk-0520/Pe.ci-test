@@ -28,10 +28,39 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true);
 
+        /// <summary>
+        /// 最初のデータを取得。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statement"></param>
+        /// <param name="parameter"></param>
+        /// <exception cref="InvalidOperationException">空っぽ。</exception>
+        /// <returns>一番最初に見つかったデータ。</returns>
         T QueryFirst<T>(string statement, object? parameter = null);
+        /// <summary>
+        /// 最初のデータを取得。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statement"></param>
+        /// <param name="parameter"></param>
+        /// <returns>一番最初に見つかったデータ。見つかんなかったら default(T)</returns>
         T QueryFirstOrDefault<T>(string statement, object? parameter = null);
+        /// <summary>
+        /// 単一データ取得。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="statement"></param>
+        /// <param name="parameter"></param>
+        /// <exception cref="InvalidOperationException">空っぽか複数あり。</exception>
+        /// <returns></returns>
         T QuerySingle<T>(string statement, object? parameter = null);
 
+        /// <summary>
+        /// <see cref="DataTable"/> でデータ取得。
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         DataTable GetDataTable(string statement, object? parameter = null);
     }
 
@@ -115,8 +144,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         IDatabaseTransaction BeginReadOnlyTransaction();
         IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);
 
-        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> action);
-        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> action, IsolationLevel isolationLevel);
+        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor);
+        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor, IsolationLevel isolationLevel);
 
         #endregion
     }
@@ -127,27 +156,20 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// </summary>
     public class DatabaseAccessor : DisposerBase, IDatabaseAccessor
     {
-#pragma warning disable CS8618 // Null 非許容フィールドが初期化されていません。
-        private DatabaseAccessor(IDatabaseFactory databaseFactory)
-#pragma warning restore CS8618 // Null 非許容フィールドが初期化されていません。
+        public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
         {
+            Logger = logger;
             DatabaseFactory = databaseFactory;
-
             LazyConnection = new Lazy<IDbConnection>(OpenConnection);
-
             LazyImplementation = new Lazy<IDatabaseImplementation>(DatabaseFactory.CreateImplementation);
         }
 
-        public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
-            : this(databaseFactory)
-        {
-            Logger = logger;
-        }
-
         public DatabaseAccessor(IDatabaseFactory databaseFactory, ILoggerFactory loggerFactory)
-            : this(databaseFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
+            DatabaseFactory = databaseFactory;
+            LazyConnection = new Lazy<IDbConnection>(OpenConnection);
+            LazyImplementation = new Lazy<IDatabaseImplementation>(DatabaseFactory.CreateImplementation);
         }
 
         #region property
@@ -219,13 +241,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region IDatabaseAccessor
 
+        /// <inheritdoc cref="IDatabaseAccessor.DatabaseFactory"/>
         public IDatabaseFactory DatabaseFactory { get; }
 
-        /// <summary>
-        /// 接続元。
-        /// </summary>
+        /// <inheritdoc cref="IDatabaseAccessor.BaseConnection"/>
         public virtual IDbConnection BaseConnection => LazyConnection.Value;
 
+        /// <inheritdoc cref="IDatabaseAccessor.StopConnection"/>
         public virtual IDisposable StopConnection()
         {
             ThrowIfDisposed();
@@ -272,6 +294,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return BaseConnection.Query(formattedStatement, parameter, transaction?.Transaction, buffered);
         }
 
+        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
         public IEnumerable<dynamic> Query(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
@@ -405,18 +428,18 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
 
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor)
         {
             ThrowIfDisposed();
 
-            return BatchImpl(() => new DatabaseTransaction(this), function);
+            return BatchImpl(() => new DatabaseTransaction(this), executor);
         }
 
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> function, IsolationLevel isolationLevel)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor, IsolationLevel isolationLevel)
         {
             ThrowIfDisposed();
 
-            return BatchImpl(() => new DatabaseTransaction(this, isolationLevel), function);
+            return BatchImpl(() => new DatabaseTransaction(this, isolationLevel), executor);
         }
 
         #endregion

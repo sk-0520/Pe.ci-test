@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <para>内部的に固定長で扱う。</para>
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ChunkBlock<T> : ICollection<T>, ICollection, IReadOnlyList<T>
+    public class ChunkBlock<T>: ICollection<T>, ICollection, IReadOnlyList<T>
     {
         public ChunkBlock(int size)
         {
@@ -116,14 +116,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Array.IndexOf(Items, item, 0, Count) != -1;
         }
 
-        public void CopyTo(T[] destinationArray, int sourceIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
-            CopyTo(sourceIndex, destinationArray, 0, Count - sourceIndex);
+            CopyTo(arrayIndex, array, 0, Count - arrayIndex);
         }
 
-        void ICollection.CopyTo(Array destinationArray, int sourceIndex)
+        void ICollection.CopyTo(Array array, int index)
         {
-            CopyTo(sourceIndex, (T[])destinationArray, 0, Count - sourceIndex);
+            CopyTo(index, (T[])array, 0, Count - index);
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// TODO: 致命的にバグってる, 直してみた気がしたけどあかんわ
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ChunkedList<T> : ICollection<T>, ICollection, IReadOnlyList<T>
+    public class ChunkedList<T>: ICollection<T>, ICollection, IReadOnlyList<T>
     {
         public ChunkedList(int capacity, int blockSize)
         {
@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         ChunkBlock<T> GetOrCreateBlock(int chunkItemIndex)
         {
-            Debug.Assert(chunkItemIndex <= Blocks.Count );
+            Debug.Assert(chunkItemIndex <= Blocks.Count);
 
             if(Blocks.Count == chunkItemIndex) {
                 var block = CreateBlock();
@@ -393,13 +393,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return false;
         }
 
-        public void CopyTo(T[] array, int sourceIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
-            CopyTo((Array)array, sourceIndex);
+            CopyTo((Array)array, arrayIndex);
         }
-        public void CopyTo(Array array, int sourceIndex)
+        public void CopyTo(Array array, int index)
         {
-            CopyTo(sourceIndex, (T[])array, 0, Count - sourceIndex);
+            CopyTo(index, (T[])array, 0, Count - index);
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -445,7 +445,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// LOHで悲しまない専用クラス。
     /// </summary>
-    public class BinaryChunkedList : ChunkedList<byte>
+    public class BinaryChunkedList: ChunkedList<byte>
     {
         public BinaryChunkedList()
             : this(DefaultCapacity, DefaultBlockSize)
@@ -476,7 +476,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class BinaryChunkedStream : Stream
+    public class BinaryChunkedStream: Stream
     {
         public BinaryChunkedStream()
             : this(new BinaryChunkedList(Capacity, BinaryChunkedList.DefaultBlockSize))

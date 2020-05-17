@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var activeToolbars = toolbars
                 .Where(i => i.Screen != null)
                 .OrderBy(i => i.Screen!.DeviceName)
-                .ToList();
+                .ToList()
             ;
             // 3.なんか適当に並べ替える
             var nonActiveToolbars = toolbars

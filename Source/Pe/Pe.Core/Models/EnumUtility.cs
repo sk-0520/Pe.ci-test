@@ -19,6 +19,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static IEnumerable<TEnum> GetMembers<TEnum>(Type enumType)
             where TEnum : struct, Enum
         {
+            if(enumType != typeof(TEnum)) {
+                throw new ArgumentException($"{enumType} != {typeof(TEnum)}");
+            }
             return Enum.GetValues(enumType).Cast<TEnum>();
         }
 
@@ -40,11 +43,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="value"></param>
         /// <param name="defaultValue"></param>
         /// <returns>指定値がEnumに存在すれば指定値、存在しなければ<paramref name="defaultValue"/>を返す。</returns>
-        public static TEnum GetNormalization<TEnum>(object value, TEnum defaultValue)
+        public static TEnum Normalize<TEnum>(string value, TEnum defaultValue)
             where TEnum : struct, Enum
         {
             if(Enum.IsDefined(typeof(TEnum), value)) {
-                return (TEnum)value;
+                return (TEnum)Enum.Parse(typeof(TEnum), value);
             } else {
                 return defaultValue;
             }

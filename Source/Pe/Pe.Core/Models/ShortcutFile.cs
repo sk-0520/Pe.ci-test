@@ -80,9 +80,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
             get
             {
                 var resultBuffer = CreateStringBuffer(PathLength);
-                var findData = new WIN32_FIND_DATA();
 
-                ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
+                ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out var findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
 
                 return resultBuffer.ToString();
             }

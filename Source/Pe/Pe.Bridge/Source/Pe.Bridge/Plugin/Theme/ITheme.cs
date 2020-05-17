@@ -74,7 +74,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
     {
         #region function
 
-        bool IsSupport(ThemeKind themeKind);
+        /// <summary>
+        /// 対象のテーマ種別がサポートされているか。
+        /// </summary>
+        /// <param name="themeKind"></param>
+        /// <returns></returns>
+        bool IsSupported(ThemeKind themeKind);
 
 
         IGeneralTheme BuildGeneralTheme(IThemeParameter parameter);

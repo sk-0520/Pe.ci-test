@@ -87,17 +87,16 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Update&quot;&gt;
-        ///	&lt;!--TODO:キーと値で分離--&gt;
         ///
-        ///	&lt;!--
-        ///	&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;
-        ///	&lt;Color name=&quot;Variable&quot; foreground=&quot;Maroon&quot; /&gt;
-        ///	--&gt;
-        ///	&lt;Color name=&quot;Key&quot; /&gt;
-        ///	&lt;Color name=&quot;Variable&quot; /&gt;
-        ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
+        ///	&lt;Color name=&quot;Key&quot; foreground=&quot;Blue&quot; fontWeight=&quot;bold&quot; /&gt;
+        ///	&lt;Color name=&quot;Value&quot; foreground=&quot;Brown&quot; fontWeight=&quot;bold&quot;   /&gt;
+        ///
+        ///	&lt;RuleSet ignoreCase=&quot;false&quot;&gt;
         ///		&lt;Rule color=&quot;Key&quot;&gt;
-        ///			\w+
+        ///			^\s*[A-Za-z0-9_]+\s*(?==\s*.*)
+        ///		&lt;/Rule&gt;
+        ///		&lt;Rule color=&quot;Value&quot;&gt;
+        ///			(?&amp;lt;=^\s*[A-Za-z0-9_]+\s*=\s*).+
         ///		&lt;/Rule&gt;
         ///	&lt;/RuleSet&gt;
         ///
@@ -113,14 +112,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;SyntaxDefinition xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot; name=&quot;EnvVar_Remove&quot;&gt;
-        ///	&lt;!--TODO:キーに限定--&gt;
-        ///	&lt;!--&lt;Color name=&quot;Key&quot; fontWeight=&quot;bold&quot; foreground=&quot;Blue&quot; /&gt;--&gt;
-        ///	&lt;Color name=&quot;Key&quot;  /&gt;
+        ///
+        ///	&lt;Color name=&quot;Key&quot; foreground=&quot;Blue&quot; fontWeight=&quot;bold&quot; /&gt;
+        ///
         ///	&lt;RuleSet ignoreCase=&quot;true&quot;&gt;
         ///		&lt;Rule color=&quot;Key&quot;&gt;
-        ///			\w+
+        ///			^\s*[A-Za-z0-9_]+\s*$
         ///		&lt;/Rule&gt;
         ///	&lt;/RuleSet&gt;
+        ///
         ///&lt;/SyntaxDefinition&gt;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -311,20 +311,20 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   長い情報のコピー に類似しているローカライズされた文字列を検索します。
+        ///   短い情報のコピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ApplicationCommand_Description_CopyLongInformation {
+        public static string String_ApplicationCommand_Description_CopyInformation {
             get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyLongInformation", resourceCulture);
+                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyInformation", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   短い情報のコピー に類似しているローカライズされた文字列を検索します。
+        ///   長い情報のコピー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ApplicationCommand_Description_CopyShortInformation {
+        public static string String_ApplicationCommand_Description_CopyInformation_Extend {
             get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyShortInformation", resourceCulture);
+                return ResourceManager.GetString("String_ApplicationCommand_Description_CopyInformation_Extend", resourceCulture);
             }
         }
         
@@ -338,6 +338,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   終了(アップデート無視) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_ApplicationCommand_Description_Exit_Extend {
+            get {
+                return ResourceManager.GetString("String_ApplicationCommand_Description_Exit_Extend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   GC に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_ApplicationCommand_Description_GarbageCollection {
@@ -347,11 +356,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   GC (フル) に類似しているローカライズされた文字列を検索します。
+        ///   GC(フル) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_ApplicationCommand_Description_GarbageCollectionFull {
+        public static string String_ApplicationCommand_Description_GarbageCollection_Extend {
             get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollectionFull", resourceCulture);
+                return ResourceManager.GetString("String_ApplicationCommand_Description_GarbageCollection_Extend", resourceCulture);
             }
         }
         
@@ -379,15 +388,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_ApplicationCommand_Description_Setting {
             get {
                 return ResourceManager.GetString("String_ApplicationCommand_Description_Setting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   終了 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_ApplicationCommand_Description_Shutdown {
-            get {
-                return ResourceManager.GetString("String_ApplicationCommand_Description_Shutdown", resourceCulture);
             }
         }
         
@@ -3789,6 +3789,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   対象: ${SCREEN-NAME} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_Hidden_Content_Format {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_Hidden_Content_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ランチャーツールバー非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_Hidden_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_Hidden_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_NewEmptyGroupName {
@@ -3956,6 +3974,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Note_Link_Unlink_A {
             get {
                 return ResourceManager.GetString("String_Note_Link_Unlink_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   対象: ${NOTE-CAPTION} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Notify_Hidden_Content_Format {
+            get {
+                return ResourceManager.GetString("String_Note_Notify_Hidden_Content_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Notify_Hidden_Header {
+            get {
+                return ResourceManager.GetString("String_Note_Notify_Hidden_Header", resourceCulture);
             }
         }
         

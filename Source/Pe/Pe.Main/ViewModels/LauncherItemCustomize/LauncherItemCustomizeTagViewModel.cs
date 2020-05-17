@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeTagViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            TagLazyChanger = new LazyAction("タグ編集編集:" + Model.LauncherItemId, TimeSpan.FromSeconds(3), LoggerFactory);
+            TagLazyChanger = new LazyAction("タグ編集編集:" + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(3), LoggerFactory);
             TagDocument = new TextDocument(string.Join(Environment.NewLine, Model.TagItems));
             TagDocument.TextChanged += TagDocument_TextChanged;
         }

@@ -6,7 +6,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
     /// <summary>
-    /// プラグイン初期化時の Pe との架け橋。。
+    /// プラグイン初期化時の Pe との架け橋。
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginInitializeContext

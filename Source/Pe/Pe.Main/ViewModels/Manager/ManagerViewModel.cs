@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         #region variable
 
         bool _isOpenNoteMenu;
+        bool _isOpenSystemMenu;
         bool _isOpenContextMenu;
         bool _isEnabledManager = true;
 
@@ -65,32 +66,50 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
         public ReadOnlyObservableCollection<LauncherToolbarNotifyAreaViewModel> LauncherToolbarItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
-        public ICollectionView NoteVisibleItems { get; }
-        public ICollectionView NoteHiddenItems { get; }
 
+        #region ノート
 
         public bool IsOpenNoteMenu
         {
             get => this._isOpenNoteMenu;
             set
             {
-                if(SetProperty(ref this._isOpenNoteMenu, value)) {
-                    if(IsOpenNoteMenu) {
-                        NoteVisibleItems.Refresh();
-                        NoteHiddenItems.Refresh();
-                    }
+                SetProperty(ref this._isOpenNoteMenu, value);
+                if(IsOpenNoteMenu) {
+                    NoteVisibleItems.Refresh();
+                    NoteHiddenItems.Refresh();
                 }
             }
         }
 
-        public bool IsEnabledHook
+        ModelViewModelObservableCollectionManagerBase<NoteElement, NoteNotifyAreaViewModel> NoteCollection { get; }
+        public ICollectionView NoteVisibleItems { get; }
+        public ICollectionView NoteHiddenItems { get; }
+
+        #endregion
+
+        #region システム
+
+        public bool IsOpenSystemMenu
         {
-            get => ApplicationManager.IsEnabledHook;
+            get => this._isOpenSystemMenu;
+            set
+            {
+                SetProperty(ref this._isOpenSystemMenu, value);
+                if(IsOpenSystemMenu) {
+                    RaisePropertyChanged(nameof(IsEnabledHook));
+                    RaisePropertyChanged(nameof(IsDisabledSystemIdle));
+                    RaisePropertyChanged(nameof(IsSupportedExplorer));
+                }
+            }
         }
 
+        public bool IsEnabledHook => ApplicationManager.IsEnabledHook;
         public bool IsDisabledSystemIdle => ApplicationManager.IsDisabledSystemIdle;
         public bool IsSupportedExplorer => ApplicationManager.IsSupportedExplorer;
+
+        #endregion
+
 
         public bool IsEnabledManager
         {
@@ -103,10 +122,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             get => this._isOpenContextMenu;
             set
             {
-                if(SetProperty(ref this._isOpenContextMenu, value)) {
-                    if(IsOpenContextMenu) {
-                        RaisePropertyChanged(nameof(ShowPlatformOldVersion));
-                    }
+                SetProperty(ref this._isOpenContextMenu, value);
+                if(IsOpenContextMenu) {
+                    RaisePropertyChanged(nameof(ShowPlatformOldVersion));
                 }
                 Logger.LogDebug("[#530調査] IsOpenContextMenu: {0}", IsOpenContextMenu);
             }
@@ -114,10 +132,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
 
         public IReadOnlyUpdateInfo UpdateInfo => ApplicationManager.ApplicationUpdateInfo;
+
         #endregion
 
         #region command
-
 
         public ICommand CreateNoteCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -187,20 +205,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICommand ToggleHookCommand => GetOrCreateCommand(() => new DelegateCommand(
            () => {
                ApplicationManager.ToggleHook();
-               RaisePropertyChanged(nameof(IsEnabledHook));
            }
         ));
         public ICommand ToggleDisabledSystemIdleCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.ToggleDisableSystemIdle();
-                RaisePropertyChanged(nameof(IsDisabledSystemIdle));
             }
         ));
 
         public ICommand ToggleSupportExplorerCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ApplicationManager.ToggleSupportExplorer();
-                RaisePropertyChanged(nameof(IsSupportedExplorer));
             }
         ));
 

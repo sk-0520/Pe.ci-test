@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         public string Description
         {
             get { return Dialog.Description; }
-            set { this.Description = value; }
+            set { Description = value; }
         }
 
         /// <summary>

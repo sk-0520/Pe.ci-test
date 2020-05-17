@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
     public abstract class EntityDaoBase : ApplicationDatabaseObjectBase
     {
-        public EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        protected EntityDaoBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
         { }
 

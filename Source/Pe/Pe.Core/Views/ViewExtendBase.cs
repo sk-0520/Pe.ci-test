@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         where TView : UIElement
         where TExtendData : IExtendData
     {
-        public ViewExtendBase(TView view, TExtendData extendData, ILoggerFactory loggerFactory)
+        protected ViewExtendBase(TView view, TExtendData extendData, ILoggerFactory loggerFactory)
         {
             View = view;
             ExtendData = extendData;

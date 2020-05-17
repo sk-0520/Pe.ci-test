@@ -34,6 +34,12 @@ if (!$IgnoreChanged) {
 	}
 }
 
+# リリース時のアナライザ系削除
+$removePackageTargets = @(
+	'ClrHeapAllocationAnalyzer',
+	'SonarAnalyzer.CSharp'
+)
+
 try {
 	Push-Location $rootDirectory
 
@@ -82,6 +88,24 @@ try {
 			'@SITE@' = 'content-type-text.net'
 		}
 		ReplaceElement $repMap $xml '/Project/PropertyGroup[1]/Copyright[1]' '/Project/PropertyGroup[1]' 'Copyright'
+
+		# リリース版は各種アナライザを除去しておく
+		if( $BuildType -eq '') {
+			$elements = $xml.SelectNodes('/Project/*/PackageReference')
+			foreach($element in $elements) {
+				$includeElement = $element.Attributes['Include']
+				if($null -eq $includeElement) {
+					continue
+				}
+
+				$includeValue = $includeElement.Value
+
+				if($removePackageTargets.Contains($includeValue)) {
+					Write-Output "remove $includeValue"
+					$element.ParentNode.RemoveChild($element)
+				}
+			}
+		}
 
 		$xml.Save($projectFile)
 	}

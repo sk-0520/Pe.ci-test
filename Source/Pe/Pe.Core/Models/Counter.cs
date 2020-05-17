@@ -7,7 +7,7 @@ using System.Text;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// foreche でくるくる回ってるよ！
+    /// foreach でくるくる回ってるよ！
     /// </summary>
     public interface ICounter
     {

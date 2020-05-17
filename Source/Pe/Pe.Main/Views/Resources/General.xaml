@@ -302,6 +302,7 @@
     <Setter Property="AllowsTransparency" Value="True" />
     <Setter Property="StaysOpen" Value="False" />
     <Setter Property="Focusable" Value="False" />
+    <Setter Property="PopupAnimation" Value="Fade" />
   </Style>
 
   <Style x:Key="HeaderGroupBox" TargetType="GroupBox" BasedOn="{StaticResource {x:Type GroupBox}}">

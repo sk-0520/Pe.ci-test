@@ -14,10 +14,9 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         public static void SetSyntaxHighlighting(HighlightingManager instance, TextEditor editor, Stream stream)
         {
-            using(var reader = new System.Xml.XmlTextReader(stream)) {
-                var define = HighlightingLoader.Load(reader, instance);
-                editor.SyntaxHighlighting = define;
-            }
+            using var reader = new System.Xml.XmlTextReader(stream);
+            var define = HighlightingLoader.Load(reader, instance);
+            editor.SyntaxHighlighting = define;
         }
 
         public static void SetSyntaxHighlightingDefault(TextEditor editor, Stream stream)

@@ -6,6 +6,12 @@
 #pragma warning disable CS8622 // パラメーターの型における参照型の Null 許容性が、対象のデリゲートと一致しません。
 #pragma warning disable IDE0009 // メンバー アクセスを修飾する必要があります。
 #pragma warning disable IDE0011 // 波かっこを追加します
+#pragma warning disable HAA0202 // Value type to reference type conversion allocation for string concatenation
+#pragma warning disable S125 // Sections of code should not be commented out
+#pragma warning disable S1066 // Collapsible "if" statements should be merged
+#pragma warning disable S3265 // Non-flags enums should not be used in bitwise operations
+#pragma warning disable S3881 // "IDisposable" should be implemented correctly
+
 // hardcodet.net NotifyIcon for WPF
 // Copyright (c) 2009 - 2013 Philipp Sumi
 // Contact and Information: http://www.hardcodet.net

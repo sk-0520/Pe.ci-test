@@ -35,13 +35,13 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
         #endregion
 
-        public ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection)
+        protected ModelViewModelObservableCollectionManagerBase(ReadOnlyObservableCollection<TModel> collection)
             : base(collection)
         {
             EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
         }
 
-        public ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection)
+        protected ModelViewModelObservableCollectionManagerBase(ObservableCollection<TModel> collection)
             : base(collection)
         {
             EditableViewModels = new ObservableCollection<TViewModel>(Collection.Select(m => ToViewModelImpl(m))!);
@@ -133,7 +133,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected override void AddItemsImpl(IReadOnlyList<TModel> newItems)
         {
             var newViewModels = newItems
-                .Cast<TModel>()
                 .Select(m => ToViewModelImpl(m)!)
                 .ToList()
             ;
@@ -148,7 +147,6 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected override void InsertItemsImpl(int insertIndex, IReadOnlyList<TModel> newItems)
         {
             var newViewModels = newItems
-                .Cast<TModel>()
                 .Select(m => ToViewModelImpl(m)!)
                 .Counting(insertIndex)
                 .ToList()

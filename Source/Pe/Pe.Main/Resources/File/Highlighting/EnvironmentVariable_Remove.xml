@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SyntaxDefinition xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008" name="EnvVar_Remove">
-	<!--TODO:キーに限定-->
-	<!--<Color name="Key" fontWeight="bold" foreground="Blue" />-->
-	<Color name="Key"  />
+
+	<Color name="Key" foreground="Blue" fontWeight="bold" />
+
 	<RuleSet ignoreCase="true">
 		<Rule color="Key">
-			\w+
+			^\s*[A-Za-z0-9_]+\s*$
 		</Rule>
 	</RuleSet>
+
 </SyntaxDefinition>

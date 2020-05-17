@@ -145,21 +145,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void StartHook()
         {
+            var hookConfiguration = ApplicationDiContainer.Build<HookConfiguration>();
+
             var hooked = false;
-            if(KeyActionChecker.HasJob) {
-                KeyboradHooker.Register();
-                hooked = true;
+            if(hookConfiguration.Keyboard) {
+                if(KeyActionChecker.HasJob) {
+                    KeyboradHooker.Register();
+                    hooked = true;
+                }
+            } else {
+                Logger.LogInformation("キーボードフックは無効");
             }
-            //TODO: キー入力待ちでクリックされたら入力待ち解除したい
-            MouseHooker.Register();
+
+            if(hookConfiguration.Mouse) {
+                MouseHooker.Register();
+                hooked = true;
+            } else {
+                Logger.LogInformation("マウスフックは無効");
+            }
 
             IsEnabledHook = hooked;
         }
 
         void StopHook()
         {
-            KeyboradHooker.Unregister();
-            MouseHooker.Unregister();
+            if(KeyboradHooker.IsEnabled) {
+                KeyboradHooker.Unregister();
+            }
+            if(MouseHooker.IsEnabled) {
+                MouseHooker.Unregister();
+            }
 
             IsEnabledHook = false;
         }
@@ -520,7 +535,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void MouseHooker_MouseMove(object? sender, MouseHookEventArgs e)
         {
             if(NotifyLogElement.NowShowing && NotifyLogElement.Position == NotifyLogPosition.Cursor) {
-                NotifyLogElement.StartView();
+                // #636: 通知ログがカーソル位置指定で通知ログウィンドウにクリック可能なアイテムがある場合は常時追従してはいけない
+                var hasCommandLog = NotifyManager.StreamNotifyLogs
+                    .Concat(NotifyManager.TopmostNotifyLogs)
+                    .Any(i => i.Kind == NotifyLogKind.Command || i.Kind == NotifyLogKind.Undo)
+                ;
+                if(!hasCommandLog) {
+                    NotifyLogElement.StartView();
+                }
             }
         }
 

@@ -7,26 +7,47 @@ using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
 {
+    public interface IReadOnlyIconData
+    {
+        #region property
+
+        /// <summary>
+        /// アイコンパス。
+        /// </summary>
+        string Path { get; }
+        /// <summary>
+        /// アイコンインデックス。
+        /// </summary>
+        int Index { get; }
+
+        #endregion
+    }
+
     [DataContract, Serializable]
-    public class IconData : DataBase
+    public class IconData : DataBase, IReadOnlyIconData
     {
         public IconData()
         { }
 
-        public IconData(IconData? source)
+        public IconData(IReadOnlyIconData? source)
         {
             Path = source?.Path ?? string.Empty;
             Index = source?.Index ?? 0;
         }
 
         #region property
-
-        public string Path { get; set; } = string.Empty;
-        public int Index { get; set; }
-
         #endregion
 
         #region function
+
+        #endregion
+
+        #region IReadOnlyIconData
+
+        /// <inheritdoc cref="IReadOnlyIconData.Path"/>
+        public string Path { get; set; } = string.Empty;
+        /// <inheritdoc cref="IReadOnlyIconData.Index"/>
+        public int Index { get; set; }
 
         #endregion
 

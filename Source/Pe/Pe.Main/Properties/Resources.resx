@@ -1867,10 +1867,7 @@
   <data name="String_ApplicationCommand_Description_Close" xml:space="preserve">
     <value>閉じる</value>
   </data>
-  <data name="String_ApplicationCommand_Description_CopyLongInformation" xml:space="preserve">
-    <value>長い情報のコピー</value>
-  </data>
-  <data name="String_ApplicationCommand_Description_CopyShortInformation" xml:space="preserve">
+  <data name="String_ApplicationCommand_Description_CopyInformation" xml:space="preserve">
     <value>短い情報のコピー</value>
   </data>
   <data name="String_ApplicationCommand_Description_Exit" xml:space="preserve">
@@ -1878,9 +1875,6 @@
   </data>
   <data name="String_ApplicationCommand_Description_GarbageCollection" xml:space="preserve">
     <value>GC</value>
-  </data>
-  <data name="String_ApplicationCommand_Description_GarbageCollectionFull" xml:space="preserve">
-    <value>GC (フル)</value>
   </data>
   <data name="String_ApplicationCommand_Description_Help" xml:space="preserve">
     <value>ヘルプ</value>
@@ -1890,9 +1884,6 @@
   </data>
   <data name="String_ApplicationCommand_Description_Setting" xml:space="preserve">
     <value>設定</value>
-  </data>
-  <data name="String_ApplicationCommand_Description_Shutdown" xml:space="preserve">
-    <value>終了</value>
   </data>
   <data name="String_Setting_KeyInput_UserInput_A" xml:space="preserve">
     <value>キー入力(_K)</value>
@@ -1908,5 +1899,26 @@
   </data>
   <data name="String_Setting_KeyInput_UserInput" xml:space="preserve">
     <value>割り当てるキーを入力してください</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_CopyInformation_Extend" xml:space="preserve">
+    <value>長い情報のコピー</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_Exit_Extend" xml:space="preserve">
+    <value>終了(アップデート無視)</value>
+  </data>
+  <data name="String_ApplicationCommand_Description_GarbageCollection_Extend" xml:space="preserve">
+    <value>GC(フル)</value>
+  </data>
+  <data name="String_Note_Notify_Hidden_Content_Format" xml:space="preserve">
+    <value>対象: ${NOTE-CAPTION}</value>
+  </data>
+  <data name="String_Note_Notify_Hidden_Header" xml:space="preserve">
+    <value>ノート非表示</value>
+  </data>
+  <data name="String_LauncherToolbar_Hidden_Content_Format" xml:space="preserve">
+    <value>対象: ${SCREEN-NAME}</value>
+  </data>
+  <data name="String_LauncherToolbar_Hidden_Header" xml:space="preserve">
+    <value>ランチャーツールバー非表示</value>
   </data>
 </root>

@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
     public abstract class SetupperBase
     {
-        public SetupperBase(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        protected SetupperBase(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             IdFactory = idFactory;
             StatementLoader = statementLoader;

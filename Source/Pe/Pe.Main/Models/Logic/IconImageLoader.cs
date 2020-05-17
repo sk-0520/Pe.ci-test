@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        public IconImageLoaderBase(IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected IconImageLoaderBase(IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             IconBox = iconBox;
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return bitmapSource;
         }
 
-        protected Task<BitmapSource?> GetIconImageAsync(IconData iconData, CancellationToken cancellationToken)
+        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -188,14 +188,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public class IconImageLoader : IconImageLoaderBase
     {
-        public IconImageLoader(IconData iconData, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(iconBox, dispatcherWrapper, loggerFactory)
+        public IconImageLoader(IReadOnlyIconData iconData, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(iconBox, dispatcherWrapper, loggerFactory)
         {
             IconData = iconData;
         }
 
         #region property
 
-        IconData IconData { get; }
+        IReadOnlyIconData IconData { get; }
 
         #endregion
 
@@ -228,11 +228,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IIconPack
 
+        /// <inheritdoc cref="IIconPack.Small"/>
         public IconImageLoaderBase Small { get; }
+        /// <inheritdoc cref="IIconPack.Normal"/>
         public IconImageLoaderBase Normal { get; }
+        /// <inheritdoc cref="IIconPack.Big"/>
         public IconImageLoaderBase Big { get; }
+        /// <inheritdoc cref="IIconPack.Large"/>
         public IconImageLoaderBase Large { get; }
 
+        /// <inheritdoc cref="IIconPack.IconItems"/>
         public IReadOnlyDictionary<IconBox, IconImageLoaderBase> IconItems => this._iconItems ??= new Dictionary<IconBox, IconImageLoaderBase>() {
             [IconBox.Small] = Small,
             [IconBox.Normal] = Normal,

@@ -322,9 +322,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             OnLauncherItemChanged(launcherItemId);
         }
-        public void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int number)
+        public void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int index)
         {
-            OnLauncherItemRemovedInGroup(launcherGroupId, launcherItemId, number);
+            OnLauncherItemRemovedInGroup(launcherGroupId, launcherItemId, index);
         }
 
         public void SendLauncherItemRegistered(Guid launcherGroupId, Guid launcherItemId)

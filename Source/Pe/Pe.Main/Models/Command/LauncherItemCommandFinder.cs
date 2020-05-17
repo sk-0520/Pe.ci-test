@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             var launcherItemElements = ids
                 .Select(i => OrderManager.GetOrCreateLauncherItemElement(i))
                 .Where(i => i.IsEnabledCommandLauncher)
-                .ToList();
+                .ToList()
             ;
             LauncherItemElements.SetRange(launcherItemElements);
             LauncherItemElementMap.Clear();

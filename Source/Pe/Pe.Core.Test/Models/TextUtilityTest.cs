@@ -114,6 +114,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         [DataRow(1, "1")]
         [DataRow(2, "22")]
         [DataRow(1, "あ")]
+        [DataRow(1, "🐙")]
         public void TextWidthTest(int result, string text)
         {
             var actual = TextUtility.TextWidth(text);

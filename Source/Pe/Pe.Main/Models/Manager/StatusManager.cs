@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public event EventHandler<StatusChangedEventArgs>? StatusChanged;
 
-        public IResult ChangeBoolean(StatusProperty statusProperty, bool value)
+        public IResult ChangeBoolean(StatusProperty statusProperty, bool newValue)
         {
             var oldValue = statusProperty switch
             {
@@ -132,22 +132,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 _ => throw new NotImplementedException(),
             };
 
-            if(oldValue == value) {
+            if(oldValue == newValue) {
                 return new Result(false);
             }
 
-            var newValue = statusProperty switch
-            {
-                StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu = value,
-                _ => throw new NotImplementedException(),
-            };
+            switch(statusProperty) {
+                case StatusProperty.CanCallNotifyAreaMenu:
+                    CanCallNotifyAreaMenu = newValue;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             OnStatusChanged(StatusChangedMode.Changed, statusProperty, oldValue, newValue);
 
             return new Result(true);
         }
 
-        public IResultSuccessValue<IDisposable> ChangeLimitedBoolean(StatusProperty statusProperty, bool value)
+        public IResultSuccessValue<IDisposable> ChangeLimitedBoolean(StatusProperty statusProperty, bool newValue)
         {
             var oldValue = statusProperty switch
             {
@@ -155,25 +158,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 _ => throw new NotImplementedException(),
             };
 
-            if(oldValue == value) {
+            if(oldValue == newValue) {
                 return ResultSuccessValue.Failure<IDisposable>();
             }
 
-            var newValue = statusProperty switch
-            {
-                StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu = value,
-                _ => throw new NotImplementedException(),
-            };
+            switch(statusProperty) {
+                case StatusProperty.CanCallNotifyAreaMenu:
+                    CanCallNotifyAreaMenu = newValue;
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             OnStatusChanged(StatusChangedMode.TemporaryChanged, statusProperty, oldValue, newValue);
 
             return ResultSuccessValue.Success((IDisposable)new ActionDisposer(d => {
-                var restoreValue = statusProperty switch
-                {
-                    StatusProperty.CanCallNotifyAreaMenu => CanCallNotifyAreaMenu = oldValue,
-                    _ => throw new NotImplementedException(),
-                };
+                switch(statusProperty) {
+                    case StatusProperty.CanCallNotifyAreaMenu:
+                        CanCallNotifyAreaMenu = oldValue;
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+#pragma warning disable S2234 // 戻し処理の通知なのでパラメータ名がテレコになってるのはOK
                 OnStatusChanged(StatusChangedMode.TemporaryRestore, statusProperty, newValue, oldValue);
+#pragma warning restore S2234
             }));
         }
 

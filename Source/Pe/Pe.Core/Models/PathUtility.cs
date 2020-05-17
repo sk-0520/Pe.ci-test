@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static string GetTemporaryExtension(string role)
         {
-            return "." + GetCurrentTimestampFileName() + "." + role + "." + extensionTemporaryFile;
+            return $".{GetCurrentTimestampFileName()}.{role}.{extensionTemporaryFile}";
         }
 
         /// <summary>
@@ -224,6 +224,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return false;
         }
 
+        public static bool IsEqual(string a, string b)
+        {
+            if(a == null) {
+                if(b == null) {
+                    return true;
+                }
+                return false;
+            } else if(b == null){
+                return false;
+            }
 
+            // Windows で動けば満足です！
+            //if(Environment.OSVersion.Platform == PlatformID.Win32NT) {
+            //    return a.ToUpperInvariant() == b.ToUpperInvariant();
+            //}
+            return a.ToUpperInvariant() == b.ToUpperInvariant();
+        }
     }
 }

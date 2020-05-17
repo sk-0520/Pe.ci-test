@@ -1,3 +1,5 @@
+#pragma warning disable S3261 // Namespaces should not be empty
+
 using System;
 using System.Collections.Generic;
 using System.Text;

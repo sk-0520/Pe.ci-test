@@ -123,5 +123,20 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             var actual = PathUtility.IsRootName(value);
             Assert.AreEqual(result, actual);
         }
+
+        [TestMethod]
+        [DataRow(true, null, null)]
+        [DataRow(false, "", null)]
+        [DataRow(false, null, "")]
+        [DataRow(true, "", "")]
+        [DataRow(true, "a", "A")]
+        [DataRow(true, "A", "a")]
+        [DataRow(true, "A", "A")]
+        [DataRow(false, "A", "B")]
+        public void IsEqualTest(bool result, string a, string b)
+        {
+            var actual = PathUtility.IsEqual(a, b);
+            Assert.AreEqual(result, actual);
+        }
     }
 }

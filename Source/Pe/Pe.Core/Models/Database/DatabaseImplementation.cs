@@ -110,15 +110,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         #region IDatabaseImplementation
 
+        /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDDL"/>
         public virtual bool SupportedTransactionDDL { get; } = false;
+        /// <inheritdoc cref="IDatabaseImplementation.SupportedTransactionDML"/>
         public virtual bool SupportedTransactionDML { get; } = true;
 
 
+        /// <inheritdoc cref="IDatabaseImplementation.GetNullValue(Type)"/>
         public virtual object? GetNullValue(Type type)
         {
             return null;
         }
 
+        /// <inheritdoc cref="IDatabaseImplementation.GetNullValue(Type)"/>
         public T GetNullValue<T>()
         {
 #pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
@@ -128,11 +132,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
         }
 
+        /// <inheritdoc cref="IDatabaseImplementation.IsNull(object?)"/>
         public virtual bool IsNull(object? value)
         {
             return value == null;
         }
 
+        /// <inheritdoc cref="IDatabaseImplementation.IsNull{T}(T?)"/>
         public bool IsNull<T>(T? value)
             where T : struct
         {
@@ -143,10 +149,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return IsNull(value.Value);
         }
 
+        /// <inheritdoc cref="IDatabaseImplementation.PreFormatStatement(string)"/>
         public virtual string PreFormatStatement(string statement) => statement;
 
+        /// <inheritdoc cref="IDatabaseImplementation.ToStatementTableName(string)"/>
         public virtual string ToStatementTableName(string tableName) => tableName;
+        /// <inheritdoc cref="IDatabaseImplementation.ToStatementColumnName(string)"/>
         public virtual string ToStatementColumnName(string columnName) => columnName;
+        /// <inheritdoc cref="IDatabaseImplementation.ToStatementParameterName(string, int)"/>
         public virtual string ToStatementParameterName(string parameterName, int index) => "@" + parameterName;
 
         #endregion

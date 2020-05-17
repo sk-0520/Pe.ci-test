@@ -26,19 +26,19 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// 呼び出しクラス情報からデータベース実行文を取得する。
         /// </summary>
         /// <returns></returns>
-        string LoadStatementByCurrent(Type caller, [CallerMemberName] string callerMemberName = "");
+        string LoadStatementByCurrent(Type callerType, [CallerMemberName] string callerMemberName = "");
 
         #endregion
     }
 
     public abstract class DatabaseStatementLoaderBase : IDatabaseStatementLoader
     {
-        public DatabaseStatementLoaderBase(ILogger logger)
+        protected DatabaseStatementLoaderBase(ILogger logger)
         {
             Logger = logger;
         }
 
-        public DatabaseStatementLoaderBase(ILoggerFactory loggerFactory)
+        protected DatabaseStatementLoaderBase(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
         }

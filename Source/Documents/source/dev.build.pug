@@ -43,6 +43,8 @@ block BLOCK_LAYOUT_CONTENT
 		h2 ビルド
 		p /Build 以下のスクリプトを用いてビルドを行う
 		dl
+			dt: strong make-buildtools.ps1
+			dd ビルド中に実行するツールのビルド
 			dt: strong build.ps1
 			dd EXE ファイル生成
 			dt: strong create-document.ps1
@@ -55,4 +57,21 @@ block BLOCK_LAYOUT_CONTENT
 			dd リリースノート生成
 			dt: strong deploy.ps1
 			dd 成果物のデプロイ
+
+		section
+			h3 C# ビルド種別
+			table
+				tr
+					th 構成名
+					th 役割
+				tr
+					td: code Debug
+					td デバッグビルド
+				tr
+					td: code Debug-DisabledAnalyzers
+					td ビルド時アナライザー無効によるデバッグビルド, 開発中の友達
+				tr
+					td: code Release
+					td リリースビルド
+
 

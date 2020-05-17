@@ -27,7 +27,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 {
-    public class LauncherToolbarElement : ElementBase, IAppDesktopToolbarExtendData, IViewShowStarter, IViewCloseReceiver, IFlushable
+    public class LauncherToolbarElement: ElementBase, IAppDesktopToolbarExtendData, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
         #region variable
 
@@ -165,6 +165,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             }
         }
 
+        Guid RestoreVisibleNotifyLogId { get; set; }
+
         #endregion
 
         #region function
@@ -194,8 +196,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var dao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
                 var screenToolbars = dao.SelectAllScreenToolbars().ToList();
-                var LauncherToolbarId = FindMaybeToolbarId(screenToolbars);
-                return LauncherToolbarId;
+                var launcherToolbarId = FindMaybeToolbarId(screenToolbars);
+                return launcherToolbarId;
             }
         }
 
@@ -478,6 +480,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public void StartView()
         {
+            if(RestoreVisibleNotifyLogId != Guid.Empty) {
+                NotifyManager.ClearLog(RestoreVisibleNotifyLogId);
+            }
+
             IsHiding = false;
 
             var windowItem = OrderManager.CreateLauncherToolbarWindow(this);
@@ -498,8 +504,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             return true;
         }
 
-        public void ReceiveViewClosed()
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
+        public void ReceiveViewClosed(bool isUserOperation)
         {
+            if(isUserOperation) {
+                if(!IsVisible) {
+                    var screenOperator = new ScreenOperator(LoggerFactory);
+                    var screenName = screenOperator.GetName(DockScreen);
+
+                    var notifyMessage = new NotifyMessage(
+                       NotifyLogKind.Undo,
+                       Properties.Resources.String_LauncherToolbar_Hidden_Header,
+                       new NotifyLogContent(
+                           TextUtility.ReplaceFromDictionary(
+                               Properties.Resources.String_LauncherToolbar_Hidden_Content_Format,
+                               new Dictionary<string, string>() {
+                                   ["SCREEN-NAME"] = screenName,
+                               }
+                           )
+                       ),
+                       () => {
+                           if(!ViewCreated) {
+                               RestoreVisibleNotifyLogId = Guid.Empty;
+                               ChangeVisibleDelaySave(true);
+                               StartView();
+                           }
+                       }
+                    );
+                    RestoreVisibleNotifyLogId = NotifyManager.AppendLog(notifyMessage);
+                }
+            }
             ViewCreated = false;
         }
 

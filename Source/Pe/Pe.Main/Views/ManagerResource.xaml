@@ -10,7 +10,7 @@
 
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Manager"
 >
-  <ContextMenu x:Key="ContextMenu" IsOpen="{Binding IsOpenContextMenu}">
+  <ContextMenu x:Key="ContextMenu" IsOpen="{Binding IsOpenContextMenu, Mode=OneWayToSource}">
     <ContextMenu.Resources>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -67,7 +67,7 @@
         </Style>
       </MenuItem.ItemContainerStyle>-->
     </MenuItem>
-    <MenuItem Header="{Binding Resources.String_AppManager_Note_A, Source={x:Static app_main:CultureService.Instance}}" IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}">
+    <MenuItem IsSubmenuOpen="{Binding IsOpenNoteMenu, Mode=OneWayToSource}" Header="{Binding Resources.String_AppManager_Note_A, Source={x:Static app_main:CultureService.Instance}}">
       <MenuItem.Resources>
         <Style x:Key="NoteItemsMenu" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>
@@ -112,7 +112,7 @@
 
     <Separator />
 
-    <MenuItem Header="{Binding Resources.String_AppManager_System_A, Source={x:Static app_main:CultureService.Instance}}">
+    <MenuItem IsSubmenuOpen="{Binding IsOpenSystemMenu, Mode=OneWayToSource}" Header="{Binding Resources.String_AppManager_System_A, Source={x:Static app_main:CultureService.Instance}}">
       <MenuItem.Style>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>

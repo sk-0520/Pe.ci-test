@@ -43,10 +43,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             Themes.Add(theme);
         }
 
-        public void SetCurrentTheme(in PluginId pluginId, PluginContextFactory pluginContextFactory)
+        public void SetCurrentTheme(IPluginIdentifiers pluginIdentifiers, PluginContextFactory pluginContextFactory)
         {
-            var id = pluginId.Id;
-            var theme = Themes.FirstOrDefault(i => i.PluginId.Id == id);
+            var theme = Themes.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginIdentifiers.PluginId);
 
             var prev = CurrentTheme;
             CurrentTheme = theme;
@@ -54,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(prev != null) {
                 prev.Unload(PluginKind.Theme);
             }
-            var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginId);
+            var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers);
             CurrentTheme.Load(PluginKind.Theme, pluginContext);
         }
 

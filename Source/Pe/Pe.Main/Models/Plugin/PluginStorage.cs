@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    public class PluginFile : IPluginFile
+    public class PluginFile : IPluginFiles
     {
         public PluginFile(PluginFileStorage user, PluginFileStorage machine, PluginFileStorage temporary)
         {
@@ -124,16 +124,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region IPluginFile
 
         public PluginFileStorage User { get; }
-        IPluginFileStorage IPluginFile.User => User;
+        IPluginFileStorage IPluginFiles.User => User;
         public PluginFileStorage Machine { get; }
-        IPluginFileStorage IPluginFile.Machine => Machine;
+        IPluginFileStorage IPluginFiles.Machine => Machine;
         public PluginFileStorage Temporary { get; }
-        IPluginFileStorage IPluginFile.Temporary => Temporary;
+        IPluginFileStorage IPluginFiles.Temporary => Temporary;
 
         #endregion
     }
 
-    public class PluginPersistent : IPluginPersistent
+    public class PluginPersistent : IPluginPersistents
     {
         public PluginPersistent(PluginPersistentStorage normal, PluginPersistentStorage large, PluginPersistentStorage temporary)
         {
@@ -145,11 +145,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region IPluginPersistent
 
         public PluginPersistentStorage Normal { get; }
-        IPluginPersistentStorage IPluginPersistent.Normal => Normal;
+        IPluginPersistentStorage IPluginPersistents.Normal => Normal;
         public PluginPersistentStorage Large { get; }
-        IPluginPersistentStorage IPluginPersistent.Large => Large;
+        IPluginPersistentStorage IPluginPersistents.Large => Large;
         public PluginPersistentStorage Temporary { get; }
-        IPluginPersistentStorage IPluginPersistent.Temporary => Temporary;
+        IPluginPersistentStorage IPluginPersistents.Temporary => Temporary;
 
         #endregion
     }
@@ -165,9 +165,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region IPluginStorage
 
         public PluginFile File { get; }
-        IPluginFile IPluginStorage.File => File;
+        IPluginFiles IPluginStorage.File => File;
         public PluginPersistent Persistent { get; }
-        IPluginPersistent IPluginStorage.Persistent => Persistent;
+        IPluginPersistents IPluginStorage.Persistent => Persistent;
 
         #endregion
     }

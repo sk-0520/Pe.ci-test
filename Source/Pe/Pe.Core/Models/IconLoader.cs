@@ -17,40 +17,46 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public interface IIconPack<TValue>
+    /// <summary>
+    /// アイコンのまとまり。
+    /// </summary>
+    /// <typeparam name="TIcon"></typeparam>
+    public interface IIconPack<TIcon>
     {
         #region property
 
-        TValue Small { get; }
-        TValue Normal { get; }
-        TValue Big { get; }
-        TValue Large { get; }
+        /// <inheritdoc cref="IconBox.Small"/>
+        TIcon Small { get; }
+        /// <inheritdoc cref="IconBox.Normal"/>
+        TIcon Normal { get; }
+        /// <inheritdoc cref="IconBox.Big"/>
+        TIcon Big { get; }
+        /// <inheritdoc cref="IconBox.Large"/>
+        TIcon Large { get; }
 
         #endregion
 
         #region function
 
-        IReadOnlyDictionary<IconBox, TValue> IconItems { get; }
+        /// <summary>
+        /// <see cref="IconBox"/> のマッピング。
+        /// </summary>
+        IReadOnlyDictionary<IconBox, TIcon> IconItems { get; }
 
         #endregion
     }
 
-
+    /// <summary>
+    /// アイコンファイルの読み込み処理。
+    /// </summary>
     public class IconLoader
     {
         const int sizeofGRPICONDIR_idCount = 4;
         const int offsetGRPICONDIRENTRY_nID = 12;
         const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
-        static readonly int sizeofICONDIR;
-        static readonly int sizeofICONDIRENTRY;
-        static readonly int sizeofGRPICONDIRENTRY;
-
-        static IconLoader()
-        {
-            sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
-            sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
-            sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
-        }
+        static readonly int sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
+        static readonly int sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
+        static readonly int sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
 
         public IconLoader(ILogger logger)
         {
@@ -82,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 using var shellItem = ComWrapper.Create(iShellItem);
                 var size = iconSize.ToSize();
                 var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
-                var hResultBitmap = IntPtr.Zero;
+                IntPtr hResultBitmap;
                 using(var imageFactory = shellItem.Cast<IShellItemImageFactory>()) {
                     imageFactory.Com.GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
                 }
@@ -99,6 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+
         /// <summary>
         /// http://hp.vector.co.jp/authors/VA016117/rsrc2icon.html
         /// </summary>
@@ -106,6 +113,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="name"></param>
         /// <param name="resType"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
         byte[]? GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
@@ -280,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         BitmapSource? LoadLargeIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
         {
             //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
+            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             if(hasIcon) {
@@ -289,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(iconIndex < iconList.Count) {
                         var binary = iconList[iconIndex];
                         iconList.Clear();
-                        var image = (BitmapSource)DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
+                        var image = DrawingUtility.ImageSourceFromBinaryIcon(binary, iconSize.ToSize());
                         return image;
                     }
                 } catch(Exception ex) {

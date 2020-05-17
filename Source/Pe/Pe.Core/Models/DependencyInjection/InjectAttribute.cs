@@ -12,11 +12,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class InjectAttribute : Attribute
     {
+        /// <summary>
+        /// コンストラクタの限定、対象プロパティ(or フィールド)をマーク。
+        /// </summary>
         public InjectAttribute()
         {
             Name = string.Empty;
         }
 
+        /// <summary>
+        /// コンストラクタの限定、対象プロパティ(or フィールド)を名前付きでマーク。
+        /// </summary>
         public InjectAttribute(string name)
         {
             Name = name;

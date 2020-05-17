@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
     public abstract class KeyActionJobBase
     {
-        public KeyActionJobBase(KeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        protected KeyActionJobBase(KeyActionCommonData commonData, IEnumerable<IReadOnlyKeyMappingData> mappings)
         {
             CommonData = commonData;
             Mappings = mappings.ToList();
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     public abstract class KeyActionJobBase<TActionData> : KeyActionJobBase
         where TActionData : KeyActionCommonData
     {
-        public KeyActionJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        protected KeyActionJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
             ActionData = actionData;
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
     public abstract class KeyActionPressedJobBase : KeyActionJobBase<KeyActionPressedDataBase>
     {
-        public KeyActionPressedJobBase(KeyActionPressedDataBase actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        protected KeyActionPressedJobBase(KeyActionPressedDataBase actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
             if(Mappings.Count == 0) {
@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     public abstract class KeyActionPressedJobBase<TActionData> : KeyActionPressedJobBase
         where TActionData : KeyActionPressedDataBase
     {
-        public KeyActionPressedJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
+        protected KeyActionPressedJobBase(TActionData actionData, IEnumerable<IReadOnlyKeyMappingData> mappings)
             : base(actionData, mappings)
         {
             PressedData = actionData;

@@ -239,9 +239,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
-            public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, IScreen screen)
+            public StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen)
             {
-                var element = DiContainer.Build<StandardInputOutputElement>(id, process, screen);
+                var element = DiContainer.Build<StandardInputOutputElement>(caption, process, screen);
                 element.Initialize();
                 return element;
             }

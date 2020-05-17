@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
     /// </summary>
     public abstract class GdiObjectBase : UnmanagedHandleWrapper, IMakeBitmapSource
     {
-        public GdiObjectBase(IntPtr hHandle)
+        protected GdiObjectBase(IntPtr hHandle)
             : base(hHandle)
         { }
 

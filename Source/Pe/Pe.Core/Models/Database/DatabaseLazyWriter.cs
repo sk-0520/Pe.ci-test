@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     {
         #region variable
 
-        object _timerLocker = new object();
+        readonly object _timerLocker = new object();
 
         #endregion
 
@@ -112,8 +112,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         IList<LazyStockItem> StockItems { get; } = new List<LazyStockItem>();
         IDictionary<object, LazyStockItem> UniqueItems { get; } = new Dictionary<object, LazyStockItem>();
-
-        public bool IsPausing { get; private set; }
 
         #endregion
 
@@ -154,6 +152,43 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             }
         }
 
+        void LazyCallback(object state)
+        {
+            if(IsPausing) {
+                return;
+            }
+            Flush();
+        }
+
+        void FlushCore(LazyStockItem[] stockItems)
+        {
+            using var transaction = DatabaseBarrier.WaitWrite();
+            foreach(var stockItem in stockItems) {
+                stockItem.Action(transaction);
+            }
+            transaction.Commit();
+        }
+
+
+        #endregion
+
+        #region IDatabaseLazyWriter
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.IsPausing"/>
+        public bool IsPausing { get; private set; }
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.Pause"/>
+        public IDisposer Pause()
+        {
+            ThrowIfDisposed();
+
+            IsPausing = true;
+            return new ActionDisposer(d => {
+                IsPausing = false;
+            });
+        }
+
+        /// <inheritdoc cref="IDatabaseLazyWriter.Stock(Action{IDatabaseTransaction}, object)"/>
         public void Stock(Action<IDatabaseTransaction> action, object uniqueKey)
         {
             if(uniqueKey == null) {
@@ -170,12 +205,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             StockCore(action, uniqueKey);
         }
 
+        /// <inheritdoc cref="IDatabaseLazyWriter.Stock(Action{IDatabaseTransaction})"/>
         public void Stock(Action<IDatabaseTransaction> action)
         {
             ThrowIfDisposed();
             StockCore(action, null);
         }
 
+        /// <inheritdoc cref="IDatabaseLazyWriter.ClearStock"/>
         public void ClearStock()
         {
             ThrowIfDisposed();
@@ -187,34 +224,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
                 StartTimer();
             }
-        }
-
-        void LazyCallback(object state)
-        {
-            if(IsPausing) {
-                return;
-            }
-            Flush();
-        }
-
-        void FlushCore(LazyStockItem[] stockItems)
-        {
-            using(var transaction = DatabaseBarrier.WaitWrite()) {
-                foreach(var stockItem in stockItems) {
-                    stockItem.Action(transaction);
-                }
-                transaction.Commit();
-            }
-        }
-
-        public IDisposer Pause()
-        {
-            ThrowIfDisposed();
-
-            IsPausing = true;
-            return new ActionDisposer(d => {
-                IsPausing = false;
-            });
         }
 
         #endregion
@@ -240,6 +249,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             FlushCore(items);
         }
 
+        /// <inheritdoc cref="IFlushable.Flush"/>
         public void Flush()
         {
             Flush(true);

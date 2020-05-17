@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IResultSuccessValue<TSuccess> : IResultSuccessValue
+    public interface IResultSuccessValue<out TSuccess> : IResultSuccessValue
         where TSuccess : class
     {
         #region property
@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public interface IResultFailureValue<TFailure> : IResultFailureValue
+    public interface IResultFailureValue<out TFailure> : IResultFailureValue
         where TFailure : class
     {
         #region property

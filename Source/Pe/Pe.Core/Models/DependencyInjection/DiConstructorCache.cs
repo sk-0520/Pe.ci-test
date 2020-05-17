@@ -13,6 +13,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// </summary>
     public sealed partial class DiConstructorCache
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="constructorInfo">コンストラクタ情報。</param>
+        /// <param name="parameterInfos">コンストラクタのパラメータ。</param>
         public DiConstructorCache(ConstructorInfo constructorInfo, IReadOnlyList<ParameterInfo> parameterInfos)
         {
             ConstructorInfo = constructorInfo;
@@ -75,6 +80,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return creator;
         }
 
+        /// <summary>
+        /// コンストラクタの呼び出し。
+        /// <para>内部実装は DiConstructorCacheImpl.tt にて機械生成。</para>
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public object Create(object[] parameters)
         {
             if(Creator == null) {

@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Tuner
 {
     public abstract class TunerBase
     {
-        public TunerBase(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        protected TunerBase(IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
         {
             StatementLoader = statementLoader;
             Logger = loggerFactory.CreateLogger(GetType());

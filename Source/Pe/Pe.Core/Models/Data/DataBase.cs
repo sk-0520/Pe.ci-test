@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Data
         #endregion
     }
 
-    public interface IRawModel<T> : IData, IRawModel
+    public interface IRawModel<out T> : IData, IRawModel
     {
         #region property
 

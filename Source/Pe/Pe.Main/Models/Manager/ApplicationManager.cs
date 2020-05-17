@@ -63,6 +63,7 @@ using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Command;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -77,6 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
+            ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
 
             WindowManager = initializer.WindowManager ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.WindowManager));
             OrderManager = ApplicationDiContainer.Build<OrderManagerImpl>(); //initializer.OrderManager;
@@ -93,6 +95,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
             ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+
+            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
+            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
+            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
+
+            ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
+            ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
+            ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
+            ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
+            ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
+            ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
 
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
@@ -145,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         KeyActionChecker KeyActionChecker { get; }
         KeyActionAssistant KeyActionAssistant { get; }
 
-        PluginContainer? PluginContainer { get; set; }
+        PluginContainer PluginContainer { get; }
 
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
@@ -162,78 +175,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
 
         #region function
-
-        IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
-        {
-            Debug.Assert(CommandElement == null);
-
-            var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
-
-            var result = new ApplicationCommandParameter[] {
-                factory.CreateParameter(ApplicationCommand.Close, p => {
-                    CommandElement!.HideView(false);
-                }),
-                factory.CreateParameter(ApplicationCommand.Exit, p => {
-                    Exit(false);
-                }),
-                factory.CreateParameter(ApplicationCommand.Shutdown, p => {
-                    Exit(true);
-                }),
-                factory.CreateParameter(ApplicationCommand.Reboot, p => {
-                    Reboot();
-                }),
-                factory.CreateParameter(ApplicationCommand.About, p => {
-                    CommandElement!.HideView(false);
-                    ShowAboutView();
-                }),
-                factory.CreateParameter(ApplicationCommand.Setting, p => {
-                    CommandElement!.HideView(false);
-                    ShowSettingView();
-                }),
-                factory.CreateParameter(ApplicationCommand.GarbageCollection, p => {
-                    var old = GC.GetTotalMemory(false);
-                    GC.Collect(0);
-                    GC.Collect(1);
-                    var now = GC.GetTotalMemory(false);
-                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
-                    Logger.LogInformation(
-                        "GC: {0}({1}) -> {2}({3}), diff: {4}({5})",
-                        sizeConverter.ConvertHumanLikeByte(old), old,
-                        sizeConverter.ConvertHumanLikeByte(now), now,
-                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
-                    );
-                }),
-                factory.CreateParameter(ApplicationCommand.GarbageCollectionFull, p => {
-                    var old = GC.GetTotalMemory(false);
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    var now = GC.GetTotalMemory(false);
-                    var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
-                    Logger.LogInformation(
-                        "GC(FULL): {0}({1}) -> {2}({3}), diff: {4}({5})",
-                        sizeConverter.ConvertHumanLikeByte(old), old,
-                        sizeConverter.ConvertHumanLikeByte(now), now,
-                        sizeConverter.ConvertHumanLikeByte(old - now), old - now
-                    );
-                }),
-                factory.CreateParameter(ApplicationCommand.CopyShortInformation, p => {
-                    var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
-                    var s = infoCollector.GetShortInformation();
-                    ClipboardManager.CopyText(s, ClipboardNotify.User);
-                }),
-                factory.CreateParameter(ApplicationCommand.CopyLongInformation, p => {
-                    var infoCollector = ApplicationDiContainer.Build<ApplicationInformationCollector>();
-                    var s = infoCollector.GetLongInformation();
-                    ClipboardManager.CopyText(s, ClipboardNotify.User);
-                }),
-                factory.CreateParameter(ApplicationCommand.Help, p => {
-                    ShowHelp();
-                }),
-            };
-
-            return result;
-        }
 
         /// <summary>
         /// すべてここで完結する神の所業。
@@ -284,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var factory = new ApplicationDatabaseFactoryPack(
                 new ApplicationDatabaseFactory(settings.Main, true, false),
                 new ApplicationDatabaseFactory(settings.File, true, false),
-                new ApplicationDatabaseFactory()
+                new ApplicationDatabaseFactory(true, false)
             );
             var lazyWriterWaitTimePack = new LazyWriterWaitTimePack(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(3));
 
@@ -469,27 +410,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.ApplicationIdle);
         }
 
-        private void RegisterPlugins()
+        private void LoadPlugins()
         {
-            Debug.Assert(ApplicationDiContainer != null);
-            var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
-            var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
-            PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
-
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+
             foreach(var plugin in PluginContainer.GetPlugins()) {
-                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginId));
+                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
                 PluginContainer.AddPlugin(plugin);
             }
-            PluginContainer.Theme.SetCurrentTheme(DefaultTheme.Id, pluginContextFactory);
+        }
 
-            ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
-            ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
-            ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
-            ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
-            ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
-            ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
+        private void ApplyCurrentTheme(IPluginIdentifiers pluginIdentifiers)
+        {
+            var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
+            PluginContainer.Theme.SetCurrentTheme(pluginIdentifiers, pluginContextFactory);
+        }
+
+        private void RunAddons()
+        {
+            //TODTO: アドオンを実行していく
         }
 
         void SetStaticPlatformTheme()
@@ -644,7 +584,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //if(!initializer.Initialize(e.Args)) {
             //    return false;
             //}
-            ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
+            //ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
 
             //setting.UserId
 
@@ -654,8 +594,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //});
 
             MakeMessageWindow();
-            RegisterPlugins();
 
+            LoadPlugins();
+            ApplyCurrentTheme(DefaultTheme.Informations.PluginIdentifiers);
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");
@@ -929,6 +870,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CefSharp.Cef.Shutdown();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="ignoreUpdate">アップデートを無視するか。</param>
         public void Exit(bool ignoreUpdate)
         {
             Logger.LogInformation("おわる！");
@@ -1397,7 +1342,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         internal void StartupEnd()
         {
             StartHook();
+            RunAddons();
             DelayCheckUpdateAsync().ConfigureAwait(false);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1215:\"GC.Collect\" should not be called")]
+        private void GarbageCollection(bool full)
+        {
+            var old = GC.GetTotalMemory(false);
+            if(full) {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            } else {
+                GC.Collect(0);
+                GC.Collect(1);
+            }
+            var now = GC.GetTotalMemory(false);
+            var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
+            Logger.LogInformation(
+                "GC(FULL:{0}): {1}({2}) -> {3}({4}), 差分: {5}({6})",
+                full,
+                sizeConverter.ConvertHumanLikeByte(old), old,
+                sizeConverter.ConvertHumanLikeByte(now), now,
+                sizeConverter.ConvertHumanLikeByte(old - now), old - now
+            );
         }
 
         #endregion
@@ -1496,9 +1465,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return OrderManager.CreateFontElement(defaultFontKind, fontId, parentUpdater);
         }
 
-        public StandardInputOutputElement CreateStandardInputOutputElement(string id, Process process, IScreen screen)
+        /// <inheritdoc cref="IOrderManager.CreateStandardInputOutputElement(string, Process, IScreen)"/>
+        public StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen)
         {
-            var element = OrderManager.CreateStandardInputOutputElement(id, process, screen);
+            var element = OrderManager.CreateStandardInputOutputElement(caption, process, screen);
             StandardInputOutputs.Add(element);
             return element;
         }

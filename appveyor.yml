@@ -30,7 +30,7 @@ build_script:
   - ps: .\Build\create-document.ps1 -Platforms $env:PLATFORM
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
 before_test:
-  - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger -Version 2.0.0 & cd ..\..\..\ )
+  - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger & cd ..\..\..\ )
 test_script:
   - cmd: dotnet test Source/Pe/Pe.sln --verbosity normal --no-build --no-restore --configuration Release --runtime win-%PLATFORM% /p:Platform=%PLATFORM% /p:DefineConstants="%BUILD_TYPE%" --test-adapter-path:. --logger:Appveyor
 artifacts:
@@ -39,7 +39,7 @@ artifacts:
   - path: Source\Documents\build
     name: document
 cache:
-  - '%USERPROFILE%\.nuget\packages'
+  #- '%USERPROFILE%\.nuget\packages'
   - 'Source\Documents\node_modules'
   - C:\ProgramData\chocolatey\bin -> appveyor.yml
   - C:\ProgramData\chocolatey\lib -> appveyor.yml

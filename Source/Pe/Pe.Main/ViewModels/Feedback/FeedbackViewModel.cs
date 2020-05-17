@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         public void ReceiveViewClosing(CancelEventArgs e)
         { }
 
-        public void ReceiveViewClosed(Window window)
+        public void ReceiveViewClosed(Window window, bool isUserOperation)
         { }
 
         #endregion

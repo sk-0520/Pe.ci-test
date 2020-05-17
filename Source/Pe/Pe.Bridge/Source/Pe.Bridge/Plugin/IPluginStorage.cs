@@ -11,6 +11,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     public enum PluginPersistentFormat
     {
         /// <summary>
+        /// ただの文字列。
+        /// <para>プラグイン側で解釈すること。</para>
+        /// </summary>
+        Text,
+        /// <summary>
         /// JSON形式。
         /// </summary>
         Json,
@@ -91,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// ファイル操作処理グループ。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginFile
+    public interface IPluginFiles
     {
         #region property
 
@@ -117,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// 永続データ操作処理グループ。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginPersistent
+    public interface IPluginPersistents
     {
         #region property
 
@@ -148,11 +153,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <summary>
         /// ファイル処理。
         /// </summary>
-        IPluginFile File { get; }
+        IPluginFiles File { get; }
         /// <summary>
         /// 永続データ処理。
         /// </summary>
-        IPluginPersistent Persistent { get; }
+        IPluginPersistents Persistent { get; }
 
         #endregion
     }

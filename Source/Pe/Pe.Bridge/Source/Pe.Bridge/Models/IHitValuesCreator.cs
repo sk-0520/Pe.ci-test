@@ -65,11 +65,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <returns></returns>
         IReadOnlyList<Match> GetMatches(string input, Regex regex);
 
-        IReadOnlyList<Range> ConvertRanges(string input, IEnumerable<Match> matches);
+        IReadOnlyList<Range> ConvertRanges(ReadOnlySpan<char> input, IEnumerable<Match> matches);
 
-        List<HitValue> ConvertHitValues(string input, string source, IReadOnlyList<Range> hitRanges);
+        List<HitValue> ConvertHitValues(ReadOnlySpan<char> input, ReadOnlySpan<char> source, IReadOnlyList<Range> hitRanges);
 
-        int CalcScore(string input, string source, IReadOnlyList<HitValue> hitValues);
+        int CalcScore(ReadOnlySpan<char> input, ReadOnlySpan<char> source, IReadOnlyList<HitValue> hitValues);
 
         #endregion
     }

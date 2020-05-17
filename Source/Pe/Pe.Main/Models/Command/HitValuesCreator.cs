@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -44,51 +45,56 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public IReadOnlyList<Match> GetMatches(string input, Regex regex) => regex.Matches(input).Cast<Match>().ToList();
 
-        public IReadOnlyList<Range> ConvertRanges(string input, IEnumerable<Match> matches) => matches.Select(i => new Range(i.Index, i.Index + i.Length)).ToList();
+        public IReadOnlyList<Range> ConvertRanges(ReadOnlySpan<char> input, IEnumerable<Match> matches) => matches.Select(i => new Range(i.Index, i.Index + i.Length)).ToList();
 
-        public List<HitValue> ConvertHitValues(string input, string source, IReadOnlyList<Range> hitRanges)
+        public List<HitValue> ConvertHitValues(ReadOnlySpan<char> input, ReadOnlySpan<char> source, IReadOnlyList<Range> hitRanges)
         {
             if(hitRanges.Count == 0) {
                 return new List<HitValue>() {
-                    new HitValue(source, false),
+                    new HitValue(source.ToString(), false),
                 };
             }
 
             var result = new List<HitValue>();
 
-            var workMatches = hitRanges.ToDictionary(i => i.Start.Value, i => i.End.Value - i.Start.Value);
+            var workMatches = hitRanges
+                .Select(i => (value: i.Start.Value, length: i.End.Value - i.Start.Value))
+                .Where(i => 0 < i.length)
+                .ToDictionary(i => i.value, i => i.length)
+            ;
+
             var i = 0;
             while(true) {
                 if(workMatches.TryGetValue(i, out var hitLength)) {
-                    var value = source.Substring(i, hitLength);
-                    var item = new HitValue(value, true);
+                    var value = source.Slice(i, hitLength);
+                    var item = new HitValue(value.ToString(), true);
                     result.Add(item);
                     workMatches.Remove(i);
                     i += hitLength;
                     if(workMatches.Count == 0) {
                         if(i < source.Length) {
-                            result.Add(new HitValue(source.Substring(i), false));
+                            result.Add(new HitValue(source.Slice(i).ToString(), false));
                         }
                         break;
                     }
                 } else {
-                    var minIndex = workMatches.Keys.Min();
-                    var value = source.Substring(i, minIndex - i);
-                    var item = new HitValue(value, false);
-                    result.Add(item);
-                    i = minIndex;
+                    if(workMatches.Count != 0) {
+                        var minIndex = workMatches.Keys.Min();
+                        var value = source.Slice(i, minIndex - i);
+                        var item = new HitValue(value.ToString(), false);
+                        result.Add(item);
+                        i = minIndex;
+                    }
                 }
             }
 
             return result;
         }
 
-        public int CalcScore(string input, string source, IReadOnlyList<HitValue> hitValues)
+        public int CalcScore(ReadOnlySpan<char> input, ReadOnlySpan<char> source, IReadOnlyList<HitValue> hitValues)
         {
-            Logger.LogDebug(">> {0}, {1}", source, string.Join(",", hitValues.Select(i => $"{(i.IsHit ? 'O' : 'X')}:{i.Value}")));
             if(hitValues.Count == 1 && hitValues.All(i => i.IsHit)) {
                 // 完全一致
-                Logger.LogInformation(source);
                 return GetScore(ScoreKind.Perfect, NoBonus);
             }
             var scrore = GetScore(ScoreKind.Initial, NoBonus);

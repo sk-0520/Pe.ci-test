@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             }
         }
 
-        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IconData iconData, CancellationToken cancellationToken)
+        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IReadOnlyIconData iconData, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 

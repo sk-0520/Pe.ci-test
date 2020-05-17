@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public abstract class GeneralSettingEditorElementBase : ElementBase
     {
-        public GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        protected GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -38,12 +38,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void Save(DatabaseCommandPack commadPack)
+        public void Save(DatabaseCommandPack commandPack)
         {
-            SaveImpl(commadPack);
+            SaveImpl(commandPack);
         }
 
-        protected abstract void SaveImpl(DatabaseCommandPack commadPack);
+        protected abstract void SaveImpl(DatabaseCommandPack commandPack);
 
         #endregion
     }
@@ -315,11 +315,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             FindTag = setting.FindTag;
         }
 
-        protected override void SaveImpl(DatabaseCommandPack commadPack)
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
             Debug.Assert(Font != null);
 
-            var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppCommandSettingData() {
                 FontId = Font.FontId,
                 IconBox = IconBox,
@@ -327,10 +327,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 HideWaitTime = HideWaitTime,
                 FindTag = FindTag,
             };
-            appCommandSettingEntityDao.UpdateSettingCommandSetting(data, commadPack.CommonStatus);
+            appCommandSettingEntityDao.UpdateSettingCommandSetting(data, commandPack.CommonStatus);
 
-            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
-            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
+            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
 
         }
 
@@ -390,11 +390,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsTopmost = setting.IsTopmost;
         }
 
-        protected override void SaveImpl(DatabaseCommandPack commadPack)
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
             Debug.Assert(Font != null);
 
-            var appNoteSettingEntityDao = new AppNoteSettingEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var appNoteSettingEntityDao = new AppNoteSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppNoteSettingData() {
                 FontId = Font.FontId,
                 TitleKind = TitleKind,
@@ -403,10 +403,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 BackgroundColor = BackgroundColor,
                 IsTopmost = IsTopmost,
             };
-            appNoteSettingEntityDao.UpdateSettingNoteSetting(data, commadPack.CommonStatus);
+            appNoteSettingEntityDao.UpdateSettingNoteSetting(data, commandPack.CommonStatus);
 
-            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
-            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
+            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
 
         }
 
@@ -466,11 +466,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsTopmost = setting.IsTopmost;
         }
 
-        protected override void SaveImpl(DatabaseCommandPack commadPack)
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
             Debug.Assert(Font != null);
 
-            var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppStandardInputOutputSettingData() {
                 FontId = Font.FontId,
                 OutputForegroundColor = OutputForegroundColor,
@@ -479,10 +479,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ErrorBackgroundColor = ErrorBackgroundColor,
                 IsTopmost = IsTopmost,
             };
-            appStandardInputOutputSettingEntityDao.UpdateSettingStandardInputOutputSetting(data, commadPack.CommonStatus);
+            appStandardInputOutputSettingEntityDao.UpdateSettingStandardInputOutputSetting(data, commandPack.CommonStatus);
 
-            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
-            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
+            var fontsEntityDao = new FontsEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
+            fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commandPack.CommonStatus);
 
         }
 

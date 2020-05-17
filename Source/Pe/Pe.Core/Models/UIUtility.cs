@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public sealed class EmptyDpiScaleOutputor : IDpiScaleOutputor
+    public sealed class EmptyDpiScaleOutputor: IDpiScaleOutputor
     {
         #region IDpiScaleOutputor
 
@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public static class UIUtility
     {
         /// <summary>
+        /// 表示要素の子孫を取得する。
         /// <para>http://stackoverflow.com/questions/974598/find-all-controls-in-wpf-window-by-type</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -66,6 +67,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// 論理ツリーから子孫を取得する。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="depObj"></param>
+        /// <returns></returns>
         public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj)
             where T : DependencyObject
         {
@@ -84,6 +91,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// 表示要素・論理要素から子孫を取得する。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="depObj"></param>
+        /// <returns></returns>
         public static IEnumerable<T> FindChildren<T>(DependencyObject depObj)
             where T : DependencyObject
         {
@@ -122,6 +135,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// 対象要素群の<see cref="FrameworkElement.ApplyTemplate"/> を再帰的に呼び出し。
+        /// </summary>
+        /// <param name="elements"></param>
         public static void RecursiveApplyTemplate(IEnumerable<FrameworkElement> elements)
         {
             foreach(var element in elements) {
@@ -129,7 +146,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 RecursiveApplyTemplate(FindChildren<FrameworkElement>(element));
             }
         }
+        /// <summary>
+        /// 対象要素の<see cref="FrameworkElement.ApplyTemplate"/> を再帰的に呼び出し。
+        /// </summary>
+        /// <param name="element"></param>
+        public static void RecursiveApplyTemplate(FrameworkElement element) => RecursiveApplyTemplate(new[] { element });
 
+        /// <summary>
+        /// スケールの取得。
+        /// </summary>
+        /// <param name="visual"></param>
+        /// <returns></returns>
         public static Point GetDpiScale(Visual visual)
         {
             var source = PresentationSource.FromVisual(visual);
@@ -143,12 +170,24 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return new Point(1.0, 1.0);
         }
 
+        /// <summary>
+        /// 物理ピクセルに変換。
+        /// </summary>
+        /// <param name="value">論理ピクセル。</param>
+        /// <param name="dpiScale"></param>
+        /// <returns></returns>
         [return: PixelKind(Px.Device)]
         public static double ToDevicePixel([PixelKind(Px.Logical)] double value, double dpiScale) => value * dpiScale;
-
+        /// <summary>
+        /// 論理ピクセルに変換
+        /// </summary>
+        /// <param name="value">物理ピクセル。</param>
+        /// <param name="dpiScale"></param>
+        /// <returns></returns>
         [return: PixelKind(Px.Logical)]
         public static double ToLogicalPixel([PixelKind(Px.Device)] double value, double dpiScale) => value / dpiScale;
 
+        /// <inheritdoc cref="ToDevicePixel(double, double)"/>
         [return: PixelKind(Px.Device)]
         public static Point ToDevicePixel([PixelKind(Px.Logical)] Point point, Visual visual)
         {
@@ -160,6 +199,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
         }
 
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Point ToLogicalPixel([PixelKind(Px.Device)] Point point, Point dpiScale)
         {
@@ -168,11 +208,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 point.Y / dpiScale.Y
             );
         }
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Point ToLogicalPixel([PixelKind(Px.Device)] Point point, IDpiScaleOutputor dpiScaleOutputor) => ToLogicalPixel(point, dpiScaleOutputor.GetDpiScale());
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Point ToLogicalPixel([PixelKind(Px.Device)] Point point, Visual visual) => ToLogicalPixel(point, GetDpiScale(visual));
 
+        /// <inheritdoc cref="ToDevicePixel(double, double)"/>
         [return: PixelKind(Px.Device)]
         public static Size ToDevicePixel([PixelKind(Px.Logical)] Size size, Point dpiScale)
         {
@@ -181,11 +224,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 size.Height * dpiScale.Y
             );
         }
+        /// <inheritdoc cref="ToDevicePixel(double, double)"/>
         [return: PixelKind(Px.Device)]
         public static Size ToDevicePixel([PixelKind(Px.Logical)] Size size, IDpiScaleOutputor dpiScaleOutputor) => ToDevicePixel(size, dpiScaleOutputor.GetDpiScale());
+        /// <inheritdoc cref="ToDevicePixel(double, double)"/>
         [return: PixelKind(Px.Device)]
         public static Size ToDevicePixel([PixelKind(Px.Logical)] Size size, Visual visual) => ToDevicePixel(size, GetDpiScale(visual));
 
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, Point dpiScale)
         {
@@ -194,11 +240,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 size.Height / dpiScale.Y
             );
         }
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, IDpiScaleOutputor dpiScaleOutputor) => ToLogicalPixel(size, dpiScaleOutputor.GetDpiScale());
         [return: PixelKind(Px.Logical)]
         public static Size ToLogicalPixel([PixelKind(Px.Device)] Size size, Visual visual) => ToLogicalPixel(size, GetDpiScale(visual));
 
+        /// <inheritdoc cref="ToDevicePixel(double, double)"/>
         [return: PixelKind(Px.Device)]
         public static Rect ToDevicePixel([PixelKind(Px.Logical)] Rect rect, Point dpiScale)
         {
@@ -209,11 +258,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 rect.Height * dpiScale.Y
             );
         }
+        /// <inheritdoc cref="ToDevicePixel(double, double)"/>
         [return: PixelKind(Px.Device)]
         public static Rect ToDevicePixel([PixelKind(Px.Logical)] Rect rect, IDpiScaleOutputor dpiScaleOutputor) => ToDevicePixel(rect, dpiScaleOutputor.GetDpiScale());
+        /// <inheritdoc cref="ToDevicePixel(double, double)"/>
         [return: PixelKind(Px.Device)]
         public static Rect ToDevicePixel([PixelKind(Px.Logical)] Rect rect, Visual visual) => ToDevicePixel(rect, GetDpiScale(visual));
 
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Rect ToLogicalPixel([PixelKind(Px.Device)] Rect rect, Point dpiScale)
         {
@@ -224,8 +276,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 rect.Height / dpiScale.Y
             );
         }
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Rect ToLogicalPixel([PixelKind(Px.Device)] Rect rect, IDpiScaleOutputor dpiScaleOutputor) => ToLogicalPixel(rect, dpiScaleOutputor.GetDpiScale());
+        /// <inheritdoc cref="ToLogicalPixel(double, double)"/>
         [return: PixelKind(Px.Logical)]
         public static Rect ToLogicalPixel([PixelKind(Px.Device)] Rect rect, Visual visual) => ToLogicalPixel(rect, GetDpiScale(visual));
 
@@ -257,6 +311,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+        /// <summary>
+        /// クリック無効なやつにする。
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="isTransparent"></param>
         public static void ChangeTransparent(Window window, bool isTransparent)
         {
             var hWnd = HandleUtility.GetWindowHandle(window);

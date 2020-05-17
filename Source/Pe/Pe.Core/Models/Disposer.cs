@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// <see cref="IDisposable.Dispose"/>をサポートする基底クラス。
     /// </summary>
-    public abstract class DisposerBase : IDisposer, IDisposable
+    public abstract class DisposerBase: IDisposer
     {
         ~DisposerBase()
         {
@@ -82,7 +82,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
             OnDisposing();
 
             if(disposing) {
+#pragma warning disable S3971 // "GC.SuppressFinalize" should not be called
                 GC.SuppressFinalize(this);
+#pragma warning restore S3971 // "GC.SuppressFinalize" should not be called
             }
 
             IsDisposed = true;

@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
     public abstract class DebugViewModelBase<TModel> : SingleModelViewModelBase<TModel>, IViewLifecycleReceiver
         where TModel : DebugElementBase
     {
-        public DebugViewModelBase(TModel model, ILoggerFactory loggerFactory)
+        protected DebugViewModelBase(TModel model, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         { }
 
@@ -36,9 +36,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
+        public void ReceiveViewClosed(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed();
+            Model.ReceiveViewClosed(isUserOperation);
         }
 
         #endregion

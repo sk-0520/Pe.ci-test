@@ -68,6 +68,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, parameter) == 1;
         }
 
+        public int DeleteAllSizeLauncherItemIconState(Guid launcherItemId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+            };
+
+            return Commander.Execute(statement, parameter);
+        }
+
         #endregion
     }
 }

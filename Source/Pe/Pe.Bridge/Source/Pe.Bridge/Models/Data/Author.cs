@@ -24,9 +24,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
-    /// <summary>
     /// <inheritdoc cref="IAuthor" />
-    /// </summary>
     public class Author : IAuthor
     {
         public Author(string name)
@@ -37,18 +35,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         #region IAuthor
 
-        /// <summary>
         /// <inheritdoc cref="IAuthor.Name"/>
-        /// </summary>
         public string Name { get; }
 
-        /// <summary>
         /// <inheritdoc cref="IAuthor.Contacts"/>
-        /// </summary>
         public List<IContact> Contacts { get; } = new List<IContact>();
-        /// <summary>
         /// <see cref="Contacts"/>
-        /// </summary>
         IReadOnlyCollection<IContact> IAuthor.Contacts => Contacts;
 
         #endregion

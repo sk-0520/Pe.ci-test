@@ -41,9 +41,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
         void ReceiveViewClosing(CancelEventArgs e);
         /// <summary>
         /// ウィンドウが閉じられた。
-        /// <para>設定状態によるけど基本的にdatacontextは空っぽ。</para>
+        /// <para>設定状態によるけど基本的に<see cref="FrameworkElement.DataContext"/>は空っぽ。</para>
         /// </summary>
-        void ReceiveViewClosed(Window window);
+        /// <param name="window">対象ウィンドウ。</param>
+        /// <param name="isUserOperation">ユーザー操作によって閉じられたか。</param>
+        void ReceiveViewClosed(Window window, bool isUserOperation);
 
         #endregion
     }
