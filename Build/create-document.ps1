@@ -1,4 +1,5 @@
 Param(
+	[switch] $NoInstall,
 	[parameter(mandatory = $true)][string[]] $Platforms
 )
 $ErrorActionPreference = 'Stop'
@@ -30,17 +31,20 @@ $embeddedScript = "Array.prototype.push.apply(changelogs, $changelogArchiveConte
 $changelogNewContent = $changelogCurrentContent.Replace($embeddedMark, $embeddedScript)
 Set-Content $changelogCurrentFilePath -Value $changelogNewContent -Encoding UTF8
 
-try{
+try {
 	Push-Location $documentDirectoryPath
-	Write-Output install
-	npm install --loglevel=error
+	if (! $NoInstall) {
+		Write-Output install
+		npm install --loglevel=error
+	}
 	Write-Output build
 	npm run build
 
-	foreach($platform in $Platforms) {
+	foreach ($platform in $Platforms) {
 		$outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$platform\Pe\doc\help"
 		robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
 	}
-} finally {
+}
+finally {
 	Pop-Location
 }
