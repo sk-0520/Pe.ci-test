@@ -64,6 +64,11 @@ dotnet_naming_symbols.any_async_methods.required_modifiers         = async
 dotnet_naming_style.end_in_async.required_suffix = Async
 dotnet_naming_style.end_in_async.capitalization  = pascal_case
 
+# IDE --------------------------------------------------------------------------
+# IDE0060: 未使用のパラメーターを削除します
+dotnet_code_quality_unused_parameters = non_public:silent
+
+
 # ClrHeapAllocationAnalyzer ----------------------------------------------------
 # HAA0301: Closure Allocation Source
 dotnet_diagnostic.HAA0301.severity = suggestion
