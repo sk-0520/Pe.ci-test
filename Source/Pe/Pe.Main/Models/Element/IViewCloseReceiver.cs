@@ -18,7 +18,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
         /// </summary>
         /// <returns>真: 閉じれる。 偽: キャンセル。</returns>
         bool ReceiveViewClosing();
-        void ReceiveViewClosed();
+        /// <summary>
+        /// ビューが閉じられた。
+        /// </summary>
+        /// <param name="isUserOperation">ユーザー操作によって閉じられたか。</param>
+        void ReceiveViewClosed(bool isUserOperation);
 
         #endregion
     }

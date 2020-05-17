@@ -26,7 +26,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element._Debug_
             return true;
         }
 
-        public virtual void ReceiveViewClosed()
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
+        public virtual void ReceiveViewClosed(bool isUserOperation)
         {
         }
 

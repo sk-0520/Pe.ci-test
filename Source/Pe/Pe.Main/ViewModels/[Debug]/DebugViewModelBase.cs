@@ -36,9 +36,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels._Debug_
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window)
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
+        public void ReceiveViewClosed(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed();
+            Model.ReceiveViewClosed(isUserOperation);
         }
 
         #endregion

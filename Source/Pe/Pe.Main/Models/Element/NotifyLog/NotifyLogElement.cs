@@ -273,7 +273,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
             return true;
         }
 
-        public void ReceiveViewClosed()
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
+        public void ReceiveViewClosed(bool isUserOperation)
         {
             ViewCreated = false;
         }

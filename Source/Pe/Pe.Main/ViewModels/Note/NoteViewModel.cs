@@ -1058,9 +1058,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             e.Cancel = !Model.ReceiveViewClosing();
         }
 
-        public void ReceiveViewClosed(Window window)
+        public void ReceiveViewClosed(Window window, bool isUserOperation)
         {
-            Model.ReceiveViewClosed();
+            Model.ReceiveViewClosed(isUserOperation);
 
             if(PrepareToRemove) {
                 Flush();
