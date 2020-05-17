@@ -18,6 +18,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
 
         #region property
 
+        public IntPtr ResourceHandle => Raw;
+
         public virtual bool CanMakeImageSource => false;
 
         #endregion

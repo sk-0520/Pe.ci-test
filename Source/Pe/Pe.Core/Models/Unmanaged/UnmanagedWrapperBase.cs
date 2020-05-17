@@ -30,11 +30,6 @@ namespace ContentTypeTextNet.Pe.Core.Models.Unmanaged
             }
         }
 
-        #region property
-
-        IntPtr Handle => Raw;
-
-        #endregion
 
         #region function
 
