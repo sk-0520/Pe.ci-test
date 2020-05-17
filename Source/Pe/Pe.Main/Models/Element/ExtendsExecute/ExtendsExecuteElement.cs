@@ -128,7 +128,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             return true;
         }
 
-        public void ReceiveViewClosed()
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
+        public void ReceiveViewClosed(bool isUserOperation)
         {
             ViewCreated = false;
         }

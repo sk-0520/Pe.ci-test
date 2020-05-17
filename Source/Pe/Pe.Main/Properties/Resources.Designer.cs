@@ -3960,6 +3960,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   対象: ${NOTE-CAPTION} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Notify_Hidden_Content_Format {
+            get {
+                return ResourceManager.GetString("String_Note_Notify_Hidden_Content_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ノート非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Notify_Hidden_Header {
+            get {
+                return ResourceManager.GetString("String_Note_Notify_Hidden_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   閉じる(_L) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Operation_Close_A {

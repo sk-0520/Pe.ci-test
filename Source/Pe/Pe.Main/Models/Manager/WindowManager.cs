@@ -119,6 +119,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public bool IsClosed { get; internal set; }
 
+        /// <summary>
+        /// ユーザー操作によってウィンドウが閉じられたか。
+        /// </summary>
+        internal bool IsUserClosed { get; set; }
+
         #endregion
     }
 
@@ -218,6 +223,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
                                 viewLifecycleReceiver.ReceiveViewUserClosing(e);
                             }
+
+                            item.IsUserClosed = !e.Cancel;
 
                             if(e.Cancel) {
                                 handled = true;
@@ -355,7 +362,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                viewLifecycleReceiver.ReceiveViewClosed(item.Window);
+                viewLifecycleReceiver.ReceiveViewClosed(item.Window, item.IsUserClosed);
             }
 
             if(item.CloseToDispose) {
