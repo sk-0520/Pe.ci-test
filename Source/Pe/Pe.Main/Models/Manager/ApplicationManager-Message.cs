@@ -521,7 +521,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void MouseHooker_MouseMove(object? sender, MouseHookEventArgs e)
         {
             if(NotifyLogElement.NowShowing && NotifyLogElement.Position == NotifyLogPosition.Cursor) {
-                NotifyLogElement.StartView();
+                // #636: 通知ログがカーソル位置指定で通知ログウィンドウにクリック可能なアイテムがある場合は常時追従してはいけない
+                var hasCommandLog = NotifyManager.StreamNotifyLogs
+                    .Concat(NotifyManager.TopmostNotifyLogs)
+                    .Any(i => i.Kind == NotifyLogKind.Command || i.Kind == NotifyLogKind.Undo)
+                ;
+                if(!hasCommandLog) {
+                    NotifyLogElement.StartView();
+                }
             }
         }
 
