@@ -155,7 +155,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#635: デバッグ用初回起動データ構築処理の実装"
 					},
 					{
 						"revision": "",
