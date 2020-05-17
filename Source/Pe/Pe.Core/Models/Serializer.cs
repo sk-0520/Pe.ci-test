@@ -61,12 +61,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+
         /// <summary>
         /// オブジェクトを複製する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="source">複製したいオブジェクト。</param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public TResult Clone<TResult, TSource>(TSource source)
         {
             if(source == null) {
@@ -286,6 +288,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return serializer.Clone<TResult>(value);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public static TResult Clone<TResult>(TResult value)
             where TResult : new()
         {
