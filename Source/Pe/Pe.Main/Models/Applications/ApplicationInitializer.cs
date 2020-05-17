@@ -43,6 +43,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CommandLineSwitchAcceptSkip { get; } = "skip-accept";
         string CommandLineSwitchBetaVersion { get; } = "beta-version";
 
+#if DEBUG
+        string CommandLineSwitchDebugDevelopMode { get; } = "debug-dev-mode";
+        public bool IsDebugDevelopMode { get; private set; }
+#endif
+
         public bool IsFirstStartup { get; private set; }
         public RunMode RunMode { get; private set; }
         public ApplicationDiContainer? DiContainer { get; private set; }
@@ -85,6 +90,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             commandLine.Add(longKey: CommandLineSwitchForceLog, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchAcceptSkip, hasValue: false);
             commandLine.Add(longKey: CommandLineSwitchBetaVersion, hasValue: false);
+#if DEBUG
+            commandLine.Add(longKey: CommandLineSwitchDebugDevelopMode, hasValue: false);
+#endif
 
             commandLine.Parse();
 
@@ -364,6 +372,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             }
 #endif
+
+#if DEBUG
+            IsDebugDevelopMode = commandLine.ExistsSwitch(CommandLineSwitchDebugDevelopMode);
+#endif
+
             var environmentParameters = InitializeEnvironment(commandLine);
 
             if(!int.TryParse(commandLine.GetValue(CommandLineKeyAppLogLimit, string.Empty), out var appLogLimit)) {
@@ -411,6 +424,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             if(skipAccept) {
                 logger.LogInformation("使用許諾はコマンドライン設定によりスキップ");
             }
+
+#if DEBUG
+            if(IsDebugDevelopMode) {
+                if(!skipAccept) {
+                    skipAccept = true;
+                    logger.LogWarning("使用許諾はデバッグ時開発者モードとしてスキップ");
+                }
+            }
+#endif
 
             AcceptResult? acceptResult = null;
             IsFirstStartup = CheckFirstStartup(environmentParameters, logger);
