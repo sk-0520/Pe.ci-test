@@ -3789,6 +3789,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   対象: ${SCREEN-NAME} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_Hidden_Content_Format {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_Hidden_Content_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ランチャーツールバー非表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherToolbar_Hidden_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherToolbar_Hidden_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   グループ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_NewEmptyGroupName {

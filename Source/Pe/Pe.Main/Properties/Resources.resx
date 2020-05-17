@@ -1915,4 +1915,10 @@
   <data name="String_Note_Notify_Hidden_Header" xml:space="preserve">
     <value>ノート非表示</value>
   </data>
+  <data name="String_LauncherToolbar_Hidden_Content_Format" xml:space="preserve">
+    <value>対象: ${SCREEN-NAME}</value>
+  </data>
+  <data name="String_LauncherToolbar_Hidden_Header" xml:space="preserve">
+    <value>ランチャーツールバー非表示</value>
+  </data>
 </root>

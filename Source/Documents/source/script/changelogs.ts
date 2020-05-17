@@ -129,6 +129,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#624: ツールバーを提供UI以外から閉じたときに元に戻すをサポートする"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
