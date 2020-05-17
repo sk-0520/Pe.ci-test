@@ -91,40 +91,22 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.95.001",
+		"date": "2020/05/17",
+		"version": "0.96.000",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "978d63b4a9b030065d2caf822f57474baa84c59c",
 						"subject": "#525: 環境変数編集機能の色付けを行う"
 					},
 					{
-						"revision": "",
+						"revision": "ce97b1eac0e12e2e60e3116c840059658c939dd5",
 						"subject": "#627: コマンドで二種類に分かれるアプリケーションコマンドは拡張キーで切り替える"
 					},
 					{
-						"revision": "",
+						"revision": "0502f2ff851b33bf5bd93d49b0cfd16ab0610e7a",
 						"subject": "#625: ノートを非表示にした際に元に戻すをサポートする",
 						"comments": [
 							"以下操作のみを対象とする",
@@ -133,16 +115,12 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
+						"revision": "e1e639d6fc5ef47f80a130fb8ea9af24bf1a7acf",
 						"subject": "#624: ツールバーを提供UI以外から閉じたときに元に戻すをサポートする",
 						"comments": [
 							"以下操作のみを対象とする",
 							"Alt + F4"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -150,11 +128,11 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "04afcca9081dafc6d22cd04421f608134b937be0",
 						"subject": "#622: 通知領域コンテキストメニューのフック状態の切り替えがチェック反映されていない"
 					},
 					{
-						"revision": "",
+						"revision": "3e32bc99b1aa15e51211b8653d6b669e148388e4",
 						"subject": "#530: 通知領域右クリックが死んでるときがある。",
 						"comments": [
 							"たぶんね、たぶん",
@@ -162,35 +140,31 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
+						"revision": "37351d1f96aa86376d04cf3eeb1082c50cc8dc41",
 						"subject": "#617: 本体設定完了時にランチャーアイテムのアイコンキャッシュが全部削除される既知の問題",
 						"comments": [
 							"調査の結果ランチャーアイテム変更時にも発生していた模様"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "7af32665d4d73e54f5904325285142bf1f6b8293",
 						"subject": "#626: ツールバーのハンバーガーメニュー表示をフェードさせる"
 					},
 					{
-						"revision": "",
+						"revision": "f1e459de74bf544605ba4661225e4f5c569476cd",
 						"subject": "#633: ランチャーグループ名に _ が存在するとアクセスキー扱いとなっている"
 					},
 					{
-						"revision": "",
+						"revision": "3cb441c7b30a875e0e74730b34ea877d6e99b5b6",
 						"subject": "#636: 通知ログがカーソル位置指定で通知ログウィンドウにクリック可能なアイテムがある場合は常時追従してはいけない"
 					},
 					{
-						"revision": "",
+						"revision": "b288e997badaa01455dc56e66e249b6e6f0cf9a3",
 						"subject": "#628: 出来立てほやほやのノート位置情報が保存されていない"
 					},
 					{
-						"revision": "",
+						"revision": "47f291f81e56c95f4b513a9fe559925aa6981b80",
 						"subject": "#638: コマンド検索時の0件ヒット文字列表記をまともにする"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -198,12 +172,12 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "2aadad27e1afc6e0c14952f635fc9eb970a5540a",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 1.6.2 -> 1.6.3"
 					},
 					{
-						"revision": "",
+						"revision": "f38039737ddecb610979d34a85a622e8d20189c9",
 						"class": "nuget",
 						"subject": "MS関係パッケージ更新",
 						"comments": [
@@ -214,19 +188,19 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
+						"revision": "cd6e3c97ec8b68c26eafc8167deac3f4adfdd33f",
 						"subject": "コマンドウィンドウにデバッグ・β版印を付与"
 					},
 					{
-						"revision": "",
+						"revision": "e23aa0c880f0699da0ed8ad5c56b37dea8da6443",
 						"subject": "#620: Clr Heap Allocation Analyzer を VS 拡張機能から Nuget に移し替える"
 					},
 					{
-						"revision": "",
+						"revision": "b9035485416401d075b05fb5c82b5f154939ac89",
 						"subject": "SonarAnalyzer.CSharp の導入"
 					},
 					{
-						"revision": "",
+						"revision": "01ee026a1a40917c8915a93c54da7ec155b4aa6a",
 						"subject": "#637: 更新履歴の元ファイルがでかすぎるので分割したい"
 					}
 				]
