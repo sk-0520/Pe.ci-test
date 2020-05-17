@@ -25,7 +25,7 @@ $changelogArchiveContent = Get-Content -Path $changelogArchiveFilePath -Raw -Enc
 
 $embeddedMark = '/*--------BUILD-EMBEDDED-JSON--------*/'
 
-$embeddedScript = "changelogs.push($changelogArchiveContent);"
+$embeddedScript = "Array.prototype.push.apply(changelogs, $changelogArchiveContent);"
 
 $changelogNewContent = $changelogCurrentContent.Replace($embeddedMark, $embeddedScript)
 Set-Content $changelogCurrentFilePath -Value $changelogNewContent -Encoding UTF8
