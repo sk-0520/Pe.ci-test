@@ -157,6 +157,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#633: ランチャーグループ名に _ が存在するとアクセスキー扱いとなっている"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
