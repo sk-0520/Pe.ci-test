@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             get => this._dockScreen ?? Screen.PrimaryScreen; //TODO: [NOTE]決定的に間違ってる気がする
             private set => SetProperty(ref this._dockScreen, value);
         }
-        public NoteStartupPosition StartupPosition { get; }
+        public NoteStartupPosition StartupPosition { get; private set; }
         IOrderManager OrderManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
@@ -785,6 +785,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             var windowItem = OrderManager.CreateNoteWindow(this);
 
             ViewCreated = true;
+
+            // 今後は設定から読むように変更
+            if(StartupPosition != NoteStartupPosition.Setting) {
+                StartupPosition = NoteStartupPosition.Setting;
+            }
         }
 
         #endregion

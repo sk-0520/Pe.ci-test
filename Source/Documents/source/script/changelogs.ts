@@ -165,7 +165,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#628: 出来立てほやほやのノート位置情報が保存されていない"
 					},
 					{
 						"revision": "",
