@@ -90,6 +90,8 @@ dotnet_diagnostic.HAA0303.severity = silent
 dotnet_diagnostic.HAA0102.severity = silent
 # HAA0502: Explicit new reference type allocation
 dotnet_diagnostic.HAA0502.severity = none
+# HAA0505: Initializer reference type allocation
+dotnet_diagnostic.HAA0505.severity = silent
 
 # SonarAnalyzer ----------------------------------------------------------------
 # S1172: Unused method parameters should be removed
