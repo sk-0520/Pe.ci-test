@@ -30,7 +30,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 {
-    public class NoteElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
+    public class NoteElement: ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
         #region variable
 
@@ -56,13 +56,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         bool _hiddenCompact;
         #endregion
 
-        public NoteElement(Guid noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
+        public NoteElement(Guid noteId, IScreen? dockScreen, NoteStartupPosition startupPosition, IOrderManager orderManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, NoteConfiguration noteConfiguration, IDispatcherWrapper dispatcherWrapper, INoteTheme noteTheme, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
             this._dockScreen = dockScreen; // プロパティは静かに暮らしたい
             StartupPosition = startupPosition;
             OrderManager = orderManager;
+            NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
             StatementLoader = statementLoader;
@@ -90,6 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
         public NoteStartupPosition StartupPosition { get; private set; }
         IOrderManager OrderManager { get; }
+        INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
@@ -187,6 +189,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             get => this._contentElement;
             private set => SetProperty(ref this._contentElement, value);
         }
+
+        private Guid RestoreVisibleNotifyLogId { get; set; }
 
         #endregion
 
@@ -533,7 +537,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                         case NoteContentKind.RichText:
                             return noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor);
 #pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
-                            //return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                        //return DispatcherWrapper.Get(() => noteContentConverter.ToRichText(fromRawContent, FontElement.FontData, ForegroundColor), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 
                         case NoteContentKind.Plain:
@@ -674,7 +678,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
         }
 
-        public void StartHidden() {
+        public void StartHidden()
+        {
             if(HiddenMode == NoteHiddenMode.None) {
                 throw new InvalidOperationException(nameof(HiddenMode));
             }
@@ -695,7 +700,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             HideWaitTimer.Start();
         }
 
-        public void StopHidden(bool restore) {
+        public void StopHidden(bool restore)
+        {
             if(HideWaitTimer != null) {
                 HideWaitTimer.Elapsed -= HideWaitTimer_Elapsed;
                 HideWaitTimer.Stop();
@@ -782,6 +788,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         public void StartView()
         {
+            if(RestoreVisibleNotifyLogId != Guid.Empty) {
+                NotifyManager.ClearLog(RestoreVisibleNotifyLogId);
+            }
+
             var windowItem = OrderManager.CreateNoteWindow(this);
 
             ViewCreated = true;
@@ -809,6 +819,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
         public void ReceiveViewClosed(bool isUserOperation)
         {
+            if(isUserOperation) {
+                if(!IsVisible) {
+                    var notifyMessage = new NotifyMessage(
+                        NotifyLogKind.Undo,
+                        Properties.Resources.String_Note_Notify_Hidden_Header,
+                        new NotifyLogContent(
+                            TextUtility.ReplaceFromDictionary(
+                                Properties.Resources.String_Note_Notify_Hidden_Content_Format,
+                                new Dictionary<string, string>() {
+                                    ["NOTE-CAPTION"] = Title,
+                                }
+                            )
+                        ),
+                        () => {
+                            if(!ViewCreated) {
+                                RestoreVisibleNotifyLogId = Guid.Empty;
+                                ChangeVisibleDelaySave(true);
+                                StartView();
+                            }
+                        }
+                    );
+                    RestoreVisibleNotifyLogId = NotifyManager.AppendLog(notifyMessage);
+                }
+            }
+
             ViewCreated = false;
         }
 
