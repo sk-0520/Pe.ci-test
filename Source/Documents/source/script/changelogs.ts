@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#640: 通知ログがウィンドウアクティブ状態を奪う "
 					},
 					{
 						"revision": "",
