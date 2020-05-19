@@ -381,6 +381,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             };
 
+            var hideToolbarKeyActionData = new KeyActionData() {
+                KeyActionId = idFactory.CreateKeyActionId(),
+                KeyActionKind = KeyActionKind.LauncherToolbar,
+                KeyActionContent = KeyActionContentLauncherToolbar.AutoHiddenToHide.ToString(),
+                Comment = "debug-dev-mode",
+            };
+            var hideToolbarKeyMappings = new[] {
+                new KeyMappingData() {
+                    Alt = ModifierKey.None,
+                    Control = ModifierKey.None,
+                    Shift = ModifierKey.None,
+                    Super = ModifierKey.None,
+                    Key = System.Windows.Input.Key.Escape,
+                },
+                new KeyMappingData() {
+                    Alt = ModifierKey.None,
+                    Control = ModifierKey.None,
+                    Shift = ModifierKey.None,
+                    Super = ModifierKey.None,
+                    Key = System.Windows.Input.Key.Escape,
+                }
+            };
+
+
             var pressedOptionConverter = new PressedOptionConverter();
 
             using(var commander = mainBarrier.WaitWrite()) {
@@ -402,6 +426,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 foreach(var item in commandKeyMappings.Counting()) {
                     keyMappingsEntityDao.InsertMapping(commandKeyActionData.KeyActionId, item.Value, item.Number, status);
                 }
+
+                keyActionsEntityDao.InsertKeyAction(hideToolbarKeyActionData, status);
+                keyOptionsEntityDao.InsertOption(hideToolbarKeyActionData.KeyActionId, KeyActionPresseOption.ThroughSystem.ToString(), true.ToString(), status);
+                foreach(var item in hideToolbarKeyMappings.Counting()) {
+                    keyMappingsEntityDao.InsertMapping(hideToolbarKeyActionData.KeyActionId, item.Value, item.Number, status);
+                }
+
 
                 commander.Commit();
             }
