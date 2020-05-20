@@ -91,8 +91,8 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.96.001",
+		"date": "2020/05/20",
+		"version": "0.97.000",
 		"contents": [
 			{
 				"type": "note",
@@ -113,27 +113,6 @@ const changelogs = [
 							"(前バージョン) Pe.exe --user-data=\"dir path\" -> 'dir pat' と解釈されていた",
 							"(本バージョン) Pe.exe --user-data=\"dir path\" -> 'dir path' と解釈される"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -141,11 +120,11 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "47fa77de01d6bee8697164059e266f40ee0c4a67",
 						"subject": "#640: 通知ログがウィンドウアクティブ状態を奪う "
 					},
 					{
-						"revision": "",
+						"revision": "7714338edaf8950ffa295e9d24eaff537d04e7a7",
 						"subject": "#641: フィードバックより -> アップデート失敗",
 						"comments": [
 							"ディレクトリパスに半角スペースが存在する場合に PowerShell の引数・変数が上手く扱えず失敗していた",
@@ -156,12 +135,8 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
+						"revision": "0b00c03a07e95f540725affd6b00b5d12acb66e2",
 						"subject": "#644: 本体コマンドの再起動処理で本体配置パス・コマンドラインの各種データディレクトリにスペースがあると再起動できない"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -169,16 +144,8 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "128c9b206ae99d52b5679093417d884255a9658c",
 						"subject": "#635: デバッグ用初回起動データ構築処理の実装"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
