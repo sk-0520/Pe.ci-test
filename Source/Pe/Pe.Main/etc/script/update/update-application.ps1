@@ -10,7 +10,7 @@ Param(
 	[parameter(mandatory = $true)][string] $UpdateBeforeScript,
 	[parameter(mandatory = $true)][string] $UpdateAfterScript,
 	[parameter(mandatory = $true)][string] $ExecuteCommand,
-	[parameter(mandatory = $false)][string] $ExecuteArgument
+	[parameter(mandatory = $false,ValueFromRemainingArguments=$true)][string] $ExecuteArgument
 )
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
@@ -46,7 +46,7 @@ foreach ($dot in $appIcon) {
 }
 Start-Sleep -Seconds 3
 
-Start-TranScript -Path $LogPath -Force
+Start-TranScript -Path "$LogPath" -Force
 try {
 	try {
 		Write-Host "ProcessId: $ProcessId"
