@@ -90,9 +90,9 @@ try {
 
 		Write-Host "本体アップデート処理実施"
 		Write-Host "$SourceDirectory -> $DestinationDirectory"
-		$customCopyItem = Join-Path $currentDirPath 'custom-copy-item.ps1'
+		$escapeCustomCopyItem = (Join-Path "$currentDirPath" 'custom-copy-item.ps1') -Replace ' ', '` '
 		#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
-		Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
+		Invoke-Expression "$escapeCustomCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
 
 		Write-Host ""
 		Write-Host "最新アップデート後スクリプト"
