@@ -10,7 +10,7 @@ Param(
 	[parameter(mandatory = $true)][string] $UpdateBeforeScript,
 	[parameter(mandatory = $true)][string] $UpdateAfterScript,
 	[parameter(mandatory = $true)][string] $ExecuteCommand,
-	[parameter(mandatory = $false)][string] $ExecuteArgument
+	[parameter(mandatory = $false,ValueFromRemainingArguments=$true)][string] $ExecuteArgument
 )
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
@@ -46,7 +46,7 @@ foreach ($dot in $appIcon) {
 }
 Start-Sleep -Seconds 3
 
-Start-TranScript -Path $LogPath -Force
+Start-TranScript -Path "$LogPath" -Force
 try {
 	try {
 		Write-Host "ProcessId: $ProcessId"
@@ -80,7 +80,8 @@ try {
 		Write-Host "最新アップデート前スクリプト"
 		if ( Test-Path -Path $UpdateBeforeScript ) {
 			Write-Host "実施: $UpdateBeforeScript" -BackgroundColor Gray
-			Invoke-Expression "$UpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform"
+			$escapeUpdateBeforeScript = $UpdateBeforeScript -Replace ' ', '` '
+			Invoke-Expression "$escapeUpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform"
 			Write-Host "---------------------------" -BackgroundColor Gray
 		}
 		else {
@@ -90,15 +91,16 @@ try {
 
 		Write-Host "本体アップデート処理実施"
 		Write-Host "$SourceDirectory -> $DestinationDirectory"
-		$customCopyItem = Join-Path $currentDirPath 'custom-copy-item.ps1'
+		$escapeCustomCopyItem = (Join-Path "$currentDirPath" 'custom-copy-item.ps1') -Replace ' ', '` '
 		#Copy-Item -Path ($SourceDirectory.FullName + "/*") -Destination $DestinationDirectory.FullName -Recurse -Force
-		Invoke-Expression "$customCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
+		Invoke-Expression "$escapeCustomCopyItem -SourceDirectoryPath ""$SourceDirectory"" -DestinationDirectoryPath ""$DestinationDirectory"" -ProgressType 'output'"
 
 		Write-Host ""
 		Write-Host "最新アップデート後スクリプト"
 		if ( Test-Path -Path $UpdateAfterScript ) {
 			Write-Host "実施: $UpdateAfterScript" -BackgroundColor Gray
-			Invoke-Expression "$UpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
+			$escapeUpdateAfterScript = $UpdateAfterScript -Replace ' ', '` '
+			Invoke-Expression "$escapeUpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
 			Write-Host "---------------------------" -BackgroundColor Gray
 		}
 		else {

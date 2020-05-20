@@ -477,6 +477,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             void Show()
             {
                 var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
+                element.Initialize();
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
                 WindowManager.Register(new WindowItem(WindowKind.Release, element, view));

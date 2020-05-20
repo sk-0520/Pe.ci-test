@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             void CustomCallback(RequestResponse requestResponse)
             {
                 result = requestResponse;
-                waitEvent.Set();
+                waitEvent!.Set();
             }
 
             return Task.Run(() => {
