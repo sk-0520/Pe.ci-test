@@ -3,7 +3,7 @@
 	[parameter(mandatory = $true)][int] $ProcessId,
 	[parameter(mandatory = $true)][int] $WaitSeconds,
 	[parameter(mandatory = $true)][string] $ExecuteCommand,
-	[parameter(mandatory = $false)][string] $ExecuteArgument
+	[parameter(mandatory = $false,ValueFromRemainingArguments=$true)][string] $ExecuteArgument
 )
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest

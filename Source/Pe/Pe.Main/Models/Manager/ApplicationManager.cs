@@ -1022,6 +1022,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// TODO: <see cref="ApplicationUpdateScriptFactory.CreateUpdateExecutePathParameter"/> と重複
+        /// </summary>
         public void Reboot()
         {
             Logger.LogInformation("再起動開始");
@@ -1051,12 +1054,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             };
             var currentCommands = Environment.GetCommandLineArgs()
                 .Skip(1)
-                .Select(i => CommandLine.Escape(i))
                 .ToList()
             ;
             if(0 < currentCommands.Count) {
-                psCommands.Add("-ExecuteArgument");
-                psCommands.Add(CommandLine.Escape(string.Join(" ", currentCommands)));
+                // -ExecuteArgumentに残り要素を """arg""" として無理やり埋め込み ps 側で "arg" と解釈させる
+                var escapedCommands = currentCommands.Select(i => i.Any(c => c == ' ') ? "\"\"\"" + i + "\"\"\"" : i);
+                var psArgument = string.Join(" ", escapedCommands);
+                psCommands.Add(psArgument);
             }
 
             var psCommand = string.Join(" ", psCommands);
