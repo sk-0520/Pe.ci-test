@@ -80,7 +80,8 @@ try {
 		Write-Host "最新アップデート前スクリプト"
 		if ( Test-Path -Path $UpdateBeforeScript ) {
 			Write-Host "実施: $UpdateBeforeScript" -BackgroundColor Gray
-			Invoke-Expression "$UpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform"
+			$escapeUpdateBeforeScript = $UpdateBeforeScript -Replace ' ', '` '
+			Invoke-Expression "$escapeUpdateBeforeScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform"
 			Write-Host "---------------------------" -BackgroundColor Gray
 		}
 		else {
@@ -98,7 +99,8 @@ try {
 		Write-Host "最新アップデート後スクリプト"
 		if ( Test-Path -Path $UpdateAfterScript ) {
 			Write-Host "実施: $UpdateAfterScript" -BackgroundColor Gray
-			Invoke-Expression "$UpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
+			$escapeUpdateAfterScript = $UpdateAfterScript -Replace ' ', '` '
+			Invoke-Expression "$escapeUpdateAfterScript -DestinationDirectory ""$DestinationDirectory"" -CurrentVersion $CurrentVersion -Platform $Platform "
 			Write-Host "---------------------------" -BackgroundColor Gray
 		}
 		else {
