@@ -78,10 +78,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="Queue{T}.TryDequeue(out T)"/>
-        public bool TryDequeue(out T result) => Queue.TryDequeue(out result);
+        public bool TryDequeue(out T result) => Queue.TryDequeue(out result!);
 
         /// <inheritdoc cref="Queue{T}.TryPeek(out T)"/>
-        public bool TryPeek(out T result) => Queue.TryPeek(out result);
+        public bool TryPeek(out T result) => Queue.TryPeek(out result!);
 
         #endregion
 
@@ -143,10 +143,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <inheritdoc cref="ConcurrentQueue{T}.TryDequeue(out T)"/>
-        public bool TryDequeue(out T result) => Queue.TryDequeue(out result);
+        public bool TryDequeue(out T result) => Queue.TryDequeue(out result!);
 
         /// <inheritdoc cref="ConcurrentQueue{T}.TryPeek(out T)"/>
-        public bool TryPeek(out T result) => Queue.TryPeek(out result);
+        public bool TryPeek(out T result) => Queue.TryPeek(out result!);
 
         #endregion
 

@@ -195,8 +195,8 @@ TCHAR* tuneArg(const TCHAR* arg)
     if (hasSpace) {
         lstrcpy(s + 1, arg);
         s[0] = '"';
-        s[len - 2] = '"';
-        s[len - 1] = 0;
+        s[len - 1] = '"';
+        s[len - 0] = 0; // ↑で +1 してるから安全安全
     }
     else {
         lstrcpy(s, arg);

@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(index < Count - 1) {
                 Array.Copy(Items, index + 1, Items, index, Count - index - 1);
             }
-            Items[Count - 1] = default(T)!;
+            Items[Count - 1] = default!;
             Count -= 1;
 
             return true;
@@ -263,7 +263,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     destinationDataLength += length;
                 } else {
                     var dstIndex = destinationDataLength + destinationIndex;
-                    var length = 0;
+                    int length;
                     if(destinationDataLength + BlockSize <= destinationLength) {
                         length = BlockSize;
                     } else {

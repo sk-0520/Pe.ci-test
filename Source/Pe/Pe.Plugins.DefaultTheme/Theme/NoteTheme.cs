@@ -217,7 +217,9 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return content;
         }
 
+
         /// <inheritdoc cref="INoteTheme.GetBlindContent(ColorPair{Color})"/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1075:URIs should not be hardcoded")]
         public DependencyObject GetBlindContent(ColorPair<Color> baseColor)
         {
             var srcContent = GetResourceValue<DependencyObject>(nameof(INoteTheme), nameof(GetBlindContent));

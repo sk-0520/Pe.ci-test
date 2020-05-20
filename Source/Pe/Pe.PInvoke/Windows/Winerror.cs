@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         }
         #endregion
         #region System.Object Members
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if(obj == null)
                 return false;
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         #endregion
 
         #region IComparable Members
-        public int CompareTo(object obj)
+        public int CompareTo(object? obj)
         {
             if(obj == null)
                 return +1;

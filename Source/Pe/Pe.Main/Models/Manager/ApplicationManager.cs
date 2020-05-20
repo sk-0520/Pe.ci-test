@@ -75,6 +75,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger = Logging.Factory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
 
+#if DEBUG
+            IsDebugDevelopMode = initializer.IsDebugDevelopMode;
+#endif
+
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
@@ -129,6 +133,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ILoggerFactory LoggerFactory => Logging.Factory;
         ApplicationDiContainer ApplicationDiContainer { get; set; }
         bool IsFirstStartup { get; }
+
+#if DEBUG
+        bool IsDebugDevelopMode { get; }
+#endif
         ILogger Logger { get; set; }
         PlatformThemeLoader PlatformThemeLoader { get; }
 
@@ -347,6 +355,90 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             changing.SuccessValue?.Dispose();
         }
 
+#if DEBUG
+        async Task StartDebugDevelopModeAsync()
+        {
+            var importProgramsElement = ApplicationDiContainer.Build<Element.Startup.ImportProgramsElement>();
+            await importProgramsElement.LoadProgramsAsync();
+            await importProgramsElement.ImportAsync();
+
+            var mainBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            var idFactory = ApplicationDiContainer.Build<IIdFactory>();
+
+            var commandKeyActionData = new KeyActionData() {
+                KeyActionId = idFactory.CreateKeyActionId(),
+                KeyActionKind = KeyActionKind.Command,
+                KeyActionContent = string.Empty,
+                Comment = "debug-dev-mode",
+            };
+            var commandKeyMappings = new[] {
+                new KeyMappingData() {
+                    Alt = ModifierKey.None,
+                    Control = ModifierKey.Any,
+                    Shift = ModifierKey.Any,
+                    Super = ModifierKey.None,
+                    Key = System.Windows.Input.Key.Space,
+                }
+            };
+
+            var hideToolbarKeyActionData = new KeyActionData() {
+                KeyActionId = idFactory.CreateKeyActionId(),
+                KeyActionKind = KeyActionKind.LauncherToolbar,
+                KeyActionContent = KeyActionContentLauncherToolbar.AutoHiddenToHide.ToString(),
+                Comment = "debug-dev-mode",
+            };
+            var hideToolbarKeyMappings = new[] {
+                new KeyMappingData() {
+                    Alt = ModifierKey.None,
+                    Control = ModifierKey.None,
+                    Shift = ModifierKey.None,
+                    Super = ModifierKey.None,
+                    Key = System.Windows.Input.Key.Escape,
+                },
+                new KeyMappingData() {
+                    Alt = ModifierKey.None,
+                    Control = ModifierKey.None,
+                    Shift = ModifierKey.None,
+                    Super = ModifierKey.None,
+                    Key = System.Windows.Input.Key.Escape,
+                }
+            };
+
+
+            var pressedOptionConverter = new PressedOptionConverter();
+
+            using(var commander = mainBarrier.WaitWrite()) {
+                var status = new DatabaseCommonStatus() {
+                    Account = "🍶",
+                    ProgramName = "🍻",
+                    ProgramVersion = BuildStatus.Version,
+                };
+                var appExecuteSettingEntityDao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
+                var keyActionsEntityDao = ApplicationDiContainer.Build<KeyActionsEntityDao>(commander, commander.Implementation);
+                var keyOptionsEntityDao = ApplicationDiContainer.Build<KeyOptionsEntityDao>(commander, commander.Implementation);
+                var keyMappingsEntityDao = ApplicationDiContainer.Build<KeyMappingsEntityDao>(commander, commander.Implementation);
+
+                var userIdManager = ApplicationDiContainer.Build<UserIdManager>();
+                appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userIdManager.CreateFromRandom(), true, status);
+
+                keyActionsEntityDao.InsertKeyAction(commandKeyActionData, status);
+                keyOptionsEntityDao.InsertOption(commandKeyActionData.KeyActionId, KeyActionPresseOption.ThroughSystem.ToString(), false.ToString(), status);
+                foreach(var item in commandKeyMappings.Counting()) {
+                    keyMappingsEntityDao.InsertMapping(commandKeyActionData.KeyActionId, item.Value, item.Number, status);
+                }
+
+                keyActionsEntityDao.InsertKeyAction(hideToolbarKeyActionData, status);
+                keyOptionsEntityDao.InsertOption(hideToolbarKeyActionData.KeyActionId, KeyActionPresseOption.ThroughSystem.ToString(), true.ToString(), status);
+                foreach(var item in hideToolbarKeyMappings.Counting()) {
+                    keyMappingsEntityDao.InsertMapping(hideToolbarKeyActionData.KeyActionId, item.Value, item.Number, status);
+                }
+
+
+                commander.Commit();
+            }
+        }
+#endif
+
         public void ShowAboutView()
         {
             var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
@@ -385,6 +477,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             void Show()
             {
                 var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
+                element.Initialize();
                 var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
                 view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
                 WindowManager.Register(new WindowItem(WindowKind.Release, element, view));
@@ -603,7 +696,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(IsFirstStartup) {
                 // 初期登録の画面を表示
+#if DEBUG
+                if(IsDebugDevelopMode) {
+                    Task.Run(() => {
+                        return StartDebugDevelopModeAsync();
+                    }).Wait();
+                } else {
+                    ShowStartupView(true);
+                }
+#else
                 ShowStartupView(true);
+#endif
             }
 
             var tuner = ApplicationDiContainer.Build<DatabaseTuner>();
@@ -919,6 +1022,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// TODO: <see cref="ApplicationUpdateScriptFactory.CreateUpdateExecutePathParameter"/> と重複
+        /// </summary>
         public void Reboot()
         {
             Logger.LogInformation("再起動開始");
@@ -948,12 +1054,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             };
             var currentCommands = Environment.GetCommandLineArgs()
                 .Skip(1)
-                .Select(i => CommandLine.Escape(i))
                 .ToList()
             ;
             if(0 < currentCommands.Count) {
-                psCommands.Add("-ExecuteArgument");
-                psCommands.Add(CommandLine.Escape(string.Join(" ", currentCommands)));
+                // -ExecuteArgumentに残り要素を """arg""" として無理やり埋め込み ps 側で "arg" と解釈させる
+                var escapedCommands = currentCommands.Select(i => i.Any(c => c == ' ') ? "\"\"\"" + i + "\"\"\"" : i);
+                var psArgument = string.Join(" ", escapedCommands);
+                psCommands.Add(psArgument);
             }
 
             var psCommand = string.Join(" ", psCommands);

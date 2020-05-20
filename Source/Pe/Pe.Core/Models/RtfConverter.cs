@@ -10,11 +10,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public string ToString(string rtf)
         {
-            using(var formRichTextBox = new System.Windows.Forms.RichTextBox() {
+            using var formRichTextBox = new System.Windows.Forms.RichTextBox() {
                 Rtf = rtf
-            }) {
-                return formRichTextBox.Text;
-            }
+            };
+            return formRichTextBox.Text;
         }
 
         #endregion

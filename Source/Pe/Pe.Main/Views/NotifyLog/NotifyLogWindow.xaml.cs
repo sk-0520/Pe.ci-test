@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
@@ -55,6 +56,24 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
             var hWnd = HandleUtility.GetWindowHandle(this);
             var exStyle = NativeMethods.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
             NativeMethods.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, exStyle | (int)WS_EX.WS_EX_NOACTIVATE);
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            var baseWdinwHandle = HandleUtility.GetWindowHandle(this);
+            var hWnd = baseWdinwHandle;
+            do {
+                hWnd = NativeMethods.GetWindow(hWnd, GW.GW_HWNDNEXT);
+                if(baseWdinwHandle == hWnd) {
+                    Logger.LogWarning("次のウィンドウ取得できず");
+                    return;
+                }
+            } while(!NativeMethods.IsWindowVisible(hWnd));
+
+            Logger.LogDebug("アクティブウィンドウ移譲: {0} -> {1}", baseWdinwHandle, hWnd);
+            NativeMethods.SetActiveWindow(hWnd);
         }
 
         #endregion

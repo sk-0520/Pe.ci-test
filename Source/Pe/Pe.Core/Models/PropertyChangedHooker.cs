@@ -71,10 +71,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IReadOnlyList<ICommand>? IReadOnlyHookItem.RaiseCommands => RaiseCommands;
 
 #pragma warning disable CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
+#pragma warning disable CS8766 // 戻り値の型における参照型の NULL 値の許容が、暗黙的に実装されるメンバーと一致しません。おそらく、NULL 値の許容の属性が原因です。
         /// <summary>
         /// 変更通知により呼び出される処理。
         /// </summary>
         public Action? Callback { get; }
+#pragma warning restore CS8766 // 戻り値の型における参照型の NULL 値の許容が、暗黙的に実装されるメンバーと一致しません。おそらく、NULL 値の許容の属性が原因です。
 #pragma warning restore CS8613 // 戻り値の型における参照型の Null 許容性が、暗黙的に実装されるメンバーと一致しません。
 
         #endregion
