@@ -1030,40 +1030,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("再起動開始");
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
-
             var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-            var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
-            var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
-            var powershell = environmentExecuteFile.Get("powershell", executeFiles);
 
-            if(pwsh == null && powershell == null) {
-                Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
+            var powerShellArguments = new PowerShellArguments();
+            var psResult = powerShellArguments.GetPowerShellFromCommandName(environmentExecuteFile);
+            if(!psResult.Success) {
+                Logger.LogError("PowerShell が見つかんないのでもぅﾏﾁﾞ無理");
                 return;
             }
+            var ps = psResult.SuccessValue!;
 
-            var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
-
-            var psCommands = new List<string>() {
-                "-NoProfile",
-                "-ExecutionPolicy", "Unrestricted",
-                "-File", CommandLine.Escape(environmentParameters.EtcRebootScriptFile.FullName),
-                "-LogPath", CommandLine.Escape(environmentParameters.TemporaryRebootLogFile.FullName),
-                "-ProcessId", Process.GetCurrentProcess().Id.ToString(),
-                "-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString(),
-                "-ExecuteCommand", CommandLine.Escape(environmentParameters.RootApplication.FullName),
-            };
-            var currentCommands = Environment.GetCommandLineArgs()
-                .Skip(1)
-                .ToList()
-            ;
-            if(0 < currentCommands.Count) {
-                // -ExecuteArgumentに残り要素を """arg""" として無理やり埋め込み ps 側で "arg" と解釈させる
-                var escapedCommands = currentCommands.Select(i => i.Any(c => c == ' ') ? "\"\"\"" + i + "\"\"\"" : i);
-                var psArgument = string.Join(" ", escapedCommands);
-                psCommands.Add(psArgument);
-            }
+            var psCommands = powerShellArguments.CreateParameters(true, new[] {
+                KeyValuePair.Create("-File", environmentParameters.EtcRebootScriptFile.FullName),
+                KeyValuePair.Create("-LogPath", environmentParameters.TemporaryRebootLogFile.FullName),
+                KeyValuePair.Create("-ProcessId", Process.GetCurrentProcess().Id.ToString()),
+                KeyValuePair.Create("-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString()),
+                KeyValuePair.Create("-ExecuteCommand", environmentParameters.RootApplication.FullName)
+            });
+            psCommands.AddRange(powerShellArguments.ConvertOptions());
 
             var psCommand = string.Join(" ", psCommands);
+
+            Logger.LogInformation("reboot path: {0}", ps);
+            Logger.LogInformation("reboot args: {0}", psCommand);
 
             try {
                 var process = new Process();
