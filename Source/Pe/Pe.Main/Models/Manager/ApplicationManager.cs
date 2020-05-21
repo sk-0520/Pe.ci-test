@@ -1058,12 +1058,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ;
             if(0 < currentCommands.Count) {
                 // -ExecuteArgumentに残り要素を """arg""" として無理やり埋め込み ps 側で "arg" と解釈させる
-                var escapedCommands = currentCommands.Select(i => i.Any(c => c == ' ') ? "\"\"\"" + i + "\"\"\"" : i);
+                // PowerShell 側で引数名との競合を避けるためスペースの有無を含めず処理する
+                var escapedCommands = currentCommands.Select(i => "\"\"\"" + i + "\"\"\"");
                 var psArgument = string.Join(" ", escapedCommands);
                 psCommands.Add(psArgument);
             }
 
             var psCommand = string.Join(" ", psCommands);
+
+            Logger.LogInformation("reboot path: {0}", ps);
+            Logger.LogInformation("reboot args: {0}", psCommand);
 
             try {
                 var process = new Process();
