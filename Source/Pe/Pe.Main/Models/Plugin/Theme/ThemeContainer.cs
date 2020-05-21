@@ -9,6 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 {
+    /// <summary>
+    /// テーマ一覧。。。
+    /// <para>一覧が必要かと問われるとなんも言えねぇ。</para>
+    /// </summary>
     public class ThemeContainer
     {
         public ThemeContainer(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -28,8 +32,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
+        /// <summary>
+        /// テーマ一覧。
+        /// </summary>
         ISet<ITheme> Themes { get; } = new HashSet<ITheme>();
 
+        /// <summary>
+        /// 現在使用中テーマ。
+        /// </summary>
         public ITheme? CurrentTheme { get; private set; }
 
         #endregion

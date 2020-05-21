@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    /// <inheritdoc cref="IPluginParameter"/>
     public abstract class PluginParameterBase: IPluginParameter
     {
         protected PluginParameterBase(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -18,8 +19,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region PluginParameter
 
+        /// <inheritdoc cref="IPluginParameter.PlatformTheme"/>
         public IPlatformTheme PlatformTheme { get; }
+        /// <inheritdoc cref="IPluginParameter.DispatcherWrapper"/>
         public IDispatcherWrapper DispatcherWrapper { get; }
+        /// <inheritdoc cref="IPluginParameter.LoggerFactory"/>
         public ILoggerFactory LoggerFactory { get; }
 
         #endregion

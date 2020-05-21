@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
+    /// <summary>
+    /// アドオン用コンテナ。
+    /// </summary>
     public class AddonContainer
     {
         public AddonContainer(ILoggerFactory loggerFactory)
@@ -19,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
 
+        /// <summary>
+        /// アドオン一覧。
+        /// </summary>
         ISet<IAddon> Addons { get; } = new HashSet<IAddon>();
 
         #endregion

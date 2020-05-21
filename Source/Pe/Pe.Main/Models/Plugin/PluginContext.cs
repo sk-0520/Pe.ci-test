@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    /// <inheritdoc cref="IPluginInitializeContext"/>
     public class PluginInitializeContext: IPluginInitializeContext
     {
         public PluginInitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
@@ -24,12 +25,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region IPluginInitializeContext
 
+        /// <inheritdoc cref="IPluginInitializeContext.Storage"/>
         public PluginStorage Storage { get; }
         IPluginStorage IPluginInitializeContext.Storage => Storage;
 
         #endregion
     }
 
+    /// <inheritdoc cref="IPluginContext"/>
     public class PluginContext : IPluginContext
     {
         public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
@@ -47,9 +50,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region IPluginContext
 
+        /// <inheritdoc cref="IPluginContext.Storage"/>
         public PluginStorage Storage { get; }
         IPluginStorage IPluginContext.Storage => Storage;
 
+        /// <inheritdoc cref="IPluginContext.UserAgentFactory"/>
         public IUserAgentFactory UserAgentFactory { get; }
 
         #endregion

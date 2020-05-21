@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 {
+    /// <inheritdoc cref="IThemeParameter"/>
     public class ThemeParameter : PluginParameterBase, IThemeParameter
     {
         public ThemeParameter(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)

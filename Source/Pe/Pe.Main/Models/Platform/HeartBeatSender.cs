@@ -8,6 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    /// <summary>
+    /// システムに対してユーザーが生きている旨を通知。
+    /// <para>アイドル状態になって画面ロックやらスリープになるのを抑制。</para>
+    /// </summary>
     public class HeartBeatSender: DisposerBase
     {
         public HeartBeatSender(TimeSpan sendSpan, ILoggerFactory loggerFactory)

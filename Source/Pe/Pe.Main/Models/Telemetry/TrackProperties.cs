@@ -6,6 +6,10 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
 {
+    /// <summary>
+    /// 追跡用プロパティ。
+    /// <para><see cref="IDictionary{TKey, TValue}"/>となんら変わらないけど宣言を短くする目的。</para>
+    /// </summary>
     public class TrackProperties : IDictionary<string, string>, IReadOnlyDictionary<string, string>
     {
         public TrackProperties()
@@ -57,10 +61,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Telemetry
             set => AddOrSet(key, value);
         }
 
+        /// <inheritdoc cref="IDictionary{TKey, TValue}.Keys"/>
         public ICollection<string> Keys => Items.Keys;
 
+        /// <inheritdoc cref="IDictionary{TKey, TValue}.Values"/>
         public ICollection<string> Values => Items.Values;
 
+        /// <inheritdoc cref="ICollection.Count"/>
         public int Count => Items.Count;
 
         public bool IsReadOnly => Items.IsReadOnly;

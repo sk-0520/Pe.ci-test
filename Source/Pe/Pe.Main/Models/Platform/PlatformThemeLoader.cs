@@ -11,6 +11,10 @@ using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    /// <summary>
+    /// システムテーマ情報を読み込み。
+    /// <inheritdoc cref="IPlatformTheme"/>
+    /// </summary>
     public class PlatformThemeLoader : DisposerBase, IPlatformTheme
     {
         public PlatformThemeLoader(PlatformConfiguration platformConfiguration, ILoggerFactory loggerFactory)

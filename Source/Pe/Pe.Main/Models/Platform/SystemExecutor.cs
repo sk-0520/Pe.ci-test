@@ -12,6 +12,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    /// <summary>
+    /// システム上処理の実行。
+    /// <para>OS上での実行を行う(ファイルなら開いてEXEなら起動的な)</para>
+    /// </summary>
     public class SystemExecutor
     {
         #region property

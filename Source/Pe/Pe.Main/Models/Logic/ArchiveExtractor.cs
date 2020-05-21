@@ -9,6 +9,9 @@ using SevenZipExtractor;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
+    /// <summary>
+    /// 圧縮ファイル展開処理。
+    /// </summary>
     public class ArchiveExtractor
     {
         public ArchiveExtractor(ILoggerFactory loggerFactory)

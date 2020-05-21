@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Count = count;
         }
 
-        #region
+        #region property
 
         public string EntityName { get; }
         public int Count { get; }

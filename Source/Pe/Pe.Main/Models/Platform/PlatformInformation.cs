@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    /// <summary>
+    /// システム情報取得。
+    /// </summary>
     public class PlatformInformation
     {
         public PlatformInformation(ILoggerFactory loggerFactory)

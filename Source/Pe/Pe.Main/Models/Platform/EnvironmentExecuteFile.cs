@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    /// <summary>
+    /// 環境変数PATHから抽出したファイルパス。
+    /// </summary>
     public class EnvironmentPathExecuteItem
     {
         public EnvironmentPathExecuteItem(DirectoryInfo directory, FileInfo file)
@@ -18,12 +21,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         #region property
 
+        /// <summary>
+        /// パスに設定されているディレクトリ。
+        /// </summary>
         public DirectoryInfo Directory { get; }
+        /// <summary>
+        /// パスから取得したファイル。
+        /// </summary>
         public FileInfo File { get; }
 
         #endregion
     }
 
+    /// <summary>
+    /// 環境変数PATHの実行ファイル処理。
+    /// </summary>
     public class EnvironmentExecuteFile
     {
         public EnvironmentExecuteFile(ILoggerFactory loggerFactory)
@@ -66,6 +78,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return new[] { "*.exe", "*.bat", "*.com" };
         }
 
+        /// <summary>
+        /// 環境変数PATHから実行形式の一覧を取得。
+        /// </summary>
+        /// <returns></returns>
         public IReadOnlyList<EnvironmentPathExecuteItem> GetPathExecuteFiles()
         {
             var path = Environment.GetEnvironmentVariable("PATH");
