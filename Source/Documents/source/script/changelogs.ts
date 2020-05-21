@@ -158,7 +158,8 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.6.3 -> 1.6.4"
 					},
 					{
 						"revision": "",
