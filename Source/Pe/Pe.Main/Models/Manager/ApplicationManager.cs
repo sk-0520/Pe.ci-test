@@ -1032,17 +1032,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
 
             var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-            var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
-            var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
-            var powershell = environmentExecuteFile.Get("powershell", executeFiles);
+            //var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
+            //var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
+            //var powershell = environmentExecuteFile.Get("powershell", executeFiles);
 
-            if(pwsh == null && powershell == null) {
-                Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
+            //if(pwsh == null && powershell == null) {
+            //    Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
+            //    return;
+            //}
+
+            //var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
+            var powerShellArguments = new PowerShellArguments();
+
+            var psResult = powerShellArguments.GetPowerShellFromCommandName(environmentExecuteFile);
+            if(!psResult.Success) {
+                Logger.LogError("PowerShell が見つかんないのでもぅﾏﾁﾞ無理");
                 return;
             }
+            var ps = psResult.SuccessValue!;
 
-            var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
+            var psCommands = powerShellArguments.CreateParameters(true, new[] {
+                KeyValuePair.Create("-File", environmentParameters.EtcRebootScriptFile.FullName),
+                KeyValuePair.Create("-LogPath", environmentParameters.TemporaryRebootLogFile.FullName),
+                KeyValuePair.Create("-ProcessId", Process.GetCurrentProcess().Id.ToString()),
+                KeyValuePair.Create("-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString()),
+                KeyValuePair.Create("-ExecuteCommand", environmentParameters.RootApplication.FullName)
+            });
+            psCommands.AddRange(powerShellArguments.ConvertOptions());
 
+            /*
             var psCommands = new List<string>() {
                 "-NoProfile",
                 "-ExecutionPolicy", "Unrestricted",
@@ -1063,7 +1081,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var psArgument = string.Join(" ", escapedCommands);
                 psCommands.Add(psArgument);
             }
-
+            */
             var psCommand = string.Join(" ", psCommands);
 
             Logger.LogInformation("reboot path: {0}", ps);
