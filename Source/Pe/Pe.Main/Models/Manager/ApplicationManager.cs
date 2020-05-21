@@ -1030,20 +1030,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("再起動開始");
 
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
-
             var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-            //var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
-            //var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
-            //var powershell = environmentExecuteFile.Get("powershell", executeFiles);
 
-            //if(pwsh == null && powershell == null) {
-            //    Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
-            //    return;
-            //}
-
-            //var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
             var powerShellArguments = new PowerShellArguments();
-
             var psResult = powerShellArguments.GetPowerShellFromCommandName(environmentExecuteFile);
             if(!psResult.Success) {
                 Logger.LogError("PowerShell が見つかんないのでもぅﾏﾁﾞ無理");
@@ -1060,28 +1049,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             });
             psCommands.AddRange(powerShellArguments.ConvertOptions());
 
-            /*
-            var psCommands = new List<string>() {
-                "-NoProfile",
-                "-ExecutionPolicy", "Unrestricted",
-                "-File", CommandLine.Escape(environmentParameters.EtcRebootScriptFile.FullName),
-                "-LogPath", CommandLine.Escape(environmentParameters.TemporaryRebootLogFile.FullName),
-                "-ProcessId", Process.GetCurrentProcess().Id.ToString(),
-                "-WaitSeconds", TimeSpan.FromSeconds(10).TotalMilliseconds.ToString(),
-                "-ExecuteCommand", CommandLine.Escape(environmentParameters.RootApplication.FullName),
-            };
-            var currentCommands = Environment.GetCommandLineArgs()
-                .Skip(1)
-                .ToList()
-            ;
-            if(0 < currentCommands.Count) {
-                // -ExecuteArgumentに残り要素を """arg""" として無理やり埋め込み ps 側で "arg" と解釈させる
-                // PowerShell 側で引数名との競合を避けるためスペースの有無を含めず処理する
-                var escapedCommands = currentCommands.Select(i => "\"\"\"" + i + "\"\"\"");
-                var psArgument = string.Join(" ", escapedCommands);
-                psCommands.Add(psArgument);
-            }
-            */
             var psCommand = string.Join(" ", psCommands);
 
             Logger.LogInformation("reboot path: {0}", ps);

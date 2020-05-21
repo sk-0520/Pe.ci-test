@@ -134,7 +134,10 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#645: 本体コマンド 再起動 死んでるやん！",
+						"comments": [
+							"#641, #644 との合わせ技で心折れたので #576 の優先度を一つ上げた"
+						]
 					},
 					{
 						"revision": "",

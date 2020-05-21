@@ -34,14 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public ILauncherExecutePathParameter CreateUpdateExecutePathParameter(FileInfo scriptSourceFIle, DirectoryInfo scriptDirectory, DirectoryInfo sourceDirectory, DirectoryInfo destinationDirectory)
         {
             var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
-            //var executeFiles = environmentExecuteFile.GetPathExecuteFiles();
-            //var pwsh = environmentExecuteFile.Get("pwsh", executeFiles);
-            //var powershell = environmentExecuteFile.Get("powershell", executeFiles);
 
-            //if(pwsh == null && powershell == null) {
-            //    Logger.LogError("[pwsh] と [powershell] が見つかんないのでもぅﾏﾁﾞ無理");
-            //    throw new Exception("[pwsh] and [powershell] is null");
-            //}
             var powerShellArguments = new PowerShellArguments();
             var psResult = powerShellArguments.GetPowerShellFromCommandName(environmentExecuteFile);
             if(!psResult.Success) {
@@ -52,7 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var scriptDirPath = Path.Combine(sourceDirectory.FullName, "etc", "script", "update");
 
-            //var ps = pwsh?.File.FullName ?? powershell!.File.FullName;
             var psCommands = powerShellArguments.CreateParameters(true, new[] {
                KeyValuePair.Create( "-File", scriptSourceFIle.FullName),
                KeyValuePair.Create( "-LogPath", EnvironmentParameters.TemporaryUpdateLogFile.FullName),
@@ -67,33 +59,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                KeyValuePair.Create( "-ExecuteCommand", EnvironmentParameters.RootApplication.FullName),
             });
             psCommands.AddRange(powerShellArguments.ConvertOptions());
-            //var psCommands = new List<string>() {
-            //    "-NoProfile",
-            //    "-ExecutionPolicy", "Unrestricted",
-            //    "-File", CommandLine.Escape(scriptSourceFIle.FullName),
-            //    "-LogPath", CommandLine.Escape(EnvironmentParameters.TemporaryUpdateLogFile.FullName),
-            //    "-ProcessId", Process.GetCurrentProcess().Id.ToString(),
-            //    "-WaitSeconds", TimeSpan.FromSeconds(5).TotalMilliseconds.ToString(),
-            //    "-SourceDirectory", CommandLine.Escape(sourceDirectory.FullName),
-            //    "-DestinationDirectory", CommandLine.Escape(destinationDirectory.FullName),
-            //    "-CurrentVersion", BuildStatus.Version.ToString(),
-            //    "-Platform", ProcessArchitecture.ApplicationArchitecture,
-            //    "-UpdateBeforeScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-before.ps1")),
-            //    "-UpdateAfterScript", CommandLine.Escape(Path.Combine(scriptDirPath, "update-new-after.ps1")),
-            //    "-ExecuteCommand", CommandLine.Escape(EnvironmentParameters.RootApplication.FullName),
-            //};
-
-            //// コマンドライン引数無し対応(#539)
-            //var currentCommands = Environment.GetCommandLineArgs()
-            //    .Skip(1)
-            //    .ToList()
-            //;
-            //if(0 < currentCommands.Count) {
-            //    // -ExecuteArgumentに残り要素を """arg""" として無理やり埋め込み ps 側で "arg" と解釈させる
-            //    var escapedCommands = currentCommands.Select(i => i.Any(c => c == ' ') ? "\"\"\"" + i + "\"\"\"" : i);
-            //    var psArgument = string.Join(" ", escapedCommands);
-            //    psCommands.Add(psArgument);
-            //}
 
             var psCommand = string.Join(" ", psCommands);
 
