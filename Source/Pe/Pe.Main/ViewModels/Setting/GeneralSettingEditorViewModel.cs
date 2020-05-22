@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -271,6 +272,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
     }
+
+
+    public sealed class AppLauncherToolbarSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppLauncherToolbarSettingEditorElement>
+    {
+        public AppLauncherToolbarSettingEditorViewModel(AppLauncherToolbarSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
+        { }
+
+        #region property
+
+        public LauncherToolbarContentDropMode ContentDropMode
+        {
+            get => Model.ContentDropMode;
+            set => SetModelValue(value);
+        }
+
+        public LauncherGroupPosition GroupMenuPosition
+        {
+            get => Model.GroupMenuPosition;
+            set => SetModelValue(value);
+        }
+
+
+        #endregion
+
+        #region command
+        #endregion
+
+        #region function
+        #endregion
+
+        #region GeneralSettingEditorViewModelBase
+
+        public override string Header => Properties.Resources.String_Setting_Generals_LauncherToolbar_Header;
+
+        #endregion
+    }
+
 
     public sealed class AppCommandSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppCommandSettingEditorElement>
     {

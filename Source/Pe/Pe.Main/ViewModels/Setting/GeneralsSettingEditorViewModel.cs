@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             AppGeneralSettingEditor = new AppGeneralSettingEditorViewModel(Model.AppGeneralSettingEditor, configuration.General.SupportCultures, DispatcherWrapper, LoggerFactory);
             AppUpdateSettingEditor = new AppUpdateSettingEditorViewModel(Model.AppUpdateSettingEditor, DispatcherWrapper, LoggerFactory);
             AppNotifyLogSettingEditor = new AppNotifyLogSettingEditorViewModel(Model.AppNotifyLogSettingEditor, DispatcherWrapper, LoggerFactory);
+            AppLauncherToolbarSettingEditor = new AppLauncherToolbarSettingEditorViewModel(Model.AppLauncherToolbarSettingEditor, DispatcherWrapper, LoggerFactory);
             AppCommandSettingEditor = new AppCommandSettingEditorViewModel(Model.AppCommandSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
             AppNoteSettingEditor = new AppNoteSettingEditorViewModel(Model.AppNoteSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
             AppStandardInputOutputSettingEditor = new AppStandardInputOutputSettingEditorViewModel(Model.AppStandardInputOutputSettingEditor, generalTheme, DispatcherWrapper, LoggerFactory);
@@ -29,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 AppGeneralSettingEditor,
                 AppUpdateSettingEditor,
                 AppNotifyLogSettingEditor,
+                AppLauncherToolbarSettingEditor,
                 AppCommandSettingEditor,
                 AppNoteSettingEditor,
                 AppStandardInputOutputSettingEditor,
@@ -41,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         AppGeneralSettingEditorViewModel AppGeneralSettingEditor { get; }
         AppUpdateSettingEditorViewModel AppUpdateSettingEditor { get; }
         AppNotifyLogSettingEditorViewModel AppNotifyLogSettingEditor { get; }
+        AppLauncherToolbarSettingEditorViewModel AppLauncherToolbarSettingEditor { get; }
         AppCommandSettingEditorViewModel AppCommandSettingEditor { get; }
         AppNoteSettingEditorViewModel AppNoteSettingEditor { get; }
         AppStandardInputOutputSettingEditorViewModel AppStandardInputOutputSettingEditor { get; }

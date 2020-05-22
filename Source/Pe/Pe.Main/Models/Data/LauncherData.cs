@@ -60,6 +60,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         RightBottom,
     }
 
+    /// <summary>
+    /// ランチャーツールバーへのD&amp;D処理。
+    /// </summary>
+    public enum LauncherToolbarContentDropMode
+    {
+        /// <summary>
+        /// 指定して実行。
+        /// </summary>
+        [EnumResource]
+        ExtendsExecute,
+        /// <summary>
+        /// D&amp;Dデータをパラメータとして直接実行。
+        /// </summary>
+        [EnumResource]
+        DirectExecute,
+    }
+
     public interface ILauncherItemId
     {
         #region property
@@ -181,6 +198,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         [EnumResource]
         Normal,
+    }
+
+    /// <summary>
+    /// グループメニューの表示位置。
+    /// </summary>
+    public enum LauncherGroupPosition
+    {
+        [EnumResource]
+        Top,
+        [EnumResource]
+        Bottom,
     }
 
 
