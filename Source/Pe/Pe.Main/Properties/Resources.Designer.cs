@@ -4633,6 +4633,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ボタンへのD&amp;D に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_LauncherToolbar_ContentDropMode_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_LauncherToolbar_ContentDropMode_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   グループメニュー位置 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_LauncherToolbar_GroupMenuPosition_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_LauncherToolbar_GroupMenuPosition_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ツールバー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_LauncherToolbar_Header {
