@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
-        ILauncherExecuteResult ExecuteFile(IScreen screen)
+        ILauncherExecuteResult ExecuteFile(string? customArgument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -132,6 +132,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
 
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
+                if(customArgument != null) {
+                    Logger.LogInformation("引数指定があるため上書き: [元] {0}, [優先] {1}", fileData.Option, customArgument);
+                    fileData.Option = customArgument;
+                }
                 if(fileData.IsEnabledCustomEnvironmentVariable) {
                     envItems = GetMergeEnvironmentVariableItems(commander, commander.Implementation);
                 } else {
@@ -174,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 ILauncherExecuteResult result;
                 switch(Kind) {
                     case LauncherItemKind.File:
-                        result = ExecuteFile(screen);
+                        result = ExecuteFile(null, screen);
                         break;
 
                     default:
@@ -183,17 +187,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
                 Debug.Assert(result != null);
 
-                using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                    var dao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                    dao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
-                    commander.Commit();
-                }
+                IncrementExecuteCount();
 
                 return result;
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
                 return LauncherExecuteResult.Error(ex);
+            }
+        }
+
+        public ILauncherExecuteResult DirectExecute(string argument, IScreen screen)
+        {
+            ThrowIfDisposed();
+
+            try {
+                ILauncherExecuteResult result;
+                switch(Kind) {
+                    case LauncherItemKind.File:
+                        result = ExecuteFile(argument, screen);
+                        break;
+
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                Debug.Assert(result != null);
+
+                IncrementExecuteCount();
+
+                return result;
+
+            } catch(Exception ex) {
+                Logger.LogError(ex, ex.Message);
+                return LauncherExecuteResult.Error(ex);
+            }
+        }
+
+        private void IncrementExecuteCount() {
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var dao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                dao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
+                commander.Commit();
             }
         }
 

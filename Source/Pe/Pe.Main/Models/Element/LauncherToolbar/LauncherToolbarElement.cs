@@ -430,6 +430,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             launcherItem.OpenExtendsExecuteViewWidthArgument(argument, screen);
         }
 
+        public void ExecuteWithArgument(Guid launcherItemId, string argument)
+        {
+            ThrowIfDisposed();
+
+            var launcherItem = LauncherItems.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+            if(launcherItem == null) {
+                Logger.LogError("指定のランチャーアイテムは存在しない: {0}", launcherItemId);
+                return;
+            }
+
+            launcherItem.DirectExecute(argument, DockScreen);
+        }
+
         #endregion
 
         #region ElementBase
