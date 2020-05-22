@@ -275,6 +275,49 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
+    public class AppLauncherToolbarSettingEditorElement: GeneralSettingEditorElementBase
+    {
+        public AppLauncherToolbarSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+            : base(mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
+        { }
+
+        #region property
+
+        public LauncherToolbarContentDropMode ContentDropMode { get; set; }
+        public LauncherGroupPosition GroupMenuPosition { get; set; }
+
+        #endregion
+
+        #region function
+        #endregion
+
+        #region GeneralSettingEditorBase
+
+        protected override void InitializeImpl()
+        {
+            var setting = MainDatabaseBarrier.ReadData(c => {
+                var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                return appLauncherToolbarSettingEntityDao.SelectSettingLauncherToolbarSetting();
+            });
+
+            ContentDropMode = setting.ContentDropMode;
+            GroupMenuPosition = setting.GroupMenuPosition;
+        }
+
+        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        {
+            var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+            var data = new AppLauncherToolbarSettingData() {
+                ContentDropMode = ContentDropMode,
+                GroupMenuPosition = GroupMenuPosition,
+            };
+
+            appLauncherToolbarSettingEntityDao.UpdateSettingLauncherToolbarSetting(data, commandPack.CommonStatus);
+        }
+
+        #endregion
+    }
+
 
     public class AppCommandSettingEditorElement : GeneralSettingEditorElementBase
     {
