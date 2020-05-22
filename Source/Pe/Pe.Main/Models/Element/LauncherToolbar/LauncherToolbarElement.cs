@@ -167,6 +167,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         Guid RestoreVisibleNotifyLogId { get; set; }
 
+        public LauncherToolbarContentDropMode ContentDropMode { get; private set; }
+        public LauncherGroupPosition GroupMenuPosition { get; private set; }
+
+
         #endregion
 
         #region function
@@ -270,9 +274,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             ThrowIfDisposed();
 
             LauncherToolbarsDisplayData displayData;
+            AppLauncherToolbarSettingData appLauncherToolbarSettingData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                displayData = dao.SelectDisplayData(LauncherToolbarId);
+                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+
+                displayData = launcherToolbarsEntityDao.SelectDisplayData(LauncherToolbarId);
+                appLauncherToolbarSettingData = appLauncherToolbarSettingEntityDao.SelectSettingLauncherToolbarSetting();
             }
 
             IconBox = displayData.IconBox;
@@ -284,6 +292,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             ToolbarPosition = displayData.ToolbarPosition;
             IsVisible = displayData.IsVisible;
             IconDirection = displayData.IconDirection;
+
+            ContentDropMode = appLauncherToolbarSettingData.ContentDropMode;
+            GroupMenuPosition = appLauncherToolbarSettingData.GroupMenuPosition;
 
             SelectedLauncherGroup = LauncherGroups
                 .FirstOrDefault(i => i.LauncherGroupId == displayData.LauncherGroupId)
@@ -421,7 +432,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         #endregion
 
-        #region ContextElementBase
+        #region ElementBase
 
         override protected void InitializeImpl()
         {
