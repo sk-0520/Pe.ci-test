@@ -1945,4 +1945,7 @@
   <data name="String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarContentDropMode.ExtendsExecute_A" xml:space="preserve">
     <value>指定して実行(_E)</value>
   </data>
+  <data name="String_Setting_Generals_LauncherToolbar_Header" xml:space="preserve">
+    <value>ツールバー</value>
+  </data>
 </root>

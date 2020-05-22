@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)
         {
-            var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+            var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new AppLauncherToolbarSettingData() {
                 ContentDropMode = ContentDropMode,
                 GroupMenuPosition = GroupMenuPosition,

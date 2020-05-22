@@ -4633,6 +4633,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ツールバー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_LauncherToolbar_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_LauncherToolbar_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   色 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_Note_Color_A {
