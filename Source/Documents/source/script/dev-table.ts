@@ -337,6 +337,8 @@ class Entity {
 			for (var optionElement of optionElements) {
 				var clrValues = ClrMap.get(logicalDataElement.value);
 				if(!clrValues) {
+					logicalDataElement.parentElement?.parentElement?.parentElement?.classList.add('error-parent');
+					logicalDataElement.parentElement?.parentElement?.classList.add('error-row');
 					throw "clrValues が取得できない, たぶん 論理型 が不明: " + logicalDataElement.value + ":" + physicalValue;
 				}
 				optionElement.disabled = !clrValues.some(i => i === optionElement.value);
