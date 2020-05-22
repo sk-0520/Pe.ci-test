@@ -276,6 +276,7 @@
                   </WrapPanel>
                 </Grid>
 
+                <!--
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Style="{StaticResource LabelDefinition}" />
@@ -288,6 +289,7 @@
                     <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherGroupPosition.Bottom}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding GroupMenuPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherGroupPosition.Bottom}}" />
                   </WrapPanel>
                 </Grid>
+                -->
               </StackPanel>
             </GroupBox>
           </DataTemplate>
