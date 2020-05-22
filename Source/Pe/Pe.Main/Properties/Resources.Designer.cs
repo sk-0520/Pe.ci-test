@@ -1370,6 +1370,43 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherGroupPosition_Bottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupPosition.Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   下(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherGroupPosition_Bottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupPosition.Bottom_A" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherGroupPosition_Top {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupPosition.Top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherGroupPosition_Top_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherGroupPosition.Top_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_File {
@@ -1384,6 +1421,46 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherItemKind_Unknown {
             get {
                 return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherItemKind.Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   直接実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarContentDropMode_DirectExecute {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarContentDropMode" +
+                        ".DirectExecute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   直接実行(_D) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarContentDropMode_DirectExecute_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarContentDropMode" +
+                        ".DirectExecute_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定して実行 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarContentDropMode_ExtendsExecute {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarContentDropMode" +
+                        ".ExtendsExecute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定して実行(_E) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_LauncherToolbarContentDropMode_ExtendsExecute_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Main.Models.Data.LauncherToolbarContentDropMode" +
+                        ".ExtendsExecute_A", resourceCulture);
             }
         }
         

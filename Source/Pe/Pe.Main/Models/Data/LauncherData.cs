@@ -68,10 +68,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <summary>
         /// 指定して実行。
         /// </summary>
+        [EnumResource]
         ExtendsExecute,
         /// <summary>
         /// D&amp;Dデータをパラメータとして直接実行。
         /// </summary>
+        [EnumResource]
         DirectExecute,
     }
 
@@ -203,7 +205,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     /// </summary>
     public enum LauncherGroupPosition
     {
+        [EnumResource]
         Top,
+        [EnumResource]
         Bottom,
     }
 
