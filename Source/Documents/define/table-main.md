@@ -170,7 +170,7 @@ ___
 |    | o  |              | 標準出力背景色           | OutputBackground      | text         | System.String   |              | #AARRGGBB            |
 |    | o  |              | エラー前景色             | ErrorForeground       | text         | System.String   |              | #AARRGGBB            |
 |    | o  |              | エラー背景色             | ErrorBackground       | text         | System.String   |              | #AARRGGBB            |
-|    | o  |              | 最前面                   | IsTopmost             |              | System.Boolean  |              |                      |
+|    | o  |              | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                      |
 
 ### index
 

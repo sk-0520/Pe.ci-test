@@ -113,6 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             var setuppers = new SetupperBase[] {
                 new Setupper_V_00_94_000(IdFactory, StatementLoader, LoggerFactory),
+                new Setupper_V_00_98_000(IdFactory, StatementLoader, LoggerFactory),
                 // これ最後
                 new Setupper_V_99_99_999(IdFactory, StatementLoader, LoggerFactory),
             };

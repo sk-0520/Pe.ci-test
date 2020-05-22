@@ -141,7 +141,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "AppStandardInputOutputSetting.IsTopmost の型が TEXT"
 					},
 					{
 						"revision": "",
