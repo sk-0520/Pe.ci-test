@@ -117,7 +117,10 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#642: フィードバックより ->ランチャーツールバーへのファイルD&D処理の標準挙動",
+						"comments": [
+							"設定 -> 基本 の「ツールバー」の「ボタンへのD&D」により変更"
+						]
 					},
 					{
 						"revision": "",
