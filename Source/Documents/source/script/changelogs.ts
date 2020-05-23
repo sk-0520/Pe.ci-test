@@ -166,7 +166,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "強制フル GC 時に LOH をコンパクションするようにした"
 					},
 					{
 						"revision": "",

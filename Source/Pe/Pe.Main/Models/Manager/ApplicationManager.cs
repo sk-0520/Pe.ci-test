@@ -1446,22 +1446,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void GarbageCollection(bool full)
         {
             var old = GC.GetTotalMemory(false);
+            var startTimestamp = DateTime.UtcNow;
+
             if(full) {
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
+                var currentMode = System.Runtime.GCSettings.LargeObjectHeapCompactionMode;
+                Logger.LogTrace("LargeObjectHeapCompactionMode: {0}", currentMode);
+                System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
+                try {
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                } finally {
+                    System.Runtime.GCSettings.LargeObjectHeapCompactionMode = currentMode;
+                }
             } else {
                 GC.Collect(0);
                 GC.Collect(1);
             }
+            var endTimestamp = DateTime.UtcNow;
             var now = GC.GetTotalMemory(false);
             var sizeConverter = ApplicationDiContainer.Build<Core.Models.SizeConverter>();
             Logger.LogInformation(
-                "GC(FULL:{0}): {1}({2}) -> {3}({4}), 差分: {5}({6})",
+                "GC(FULL:{0}): {1}({2}) -> {3}({4}), 差分: {5}({6}), 所要時間: {7}",
                 full,
                 sizeConverter.ConvertHumanLikeByte(old), old,
                 sizeConverter.ConvertHumanLikeByte(now), now,
-                sizeConverter.ConvertHumanLikeByte(old - now), old - now
+                sizeConverter.ConvertHumanLikeByte(old - now), old - now,
+                endTimestamp - startTimestamp
             );
         }
 
