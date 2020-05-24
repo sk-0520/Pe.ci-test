@@ -13,14 +13,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグインの識別ID。
         /// <para>重複してるとバグる。</para>
         /// </summary>
-        public Guid PluginId { get; }
+        Guid PluginId { get; }
 
         /// <summary>
         /// プラグインを人が見て判断するための名前。
         /// <para><see cref="PluginId"/>と異なり重複してもいいけどなるべく重複しない方針。</para>
         /// <para>ローカライズは考えなくていい。</para>
         /// </summary>
-        public string PluginName { get; }
+        string PluginName { get; }
 
         #endregion
     }
