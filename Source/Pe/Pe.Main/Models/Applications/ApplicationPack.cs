@@ -83,10 +83,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IReaderWriterLockerPack : IApplicationPack<ReaderWriterLocker>
+    public interface IReaderWriterLockerPack : IApplicationPack<IReaderWriterLocker>
     { }
 
-    public sealed class ApplicationReaderWriterLockerPack : TApplicationPackBase<ReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
+    public sealed class ApplicationReaderWriterLockerPack : TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
     {
         public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
             : base(main, file, temporary)
