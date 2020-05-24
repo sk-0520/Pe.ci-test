@@ -91,24 +91,18 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.97.001",
+		"date": "2020/05/24",
+		"version": "0.98.000",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "デスクトップPCがぶっ壊れたのでノートPCから意味もなくアップデート",
+						"comments": [
+							"データのバックアップ大事",
+							"全部吹っ飛んだわ。全ドライブ死ぬとかどうなってんの"
+						]
 					}
 				]
 			},
@@ -116,19 +110,11 @@ const changelogs = [
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "88fc9fcca83f0a88eff7a9ede26e9107870a7677",
 						"subject": "#642: フィードバックより ->ランチャーツールバーへのファイルD&D処理の標準挙動",
 						"comments": [
 							"設定 -> 基本 の「ツールバー」の「ボタンへのD&D」により変更"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -136,23 +122,15 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "b2cf4bd6c49695df4a83f0469437cab500e7c81c",
 						"subject": "#645: 本体コマンド 再起動 死んでるやん！",
 						"comments": [
 							"#641, #644 との合わせ技で心折れたので #576 の優先度を一つ上げた"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "5aa21a3c074d622f689b99281d9b82e8ec3fcd0e",
 						"subject": "AppStandardInputOutputSetting.IsTopmost の型が TEXT"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -160,17 +138,13 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "c814ae8832590d86c1f548828a662b9255773192",
 						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 1.6.3 -> 1.6.4"
 					},
 					{
-						"revision": "",
+						"revision": "31086ffcf54cc1f4128ef64e38d6e3390ca848be",
 						"subject": "強制フル GC 時に LOH をコンパクションするようにした"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
