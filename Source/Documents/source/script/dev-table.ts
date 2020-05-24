@@ -257,7 +257,7 @@ class Entity {
 			}
 		}
 
-		throw 'はい、定義ミス';
+		throw 'はい、定義ミス:' + JSON.stringify(lines);
 	}
 
 	private trimMarkdownTable(lines: ReadonlyArray<string>): ReadonlyArray<string> {
@@ -326,6 +326,7 @@ class Entity {
 		logicalDataElement.value = columns[LayoutColumn.LogicalType];
 		clrDataElement.value = columns[LayoutColumn.ClrType];
 		logicalDataElement.addEventListener('change', ev => {
+
 			var physicalValue = DatabaseTypeMap.get(logicalDataElement.value);
 			physicalDataElement.value = physicalValue || 'なんかデータ変';
 
@@ -336,7 +337,9 @@ class Entity {
 			for (var optionElement of optionElements) {
 				var clrValues = ClrMap.get(logicalDataElement.value);
 				if(!clrValues) {
-					throw "clrValues が取得できない, たぶん 論理型 が不明";
+					logicalDataElement.parentElement?.parentElement?.parentElement?.classList.add('error-parent');
+					logicalDataElement.parentElement?.parentElement?.classList.add('error-row');
+					throw "clrValues が取得できない, たぶん 論理型 が不明: " + logicalDataElement.value + ":" + physicalValue;
 				}
 				optionElement.disabled = !clrValues.some(i => i === optionElement.value);
 				if (!optionElement.disabled && !defaultElement) {

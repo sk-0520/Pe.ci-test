@@ -40,7 +40,7 @@ using System.Windows.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
-    public class LauncherToolbarViewModel : ElementViewModelBase<LauncherToolbarElement>, IReadOnlyAppDesktopToolbarExtendData, IViewLifecycleReceiver
+    public class LauncherToolbarViewModel: ElementViewModelBase<LauncherToolbarElement>, IReadOnlyAppDesktopToolbarExtendData, IViewLifecycleReceiver
     {
         #region variable
 
@@ -204,6 +204,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 #pragma warning restore CS8604 // Null 参照引数の可能性があります。
         }
 
+        public LauncherToolbarContentDropMode ContentDropMode => Model.ContentDropMode;
+        public LauncherGroupPosition GroupMenuPosition => Model.GroupMenuPosition;
+
+        #region theme
+
         [ThemeProperty]
         public DependencyObject ToolbarPositionLeftIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Left);
         [ThemeProperty]
@@ -217,6 +222,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public ControlTemplate LauncherItemNormalButtonControlTemplate => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate();
         [ThemeProperty]
         public ControlTemplate LauncherItemToggleButtonControlTemplate => LauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate();
+
+        #endregion
 
         #endregion
 
@@ -451,7 +458,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         void ExecuteExtendDropData(Guid launcherItemId, string argument)
         {
-            Model.OpenExtendsExecuteView(launcherItemId, argument, DockScreen);
+            switch(ContentDropMode) {
+                case LauncherToolbarContentDropMode.ExtendsExecute:
+                    Model.OpenExtendsExecuteView(launcherItemId, argument, DockScreen);
+                    break;
+
+                case LauncherToolbarContentDropMode.DirectExecute:
+                    Model.ExecuteWithArgument(launcherItemId, argument);
+                    break;
+            }
         }
 
 

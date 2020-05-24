@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    public sealed class IdFactory : IIdFactory
+    internal sealed class IdFactory : IIdFactory
     {
         public IdFactory(ILoggerFactory loggerFactory)
         {

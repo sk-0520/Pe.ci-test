@@ -9,6 +9,7 @@ using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    [Obsolete("CEFへ移行したのでもう使わないはず")]
     public static class SystemWebBrowserUtility
     {
         #region define

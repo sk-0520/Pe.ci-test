@@ -28,18 +28,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         ISet<IPlugin> Plugins { get; } = new HashSet<IPlugin>();
 
+        /// <summary>
+        /// アドオン用コンテナ。
+        /// </summary>
         public AddonContainer Addon { get; }
+        /// <summary>
+        /// テーマ用コンテナ。
+        /// </summary>
         public ThemeContainer Theme { get; }
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// プラグインの実体一覧を取得。
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IPlugin> GetPlugins()
         {
             yield return new DefaultTheme();
         }
 
+        /// <summary>
+        /// プラグインの実体をコンテナに取り込み。
+        /// </summary>
+        /// <param name="plugin"></param>
         public void AddPlugin(IPlugin plugin)
         {
             Plugins.Add(plugin);

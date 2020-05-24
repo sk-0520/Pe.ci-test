@@ -11,6 +11,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
+    /// <summary>
+    /// Windows Explorer に対する(独善的)補助処理。
+    /// <para>今んとこフォルダツリーの横スクロールくらい。</para>
+    /// </summary>
     public class ExplorerSupporter : DisposerBase
     {
         #region define
@@ -19,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
 
         #endregion
+
         public ExplorerSupporter(TimeSpan checkSpan, int cacheSize, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());

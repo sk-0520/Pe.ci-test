@@ -20,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             AppGeneralSettingEditor = new AppGeneralSettingEditorElement(MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
             AppUpdateSettingEditor = new AppUpdateSettingEditorElement(MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
             AppNotifyLogSettingEditor = new AppNotifyLogSettingEditorElement(MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+            AppLauncherToolbarSettingEditor = new AppLauncherToolbarSettingEditorElement(MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
             AppCommandSettingEditor = new AppCommandSettingEditorElement(MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
             AppNoteSettingEditor = new AppNoteSettingEditorElement(MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
             AppStandardInputOutputSettingEditor = new AppStandardInputOutputSettingEditorElement(MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
@@ -29,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 AppGeneralSettingEditor,
                 AppUpdateSettingEditor,
                 AppNotifyLogSettingEditor,
+                AppLauncherToolbarSettingEditor,
                 AppCommandSettingEditor,
                 AppNoteSettingEditor,
                 AppStandardInputOutputSettingEditor,
@@ -41,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public AppGeneralSettingEditorElement AppGeneralSettingEditor { get; }
         public AppUpdateSettingEditorElement AppUpdateSettingEditor { get; }
         public AppNotifyLogSettingEditorElement AppNotifyLogSettingEditor { get; }
+        public AppLauncherToolbarSettingEditorElement AppLauncherToolbarSettingEditor { get; }
         public AppCommandSettingEditorElement AppCommandSettingEditor { get; }
         public AppNoteSettingEditorElement AppNoteSettingEditor { get; }
         public AppStandardInputOutputSettingEditorElement AppStandardInputOutputSettingEditor { get; }

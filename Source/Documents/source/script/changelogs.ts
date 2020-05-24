@@ -91,6 +91,66 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/05/24",
+		"version": "0.98.000",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "デスクトップPCがぶっ壊れたのでノートPCから意味もなくアップデート",
+						"comments": [
+							"データのバックアップ大事",
+							"全部吹っ飛んだわ。全ドライブ死ぬとかどうなってんの"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "88fc9fcca83f0a88eff7a9ede26e9107870a7677",
+						"subject": "#642: フィードバックより ->ランチャーツールバーへのファイルD&D処理の標準挙動",
+						"comments": [
+							"設定 -> 基本 の「ツールバー」の「ボタンへのD&D」により変更"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "b2cf4bd6c49695df4a83f0469437cab500e7c81c",
+						"subject": "#645: 本体コマンド 再起動 死んでるやん！",
+						"comments": [
+							"#641, #644 との合わせ技で心折れたので #576 の優先度を一つ上げた"
+						]
+					},
+					{
+						"revision": "5aa21a3c074d622f689b99281d9b82e8ec3fcd0e",
+						"subject": "AppStandardInputOutputSetting.IsTopmost の型が TEXT"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "c814ae8832590d86c1f548828a662b9255773192",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.6.3 -> 1.6.4"
+					},
+					{
+						"revision": "31086ffcf54cc1f4128ef64e38d6e3390ca848be",
+						"subject": "強制フル GC 時に LOH をコンパクションするようにした"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/05/20",
 		"version": "0.97.000",
 		"contents": [

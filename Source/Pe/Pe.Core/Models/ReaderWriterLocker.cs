@@ -11,7 +11,138 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// <see cref="ReaderWriterLockSlim"/>のラッパー。
     /// </summary>
-    public class ReaderWriterLocker : DisposerBase
+    public interface IReaderWriterLocker
+    {
+        #region property
+
+        /// <summary>
+        /// 標準の読み込み待ち時間。
+        /// </summary>
+        public TimeSpan DefaultReadTimeout { get; }
+        /// <summary>
+        /// 標準の更新待ち時間。
+        /// </summary>
+        public TimeSpan DefaultUpdateTimeout { get; }
+        /// <summary>
+        /// 標準の書き込み待ち時間。
+        /// </summary>
+        public TimeSpan DefaultWriteTimeout { get; }
+
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// 読み込みロックを即時開始。
+        /// </summary>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable BeginRead();
+
+        /// <summary>
+        /// 更新ロックを即時開始。
+        /// </summary>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable BeginUpdate();
+
+        /// <summary>
+        /// 書き込みロックを即時開始。
+        /// </summary>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable BeginWrite();
+
+        /// <summary>
+        /// 読み込みロックを待機実行。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <param name="lockedAction">ロック中処理。</param>
+        /// <returns>ロック成功状態。</returns>
+        public bool TryRead(TimeSpan timeout, Action lockedAction);
+
+        /// <summary>
+        /// 標準待ち時間を使用した読み込みロックを待機実行。
+        /// </summary>
+        /// <param name="lockedAction">ロック中処理。</param>
+        /// <returns>ロック成功状態。</returns>
+        public bool TryReadByDefaultTimeout(Action lockedAction);
+
+        /// <summary>
+        /// 更新ロックを待機実行。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <param name="lockedAction">ロック中処理。</param>
+        /// <returns>ロック成功状態。</returns>
+        public bool TryUpdate(TimeSpan timeout, Action lockedAction);
+
+        /// <summary>
+        /// 標準待ち時間を使用した更新ロックを待機実行。
+        /// </summary>
+        /// <param name="lockedAction">ロック中処理。</param>
+        /// <returns>ロック成功状態。</returns>
+        public bool TryUpdateByDefaultTimeout(Action lockedAction);
+
+        /// <summary>
+        /// 書き込みロックを待機実行。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <param name="lockedAction">ロック中処理。</param>
+        /// <returns>ロック成功状態。</returns>
+        public bool TryWrite(TimeSpan timeout, Action lockedAction);
+
+        /// <summary>
+        /// 標準待ち時間を使用した書き込みロックを待機実行。
+        /// </summary>
+        /// <param name="lockedAction">ロック中処理。</param>
+        /// <returns>ロック成功状態。</returns>
+        public bool TryWriteByDefaultTimeout(Action lockedAction);
+
+        /// <summary>
+        /// 読み込みロックを待機し、ロックを取得できない場合に例外処理。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable WaitRead(TimeSpan timeout);
+
+        /// <summary>
+        /// 標準待ち時間を使用した読み込みロックを待機し、ロックを取得できない場合に例外処理。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable WaitReadByDefaultTimeout();
+
+        /// <summary>
+        /// 更新ロックを待機し、ロックを取得できない場合に例外処理。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable WaitUpdate(TimeSpan timeout);
+
+        /// <summary>
+        /// 標準待ち時間を使用した更新ロックを待機し、ロックを取得できない場合に例外処理。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable WaitUpdateByDefaultTimeout();
+
+        /// <summary>
+        /// 書き込みロックを待機し、ロックを取得できない場合に例外処理。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable WaitWrite(TimeSpan timeout);
+
+        /// <summary>
+        /// 標準待ち時間を使用した書き込みロックを待機し、ロックを取得できない場合に例外処理。
+        /// </summary>
+        /// <param name="timeout">待機時間。</param>
+        /// <returns>ロック解除用オブジェクト。</returns>
+        public IDisposable WaitWriteByDefaultTimeout();
+
+        #endregion
+
+    }
+
+    /// <inheritdoc cref="IReaderWriterLocker"/>
+    public class ReaderWriterLocker: DisposerBase, IReaderWriterLocker
     {
         /// <summary>
         /// 再帰ロック不可で作成。
@@ -35,18 +166,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         ReaderWriterLockSlim Locker { get; set; }
 
-        /// <summary>
-        /// 標準の読み込み待ち時間。
-        /// </summary>
-        public virtual TimeSpan DefaultReadTimeout { get; set; } = TimeSpan.FromSeconds(5);
-        /// <summary>
-        /// 標準の更新待ち時間。
-        /// </summary>
-        public virtual TimeSpan DefaultUpdateTimeout { get; set; } = TimeSpan.FromSeconds(3);
-        /// <summary>
-        /// 標準の書き込み待ち時間。
-        /// </summary>
-        public virtual TimeSpan DefaultWriteTimeout { get; set; } = TimeSpan.FromSeconds(3);
 
         #endregion
 
@@ -70,40 +189,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     action();
                 }
             }, exitAction);
-        }
-
-        /// <summary>
-        /// 読み込みロックを即時開始。
-        /// </summary>
-        /// <returns>ロック解除用オブジェクト。</returns>
-        public IDisposable BeginRead()
-        {
-            ThrowIfDisposed();
-
-            return BeginCore(Locker.EnterReadLock, Locker.ExitReadLock);
-        }
-
-        /// <summary>
-        /// 更新ロックを即時開始。
-        /// </summary>
-        /// <returns>ロック解除用オブジェクト。</returns>
-        public IDisposable BeginUpdate()
-        {
-            ThrowIfDisposed();
-
-            // write系と何が違うのか分からん
-            return BeginCore(Locker.EnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
-        }
-
-        /// <summary>
-        /// 書き込みロックを即時開始。
-        /// </summary>
-        /// <returns>ロック解除用オブジェクト。</returns>
-        public IDisposable BeginWrite()
-        {
-            ThrowIfDisposed();
-
-            return BeginCore(Locker.EnterWriteLock, Locker.ExitWriteLock);
         }
 
         /// <summary>
@@ -133,89 +218,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return false;
         }
 
-        /// <summary>
-        /// 読み込みロックを待機実行。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <param name="lockedAction">ロック中処理。</param>
-        /// <returns>ロック成功状態。</returns>
-        public bool TryRead(TimeSpan timeout, Action lockedAction)
-        {
-            if(lockedAction == null) {
-                throw new ArgumentNullException(nameof(lockedAction));
-            }
-            ThrowIfDisposed();
-
-            return TryCore(timeout, lockedAction, Locker.TryEnterReadLock, Locker.ExitReadLock);
-        }
-
-        /// <summary>
-        /// 標準待ち時間を使用した読み込みロックを待機実行。
-        /// </summary>
-        /// <param name="lockedAction">ロック中処理。</param>
-        /// <returns>ロック成功状態。</returns>
-        public bool TryReadByDefaultTimeout(Action lockedAction)
-        {
-            ThrowIfDisposed();
-
-            return TryUpdate(DefaultReadTimeout, lockedAction);
-        }
-
-        /// <summary>
-        /// 更新ロックを待機実行。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <param name="lockedAction">ロック中処理。</param>
-        /// <returns>ロック成功状態。</returns>
-        public bool TryUpdate(TimeSpan timeout, Action lockedAction)
-        {
-            if(lockedAction == null) {
-                throw new ArgumentNullException(nameof(lockedAction));
-            }
-            ThrowIfDisposed();
-
-            return TryCore(timeout, lockedAction, Locker.TryEnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
-        }
-
-        /// <summary>
-        /// 標準待ち時間を使用した更新ロックを待機実行。
-        /// </summary>
-        /// <param name="lockedAction">ロック中処理。</param>
-        /// <returns>ロック成功状態。</returns>
-        public bool TryUpdateByDefaultTimeout(Action lockedAction)
-        {
-            ThrowIfDisposed();
-
-            return TryUpdate(DefaultUpdateTimeout, lockedAction);
-        }
-
-        /// <summary>
-        /// 書き込みロックを待機実行。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <param name="lockedAction">ロック中処理。</param>
-        /// <returns>ロック成功状態。</returns>
-        public bool TryWrite(TimeSpan timeout, Action lockedAction)
-        {
-            if(lockedAction == null) {
-                throw new ArgumentNullException(nameof(lockedAction));
-            }
-            ThrowIfDisposed();
-
-            return TryCore(timeout, lockedAction, Locker.TryEnterWriteLock, Locker.ExitWriteLock);
-        }
-
-        /// <summary>
-        /// 標準待ち時間を使用した書き込みロックを待機実行。
-        /// </summary>
-        /// <param name="lockedAction">ロック中処理。</param>
-        /// <returns>ロック成功状態。</returns>
-        public bool TryWriteByDefaultTimeout(Action lockedAction)
-        {
-            ThrowIfDisposed();
-
-            return TryWrite(DefaultWriteTimeout, lockedAction);
-        }
 
         /// <summary>
         /// ロックを待機し、ロックを取得できない場合に例外処理。
@@ -224,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="tryAction">ロック処理。</param>
         /// <param name="exitAction">ロック解除処理。</param>
         /// <returns>ロック解除用オブジェクト。</returns>
-        public IDisposable WaitCore(TimeSpan timeout, Func<TimeSpan, bool> tryAction, Action exitAction)
+        protected IDisposable WaitCore(TimeSpan timeout, Func<TimeSpan, bool> tryAction, Action exitAction)
         {
             Debug.Assert(tryAction != null);
             Debug.Assert(exitAction != null);
@@ -241,11 +243,101 @@ namespace ContentTypeTextNet.Pe.Core.Models
             throw new SynchronizationLockException();
         }
 
-        /// <summary>
-        /// 読み込みロックを待機し、ロックを取得できない場合に例外処理。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <returns>ロック解除用オブジェクト。</returns>
+        #endregion
+
+        #region IReaderWriterLocker
+
+        /// <inheritdoc cref="IReaderWriterLocker"/>
+        public virtual TimeSpan DefaultReadTimeout { get; set; } = TimeSpan.FromSeconds(5);
+        /// <inheritdoc cref="IReaderWriterLocker"/>
+        public virtual TimeSpan DefaultUpdateTimeout { get; set; } = TimeSpan.FromSeconds(3);
+        /// <inheritdoc cref="IReaderWriterLocker"/>
+        public virtual TimeSpan DefaultWriteTimeout { get; set; } = TimeSpan.FromSeconds(3);
+
+
+        /// <inheritdoc cref="IReaderWriterLocker.BeginRead"/>
+        public IDisposable BeginRead()
+        {
+            ThrowIfDisposed();
+
+            return BeginCore(Locker.EnterReadLock, Locker.ExitReadLock);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.BeginUpdate"/>
+        public IDisposable BeginUpdate()
+        {
+            ThrowIfDisposed();
+
+            // write系と何が違うのか分からん
+            return BeginCore(Locker.EnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.BeginWrite"/>
+        public IDisposable BeginWrite()
+        {
+            ThrowIfDisposed();
+
+            return BeginCore(Locker.EnterWriteLock, Locker.ExitWriteLock);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.TryRead(TimeSpan, Action)"/>
+        public bool TryRead(TimeSpan timeout, Action lockedAction)
+        {
+            if(lockedAction == null) {
+                throw new ArgumentNullException(nameof(lockedAction));
+            }
+            ThrowIfDisposed();
+
+            return TryCore(timeout, lockedAction, Locker.TryEnterReadLock, Locker.ExitReadLock);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.TryReadByDefaultTimeout(Action)"/>
+        public bool TryReadByDefaultTimeout(Action lockedAction)
+        {
+            ThrowIfDisposed();
+
+            return TryUpdate(DefaultReadTimeout, lockedAction);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.TryUpdate(TimeSpan, Action)"/>
+        public bool TryUpdate(TimeSpan timeout, Action lockedAction)
+        {
+            if(lockedAction == null) {
+                throw new ArgumentNullException(nameof(lockedAction));
+            }
+            ThrowIfDisposed();
+
+            return TryCore(timeout, lockedAction, Locker.TryEnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.TryUpdateByDefaultTimeout(Action)"/>
+        public bool TryUpdateByDefaultTimeout(Action lockedAction)
+        {
+            ThrowIfDisposed();
+
+            return TryUpdate(DefaultUpdateTimeout, lockedAction);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.TryWrite(TimeSpan, Action)"/>
+        public bool TryWrite(TimeSpan timeout, Action lockedAction)
+        {
+            if(lockedAction == null) {
+                throw new ArgumentNullException(nameof(lockedAction));
+            }
+            ThrowIfDisposed();
+
+            return TryCore(timeout, lockedAction, Locker.TryEnterWriteLock, Locker.ExitWriteLock);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.TryWriteByDefaultTimeout(Action)"/>
+        public bool TryWriteByDefaultTimeout(Action lockedAction)
+        {
+            ThrowIfDisposed();
+
+            return TryWrite(DefaultWriteTimeout, lockedAction);
+        }
+
+        /// <inheritdoc cref="IReaderWriterLocker.WaitRead(TimeSpan)"/>
         public IDisposable WaitRead(TimeSpan timeout)
         {
             ThrowIfDisposed();
@@ -253,11 +345,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return WaitCore(timeout, Locker.TryEnterReadLock, Locker.ExitReadLock);
         }
 
-        /// <summary>
-        /// 標準待ち時間を使用した読み込みロックを待機し、ロックを取得できない場合に例外処理。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <returns>ロック解除用オブジェクト。</returns>
+        /// <inheritdoc cref="IReaderWriterLocker.WaitReadByDefaultTimeout"/>
         public IDisposable WaitReadByDefaultTimeout()
         {
             ThrowIfDisposed();
@@ -265,11 +353,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return WaitRead(DefaultReadTimeout);
         }
 
-        /// <summary>
-        /// 更新ロックを待機し、ロックを取得できない場合に例外処理。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <returns>ロック解除用オブジェクト。</returns>
+        /// <inheritdoc cref="IReaderWriterLocker.WaitUpdate(TimeSpan)"/>
         public IDisposable WaitUpdate(TimeSpan timeout)
         {
             ThrowIfDisposed();
@@ -277,11 +361,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return WaitCore(timeout, Locker.TryEnterUpgradeableReadLock, Locker.ExitUpgradeableReadLock);
         }
 
-        /// <summary>
-        /// 標準待ち時間を使用した更新ロックを待機し、ロックを取得できない場合に例外処理。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <returns>ロック解除用オブジェクト。</returns>
+        /// <inheritdoc cref="IReaderWriterLocker.WaitUpdateByDefaultTimeout"/>
         public IDisposable WaitUpdateByDefaultTimeout()
         {
             ThrowIfDisposed();
@@ -289,11 +369,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return WaitUpdate(DefaultUpdateTimeout);
         }
 
-        /// <summary>
-        /// 書き込みロックを待機し、ロックを取得できない場合に例外処理。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <returns>ロック解除用オブジェクト。</returns>
+        /// <inheritdoc cref="IReaderWriterLocker.WaitWrite(TimeSpan)"/>
         public IDisposable WaitWrite(TimeSpan timeout)
         {
             ThrowIfDisposed();
@@ -301,11 +377,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return WaitCore(timeout, Locker.TryEnterWriteLock, Locker.ExitWriteLock);
         }
 
-        /// <summary>
-        /// 標準待ち時間を使用した書き込みロックを待機し、ロックを取得できない場合に例外処理。
-        /// </summary>
-        /// <param name="timeout">待機時間。</param>
-        /// <returns>ロック解除用オブジェクト。</returns>
+        /// <inheritdoc cref="IReaderWriterLocker.WaitWriteByDefaultTimeout"/>
         public IDisposable WaitWriteByDefaultTimeout()
         {
             ThrowIfDisposed();

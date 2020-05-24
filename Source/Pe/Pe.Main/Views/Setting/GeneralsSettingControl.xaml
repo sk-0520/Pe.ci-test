@@ -260,6 +260,40 @@
             </GroupBox>
           </DataTemplate>
 
+          <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppLauncherToolbarSettingEditorViewModel}">
+            <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
+              <StackPanel>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_LauncherToolbar_ContentDropMode_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherToolbarContentDropMode.ExtendsExecute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarContentDropMode.ExtendsExecute}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherToolbarContentDropMode.DirectExecute}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding ContentDropMode, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherToolbarContentDropMode.DirectExecute}}" />
+                  </WrapPanel>
+                </Grid>
+
+                <!--
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_LauncherToolbar_GroupMenuPosition_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherGroupPosition.Top}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding GroupMenuPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherGroupPosition.Top}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_main_models_data:LauncherGroupPosition.Bottom}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding GroupMenuPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_main_models_data:LauncherGroupPosition.Bottom}}" />
+                  </WrapPanel>
+                </Grid>
+                -->
+              </StackPanel>
+            </GroupBox>
+          </DataTemplate>
+
           <DataTemplate DataType="{x:Type app_main_viewmodels_setting:AppCommandSettingEditorViewModel}">
             <GroupBox Header="{Binding Header}" Style="{StaticResource HeaderGroupBox}">
               <StackPanel>

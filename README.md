@@ -22,6 +22,6 @@ Pe は Windows 上で動作するデスクトップユーティリティです�
 
 ## 開発
 
-* `dotnet --version`: [3.1.101](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+* `dotnet --version`: [3.1.300](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
 
