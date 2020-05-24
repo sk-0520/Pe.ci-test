@@ -24,13 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
 
         /// <inheritdoc cref="SetupperBase.Version"/>
-        public override Version Version { get; }
-#if DEBUG || BETA
-            = new Version(0, 97, 0);
-#else
-#error !!!version 0.98.0!!!
-            = new Version(0, 98, 0);
-#endif
+        public override Version Version { get; } = new Version(0, 98, 0);
 
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
