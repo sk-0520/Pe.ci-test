@@ -69,3 +69,26 @@ ___
 
 *NONE*
 
+
+
+___
+
+## PluginValues
+
+### layout
+
+| PK | NN | FK | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                   |
+|:--:|:--:|:---|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:---------------------------|
+| o  | o  |    | プラグインID             | PluginId              | text         | System.Guid     |              |                            |
+| o  | o  |    | プラグイン設定キー       | PluginSettingKey      | text         | System.Guid     |              | プラグイン側からのキー指定 |
+| o  | o  |    | 連結順序                 | Sequence              | integer      | System.Int64    |              |                            |
+|    | o  |    | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                        |
+|    | o  |    | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                            |
+|    | o  |    | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                            |
+|    | o  |    | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                            |
+|    | o  |    | データ                   | Data                  | blob         | System.Byte[]   |              |                            |
+
+### index
+
+*NONE*
+
