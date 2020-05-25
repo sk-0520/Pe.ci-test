@@ -506,6 +506,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void LoadPlugins()
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+            //var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+
+            //var plugins = environmentParameters.MachinePluginsDirectory
+            //    .EnumerateDirectories()
+            //    .Select(i => new { Directory = i, DllName = Path.ChangeExtension(i.Name, "dll") })
+            //;
+
+            //var pluginItems = new List<>();
+            //foreach(var item in plugins) {
+
+            //}
+
 
             foreach(var plugin in PluginContainer.GetPlugins()) {
                 plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));

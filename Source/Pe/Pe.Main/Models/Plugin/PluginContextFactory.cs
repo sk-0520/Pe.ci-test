@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var pluginFile = new PluginFile(
                 new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.UserPluginDirectory.FullName, dirName))),
-                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.MachinePluginDirectory.FullName, dirName))),
+                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.MachinePluginBaseDirectory.FullName, dirName))),
                 new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.TemporaryPluginDirectory.FullName, dirName)))
             );
 

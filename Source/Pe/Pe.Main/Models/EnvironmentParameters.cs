@@ -203,17 +203,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// ユーザー端末プラグインディレクトリ。
         /// </summary>
-        public DirectoryInfo MachinePluginDirectory => CombineDirectory(true, MachineDirectory, "plugins");
+        public DirectoryInfo MachinePluginBaseDirectory => CombineDirectory(true, MachineDirectory, "plugin");
+        /// <summary>
+        /// ユーザー端末プラグインディレクトリ。
+        /// </summary>
+        public DirectoryInfo MachinePluginsDirectory => CombineDirectory(true, MachinePluginBaseDirectory, "plugins");
         /// <summary>
         /// ユーザー端末プラグイン設定ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してデータを置く。</para>
         /// </summary>
-        public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(true, MachinePluginDirectory, "data");
+        public DirectoryInfo MachinePluginDataDirectory => CombineDirectory(true, MachinePluginBaseDirectory, "data");
         /// <summary>
         /// プラグインモジュール配置ディレクトリ。
         /// <para>この下にプラグインごとのディレクトリを配置してバイナリを置く。</para>
         /// </summary>
-        public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(true, MachinePluginDirectory, "modules");
+        public DirectoryInfo MachinePluginModuleDirectory => CombineDirectory(true, MachinePluginBaseDirectory, "modules");
 
         /// <summary>
         /// WebViewの端末親ディレクトリ。
