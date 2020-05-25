@@ -11,12 +11,12 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 {
     /// <summary>
-    /// フィードバックからの設定が仲間入り。
+    /// プラグインが仲間入り。
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase")]
-    public class Setupper_V_00_98_000 : SetupperBase
+    public class Setupper_V_00_99_000 : SetupperBase
     {
-        public Setupper_V_00_98_000(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public Setupper_V_00_99_000(IIdFactory idFactory, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
             : base(idFactory, statementLoader, loggerFactory)
         { }
 
@@ -24,8 +24,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
 
         /// <inheritdoc cref="SetupperBase.Version"/>
-        public override Version Version { get; } = new Version(0, 98, 0);
-
+        public override Version Version { get; }
+#if DEBUG || BEATA
+         = new Version(0, 98, 1);
+#else
+#error !!!0.99.000!!!
+#endif
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
             ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(GetType()), dto);
@@ -35,7 +39,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         { }
 
         public override void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
-        { }
+        {
+            ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(GetType()), dto);
+        }
 
         public override void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         { }
