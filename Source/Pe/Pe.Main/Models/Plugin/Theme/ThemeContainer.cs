@@ -5,6 +5,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
@@ -22,6 +23,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
+
+            Themes = new HashSet<ITheme>() {
+                DefaultTheme,
+            };
         }
 
         #region property
@@ -35,7 +40,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         /// <summary>
         /// テーマ一覧。
         /// </summary>
-        ISet<ITheme> Themes { get; } = new HashSet<ITheme>();
+        ISet<ITheme> Themes { get; }
+
+        DefaultTheme DefaultTheme { get; } = new DefaultTheme();
+
 
         /// <summary>
         /// 現在使用中テーマ。
@@ -53,9 +61,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             Themes.Add(theme);
         }
 
-        public void SetCurrentTheme(IPluginIdentifiers pluginIdentifiers, PluginContextFactory pluginContextFactory)
+        public void SetCurrentTheme(Guid themePluginId, PluginContextFactory pluginContextFactory)
         {
-            var theme = Themes.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginIdentifiers.PluginId);
+            var theme = Themes.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == themePluginId);
+            if(theme == null) {
+                Logger.LogWarning("指定のテーマ不明のため標準テーマを使用: {0}", themePluginId);
+                theme = DefaultTheme;
+            }
 
             var prev = CurrentTheme;
             CurrentTheme = theme;

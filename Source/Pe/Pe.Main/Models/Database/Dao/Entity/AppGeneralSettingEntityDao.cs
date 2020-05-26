@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppGeneralSettingEntityDto : CommonDtoBase
+    internal class AppGeneralSettingEntityDto: CommonDtoBase
     {
         #region property
         public string Language { get; set; } = string.Empty;
@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #endregion
     }
 
-    public class AppGeneralSettingEntityDao : EntityDaoBase
+    public class AppGeneralSettingEntityDao: EntityDaoBase
     {
         public AppGeneralSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
@@ -56,10 +56,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             return Commander.QueryFirst<string>(statement);
         }
+
         public string SelectUserBackupDirectoryPath()
         {
             var statement = LoadStatement();
             return Commander.QueryFirst<string>(statement);
+        }
+
+        public Guid SelectThemePluginId()
+        {
+            var statement = LoadStatement();
+            return Commander.QueryFirst<Guid>(statement);
         }
 
         public bool UpdateSettingGeneralSetting(SettingAppGeneralSettingData data, IDatabaseCommonStatus commonStatus)

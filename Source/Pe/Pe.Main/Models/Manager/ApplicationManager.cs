@@ -624,7 +624,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             foreach(var plugin in initializedPlugins) {
                 PluginContainer.AddPlugin(plugin);
             }
-            PluginContainer.AddPlugin(new DefaultTheme());
 
             // プラグイン情報を更新
             if(0 < initializedPlugins.Count) {
@@ -644,11 +643,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
-        private void ApplyCurrentTheme(IPluginIdentifiers pluginIdentifiers)
+        private void ApplyCurrentTheme(Guid themePluginId)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
-            PluginContainer.Theme.SetCurrentTheme(pluginIdentifiers, pluginContextFactory);
+            PluginContainer.Theme.SetCurrentTheme(themePluginId, pluginContextFactory);
         }
 
         private void RunAddons()
@@ -820,7 +819,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MakeMessageWindow();
 
             LoadPlugins();
-            ApplyCurrentTheme(DefaultTheme.Informations.PluginIdentifiers);
+            var themePluginId = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
+                var appGeneralSettingEntityDao = ApplicationDiContainer.Build<AppGeneralSettingEntityDao>(c, c.Implementation);
+                try {
+                    return appGeneralSettingEntityDao.SelectThemePluginId();
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, "テーマプラグインID取得失敗のため標準テーマを使用");
+                    return DefaultTheme.Informations.PluginIdentifiers.PluginId;
+                }
+            });
+            ApplyCurrentTheme(themePluginId);
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");

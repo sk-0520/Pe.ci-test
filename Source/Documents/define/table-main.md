@@ -52,6 +52,7 @@ ___
 |    | o  |    | 更新回数                       | UpdatedCount            | integer      | System.Int64    |              | 0始まり              |
 |    | o  |    | 使用言語                       | Language                | text         | System.String   |              |                      |
 |    | o  |    | 明示的バックアップディレクトリ | UserBackupDirectoryPath | text         | System.String   |              |                      |
+|    | o  |    | テーマプラグインID             | ThemePluginId           | text         | System.String   |              | ※一応外部参照しない |
 
 ### index
 
