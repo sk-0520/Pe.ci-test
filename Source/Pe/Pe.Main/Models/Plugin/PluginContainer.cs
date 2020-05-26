@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
@@ -73,6 +77,101 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         }
 
         /// <summary>
+        /// プラグインの読み込み。
+        /// <para>検証結果がダメダメな場合は解放される。</para>
+        /// </summary>
+        /// <param name="pluginFile"></param>
+        /// <returns>読み込み結果。</returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion)
+        {
+            var pluginBaseName = Path.GetFileNameWithoutExtension(pluginFile.Name);
+            var currentPlugin = pluginStateItems.FirstOrDefault(i => string.Equals(pluginBaseName, i.Name, StringComparison.InvariantCultureIgnoreCase));
+            if(currentPlugin != null) {
+                if(currentPlugin.State == PluginState.Disable) {
+                    Logger.LogInformation("(名前判定)プラグイン読み込み停止中: {0}, {1}", currentPlugin.Name, currentPlugin.PluginId);
+                    return new PluginLoadStateData(currentPlugin.PluginId, currentPlugin.Name, new Version(), PluginState.Disable, null, null);
+                }
+            }
+
+            var loadContext = new PluginLoadContext(pluginFile);
+            Assembly pluginAssembly;
+            try {
+                pluginAssembly = loadContext.Load();
+            } catch(Exception ex) {
+                Logger.LogError(ex, "プラグインアセンブリ読み込み失敗: {0}", pluginFile.Name);
+                loadContext.Unload();
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
+            }
+
+            Type? pluginInterfaceImpl = null;
+            var pluginTypes = pluginAssembly.GetTypes();
+            foreach(var pluginType in pluginTypes) {
+                var typeInterfaces = pluginType.GetInterfaces();
+                var plugins = typeInterfaces.FirstOrDefault(i => i == typeof(IPlugin));
+                if(plugins != null) {
+                    pluginInterfaceImpl = pluginType;
+                    break;
+                }
+            }
+
+            if(pluginInterfaceImpl == null) {
+                Logger.LogError("プラグインアセンブリからプラグインインターフェイス取得できず: {0}, {1}", pluginAssembly.FullName, pluginFile.FullName);
+                loadContext.Unload();
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
+            }
+
+            IPlugin plugin;
+            try {
+                //var obj = pluginAssembly.CreateInstance(pluginInterfaceImpl.Name!)!;
+                var obj = Activator.CreateInstance(pluginInterfaceImpl)!;
+                plugin = (IPlugin)obj ?? throw new Exception($"{nameof(IPlugin)}へのキャスト失敗: {obj}");
+            } catch(Exception ex) {
+                Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);
+                loadContext.Unload();
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
+            }
+
+            var info = plugin.PluginInformations;
+            var pluginId = info.PluginIdentifiers.PluginId;
+
+            var loadedCurrentPlugin = pluginStateItems.FirstOrDefault(i => i.PluginId == pluginId);
+            if(loadedCurrentPlugin != null) {
+                if(loadedCurrentPlugin.State == PluginState.Disable) {
+                    Logger.LogInformation("(ID判定)プラグイン読み込み停止中: {0}, {1}", loadedCurrentPlugin.Name, loadedCurrentPlugin.PluginId);
+                    loadContext.Unload();
+                    return new PluginLoadStateData(loadedCurrentPlugin.PluginId, loadedCurrentPlugin.Name, new Version(), PluginState.Disable, new WeakReference<PluginLoadContext>(loadContext), null);
+                }
+            }
+
+            var pluginName = new string(info.PluginIdentifiers.PluginName.ToCharArray()); // 一応複製
+            var pluginVersion = (Version)info.PluginVersions.PluginVersion.Clone();
+
+            var unlimitVersion = new Version(0, 0, 0);
+
+            if(info.PluginVersions.MinimumSupportVersion != unlimitVersion) {
+                var ok = info.PluginVersions.MinimumSupportVersion <= applicationVersion;
+                if(!ok) {
+                    Logger.LogWarning("プラグインサポート最低バージョン({0}): {1}, {2}", info.PluginVersions.MinimumSupportVersion, pluginName, pluginId);
+                    loadContext.Unload();
+                    return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, new WeakReference<PluginLoadContext>(loadContext), null);
+                }
+            }
+
+            if(info.PluginVersions.MaximumSupportVersion != unlimitVersion) {
+                var ok = applicationVersion <= info.PluginVersions.MaximumSupportVersion;
+                if(!ok) {
+                    Logger.LogWarning("プラグインサポート最高バージョン({0}): {1}, {2}", info.PluginVersions.MaximumSupportVersion, pluginName, pluginId);
+                    return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.IllegalVersion, new WeakReference<PluginLoadContext>(loadContext), null);
+                }
+            }
+
+            // 読み込み対象！
+            Logger.LogInformation("プラグイン読み込み対象: {0}, {1}", pluginName, pluginId);
+            return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.Enable, new WeakReference<PluginLoadContext>(loadContext), plugin);
+        }
+
+        /// <summary>
         /// プラグインの実体一覧を取得。
         /// </summary>
         /// <returns></returns>
@@ -93,6 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 Theme.Add(theme);
             }
         }
+
 
         #endregion
     }

@@ -507,9 +507,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
-            
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginsDirectory, environmentParameters.Configuration.Plugin.Extentions);
 
+            // プラグインディレクトリからプラグインDLL列挙
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.Configuration.Plugin.Extentions);
+
+            // プラグイン情報取得
+            var pluginStateItems = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(c, c.Implementation);
+                return pluginsEntityDao.SelectePlguinStateData().ToList();
+            });
+
+            // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
+            var pluginLoadStateItems = new List<PluginLoadStateData>();
+            foreach(var pluginFile in pluginFiles) {
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version);
+                pluginLoadStateItems.Add(loadStateData);
+            }
+            // 戻ってきた突合情報を反映
+            var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            using(var commander = barrier.WaitWrite()) {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+                foreach(var pluginLoadStateItem in pluginLoadStateItems) {
+                    var pluginStateData = new PluginStateData() {
+                        PluginId = pluginLoadStateItem.PluginId,
+                        Name = pluginLoadStateItem.PluginName,
+                        State = pluginLoadStateItem.LoadState switch
+                        {
+                            PluginState.IllegalAssembly => PluginState.Disable, // アセンブリぶっこわれ系は無効マーク(次も読み込まれると鬱陶しさが花丸)
+                            _ => pluginLoadStateItem.LoadState,
+                        }
+                    };
+
+                    if(pluginsEntityDao.SelecteExistsPlguin(pluginLoadStateItem.PluginId)) {
+                        pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
+                    } else {
+                        pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+                }
+
+                commander.Commit();
+            }
 
             foreach(var plugin in PluginContainer.GetPlugins()) {
                 plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
