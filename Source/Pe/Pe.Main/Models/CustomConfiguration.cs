@@ -17,6 +17,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region function
 
+        protected static IReadOnlyList<T> GetList<T>(IConfigurationSection section, string key)
+        {
+            return section.GetSection(key).Get<T[]>();
+        }
+
         protected static Size GetSize(IConfigurationSection section, string key)
         {
             var size = section.GetSection(key);
@@ -346,6 +351,27 @@ namespace ContentTypeTextNet.Pe.Main.Models
     }
 
 
+    public class PluginConfiguration: ConfigurationBase
+    {
+        public PluginConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            Extentions = GetList<string>(section, "extentions");
+        }
+
+        #region property
+
+        /// <summary>
+        /// プラグインとなり得る拡張子。
+        /// <para>先に一致したものを優先する。</para>
+        /// </summary>
+        public IReadOnlyList<string> Extentions { get; }
+
+
+        #endregion
+    }
+    
+
     public class CustomConfiguration
     {
         public CustomConfiguration(IConfigurationRoot configurationRoot)
@@ -363,6 +389,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
+            Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
         }
 
         #region property
@@ -380,6 +407,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public NoteConfiguration Note { get; }
         public CommandConfiguration Command { get; }
         public PlatformConfiguration Platform { get; }
+        public PluginConfiguration Plugin { get; }
         #endregion
     }
 }

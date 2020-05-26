@@ -201,11 +201,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public DirectoryInfo MachineUpdatePluginDirectory => CombineDirectory(true, MachineArchiveDirectory, "plugins");
         /// <summary>
-        /// ユーザー端末プラグインディレクトリ。
+        /// ユーザー端末プラグイン用ディレクトリ。
         /// </summary>
         public DirectoryInfo MachinePluginBaseDirectory => CombineDirectory(true, MachineDirectory, "plugin");
         /// <summary>
-        /// ユーザー端末プラグインディレクトリ。
+        /// ユーザー端末プラグイン実態格納ディレクトリ。
         /// </summary>
         public DirectoryInfo MachinePluginsDirectory => CombineDirectory(true, MachinePluginBaseDirectory, "plugins");
         /// <summary>

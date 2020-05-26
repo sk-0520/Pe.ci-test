@@ -506,7 +506,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void LoadPlugins()
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
-            //var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
 
             //var plugins = environmentParameters.MachinePluginsDirectory
             //    .EnumerateDirectories()
@@ -517,7 +517,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //foreach(var item in plugins) {
 
             //}
-
+            
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginsDirectory, environmentParameters.Configuration.Plugin.Extentions);
 
             foreach(var plugin in PluginContainer.GetPlugins()) {
                 plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
