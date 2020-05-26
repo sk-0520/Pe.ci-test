@@ -111,6 +111,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, dto) == 1;
         }
 
+        public bool UpdatePluginRunningState(Guid pluginId, Version pluginVersion, Version applicationVersio, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
+            parameter[Column.PluginId] = pluginId;
+            parameter[Column.LastUseTimestamp] = DateTime.UtcNow; // DAO層でまぁいっかぁ
+            parameter[Column.LastUsePluginVersion] = pluginVersion;
+            parameter[Column.LastUseAppVersion] = applicationVersio;
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
         #endregion
     }
 }

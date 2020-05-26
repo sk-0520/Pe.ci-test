@@ -548,9 +548,99 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 commander.Commit();
             }
 
-            foreach(var plugin in PluginContainer.GetPlugins()) {
-                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
+            var enabledPluginLoadStateItems = pluginLoadStateItems
+                .Where(i => i.LoadState == PluginState.Enable)
+                .ToList()
+            ;
+            var disabledPluginLoadStateItems = pluginLoadStateItems
+                .Except(enabledPluginLoadStateItems)
+                .Where(i => i.WeekLoadContext != null)
+                .ToList()
+            ;
+            if(0 < disabledPluginLoadStateItems.Count) {
+                // アンロード対象の解放待ち
+                foreach(var counter in new Counter(10)) {
+                    if(counter.IsFirst || counter.IsLast || (counter.CurrentCount == counter.MaxCount / 2)) {
+                        GarbageCollection(true);
+                    } else {
+                        GarbageCollection(false);
+                    }
+
+                    var unloadedItems = new List<PluginLoadStateData>();
+                    foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
+                        if(disabledPluginLoadStateItem.WeekLoadContext!.TryGetTarget(out _)) {
+                            Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        } else {
+                            Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                            unloadedItems.Add(disabledPluginLoadStateItem);
+                        }
+                    }
+                    foreach(var removeItem in unloadedItems) {
+                        disabledPluginLoadStateItems.Remove(removeItem);
+                    }
+                    if(disabledPluginLoadStateItems.Count == 0) {
+                        break;
+                    }
+                }
+                if(0 < disabledPluginLoadStateItems.Count) {
+                    GarbageCollection(true);
+                    foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
+                        if(disabledPluginLoadStateItem.WeekLoadContext!.TryGetTarget(out _)) {
+                            Logger.LogWarning("[LAST] アンロード待機超過: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        } else {
+                            Logger.LogInformation("[LAST] アンロード完了: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        }
+                    }
+                }
+
+                if(disabledPluginLoadStateItems.Count == 0) {
+                    Logger.LogInformation("不要プラグイン解放完了");
+                } else {
+                    Logger.LogWarning("不要プラグイン解放不完全: {0}", disabledPluginLoadStateItems.Count);
+                }
+            }
+
+            var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count);
+            foreach(var pluginLoadStateItem in enabledPluginLoadStateItems) {
+                Debug.Assert(pluginLoadStateItem.Plugin != null);
+
+                Logger.LogInformation("プラグイン初期化処理: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                var plugin = pluginLoadStateItem.Plugin;
+                try {
+                    plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
+                    initializedPlugins.Add(plugin);
+                    PluginContainer.AddPlugin(plugin);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, "プラグイン初期化失敗: {0}, {1}, {2}", ex.Message, pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                    if(pluginLoadStateItem.WeekLoadContext!.TryGetTarget(out var loadContext)) {
+                        Logger.LogWarning("プラグイン初期化失敗のため解放だけ指示: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                        loadContext.Unload();
+                    } else {
+                        Logger.LogError("プラグイン参照が切れてる恐怖: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                    }
+                }
+            }
+
+            foreach(var plugin in initializedPlugins) {
                 PluginContainer.AddPlugin(plugin);
+            }
+            PluginContainer.AddPlugin(new DefaultTheme());
+
+            // プラグイン情報を更新
+            if(0 < initializedPlugins.Count) {
+                using(var commander = barrier.WaitWrite()) {
+                    var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+                    foreach(var initializedPlugin in initializedPlugins) {
+                        pluginsEntityDao.UpdatePluginRunningState(
+                            initializedPlugin.PluginInformations.PluginIdentifiers.PluginId,
+                            initializedPlugin.PluginInformations.PluginVersions.PluginVersion,
+                            BuildStatus.Version,
+                            DatabaseCommonStatus.CreateCurrentAccount()
+                        );
+                    }
+
+                    commander.Commit();
+                }
             }
         }
 

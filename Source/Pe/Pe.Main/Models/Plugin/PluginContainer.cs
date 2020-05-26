@@ -134,17 +134,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var info = plugin.PluginInformations;
             var pluginId = info.PluginIdentifiers.PluginId;
+            var pluginName = new string(info.PluginIdentifiers.PluginName.ToCharArray()); // 一応複製
 
             var loadedCurrentPlugin = pluginStateItems.FirstOrDefault(i => i.PluginId == pluginId);
             if(loadedCurrentPlugin != null) {
                 if(loadedCurrentPlugin.State == PluginState.Disable) {
-                    Logger.LogInformation("(ID判定)プラグイン読み込み停止中: {0}, {1}", loadedCurrentPlugin.Name, loadedCurrentPlugin.PluginId);
+                    Logger.LogInformation("(ID判定)プラグイン読み込み停止中: {0}({1}), {2}", loadedCurrentPlugin.Name, pluginName, loadedCurrentPlugin.PluginId);
                     loadContext.Unload();
-                    return new PluginLoadStateData(loadedCurrentPlugin.PluginId, loadedCurrentPlugin.Name, new Version(), PluginState.Disable, new WeakReference<PluginLoadContext>(loadContext), null);
+                    return new PluginLoadStateData(loadedCurrentPlugin.PluginId, pluginName, new Version(), PluginState.Disable, new WeakReference<PluginLoadContext>(loadContext), null);
                 }
             }
 
-            var pluginName = new string(info.PluginIdentifiers.PluginName.ToCharArray()); // 一応複製
             var pluginVersion = (Version)info.PluginVersions.PluginVersion.Clone();
 
             var unlimitVersion = new Version(0, 0, 0);
@@ -169,15 +169,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             // 読み込み対象！
             Logger.LogInformation("プラグイン読み込み対象: {0}, {1}", pluginName, pluginId);
             return new PluginLoadStateData(pluginId, pluginName, pluginVersion, PluginState.Enable, new WeakReference<PluginLoadContext>(loadContext), plugin);
-        }
-
-        /// <summary>
-        /// プラグインの実体一覧を取得。
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<IPlugin> GetPlugins()
-        {
-            yield return new DefaultTheme();
         }
 
         /// <summary>
