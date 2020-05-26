@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -181,6 +182,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             if(plugin is ITheme theme) {
                 Theme.Add(theme);
+            }
+            if(plugin is IAddon addon) {
+                Addon.Add(addon);
             }
         }
 

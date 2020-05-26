@@ -29,5 +29,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
+        #region function
+
+        public void Add(IAddon addon)
+        {
+            Addons.Add(addon);
+        }
+
+        #endregion
     }
 }
