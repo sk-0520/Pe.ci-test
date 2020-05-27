@@ -50,6 +50,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         /// </summary>
         public ITheme? CurrentTheme { get; private set; }
 
+        public bool CurrentThemeIsDefaultTheme { get; private set; }
+
         #endregion
 
         #region function
@@ -67,6 +69,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(theme == null) {
                 Logger.LogWarning("指定のテーマ不明のため標準テーマを使用: {0}", themePluginId);
                 theme = DefaultTheme;
+                CurrentThemeIsDefaultTheme = true;
+            } else {
+                CurrentThemeIsDefaultTheme = false;
             }
 
             var prev = CurrentTheme;

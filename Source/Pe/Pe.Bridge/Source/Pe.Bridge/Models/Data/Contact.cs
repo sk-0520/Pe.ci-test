@@ -12,15 +12,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// Webサイト。
         /// </summary>
-        public static string WebSite { get; } = "web-site";
+        public static string Website { get; } = "website";
         /// <summary>
-        /// リポジトリ。
+        /// プロジェクトサイト。
         /// </summary>
-        public static string Repository { get; } = "repository";
+        public static string Projectsite { get; } = "projectsite";
         /// <summary>
         /// 電子メール。
         /// </summary>
-        public static string EMail { get; } = "e-mail";
+        public static string Email { get; } = "email";
     }
 
     /// <summary>

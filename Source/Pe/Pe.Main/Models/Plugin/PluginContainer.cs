@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="pluginFile"></param>
         /// <returns>読み込み結果。</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion)
+        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion, Func<Type, object> pluginFactory)
         {
             var pluginBaseName = Path.GetFileNameWithoutExtension(pluginFile.Name);
             var currentPlugin = pluginStateItems.FirstOrDefault(i => string.Equals(pluginBaseName, i.Name, StringComparison.InvariantCultureIgnoreCase));
@@ -106,14 +107,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             Type? pluginInterfaceImpl = null;
-            var pluginTypes = pluginAssembly.GetTypes();
-            foreach(var pluginType in pluginTypes) {
-                var typeInterfaces = pluginType.GetInterfaces();
-                var plugins = typeInterfaces.FirstOrDefault(i => i == typeof(IPlugin));
-                if(plugins != null) {
-                    pluginInterfaceImpl = pluginType;
-                    break;
+            try {
+                var pluginTypes = pluginAssembly.GetTypes();
+                foreach(var pluginType in pluginTypes) {
+                    var typeInterfaces = pluginType.GetInterfaces();
+                    var plugins = typeInterfaces.FirstOrDefault(i => i == typeof(IPlugin));
+                    if(plugins != null) {
+                        pluginInterfaceImpl = pluginType;
+                        break;
+                    }
                 }
+            } catch(Exception ex) {
+                Logger.LogError(ex, "プラグインアセンブリ リフレクション失敗: {0}", pluginFile.Name);
+                loadContext.Unload();
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
             }
 
             if(pluginInterfaceImpl == null) {
@@ -125,7 +132,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             IPlugin plugin;
             try {
                 //var obj = pluginAssembly.CreateInstance(pluginInterfaceImpl.Name!)!;
-                var obj = Activator.CreateInstance(pluginInterfaceImpl)!;
+                //var obj = Activator.CreateInstance(pluginInterfaceImpl)!;
+                var obj = pluginFactory(pluginInterfaceImpl);
                 plugin = (IPlugin)obj ?? throw new Exception($"{nameof(IPlugin)}へのキャスト失敗: {obj}");
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);

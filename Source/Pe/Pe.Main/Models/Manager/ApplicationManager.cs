@@ -520,7 +520,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
             var pluginLoadStateItems = new List<PluginLoadStateData>();
             foreach(var pluginFile in pluginFiles) {
-                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version);
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, ApplicationDiContainer.New);
                 pluginLoadStateItems.Add(loadStateData);
             }
             // 戻ってきた突合情報を反映
@@ -601,7 +601,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var applicationPlugins = new List<IPlugin>() {
-                new DefaultTheme(),
+                ApplicationDiContainer.New<DefaultTheme>(),
             };
             var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
 

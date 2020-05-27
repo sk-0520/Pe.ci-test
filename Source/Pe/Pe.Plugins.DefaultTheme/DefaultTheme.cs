@@ -7,16 +7,17 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 {
-    public class DefaultTheme : ITheme
+    public class DefaultTheme: ITheme
     {
         #region define
 
         public static readonly PluginInformations Informations = new PluginInformations(
             new PluginIdentifiers(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "default-theme"),
-            new PluginVersions(Assembly.GetExecutingAssembly()!.GetName()!.Version!, new Version(0,0,0), new Version(0, 0, 0)),
+            new PluginVersions(Assembly.GetExecutingAssembly()!.GetName()!.Version!, new Version(0, 0, 0), new Version(0, 0, 0)),
             new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2)
         );
 
@@ -26,7 +27,14 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #endregion
 
+        public DefaultTheme(ILoggerFactory loggerFactory)
+        {
+            Logger = loggerFactory.CreateLogger(GetType());
+        }
+
         #region property
+
+        ILogger Logger { get; }
 
         ResourceDictionary? ResourceDictionary { get; set; }
 
