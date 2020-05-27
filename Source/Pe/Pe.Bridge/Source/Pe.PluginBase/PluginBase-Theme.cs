@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.PluginBase
         /// <summary>
         /// サポートするテーマ機能を一括定義。
         /// </summary>
-        protected abstract IReadOnlyCollection<ThemeKind> SupportedThemeKinds { get; }
+        protected virtual IReadOnlyCollection<ThemeKind> SupportedThemeKinds { get; } = new ThemeKind[0];
 
         #endregion
 

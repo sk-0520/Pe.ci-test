@@ -25,4 +25,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.PluginBase\Pe.PluginBase.csproj" />
+  </ItemGroup>
+
 </Project>
