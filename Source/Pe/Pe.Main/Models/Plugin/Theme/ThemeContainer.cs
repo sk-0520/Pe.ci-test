@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             CurrentTheme = theme;
 
             if(prev != null) {
-                prev.Unload(PluginKind.Theme);
+                prev.Unload(PluginKind.Theme, pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers));
             }
             var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers);
             CurrentTheme.Load(PluginKind.Theme, pluginContext);

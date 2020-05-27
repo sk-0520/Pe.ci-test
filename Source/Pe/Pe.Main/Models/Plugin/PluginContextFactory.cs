@@ -59,6 +59,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return new PluginInitializeContext(pluginIdentifiers, pluginStorage);
         }
 
+        public PluginUninitializeContext CreateUninitializeContext(IPluginIdentifiers pluginIdentifiers)
+        {
+            var pluginStorage = CreatePluginStorage(pluginIdentifiers);
+            return new PluginUninitializeContext(pluginIdentifiers, pluginStorage);
+        }
+
         public PluginContext CreateContext(IPluginIdentifiers pluginIdentifiers)
         {
             var pluginStorage = CreatePluginStorage(pluginIdentifiers);

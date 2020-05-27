@@ -47,8 +47,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         {
             IsInitialized = true;
         }
-        /// <inheritdoc cref="IPlugin.Uninitialize"/>
-        public void Uninitialize()
+        /// <inheritdoc cref="IPlugin.Uninitialize(IPluginUninitializeContext)"/>
+        public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext)
         {
             IsInitialized = false;
         }
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         }
 
         /// <inheritdoc cref="IPlugin.Unload(PluginKind)"/>
-        public void Unload(PluginKind pluginKind)
+        public void Unload(PluginKind pluginKind, IPluginContext pluginContext)
         {
             if(IsThemeLoaded) {
                 if(ResourceDictionary != null) {

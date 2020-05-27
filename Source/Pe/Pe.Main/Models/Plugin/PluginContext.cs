@@ -32,6 +32,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
+    /// <inheritdoc cref="IPluginUninitializeContext"/>
+    internal class PluginUninitializeContext: IPluginUninitializeContext
+    {
+        public PluginUninitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+        {
+            PluginIdentifiers = pluginIdentifiers;
+            Storage = storage;
+        }
+
+        #region property
+
+        public IPluginIdentifiers PluginIdentifiers { get; }
+
+        #endregion
+
+        #region IPluginUninitializeContext
+
+        /// <inheritdoc cref="IPluginUninitializeContext.Storage"/>
+        public PluginStorage Storage { get; }
+        IPluginStorage IPluginUninitializeContext.Storage => Storage;
+
+        #endregion
+    }
+
     /// <inheritdoc cref="IPluginContext"/>
     internal class PluginContext : IPluginContext
     {

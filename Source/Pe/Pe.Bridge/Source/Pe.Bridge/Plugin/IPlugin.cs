@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグイン終了。
         /// <para>可能な限りプラグイン開放可能な状態になること。</para>
         /// </summary>
-        void Uninitialize();
+        void Uninitialize(IPluginUninitializeContext pluginUninitializeContext);
 
         /// <summary>
         /// プラグイン機能を使用するための読み込み。
@@ -65,7 +65,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグイン機能の使用を終了。
         /// </summary>
         /// <param name="pluginKind">対象機能。</param>
-        void Unload(PluginKind pluginKind);
+        /// <param name="pluginContext"></param>
+        void Unload(PluginKind pluginKind, IPluginContext pluginContext);
         /// <summary>
         /// プラグイン機能は読み込まれているか。
         /// </summary>
