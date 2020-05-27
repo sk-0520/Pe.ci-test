@@ -59,9 +59,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #endregion
     }
-
-    internal class LauncherAddonContext
-    {
-
-    }
 }

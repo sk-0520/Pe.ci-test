@@ -7,35 +7,25 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal class PluginContextFactory
+    internal class PluginContextFactory: PluginContextFactoryBase
     {
         public PluginContextFactory(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
-        {
-            EnvironmentParameters = environmentParameters;
-            UserAgentManager = userAgentManager;
-        }
+            :base(environmentParameters, userAgentManager)
+        { }
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
-        IUserAgentManager UserAgentManager { get; }
         #endregion
 
         #region function
 
-        string ConvertDirectoryName(IPluginIdentifiers pluginId)
-        {
-            return pluginId.PluginId.ToString();
-        }
-
         PluginFile CreatePluginFile(IPluginIdentifiers pluginId)
         {
-            var dirName = ConvertDirectoryName(pluginId);
 
             var pluginFile = new PluginFile(
-                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.UserPluginDirectory.FullName, dirName))),
-                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.MachinePluginDirectory.FullName, dirName))),
-                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.TemporaryPluginDirectory.FullName, dirName)))
+                new PluginFileStorage(GetUserDirectory(pluginId)),
+                new PluginFileStorage(GetMachineDirectory(pluginId)),
+                new PluginFileStorage(GetTemporaryDirectory(pluginId))
             );
 
             return pluginFile;
@@ -74,6 +64,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var pluginStorage = CreatePluginStorage(pluginIdentifiers);
             return new PluginContext(pluginIdentifiers, pluginStorage, UserAgentManager);
         }
+
+        #endregion
+
+        #region PluginContextFactoryBase
+
+        protected override string BaseDirectoryName => "data";
 
         #endregion
     }
