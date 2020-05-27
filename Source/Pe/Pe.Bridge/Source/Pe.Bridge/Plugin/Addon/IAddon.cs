@@ -37,6 +37,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <returns></returns>
         bool IsSupported(AddonKind addonKind);
 
+        /// <summary>
+        /// コマンド型アドオンの生成。
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         ICommandFinder BuildCommandFinder(IAddonParameter parameter);
 
 
