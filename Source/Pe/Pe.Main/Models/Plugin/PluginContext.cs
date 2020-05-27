@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     /// <inheritdoc cref="IPluginInitializeContext"/>
-    public class PluginInitializeContext: IPluginInitializeContext
+    internal class PluginInitializeContext: IPluginInitializeContext
     {
         public PluginInitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
         {
