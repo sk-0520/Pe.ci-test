@@ -8,9 +8,10 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.PluginBase.Attributes;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.PluginBase
+namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
     public abstract partial class PluginBase: IPlugin
     {
@@ -34,6 +35,9 @@ namespace ContentTypeTextNet.Pe.PluginBase
 
         protected bool IsLoadedAddon { get; private set; }
         protected bool IsLoadedTheme { get; private set; }
+
+        protected virtual AddonBase Addon { get => throw new NotImplementedException(); }
+        protected virtual ThemeBase Theme { get => throw new NotImplementedException(); }
 
         #endregion
 
@@ -101,6 +105,36 @@ namespace ContentTypeTextNet.Pe.PluginBase
         {
             if(!HasTheme) {
                 Logger.LogWarning("このプラグインはテーマがサポートされていない");
+            }
+        }
+
+        private TTheme BuildSupporttedAddon<TArgument, TTheme>(AddonKind addonKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
+        {
+            if(!Addon.IsSupported(addonKind)) {
+                Logger.LogWarning("{0} はサポートされていない", addonKind);
+                throw new NotSupportedException();
+            }
+
+            try {
+                return build(argument);
+            } catch(NotImplementedException) {
+                Logger.LogError("{0} の実装が必要({1})", methodName, addonKind);
+                throw;
+            }
+        }
+
+        private TTheme BuildSupporttedTheme<TArgument, TTheme>(ThemeKind themeKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
+        {
+            if(!Theme.IsSupported(themeKind)) {
+                Logger.LogWarning("{0} はサポートされていない", themeKind);
+                throw new NotSupportedException();
+            }
+
+            try {
+                return build(argument);
+            } catch(NotImplementedException) {
+                Logger.LogError("{0} の実装が必要({1})", nameof(BuildGeneralTheme), themeKind);
+                throw;
             }
         }
 
@@ -213,5 +247,68 @@ namespace ContentTypeTextNet.Pe.PluginBase
         }
 
         #endregion
+
+        #region IAddon
+
+        /// <inheritdoc cref="IAddon.IsSupported(AddonKind)"/>
+        public bool IsSupported(AddonKind addonKind)
+        {
+            LoggingNotSupportAddon();
+
+            return Addon.IsSupported(addonKind);
+        }
+
+        /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>
+        public ICommandFinder BuildCommandFinder(IAddonParameter parameter)
+        {
+            return BuildSupporttedAddon(AddonKind.CommandFinder, nameof(BuildCommandFinder), parameter, p => Addon.BuildCommandFinder(p));
+        }
+
+
+        #endregion
+
+        #region ITheme
+
+        /// <inheritdoc cref="ITheme.IsSupported(ThemeKind)"/>
+        public bool IsSupported(ThemeKind themeKind)
+        {
+            LoggingNotSupportTheme();
+
+            return Theme.IsSupported(themeKind);
+        }
+
+        /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
+        public IGeneralTheme BuildGeneralTheme(IThemeParameter parameter)
+        {
+            return BuildSupporttedTheme(ThemeKind.General, nameof(BuildGeneralTheme), parameter, p => Theme.BuildGeneralTheme(p));
+        }
+        /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
+        public ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter)
+        {
+            return BuildSupporttedTheme(ThemeKind.LauncherGroup, nameof(BuildLauncherGroupTheme), parameter, p => Theme.BuildLauncherGroupTheme(p));
+        }
+        /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
+        public ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
+        {
+            return BuildSupporttedTheme(ThemeKind.LauncherToolbar, nameof(BuildLauncherToolbarTheme), parameter, p => Theme.BuildLauncherToolbarTheme(p));
+        }
+        /// <inheritdoc cref="ITheme.BuildNoteTheme(IThemeParameter)"/>
+        public INoteTheme BuildNoteTheme(IThemeParameter parameter)
+        {
+            return BuildSupporttedTheme(ThemeKind.Note, nameof(BuildNoteTheme), parameter, p => Theme.BuildNoteTheme(p));
+        }
+        /// <inheritdoc cref="ITheme.BuildCommandTheme(IThemeParameter)"/>
+        public ICommandTheme BuildCommandTheme(IThemeParameter parameter)
+        {
+            return BuildSupporttedTheme(ThemeKind.Command, nameof(BuildCommandTheme), parameter, p => Theme.BuildCommandTheme(p));
+        }
+        /// <inheritdoc cref="ITheme.BuildNotifyLogTheme(IThemeParameter)"/>
+        public INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
+        {
+            return BuildSupporttedTheme(ThemeKind.Notify, nameof(BuildNotifyLogTheme), parameter, p => Theme.BuildNotifyLogTheme(p));
+        }
+
+        #endregion
+
     }
 }

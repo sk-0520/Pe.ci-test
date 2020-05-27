@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         Disable
     }
 
-    public interface ITheme : IPlugin
+    public interface ITheme: IPlugin
     {
         #region function
 
