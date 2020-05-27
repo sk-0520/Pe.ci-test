@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginContext"/>
-    public class PluginContext : IPluginContext
+    internal class PluginContext : IPluginContext
     {
         public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
         {
@@ -58,5 +58,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public IUserAgentFactory UserAgentFactory { get; }
 
         #endregion
+    }
+
+    internal class LauncherAddonContext
+    {
+
     }
 }
