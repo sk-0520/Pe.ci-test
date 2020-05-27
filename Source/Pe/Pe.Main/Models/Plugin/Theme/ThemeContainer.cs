@@ -16,6 +16,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
     /// </summary>
     public class ThemeContainer
     {
+        #region variable
+
+        DefaultTheme? _defaultTheme;
+
+        #endregion
         public ThemeContainer(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
@@ -23,10 +28,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
-
-            Themes = new HashSet<ITheme>() {
-                DefaultTheme,
-            };
         }
 
         #region property
@@ -40,10 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         /// <summary>
         /// テーマ一覧。
         /// </summary>
-        ISet<ITheme> Themes { get; }
+        ISet<ITheme> Themes { get; } = new HashSet<ITheme>();
 
-        DefaultTheme DefaultTheme { get; } = new DefaultTheme();
-
+        DefaultTheme DefaultTheme => this._defaultTheme ??= (DefaultTheme)Themes.First(i => i.PluginInformations.PluginIdentifiers.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId);
 
         /// <summary>
         /// 現在使用中テーマ。

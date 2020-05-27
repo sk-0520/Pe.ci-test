@@ -600,7 +600,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count);
+            var applicationPlugins = new List<IPlugin>() {
+                new DefaultTheme(),
+            };
+            var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
+
+            // Pe専用プラグイン
+            foreach(var plugin in applicationPlugins) {
+                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
+                initializedPlugins.Add(plugin);
+            }
+
+            // 通常プラグイン
             foreach(var pluginLoadStateItem in enabledPluginLoadStateItems) {
                 Debug.Assert(pluginLoadStateItem.Plugin != null);
 
@@ -609,7 +620,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 try {
                     plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
                     initializedPlugins.Add(plugin);
-                    PluginContainer.AddPlugin(plugin);
                 } catch(Exception ex) {
                     Logger.LogError(ex, "プラグイン初期化失敗: {0}, {1}, {2}", ex.Message, pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
                     if(pluginLoadStateItem.WeekLoadContext!.TryGetTarget(out var loadContext)) {
