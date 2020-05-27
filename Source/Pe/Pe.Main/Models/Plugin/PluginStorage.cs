@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,23 +8,22 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    /// <inheritdoc cref="IPluginFileStorage"/>
-    public class PluginFileStorage: IPluginFileStorage
+    internal abstract class PluginFileStorageBase
     {
-        public PluginFileStorage(DirectoryInfo directory)
+        protected PluginFileStorageBase(DirectoryInfo directoryInfo)
         {
-            DirectoryInfo = directory;
+            DirectoryInfo = directoryInfo;
         }
 
         #region property
 
-        DirectoryInfo DirectoryInfo { get; }
+        protected DirectoryInfo DirectoryInfo { get; }
 
         #endregion
 
         #region function
 
-        private string TuneFileName(string name)
+        protected string TuneFileName(string name)
         {
             if(name == null) {
                 throw new ArgumentNullException(nameof(name));
@@ -42,21 +42,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return s;
         }
 
-        #endregion
-
-        #region IPluginFileStorage
-
-        /// <inheritdoc cref="IPluginFileStorage.Exists(string)"/>
-        public bool Exists(string name)
+        protected string CombinePath(string directoryName, string fileName)
         {
-            var tunedFileName = TuneFileName(name);
-            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            var path = string.IsNullOrEmpty(directoryName)
+                ? Path.Combine(DirectoryInfo.FullName, fileName)
+                : Path.Combine(DirectoryInfo.FullName, directoryName, fileName)
+            ;
+            return path;
+        }
+
+        protected bool Exists(string directoryName, string fileName)
+        {
+            Debug.Assert(directoryName != null);
+
+            var tunedFileName = TuneFileName(fileName);
+            var path = CombinePath(directoryName, tunedFileName);
+
             return File.Exists(path);
         }
 
-        /// <inheritdoc cref="IPluginFileStorage.Rename(string, string, bool)"/>
-        public void Rename(string sourceName, string destinationName, bool overwrite)
+        protected void Rename(string directoryName, string sourceName, string destinationName, bool overwrite)
         {
+            Debug.Assert(directoryName != null);
+
             if(sourceName == destinationName) {
                 throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
             }
@@ -64,15 +72,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var tunedSourceFileName = TuneFileName(sourceName);
             var tunedDestinationFileName = TuneFileName(destinationName);
 
-            var tunedSourceFilePath = Path.Combine(DirectoryInfo.FullName, tunedSourceFileName);
-            var tunedDestinationFilePath = Path.Combine(DirectoryInfo.FullName, tunedDestinationFileName);
+            var tunedSourceFilePath = CombinePath(directoryName, tunedSourceFileName);
+            var tunedDestinationFilePath = CombinePath(directoryName, tunedDestinationFileName);
 
             File.Move(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
         }
 
-        /// <inheritdoc cref="IPluginFileStorage.Copy(string, string, bool)"/>
-        public void Copy(string sourceName, string destinationName, bool overwrite)
+        protected void Copy(string directoryName, string sourceName, string destinationName, bool overwrite)
         {
+            Debug.Assert(directoryName != null);
+
             if(sourceName == destinationName) {
                 throw new ArgumentException($"{nameof(sourceName)} == {nameof(destinationName)}");
             }
@@ -80,25 +89,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var tunedSourceFileName = TuneFileName(sourceName);
             var tunedDestinationFileName = TuneFileName(destinationName);
 
-            var tunedSourceFilePath = Path.Combine(DirectoryInfo.FullName, tunedSourceFileName);
-            var tunedDestinationFilePath = Path.Combine(DirectoryInfo.FullName, tunedDestinationFileName);
+            var tunedSourceFilePath = CombinePath(directoryName, tunedSourceFileName);
+            var tunedDestinationFilePath = CombinePath(directoryName, tunedDestinationFileName);
 
             File.Copy(tunedSourceFilePath, tunedDestinationFilePath, overwrite);
         }
 
-        /// <inheritdoc cref="IPluginFileStorage.Delete(string)"/>
-        public void Delete(string name)
+        protected void Delete(string directoryName, string name)
         {
+            Debug.Assert(directoryName != null);
+
             var tunedFileName = TuneFileName(name);
-            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            var path = CombinePath(directoryName, tunedFileName);
             File.Delete(path);
         }
 
-        /// <inheritdoc cref="IPluginFileStorage.Open(string, FileMode)"/>
-        public Stream Open(string name, FileMode fileMode)
+        protected Stream Open(string directoryName, string name, FileMode fileMode)
         {
+            Debug.Assert(directoryName != null);
+
             var tunedFileName = TuneFileName(name);
-            var path = Path.Combine(DirectoryInfo.FullName, tunedFileName);
+            var path = CombinePath(directoryName, tunedFileName);
             var stream = new FileStream(path, fileMode, FileAccess.ReadWrite, FileShare.Read);
             return stream;
         }
@@ -106,7 +117,55 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    public class PluginPersistentStorage: IPluginPersistentStorage
+    /// <inheritdoc cref="IPluginFileStorage"/>
+    internal class PluginFileStorage: PluginFileStorageBase, IPluginFileStorage
+    {
+        public PluginFileStorage(DirectoryInfo directoryInfo)
+            : base(directoryInfo)
+        { }
+
+        #region property
+        #endregion
+
+        #region function
+        #endregion
+
+        #region IPluginFileStorage
+
+        /// <inheritdoc cref="IPluginFileStorage.Exists(string)"/>
+        public bool Exists(string name)
+        {
+            return Exists(string.Empty, name);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Rename(string, string, bool)"/>
+        public void Rename(string sourceName, string destinationName, bool overwrite)
+        {
+            Rename(string.Empty, sourceName, destinationName, overwrite);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Copy(string, string, bool)"/>
+        public void Copy(string sourceName, string destinationName, bool overwrite)
+        {
+            Copy(string.Empty, sourceName, destinationName, overwrite);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Delete(string)"/>
+        public void Delete(string name)
+        {
+            Delete(string.Empty, name);
+        }
+
+        /// <inheritdoc cref="IPluginFileStorage.Open(string, FileMode)"/>
+        public Stream Open(string name, FileMode fileMode)
+        {
+            return Open(string.Empty, name, fileMode);
+        }
+
+        #endregion
+    }
+
+    internal class PluginPersistentStorage: IPluginPersistentStorage
     {
         #region IPluginPersistentStorage
 
@@ -114,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginFiles"/>
-    public class PluginFile: IPluginFiles
+    internal class PluginFile: IPluginFiles
     {
         public PluginFile(PluginFileStorage user, PluginFileStorage machine, PluginFileStorage temporary)
         {
@@ -139,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginPersistents"/>
-    public class PluginPersistent: IPluginPersistents
+    internal class PluginPersistent: IPluginPersistents
     {
         public PluginPersistent(PluginPersistentStorage normal, PluginPersistentStorage large, PluginPersistentStorage temporary)
         {
@@ -164,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginStorage"/>
-    public class PluginStorage: IPluginStorage
+    internal class PluginStorage: IPluginStorage
     {
         public PluginStorage(PluginFile file, PluginPersistent persistent)
         {
