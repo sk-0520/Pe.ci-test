@@ -519,9 +519,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
             var pluginLoadStateItems = new List<PluginLoadStateData>();
-            //var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
+            var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
             foreach(var pluginFile in pluginFiles) {
-                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version);
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
                 pluginLoadStateItems.Add(loadStateData);
             }
             // 戻ってきた突合情報を反映

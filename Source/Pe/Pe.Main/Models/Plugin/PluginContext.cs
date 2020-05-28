@@ -11,14 +11,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     internal class PluginConstructorContext: IPluginConstructorContext
     {
-        public PluginConstructorContext(ILogger logger)
+        public PluginConstructorContext(ILoggerFactory loggerFactory)
         {
-            Logger = logger;
+            LoggerFactory = loggerFactory;
         }
 
         #region IPluginConstructorContext
 
-        public ILogger Logger { get; }
+        public ILoggerFactory LoggerFactory { get; }
 
         #endregion
     }

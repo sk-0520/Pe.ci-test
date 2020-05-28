@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region property
 
-        ILogger Logger { get; }
+        ILoggerFactory LoggerFactory { get; }
 
         #endregion
     }

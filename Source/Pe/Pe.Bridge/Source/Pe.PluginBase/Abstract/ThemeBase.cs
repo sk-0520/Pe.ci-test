@@ -12,14 +12,14 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
     internal abstract class ThemeBase: ITheme
     {
-        public ThemeBase()
+        public ThemeBase(IPluginConstructorContext pluginConstructorContext)
         {
- //           Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
+            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
-//        protected ILogger Logger { get; }
+        protected ILogger Logger { get; }
 
         /// <summary>
         /// サポートするテーマ機能を一括定義。

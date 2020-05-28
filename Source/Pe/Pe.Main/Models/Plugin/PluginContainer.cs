@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="pluginFile"></param>
         /// <returns>読み込み結果。</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion)
+        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion, PluginConstructorContext pluginConstructorContext, Func<IDisposable> pauseReceiveLog)
         {
             var pluginBaseName = Path.GetFileNameWithoutExtension(pluginFile.Name);
             var currentPlugin = pluginStateItems.FirstOrDefault(i => string.Equals(pluginBaseName, i.Name, StringComparison.InvariantCultureIgnoreCase));
@@ -136,26 +136,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             IPlugin plugin;
             try {
-                //var obj = pluginAssembly.CreateInstance(pluginInterfaceImpl.Name!)!;
-                var pluginConstructorContext = new PluginConstructorContext(LoggerFactory.CreateLogger("loggggg"));
-                var obj = Activator.CreateInstance(pluginInterfaceImpl, new[] { pluginConstructorContext })!; // ログ作るとガッツリつかまれる
-                // DIで作るとガッツリつかまれる
-                //var obj = pluginFactory(pluginInterfaceImpl);
-                plugin = (IPlugin)obj ?? throw new Exception($"{nameof(IPlugin)}へのキャスト失敗: {obj}");
+                // コンストラクタ時にメモリログが参照に残るのを抑制
+                using(pauseReceiveLog()) {
+                    var obj = Activator.CreateInstance(pluginInterfaceImpl, new[] { pluginConstructorContext })!;
+                    plugin = (IPlugin)obj ?? throw new Exception($"{nameof(IPlugin)}へのキャスト失敗: {obj}");
+                }
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
                 return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
             }
 
-            //var a = true;
-            //if(a) {
-            //    pluginClear(pluginInterfaceImpl);
-            //    loadContext.Unload();
-            //    return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
-            //}
-
-            var info = plugin.PluginInformations;
+            IPluginInformations info;
+            // プラグイン情報取得時にメモリログに参照が残るのをよく抑制(情報取得だけの局所的処理)
+            using(pauseReceiveLog()) {
+                info = plugin.PluginInformations;
+            }
             var pluginId = info.PluginIdentifiers.PluginId;
             var pluginName = new string(info.PluginIdentifiers.PluginName.ToCharArray()); // 一応複製
 
@@ -168,13 +164,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 }
             }
 
-#if DEBUG
-            var a = true;
-            if(a) {
-                loadContext.Unload();
-                return new PluginLoadStateData(loadedCurrentPlugin!.PluginId, pluginName, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
-            }
-#endif
             var pluginVersion = (Version)info.PluginVersions.PluginVersion.Clone();
 
             var unlimitVersion = new Version(0, 0, 0);
