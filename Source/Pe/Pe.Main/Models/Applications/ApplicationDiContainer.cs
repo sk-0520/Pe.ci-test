@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         /// <para>本来なら<see cref="ScopeDiContainer"/>で何とかすべきかもしれないが<see cref="DiContainer.Constructors"/>周りのキャッシュ構成に手を加えるのがしんどかったのでここで拡張。</para>
         /// </summary>
         /// <param name="type"></param>
+        [Obsolete]
         private void ClearTypeCore(Type type)
         {
             foreach(var item in ObjectPool.Values) {
@@ -59,7 +60,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
         }
 
+        [Obsolete]
         public void ClearType<T>() => ClearTypeCore(typeof(T));
+        [Obsolete]
         public void ClearType(Type type) => ClearTypeCore(type);
 
         #endregion

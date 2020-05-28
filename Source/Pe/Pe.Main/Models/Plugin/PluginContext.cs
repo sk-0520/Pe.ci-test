@@ -5,9 +5,24 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    internal class PluginConstructorContext: IPluginConstructorContext
+    {
+        public PluginConstructorContext(ILoggerFactory loggerFactory)
+        {
+            LoggerFactory = loggerFactory;
+        }
+
+        #region IPluginConstructorContext
+
+        public ILoggerFactory LoggerFactory { get; }
+
+        #endregion
+    }
+
     /// <inheritdoc cref="IPluginInitializeContext"/>
     internal class PluginInitializeContext: IPluginInitializeContext
     {
@@ -57,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginContext"/>
-    internal class PluginContext : IPluginContext
+    internal class PluginContext: IPluginContext
     {
         public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
         {

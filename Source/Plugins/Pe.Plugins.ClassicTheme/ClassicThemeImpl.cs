@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.PluginBase.Abstract;
 using Microsoft.Extensions.Logging;
@@ -9,8 +10,8 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
 {
     internal class ClassicThemeImpl: ThemeBase
     {
-        public ClassicThemeImpl()
-            :base()
+        public ClassicThemeImpl(IPluginConstructorContext pluginConstructorContext)
+            :base(pluginConstructorContext)
         { }
 
         protected override IReadOnlyCollection<ThemeKind> SupportedKinds => throw new NotImplementedException();
