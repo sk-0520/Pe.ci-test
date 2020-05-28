@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
         protected override IReadOnlyCollection<ThemeKind> SupportedKinds { get; } = new[] {
             ThemeKind.General,
             ThemeKind.LauncherToolbar,
+            ThemeKind.Notify,
         };
 
         protected internal override void Load(IPluginContext pluginContext)
@@ -63,7 +64,10 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
         /// <inheritdoc cref="ITheme.BuildCommandTheme(IThemeParameter)"/>
         public override ICommandTheme BuildCommandTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildNotifyLogTheme(IThemeParameter)"/>
-        public override INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter) => throw new NotImplementedException();
+        public override INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
+        {
+            return new ClassicNotifyLogTheme(parameter);
+        }
 
         #endregion
     }
