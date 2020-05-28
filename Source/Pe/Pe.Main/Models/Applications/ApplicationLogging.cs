@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public void ReceiveLog(LogEventInfo logEventInfo, object[] parameters)
         {
-            LogItems.Enqueue(logEventInfo);
+            //LogItems.Enqueue(logEventInfo);
         }
 
         public IReadOnlyList<LogEventInfo> GetLogItems() => LogItems.ToArray();
