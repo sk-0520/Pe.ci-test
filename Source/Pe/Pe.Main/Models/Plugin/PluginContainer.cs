@@ -108,6 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             Type? pluginInterfaceImpl = null;
             try {
+                // これが失敗した場合に解放できない・・・
                 var pluginTypes = pluginAssembly.GetTypes();
                 foreach(var pluginType in pluginTypes) {
                     var typeInterfaces = pluginType.GetInterfaces();
