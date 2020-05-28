@@ -60,23 +60,23 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             var assemblyName = assembly.GetName();
             var assemblyType = assembly.GetType();
 
-            var pluginIdentifiersAttr = assembly.GetCustomAttribute<PluginIdentifiersAttibute>();
+            var pluginIdentifiersAttr = assembly.GetCustomAttribute<PluginIdentifiersAttribute>();
             if(pluginIdentifiersAttr == null) {
-                pluginIdentifiersAttr = new PluginIdentifiersAttibute(CreateRandomText("DUMMY-PLUGIN-{0}", 16), Guid.NewGuid().ToString());
-                Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttibute), pluginIdentifiersAttr.PluginName, pluginIdentifiersAttr.PluginId);
+                pluginIdentifiersAttr = new PluginIdentifiersAttribute(CreateRandomText("DUMMY-PLUGIN-{0}", 16), Guid.NewGuid().ToString());
+                Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttribute), pluginIdentifiersAttr.PluginName, pluginIdentifiersAttr.PluginId);
             }
 
 
-            var supportVersionsAttr = assemblyType.GetCustomAttribute<SupportVersionsAttibute>();
+            var supportVersionsAttr = assemblyType.GetCustomAttribute<SupportVersionsAttribute>();
             if(supportVersionsAttr == null) {
-                Logger.LogWarning("{0} の取得に失敗したため最低バージョンで補正", nameof(SupportVersionsAttibute));
-                supportVersionsAttr = new SupportVersionsAttibute();
+                Logger.LogWarning("{0} の取得に失敗したため最低バージョンで補正", nameof(SupportVersionsAttribute));
+                supportVersionsAttr = new SupportVersionsAttribute();
             }
 
             var pluginAuthorsAttr = assembly.GetCustomAttribute<PluginAuthorsAttribute>();
             if(pluginAuthorsAttr == null) {
                 pluginAuthorsAttr = new PluginAuthorsAttribute(CreateRandomText("NAME-{0}", 4), PluginLicense.Unknown);
-                Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttibute), pluginAuthorsAttr.Name, pluginAuthorsAttr.License);
+                Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttribute), pluginAuthorsAttr.Name, pluginAuthorsAttr.License);
             }
 
             var pluginIdentifiers = new PluginIdentifiers(pluginIdentifiersAttr.PluginId, pluginIdentifiersAttr.PluginName);

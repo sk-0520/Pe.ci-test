@@ -5,9 +5,9 @@ using System.Text;
 namespace ContentTypeTextNet.Pe.Embedded.Attributes
 {
     [AttributeUsage(AttributeTargets.Assembly)]
-    public class PluginIdentifiersAttibute: Attribute
+    public class PluginIdentifiersAttribute: Attribute
     {
-        public PluginIdentifiersAttibute(string pluginName, string pluginId)
+        public PluginIdentifiersAttribute(string pluginName, string pluginId)
         {
             if(string.IsNullOrWhiteSpace(pluginName)) {
                 throw new ArgumentException(nameof(pluginName));
