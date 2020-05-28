@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
+namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
 {
     internal class ClassicThemeImpl: ThemeBase
     {
@@ -14,9 +15,34 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
             :base(pluginConstructorContext)
         { }
 
-        protected override IReadOnlyCollection<ThemeKind> SupportedKinds => throw new NotImplementedException();
+        #region property
+
+        ResourceDictionary? ResourceDictionary { get; set; }
+
+        #endregion
+
 
         #region ThemeBase
+
+        protected override IReadOnlyCollection<ThemeKind> SupportedKinds { get; } = new[] {
+            ThemeKind.General,
+        };
+
+        protected internal override void Load(IPluginContext pluginContext)
+        {
+            ResourceDictionary = new ResourceDictionary();
+            var uri = new Uri("pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ThemeResource.xaml", UriKind.Absolute);
+            ResourceDictionary.Source = uri;
+
+            Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
+        }
+
+        protected internal override void Unload(IPluginContext pluginContext)
+        {
+            if(ResourceDictionary != null) {
+                Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
+            }
+        }
 
         /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
         public override IGeneralTheme BuildGeneralTheme(IThemeParameter parameter) => throw new NotImplementedException();

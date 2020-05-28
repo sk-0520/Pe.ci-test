@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected PluginBase(IPluginConstructorContext pluginConstructorContext)
         {
             var type = GetType();
-            Logger= pluginConstructorContext.LoggerFactory.CreateLogger(type);
+            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(type);
             var interfaces = type.GetInterfaces();
             HasAddon = interfaces.Any(i => i == typeof(IAddon));
             HasTheme = interfaces.Any(i => i == typeof(ITheme));
@@ -45,11 +45,6 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected abstract void InitializeImpl(IPluginInitializeContext pluginInitializeContext);
         protected abstract void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext);
 
-        protected abstract void LoadAddonImpl(IPluginContext pluginContext);
-        protected abstract void LoadThemeImpl(IPluginContext pluginContext);
-
-        protected abstract void UnloadAddonImpl(IPluginContext pluginContext);
-        protected abstract void UnloadThemeImpl(IPluginContext pluginContext);
 
         protected virtual IPluginInformations CreateInformations()
         {
@@ -175,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(IsLoadedAddon) {
                             throw new InvalidOperationException(nameof(IsLoadedAddon));
                         }
-                        LoadAddonImpl(pluginContext);
+                        Addon.Load(pluginContext);
                         IsLoadedAddon = true;
                     } else {
                         throw new NotSupportedException();
@@ -187,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(IsLoadedTheme) {
                             throw new InvalidOperationException(nameof(IsLoadedTheme));
                         }
-                        LoadThemeImpl(pluginContext);
+                        Theme.Load(pluginContext);
                         IsLoadedTheme = true;
                     } else {
                         throw new NotSupportedException();
@@ -207,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(!IsLoadedAddon) {
                             throw new InvalidOperationException(nameof(IsLoadedAddon));
                         }
-                        UnloadAddonImpl(pluginContext);
+                        Addon.Unload(pluginContext);
                         IsLoadedAddon = false;
                     } else {
                         throw new NotSupportedException();
@@ -219,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(!IsLoadedTheme) {
                             throw new InvalidOperationException(nameof(IsLoadedTheme));
                         }
-                        UnloadThemeImpl(pluginContext);
+                        Theme.Unload(pluginContext);
                         IsLoadedAddon = false;
                     } else {
                         throw new NotSupportedException();

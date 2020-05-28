@@ -26,6 +26,13 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #endregion
 
+        #region function
+
+        protected internal abstract void Load(IPluginContext pluginContext);
+        protected internal abstract void Unload(IPluginContext pluginContext);
+
+        #endregion
+
         #region IAddon
 
 

@@ -4,6 +4,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
+using ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
@@ -31,15 +32,6 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
         protected override void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext)
         { }
 
-        protected override void LoadAddonImpl(IPluginContext pluginContext)
-        { }
-        protected override void LoadThemeImpl(IPluginContext pluginContext)
-        { }
-
-        protected override void UnloadAddonImpl(IPluginContext pluginContext)
-        { }
-        protected override void UnloadThemeImpl(IPluginContext pluginContext)
-        { }
 
         #endregion
     }

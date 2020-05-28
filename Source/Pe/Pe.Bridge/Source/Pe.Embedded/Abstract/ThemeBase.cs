@@ -30,6 +30,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region function
 
+        protected internal abstract void Load(IPluginContext pluginContext);
+        protected internal abstract void Unload(IPluginContext pluginContext);
+
         #endregion
 
         #region ITheme
