@@ -9,8 +9,8 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
 {
     internal class ClassicThemeImpl: ThemeBase
     {
-        public ClassicThemeImpl(ILoggerFactory loggerFactory)
-            :base(loggerFactory)
+        public ClassicThemeImpl()
+            :base()
         { }
 
         protected override IReadOnlyCollection<ThemeKind> SupportedKinds => throw new NotImplementedException();

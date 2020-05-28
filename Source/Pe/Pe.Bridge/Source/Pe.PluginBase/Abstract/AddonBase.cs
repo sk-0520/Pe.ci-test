@@ -10,14 +10,11 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
     internal abstract class AddonBase: IAddon
     {
-        public AddonBase(ILoggerFactory loggerFactory)
+        public AddonBase()
         {
-            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
-
-        protected ILogger Logger { get; }
 
         /// <summary>
         /// サポートするテーマ機能を一括定義。

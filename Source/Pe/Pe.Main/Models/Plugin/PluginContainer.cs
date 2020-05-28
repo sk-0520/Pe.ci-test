@@ -137,11 +137,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             IPlugin plugin;
             try {
                 //var obj = pluginAssembly.CreateInstance(pluginInterfaceImpl.Name!)!;
-                //var obj = Activator.CreateInstance(pluginInterfaceImpl)!;
-                var obj = pluginFactory(pluginInterfaceImpl);
+                var obj = Activator.CreateInstance(pluginInterfaceImpl)!;
+                //var obj = pluginFactory(pluginInterfaceImpl);
                 plugin = (IPlugin)obj ?? throw new Exception($"{nameof(IPlugin)}へのキャスト失敗: {obj}");
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインインターフェイスを生成できず: {0}, {1}, {2}", ex.Message, pluginAssembly.FullName, pluginFile.FullName);
+                pluginClear(pluginInterfaceImpl);
+                loadContext.Unload();
+                return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
+            }
+
+            var a = true;
+            if(a) {
                 pluginClear(pluginInterfaceImpl);
                 loadContext.Unload();
                 return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);

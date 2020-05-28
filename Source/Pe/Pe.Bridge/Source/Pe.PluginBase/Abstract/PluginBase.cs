@@ -15,10 +15,9 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
     public abstract class PluginBase: IPlugin
     {
-        protected PluginBase(ILoggerFactory loggerFactory)
+        protected PluginBase()
         {
             var type = GetType();
-            Logger = loggerFactory.CreateLogger(type);
             var interfaces = type.GetInterfaces();
             HasAddon = interfaces.Any(i => i == typeof(IAddon));
             HasTheme = interfaces.Any(i => i == typeof(ITheme));
@@ -26,7 +25,6 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 
         #region property
 
-        protected ILogger Logger { get; }
 
         IPluginInformations? Informations { get; set; }
 
@@ -69,20 +67,20 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
             var pluginIdentifiersAttr = assembly.GetCustomAttribute<PluginIdentifiersAttibute>();
             if(pluginIdentifiersAttr == null) {
                 pluginIdentifiersAttr = new PluginIdentifiersAttibute(CreateRandomText("DUMMY-PLUGIN-{0}", 16), Guid.NewGuid().ToString());
-                Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttibute), pluginIdentifiersAttr.PluginName, pluginIdentifiersAttr.PluginId);
+                //Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttibute), pluginIdentifiersAttr.PluginName, pluginIdentifiersAttr.PluginId);
             }
 
 
             var supportVersionsAttr = assemblyType.GetCustomAttribute<SupportVersionsAttibute>();
             if(supportVersionsAttr == null) {
-                Logger.LogWarning("{0} の取得に失敗したため最低バージョンで補正", nameof(SupportVersionsAttibute));
+                //Logger.LogWarning("{0} の取得に失敗したため最低バージョンで補正", nameof(SupportVersionsAttibute));
                 supportVersionsAttr = new SupportVersionsAttibute();
             }
 
             var pluginAuthorsAttr = assembly.GetCustomAttribute<PluginAuthorsAttribute>();
             if(pluginAuthorsAttr == null) {
                 pluginAuthorsAttr = new PluginAuthorsAttribute(CreateRandomText("NAME-{0}", 4), PluginLicense.Unknown);
-                Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttibute), pluginAuthorsAttr.Name, pluginAuthorsAttr.License);
+                //Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttibute), pluginAuthorsAttr.Name, pluginAuthorsAttr.License);
             }
 
             var pluginIdentifiers = new PluginIdentifiers(pluginIdentifiersAttr.PluginId, pluginIdentifiersAttr.PluginName);
@@ -96,7 +94,7 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
         private void LoggingNotSupportAddon()
         {
             if(!HasTheme) {
-                Logger.LogWarning("このプラグインはアドオンがサポートされていない");
+                //Logger.LogWarning("このプラグインはアドオンがサポートされていない");
             }
         }
 
@@ -104,21 +102,21 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
         private void LoggingNotSupportTheme()
         {
             if(!HasTheme) {
-                Logger.LogWarning("このプラグインはテーマがサポートされていない");
+                //Logger.LogWarning("このプラグインはテーマがサポートされていない");
             }
         }
 
         private TTheme BuildSupporttedAddon<TArgument, TTheme>(AddonKind addonKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
         {
             if(!Addon.IsSupported(addonKind)) {
-                Logger.LogWarning("{0} はサポートされていない", addonKind);
+                //Logger.LogWarning("{0} はサポートされていない", addonKind);
                 throw new NotSupportedException();
             }
 
             try {
                 return build(argument);
             } catch(NotImplementedException) {
-                Logger.LogError("{0} の実装が必要({1})", methodName, addonKind);
+                //Logger.LogError("{0} の実装が必要({1})", methodName, addonKind);
                 throw;
             }
         }
@@ -126,14 +124,14 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
         private TTheme BuildSupporttedTheme<TArgument, TTheme>(ThemeKind themeKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
         {
             if(!Theme.IsSupported(themeKind)) {
-                Logger.LogWarning("{0} はサポートされていない", themeKind);
+                //Logger.LogWarning("{0} はサポートされていない", themeKind);
                 throw new NotSupportedException();
             }
 
             try {
                 return build(argument);
             } catch(NotImplementedException) {
-                Logger.LogError("{0} の実装が必要({1})", nameof(BuildGeneralTheme), themeKind);
+                //Logger.LogError("{0} の実装が必要({1})", nameof(BuildGeneralTheme), themeKind);
                 throw;
             }
         }

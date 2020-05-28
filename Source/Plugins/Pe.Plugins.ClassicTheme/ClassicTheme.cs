@@ -16,10 +16,10 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
 
         #endregion
 
-        public ClassicTheme(ILoggerFactory loggerFactory)
-            : base(loggerFactory)
+        public ClassicTheme()
+            : base()
         {
-            this._theme = new ClassicThemeImpl(loggerFactory);
+            this._theme = new ClassicThemeImpl();
         }
 
         #region PluginBase
