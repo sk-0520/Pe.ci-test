@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
     internal class ClassicThemeImpl: ThemeBase
     {
         public ClassicThemeImpl(IPluginConstructorContext pluginConstructorContext)
-            :base(pluginConstructorContext)
+            : base(pluginConstructorContext)
         { }
 
         #region property
@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
 
         protected override IReadOnlyCollection<ThemeKind> SupportedKinds { get; } = new[] {
             ThemeKind.General,
+            ThemeKind.LauncherToolbar,
         };
 
         protected internal override void Load(IPluginContext pluginContext)
@@ -45,11 +46,18 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
         }
 
         /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
-        public override IGeneralTheme BuildGeneralTheme(IThemeParameter parameter) => throw new NotImplementedException();
+        public override IGeneralTheme BuildGeneralTheme(IThemeParameter parameter)
+        {
+            return new ClassicGeneralTheme(parameter);
+        }
+
         /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
         public override ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
-        public override ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter) => throw new NotImplementedException();
+        public override ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
+        {
+            return new ClassicLauncherToolbarTheme(parameter);
+        }
         /// <inheritdoc cref="ITheme.BuildNoteTheme(IThemeParameter)"/>
         public override INoteTheme BuildNoteTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildCommandTheme(IThemeParameter)"/>

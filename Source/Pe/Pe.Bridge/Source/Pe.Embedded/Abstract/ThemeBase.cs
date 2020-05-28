@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -72,5 +74,38 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #endregion
 
+    }
+
+    internal abstract class ThemeDetailBase
+    {
+        protected ThemeDetailBase(IThemeParameter parameter)
+        {
+            PlatformTheme = parameter.PlatformTheme;
+            DispatcherWrapper = parameter.DispatcherWrapper;
+            Logger = parameter.LoggerFactory.CreateLogger(GetType());
+        }
+
+        #region property
+
+        protected ILogger Logger { get; }
+        protected IPlatformTheme PlatformTheme { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
+
+        #endregion
+
+        #region function
+
+        protected double GetHorizontal(Thickness thickness) => thickness.Left + thickness.Right;
+
+        protected double GetVertical(Thickness thickness) => thickness.Top + thickness.Bottom;
+
+        protected TValue GetResourceValue<TValue>(string className, string methodName)
+        {
+            var key = className + '.' + methodName;
+            return (TValue)Application.Current.Resources[key];
+
+        }
+
+        #endregion
     }
 }
