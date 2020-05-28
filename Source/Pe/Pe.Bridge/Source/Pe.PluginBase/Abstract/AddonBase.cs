@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
     internal abstract class AddonBase: IAddon
     {
-        public AddonBase(IPluginConstructorContext pluginConstructorContext)
+        public AddonBase()
         {
 //            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
         }

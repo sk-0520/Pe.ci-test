@@ -10,8 +10,8 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
 {
     internal class ClassicThemeImpl: ThemeBase
     {
-        public ClassicThemeImpl(IPluginConstructorContext pluginConstructorContext)
-            :base(pluginConstructorContext)
+        public ClassicThemeImpl()
+            :base()
         { }
 
         protected override IReadOnlyCollection<ThemeKind> SupportedKinds => throw new NotImplementedException();

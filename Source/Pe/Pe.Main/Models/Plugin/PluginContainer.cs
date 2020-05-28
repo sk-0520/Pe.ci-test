@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="pluginFile"></param>
         /// <returns>読み込み結果。</returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion, PluginConstructorContext pluginConstructorContext)
+        public PluginLoadStateData LoadPlugin(FileInfo pluginFile, List<PluginStateData> pluginStateItems, Version applicationVersion/*, PluginConstructorContext pluginConstructorContext*/)
         {
             var pluginBaseName = Path.GetFileNameWithoutExtension(pluginFile.Name);
             var currentPlugin = pluginStateItems.FirstOrDefault(i => string.Equals(pluginBaseName, i.Name, StringComparison.InvariantCultureIgnoreCase));
@@ -137,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             IPlugin plugin;
             try {
                 //var obj = pluginAssembly.CreateInstance(pluginInterfaceImpl.Name!)!;
-                var obj = Activator.CreateInstance(pluginInterfaceImpl, new[] { pluginConstructorContext })!;
+                var obj = Activator.CreateInstance(pluginInterfaceImpl/*, new[] { pluginConstructorContext }*/)!; // ログ作るとガッツリつかまれる
                 // DIで作るとガッツリつかまれる
                 //var obj = pluginFactory(pluginInterfaceImpl);
                 plugin = (IPlugin)obj ?? throw new Exception($"{nameof(IPlugin)}へのキャスト失敗: {obj}");

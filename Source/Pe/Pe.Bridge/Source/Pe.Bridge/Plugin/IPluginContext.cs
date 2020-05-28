@@ -6,18 +6,18 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
-    /// <summary>
-    /// プラグインのコンストラクタ時の Pe との架け橋。
-    /// <para>Pe から提供される。</para>
-    /// </summary>
-    public interface IPluginConstructorContext
-    {
-        #region property
+    ///// <summary>
+    ///// プラグインのコンストラクタ時の Pe との架け橋。
+    ///// <para>Pe から提供される。</para>
+    ///// </summary>
+    //public interface IPluginConstructorContext
+    //{
+    //    #region property
 
-        ILoggerFactory LoggerFactory { get; }
+    //    ILoggerFactory LoggerFactory { get; }
 
-        #endregion
-    }
+    //    #endregion
+    //}
 
     /// <summary>
     /// プラグイン初期化時の Pe との架け橋。

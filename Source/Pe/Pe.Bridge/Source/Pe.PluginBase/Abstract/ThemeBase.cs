@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
     internal abstract class ThemeBase: ITheme
     {
-        public ThemeBase(IPluginConstructorContext pluginConstructorContext)
+        public ThemeBase()
         {
  //           Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
         }

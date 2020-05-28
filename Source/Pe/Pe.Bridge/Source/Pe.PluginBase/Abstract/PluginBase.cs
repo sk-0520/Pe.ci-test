@@ -15,11 +15,11 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
     public abstract class PluginBase: IPlugin
     {
-        protected PluginBase(IPluginConstructorContext pluginConstructorContext)
+        protected PluginBase()
         {
             var type = GetType();
-            var Logger = pluginConstructorContext.LoggerFactory.CreateLogger(type);
-            Logger.LogInformation("どこの誰が掴んでんの・・・");
+            //var Logger = pluginConstructorContext.LoggerFactory.CreateLogger(type);
+            //Logger.LogInformation("どこの誰が掴んでんの・・・");
             var interfaces = type.GetInterfaces();
             HasAddon = interfaces.Any(i => i == typeof(IAddon));
             HasTheme = interfaces.Any(i => i == typeof(ITheme));
