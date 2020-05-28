@@ -80,6 +80,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
 
         public ObservableCollection<LauncherItemElement> LauncherItems { get; } = new ObservableCollection<LauncherItemElement>();
 
+        public LauncherToolbarIconFactory IconFactory { get; } = new LauncherToolbarIconFactory();
+
         /// <summary>
         /// 表示されているか。
         /// </summary>

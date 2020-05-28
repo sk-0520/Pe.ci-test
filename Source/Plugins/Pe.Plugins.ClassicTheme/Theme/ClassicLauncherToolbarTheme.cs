@@ -67,38 +67,6 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
             return SystemColors.ControlTextBrush;
         }
 
-        public DependencyObject GetToolbarImage(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong)
-        {
-            var drawSize = new IconSize(iconBox);
-
-            var canvas = new Canvas();
-
-            canvas.BeginInit();
-            {
-                canvas.Width = drawSize.Width;
-                canvas.Height = drawSize.Height;
-            }
-            canvas.EndInit();
-
-            return canvas;
-        }
-
-        public DependencyObject GetToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
-        {
-            var drawSize = new IconSize(iconBox);
-
-            var canvas = new Canvas();
-
-            canvas.BeginInit();
-            {
-                canvas.Width = drawSize.Width;
-                canvas.Height = drawSize.Height;
-            }
-            canvas.EndInit();
-
-            return canvas;
-        }
-
         #endregion
     }
 }

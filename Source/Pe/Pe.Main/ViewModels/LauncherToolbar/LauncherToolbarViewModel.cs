@@ -347,7 +347,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
         {
-            return LauncherToolbarTheme.GetToolbarPositionImage(toolbarPosition, IconBox.Small);
+            return Model.IconFactory.GetToolbarPositionImage(toolbarPosition, IconBox.Small);
         }
 
         #region ViewDragAndDrop
