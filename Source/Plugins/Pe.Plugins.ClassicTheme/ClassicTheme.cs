@@ -16,7 +16,8 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
 
         #endregion
 
-        public ClassicTheme()
+        public ClassicTheme(IPluginConstructorContext pluginConstructorContext)
+            : base(pluginConstructorContext)
         {
             this._theme = new ClassicThemeImpl();
         }

@@ -9,19 +9,19 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    //internal class PluginConstructorContext: IPluginConstructorContext
-    //{
-    //    public PluginConstructorContext(ILoggerFactory loggerFactory)
-    //    {
-    //        LoggerFactory = loggerFactory;
-    //    }
+    internal class PluginConstructorContext: IPluginConstructorContext
+    {
+        public PluginConstructorContext(ILogger logger)
+        {
+            Logger = logger;
+        }
 
-    //    #region IPluginConstructorContext
+        #region IPluginConstructorContext
 
-    //    public ILoggerFactory LoggerFactory { get; }
+        public ILogger Logger { get; }
 
-    //    #endregion
-    //}
+        #endregion
+    }
 
     /// <inheritdoc cref="IPluginInitializeContext"/>
     internal class PluginInitializeContext: IPluginInitializeContext

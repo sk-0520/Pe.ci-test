@@ -521,7 +521,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginLoadStateItems = new List<PluginLoadStateData>();
             //var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
             foreach(var pluginFile in pluginFiles) {
-                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version/*, pluginConstructorContext*/);
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version);
                 pluginLoadStateItems.Add(loadStateData);
             }
             // 戻ってきた突合情報を反映
