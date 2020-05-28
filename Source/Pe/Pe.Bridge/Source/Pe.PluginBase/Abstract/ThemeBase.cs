@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
-    public abstract class ThemeBase: ITheme
+    internal abstract class ThemeBase: ITheme
     {
         public ThemeBase(ILoggerFactory loggerFactory)
         {

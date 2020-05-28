@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
-    public abstract partial class PluginBase: IPlugin
+    public abstract class PluginBase: IPlugin
     {
         protected PluginBase(ILoggerFactory loggerFactory)
         {
@@ -36,8 +36,8 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
         protected bool IsLoadedAddon { get; private set; }
         protected bool IsLoadedTheme { get; private set; }
 
-        protected virtual AddonBase Addon { get => throw new NotImplementedException(); }
-        protected virtual ThemeBase Theme { get => throw new NotImplementedException(); }
+        internal virtual AddonBase Addon { get => throw new NotImplementedException(); }
+        internal virtual ThemeBase Theme { get => throw new NotImplementedException(); }
 
         #endregion
 

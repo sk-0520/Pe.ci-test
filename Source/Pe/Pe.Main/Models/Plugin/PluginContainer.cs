@@ -108,9 +108,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             Type? pluginInterfaceImpl = null;
             try {
-                // これが失敗した場合に解放できない・・・
+                // 型情報が変な場合、例外が投げられるがそいつはなんかもう解放できなくなる
                 var pluginTypes = pluginAssembly.GetTypes();
                 foreach(var pluginType in pluginTypes) {
+                    if(pluginType.IsAbstract || pluginType.IsNotPublic) {
+                        continue;
+                    }
+
                     var typeInterfaces = pluginType.GetInterfaces();
                     var plugins = typeInterfaces.FirstOrDefault(i => i == typeof(IPlugin));
                     if(plugins != null) {

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.PluginBase.Abstract
 {
-    public abstract class AddonBase: IAddon
+    internal abstract class AddonBase: IAddon
     {
         public AddonBase(ILoggerFactory loggerFactory)
         {

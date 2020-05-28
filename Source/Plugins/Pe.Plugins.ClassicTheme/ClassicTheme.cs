@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
 
         #region PluginBase
 
-        protected override ThemeBase Theme => this._theme;
+        internal override ThemeBase Theme => this._theme;
 
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }

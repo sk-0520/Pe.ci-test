@@ -26,7 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.PluginBase\Pe.PluginBase.csproj" />
+    <Compile Include="..\..\Pe\Pe.Bridge\Source\Pe.PluginBase\**\*.cs" Exclude="..\..\Pe\Pe.Bridge\Source\Pe.PluginBase\obj\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
   </ItemGroup>
 
 </Project>
