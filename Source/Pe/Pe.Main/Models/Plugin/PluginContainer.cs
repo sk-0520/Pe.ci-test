@@ -167,6 +167,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 }
             }
 
+#if DEBUG
+            var a = true;
+            if(a) {
+                loadContext.Unload();
+                return new PluginLoadStateData(loadedCurrentPlugin!.PluginId, pluginName, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginLoadContext>(loadContext), null);
+            }
+#endif
             var pluginVersion = (Version)info.PluginVersions.PluginVersion.Clone();
 
             var unlimitVersion = new Version(0, 0, 0);

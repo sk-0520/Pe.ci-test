@@ -12,12 +12,12 @@ namespace ContentTypeTextNet.Pe.PluginBase.Abstract
     {
         public AddonBase(IPluginConstructorContext pluginConstructorContext)
         {
-            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
+//            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
-        protected ILogger Logger { get; }
+//        protected ILogger Logger { get; }
 
         /// <summary>
         /// サポートするテーマ機能を一括定義。
