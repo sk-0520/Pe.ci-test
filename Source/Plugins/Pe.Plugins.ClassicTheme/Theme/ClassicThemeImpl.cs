@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
             ThemeKind.General,
             ThemeKind.LauncherToolbar,
             ThemeKind.Notify,
+            ThemeKind.Command,
         };
 
         protected internal override void Load(IPluginContext pluginContext)
@@ -62,7 +63,10 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
         /// <inheritdoc cref="ITheme.BuildNoteTheme(IThemeParameter)"/>
         public override INoteTheme BuildNoteTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildCommandTheme(IThemeParameter)"/>
-        public override ICommandTheme BuildCommandTheme(IThemeParameter parameter) => throw new NotImplementedException();
+        public override ICommandTheme BuildCommandTheme(IThemeParameter parameter)
+        {
+            return new ClassicCommandTheme(parameter);
+        }
         /// <inheritdoc cref="ITheme.BuildNotifyLogTheme(IThemeParameter)"/>
         public override INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
         {

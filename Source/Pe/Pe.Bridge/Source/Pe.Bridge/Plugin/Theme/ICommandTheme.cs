@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 
     public interface ICommandTheme
     {
-        #region property
+        #region function
 
         /// <summary>
         /// ウィンドウの背景ブラシ取得。

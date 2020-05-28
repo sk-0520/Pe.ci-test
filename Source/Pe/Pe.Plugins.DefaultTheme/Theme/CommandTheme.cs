@@ -89,12 +89,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return (ControlTemplate)Application.Current.Resources["ICommandTheme-ExecuteButton"];
         }
 
-        public DependencyObject GetCommandItemKindImage(IconBox iconBox, CommandItemKind commandItemKind)
-        {
-            var key = "ICommandTheme-GetCommandItemKindImage-CommandItemKind-" + commandItemKind.ToString();
-            return (DependencyObject)Application.Current.Resources[key];
-        }
-
 
         #endregion
     }
