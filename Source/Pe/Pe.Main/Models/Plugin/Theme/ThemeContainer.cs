@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -84,12 +85,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             CurrentTheme.Load(PluginKind.Theme, pluginContext);
         }
 
+        private IResultTheme GetTheme<IResultTheme, TBuildParameter>(ThemeKind kind, TBuildParameter parameter, Func<TBuildParameter, IResultTheme> buildCurrentTheme, Func<TBuildParameter, IResultTheme> buildDefaultTheme)
+        {
+            Debug.Assert(CurrentTheme != null);
+
+            Func<TBuildParameter, IResultTheme>? build = null;
+
+            if(!CurrentThemeIsDefaultTheme) {
+                if(CurrentTheme.IsSupported(kind)) {
+                    build = buildCurrentTheme;
+                }
+            }
+
+            if(build != null) {
+                try {
+                    return DispatcherWrapper.Get(() => build(parameter));
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, "テーマ使用時にエラー発生のため標準テーマを使用");
+                }
+            }
+
+            return DispatcherWrapper.Get(() => buildDefaultTheme(parameter));
+        }
+
         public IGeneralTheme GetGeneralTheme()
         {
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return DispatcherWrapper.Get(() => CurrentTheme.BuildGeneralTheme(CreateParameter()));
+            return GetTheme(ThemeKind.General, CreateParameter(), CurrentTheme.BuildGeneralTheme, DefaultTheme.BuildGeneralTheme);
         }
 
         public ILauncherGroupTheme GetLauncherGroupTheme()
@@ -97,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return DispatcherWrapper.Get(() => CurrentTheme.BuildLauncherGroupTheme(CreateParameter()));
+            return GetTheme(ThemeKind.LauncherGroup, CreateParameter(), CurrentTheme.BuildLauncherGroupTheme, DefaultTheme.BuildLauncherGroupTheme);
         }
 
         public ILauncherToolbarTheme GetLauncherToolbarTheme()
@@ -105,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return DispatcherWrapper.Get(() => CurrentTheme.BuildLauncherToolbarTheme(CreateParameter()));
+            return GetTheme(ThemeKind.LauncherToolbar, CreateParameter(), CurrentTheme.BuildLauncherToolbarTheme, DefaultTheme.BuildLauncherToolbarTheme);
         }
 
         public INoteTheme GetNoteTheme()
@@ -113,7 +137,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return DispatcherWrapper.Get(() => CurrentTheme.BuildNoteTheme(CreateParameter()));
+            return GetTheme(ThemeKind.Note, CreateParameter(), CurrentTheme.BuildNoteTheme, DefaultTheme.BuildNoteTheme);
         }
 
         public ICommandTheme GetCommandTheme()
@@ -121,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return DispatcherWrapper.Get(() => CurrentTheme.BuildCommandTheme(CreateParameter()));
+            return GetTheme(ThemeKind.Command, CreateParameter(), CurrentTheme.BuildCommandTheme, DefaultTheme.BuildCommandTheme);
         }
 
         public INotifyLogTheme GetNotifyTheme()
@@ -129,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return DispatcherWrapper.Get(() => CurrentTheme.BuildNotifyLogTheme(CreateParameter()));
+            return GetTheme(ThemeKind.Notify, CreateParameter(), CurrentTheme.BuildNotifyLogTheme, DefaultTheme.BuildNotifyLogTheme);
         }
 
         #endregion
