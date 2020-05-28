@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ContentTypeTextNet.Pe.PluginBase.Attributes;
+using ContentTypeTextNet.Pe.Embedded.Attributes;
 
 [assembly: PluginIdentifiersAttibute("ClassicTheme", "67F0FA7D-52D3-4889-B595-BE3703B224EB")]
 [assembly: SupportVersionsAttibute("0.0.0", "0.0.0")]

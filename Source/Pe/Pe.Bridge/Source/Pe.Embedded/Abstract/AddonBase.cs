@@ -6,7 +6,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.PluginBase.Abstract
+namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class AddonBase: IAddon
     {

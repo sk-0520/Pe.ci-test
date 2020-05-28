@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using ContentTypeTextNet.Pe.PluginBase.Abstract;
+using ContentTypeTextNet.Pe.Embedded.Abstract;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
 {
-    public class ClassicTheme: PluginBase.Abstract.PluginBase, ITheme
+    public class ClassicTheme: PluginBase, ITheme
     {
         #region variable
 

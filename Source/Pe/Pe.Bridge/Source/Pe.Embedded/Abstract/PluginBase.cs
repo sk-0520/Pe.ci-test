@@ -8,10 +8,10 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using ContentTypeTextNet.Pe.PluginBase.Attributes;
+using ContentTypeTextNet.Pe.Embedded.Attributes;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.PluginBase.Abstract
+namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     public abstract class PluginBase: IPlugin
     {

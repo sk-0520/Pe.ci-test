@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.PluginBase.Attributes
+namespace ContentTypeTextNet.Pe.Embedded.Attributes
 {
     [AttributeUsage(AttributeTargets.Assembly)]
     public class PluginAuthorsAttribute: Attribute

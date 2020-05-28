@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge", "Pe.Bridge\Sour
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge.Test", "Pe.Bridge\Source\Pe.Bridge.Test\Pe.Bridge.Test.csproj", "{587C7761-68C6-408E-8A33-E7D53ED2A703}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.PluginBase", "Pe.Bridge\Source\Pe.PluginBase\Pe.PluginBase.csproj", "{2DDAD3BC-7109-496D-85CF-1B3079B7EDE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded", "Pe.Bridge\Source\Pe.Embedded\Pe.Embedded.csproj", "{2DDAD3BC-7109-496D-85CF-1B3079B7EDE0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{000DF07E-ADB7-4D21-96B7-74F0CBED2840}"
 EndProject
@@ -166,8 +166,8 @@ Global
 		{7497BE4A-60A7-4473-9F38-52DA76295F99} = {000DF07E-ADB7-4D21-96B7-74F0CBED2840}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_NeutralResourcesLanguage = ja-JP
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_PrefixTranslations = False
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_NeutralResourcesLanguage = ja-JP
 	EndGlobalSection
 EndGlobal

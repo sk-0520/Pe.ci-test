@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.PluginBase.Abstract
+namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class ThemeBase: ITheme
     {

@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Pe\Pe.Bridge\Source\Pe.PluginBase\**\*.cs" Exclude="..\..\Pe\Pe.Bridge\Source\Pe.PluginBase\obj\**\*.cs" />
+    <Compile Include="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\**\*.cs" Exclude="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\obj\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

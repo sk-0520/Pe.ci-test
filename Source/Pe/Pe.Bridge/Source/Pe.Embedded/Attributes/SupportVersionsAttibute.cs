@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 
-namespace ContentTypeTextNet.Pe.PluginBase.Attributes
+namespace ContentTypeTextNet.Pe.Embedded.Attributes
 {
     [AttributeUsage(AttributeTargets.Assembly)]
     public class SupportVersionsAttibute: Attribute
