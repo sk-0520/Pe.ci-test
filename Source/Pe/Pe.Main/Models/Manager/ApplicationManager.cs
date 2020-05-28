@@ -520,7 +520,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
             var pluginLoadStateItems = new List<PluginLoadStateData>();
             foreach(var pluginFile in pluginFiles) {
-                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, ApplicationDiContainer.New);
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, ApplicationDiContainer.New, ApplicationDiContainer.ClearType);
                 pluginLoadStateItems.Add(loadStateData);
             }
             // 戻ってきた突合情報を反映
@@ -528,6 +528,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             using(var commander = barrier.WaitWrite()) {
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
                 foreach(var pluginLoadStateItem in pluginLoadStateItems) {
+                    // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
+                    if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
+                        Logger.LogWarning("プラグイン {0} はもろもろおかしい", pluginLoadStateItem.PluginName);
+                        continue;
+                    }
+
                     var pluginStateData = new PluginStateData() {
                         PluginId = pluginLoadStateItem.PluginId,
                         Name = pluginLoadStateItem.PluginName,
