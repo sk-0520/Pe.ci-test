@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Windows.Interactivity;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
@@ -11,10 +16,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// </summary>
     internal class AddonContainer
     {
-        public AddonContainer(ILoggerFactory loggerFactory)
+        #region variable
+
+        IList<IAddon>? _launcherItemSupportAddons;
+        IList<IAddon>? _commandFinderSupportAddons;
+        IList<IAddon>? _widgetSupportAddons;
+        IList<IAddon>? _backgroundSupportAddons;
+
+
+        #endregion
+        public AddonContainer(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+
+            EnvironmentParameters = environmentParameters;
+            UserAgentManager = userAgentManager;
+
+            PlatformTheme = platformTheme;
+            DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
@@ -22,10 +42,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
 
+        EnvironmentParameters EnvironmentParameters { get; }
+        IUserAgentManager UserAgentManager { get; }
+
+        IPlatformTheme PlatformTheme { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
+
         /// <summary>
         /// アドオン一覧。
         /// </summary>
         ISet<IAddon> Addons { get; } = new HashSet<IAddon>();
+
+        IList<IAddon> LauncherItemSupportAddons => this._launcherItemSupportAddons ??= GetSupportAddons(AddonKind.LauncherItem);
+        IList<IAddon> CommandFinderSupportAddons => this._commandFinderSupportAddons ??= GetSupportAddons(AddonKind.CommandFinder);
+        IList<IAddon> WidgetSupportAddons => this._widgetSupportAddons ??= GetSupportAddons(AddonKind.Widget);
+        IList<IAddon> BackgroundSupportAddons => this._backgroundSupportAddons ??= GetSupportAddons(AddonKind.Background);
 
         #endregion
 
@@ -35,6 +66,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             Addons.Add(addon);
         }
+
+        private IList<IAddon> GetSupportAddons(AddonKind kind)
+        {
+            var result = new List<IAddon>();
+
+            var targets = Addons.Where(i => i.IsSupported(kind));
+
+            foreach(var target in targets) {
+                if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
+                    var pluginContextFactory = new PluginContextFactory(EnvironmentParameters, UserAgentManager);
+                    target.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(target.PluginInformations.PluginIdentifiers));
+                }
+
+                result.Add(target);
+            }
+
+            return result;
+        }
+
 
         #endregion
     }
