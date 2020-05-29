@@ -108,12 +108,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             return new GeneralTheme(parameter);
         }
 
-        /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
-        public ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter)
-        {
-            return new LauncherGroupTheme(parameter);
-        }
-
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Models;
 
@@ -53,6 +54,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
             }
             return box;
         }
+
+        protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
 
         #endregion
     }

@@ -116,14 +116,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             return GetTheme(ThemeKind.General, CreateParameter(), CurrentTheme.BuildGeneralTheme, DefaultTheme.BuildGeneralTheme);
         }
 
-        public ILauncherGroupTheme GetLauncherGroupTheme()
-        {
-            if(CurrentTheme == null) {
-                throw new InvalidOperationException();
-            }
-            return GetTheme(ThemeKind.LauncherGroup, CreateParameter(), CurrentTheme.BuildLauncherGroupTheme, DefaultTheme.BuildLauncherGroupTheme);
-        }
-
         public ILauncherToolbarTheme GetLauncherToolbarTheme()
         {
             if(CurrentTheme == null) {

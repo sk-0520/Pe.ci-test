@@ -33,14 +33,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherGroupSettingEditorViewModel(LauncherGroupSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupSettingEditorViewModel(LauncherGroupSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             if(!Model.IsInitialized) {
                 throw new ArgumentException(nameof(Model.IsInitialized));
             }
 
-            LauncherGroupTheme = launcherGroupTheme;
             DispatcherWrapper = dispatcherWrapper;
             AllLauncherItemCollection = allLauncherItemCollection;
 
@@ -73,7 +72,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         [IgnoreValidation]
         public ReadOnlyObservableCollection<LauncherItemSettingEditorViewModel> LauncherItems { get; }
 
-        ILauncherGroupTheme LauncherGroupTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
 
@@ -120,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherGroupKind Kind => Model.Kind;
 
-        public object GroupIcon => LauncherGroupTheme.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
+        public object GroupIcon => Model.IconFactory.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
 
         [IgnoreValidation]
         public LauncherItemSettingEditorViewModel? SelectedLauncherItem

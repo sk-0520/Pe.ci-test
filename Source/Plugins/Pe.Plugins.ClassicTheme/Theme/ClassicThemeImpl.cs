@@ -53,8 +53,6 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
             return new ClassicGeneralTheme(parameter);
         }
 
-        /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
-        public override ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public override ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {

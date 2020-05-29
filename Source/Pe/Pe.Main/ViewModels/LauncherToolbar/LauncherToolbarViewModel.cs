@@ -49,17 +49,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, ILauncherGroupTheme launcherGroupTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             LauncherToolbarConfiguration = launcherToolbarConfiguration;
             PlatformThemeLoader = platformThemeLoader;
             LauncherToolbarTheme = launcherToolbarTheme;
-            LauncherGroupTheme = launcherGroupTheme;
             GeneralTheme = generalTheme;
 
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups) {
-                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LauncherGroupTheme, LoggerFactory),
+                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LoggerFactory),
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
@@ -111,7 +110,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         LauncherToolbarConfiguration LauncherToolbarConfiguration { get; }
         IPlatformTheme PlatformThemeLoader { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        ILauncherGroupTheme LauncherGroupTheme { get; }
         IGeneralTheme GeneralTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
         ThemeProperties ThemeProperties { get; }

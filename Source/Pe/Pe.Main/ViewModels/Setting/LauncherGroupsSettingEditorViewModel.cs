@@ -36,11 +36,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, ILauncherGroupTheme launcherGroupTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherGroupsSettingEditorViewModel(LauncherGroupsSettingEditorElement model, ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> allLauncherItemCollection, ModelViewModelObservableCollectionManagerBase<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel> allLauncherGroupCollection, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            LauncherGroupTheme = launcherGroupTheme;
-
             //LauncherCollection = new ActionModelViewModelObservableCollectionManager<LauncherElementWithIconElement<CommonLauncherItemElement>, LauncherItemWithIconViewModel<CommonLauncherItemViewModel>>(Model.LauncherItems) {
             //    ToViewModel = m => LauncherItemWithIconViewModel.Create(new CommonLauncherItemViewModel(m.Element, LoggerFactory), new LauncherIcon.LauncherIconViewModel(m.Icon, DispatcherWrapper, loggerFactory), LoggerFactory),
             //};
@@ -54,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             var groupImageItems = EnumUtility.GetMembers<LauncherGroupImageName>()
                 .OrderBy(i => (int)i)
-                .Select(i => new ThemeIconViewModel<LauncherGroupImageName>(i, c => LauncherGroupTheme.GetGroupImage(i, c, IconBox.Small, false), LoggerFactory))
+                .Select(i => new ThemeIconViewModel<LauncherGroupImageName>(i, c => Model.IconFactory.GetGroupImage(i, c, IconBox.Small, false), LoggerFactory))
             ;
             GroupIconItems = new ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>>(groupImageItems);
 
@@ -100,7 +98,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         SimpleRegexFactory SimpleRegexFactory { get; }
 
-        ILauncherGroupTheme LauncherGroupTheme { get; }
         public IDragAndDrop GroupsDragAndDrop { get; }
         public IDragAndDrop LauncherItemDragAndDrop { get; }
         public IDragAndDrop LauncherItemsDragAndDrop { get; }

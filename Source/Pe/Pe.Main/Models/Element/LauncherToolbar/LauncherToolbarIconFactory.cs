@@ -58,11 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 }
 
                 if(isStrong) {
-                    canvas.Effect = new DropShadowEffect() {
-                        Color = SystemColors.MenuHighlightColor,
-                        ShadowDepth = 0,
-                        BlurRadius = 8,
-                    };
+                    canvas.Effect = GetStrongEffect();
                 }
             }
             //var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);

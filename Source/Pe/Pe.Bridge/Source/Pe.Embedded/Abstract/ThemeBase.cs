@@ -43,8 +43,6 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public bool IsSupported(ThemeKind themeKind) => SupportedKinds.Contains(themeKind);
         /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
         public virtual IGeneralTheme BuildGeneralTheme(IThemeParameter parameter) => throw new NotImplementedException();
-        /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
-        public virtual ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public virtual ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildNoteTheme(IThemeParameter)"/>
