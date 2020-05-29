@@ -10,9 +10,9 @@ using ContentTypeTextNet.Pe.Core.Models;
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
     /// <inheritdoc cref="INotifyLogTheme"/>
-    internal class NotifyLogTheme : ThemeBase, INotifyLogTheme
+    internal class DefaultNotifyLogTheme : DefaultThemeBase, INotifyLogTheme
     {
-        public NotifyLogTheme(IThemeParameter parameter)
+        public DefaultNotifyLogTheme(IThemeParameter parameter)
             : base(parameter)
         { }
 

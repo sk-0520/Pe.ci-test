@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         [ThemeProperty]
         public object ToolbarMainIcon
         {
-            get => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.Menu, IconBox);
+            get => GeneralTheme.GetPathImage(GeneralPathImageKind.Menu, IconBox);
         }
 
         [ThemeProperty]

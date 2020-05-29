@@ -19,9 +19,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal class NoteTheme : ThemeBase, INoteTheme
+    internal class DefaultNoteTheme: DefaultThemeBase, INoteTheme
     {
-        public NoteTheme(IThemeParameter parameter)
+        public DefaultNoteTheme(IThemeParameter parameter)
             : base(parameter)
         { }
 
@@ -31,25 +31,25 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         #region function
 
 
-        string GetResourceKey(NoteCaption noteCaption, bool isEnabled)
+        string GetResourceBaseKey(NoteCaption noteCaption, bool isEnabled)
         {
             switch(noteCaption) {
                 case NoteCaption.Compact:
                     if(isEnabled) {
-                        return "Image-NoteCaption-Compact-Enabled";
+                        return "Path-NoteCaption-Compact-Enabled";
                     } else {
-                        return "Image-NoteCaption-Compact-Disabled";
+                        return "Path-NoteCaption-Compact-Disabled";
                     }
 
                 case NoteCaption.Topmost:
                     if(isEnabled) {
-                        return "Image-NoteCaption-Topmost-Enabled";
+                        return "Path-NoteCaption-Topmost-Enabled";
                     } else {
-                        return "Image-NoteCaption-Topmost-Disabled";
+                        return "Path-NoteCaption-Topmost-Disabled";
                     }
 
                 case NoteCaption.Close:
-                    return "Image-NoteCaption-Close";
+                    return "Path-NoteCaption-Close";
 
                 default:
                     throw new NotSupportedException();
@@ -70,8 +70,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
                     var path = new Path();
                     using(Initializer.Begin(path)) {
-                        var resourceKey = GetResourceKey(noteCaption, isEnabled);
-                        var geometry = (Geometry)Application.Current.Resources[resourceKey];
+                        var resourceBaseKey = GetResourceBaseKey(noteCaption, isEnabled);
+                        var geometry = GetResourceValue<Geometry>(nameof(DefaultNoteTheme), resourceBaseKey);
                         FreezableUtility.SafeFreeze(geometry);
                         path.Data = geometry;
                         path.Fill = FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Foreground));
@@ -187,9 +187,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
                     var path = new Path();
                     using(Initializer.Begin(path)) {
-                        var resourceKey = "Image-Note-ResizeGrip";
-                        var geometry = (Geometry)Application.Current.Resources[resourceKey];
-                        FreezableUtility.SafeFreeze(geometry);
+                        var resourceBaseKey = "Path-Note-ResizeGrip";
+                        var geometry = GetResourceValue<Geometry>(nameof(DefaultNoteTheme), resourceBaseKey);
                         path.Data = geometry;
                         path.Fill = FreezableUtility.GetSafeFreeze(new SolidColorBrush(MediaUtility.GetAutoColor(baseColor.Foreground)));
                         path.Stroke = FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Foreground));

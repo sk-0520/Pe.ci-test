@@ -9,7 +9,7 @@
   </Style>
 
   <VisualBrush
-    x:Key="ICommandTheme-GetGripBrush"
+    x:Key="DefaultCommandTheme.GetGripBrush"
     TileMode="Tile"
     Stretch="None"
     AlignmentX="Left"
@@ -56,7 +56,7 @@
     </VisualBrush.Visual>
   </VisualBrush>
 
-  <ControlTemplate x:Key="ICommandTheme-ExecuteButton" TargetType="Button">
+  <ControlTemplate x:Key="DefaultCommandTheme.GetExecuteButtonControlTemplate" TargetType="Button">
     <Grid x:Name="PART_content">
       <Grid.Background>
         <SolidColorBrush Color="Transparent" />

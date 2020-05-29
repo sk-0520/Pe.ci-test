@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             }
             if(!IsThemeLoaded) {
                 ResourceDictionary = new ResourceDictionary();
-                var uri = new Uri("pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/ThemeResource.xaml", UriKind.Absolute);
+                var uri = new Uri("pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/DefaultThemeResource.xaml", UriKind.Absolute);
                 ResourceDictionary.Source = uri;
 
                 Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
@@ -105,31 +105,31 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         /// <inheritdoc cref="ITheme.BuildGeneralTheme(IThemeParameter)"/>
         public IGeneralTheme BuildGeneralTheme(IThemeParameter parameter)
         {
-            return new GeneralTheme(parameter);
+            return new DefaultGeneralTheme(parameter);
         }
 
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {
-            return new LauncherToolbarTheme(parameter);
+            return new DefaultLauncherToolbarTheme(parameter);
         }
 
         /// <inheritdoc cref="ITheme.BuildNoteTheme(IThemeParameter)"/>
         public INoteTheme BuildNoteTheme(IThemeParameter parameter)
         {
-            return new NoteTheme(parameter);
+            return new DefaultNoteTheme(parameter);
         }
 
         /// <inheritdoc cref="ITheme.BuildCommandTheme(IThemeParameter)"/>
         public ICommandTheme BuildCommandTheme(IThemeParameter parameter)
         {
-            return new CommandTheme(parameter);
+            return new DefaultCommandTheme(parameter);
         }
 
         /// <inheritdoc cref="ITheme.BuildNotifyLogTheme(IThemeParameter)"/>
         public INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
         {
-            return new NotifyLogTheme(parameter);
+            return new DefaultNotifyLogTheme(parameter);
         }
 
         #endregion

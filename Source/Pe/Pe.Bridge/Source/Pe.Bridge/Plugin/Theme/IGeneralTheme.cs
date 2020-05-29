@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
-    public enum GeneralGeometryImageKind
+    public enum GeneralPathImageKind
     {
         Menu,
     }
@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <param name="kind"></param>
         /// <param name="iconBox">イメージの基準サイズ。本体側で調整されるためどれくらいの大きさで使用されるかの指針にのみ使用する。</param>
         /// <returns></returns>
-        Geometry GetGeometryImage(GeneralGeometryImageKind kind, IconBox iconBox);
+        Geometry GetPathImage(GeneralPathImageKind kind, IconBox iconBox);
 
         #endregion
     }
