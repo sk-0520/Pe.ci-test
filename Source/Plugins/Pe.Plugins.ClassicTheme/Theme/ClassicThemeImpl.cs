@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
         protected internal override void Load(IPluginContext pluginContext)
         {
             ResourceDictionary = new ResourceDictionary();
-            var uri = new Uri("pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ThemeResource.xaml", UriKind.Absolute);
+            var uri = new Uri("pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicThemeResource.xaml", UriKind.Absolute);
             ResourceDictionary.Source = uri;
 
             Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);

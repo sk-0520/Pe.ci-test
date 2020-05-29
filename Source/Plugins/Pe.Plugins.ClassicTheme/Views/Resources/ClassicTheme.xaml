@@ -3,10 +3,10 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
 
-  <DropShadowEffect x:Key="Effect-Strong"
+  <!--<DropShadowEffect x:Key="Effect-Strong"
     Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
     ShadowDepth="0"
     BlurRadius="8"
-  />
+  />-->
 
 </ResourceDictionary>

@@ -4,13 +4,13 @@
 >
 
   <BlurEffect
-    x:Key="INoteTheme.GetBlindEffect"
+    x:Key="ClassicTheme.GetBlindEffect"
     Radius="10"
     RenderingBias="Performance"
   />
 
   <Border
-    x:Key="INoteTheme.GetBlindContent"
+    x:Key="ClassicTheme.GetBlindContent"
     BorderThickness="0"
     SnapsToDevicePixels="True"
   >
