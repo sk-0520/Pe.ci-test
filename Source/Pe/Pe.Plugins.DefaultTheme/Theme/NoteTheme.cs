@@ -203,13 +203,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return viewBox;
         }
 
-        public DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, ColorPair<Color> baseColor)
-        {
-            var size = new Size((int)iconBox, isCompact ? (int)iconBox / 2 : (int)iconBox);
-            var box = CreateBox(baseColor.Foreground, baseColor.Background, size);
-            return box;
-        }
-
         /// <inheritdoc cref="INoteTheme.GetBlindEffect(ColorPair{Color})"/>
         public Effect GetBlindEffect(ColorPair<Color> baseColor)
         {

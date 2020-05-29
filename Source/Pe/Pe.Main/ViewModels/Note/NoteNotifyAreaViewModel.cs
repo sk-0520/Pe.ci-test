@@ -41,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         PropertyChangedHooker PropertyChangedHooker { get; }
 
+        NoteIconFactory NoteIconFactory { get; } = new NoteIconFactory();
+
         public bool IsVisible => Model.IsVisible;
 
         #endregion
@@ -74,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public string MenuHeader => Model.Title ?? "<からもじれつ>";
         public bool MenuHeaderHasAccessKey { get; } = false;
         public KeyGesture? MenuKeyGesture { get; }
-        public DependencyObject? MenuIcon => NoteTheme.GetIconImage(IconBox.Small, Model.IsCompact, Model.IsLocked, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
+        public DependencyObject? MenuIcon => NoteIconFactory.GetIconImage(IconBox.Small, Model.IsCompact, Model.IsLocked, ColorPair.Create(Model.ForegroundColor, Model.BackgroundColor));
         public bool MenuHasIcon { get; } = true;
         public bool MenuIsEnabled { get; } = true;
         public bool MenuIsChecked { get; } = false;
