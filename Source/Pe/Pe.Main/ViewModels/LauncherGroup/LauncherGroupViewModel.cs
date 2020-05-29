@@ -33,8 +33,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
         public LauncherGroupImageName ImageName => Model.ImageName;
         public Color ImageColor => Model.ImageColor;
 
-        public DependencyObject NormalGroupIcon => Model.IconFactory.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
-        public DependencyObject StrongGroupIcon => Model.IconFactory.GetGroupImage(ImageName, ImageColor, IconBox.Small, true);
+        LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
+
+        public DependencyObject NormalGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
+        public DependencyObject StrongGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, true);
 
         #endregion
 

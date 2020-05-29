@@ -9,9 +9,9 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
 {
-    public class LauncherGroupIconFactory: ViewElementFactoryBase
+    public class LauncherGroupIconMaker: ViewElementMakerBase
     {
         #region function
 

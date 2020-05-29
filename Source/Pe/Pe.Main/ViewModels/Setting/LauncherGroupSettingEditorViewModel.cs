@@ -20,6 +20,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -118,7 +119,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherGroupKind Kind => Model.Kind;
 
-        public object GroupIcon => Model.IconFactory.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
+        LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
+
+        public object GroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
 
         [IgnoreValidation]
         public LauncherItemSettingEditorViewModel? SelectedLauncherItem

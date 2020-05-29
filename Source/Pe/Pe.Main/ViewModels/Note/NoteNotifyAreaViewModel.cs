@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         PropertyChangedHooker PropertyChangedHooker { get; }
 
-        NoteIconFactory NoteIconFactory { get; } = new NoteIconFactory();
+        NoteIconMaker NoteIconFactory { get; } = new NoteIconMaker();
 
         public bool IsVisible => Model.IsVisible;
 

@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
@@ -50,9 +51,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             GroupCollection = allLauncherGroupCollection;
             GroupItems = GroupCollection.GetDefaultView();
 
+            var iconMaker = new LauncherGroupIconMaker();
+
             var groupImageItems = EnumUtility.GetMembers<LauncherGroupImageName>()
                 .OrderBy(i => (int)i)
-                .Select(i => new ThemeIconViewModel<LauncherGroupImageName>(i, c => Model.IconFactory.GetGroupImage(i, c, IconBox.Small, false), LoggerFactory))
+                .Select(i => new ThemeIconViewModel<LauncherGroupImageName>(i, c => iconMaker.GetGroupImage(i, c, IconBox.Small, false), LoggerFactory))
             ;
             GroupIconItems = new ObservableCollection<ThemeIconViewModel<LauncherGroupImageName>>(groupImageItems);
 

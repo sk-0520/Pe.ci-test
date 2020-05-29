@@ -6,9 +6,9 @@ using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
+namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
-    public class NoteIconFactory: ViewElementFactoryBase
+    public class NoteIconMaker: ViewElementMakerBase
     {
         #region function
 

@@ -205,16 +205,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public LauncherToolbarContentDropMode ContentDropMode => Model.ContentDropMode;
         public LauncherGroupPosition GroupMenuPosition => Model.GroupMenuPosition;
 
+        LauncherToolbarIconMaker IconMaker { get; } = new LauncherToolbarIconMaker();
+
         #region theme
 
         [ThemeProperty]
-        public DependencyObject ToolbarPositionLeftIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Left);
+        public DependencyObject ToolbarPositionLeftIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Left, IconBox.Small);
         [ThemeProperty]
-        public DependencyObject ToolbarPositionTopIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Top);
+        public DependencyObject ToolbarPositionTopIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Top, IconBox.Small);
         [ThemeProperty]
-        public DependencyObject ToolbarPositionRightIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Right);
+        public DependencyObject ToolbarPositionRightIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Right, IconBox.Small);
         [ThemeProperty]
-        public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
+        public DependencyObject ToolbarPositionBottomIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Bottom, IconBox.Small);
 
         [ThemeProperty]
         public ControlTemplate LauncherItemNormalButtonControlTemplate => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate();
@@ -343,10 +345,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         }
 
-        DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
-        {
-            return Model.IconFactory.GetToolbarPositionImage(toolbarPosition, IconBox.Small);
-        }
 
         #region ViewDragAndDrop
 

@@ -43,9 +43,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         public List<Guid> LauncherItemIds { get; } = new List<Guid>();
 
-
-        public LauncherGroupIconFactory IconFactory { get; } = new LauncherGroupIconFactory();
-
         #endregion
 
         #region function
