@@ -49,6 +49,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
+        public FileInfo? GetPluginFile(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
+        {
+            foreach(var extension in extensions) {
+                var pluginFileName = PathUtility.AppendExtension(pluginName, extension);
+                var pluginPath = Path.Combine(pluginDirectory.FullName, pluginFileName);
+                bool existsPlugin;
+                try {
+                    existsPlugin = File.Exists(pluginPath);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, "プラグイン実ファイル取得失敗: {0}, {1}", ex.Message, pluginPath);
+                    continue;
+                }
+
+                if(existsPlugin) {
+                    return new FileInfo(pluginPath);
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// プラグインの実ファイル一覧を取得。
         /// <para>Pe 付属のプラグイン(<see cref="DefaultTheme"/>とか)は含まれない。</para>
@@ -59,21 +80,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var pluginDirs = baseDirectory.EnumerateDirectories();
             foreach(var pluginDir in pluginDirs) {
-                foreach(var extension in extensions) {
-                    var pluginName = PathUtility.AppendExtension(pluginDir.Name, extension);
-                    var pluginPath = Path.Combine(pluginDir.FullName, pluginName);
-                    bool existsPlugin;
-                    try {
-                        existsPlugin = File.Exists(pluginPath);
-                    } catch(Exception ex) {
-                        Logger.LogError(ex, "プラグイン実ファイル取得失敗: {0}, {1}", ex.Message, pluginPath);
-                        continue;
-                    }
-
-                    if(existsPlugin) {
-                        yield return new FileInfo(pluginPath);
-                        break;
-                    }
+                var pluginFile = GetPluginFile(pluginDir, pluginDir.Name, extensions);
+                if(pluginFile!= null) {
+                    yield return pluginFile;
                 }
             }
         }

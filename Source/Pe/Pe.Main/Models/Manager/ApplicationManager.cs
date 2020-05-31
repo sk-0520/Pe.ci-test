@@ -124,6 +124,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
             LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
+
+            if(!string.IsNullOrWhiteSpace(initializer.TestPluginDirectoryPath)) {
+                TestPluginDirectory = new DirectoryInfo(initializer.TestPluginDirectoryPath);
+                TestPluginName = initializer.TestPluginName;
+            }
         }
 
         #region property
@@ -178,6 +183,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private bool ResetWaiting { get; set; }
         private LazyAction LazyScreenElementReset { get; }
+
+        private DirectoryInfo? TestPluginDirectory { get; }
+        private string TestPluginName { get; } = string.Empty;
 
         #endregion
 
@@ -516,6 +524,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return pluginsEntityDao.SelectePlguinStateData().ToList();
             });
 
+            FileInfo? testPluginFile = null;
+            if(TestPluginDirectory != null) {
+                var pluginName = string.IsNullOrWhiteSpace(TestPluginName) ? TestPluginDirectory.Name : TestPluginName;
+                testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.Configuration.Plugin.Extentions);
+            }
+
             // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
             var pluginLoadStateItems = new List<PluginLoadStateData>();
             var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
@@ -523,6 +537,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
                 pluginLoadStateItems.Add(loadStateData);
             }
+
+            PluginLoadStateData? testPluginLoadState = null;
+            if(testPluginFile != null) {
+                testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                pluginLoadStateItems.Add(testPluginLoadState);
+            }
+
             // 戻ってきた突合情報を反映
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             using(var commander = barrier.WaitWrite()) {
@@ -543,6 +564,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                             _ => pluginLoadStateItem.LoadState,
                         }
                     };
+
+                    if(pluginLoadStateItem == testPluginLoadState) {
+                        if(pluginStateData.State == PluginState.Disable) {
+                            Logger.LogWarning("テスト用プラグインは読み込み失敗したためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginStateData.State);
+                            continue;
+                        }
+                    }
 
                     if(pluginsEntityDao.SelecteExistsPlguin(pluginLoadStateItem.PluginId)) {
                         pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
