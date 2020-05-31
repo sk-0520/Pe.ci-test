@@ -1,0 +1,10 @@
+{
+	"profiles": {
+		"Pe.Plugins.ClassicTheme": {
+			"commandName": "Executable",
+			"executablePath": "..\\Pe\\Pe.Main\\bin\\x64\\Debug-DisabledAnalyzers\\netcoreapp3.1\\Pe.Main.exe",
+			"commandLineArgs": "--debug-dev-mode --log=X:\\pe\\log --with-log=xml --force-log --full-trace-log --user-dir=X:\\pe\\user --machine-dir=X:\\pe\\machine --temp-dir=X:\\pe\\temp --test-plugin-dir $(TargetDir) --test-plugin-name $(TargetName) ",
+			"workingDirectory": "$(SolutionDir)"
+		}
+	}
+}
