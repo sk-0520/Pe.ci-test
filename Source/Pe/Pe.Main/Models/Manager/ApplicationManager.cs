@@ -64,6 +64,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -552,6 +553,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
                     if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
                         Logger.LogWarning("プラグイン {0} はもろもろおかしい", pluginLoadStateItem.PluginName);
+                        if(pluginLoadStateItem == testPluginLoadState) {
+#if DEBUG
+                            if(Debugger.IsAttached) {
+                                Debugger.Break();
+                            }
+#endif
+                            Logger.LogWarning("テスト用プラグインはおかしいためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
+                        }
                         continue;
                     }
 
@@ -567,7 +576,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     if(pluginLoadStateItem == testPluginLoadState) {
                         if(pluginStateData.State == PluginState.Disable) {
-                            Logger.LogWarning("テスト用プラグインは読み込み失敗したためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginStateData.State);
+#if DEBUG
+                            if(Debugger.IsAttached) {
+                                Debugger.Break();
+                            }
+#endif
+                            Logger.LogWarning("テスト用プラグインは読み込み失敗したためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
                             continue;
                         }
                     }
