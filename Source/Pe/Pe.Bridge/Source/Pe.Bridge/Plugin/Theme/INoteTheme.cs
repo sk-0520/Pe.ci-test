@@ -46,8 +46,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor);
         DependencyObject GetResizeGripImage(ColorPair<Color> baseColor);
 
-        DependencyObject GetIconImage(IconBox iconBox, bool isCompact, bool isLocked, ColorPair<Color> baseColor);
-
         Effect GetBlindEffect(ColorPair<Color> baseColor);
         DependencyObject GetBlindContent(ColorPair<Color> baseColor);
 

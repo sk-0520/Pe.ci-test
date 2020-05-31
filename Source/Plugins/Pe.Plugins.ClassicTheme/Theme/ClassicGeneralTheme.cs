@@ -17,10 +17,10 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
 
         #region IGeneralTheme
 
-        public Geometry GetGeometryImage(GeneralGeometryImageKind kind, IconBox iconBox)
+        public Geometry GetPathImage(GeneralPathImageKind kind, IconBox iconBox)
         {
-            var key = nameof(ClassicGeneralTheme) + ".Image-General-" + kind.ToString();
-            return (Geometry)Application.Current.Resources[key];
+            var baseKey = "Path-General-" + kind.ToString();
+            return GetResourceValue<Geometry>(nameof(ClassicGeneralTheme), baseKey);
         }
 
         #endregion

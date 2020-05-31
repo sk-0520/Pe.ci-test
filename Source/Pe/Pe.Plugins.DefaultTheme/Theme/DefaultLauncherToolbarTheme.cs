@@ -13,9 +13,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal class LauncherToolbarTheme : ThemeBase, ILauncherToolbarTheme
+    internal class DefaultLauncherToolbarTheme : DefaultThemeBase, ILauncherToolbarTheme
     {
-        public LauncherToolbarTheme(IThemeParameter parameter)
+        public DefaultLauncherToolbarTheme(IThemeParameter parameter)
             : base(parameter)
         { }
 
@@ -55,8 +55,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return new Size(4, 4);
         }
 
-        public ControlTemplate GetLauncherItemNormalButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemNormalButton"];
-        public ControlTemplate GetLauncherItemToggleButtonControlTemplate() => (ControlTemplate)Application.Current.Resources["ILauncherToolbarTheme-LauncherItemToggleButton"];
+        public ControlTemplate GetLauncherItemNormalButtonControlTemplate() => GetResourceValue<ControlTemplate>(nameof(DefaultLauncherToolbarTheme), nameof(GetLauncherItemNormalButtonControlTemplate));
+        public ControlTemplate GetLauncherItemToggleButtonControlTemplate() => GetResourceValue<ControlTemplate>(nameof(DefaultLauncherToolbarTheme), nameof(GetLauncherItemToggleButtonControlTemplate));
 
         public Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {

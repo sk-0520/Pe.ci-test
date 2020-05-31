@@ -9,9 +9,9 @@ using System.Windows.Media.Effects;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
-    public class LauncherToolbarIconFactory: ViewElementFactoryBase
+    public class LauncherToolbarIconMaker: ViewElementMakerBase
     {
         #region function
 
@@ -58,11 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 }
 
                 if(isStrong) {
-                    canvas.Effect = new DropShadowEffect() {
-                        Color = SystemColors.MenuHighlightColor,
-                        ShadowDepth = 0,
-                        BlurRadius = 8,
-                    };
+                    canvas.Effect = GetStrongEffect();
                 }
             }
             //var result = ImageUtility.MakeBitmapBitmapSourceDefualtDpi(canvas);

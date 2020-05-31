@@ -49,17 +49,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, ILauncherGroupTheme launcherGroupTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             LauncherToolbarConfiguration = launcherToolbarConfiguration;
             PlatformThemeLoader = platformThemeLoader;
             LauncherToolbarTheme = launcherToolbarTheme;
-            LauncherGroupTheme = launcherGroupTheme;
             GeneralTheme = generalTheme;
 
             LauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupElement, LauncherGroupViewModel>(Model.LauncherGroups) {
-                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LauncherGroupTheme, LoggerFactory),
+                ToViewModel = (m) => new LauncherGroupViewModel(m, DispatcherWrapper, LoggerFactory),
             };
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
@@ -111,7 +110,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         LauncherToolbarConfiguration LauncherToolbarConfiguration { get; }
         IPlatformTheme PlatformThemeLoader { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        ILauncherGroupTheme LauncherGroupTheme { get; }
         IGeneralTheme GeneralTheme { get; }
         PropertyChangedHooker PropertyChangedHooker { get; }
         ThemeProperties ThemeProperties { get; }
@@ -138,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         [ThemeProperty]
         public object ToolbarMainIcon
         {
-            get => GeneralTheme.GetGeometryImage(GeneralGeometryImageKind.Menu, IconBox);
+            get => GeneralTheme.GetPathImage(GeneralPathImageKind.Menu, IconBox);
         }
 
         [ThemeProperty]
@@ -207,16 +205,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public LauncherToolbarContentDropMode ContentDropMode => Model.ContentDropMode;
         public LauncherGroupPosition GroupMenuPosition => Model.GroupMenuPosition;
 
+        LauncherToolbarIconMaker IconMaker { get; } = new LauncherToolbarIconMaker();
+
         #region theme
 
         [ThemeProperty]
-        public DependencyObject ToolbarPositionLeftIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Left);
+        public DependencyObject ToolbarPositionLeftIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Left, IconBox.Small);
         [ThemeProperty]
-        public DependencyObject ToolbarPositionTopIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Top);
+        public DependencyObject ToolbarPositionTopIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Top, IconBox.Small);
         [ThemeProperty]
-        public DependencyObject ToolbarPositionRightIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Right);
+        public DependencyObject ToolbarPositionRightIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Right, IconBox.Small);
         [ThemeProperty]
-        public DependencyObject ToolbarPositionBottomIcon => CreateToolbarPositionIcon(AppDesktopToolbarPosition.Bottom);
+        public DependencyObject ToolbarPositionBottomIcon => IconMaker.GetToolbarPositionImage(AppDesktopToolbarPosition.Bottom, IconBox.Small);
 
         [ThemeProperty]
         public ControlTemplate LauncherItemNormalButtonControlTemplate => LauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate();
@@ -345,10 +345,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         }
 
-        DependencyObject CreateToolbarPositionIcon(AppDesktopToolbarPosition toolbarPosition)
-        {
-            return Model.IconFactory.GetToolbarPositionImage(toolbarPosition, IconBox.Small);
-        }
 
         #region ViewDragAndDrop
 

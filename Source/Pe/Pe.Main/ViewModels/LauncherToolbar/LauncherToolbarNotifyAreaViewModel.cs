@@ -79,7 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         }
         public bool MenuHeaderHasAccessKey { get; } = false;
         public KeyGesture? MenuKeyGesture { get; }
-        public DependencyObject MenuIcon => Model.IconFactory.GetToolbarImage(Model.DockScreen, Screen.AllScreens, IconBox.Small, MenuIsChecked);
+        LauncherToolbarIconMaker IconMaker { get; } = new LauncherToolbarIconMaker();
+        public DependencyObject MenuIcon => IconMaker.GetToolbarImage(Model.DockScreen, Screen.AllScreens, IconBox.Small, MenuIsChecked);
         public bool MenuHasIcon { get; } = true;
         public bool MenuIsEnabled { get; } = true;
         public bool MenuIsChecked => Model.IsVisible;

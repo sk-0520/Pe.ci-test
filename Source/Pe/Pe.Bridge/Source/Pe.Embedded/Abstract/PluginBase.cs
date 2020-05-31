@@ -276,11 +276,6 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         {
             return BuildSupporttedTheme(ThemeKind.General, nameof(BuildGeneralTheme), parameter, p => Theme.BuildGeneralTheme(p));
         }
-        /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
-        public ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter)
-        {
-            return BuildSupporttedTheme(ThemeKind.LauncherGroup, nameof(BuildLauncherGroupTheme), parameter, p => Theme.BuildLauncherGroupTheme(p));
-        }
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {

@@ -6,6 +6,8 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 
@@ -22,10 +24,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         DefaultTheme? _defaultTheme;
 
         #endregion
-        public ThemeContainer(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeContainer(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+
+            EnvironmentParameters = environmentParameters;
+            UserAgentManager = userAgentManager;
 
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
@@ -35,6 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
+
+        EnvironmentParameters EnvironmentParameters { get; }
+        IUserAgentManager UserAgentManager { get; }
 
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -105,6 +113,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
                 }
             }
 
+            if(!CurrentThemeIsDefaultTheme) {
+                if(!DefaultTheme.IsLoaded(PluginKind.Theme)) {
+                    Logger.LogInformation("標準テーマ先生準備できておらず。");
+                    var pluginContextFactory = new PluginContextFactory(EnvironmentParameters, UserAgentManager);
+                    DefaultTheme.Load(PluginKind.Theme, pluginContextFactory.CreateContext(DefaultTheme.PluginInformations.PluginIdentifiers));
+                }
+            }
+
             return DispatcherWrapper.Get(() => buildDefaultTheme(parameter));
         }
 
@@ -114,14 +130,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
                 throw new InvalidOperationException();
             }
             return GetTheme(ThemeKind.General, CreateParameter(), CurrentTheme.BuildGeneralTheme, DefaultTheme.BuildGeneralTheme);
-        }
-
-        public ILauncherGroupTheme GetLauncherGroupTheme()
-        {
-            if(CurrentTheme == null) {
-                throw new InvalidOperationException();
-            }
-            return GetTheme(ThemeKind.LauncherGroup, CreateParameter(), CurrentTheme.BuildLauncherGroupTheme, DefaultTheme.BuildLauncherGroupTheme);
         }
 
         public ILauncherToolbarTheme GetLauncherToolbarTheme()

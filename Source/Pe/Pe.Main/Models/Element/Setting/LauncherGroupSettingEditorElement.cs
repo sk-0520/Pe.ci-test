@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
 
+
         #endregion
 
         #region function

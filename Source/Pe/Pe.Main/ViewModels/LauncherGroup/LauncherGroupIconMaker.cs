@@ -5,42 +5,33 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
-using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 
-namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
+namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
 {
-    internal class LauncherGroupTheme : ThemeBase, ILauncherGroupTheme
+    public class LauncherGroupIconMaker: ViewElementMakerBase
     {
-        public LauncherGroupTheme(IThemeParameter parameter)
-            : base(parameter)
-        { }
-
-        #region property
-        #endregion
-
         #region function
 
         string GetResourceKey(LauncherGroupImageName imageName)
         {
             return imageName switch
             {
-                LauncherGroupImageName.DirectoryNormal => "Image-LauncherGroup-Directory-Normal",
-                LauncherGroupImageName.DirectoryOpen => "Image-LauncherGroup-Directory-Open",
-                LauncherGroupImageName.File => "Image-LauncherGroup-File",
-                LauncherGroupImageName.Gear => "Image-LauncherGroup-Gear",
-                LauncherGroupImageName.Config => "Image-LauncherGroup-Config",
-                LauncherGroupImageName.Builder => "Image-LauncherGroup-Builder",
-                LauncherGroupImageName.Book => "Image-LauncherGroup-Book",
-                LauncherGroupImageName.Bookmark => "Image-LauncherGroup-Bookmark",
-                LauncherGroupImageName.Light => "Image-LauncherGroup-Light",
-                LauncherGroupImageName.Shortcut => "Image-LauncherGroup-Shortcut",
-                LauncherGroupImageName.Storage => "Image-LauncherGroup-Storage",
-                LauncherGroupImageName.Cloud => "Image-LauncherGroup-Cloud",
-                LauncherGroupImageName.User => "Image-LauncherGroup-User",
+                LauncherGroupImageName.DirectoryNormal => "Path-LauncherGroup-Directory-Normal",
+                LauncherGroupImageName.DirectoryOpen => "Path-LauncherGroup-Directory-Open",
+                LauncherGroupImageName.File => "Path-LauncherGroup-File",
+                LauncherGroupImageName.Gear => "Path-LauncherGroup-Gear",
+                LauncherGroupImageName.Config => "Path-LauncherGroup-Config",
+                LauncherGroupImageName.Builder => "Path-LauncherGroup-Builder",
+                LauncherGroupImageName.Book => "Path-LauncherGroup-Book",
+                LauncherGroupImageName.Bookmark => "Path-LauncherGroup-Bookmark",
+                LauncherGroupImageName.Light => "Path-LauncherGroup-Light",
+                LauncherGroupImageName.Shortcut => "Path-LauncherGroup-Shortcut",
+                LauncherGroupImageName.Storage => "Path-LauncherGroup-Storage",
+                LauncherGroupImageName.Cloud => "Path-LauncherGroup-Cloud",
+                LauncherGroupImageName.User => "Path-LauncherGroup-User",
                 _ => throw new NotImplementedException(),
             };
         }
@@ -79,11 +70,6 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return viewBox;
         }
 
-        #endregion
-
-        #region ILauncherGroupTheme
-
-        /// <inheritdoc cref="ILauncherGroupTheme.GetGroupImage(LauncherGroupImageName, Color, IconBox, bool)"/>
         public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, bool isStrong)
         {
             return GetGroupImageCore(imageName, imageColor, iconBox, isStrong);

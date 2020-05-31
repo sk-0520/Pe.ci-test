@@ -14,10 +14,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// </summary>
         General,
         /// <summary>
-        /// ランチャーグループ。
-        /// </summary>
-        LauncherGroup,
-        /// <summary>
         /// ランチャーツールバー。
         /// </summary>
         LauncherToolbar,
@@ -89,13 +85,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <param name="parameter"></param>
         /// <returns></returns>
         IGeneralTheme BuildGeneralTheme(IThemeParameter parameter);
-        /// <summary>
-        /// ランチャーグループテーマ生成。
-        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter);
         /// <summary>
         /// ランチャーツールバーテーマ生成。
         /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>

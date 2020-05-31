@@ -200,6 +200,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Normal,
     }
 
+    public enum LauncherGroupImageName
+    {
+        DirectoryNormal,
+        DirectoryOpen,
+        File,
+        Gear,
+        Config,
+        Builder,
+        Bookmark,
+        Book,
+        Light,
+        Shortcut,
+        Storage,
+        Cloud,
+        User,
+    }
+
     /// <summary>
     /// グループメニューの表示位置。
     /// </summary>

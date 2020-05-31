@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
@@ -12,9 +13,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    public abstract class ThemeBase
+    public abstract class DefaultThemeBase
     {
-        protected ThemeBase(IThemeParameter parameter)
+        protected DefaultThemeBase(IThemeParameter parameter)
         {
             PlatformTheme = parameter.PlatformTheme;
             DispatcherWrapper = parameter.DispatcherWrapper;
@@ -77,12 +78,13 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return box;
         }
 
-        protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
 
-        protected TValue GetResourceValue<TValue>(string interfaceName, string methodName)
+        protected TValue GetResourceValue<TValue>(string parentName, string targetName)
         {
-            var key = interfaceName + '.' + methodName;
-            return (TValue)Application.Current.Resources[key];
+            var key = parentName + '.' + targetName;
+            var result =  (TValue)Application.Current.Resources[key];
+            Debug.Assert(result != null);
+            return result;
 
         }
 

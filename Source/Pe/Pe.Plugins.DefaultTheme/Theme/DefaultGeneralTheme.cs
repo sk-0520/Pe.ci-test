@@ -9,18 +9,18 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal class GeneralTheme : ThemeBase, IGeneralTheme
+    internal class DefaultGeneralTheme : DefaultThemeBase, IGeneralTheme
     {
-        public GeneralTheme(IThemeParameter parameter)
+        public DefaultGeneralTheme(IThemeParameter parameter)
             : base(parameter)
         { }
 
         #region IGeneralTheme
 
-        public Geometry GetGeometryImage(GeneralGeometryImageKind kind, IconBox iconBox)
+        public Geometry GetPathImage(GeneralPathImageKind kind, IconBox iconBox)
         {
-            var key = "Image-General-" + kind.ToString();
-            return (Geometry)Application.Current.Resources[key];
+            var baseKey = "Path-General-" + kind.ToString();
+            return GetResourceValue<Geometry>(nameof(DefaultGeneralTheme), baseKey);
         }
 
         #endregion

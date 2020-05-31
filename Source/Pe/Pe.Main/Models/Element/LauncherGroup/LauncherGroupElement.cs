@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
-    public class LauncherGroupElement : ElementBase, ILauncherGroupId
+    public class LauncherGroupElement: ElementBase, ILauncherGroupId
     {
         public LauncherGroupElement(Guid launcherGroupId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)

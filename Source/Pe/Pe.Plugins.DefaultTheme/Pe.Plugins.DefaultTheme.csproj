@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Page Remove="Views\Resources\ImageResource.xaml" />
+    <Page Remove="Views\Resources\DefaultPathResource.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Views\Resources\ImageResource.xaml">
+    <Resource Include="Views\Resources\DefaultPathResource.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
   </ItemGroup>

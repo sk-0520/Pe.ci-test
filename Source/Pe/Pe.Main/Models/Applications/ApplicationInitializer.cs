@@ -47,6 +47,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CommandLineSwitchDebugDevelopMode { get; } = "debug-dev-mode";
         public bool IsDebugDevelopMode { get; private set; }
 #endif
+        /// <summary>
+        /// テストプラグイン格納ディレクトリパス。
+        /// </summary>
+        string CommandLineTestPluginDirectoryPath { get; } = "test-plugin-dir";
+        /// <summary>
+        /// テストプラグイン名。
+        /// <para>通常は<see cref="CommandLineTestPluginDirectoryPath"/>のディレクトリ名を使用するが、デバッグ実行時などのプラグインディレクトリ名とプラグイン名が異なる場合に指定する。</para>
+        /// <para>なお指定の際には拡張子を除外すること(plugin-name.dll -> plugin-name)</para>
+        /// </summary>
+        string CommandLineTestPluginName { get; } = "test-plugin-name";
 
         public bool IsFirstStartup { get; private set; }
         public RunMode RunMode { get; private set; }
@@ -61,6 +71,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public Mutex? Mutex { get; private set; }
 
+        public string TestPluginDirectoryPath { get; private set; } = string.Empty;
+        public string TestPluginName { get; private set; } = string.Empty;
         #endregion
 
         #region function
@@ -93,6 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #if DEBUG
             commandLine.Add(longKey: CommandLineSwitchDebugDevelopMode, hasValue: false);
 #endif
+            commandLine.Add(longKey: CommandLineTestPluginDirectoryPath, hasValue: true);
+            commandLine.Add(longKey: CommandLineTestPluginName, hasValue: true);
 
             commandLine.Parse();
 
@@ -108,8 +122,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             var result = MessageBox.Show(
-                Properties.Resources.String_Unknown_BetaVersion_Message,
-                Properties.Resources.String_Unknown_BetaVersion_Caption,
+                Properties.Resources.String_BetaVersion_Unknown_Message,
+                Properties.Resources.String_BetaVersion_Unknown_Caption,
                 MessageBoxButton.OKCancel,
                 MessageBoxImage.Warning,
                 MessageBoxResult.Cancel
@@ -118,6 +132,64 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return result == MessageBoxResult.OK;
         }
 #endif
+        bool ShowCommandLineTestPlugin(CommandLine commandLine, EnvironmentParameters environmentParameters)
+        {
+            var testPluginDirectoryPath = commandLine.GetValue(CommandLineTestPluginDirectoryPath, string.Empty);
+            if(string.IsNullOrWhiteSpace(testPluginDirectoryPath)) {
+                return true;
+            }
+
+            var expandedTestPluginDirectoryPath = Environment.ExpandEnvironmentVariables(testPluginDirectoryPath);
+
+            if(!Directory.Exists(expandedTestPluginDirectoryPath)) {
+                MessageBox.Show(
+                    TextUtility.ReplaceFromDictionary(
+                        Properties.Resources.String_TestPlugin_NotFound_Message_Format,
+                        new Dictionary<string, string>() {
+                            ["PATH"] = testPluginDirectoryPath,
+                        }
+                    ),
+                    Properties.Resources.String_TestPlugin_NotFound_Caption,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                return false;
+            }
+
+            var userDirKey = commandLine.GetValue(EnvironmentParameters.CommandLineKeyUserDirectory, string.Empty);
+            var machineDirKey = commandLine.GetValue(EnvironmentParameters.CommandLineKeyMachineDirectory, string.Empty);
+            var tempDirKey = commandLine.GetValue(EnvironmentParameters.CommandLineKeyTemporaryDirectory, string.Empty);
+
+            var hasEmpty = new[] { userDirKey, machineDirKey, tempDirKey, }.Any(i => string.IsNullOrWhiteSpace(i));
+            if(hasEmpty) {
+                var result = MessageBox.Show(
+                    TextUtility.ReplaceFromDictionary(
+                        Properties.Resources.String_TestPlugin_Data_Message_Format,
+                        new Dictionary<string, string>() {
+                            ["COMMAND-USER-KEY"] = EnvironmentParameters.CommandLineKeyUserDirectory,
+                            ["COMMAND-MACHINE-KEY"] = EnvironmentParameters.CommandLineKeyMachineDirectory,
+                            ["COMMAND-TEMP-KEY"] = EnvironmentParameters.CommandLineKeyTemporaryDirectory,
+                            ["USER-DIR"] = userDirKey,
+                            ["MACHINE-DIR"] = machineDirKey,
+                            ["TEMP-DIR"] = tempDirKey,
+                        }
+                    ),
+                    Properties.Resources.String_TestPlugin_Data_Caption,
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Warning,
+                    MessageBoxResult.Cancel
+                );
+
+                if(result != MessageBoxResult.OK) {
+                    return false;
+                }
+            }
+
+            TestPluginDirectoryPath = expandedTestPluginDirectoryPath;
+            TestPluginName = commandLine.GetValue(CommandLineTestPluginName, string.Empty);
+
+            return true;
+        }
 
         ApplicationEnvironmentParameters InitializeEnvironment(CommandLine commandLine)
         {
@@ -446,6 +518,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                         logger.LogInformation("使用許諾得られず");
                         return false;
                     }
+                }
+            }
+
+            if(RunMode != RunMode.CrashReport) {
+                if(!ShowCommandLineTestPlugin(commandLine, environmentParameters)) {
+                    return false;
                 }
             }
 

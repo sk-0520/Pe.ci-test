@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
         protected internal override void Load(IPluginContext pluginContext)
         {
             ResourceDictionary = new ResourceDictionary();
-            var uri = new Uri("pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ThemeResource.xaml", UriKind.Absolute);
+            var uri = new Uri("pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicThemeResource.xaml", UriKind.Absolute);
             ResourceDictionary.Source = uri;
 
             Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
@@ -53,8 +53,6 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
             return new ClassicGeneralTheme(parameter);
         }
 
-        /// <inheritdoc cref="ITheme.BuildLauncherGroupTheme(IThemeParameter)"/>
-        public override ILauncherGroupTheme BuildLauncherGroupTheme(IThemeParameter parameter) => throw new NotImplementedException();
         /// <inheritdoc cref="ITheme.BuildLauncherToolbarTheme(IThemeParameter)"/>
         public override ILauncherToolbarTheme BuildLauncherToolbarTheme(IThemeParameter parameter)
         {

@@ -11,9 +11,9 @@ using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 {
-    internal class CommandTheme : ThemeBase, ICommandTheme
+    internal class DefaultCommandTheme : DefaultThemeBase, ICommandTheme
     {
-        public CommandTheme(IThemeParameter parameter)
+        public DefaultCommandTheme(IThemeParameter parameter)
             : base(parameter)
         { }
 
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             //var color = PlatformTheme.GetTaskbarColor();
             //var fore = MediaUtility.GetAutoColor(color);
             //return new SolidColorBrush(fore);
-            return (Brush)Application.Current.Resources["ICommandTheme-GetGripBrush"];
+            return GetResourceValue<Brush>(nameof(DefaultCommandTheme), nameof(GetGripBrush));
         }
 
         [return: PixelKind(Px.Logical)]
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
 
         public ControlTemplate GetExecuteButtonControlTemplate(IconBox icon)
         {
-            return (ControlTemplate)Application.Current.Resources["ICommandTheme-ExecuteButton"];
+            return GetResourceValue<ControlTemplate>(nameof(DefaultCommandTheme), nameof(GetExecuteButtonControlTemplate));
         }
 
 

@@ -20,7 +20,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class LauncherGroupsSettingEditorElement : SettingEditorElementBase
+    public class LauncherGroupsSettingEditorElement: SettingEditorElementBase
     {
         public LauncherGroupsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public ObservableCollection<LauncherGroupSettingEditorElement> GroupItems { get; }
         public ObservableCollection<WrapModel<Guid>> LauncherItems { get; } = new ObservableCollection<WrapModel<Guid>>();
+
 
         #endregion
 

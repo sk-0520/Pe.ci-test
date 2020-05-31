@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Core.Models;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element
+namespace ContentTypeTextNet.Pe.Main.ViewModels
 {
-    public class ViewElementFactoryBase
+    /// <summary>
+    /// 表示要素生成処理。
+    /// </summary>
+    public class ViewElementMakerBase
     {
         #region function
 
@@ -53,6 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element
             }
             return box;
         }
+
+        protected Effect GetStrongEffect() => (Effect)Application.Current.Resources["Effect-Strong"];
 
         #endregion
     }

@@ -2,7 +2,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
-  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemNormalButton" TargetType="Button">
+  <ControlTemplate x:Key="DefaultLauncherToolbarTheme.GetLauncherItemNormalButtonControlTemplate" TargetType="Button">
     <Grid x:Name="PART_content">
       <Grid.Background>
         <SolidColorBrush Color="Transparent" />
@@ -36,7 +36,7 @@
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
-  <ControlTemplate x:Key="ILauncherToolbarTheme-LauncherItemToggleButton" TargetType="ToggleButton">
+  <ControlTemplate x:Key="DefaultLauncherToolbarTheme.GetLauncherItemToggleButtonControlTemplate" TargetType="ToggleButton">
     <Grid x:Name="PART_content">
       <Grid.Background>
         <SolidColorBrush Color="Transparent" />
