@@ -1439,10 +1439,10 @@
   <data name="String_AppManager_Reboot_Update_A" xml:space="preserve">
     <value>アップデートして再起動(_R)</value>
   </data>
-  <data name="String_Unknown_BetaVersion_Caption" xml:space="preserve">
+  <data name="String_BetaVersion_Unknown_Caption" xml:space="preserve">
     <value>β版直接実行注意</value>
   </data>
-  <data name="String_Unknown_BetaVersion_Message" xml:space="preserve">
+  <data name="String_BetaVersion_Unknown_Message" xml:space="preserve">
     <value>本バージョンはβ版です。
 不具合修正確確認や動作確認のために使用されます。
 
@@ -1953,5 +1953,25 @@
   </data>
   <data name="String_Setting_Generals_LauncherToolbar_GroupMenuPosition_A" xml:space="preserve">
     <value>グループメニュー位置</value>
+  </data>
+  <data name="String_TestPlugin_Data_Caption" xml:space="preserve">
+    <value>プラグインテスト</value>
+  </data>
+  <data name="String_TestPlugin_Data_Message_Format" xml:space="preserve">
+    <value>テストプラグインが指定されていますがデータディレクトリが指定されていません
+ユーザーデータデータディレクトリ(${COMMAND-USER-KEY}):  ${USER-DIR}
+端末データデータディレクトリ(${COMMAND-MACHINE-KEY}): ${MACHINE-DIR}
+一時データディレクトリ(${COMMAND-TEMP-KEY}): ${TEMP-DIR}
+
+このまま続行すると Pe の既存データを壊す可能性があります
+このまま実行してもよろしいですか。</value>
+  </data>
+  <data name="String_TestPlugin_NotFound_Caption" xml:space="preserve">
+    <value>プラグインテスト</value>
+  </data>
+  <data name="String_TestPlugin_NotFound_Message_Format" xml:space="preserve">
+    <value>指定されたプラグインディレクトリが存在しません
+パス: ${PATH}
+アプリケーションを終了します</value>
   </data>
 </root>

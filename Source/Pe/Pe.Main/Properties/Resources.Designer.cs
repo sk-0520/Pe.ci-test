@@ -599,6 +599,30 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   β版直接実行注意 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_BetaVersion_Unknown_Caption {
+            get {
+                return ResourceManager.GetString("String_BetaVersion_Unknown_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   本バージョンはβ版です。
+        ///不具合修正確確認や動作確認のために使用されます。
+        ///
+        ///このメッセージはβ版 Pe を直接実行した場合に表示されます。
+        ///このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
+        ///
+        ///β版 Pe をこのまま実行してよろしいですか。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_BetaVersion_Unknown_Message {
+            get {
+                return ResourceManager.GetString("String_BetaVersion_Unknown_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   コマンドランチャー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Command_Caption {
@@ -5551,26 +5575,46 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   β版直接実行注意 に類似しているローカライズされた文字列を検索します。
+        ///   プラグインテスト に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Unknown_BetaVersion_Caption {
+        public static string String_TestPlugin_Data_Caption {
             get {
-                return ResourceManager.GetString("String_Unknown_BetaVersion_Caption", resourceCulture);
+                return ResourceManager.GetString("String_TestPlugin_Data_Caption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   本バージョンはβ版です。
-        ///不具合修正確確認や動作確認のために使用されます。
+        ///   テストプラグインが指定されていますがデータディレクトリが指定されていません
+        ///ユーザーデータデータディレクトリ(${COMMAND-USER-KEY}):  ${USER-DIR}
+        ///端末データデータディレクトリ(${COMMAND-MACHINE-KEY}): ${MACHINE-DIR}
+        ///一時データディレクトリ(${COMMAND-TEMP-KEY}): ${TEMP-DIR}
         ///
-        ///このメッセージはβ版 Pe を直接実行した場合に表示されます。
-        ///このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
-        ///
-        ///β版 Pe をこのまま実行してよろしいですか。 に類似しているローカライズされた文字列を検索します。
+        ///このまま続行すると Pe の既存データを壊す可能性があります
+        ///このまま実行してもよろしいですか。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Unknown_BetaVersion_Message {
+        public static string String_TestPlugin_Data_Message_Format {
             get {
-                return ResourceManager.GetString("String_Unknown_BetaVersion_Message", resourceCulture);
+                return ResourceManager.GetString("String_TestPlugin_Data_Message_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインテスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_TestPlugin_NotFound_Caption {
+            get {
+                return ResourceManager.GetString("String_TestPlugin_NotFound_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   指定されたプラグインディレクトリが存在しません
+        ///パス: ${PATH}
+        ///アプリケーションを終了します に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_TestPlugin_NotFound_Message_Format {
+            get {
+                return ResourceManager.GetString("String_TestPlugin_NotFound_Message_Format", resourceCulture);
             }
         }
     }
