@@ -18,10 +18,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     {
         #region variable
 
-        IList<IAddon>? _launcherItemSupportAddons;
-        IList<IAddon>? _commandFinderSupportAddons;
-        IList<IAddon>? _widgetSupportAddons;
-        IList<IAddon>? _backgroundSupportAddons;
+        List<IAddon>? _launcherItemSupportAddons;
+        List<IAddon>? _commandFinderSupportAddons;
+        List<IAddon>? _widgetSupportAddons;
+        List<IAddon>? _backgroundSupportAddons;
 
 
         #endregion
@@ -53,10 +53,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// </summary>
         ISet<IAddon> Addons { get; } = new HashSet<IAddon>();
 
-        IList<IAddon> LauncherItemSupportAddons => this._launcherItemSupportAddons ??= GetSupportAddons(AddonKind.LauncherItem);
-        IList<IAddon> CommandFinderSupportAddons => this._commandFinderSupportAddons ??= GetSupportAddons(AddonKind.CommandFinder);
-        IList<IAddon> WidgetSupportAddons => this._widgetSupportAddons ??= GetSupportAddons(AddonKind.Widget);
-        IList<IAddon> BackgroundSupportAddons => this._backgroundSupportAddons ??= GetSupportAddons(AddonKind.Background);
+        List<IAddon> LauncherItemSupportAddons => this._launcherItemSupportAddons ??= GetSupportAddons(AddonKind.LauncherItem);
+        List<IAddon> CommandFinderSupportAddons => this._commandFinderSupportAddons ??= GetSupportAddons(AddonKind.CommandFinder);
+        List<IAddon> WidgetSupportAddons => this._widgetSupportAddons ??= GetSupportAddons(AddonKind.Widget);
+        List<IAddon> BackgroundSupportAddons => this._backgroundSupportAddons ??= GetSupportAddons(AddonKind.Background);
 
         #endregion
 
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             Addons.Add(addon);
         }
 
-        private IList<IAddon> GetSupportAddons(AddonKind kind)
+        private List<IAddon> GetSupportAddons(AddonKind kind)
         {
             var result = new List<IAddon>();
 
@@ -85,6 +85,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return result;
         }
 
+        public CommandFinderAddonWrapper GetCommandFinder()
+        {
+            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, LoggerFactory);
+        }
 
         #endregion
     }
