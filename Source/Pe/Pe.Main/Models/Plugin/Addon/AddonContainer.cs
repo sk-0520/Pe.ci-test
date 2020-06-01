@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public CommandFinderAddonWrapper GetCommandFinder()
         {
-            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, LoggerFactory);
+            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, EnvironmentParameters, UserAgentManager, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
         #endregion
