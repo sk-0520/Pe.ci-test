@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// </summary>
         /// <param name="commandItem"></param>
         /// <returns></returns>
-        bool Equals(ICommandItem? commandItem);
+        bool IsEquals(ICommandItem? commandItem);
 
         #endregion
     }

@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 //SelectedItem = CommandItems.FirstOrDefault();
                 SelectedItem = prevSelectedItem == null
                     ? CommandItems.FirstOrDefault()
-                    : CommandItems.FirstOrDefault(i => prevSelectedItem.Equals(i))
+                    : CommandItems.FirstOrDefault(i => prevSelectedItem.IsEquals(i))
                 ;
 
                 if(SelectedItem == null) {

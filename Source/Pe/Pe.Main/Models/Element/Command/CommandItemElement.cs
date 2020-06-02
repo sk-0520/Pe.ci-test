@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         }
         public void Execute(ICommandExecuteParameter parameter) => ExecuteImpl(parameter);
 
-        public bool Equals(ICommandItem? commandItem)
+        public bool IsEquals(ICommandItem? commandItem)
         {
             if(commandItem == null) {
                 return false;
