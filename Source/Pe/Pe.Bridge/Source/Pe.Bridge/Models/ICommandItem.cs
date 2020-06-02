@@ -67,9 +67,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region property
 
         /// <summary>
-        /// このアイテムを選択可能な全文字列。
+        /// このアイテムを選択可能な入力文字列。
+        /// <para>この文字列を入力すれば確実にリストアップされることを保証する</para>
         /// </summary>
-        public string FullValueText { get; }
+        public string FullMatchValue { get; }
 
         /// <summary>
         /// 小さく表示する種別文言。

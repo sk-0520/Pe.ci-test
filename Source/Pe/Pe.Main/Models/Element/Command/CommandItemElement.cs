@@ -48,15 +48,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public abstract CommandItemKind Kind { get; }
 
-        public string FullValueText => Kind switch
-        {
-            CommandItemKind.LauncherItem => string.Join(string.Empty, HeaderValues.Select(i => i.Value)),
-            CommandItemKind.LauncherItemName=> string.Join(string.Empty, HeaderValues.Select(i => i.Value)),
-            CommandItemKind.LauncherItemCode => string.Join(string.Empty, DescriptionValues.Select(i => i.Value)),
-            CommandItemKind.LauncherItemTag => string.Join(string.Empty, DescriptionValues.Select(i => i.Value)),
-            CommandItemKind.ApplicationCommand => string.Join(string.Empty, HeaderValues.Select(i => i.Value)),
-            _ => throw new NotImplementedException(),
-        };
+        public string FullMatchValue {
+            get
+            {
+                switch(Kind) {
+                    case CommandItemKind.LauncherItem:
+                    case CommandItemKind.LauncherItemName:
+                        return this.GetHeaderText();
+
+                    case CommandItemKind.LauncherItemCode:
+                    case CommandItemKind.LauncherItemTag:
+                        return this.GetDescriptionText();
+
+                    case CommandItemKind.ApplicationCommand:
+                        return this.GetHeaderText();
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
+
 
         public IReadOnlyList<HitValue> HeaderValues => EditableHeaderValues;
 

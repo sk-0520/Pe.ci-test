@@ -185,9 +185,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 } else if(!string.IsNullOrWhiteSpace(InputValue)) {
                     InputState = InputState.Listup;
                 }
+                ScrollSelectedItemRequest.Send();
+
             } catch(OperationCanceledException ex) {
                 Logger.LogDebug(ex, "入力処理はキャンセルされた");
-
             }
         }
 
@@ -311,7 +312,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 Logger.LogTrace("補完！");
                 var now = SelectedItem;
 
-                await ChangeInutValueAsync(now.FullValueText);
+                await ChangeInutValueAsync(now.FullMatchValue);
 
                 RaisePropertyChanged(nameof(InputValue));
 
