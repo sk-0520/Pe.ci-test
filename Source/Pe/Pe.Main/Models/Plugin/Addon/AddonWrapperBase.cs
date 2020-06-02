@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -9,8 +10,17 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal abstract class AddonWrapperBase: DisposerBase
+    /// <summary>
+    /// 特定に機能単位によるアドオン機能のラッパー。
+    /// </summary>
+    /// <typeparam name="TFunctionUnit"></typeparam>
+    internal abstract class AddonWrapperBase<TFunctionUnit>: DisposerBase
     {
+        #region variable
+
+        IReadOnlyList<TFunctionUnit>? _functionUnits;
+
+        #endregion
         protected AddonWrapperBase(IReadOnlyList<IAddon> addons, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
@@ -28,19 +38,54 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected ILogger Logger { get; }
         protected EnvironmentParameters EnvironmentParameters { get; }
         protected IUserAgentManager UserAgentManager { get; }
-        protected IPlatformTheme PlatformTheme{get;}
+        protected IPlatformTheme PlatformTheme { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
-
-
+        /// <summary>
+        /// 対象アドオン一覧。
+        /// </summary>
         protected IReadOnlyList<IAddon> Addons { get; }
 
+        /// <summary>
+        /// 担当する処理単位。
+        /// </summary>
+        protected abstract AddonKind AddonKind { get; }
+
+        /// <summary>
+        /// 処理単位一覧。
+        /// <para>初回参照時に読み込まれる。</para>
+        /// </summary>
+        public IReadOnlyList<TFunctionUnit> FunctionUnits
+        {
+            get => this._functionUnits ??= LoadFunctionUnits();
+        }
 
         #endregion
 
         #region function
 
-        protected AddonParameter CreateParameter() => new AddonParameter(PlatformTheme, DispatcherWrapper, LoggerFactory);
+        /// <summary>
+        /// <see cref="AddonParameter"/> を普通に作成する。
+        /// </summary>
+        /// <returns></returns>
+        protected virtual AddonParameter CreateParameter() => new AddonParameter(PlatformTheme, DispatcherWrapper, LoggerFactory);
 
+        protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
+
+        protected IReadOnlyList<TFunctionUnit> LoadFunctionUnits()
+        {
+            var list = new List<TFunctionUnit>(Addons.Count);
+            foreach(var addon in Addons) {
+                Debug.Assert(addon.IsSupported(AddonKind));
+
+                if(!addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
+                    var pluginContextFactory = new PluginContextFactory(EnvironmentParameters, UserAgentManager);
+                    addon.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(addon.PluginInformations.PluginIdentifiers));
+                }
+                var functionUnit = BuildFunctionUnit(addon);
+                list.Add(functionUnit);
+            }
+            return list;
+        }
 
         #endregion
     }
