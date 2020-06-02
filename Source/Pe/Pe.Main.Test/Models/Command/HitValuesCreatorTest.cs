@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Command
 
             var hvc = new HitValuesCreator(Test.LoggerFactory);
             var matchers = hvc.GetMatches(source, regex);
-            var ranges = hvc.ConvertRanges(input, matchers);
-            var hitValues = hvc.ConvertHitValues(input, source, ranges);
-            var actual = hvc.CalcScore(input, source, hitValues);
+            var ranges = hvc.ConvertRanges(matchers);
+            var hitValues = hvc.ConvertHitValues(source, ranges);
+            var actual = hvc.CalcScore(source, hitValues);
             Assert.AreEqual(result, actual);
         }
 
