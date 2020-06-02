@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
@@ -7,10 +8,15 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 {
     internal class FileFinderCommandItem: ICommandItem
     {
-        public FileFinderCommandItem(string path)
+        public FileFinderCommandItem(string path, string fullMatchValue)
         {
             Path = path;
+            FullMatchValue = fullMatchValue;
         }
+
+        public FileFinderCommandItem(string path)
+            : this(path, path)
+        { }
 
         #region property
 
@@ -34,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         public int Score { get; internal set; }
 
-        public string FullMatchValue => Path;
+        public string FullMatchValue { get; }
 
         public void Execute(ICommandExecuteParameter parameter)
         {

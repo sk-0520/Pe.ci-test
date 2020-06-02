@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Printing;
@@ -30,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         ILogger Logger { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+
+        bool IncludeHiddenFile { get; } = false;
 
         #endregion
 
@@ -80,27 +83,49 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             return filePattern;
         }
 
-        IEnumerable<ICommandItem> GetChildren(string description, string displayBase, string directoryPath, string filePattern, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        IEnumerable<ICommandItem> GetOwnerAndChildren(string directoryPath, string filePattern, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(!Directory.Exists(directoryPath)) {
                 yield break;
             }
 
+            if(string.IsNullOrWhiteSpace(filePattern)) {
+                var ownerItem = new FileFinderCommandItem(directoryPath);
+                ownerItem.HeaderValues.Add(new HitValue(directoryPath, false));
+                ownerItem.DescriptionValues.Add(new HitValue("ディレクトリ", false));
+                yield return ownerItem;
+            }
 
             var fileNameRegex = new Regex(Regex.Escape(filePattern).Replace("\\?", ".").Replace("\\*", ".*"), RegexOptions.IgnoreCase);
             var searchPattern = ConvertSearchPattern(filePattern);
             var dir = new DirectoryInfo(directoryPath);
-            var files = dir.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly);
-
-            Logger.LogTrace("searchPattern = {0}", searchPattern);
+            IEnumerable<FileSystemInfo>? files = null;
+            try {
+                files = dir.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly);
+            } catch(AccessViolationException ex) {
+                Logger.LogWarning(ex, "{0}, {1}", ex.Message, dir.FullName);
+            }
+            Debug.Assert(files != null);
 
             foreach(var file in files) {
+                if(!IncludeHiddenFile) {
+                    try {
+                        if(file.Attributes.HasFlag(FileAttributes.Hidden)) {
+                            continue;
+                        }
+                    } catch(AccessViolationException ex) {
+                        Logger.LogWarning(ex, "{0}, {1}", ex.Message, dir.FullName);
+                        continue;
+                    }
+                }
+
                 // この演算いやだなぁ
 
                 var fullPath = file.Attributes.HasFlag(FileAttributes.Directory)
                     ? (Path.EndsInDirectorySeparator(file.FullName) ? file.FullName : file.FullName + Path.DirectorySeparatorChar)
                     : file.FullName
                 ;
+                var fullMatchValue = Path.Combine(directoryPath, file.Name);
                 var item = new FileFinderCommandItem(fullPath);
 
                 if(string.IsNullOrWhiteSpace(filePattern)) {
@@ -108,8 +133,9 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                 } else {
                     var values = hitValuesCreator.GetHitValues(file.Name, fileNameRegex);
                     item.HeaderValues.AddRange(values);
+                    item.Score = hitValuesCreator.CalcScore(file.Name, values);
                 }
-                item.DescriptionValues.Add(new HitValue(description, false));
+                item.DescriptionValues.Add(new HitValue("ファイルパス", false));
 
                 yield return item;
             }
@@ -154,10 +180,9 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                 var envNextIndex = inputValue.IndexOf('%', envStartIndex + 1);
                 if(envNextIndex != -1) {
                     var expandedInputValue = Environment.ExpandEnvironmentVariables(inputValue);
-                    var inputDirValue = inputValue.Substring(inputValue.LastIndexOf('%'));
                     if(IsPath(expandedInputValue)) {
                         var parts = SplitPath(expandedInputValue);
-                        var items = GetChildren("ふぁいるぱす", inputDirValue, parts.directoryPath, parts.filePattern, hitValuesCreator, cancellationToken);
+                        var items = GetOwnerAndChildren(parts.directoryPath, parts.filePattern, hitValuesCreator, cancellationToken);
                         foreach(var item in items) {
                             yield return item;
                         }
@@ -170,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             if(Path.IsPathRooted(inputValue)) {
                 if(IsPath(inputValue)) {
                     var parts = SplitPath(inputValue);
-                    var items = GetChildren("ファイルパス", inputValue, parts.directoryPath, parts.filePattern, hitValuesCreator, cancellationToken);
+                    var items = GetOwnerAndChildren(parts.directoryPath, parts.filePattern, hitValuesCreator, cancellationToken);
                     foreach(var item in items) {
                         yield return item;
                     }
