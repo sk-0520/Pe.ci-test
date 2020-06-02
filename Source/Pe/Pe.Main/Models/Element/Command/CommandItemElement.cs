@@ -40,10 +40,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         protected abstract object GetIconImpl(IconBox iconBox);
         protected abstract void ExecuteImpl(ICommandExecuteParameter parameter);
+        protected abstract bool EqualsImpl(CommandItemElementBase commandItemElement);
 
         #endregion
 
-        #region IReadOnlyCommandItem
+        #region ICommandItem
 
         public abstract CommandItemKind Kind { get; }
 
@@ -79,6 +80,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             return GetIconImpl(iconBox);
         }
         public void Execute(ICommandExecuteParameter parameter) => ExecuteImpl(parameter);
+
+        public bool Equals(ICommandItem? commandItem)
+        {
+            if(commandItem == null) {
+                return false;
+            }
+
+            if(Kind != commandItem.Kind) {
+                return false;
+            }
+
+            if(commandItem is CommandItemElementBase commandItemElement) {
+                return EqualsImpl(commandItemElement);
+            }
+
+            return false;
+        }
 
         #endregion
 
@@ -117,6 +135,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
         }
 
+        protected override bool EqualsImpl(CommandItemElementBase commandItemElement)
+        {
+            if(commandItemElement is LauncherCommandItemElement launcherCommandItemElement) {
+                return LauncherItemElement == launcherCommandItemElement.LauncherItemElement;
+            }
+
+            return false;
+        }
+
         protected override void InitializeImpl()
         { }
 
@@ -153,6 +180,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             return Parameter.IconGetter(iconBox);
             //return Application.Current.Resources["pack://application:,,,/Pe.Main;component/Resources/Icon/App.ico"];
+        }
+
+        protected override bool EqualsImpl(CommandItemElementBase commandItemElement)
+        {
+            if(commandItemElement is ApplicationCommandItemElement  applicationCommandItemElement) {
+                return Parameter == applicationCommandItemElement.Parameter;
+            }
+
+            return false;
         }
 
         protected override void InitializeImpl()

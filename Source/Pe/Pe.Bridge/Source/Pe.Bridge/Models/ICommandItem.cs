@@ -110,6 +110,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <param name="parameter">実行パラメータ。</param>
         void Execute(ICommandExecuteParameter parameter);
 
+        /// <summary>
+        /// 対象が自身と同等であるかを調べる。
+        /// </summary>
+        /// <param name="commandItem"></param>
+        /// <returns></returns>
+        bool Equals(ICommandItem? commandItem);
+
         #endregion
     }
 }

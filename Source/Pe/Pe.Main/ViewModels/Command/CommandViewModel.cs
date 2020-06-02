@@ -140,7 +140,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 #if DEBUG
             DispatcherWrapper.VerifyAccess();
 #endif
-            CurrentSelectedItem = SelectedItem;
+            var prevSelectedItem = CurrentSelectedItem = SelectedItem;
+
             //SetProperty(ref this._inputValue, value);
             this._inputValue = value;
 
@@ -172,7 +173,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 #endif
 
                 SetCommandItems(commandItems);
-                SelectedItem = CommandItems.FirstOrDefault();
+                //SelectedItem = CommandItems.FirstOrDefault();
+                SelectedItem = prevSelectedItem == null
+                    ? CommandItems.FirstOrDefault()
+                    : CommandItems.FirstOrDefault(i => prevSelectedItem.Equals(i))
+                ;
+
                 if(SelectedItem == null) {
                     CurrentSelectedItem = null;
                     InputState = InputState.NotFound;

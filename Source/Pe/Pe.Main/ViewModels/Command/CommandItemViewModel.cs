@@ -88,6 +88,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             Item.Execute(parameter);
         }
 
+        public bool Equals(CommandItemViewModel commandItemViewModel)
+        {
+            return Item.Equals(commandItemViewModel.Item);
+        }
+
 
         #endregion
     }
