@@ -309,7 +309,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
                 RaisePropertyChanged(nameof(InputValue));
 
-                SelectedItem = now;
+                // 識別できんから無理だわ
+                //SelectedItem = now;
 
                 FocusEndRequest.Send();
                 ScrollSelectedItemRequest.Send();
