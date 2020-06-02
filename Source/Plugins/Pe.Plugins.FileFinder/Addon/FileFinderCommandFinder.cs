@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         ILogger Logger { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
-        bool IncludeHiddenFile { get; } = false;
+        bool IncludeHiddenFile { get; } = true;
 
         #endregion
 
@@ -102,19 +102,14 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             IEnumerable<FileSystemInfo>? files = null;
             try {
                 files = dir.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly);
-            } catch(AccessViolationException ex) {
+            } catch(UnauthorizedAccessException ex) {
                 Logger.LogWarning(ex, "{0}, {1}", ex.Message, dir.FullName);
+                yield break;
             }
-            Debug.Assert(files != null);
 
             foreach(var file in files) {
                 if(!IncludeHiddenFile) {
-                    try {
-                        if(file.Attributes.HasFlag(FileAttributes.Hidden)) {
-                            continue;
-                        }
-                    } catch(AccessViolationException ex) {
-                        Logger.LogWarning(ex, "{0}, {1}", ex.Message, dir.FullName);
+                    if(file.Attributes.HasFlag(FileAttributes.Hidden)) {
                         continue;
                     }
                 }

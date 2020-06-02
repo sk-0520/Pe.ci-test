@@ -194,7 +194,7 @@
               <KeyBinding Gesture="Esc" Command="{Binding HideCommand}" />
               <KeyBinding Gesture="Up" Command="{Binding UpSelectItemCommand}" />
               <KeyBinding Gesture="Down" Command="{Binding DownSelectItemCommand}" />
-              <KeyBinding Gesture="Right" Command="{Binding EnterSelectedItemCommand}" />
+              <KeyBinding Gesture="Right" Modifiers="Ctrl" Command="{Binding EnterSelectedItemCommand}" />
               <KeyBinding Gesture="Tab" Command="{Binding EnterSelectedItemCommand}" />
             </TextBox.InputBindings>
 
