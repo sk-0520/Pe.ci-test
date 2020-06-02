@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         public int Score { get; internal set; }
 
-        public string FullMatchValue => throw new NotImplementedException();
+        public string FullMatchValue => Path;
 
         public void Execute(ICommandExecuteParameter parameter)
         {

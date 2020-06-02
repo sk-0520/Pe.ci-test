@@ -72,14 +72,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     EditableKind = kind,
                 };
                 result.Initialize();
-                var ranges = hitValuesCreator.ConvertRanges(input, nameMatches);
-                var hitValue = hitValuesCreator.ConvertHitValues(input, targetValue, ranges);
+                var ranges = hitValuesCreator.ConvertRanges(nameMatches);
+                var hitValue = hitValuesCreator.ConvertHitValues(targetValue, ranges);
                 if(kind == CommandItemKind.LauncherItemName) {
                     result.EditableHeaderValues.SetRange(hitValue);
-                    result.EditableScore = hitValuesCreator.CalcScore(input, targetValue, result.EditableHeaderValues);
+                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableHeaderValues);
                 } else {
                     result.EditableDescriptionValues.SetRange(hitValue);
-                    result.EditableScore = hitValuesCreator.CalcScore(input, targetValue, result.EditableDescriptionValues);
+                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableDescriptionValues);
                 }
                 return result;
             }

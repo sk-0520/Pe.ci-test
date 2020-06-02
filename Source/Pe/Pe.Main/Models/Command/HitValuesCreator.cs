@@ -26,8 +26,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         #region IHitValuesCreator
 
+        /// <inheritdoc cref="IHitValuesCreator.NoBonus"/>
         public double NoBonus => 1;
 
+        /// <inheritdoc cref="IHitValuesCreator.GetScore(ScoreKind, double)"/>
         public int GetScore(ScoreKind scoreKind, double bonus)
         {
             return scoreKind switch
@@ -42,12 +44,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             };
         }
 
+        /// <inheritdoc cref="IHitValuesCreator.GetMatches(string, Regex)"/>
+        public IReadOnlyList<Match> GetMatches(string source, Regex regex) => regex.Matches(source).Cast<Match>().ToList();
 
-        public IReadOnlyList<Match> GetMatches(string input, Regex regex) => regex.Matches(input).Cast<Match>().ToList();
+        /// <inheritdoc cref="IHitValuesCreator.ConvertRanges(IEnumerable{Match})"/>
+        public IReadOnlyList<Range> ConvertRanges(IEnumerable<Match> matches) => matches.Select(i => new Range(i.Index, i.Index + i.Length)).ToList();
 
-        public IReadOnlyList<Range> ConvertRanges(ReadOnlySpan<char> input, IEnumerable<Match> matches) => matches.Select(i => new Range(i.Index, i.Index + i.Length)).ToList();
-
-        public List<HitValue> ConvertHitValues(ReadOnlySpan<char> input, ReadOnlySpan<char> source, IReadOnlyList<Range> hitRanges)
+        /// <inheritdoc cref="IHitValuesCreator.ConvertHitValues(ReadOnlySpan{char}, IReadOnlyList{Range})"/>
+        public IReadOnlyList<HitValue> ConvertHitValues(ReadOnlySpan<char> source, IReadOnlyList<Range> hitRanges)
         {
             if(hitRanges.Count == 0) {
                 return new List<HitValue>() {
@@ -91,7 +95,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             return result;
         }
 
-        public int CalcScore(ReadOnlySpan<char> input, ReadOnlySpan<char> source, IReadOnlyList<HitValue> hitValues)
+        /// <inheritdoc cref="IHitValuesCreator.CalcScore(ReadOnlySpan{char}, ReadOnlySpan{char}, IReadOnlyList{HitValue})"/>
+        public int CalcScore(ReadOnlySpan<char> source, IReadOnlyList<HitValue> hitValues)
         {
             if(hitValues.Count == 1 && hitValues.All(i => i.IsHit)) {
                 // 完全一致

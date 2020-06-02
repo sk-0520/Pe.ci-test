@@ -259,14 +259,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             foreach(var parameter in Parameters) {
                 var parameterMatches = hitValuesCreator.GetMatches(parameter.Header, inputRegex);
                 if(parameterMatches.Any()) {
-                    var ranges = hitValuesCreator.ConvertRanges(inputValue, parameterMatches);
-                    var hitValue = hitValuesCreator.ConvertHitValues(inputValue, parameter.Header, ranges);
+                    var ranges = hitValuesCreator.ConvertRanges(parameterMatches);
+                    var hitValue = hitValuesCreator.ConvertHitValues(parameter.Header, ranges);
 
                     var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
                     element.Initialize();
 
                     element.EditableHeaderValues.SetRange(hitValue);
-                    element.EditableScore = hitValuesCreator.CalcScore(inputValue, parameter.Header, element.EditableHeaderValues);
+                    element.EditableScore = hitValuesCreator.CalcScore(parameter.Header, element.EditableHeaderValues);
                     yield return element;
                 }
             }
