@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public void Initialize()
         {
-            if(!IsInitialize) {
+            if(IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }
 
