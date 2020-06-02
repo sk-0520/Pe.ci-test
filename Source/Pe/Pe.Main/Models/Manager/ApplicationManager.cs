@@ -106,23 +106,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
             PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
 
-            // テーマをDI登録
+            // テーマIFをDI登録
             ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
             ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
             ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
             ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
             ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
-            // アドオンをDI登録
-            ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
+            //// アドオンIFをDI登録
+            //ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            var applicationCommandFinder = ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters());
-            CommandElement = ApplicationDiContainer.Build<CommandElement>(applicationCommandFinder);
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
 
@@ -163,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
-        CommandElement CommandElement { get; }
+        CommandElement? CommandElement { get; set; }
         NotifyLogElement NotifyLogElement { get; }
         //FeedbackElement? FeedbackElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
@@ -204,9 +203,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StopHook();
             UninitializeSystem();
 
-            if(CommandElement.ViewCreated) {
-                CommandElement.HideView(true);
+            if(CommandElement != null) {
+                if(CommandElement.ViewCreated) {
+                    CommandElement.HideView(true);
+                }
             }
+
             if(NotifyLogElement.ViewCreated) {
                 NotifyLogElement.HideView(true);
             }
@@ -310,8 +312,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("設定適用のため各要素生成");
                 RebuildHook();
                 ExecuteElements();
-                if(CommandElement.IsInitialized) {
-                    CommandElement.Refresh();
+
+                if(CommandElement != null) {
+                    if(CommandElement.IsInitialized) {
+                        CommandElement.Refresh();
+                    }
                 }
                 NotifyLogElement.Refresh();
             } else {
@@ -1270,8 +1275,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ShowCommandView()
         {
-            if(!CommandElement.IsInitialized) {
+            if(CommandElement == null) {
+                CommandElement = ApplicationDiContainer.Build<CommandElement>();
                 CommandElement.Initialize();
+
+                var commandFinders = new ICommandFinder[] {
+                    ApplicationDiContainer.Build<LauncherItemCommandFinder>(),
+                    ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters()),
+                    PluginContainer.Addon.GetCommandFinder(),
+                };
+
+                foreach(var commandFinder in commandFinders) {
+                    CommandElement.AddCommandFinder(commandFinder);
+                }
             }
 
             CommandElement.StartView();

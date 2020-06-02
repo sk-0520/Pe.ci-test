@@ -15,13 +15,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         IReadOnlyList<ApplicationCommandParameter> CreateApplicationCommandParameters()
         {
-            Debug.Assert(CommandElement == null);
-
             var factory = ApplicationDiContainer.Build<ApplicationCommandParameterFactory>();
 
             var result = new ApplicationCommandParameter[] {
                 factory.CreateParameter(ApplicationCommand.Close, p => {
-                    CommandElement!.HideView(false);
+                    Debug.Assert(CommandElement != null);
+                    CommandElement.HideView(false);
                 }),
                 factory.CreateParameter(ApplicationCommand.Exit, p => {
                     // 拡張機能としてアップデート無視
@@ -31,11 +30,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Reboot();
                 }),
                 factory.CreateParameter(ApplicationCommand.About, p => {
-                    CommandElement!.HideView(false);
+                    Debug.Assert(CommandElement != null);
+                    CommandElement.HideView(false);
                     ShowAboutView();
                 }),
                 factory.CreateParameter(ApplicationCommand.Setting, p => {
-                    CommandElement!.HideView(false);
+                    Debug.Assert(CommandElement != null);
+                    CommandElement.HideView(false);
                     ShowSettingView();
                 }),
                 factory.CreateParameter(ApplicationCommand.GarbageCollection, p => {

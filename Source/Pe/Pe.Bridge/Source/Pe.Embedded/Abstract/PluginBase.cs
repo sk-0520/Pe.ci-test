@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         [Conditional("DEBUG")]
         private void LoggingNotSupportAddon()
         {
-            if(!HasTheme) {
+            if(!HasAddon) {
                 Logger.LogWarning("このプラグインはアドオンがサポートされていない");
             }
         }

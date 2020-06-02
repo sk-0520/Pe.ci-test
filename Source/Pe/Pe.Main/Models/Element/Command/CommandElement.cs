@@ -28,9 +28,9 @@ using Timer = System.Timers.Timer;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
-    public class CommandElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
+    public class CommandElement: ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(ApplicationCommandFinder applicationCommandFinder, ICommandFinder addonCommandFinder, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -51,16 +51,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 Interval = customConfiguration.Command.ViewCloseWaitTime.TotalMilliseconds,
             };
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
-
-            ApplicationCommandFinder = applicationCommandFinder;
-            LauncherItemCommandFinder = new LauncherItemCommandFinder(MainDatabaseBarrier, StatementLoader, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
-
-            var commandFinders = new List<ICommandFinder>() {
-                LauncherItemCommandFinder,
-                ApplicationCommandFinder,
-                addonCommandFinder,
-            };
-            CommandFinders = commandFinders;
         }
 
         #region property
@@ -85,9 +75,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         Timer ViewCloseTimer { get; }
         Timer IconClearTimer { get; }
 
-        LauncherItemCommandFinder LauncherItemCommandFinder { get; }
-        ApplicationCommandFinder ApplicationCommandFinder { get; }
-        IReadOnlyCollection<ICommandFinder> CommandFinders { get; }
+        LauncherItemCommandFinder? LauncherItemCommandFinder { get; set; }
+
+        List<ICommandFinder> CommandFindersImpl { get; } = new List<ICommandFinder>(2);
+        IReadOnlyCollection<ICommandFinder> CommandFinders => CommandFindersImpl;
 
         #endregion
 
@@ -127,7 +118,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             Logger.LogDebug("アイコンキャッシュ破棄開始");
 
-            LauncherItemCommandFinder.ClearIcon();
+            if(LauncherItemCommandFinder != null) {
+                LauncherItemCommandFinder.ClearIcon();
+            }
 
             StopIconClear();
             Logger.LogDebug("アイコンキャッシュ破棄終了");
@@ -180,9 +173,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             // アイテム一覧とったりなんかしたりあれこれしたり
             RefreshSetting();
 
-            // 諦め
-            LauncherItemCommandFinder.FindTag = FindTag;
-            LauncherItemCommandFinder.IconBox = IconBox;
+            if(LauncherItemCommandFinder != null) {
+                // 諦め
+                LauncherItemCommandFinder.FindTag = FindTag;
+                LauncherItemCommandFinder.IconBox = IconBox;
+            }
 
             foreach(var commandFinder in CommandFinders) {
                 commandFinder.Refresh();
@@ -243,6 +238,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }, UniqueKeyPool.Get());
         }
 
+        public void AddCommandFinder(ICommandFinder commandFinder)
+        {
+            if(!commandFinder.IsInitialize) {
+                commandFinder.Initialize();
+            }
+
+            CommandFindersImpl.Add(commandFinder);
+
+            if(commandFinder is LauncherItemCommandFinder launcherItemCommandFinder) {
+                LauncherItemCommandFinder = launcherItemCommandFinder;
+            }
+        }
+
         #endregion
 
         #region ElementBase
@@ -250,7 +258,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         protected override void InitializeImpl()
         {
             foreach(var commandFinder in CommandFinders) {
-                commandFinder.Initialize();
+                if(!commandFinder.IsInitialize) {
+                    commandFinder.Initialize();
+                }
             }
 
             Refresh();
