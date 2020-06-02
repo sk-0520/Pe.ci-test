@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder
         #endregion
 
         public FileFinder(IPluginConstructorContext pluginConstructorContext)
-    : base(pluginConstructorContext)
+            : base(pluginConstructorContext)
         {
             this._addon = new FileFinderAddonImpl(pluginConstructorContext);
         }
@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder
 
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }
+
         protected override void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext)
         { }
 

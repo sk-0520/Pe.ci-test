@@ -1288,6 +1288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 foreach(var commandFinder in commandFinders) {
                     CommandElement.AddCommandFinder(commandFinder);
                 }
+                CommandElement.Refresh();
             }
 
             CommandElement.StartView();

@@ -24,5 +24,10 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         protected internal override void Unload(IPluginContext pluginContext)
         {
         }
+
+        public override ICommandFinder BuildCommandFinder(IAddonParameter parameter)
+        {
+            return new FileCommandFinder(parameter);
+        }
     }
 }

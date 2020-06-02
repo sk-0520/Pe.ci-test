@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
 
             foreach(var addonFunctions in FunctionUnits) {
-                if(!addonFunctions.IsInitialize) {
+                if(addonFunctions.IsInitialize) {
                     continue;
                 }
                 addonFunctions.Initialize();
