@@ -40,6 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public CommandItemKind Kind => Item.Kind;
         public double Score => Item.Score;
 
+        public string FullValueText => Item.FullValueText;
+
         public IReadOnlyList<HitValueItemViewModel> HeaderValues { get; }
         public IReadOnlyList<HitValueItemViewModel> DescriptionValues { get; }
         public IReadOnlyList<HitValueItemViewModel> ExtendDescriptionValues { get; }

@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         ApplicationCommand,
 
         #endregion
+
         /// <summary>
         /// プラグイン処理により生成。
         /// </summary>
@@ -64,6 +65,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     public interface ICommandItem
     {
         #region property
+
+        /// <summary>
+        /// このアイテムを選択可能な全文字列。
+        /// </summary>
+        public string FullValueText { get; }
 
         /// <summary>
         /// 小さく表示する種別文言。

@@ -26,7 +26,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
-    public class CommandViewModel : ElementViewModelBase<CommandElement>, IViewLifecycleReceiver
+    public class CommandViewModel: ElementViewModelBase<CommandElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -70,6 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #region property
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
+        public RequestSender FocusEndRequest { get; } = new RequestSender();
 
         IGeneralTheme GeneralTheme { get; }
         ICommandTheme CommandTheme { get; }
@@ -140,7 +141,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             DispatcherWrapper.VerifyAccess();
 #endif
             CurrentSelectedItem = SelectedItem;
-            SetProperty(ref this._inputValue, value);
+            //SetProperty(ref this._inputValue, value);
+            this._inputValue = value;
 
             var prevInputCancellationTokenSource = InputCancellationTokenSource;
             if(prevInputCancellationTokenSource != null) {
@@ -291,6 +293,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public ICommand DownSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 UpDownSelectItem(false);
+            }
+        ));
+
+        public ICommand EnterSelectedItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            async () => {
+                if(SelectedItem == null) {
+                    return;
+                }
+
+                Logger.LogTrace("補完！");
+                var now = SelectedItem;
+
+                await ChangeInutValueAsync(now.FullValueText);
+
+                RaisePropertyChanged(nameof(InputValue));
+
+                SelectedItem = now;
+
+                FocusEndRequest.Send();
+                ScrollSelectedItemRequest.Send();
             }
         ));
 

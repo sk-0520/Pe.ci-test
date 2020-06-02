@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +46,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         #region IReadOnlyCommandItem
 
         public abstract CommandItemKind Kind { get; }
+
+        public string FullValueText => Kind switch
+        {
+            CommandItemKind.LauncherItem => string.Join(string.Empty, HeaderValues.Select(i => i.Value)),
+            CommandItemKind.LauncherItemName=> string.Join(string.Empty, HeaderValues.Select(i => i.Value)),
+            CommandItemKind.LauncherItemCode => string.Join(string.Empty, DescriptionValues.Select(i => i.Value)),
+            CommandItemKind.LauncherItemTag => string.Join(string.Empty, DescriptionValues.Select(i => i.Value)),
+            CommandItemKind.ApplicationCommand => string.Join(string.Empty, HeaderValues.Select(i => i.Value)),
+            _ => throw new NotImplementedException(),
+        };
 
         public IReadOnlyList<HitValue> HeaderValues => EditableHeaderValues;
 

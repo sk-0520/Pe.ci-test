@@ -102,6 +102,9 @@
     <app_core_views:RequestTrigger SourceObject="{Binding ScrollSelectedItemRequest}">
       <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding FocusEndRequest}">
+      <prism:InvokeCommandAction Command="{Binding FocusEndCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
     <i:EventTrigger EventName="Activated">
       <i:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
     </i:EventTrigger>
@@ -191,6 +194,8 @@
               <KeyBinding Gesture="Esc" Command="{Binding HideCommand}" />
               <KeyBinding Gesture="Up" Command="{Binding UpSelectItemCommand}" />
               <KeyBinding Gesture="Down" Command="{Binding DownSelectItemCommand}" />
+              <KeyBinding Gesture="Right" Command="{Binding EnterSelectedItemCommand}" />
+              <KeyBinding Gesture="Tab" Command="{Binding EnterSelectedItemCommand}" />
             </TextBox.InputBindings>
 
             <TextBox.Style>
