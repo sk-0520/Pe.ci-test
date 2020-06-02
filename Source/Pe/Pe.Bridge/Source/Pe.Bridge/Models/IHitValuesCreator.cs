@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         {
             var matches = hitValuesCreator.GetMatches(source, regex);
             if(matches.Count == 0) {
-                return new[] { new HitValue(source, false) };
+                return new HitValue[0];
             }
             var sourceSpan = source.AsSpan();
             var ranges = hitValuesCreator.ConvertRanges(matches);

@@ -21,6 +21,27 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
     /// </summary>
     internal class FileFinderCommandFinder: ICommandFinder, IDisposable
     {
+        #region define
+
+        class PathItem
+        {
+            public PathItem(string path)
+            {
+                Path = path;
+                CommandName = System.IO.Path.GetFileNameWithoutExtension(path)!;
+            }
+
+            #region property
+
+            public string Path { get; }
+            public string CommandName { get; }
+
+            #endregion
+        }
+
+        #endregion
+
+
         public FileFinderCommandFinder(IAddonParameter parameter)
         {
             Logger = parameter.LoggerFactory.CreateLogger(GetType());
@@ -31,8 +52,25 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         ILogger Logger { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+        List<PathItem> PathItems { get; } = new List<PathItem>(512);
 
+        /// <summary>
+        /// 隠しファイルを列挙するか。
+        /// </summary>
         bool IncludeHiddenFile { get; } = true;
+        /// <summary>
+        /// PATHの通っている実行ファイルを列挙するか。
+        /// </summary>
+        bool IncludePath { get; } = true;
+        /// <summary>
+        /// パスからの列挙において列挙する上限数。
+        /// <para>0 で制限しない。</para>
+        /// </summary>
+        int MaximumPathItem { get; } = 10;
+        /// <summary>
+        /// パス検索を有効にする入力文字数(以上)。
+        /// </summary>
+        int PathEnabledInputCharCount { get; } = 0;
 
         #endregion
 
@@ -150,6 +188,37 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                 throw new InvalidOperationException(nameof(IsInitialize));
             }
 
+            var path = Environment.GetEnvironmentVariable("PATH");
+            if(!string.IsNullOrWhiteSpace(path)) {
+                var executableExtensions = new[] { "exe", "bat", "com" };
+
+                var extRegex = new Regex(@".*\." + string.Join("|", executableExtensions) + "$");
+                var dirPaths = path
+                    .Split(';')
+                    .Where(i => !string.IsNullOrWhiteSpace(i))
+                ;
+
+                foreach(var dirPath in dirPaths) {
+                    try {
+                        var dir = new DirectoryInfo(dirPath);
+                        dir.Refresh();
+                        if(!dir.Exists) {
+                            Logger.LogInformation("存在しない PATH は無視: {0}", dir.FullName);
+                            continue;
+                        }
+                        IEnumerable<FileInfo> files = dir.EnumerateFiles("*", SearchOption.TopDirectoryOnly);
+                        foreach(var file in files) {
+                            if(extRegex.IsMatch(file.Name)) {
+                                var item = new PathItem(file.FullName);
+                                PathItems.Add(item);
+                            }
+                        }
+                    } catch(Exception ex) {
+                        Logger.LogWarning(ex, ex.Message);
+                    }
+                }
+            }
+
             IsInitialize = true;
         }
 
@@ -170,6 +239,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                 yield break;
             }
 
+            var gotItems = false;
             var envStartIndex = inputValue.IndexOf('%');
             if(envStartIndex != -1) {
                 var envNextIndex = inputValue.IndexOf('%', envStartIndex + 1);
@@ -179,26 +249,49 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                         var parts = SplitPath(expandedInputValue);
                         var items = GetOwnerAndChildren(parts.directoryPath, parts.filePattern, hitValuesCreator, cancellationToken);
                         foreach(var item in items) {
+                            gotItems = true;
                             yield return item;
                         }
                     }
-                    yield break;
                 }
             }
 
             // 通常のファイル検索
-            if(Path.IsPathRooted(inputValue)) {
-                if(IsPath(inputValue)) {
-                    var parts = SplitPath(inputValue);
-                    var items = GetOwnerAndChildren(parts.directoryPath, parts.filePattern, hitValuesCreator, cancellationToken);
-                    foreach(var item in items) {
-                        yield return item;
+            if(!gotItems) {
+                if(Path.IsPathRooted(inputValue)) {
+                    if(IsPath(inputValue)) {
+                        var parts = SplitPath(inputValue);
+                        var items = GetOwnerAndChildren(parts.directoryPath, parts.filePattern, hitValuesCreator, cancellationToken);
+                        foreach(var item in items) {
+                            yield return item;
+                        }
                     }
                 }
-                yield break;
             }
 
             // PATH からファイル検索
+            if(IncludePath && PathEnabledInputCharCount <= inputValue.Length) {
+                var count = 0;
+
+                foreach(var pathItem in PathItems) {
+                    if(cancellationToken.IsCancellationRequested) {
+                        break;
+                    }
+                    var values = hitValuesCreator.GetHitValues(pathItem.CommandName, inputRegex);
+                    if(values.Count != 0 && values.Any(i => i.IsHit)) {
+                        if(MaximumPathItem != 0 && MaximumPathItem < ++count) {
+                            break;
+                        }
+
+                        var item = new FileFinderCommandItem(pathItem.Path, pathItem.CommandName);
+                        item.HeaderValues.AddRange(values);
+                        item.DescriptionValues.Add(new HitValue("%PATH%", false));
+                        item.Score = hitValuesCreator.CalcScore(pathItem.CommandName, values) - 3;
+
+                        yield return item;
+                    }
+                }
+            }
 
             yield break;
         }

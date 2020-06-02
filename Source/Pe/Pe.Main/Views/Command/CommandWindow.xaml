@@ -313,6 +313,7 @@
                 <VirtualizingStackPanel
                   VirtualizingStackPanel.IsVirtualizing="True"
                   VirtualizingStackPanel.VirtualizationMode="Recycling"
+                  ScrollUnit="Item"
                 />
               </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
