@@ -15,9 +15,9 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
     /// 入力からファイル検索を行う。
     /// <para>もうちと簡単にやるなら Pe.Core から IconLoader を参照するべきかなぁ。</para>
     /// </summary>
-    internal class FileCommandFinder: ICommandFinder, IDisposable
+    internal class FileFinderCommandFinder: ICommandFinder, IDisposable
     {
-        public FileCommandFinder(IAddonParameter parameter)
+        public FileFinderCommandFinder(IAddonParameter parameter)
         {
             Logger = parameter.LoggerFactory.CreateLogger(GetType());
             DispatcherWrapper = parameter.DispatcherWrapper;
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 var drives = DriveInfo.GetDrives();
                 foreach(var drive in drives) {
-                    var item = new FileCommandItem(drive.RootDirectory.FullName);
+                    var item = new FileFinderCommandItem(drive.RootDirectory.FullName);
 
                     string name;
                     if(drive.DriveType == DriveType.CDRom || drive.DriveType == DriveType.Removable) {

@@ -5,9 +5,9 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 {
-    internal class FileCommandItem: ICommandItem
+    internal class FileFinderCommandItem: ICommandItem
     {
-        public FileCommandItem(string path)
+        public FileFinderCommandItem(string path)
         {
             Path = path;
         }
@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         public int Score { get; internal set; }
 
+        public string FullMatchValue => throw new NotImplementedException();
+
         public void Execute(ICommandExecuteParameter parameter)
         {
             throw new NotImplementedException();
@@ -42,6 +44,26 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         public object GetIcon(IconBox iconBox)
         {
             return null!;
+        }
+
+        public bool IsEquals(ICommandItem? commandItem)
+        {
+            if(commandItem == null) {
+                return false;
+            }
+
+            if(Kind != commandItem.Kind) {
+                return false;
+            }
+
+            if(commandItem is FileFinderCommandItem fileCommandItem) {
+                var a = System.IO.Path.TrimEndingDirectorySeparator(Path);
+                var b = System.IO.Path.TrimEndingDirectorySeparator(fileCommandItem.Path);
+
+                return string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+            }
+
+            return false;
         }
 
         #endregion

@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         public override ICommandFinder BuildCommandFinder(IAddonParameter parameter)
         {
-            return new FileCommandFinder(parameter);
+            return new FileFinderCommandFinder(parameter);
         }
     }
 }
