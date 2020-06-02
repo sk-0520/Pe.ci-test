@@ -21,6 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         IReadOnlyList<TFunctionUnit>? _functionUnits;
 
         #endregion
+
         protected AddonWrapperBase(IReadOnlyList<IAddon> addons, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
