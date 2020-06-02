@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -47,6 +48,27 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         /// <inheritdoc cref="ICommandFinder.ListupCommandItems(string, Regex, IHitValuesCreator, CancellationToken)"/>
         public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
+            if(string.IsNullOrWhiteSpace(inputValue)) {
+                var drives = DriveInfo.GetDrives();
+                foreach(var drive in drives) {
+                    var item = new FileCommandItem(drive.RootDirectory.FullName);
+
+                    string name;
+                    if(drive.DriveType == DriveType.CDRom || drive.DriveType == DriveType.Removable) {
+                        name = string.Format("{0} ({1})", drive.Name, drive.DriveType);
+                    } else {
+                        name = string.Format("{0} {1} ({2})", drive.VolumeLabel, drive.Name, drive.DriveType);
+                    }
+
+                    item.HeaderValues.Add(new HitValue(name, false));
+
+                    item.Score = hitValuesCreator.GetScore(ScoreKind.Initial, 1) - 10;
+
+                    yield return item;
+                }
+                yield break;
+            }
+            Logger.LogTrace("{0}, {1}", inputValue, inputRegex);
             yield break;
         }
 
