@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(ApplicationCommandFinder applicationCommandFinder, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandElement(ApplicationCommandFinder applicationCommandFinder, ICommandFinder addonCommandFinder, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -58,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             var commandFinders = new List<ICommandFinder>() {
                 LauncherItemCommandFinder,
                 ApplicationCommandFinder,
+                addonCommandFinder,
             };
             CommandFinders = commandFinders;
         }

@@ -65,6 +65,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -105,12 +106,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
             PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
 
+            // テーマをDI登録
             ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
             ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
             ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
             ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
             ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
-
+            // アドオンをDI登録
+            ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
