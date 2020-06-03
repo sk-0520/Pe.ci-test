@@ -66,6 +66,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// </summary>
         IPluginStorage Storage { get; }
 
+        /// <summary>
+        /// <see cref="IUserAgent"/> 生成器。
+        /// </summary>
         IUserAgentFactory UserAgentFactory { get; }
 
         #endregion

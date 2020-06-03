@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <summary>
     /// プラグインの既定インターフェイス。
     /// <para><see cref="Addon.IAddon"/>か<see cref="Theme.ITheme"/>をさらに実装している必要あり。</para>
+    /// <para>設定機能を有する場合はさらに<see cref="Preferences.IPreferences"/>を実装する必要あり。</para>
     /// </summary>
     public interface IPlugin
     {

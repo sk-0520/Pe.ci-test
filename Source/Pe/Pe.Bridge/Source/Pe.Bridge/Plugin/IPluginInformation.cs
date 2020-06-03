@@ -5,6 +5,9 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// プラグイン識別。
+    /// </summary>
     public interface IPluginIdentifiers
     {
         #region property
@@ -17,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// プラグインを人が見て判断するための名前。
-        /// <para><see cref="PluginId"/>と異なり重複してもいいけどなるべく重複しない方針。</para>
+        /// <para><see cref="PluginId"/>程ではないが重複しない方針。</para>
         /// <para>ローカライズは考えなくていい。</para>
         /// </summary>
         string PluginName { get; }
@@ -25,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
     }
 
+    /// <inheritdoc cref="IPluginIdentifiers"/>
     public class PluginIdentifiers: IPluginIdentifiers
     {
         public PluginIdentifiers(Guid pluginId, string pluginName)
@@ -92,6 +96,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
     }
 
+    /// <summary>
+    /// Pe の解釈可能なライセンス一覧。
+    /// <para>const なのでバージョンアップ時に変になるかもねー。</para>
+    /// </summary>
     public static class PluginLicense
     {
         #region property
@@ -146,7 +154,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// </summary>
     public interface IPluginInformations
     {
-
         /// <summary>
         /// プラグインID。
         /// </summary>
