@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Embedded.Attributes;
 using Microsoft.Extensions.Logging;
@@ -22,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             var interfaces = type.GetInterfaces();
             HasAddon = interfaces.Any(i => i == typeof(IAddon));
             HasTheme = interfaces.Any(i => i == typeof(ITheme));
+            HasPreferences = interfaces.Any(i => i == typeof(PreferencesBase));
         }
 
         #region property
@@ -34,9 +37,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         protected bool IsLoadedAddon { get; private set; }
         protected bool IsLoadedTheme { get; private set; }
+        protected bool HasPreferences { get; private set; }
 
         internal virtual AddonBase Addon { get => throw new NotImplementedException(); }
         internal virtual ThemeBase Theme { get => throw new NotImplementedException(); }
+        private IPreferences? Preferences { get; set; }
 
         #endregion
 
@@ -109,6 +114,15 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             }
         }
 
+        [Conditional("DEBUG")]
+        private void LoggingNotSupportPreferences()
+        {
+            if(!HasPreferences) {
+                Logger.LogWarning("このプラグインは設定がサポートされていない");
+            }
+        }
+
+
         private TTheme BuildSupporttedAddon<TArgument, TTheme>(AddonKind addonKind, string methodName, TArgument argument, Func<TArgument, TTheme> build)
         {
             if(!Addon.IsSupported(addonKind)) {
@@ -138,6 +152,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 throw;
             }
         }
+
+        /// <summary>
+        /// <see cref="IPreferences"/> を実装する場合に実装する必要あり。
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IPreferences CreatePreferences() => throw new NotImplementedException();
 
         #endregion
 
@@ -302,6 +322,56 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter)
         {
             return BuildSupporttedTheme(ThemeKind.Notify, nameof(BuildNotifyLogTheme), parameter, p => Theme.BuildNotifyLogTheme(p));
+        }
+
+        #endregion
+
+        #region IPreferences
+
+        /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext)"/>
+        public virtual UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext)
+        {
+            LoggingNotSupportPreferences();
+            if(Preferences != null) {
+                throw new InvalidOperationException();
+            }
+
+            Preferences = CreatePreferences();
+            return Preferences.BeginPreferences(preferencesLoadContext);
+        }
+
+        /// <inheritdoc cref="IPreferences.CheckPreferences(IPreferencesCheckContext)"/>
+        public virtual void CheckPreferences(IPreferencesCheckContext preferencesCheckContext)
+        {
+            LoggingNotSupportPreferences();
+            if(Preferences == null) {
+                throw new InvalidOperationException();
+            }
+
+            Preferences.CheckPreferences(preferencesCheckContext);
+        }
+
+        /// <inheritdoc cref="IPreferences.SavePreferences(IPreferencesSaveContext)"/>
+        public virtual void SavePreferences(IPreferencesSaveContext preferencesSaveContext)
+        {
+            LoggingNotSupportPreferences();
+            if(Preferences == null) {
+                throw new InvalidOperationException();
+            }
+
+            Preferences.SavePreferences(preferencesSaveContext);
+        }
+
+        /// <inheritdoc cref="IPreferences.EndPreferences(IPreferencesEndContext)"/>
+        public virtual void EndPreferences(IPreferencesEndContext preferencesEndContext)
+        {
+            LoggingNotSupportPreferences();
+            if(Preferences == null) {
+                throw new InvalidOperationException();
+            }
+
+            Preferences.EndPreferences(preferencesEndContext);
+            Preferences = null;
         }
 
         #endregion
