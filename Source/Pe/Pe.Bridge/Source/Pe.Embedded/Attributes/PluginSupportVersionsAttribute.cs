@@ -6,14 +6,14 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 namespace ContentTypeTextNet.Pe.Embedded.Attributes
 {
     [AttributeUsage(AttributeTargets.Assembly)]
-    public class SupportVersionsAttribute: Attribute
+    public class PluginSupportVersionsAttribute: Attribute
     {
         /// <summary>
         ///
         /// </summary>
         /// <param name="minimumVersion"><see cref="IPluginVersions.MinimumSupportVersion"/></param>
         /// <param name="maximumVersion"><see cref="IPluginVersions.MaximumSupportVersion"/></param>
-        public SupportVersionsAttribute(string minimumVersion = "0.0.0", string maximumVersion = "0.0.0")
+        public PluginSupportVersionsAttribute(string minimumVersion = "0.0.0", string maximumVersion = "0.0.0")
         {
             MinimumVersion = Version.Parse(minimumVersion);
             MaximumVersion = Version.Parse(maximumVersion);

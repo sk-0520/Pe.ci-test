@@ -66,11 +66,10 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttribute), pluginIdentifiersAttr.PluginName, pluginIdentifiersAttr.PluginId);
             }
 
-
-            var supportVersionsAttr = assemblyType.GetCustomAttribute<SupportVersionsAttribute>();
+            var supportVersionsAttr = assemblyType.GetCustomAttribute<PluginSupportVersionsAttribute>();
             if(supportVersionsAttr == null) {
-                Logger.LogWarning("{0} の取得に失敗したため最低バージョンで補正", nameof(SupportVersionsAttribute));
-                supportVersionsAttr = new SupportVersionsAttribute();
+                Logger.LogWarning("{0} の取得に失敗したため最低バージョンで補正", nameof(PluginSupportVersionsAttribute));
+                supportVersionsAttr = new PluginSupportVersionsAttribute();
             }
 
             var pluginAuthorsAttr = assembly.GetCustomAttribute<PluginAuthorsAttribute>();
@@ -79,11 +78,19 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttribute), pluginAuthorsAttr.Name, pluginAuthorsAttr.License);
             }
 
+            var pluginCategoryAttr = assembly.GetCustomAttribute<PluginCategoryAttribute>();
+            if(pluginCategoryAttr == null) {
+                pluginCategoryAttr = new PluginCategoryAttribute(PluginCategories.Others);
+                Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}", nameof(PluginCategoryAttribute), pluginCategoryAttr.Primary);
+            }
+
+
             var pluginIdentifiers = new PluginIdentifiers(pluginIdentifiersAttr.PluginId, pluginIdentifiersAttr.PluginName);
             var pluginVersions = new PluginVersions(assemblyName.Version!, supportVersionsAttr.MinimumVersion, supportVersionsAttr.MaximumVersion);
             var pluginAuthors = new PluginAuthors(new Author(pluginAuthorsAttr.Name), pluginAuthorsAttr.License);
+            var pluginCategory = new PluginCategory(pluginCategoryAttr.Primary, pluginCategoryAttr.Secondaries);
 
-            return new PluginInformations(pluginIdentifiers, pluginVersions, pluginAuthors);
+            return new PluginInformations(pluginIdentifiers, pluginVersions, pluginAuthors, pluginCategory);
         }
 
         [Conditional("DEBUG")]

@@ -96,13 +96,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     {
         #region property
 
-        public static string Unknown => "unknown";
+        public const string Unknown = "unknown";
 
-        public static string DoWhatTheF_ckYouWantToPublicLicense1 => "WTFPLv1";
-        public static string DoWhatTheF_ckYouWantToPublicLicense2 => "WTFPLv2";
-        public static string GnuGeneralPublicLicense1 => "GPLv1";
-        public static string GnuGeneralPublicLicense2 => "GPLv2";
-        public static string GnuGeneralPublicLicense3 => "GPLv3";
+        public const string DoWhatTheF_ckYouWantToPublicLicense1 = "WTFPLv1";
+        public const string DoWhatTheF_ckYouWantToPublicLicense2 = "WTFPLv2";
+        public const string GnuGeneralPublicLicense1 = "GPLv1";
+        public const string GnuGeneralPublicLicense2 = "GPLv2";
+        public const string GnuGeneralPublicLicense3 = "GPLv3";
 
         #endregion
     }
@@ -159,16 +159,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// 作者情報。
         /// </summary>
         IPluginAuthors PluginAuthors { get; }
+
+        /// <summary>
+        /// プラグインカテゴリ。
+        /// </summary>
+        IPluginCategory PluginCategory { get; }
     }
 
     /// <inheritdoc cref="IPluginInformations"/>
     public class PluginInformations: IPluginInformations
     {
-        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
+        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors, IPluginCategory pluginCategory)
         {
             PluginIdentifiers = pluginIdentifiers;
             PluginVersions = pluginVersions;
             PluginAuthors = pluginAuthors;
+            PluginCategory = pluginCategory;
         }
 
         #region IPluginInformations
@@ -182,6 +188,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <inheritdoc cref="IPluginInformations.PluginAuthors"/>
         public IPluginAuthors PluginAuthors { get; }
 
+        /// <inheritdoc cref="IPluginInformations.PluginCategory"/>
+        public IPluginCategory PluginCategory { get; }
         #endregion
     }
 }

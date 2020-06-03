@@ -18,7 +18,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         public static readonly PluginInformations Informations = new PluginInformations(
             new PluginIdentifiers(new Guid("4524FC23-EBB9-4C79-A26B-8F472C05095E"), "default-theme"),
             new PluginVersions(Assembly.GetExecutingAssembly()!.GetName()!.Version!, new Version(0, 0, 0), new Version(0, 0, 0)),
-            new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2)
+            new PluginAuthors(new Author("sk"), PluginLicense.DoWhatTheF_ckYouWantToPublicLicense2),
+            new PluginCategory(PluginCategories.Design)
         );
 
         #endregion
