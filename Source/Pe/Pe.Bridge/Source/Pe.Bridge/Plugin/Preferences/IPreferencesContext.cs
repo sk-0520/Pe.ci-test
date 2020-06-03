@@ -19,6 +19,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// </summary>
         IPluginStorage Storage { get; }
 
+        /// <summary>
+        /// <see cref="IUserAgent"/> 生成器。
+        /// </summary>
         IUserAgentFactory UserAgentFactory { get; }
 
         #endregion
@@ -38,8 +41,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// </summary>
         IPluginStorage Storage { get; }
 
+        /// <summary>
+        /// <see cref="IUserAgent"/> 生成器。
+        /// </summary>
         IUserAgentFactory UserAgentFactory { get; }
 
+        /// <summary>
+        /// チェック結果。
+        /// </summary>
         bool HasError { get; set; }
 
         #endregion
@@ -59,6 +68,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// </summary>
         IPluginStorage Storage { get; }
 
+        /// <summary>
+        /// <see cref="IUserAgent"/> 生成器。
+        /// </summary>
         IUserAgentFactory UserAgentFactory { get; }
 
         #endregion
@@ -78,6 +90,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// </summary>
         IPluginStorage Storage { get; }
 
+        /// <summary>
+        /// <see cref="IUserAgent"/> 生成器。
+        /// </summary>
         IUserAgentFactory UserAgentFactory { get; }
 
         /// <summary>

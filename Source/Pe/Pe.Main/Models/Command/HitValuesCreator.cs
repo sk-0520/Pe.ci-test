@@ -40,6 +40,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 ScoreKind.Perfect => 800,
                 ScoreKind.Good => (int)Math.Round(10 * bonus),
                 ScoreKind.Bad => (int)Math.Round(-10 * bonus),
+                ScoreKind.GoodStep => 15,
+                ScoreKind.BadStep => -15,
                 _ => throw new NotImplementedException(),
             };
         }

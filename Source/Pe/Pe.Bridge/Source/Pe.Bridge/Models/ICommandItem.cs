@@ -90,7 +90,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// </summary>
         IReadOnlyList<HitValue> ExtendDescriptionValues { get; }
 
-
+        /// <summary>
+        /// 表示優先度。
+        /// <para><see cref="ScoreKind"/>と<see cref="IHitValuesCreator"/>からもろもろ算出する。</para>
+        /// </summary>
         int Score { get; }
 
         #endregion

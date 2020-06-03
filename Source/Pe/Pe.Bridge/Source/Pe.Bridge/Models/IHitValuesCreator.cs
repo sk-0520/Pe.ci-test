@@ -36,6 +36,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// 悪い。
         /// </summary>
         Bad,
+        /// <summary>
+        /// 良い感じの一つ上げ。
+        /// </summary>
+        GoodStep,
+        /// <summary>
+        /// 悪い感じの一つ上げ。
+        /// </summary>
+        BadStep,
     }
 
     /// <summary>
@@ -45,6 +53,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     {
         #region property
 
+        /// <summary>
+        /// ボーナス無効。
+        /// </summary>
         double NoBonus { get; }
 
         #endregion
@@ -81,6 +92,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <returns>該当・非該当の一覧。</returns>
         IReadOnlyList<HitValue> ConvertHitValues(ReadOnlySpan<char> source, IReadOnlyList<Range> hitRanges);
 
+        /// <summary>
+        /// スコア算出。
+        /// </summary>
+        /// <param name="source"><see cref="GetMatches"/>の対象値。</param>
+        /// <param name="hitValues">該当・非該当の一覧。</param>
+        /// <returns></returns>
         int CalcScore(ReadOnlySpan<char> source, IReadOnlyList<HitValue> hitValues);
 
         #endregion
@@ -90,6 +107,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     {
         #region function
 
+        /// <summary>
+        /// 対象値から該当・非該当の一覧を取得。
+        /// </summary>
+        /// <param name="hitValuesCreator"></param>
+        /// <param name="source"></param>
+        /// <param name="regex"></param>
+        /// <returns></returns>
         public static IReadOnlyList<HitValue> GetHitValues(this IHitValuesCreator hitValuesCreator, string source, Regex regex)
         {
             var matches = hitValuesCreator.GetMatches(source, regex);
@@ -101,6 +125,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
             var hitValue = hitValuesCreator.ConvertHitValues(sourceSpan, ranges);
             return hitValue;
         }
+
         #endregion
     }
 }
