@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <summary>
         /// 検索完了。
         /// </summary>
-        Listup,
+        Complete,
         /// <summary>
         /// 検索対象なし。
         /// </summary>

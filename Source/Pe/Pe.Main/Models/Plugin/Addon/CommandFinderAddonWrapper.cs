@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             IsInitialize = true;
         }
 
-        public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             foreach(var addonFunctions in FunctionUnits) {
                 Debug.Assert(addonFunctions.IsInitialize);
-                var results = addonFunctions.ListupCommandItems(inputValue, inputRegex, hitValuesCreator, cancellationToken);
+                var results = addonFunctions.EnumerateCommandItems(inputValue, inputRegex, hitValuesCreator, cancellationToken);
                 foreach(var result in results) {
                     yield return result;
                 }

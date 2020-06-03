@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             {
                 InputState.Empty => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Border)),
                 InputState.Finding => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Control)),
-                InputState.Listup => FreezableUtility.GetSafeFreeze(new SolidColorBrush(PlatformTheme.GetAccentColors(PlatformTheme.AccentColor).Base)),
+                InputState.Complete => FreezableUtility.GetSafeFreeze(new SolidColorBrush(PlatformTheme.GetAccentColors(PlatformTheme.AccentColor).Base)),
                 InputState.NotFound => FreezableUtility.GetSafeFreeze(new SolidColorBrush(colors.Foreground)),
                 _ => throw new NotImplementedException(),
             };

@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 DispatcherWrapper.VerifyAccess();
 #endif
 
-                var commandItems = await Model.ListupCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token);
+                var commandItems = await Model.EnumerateCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token);
                 InputCancellationTokenSource?.Dispose();
                 InputCancellationTokenSource = null;
 #if DEBUG
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                     CurrentSelectedItem = null;
                     InputState = InputState.NotFound;
                 } else if(!string.IsNullOrWhiteSpace(InputValue)) {
-                    InputState = InputState.Listup;
+                    InputState = InputState.Complete;
                 }
                 ScrollSelectedItemRequest.Send();
 
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Finding);
         [ThemeProperty]
-        public Brush InputListupBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Listup);
+        public Brush InputCompleteBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Complete);
         [ThemeProperty]
         public Brush InputNotFoundBorderBrush => CommandTheme.GetInputBorderBrush(InputState.NotFound);
 
@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingBackground => CommandTheme.GetInputBackground(InputState.Finding);
         [ThemeProperty]
-        public Brush InputListupBackground => CommandTheme.GetInputBackground(InputState.Listup);
+        public Brush InputCompleteBackground => CommandTheme.GetInputBackground(InputState.Complete);
         [ThemeProperty]
         public Brush InputNotFoundBackground => CommandTheme.GetInputBackground(InputState.NotFound);
 
@@ -261,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingForeground => CommandTheme.GetInputForeground(InputState.Finding);
         [ThemeProperty]
-        public Brush InputListupForeground => CommandTheme.GetInputForeground(InputState.Listup);
+        public Brush InputCompleteForeground => CommandTheme.GetInputForeground(InputState.Complete);
         [ThemeProperty]
         public Brush InputNotFoundForeground => CommandTheme.GetInputForeground(InputState.NotFound);
 

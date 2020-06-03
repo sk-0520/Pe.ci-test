@@ -222,8 +222,8 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             IsInitialize = true;
         }
 
-        /// <inheritdoc cref="ICommandFinder.ListupCommandItems(string, Regex, IHitValuesCreator, CancellationToken)"/>
-        public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        /// <inheritdoc cref="ICommandFinder.EnumerateCommandItems(string, Regex, IHitValuesCreator, CancellationToken)"/>
+        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(string.IsNullOrWhiteSpace(inputValue)) {
                 // 未入力状態ならドライブ一覧を返す

@@ -174,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
         }
 
-        public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));

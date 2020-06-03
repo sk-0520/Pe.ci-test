@@ -184,13 +184,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             }
         }
 
-        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             var simpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(inputValue);
 
             foreach(var commandFinder in CommandFinders) {
-                var items = commandFinder.ListupCommandItems(inputValue, regex, hitValuesCreator, cancellationToken);
+                var items = commandFinder.EnumerateCommandItems(inputValue, regex, hitValuesCreator, cancellationToken);
                 foreach(var item in items) {
                     yield return item;
                 }
@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
 
 
-        public Task<IReadOnlyList<ICommandItem>> ListupCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
+        public Task<IReadOnlyList<ICommandItem>> EnumerateCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 Logger.LogTrace("検索開始");
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 var hitValuesCreator = new HitValuesCreator(LoggerFactory);
 
                 var commandItems = new List<ICommandItem>();
-                foreach(var item in ListupCommandItems(inputValue, hitValuesCreator, cancellationToken)) {
+                foreach(var item in EnumerateCommandItems(inputValue, hitValuesCreator, cancellationToken)) {
                     commandItems.Add(item);
                     Logger.LogDebug(string.Join(" - ", item.HeaderValues.Select(i => i.Value)));
                 }
