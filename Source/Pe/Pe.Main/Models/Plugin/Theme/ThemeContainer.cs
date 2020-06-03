@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
     /// テーマ一覧。。。
     /// <para>一覧が必要かと問われるとなんも言えねぇ。</para>
     /// </summary>
-    internal class ThemeContainer
+    public class ThemeContainer
     {
         #region variable
 

@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// 特定に機能単位によるアドオン機能のラッパー。
     /// </summary>
     /// <typeparam name="TFunctionUnit"></typeparam>
-    internal abstract class AddonWrapperBase<TFunctionUnit>: DisposerBase
+    public abstract class AddonWrapperBase<TFunctionUnit>: DisposerBase
     {
         #region variable
 

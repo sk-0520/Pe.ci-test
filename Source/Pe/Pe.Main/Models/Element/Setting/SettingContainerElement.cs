@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
 using Microsoft.Extensions.Logging;
 
@@ -35,13 +36,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
             LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
+            PluginsSettingEditor = ServiceLocator.Build<PluginsSettingEditorElement>();
 
             Editors = new SettingEditorElementBase[] {
                 GeneralsSettingEditor,
                 LauncherItemsSettingEditor,
                 LauncherGroupsSettingEditor,
                 LauncherToobarsSettingEditor,
-                KeyboardSettingEditor
+                KeyboardSettingEditor,
+                PluginsSettingEditor
             };
         }
 
@@ -67,7 +70,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public LauncherGroupsSettingEditorElement LauncherGroupsSettingEditor { get; }
         public LauncherToobarsSettingEditorElement LauncherToobarsSettingEditor { get; }
         public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
+        public PluginsSettingEditorElement PluginsSettingEditor { get; }
         public IReadOnlyList<SettingEditorElementBase> Editors { get; }
+
         #endregion
 
         #region function

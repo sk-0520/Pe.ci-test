@@ -20,7 +20,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
+        /// <summary>
+        /// データ読み込み。
+        /// </summary>
         void Load();
+        /// <summary>
+        /// 情報更新。
+        /// </summary>
         void Refresh();
 
         #endregion

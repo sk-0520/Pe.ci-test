@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal abstract class PluginFileStorageBase
+    public abstract class PluginFileStorageBase
     {
         protected PluginFileStorageBase(DirectoryInfo directoryInfo)
         {
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginFileStorage"/>
-    internal class PluginFileStorage: PluginFileStorageBase, IPluginFileStorage
+    public class PluginFileStorage: PluginFileStorageBase, IPluginFileStorage
     {
         public PluginFileStorage(DirectoryInfo directoryInfo)
             : base(directoryInfo)
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    internal class PluginPersistentStorage: IPluginPersistentStorage
+    public class PluginPersistentStorage: IPluginPersistentStorage
     {
         #region IPluginPersistentStorage
 
@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginFiles"/>
-    internal class PluginFile: IPluginFiles
+    public class PluginFile: IPluginFiles
     {
         public PluginFile(PluginFileStorage user, PluginFileStorage machine, PluginFileStorage temporary)
         {
@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginPersistents"/>
-    internal class PluginPersistent: IPluginPersistents
+    public class PluginPersistent: IPluginPersistents
     {
         public PluginPersistent(PluginPersistentStorage normal, PluginPersistentStorage large, PluginPersistentStorage temporary)
         {
@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginStorage"/>
-    internal class PluginStorage: IPluginStorage
+    public class PluginStorage: IPluginStorage
     {
         public PluginStorage(PluginFile file, PluginPersistent persistent)
         {

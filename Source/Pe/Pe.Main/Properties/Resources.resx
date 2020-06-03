@@ -1974,4 +1974,7 @@
 パス: ${PATH}
 アプリケーションを終了します</value>
   </data>
+  <data name="String_Setting_Plugins_Header" xml:space="preserve">
+    <value>プラグイン</value>
+  </data>
 </root>

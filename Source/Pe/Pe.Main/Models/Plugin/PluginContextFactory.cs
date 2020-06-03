@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal class PluginContextFactory: PluginContextFactoryBase
+    public class PluginContextFactory: PluginContextFactoryBase
     {
         public PluginContextFactory(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
             :base(environmentParameters, userAgentManager)

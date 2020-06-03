@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal class PluginConstructorContext: IPluginConstructorContext
+    public class PluginConstructorContext: IPluginConstructorContext
     {
         public PluginConstructorContext(ILoggerFactory loggerFactory)
         {
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginInitializeContext"/>
-    internal class PluginInitializeContext: IPluginInitializeContext
+    public class PluginInitializeContext: IPluginInitializeContext
     {
         public PluginInitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
         {
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginUninitializeContext"/>
-    internal class PluginUninitializeContext: IPluginUninitializeContext
+    public class PluginUninitializeContext: IPluginUninitializeContext
     {
         public PluginUninitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
         {
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginContext"/>
-    internal class PluginContext: IPluginContext
+    public class PluginContext: IPluginContext
     {
         public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
         {

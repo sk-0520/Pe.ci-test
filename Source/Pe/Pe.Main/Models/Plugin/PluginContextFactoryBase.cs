@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal abstract class PluginContextFactoryBase
+    public abstract class PluginContextFactoryBase
     {
         protected PluginContextFactoryBase(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
         {

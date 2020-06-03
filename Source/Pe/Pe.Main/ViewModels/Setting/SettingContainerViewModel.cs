@@ -43,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, AllLauncherGroupCollection, DispatcherWrapper, LoggerFactory);
             LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, AllLauncherGroupCollection, generalTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
+            PluginsSettingEditor = new PluginsSettingEditorViewModel(Model.PluginsSettingEditor, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new List<ISettingEditorViewModel>() {
                 GeneralSettingEditor,
@@ -50,12 +51,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 LauncherGroupsSettingEditor,
                 LauncherToobarsSettingEditor,
                 KeyboardSettingEditor,
+                PluginsSettingEditor,
             };
+#if DEBUG
+            this._selectedEditor = PluginsSettingEditor;
+#else
             this._selectedEditor = GeneralSettingEditor;
-            //this._selectedEditor = KeyboardSettingEditor;
+#endif
         }
 
-        #region property
+#region property
 
         IGeneralTheme GeneralTheme { get; }
 
@@ -88,9 +93,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherGroupsSettingEditorViewModel LauncherGroupsSettingEditor { get; }
         public LauncherToobarsSettingEditorViewModel LauncherToobarsSettingEditor { get; }
         public KeyboardSettingEditorViewModel KeyboardSettingEditor { get; }
-        #endregion
+        public PluginsSettingEditorViewModel PluginsSettingEditor { get; }
+#endregion
 
-        #region command
+#region command
 
         public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -104,12 +110,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         ));
 
-        #endregion
+#endregion
 
-        #region function
-        #endregion
+#region function
+#endregion
 
-        #region IViewLifecycleReceiver
+#region IViewLifecycleReceiver
 
         public void ReceiveViewInitialized(Window window)
         { }
@@ -129,9 +135,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public void ReceiveViewClosed(Window window, bool isUserOperation)
         { }
 
-        #endregion
+#endregion
 
-        #region ElementViewModelBase
+#region ElementViewModelBase
 
         protected override void Dispose(bool disposing)
         {
@@ -156,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.Dispose(disposing);
         }
 
-        #endregion
+#endregion
 
     }
 }

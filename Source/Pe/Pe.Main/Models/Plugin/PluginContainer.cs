@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal class PluginContainer
+    public class PluginContainer
     {
         public PluginContainer(AddonContainer addonContainer, ThemeContainer themeContainer, ILoggerFactory loggerFactory)
         {
