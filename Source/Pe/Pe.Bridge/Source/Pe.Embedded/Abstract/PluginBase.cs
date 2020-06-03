@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 Logger.LogWarning("{0} の取得に失敗したためダミー値にて処理: {1}, {2}", nameof(PluginIdentifiersAttribute), pluginIdentifiersAttr.PluginName, pluginIdentifiersAttr.PluginId);
             }
 
-            var supportVersionsAttr = assemblyType.GetCustomAttribute<PluginSupportVersionsAttribute>();
+            var supportVersionsAttr = assembly.GetCustomAttribute<PluginSupportVersionsAttribute>();
             if(supportVersionsAttr == null) {
                 Logger.LogWarning("{0} の取得に失敗したため最低バージョンで補正", nameof(PluginSupportVersionsAttribute));
                 supportVersionsAttr = new PluginSupportVersionsAttribute();
