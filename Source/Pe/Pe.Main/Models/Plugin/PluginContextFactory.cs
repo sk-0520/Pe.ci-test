@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
-        PluginFile CreatePluginFile(IPluginIdentifiers pluginId)
+        protected virtual PluginFile CreatePluginFile(IPluginIdentifiers pluginId)
         {
 
             var pluginFile = new PluginFile(
@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginFile;
         }
 
-        PluginPersistent CrteatePluginPersistent(IPluginIdentifiers pluginId)
+        protected virtual PluginPersistent CrteatePluginPersistent(IPluginIdentifiers pluginId)
         {
             // DB渡す？ バリア渡す？ 遅延渡す？
             var pluginPersistent = new PluginPersistent(
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginPersistent;
         }
 
-        PluginStorage CreatePluginStorage(IPluginIdentifiers pluginId)
+        protected virtual PluginStorage CreatePluginStorage(IPluginIdentifiers pluginId)
         {
             var pluginStorage = new PluginStorage(
                 CreatePluginFile(pluginId),

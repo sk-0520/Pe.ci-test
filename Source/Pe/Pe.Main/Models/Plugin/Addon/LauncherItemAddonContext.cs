@@ -7,20 +7,14 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class LauncherItemAddonContext: ILauncherItemAddonContext
+    internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext
     {
         public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, LauncherItemAddonStorage storage, IUserAgentFactory userAgentFactory)
+            :base(pluginIdentifiers)
         {
-            PluginIdentifiers = pluginIdentifiers;
             Storage = storage;
             UserAgentFactory = userAgentFactory;
         }
-
-        #region property
-
-        public IPluginIdentifiers PluginIdentifiers { get; }
-
-        #endregion
 
         #region ILauncherItemAddonContext
 

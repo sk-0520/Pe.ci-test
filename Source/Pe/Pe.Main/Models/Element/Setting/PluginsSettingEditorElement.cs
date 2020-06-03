@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -31,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void LoadImpl()
         {
+            //var p = new PluginLoadContext
             //throw new NotImplementedException();
         }
 

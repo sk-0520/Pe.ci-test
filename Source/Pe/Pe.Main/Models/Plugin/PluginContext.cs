@@ -23,20 +23,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    /// <inheritdoc cref="IPluginInitializeContext"/>
-    public class PluginInitializeContext: IPluginInitializeContext
+    public abstract class PluginIdentifiersContextBase
     {
-        public PluginInitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+        protected PluginIdentifiersContextBase(IPluginIdentifiers pluginIdentifiers)
         {
             PluginIdentifiers = pluginIdentifiers;
-            Storage = storage;
         }
 
-        #region property
+        #region public
 
         public IPluginIdentifiers PluginIdentifiers { get; }
 
         #endregion
+    }
+
+    /// <inheritdoc cref="IPluginInitializeContext"/>
+    public class PluginInitializeContext: PluginIdentifiersContextBase, IPluginInitializeContext
+    {
+        public PluginInitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+            : base(pluginIdentifiers)
+        {
+            Storage = storage;
+        }
 
         #region IPluginInitializeContext
 
@@ -48,19 +56,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginUninitializeContext"/>
-    public class PluginUninitializeContext: IPluginUninitializeContext
+    public class PluginUninitializeContext: PluginIdentifiersContextBase, IPluginUninitializeContext
     {
         public PluginUninitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+            : base(pluginIdentifiers)
         {
-            PluginIdentifiers = pluginIdentifiers;
             Storage = storage;
         }
-
-        #region property
-
-        public IPluginIdentifiers PluginIdentifiers { get; }
-
-        #endregion
 
         #region IPluginUninitializeContext
 
@@ -72,20 +74,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginContext"/>
-    public class PluginContext: IPluginContext
+    public class PluginContext: PluginIdentifiersContextBase, IPluginContext
     {
         public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
+            : base(pluginIdentifiers)
         {
-            PluginIdentifiers = pluginIdentifiers;
             Storage = storage;
             UserAgentFactory = userAgentFactory;
         }
-
-        #region property
-
-        public IPluginIdentifiers PluginIdentifiers { get; }
-
-        #endregion
 
         #region IPluginContext
 
