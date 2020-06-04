@@ -34,7 +34,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
 
-        ISet<IPlugin> Plugins { get; } = new HashSet<IPlugin>();
+        HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();
+        /// <summary>
+        /// プラグイン一覧。
+        /// </summary>
+        public IReadOnlyCollection<IPlugin> Plugins => PluginsImpl;
 
         /// <summary>
         /// アドオン用コンテナ。
@@ -206,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="plugin"></param>
         public void AddPlugin(IPlugin plugin)
         {
-            Plugins.Add(plugin);
+            PluginsImpl.Add(plugin);
 
             if(plugin is ITheme theme) {
                 Theme.Add(theme);

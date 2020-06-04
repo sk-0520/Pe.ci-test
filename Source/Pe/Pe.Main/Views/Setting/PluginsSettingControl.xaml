@@ -5,13 +5,13 @@
 
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
-  
+
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-  mc:Ignorable="d" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
   d:DesignWidth="800"
   d:DesignHeight="450"
 >
@@ -21,6 +21,36 @@
     <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
   </UserControl.Resources>
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="7*" />
+    </Grid.ColumnDefinitions>
+
+    <ListBox x:Name="listPlugins" Grid.Column="0" SelectedItem="{Binding Editor.SelectedPlugin, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.PluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    </ListBox>
+
+    <GridSplitter Grid.Column="1" Style="{StaticResource Horizon-GridSplitter}" />
+
+    <ScrollViewer Grid.Column="2">
+      <StackPanel DataContext="{Binding SelectedItem, ElementName=listPlugins}">
+        <StackPanel.Style>
+          <Style TargetType="StackPanel">
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                <Setter Property="Visibility" Value="Collapsed" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </StackPanel.Style>
+
+        <TextBlock>
+                    <Run Text="name" />
+                    <Run Text="{Binding PluginName, Mode=OneTime}" />
+        </TextBlock>
+      </StackPanel>
+
+    </ScrollViewer>
 
   </Grid>
 </UserControl>

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Management;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -19,11 +22,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
+            PluginItems = new ReadOnlyObservableCollection<PluginSettingEditorElement>(PluginItemsImpl);
         }
 
         #region property
 
         PluginContainer PluginContainer { get; }
+
+        ObservableCollection<PluginSettingEditorElement> PluginItemsImpl { get; } = new ObservableCollection<PluginSettingEditorElement>();
+        public ReadOnlyObservableCollection<PluginSettingEditorElement> PluginItems { get; }
 
         #endregion
 
@@ -34,6 +41,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             //var p = new PluginLoadContext
             //throw new NotImplementedException();
+            foreach(var plugin in PluginContainer.Plugins) {
+                var element = new PluginSettingEditorElement(plugin, LoggerFactory);
+                element.Initialize(); // 無意味だけど呼び出し
+                PluginItemsImpl.Add(element);
+            }
         }
 
         protected override void SaveImpl(DatabaseCommandPack commandPack)

@@ -33,6 +33,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         IllegalAssembly,
     }
 
+    public interface IPLuginId
+    {
+        #region property
+
+        Guid PluginId { get; }
+
+        #endregion
+    }
+
     public class PluginStateData: DataBase
     {
         #region property

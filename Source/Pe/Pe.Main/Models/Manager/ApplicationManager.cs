@@ -1660,6 +1660,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StartHook();
             RunAddons();
             DelayCheckUpdateAsync().ConfigureAwait(false);
+#if DEBUG
+            DebugStartupEnd();
+#endif
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1215:\"GC.Collect\" should not be called")]
