@@ -31,6 +31,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// </summary>
         string PluginPrimaryCategory { get; }
 
+        /// <summary>
+        /// <see cref="PluginPrimaryCategory"/>以外の該当しそうなカテゴリ一覧。
+        /// </summary>
         IReadOnlyList<string> PluginSecondaryCategories { get; }
 
         #endregion
@@ -54,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         #region IPluginCategory
 
-        /// <inheritdoc cref="IPluginCategory.IPluginCategory"/>
+        /// <inheritdoc cref="IPluginCategory.PluginPrimaryCategory"/>
         public string PluginPrimaryCategory { get; }
 
         /// <inheritdoc cref="IPluginCategory.PluginSecondaryCategories"/>

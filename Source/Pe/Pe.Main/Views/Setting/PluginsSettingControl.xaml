@@ -28,29 +28,74 @@
     </Grid.ColumnDefinitions>
 
     <ListBox x:Name="listPlugins" Grid.Column="0" SelectedItem="{Binding Editor.SelectedPlugin, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.PluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding PluginName}" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
     </ListBox>
 
     <GridSplitter Grid.Column="1" Style="{StaticResource Horizon-GridSplitter}" />
 
-    <ScrollViewer Grid.Column="2">
-      <StackPanel DataContext="{Binding SelectedItem, ElementName=listPlugins}">
-        <StackPanel.Style>
-          <Style TargetType="StackPanel">
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                <Setter Property="Visibility" Value="Collapsed" />
-              </DataTrigger>
-            </Style.Triggers>
-          </Style>
-        </StackPanel.Style>
+    <Grid Grid.Column="2" Margin="{StaticResource AllMargin}">
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding SelectedItem, ElementName=listPlugins}" Value="{x:Null}">
+              <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
 
-        <TextBlock>
-                    <Run Text="name" />
-                    <Run Text="{Binding PluginName, Mode=OneTime}" />
-        </TextBlock>
-      </StackPanel>
+      <GroupBox Style="{StaticResource HeaderGroupBox}" DataContext="{Binding SelectedItem, ElementName=listPlugins}" Header="{Binding PluginName, Mode=OneTime, Converter={StaticResource EscapeAccessKeyConverter}}">
+        <StackPanel Grid.IsSharedSizeScope="True">
+          <GroupBox Header="info">
+            <StackPanel>
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" SharedSizeGroup="PluginLabel" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-    </ScrollViewer>
+                <TextBlock Grid.Column="0" Text="plugin id"/>
+                <TextBlock Grid.Column="1" Text="{Binding PluginId, Mode=OneTime}"/>
+              </Grid>
+
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" SharedSizeGroup="PluginLabel" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="version"/>
+                <TextBlock Grid.Column="1" Text="{Binding PluginVersion, Mode=OneTime}"/>
+              </Grid>
+
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" SharedSizeGroup="PluginLabel" />
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="support"/>
+                <TextBlock Grid.Column="1">
+                  <Run Text="{Binding MinimumSupportVersion, Mode=OneTime}" />
+                  <Run Text=" - "/>
+                  <Run Text="{Binding MaximumSupportVersion, Mode=OneTime}" />
+                </TextBlock>
+              </Grid>
+
+            </StackPanel>
+          </GroupBox>
+
+          <ScrollViewer Visibility="{Binding HasSettingControl, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <GroupBox Header="setting" Content="{Binding SettingControl}" />
+          </ScrollViewer>
+        </StackPanel>
+      </GroupBox>
+
+    </Grid>
 
   </Grid>
 </UserControl>
