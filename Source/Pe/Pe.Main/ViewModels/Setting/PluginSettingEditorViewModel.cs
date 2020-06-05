@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     return null;
                 }
 
-                if(this._settingControl != null) {
+                if(this._settingControl == null) {
                     this._settingControl = Model.BeginPreferences();
                 }
 
