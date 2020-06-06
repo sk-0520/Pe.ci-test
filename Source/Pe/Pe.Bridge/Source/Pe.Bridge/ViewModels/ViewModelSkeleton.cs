@@ -1,0 +1,110 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Windows.Input;
+
+namespace ContentTypeTextNet.Pe.Bridge.ViewModels
+{
+    public interface ISkeletonImplements
+    {
+        #region function
+
+        ICommand CreateCommand(Action execute);
+        ICommand CreateCommand<TParameter>(Action<TParameter> execute);
+        ICommand CreateCommand(Action execute, Func<bool> canExecute);
+        ICommand CreateCommand<TParameter>(Action<TParameter> execute, Func<TParameter, bool> canExecute);
+
+        #endregion
+    }
+
+    /// <summary>
+    /// プラグイン側でのViewModel作成を簡略化。
+    /// <para><see cref="ISkeletonImplements"/>が本体。</para>
+    /// </summary>
+    public abstract class ViewModelSkeleton: INotifyPropertyChanged
+    {
+        protected ViewModelSkeleton(ISkeletonImplements skeletonImplements)
+        {
+            Implements = skeletonImplements;
+        }
+
+        #region property
+
+        /// <summary>
+        /// こいつ経由でViewModel処理を行う。
+        /// </summary>
+        protected ISkeletonImplements Implements { get; }
+
+        #endregion
+
+        #region function
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            var propertyChanged = PropertyChanged;
+            if(propertyChanged != null) {
+                var e = new PropertyChangedEventArgs(propertyName);
+                propertyChanged(this, e);
+            }
+        }
+
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")
+        {
+            if(Equals(storage, value)) {
+                return false;
+            }
+
+            storage = value;
+            OnPropertyChanged(propertyName);
+
+            return true;
+        }
+
+        /// <summary>
+        /// オブジェクトのプロパティに値設定。
+        /// </summary>
+        /// <typeparam name="TValue">設定値のデータ。</typeparam>
+        /// <param name="obj">対象オブジェクト。</param>
+        /// <param name="value">設定値。</param>
+        /// <param name="targetMemberName">設定対象となる<paramref name="obj"/>のメンバ名。未設定で呼び出しメンバ名。</param>
+        /// <param name="notifyPropertyName">値設定後に通知するプロパティ名。未設定で呼び出しメンバ名。</param>
+        /// <returns>設定されたか。同一値の場合は設定しない。</returns>
+        protected virtual bool SetPropertyValue<TValue>(object obj, TValue value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string notifyPropertyName = "")
+        {
+            var type = obj.GetType();
+            var propertyInfo = type.GetProperty(targetMemberName);
+
+#pragma warning disable CS8601 // Null 参照割り当ての可能性があります。
+#pragma warning disable CS8602 // null 参照の可能性があるものの逆参照です。
+            var nowValue = (TValue)propertyInfo.GetValue(obj);
+#pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
+#pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
+
+            if(Equals(nowValue, value)) {
+
+                propertyInfo.SetValue(obj, value);
+
+                OnPropertyChanged(notifyPropertyName);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public ICommand CreateCommand(Action execute) => Implements.CreateCommand(execute);
+        public ICommand CreateCommand<TParameter>(Action<TParameter> execute) => Implements.CreateCommand(execute);
+        public ICommand CreateCommand(Action execute, Func<bool> canExecute) => Implements.CreateCommand(execute, canExecute);
+        public ICommand CreateCommand<TParameter>(Action<TParameter> execute, Func<TParameter, bool> canExecute) => Implements.CreateCommand(execute, canExecute);
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #endregion
+    }
+}
