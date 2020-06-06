@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
         public PreferencesLoadContext CreateLoadContext(IPluginIdentifiers pluginIdentifiers)
         {
             var pluginStorage = CreatePluginStorage(pluginIdentifiers);
-            return new PreferencesLoadContext(pluginIdentifiers, pluginStorage, UserAgentManager);
+            return new PreferencesLoadContext(pluginIdentifiers, pluginStorage, UserAgentManager, new SkeletonImplements());
         }
 
         public PreferencesCheckContext CreateCheckContext(IPluginIdentifiers pluginIdentifiers)

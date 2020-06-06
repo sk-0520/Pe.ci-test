@@ -4,17 +4,19 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
+using ContentTypeTextNet.Pe.Bridge.ViewModels;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 {
     /// <inheritdoc cref="IPreferencesLoadContext"/>
     public class PreferencesLoadContext: PluginIdentifiersContextBase, IPreferencesLoadContext
     {
-        public PreferencesLoadContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
+        public PreferencesLoadContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory, ISkeletonImplements skeletonImplements)
             : base(pluginIdentifiers)
         {
             Storage = storage;
             UserAgentFactory = userAgentFactory;
+            SkeletonImplements = skeletonImplements;
         }
 
         #region IPreferencesLoadContext
@@ -25,6 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 
         /// <inheritdoc cref="IPreferencesLoadContext.UserAgentFactory"/>
         public IUserAgentFactory UserAgentFactory { get; }
+
+        public ISkeletonImplements SkeletonImplements { get; }
 
         #endregion
     }

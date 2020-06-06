@@ -49,8 +49,8 @@
       </Grid.Style>
 
       <GroupBox Style="{StaticResource HeaderGroupBox}" DataContext="{Binding SelectedItem, ElementName=listPlugins}" Header="{Binding PluginName, Mode=OneTime, Converter={StaticResource EscapeAccessKeyConverter}}">
-        <StackPanel Grid.IsSharedSizeScope="True">
-          <GroupBox Header="info">
+        <StackPanel>
+          <GroupBox Grid.IsSharedSizeScope="True" Header="info">
             <StackPanel>
               <Grid>
                 <Grid.ColumnDefinitions>

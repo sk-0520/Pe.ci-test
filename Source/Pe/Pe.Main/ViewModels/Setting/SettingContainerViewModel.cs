@@ -18,7 +18,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class SettingContainerViewModel : ElementViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
+    public class SettingContainerViewModel: ElementViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 #endif
         }
 
-#region property
+        #region property
 
         IGeneralTheme GeneralTheme { get; }
 
@@ -94,9 +94,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherToobarsSettingEditorViewModel LauncherToobarsSettingEditor { get; }
         public KeyboardSettingEditorViewModel KeyboardSettingEditor { get; }
         public PluginsSettingEditorViewModel PluginsSettingEditor { get; }
-#endregion
+        #endregion
 
-#region command
+        #region command
 
         public ICommand SubmitCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -110,12 +110,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         ));
 
-#endregion
+        #endregion
 
-#region function
-#endregion
+        #region function
+        #endregion
 
-#region IViewLifecycleReceiver
+        #region IViewLifecycleReceiver
 
         public void ReceiveViewInitialized(Window window)
         { }
@@ -135,9 +135,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public void ReceiveViewClosed(Window window, bool isUserOperation)
         { }
 
-#endregion
+        #endregion
 
-#region ElementViewModelBase
+        #region ElementViewModelBase
 
         protected override void Dispose(bool disposing)
         {
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.Dispose(disposing);
         }
 
-#endregion
+        #endregion
 
     }
 }

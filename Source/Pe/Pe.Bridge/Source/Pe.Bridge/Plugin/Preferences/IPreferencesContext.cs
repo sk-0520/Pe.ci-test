@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.ViewModels;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
 {
@@ -23,6 +24,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// <see cref="IUserAgent"/> 生成器。
         /// </summary>
         IUserAgentFactory UserAgentFactory { get; }
+
+        ISkeletonImplements SkeletonImplements { get; }
 
         #endregion
     }
