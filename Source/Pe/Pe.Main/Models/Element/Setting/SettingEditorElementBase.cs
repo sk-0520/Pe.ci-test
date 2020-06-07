@@ -12,21 +12,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public sealed class DatabaseCommandPack : TApplicationPackBase<IDatabaseCommands, DatabaseCommands>
-    {
-        public DatabaseCommandPack(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus)
-            : base(main, file, temporary)
-        {
-            CommonStatus=commonStatus;
-        }
-
-        #region property
-
-        public IDatabaseCommonStatus CommonStatus { get; }
-
-        #endregion
-    }
-
     /// <summary>
     /// 各設定項目の親。
     /// </summary>
@@ -77,9 +62,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsLoaded = true;
         }
 
-        protected abstract void SaveImpl(DatabaseCommandPack commandPack);
+        protected abstract void SaveImpl(ApplicationDatabaseCommandsPack commandPack);
 
-        public void Save(DatabaseCommandPack commandPack)
+        public void Save(ApplicationDatabaseCommandsPack commandPack)
         {
             if(!IsLoaded) {
                 throw new InvalidOperationException(nameof(IsLoaded));

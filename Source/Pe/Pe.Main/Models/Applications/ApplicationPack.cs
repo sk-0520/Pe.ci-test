@@ -4,6 +4,7 @@ using System.DirectoryServices;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using Microsoft.Extensions.Logging;
 
@@ -144,6 +145,56 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
+    public interface IDatabaseCommandPack: IApplicationPack<IDatabaseCommands>
+    { }
+
+    public sealed class ApplicationDatabaseCommandsPack: TApplicationPackBase<IDatabaseCommands, DatabaseCommands>, IDatabaseCommandPack
+    {
+        public ApplicationDatabaseCommandsPack(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus)
+            : base(main, file, temporary)
+        {
+            CommonStatus = commonStatus;
+        }
+
+        #region property
+
+        public IDatabaseCommonStatus CommonStatus { get; }
+
+        #endregion
+    }
+
+    internal class Barriers: TApplicationPackBase<IDatabaseCommander, IDatabaseTransaction>
+    {
+        public Barriers(IDatabaseTransaction main, IDatabaseTransaction file, IDatabaseTransaction temporary, bool isReadOnly)
+            : base(main, file, temporary)
+        {
+            IsReadOnly = isReadOnly;
+        }
+
+        #region property
+
+        public bool IsReadOnly { get; }
+
+        #endregion
+
+        #region TApplicationPackBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Main.Dispose();
+                    File.Dispose();
+                    Temporary.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+    }
+
     public interface IDatabaseBarrierPack: IApplicationPack<IDatabaseBarrier>
     {
 
@@ -191,38 +242,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    internal class Barriers: TApplicationPackBase<IDatabaseCommander, IDatabaseTransaction>
-    {
-        public Barriers(IDatabaseTransaction main, IDatabaseTransaction file, IDatabaseTransaction temporary, bool isReadOnly)
-            : base(main, file, temporary)
-        {
-            IsReadOnly = isReadOnly;
-        }
-
-        #region property
-
-        public bool IsReadOnly { get; }
-
-        #endregion
-
-        #region TApplicationPackBase
-
-        protected override void Dispose(bool disposing)
-        {
-            if(!IsDisposed) {
-                if(disposing) {
-                    Main.Dispose();
-                    File.Dispose();
-                    Temporary.Dispose();
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
-        #endregion
-    }
-
     internal sealed class TApplicationPack<TInterface, TObject>: TApplicationPackBase<TInterface, TObject>
         where TObject : TInterface
     {
@@ -239,6 +258,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #endregion
     }
-
-
 }

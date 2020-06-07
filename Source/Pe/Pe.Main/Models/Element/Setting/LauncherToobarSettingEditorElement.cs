@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void Save(DatabaseCommandPack commadPack)
+        public void Save(ApplicationDatabaseCommandsPack commadPack)
         {
             Debug.Assert(Font != null);
 

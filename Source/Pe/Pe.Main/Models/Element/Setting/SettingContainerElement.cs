@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var tempDatabaseBarrier = ServiceLocator.Get<ITemporaryDatabaseBarrier>();
             var tempDatabaseCommander = tempDatabaseBarrier.WaitWrite();
 
-            var pack = new DatabaseCommandPack(
+            var pack = new ApplicationDatabaseCommandsPack(
                 new DatabaseCommands(mainDatabaseCommander, mainDatabaseCommander.Implementation),
                 new DatabaseCommands(fileDatabaseCommander, fileDatabaseCommander.Implementation),
                 new DatabaseCommands(tempDatabaseCommander, tempDatabaseCommander.Implementation),

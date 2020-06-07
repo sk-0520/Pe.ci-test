@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
         {
             var launcherFactory = new LauncherFactory(IdFactory, LoggerFactory);
             foreach(var group in GroupItems.Counting()) {

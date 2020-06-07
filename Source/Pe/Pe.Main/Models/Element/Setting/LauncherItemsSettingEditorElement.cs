@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //}
         }
 
-        protected override void SaveImpl(DatabaseCommandPack commandPack)
+        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
         {
             foreach(var item in AllLauncherItems) {
                 var needToIconClear = item.SaveItem(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
