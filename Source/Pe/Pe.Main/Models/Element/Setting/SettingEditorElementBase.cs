@@ -12,25 +12,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class DatabaseCommander
+    public sealed class DatabaseCommandPack : TApplicationPackBase<IDatabaseCommands, DatabaseCommands>
     {
-        public DatabaseCommander(IDatabaseCommander commander, IDatabaseImplementation implementation)
-        {
-            Commander = commander;
-            Implementation = implementation;
-        }
-
-        #region property
-
-        public IDatabaseCommander Commander { get; }
-        public IDatabaseImplementation Implementation { get; }
-
-        #endregion
-    }
-
-    public sealed class DatabaseCommandPack : TApplicationPackBase<DatabaseCommander, DatabaseCommander>
-    {
-        public DatabaseCommandPack(DatabaseCommander main, DatabaseCommander file, DatabaseCommander temporary, IDatabaseCommonStatus commonStatus)
+        public DatabaseCommandPack(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus)
             : base(main, file, temporary)
         {
             CommonStatus=commonStatus;
@@ -39,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         public IDatabaseCommonStatus CommonStatus { get; }
+
         #endregion
     }
 

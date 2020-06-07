@@ -89,9 +89,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var tempDatabaseCommander = tempDatabaseBarrier.WaitWrite();
 
             var pack = new DatabaseCommandPack(
-                new DatabaseCommander(mainDatabaseCommander, mainDatabaseCommander.Implementation),
-                new DatabaseCommander(fileDatabaseCommander, fileDatabaseCommander.Implementation),
-                new DatabaseCommander(tempDatabaseCommander, tempDatabaseCommander.Implementation),
+                new DatabaseCommands(mainDatabaseCommander, mainDatabaseCommander.Implementation),
+                new DatabaseCommands(fileDatabaseCommander, fileDatabaseCommander.Implementation),
+                new DatabaseCommands(tempDatabaseCommander, tempDatabaseCommander.Implementation),
                 DatabaseCommonStatus.CreateCurrentAccount()
             );
 
