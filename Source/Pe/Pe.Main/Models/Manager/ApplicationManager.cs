@@ -664,9 +664,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             };
             var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
 
+            var databaseBarrierPack = ApplicationDiContainer.Build<IDatabaseBarrierPack>();
+
             // Pe専用プラグイン
             foreach(var plugin in applicationPlugins) {
-                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
+                using(var readerPack = databaseBarrierPack.WaitRead()) {
+                    plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers, readerPack, true));
+                }
                 initializedPlugins.Add(plugin);
             }
 
@@ -677,7 +681,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("プラグイン初期化処理: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
                 var plugin = pluginLoadStateItem.Plugin;
                 try {
-                    plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
+                    using(var readerPack = databaseBarrierPack.WaitRead()) {
+                        plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers, readerPack, true));
+                    }
                     initializedPlugins.Add(plugin);
                 } catch(Exception ex) {
                     Logger.LogError(ex, "プラグイン初期化失敗: {0}, {1}, {2}", ex.Message, pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);

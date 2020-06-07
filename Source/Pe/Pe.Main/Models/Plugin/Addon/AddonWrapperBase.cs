@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -22,10 +24,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        protected AddonWrapperBase(IReadOnlyList<IAddon> addons, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected AddonWrapperBase(IReadOnlyList<IAddon> addons, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+            DatabaseBarrierPack = databaseBarrierPack;
+            DatabaseLazyWriterPack =databaseLazyWriterPack;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
             PlatformTheme = platformTheme;
@@ -37,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
+       protected IDatabaseBarrierPack DatabaseBarrierPack { get; }
+        protected IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
         protected EnvironmentParameters EnvironmentParameters { get; }
         protected IUserAgentManager UserAgentManager { get; }
         protected IPlatformTheme PlatformTheme { get; }
@@ -79,8 +85,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 Debug.Assert(addon.IsSupported(AddonKind));
 
                 if(!addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                    var pluginContextFactory = new PluginContextFactory(EnvironmentParameters, UserAgentManager);
-                    addon.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(addon.PluginInformations.PluginIdentifiers));
+                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager);
+                    using(var reader = DatabaseBarrierPack.WaitRead()) {
+                        addon.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(addon.PluginInformations.PluginIdentifiers, reader, true));
+                    }
                 }
                 var functionUnit = BuildFunctionUnit(addon);
                 list.Add(functionUnit);

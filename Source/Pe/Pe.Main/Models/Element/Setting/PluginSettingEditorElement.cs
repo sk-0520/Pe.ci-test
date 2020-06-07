@@ -17,10 +17,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPLuginId
     {
-        public PluginSettingEditorElement(IPlugin plugin, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public PluginSettingEditorElement(IPlugin plugin, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack,  EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Plugin = plugin;
+            DatabaseBarrierPack = databaseBarrierPack;
+            DatabaseLazyWriterPack = databaseLazyWriterPack;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
 
@@ -36,6 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public IPlugin Plugin { get; }
 
+        IDatabaseBarrierPack DatabaseBarrierPack { get; }
+        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IUserAgentManager UserAgentManager { get; }
 
@@ -50,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         PreferencesContextFactory CreateContextFactory()
         {
-            var factory = new PreferencesContextFactory(EnvironmentParameters, UserAgentManager);
+            var factory = new PreferencesContextFactory(EnvironmentParameters, DatabaseLazyWriterPack, UserAgentManager);
             return factory;
         }
 
@@ -62,9 +66,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(!StartedPreferences);
 
+            UserControl result;
             var factory = CreateContextFactory();
-            var context = factory.CreateLoadContext(Plugin.PluginInformations.PluginIdentifiers);
-            var result = Preferences.BeginPreferences(context);
+            using(var reader = DatabaseBarrierPack.WaitRead()) {
+                var context = factory.CreateLoadContext(Plugin.PluginInformations.PluginIdentifiers, reader);
+                result = Preferences.BeginPreferences(context);
+            }
             StartedPreferences = true;
             return result;
         }
@@ -77,13 +84,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
 
+            PreferencesCheckContext context;
             var factory = CreateContextFactory();
-            var context = factory.CreateCheckContext(Plugin.PluginInformations.PluginIdentifiers);
-            Preferences.CheckPreferences(context);
+            using(var reader = DatabaseBarrierPack.WaitRead()) {
+                context = factory.CreateCheckContext(Plugin.PluginInformations.PluginIdentifiers, reader);
+                Preferences.CheckPreferences(context);
+            }
             return context.HasError;
         }
 
-        public void SavePreferences()
+        public void SavePreferences(DatabaseCommandPack databaseCommandPack)
         {
             if(!SupportedPreferences) {
                 throw new InvalidOperationException(nameof(SupportedPreferences));
@@ -92,9 +102,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(StartedPreferences);
 
             // NOTE: 上位から保存用のDBアクセス処理を渡して保存すべき
-
+            var commandPack = TApplicationPack.Create(databaseCommandPack.Main.Commander, databaseCommandPack.File.Commander, databaseCommandPack.Temporary.Commander);
             var factory = CreateContextFactory();
-            var context = factory.CreateSaveContext(Plugin.PluginInformations.PluginIdentifiers);
+            var context = factory.CreateSaveContext(Plugin.PluginInformations.PluginIdentifiers, commandPack);
             Preferences.SavePreferences(context);
         }
 
@@ -109,8 +119,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             // NOTE: 多分ここじゃなくて別んところで呼び出すべき
 
             var factory = CreateContextFactory();
-            var context = factory.CreateEndContext(Plugin.PluginInformations.PluginIdentifiers);
-            Preferences.EndPreferences(context);
+            using(var reader = DatabaseBarrierPack.WaitRead()) {
+                var context = factory.CreateEndContext(Plugin.PluginInformations.PluginIdentifiers, reader);
+                Preferences.EndPreferences(context);
+            }
         }
 
         #endregion

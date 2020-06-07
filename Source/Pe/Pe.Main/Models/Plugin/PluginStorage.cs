@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
@@ -165,9 +167,60 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
-    public class PluginPersistentStorage: IPluginPersistentStorage
+    public enum PluginPersistentMode
     {
+        /// <summary>
+        /// 上流に影響される読み書き。
+        /// <para>書き込みは状況により不可。</para>
+        /// </summary>
+        Commander,
+        /// <summary>
+        /// 遅延書き込み。
+        /// </summary>
+        LazyWriter,
+    }
+
+    /// <inheritdoc cref="IPluginPersistentStorage"/>
+    public class PluginPersistentStorage: IPluginPersistentStorage, IPLuginId
+    {
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommander databaseCommander, bool isReadOnly)
+        {
+            PluginIdentifiers = pluginIdentifiers;
+            DatabaseCommander = databaseCommander;
+            IsReadOnly = isReadOnly;
+            Mode = PluginPersistentMode.Commander;
+        }
+
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommander databaseCommander, IDatabaseLazyWriter databaseLazyWriter)
+        {
+            PluginIdentifiers = pluginIdentifiers;
+            DatabaseCommander = databaseCommander;
+            DatabaseLazyWriter = databaseLazyWriter;
+            IsReadOnly = false;
+            Mode = PluginPersistentMode.LazyWriter;
+        }
+
+        #region property
+
+        IPluginIdentifiers PluginIdentifiers { get; }
+        public string PluginName => PluginIdentifiers.PluginName;
+
+        PluginPersistentMode Mode { get; }
+        IDatabaseCommander? DatabaseCommander { get; }
+        IDatabaseLazyWriter? DatabaseLazyWriter { get; }
+
+        #endregion
+
         #region IPluginPersistentStorage
+
+        /// <inheritdoc cref="IPluginPersistentStorage.IsReadOnly"/>
+        public bool IsReadOnly { get; }
+
+        #endregion
+
+        #region IPluginId
+
+        public Guid PluginId => PluginIdentifiers.PluginId;
 
         #endregion
     }

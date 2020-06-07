@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region property
 
-        IApplicationDatabaseBarrier DatabaseBarrier { get; }
+        IMainDatabaseBarrier DatabaseBarrier { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IWindowManager WindowManager { get; }
         IIdFactory IdFactory { get; }

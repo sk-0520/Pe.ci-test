@@ -87,7 +87,20 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// </summary>
     public interface IPluginPersistentStorage
     {
+        #region property
+
+        /// <summary>
+        /// 永続データアクセスは読み取り専用か。
+        /// <para>読み取り専用の場合、書き込み処理実行で例外発生。</para>
+        /// </summary>
+        bool IsReadOnly { get; }
+
+        #endregion
+
+
         #region function
+
+
 
         #endregion
     }

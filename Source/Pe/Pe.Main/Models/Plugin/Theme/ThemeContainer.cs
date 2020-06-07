@@ -6,6 +6,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
@@ -24,11 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         DefaultTheme? _defaultTheme;
 
         #endregion
-        public ThemeContainer(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
+            DatabaseBarrierPack = databaseBarrierPack;
+            DatabaseLazyWriterPack = databaseLazyWriterPack;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
 
@@ -40,7 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
-
+        IDatabaseBarrierPack DatabaseBarrierPack { get; }
+        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IUserAgentManager UserAgentManager { get; }
 
@@ -86,11 +90,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             var prev = CurrentTheme;
             CurrentTheme = theme;
 
-            if(prev != null) {
-                prev.Unload(PluginKind.Theme, pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers));
+            using(var readerPack = DatabaseBarrierPack.WaitWrite()) {
+                if(prev != null) {
+                    prev.Unload(PluginKind.Theme, pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers, readerPack, false));
+                }
+                var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers, readerPack, true);
+                CurrentTheme.Load(PluginKind.Theme, pluginContext);
             }
-            var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers);
-            CurrentTheme.Load(PluginKind.Theme, pluginContext);
         }
 
         private IResultTheme GetTheme<IResultTheme, TBuildParameter>(ThemeKind kind, TBuildParameter parameter, Func<TBuildParameter, IResultTheme> buildCurrentTheme, Func<TBuildParameter, IResultTheme> buildDefaultTheme)
@@ -116,8 +122,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(!CurrentThemeIsDefaultTheme) {
                 if(!DefaultTheme.IsLoaded(PluginKind.Theme)) {
                     Logger.LogInformation("標準テーマ先生準備できておらず。");
-                    var pluginContextFactory = new PluginContextFactory(EnvironmentParameters, UserAgentManager);
-                    DefaultTheme.Load(PluginKind.Theme, pluginContextFactory.CreateContext(DefaultTheme.PluginInformations.PluginIdentifiers));
+                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager);
+                    using(var readerPack = DatabaseBarrierPack.WaitRead()) {
+                        DefaultTheme.Load(PluginKind.Theme, pluginContextFactory.CreateContext(DefaultTheme.PluginInformations.PluginIdentifiers, readerPack, true));
+                    }
                 }
             }
 

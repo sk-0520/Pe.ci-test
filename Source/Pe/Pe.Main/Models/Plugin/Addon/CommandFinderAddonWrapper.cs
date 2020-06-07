@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -16,8 +17,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     public class CommandFinderAddonWrapper: AddonWrapperBase<ICommandFinder>, ICommandFinder
     {
-        public CommandFinderAddonWrapper(IReadOnlyList<IAddon> addons, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(addons, environmentParameters, userAgentManager, platformTheme, dispatcherWrapper, loggerFactory)
+        public CommandFinderAddonWrapper(IReadOnlyList<IAddon> addons, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(addons, databaseBarrierPack, databaseLazyWriterPack, environmentParameters, userAgentManager, platformTheme, dispatcherWrapper, loggerFactory)
         {
         }
 

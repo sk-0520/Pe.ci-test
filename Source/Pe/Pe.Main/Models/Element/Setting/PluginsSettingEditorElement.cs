@@ -18,10 +18,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginsSettingEditorElement: SettingEditorElementBase
     {
-        public PluginsSettingEditorElement(PluginContainer pluginContainer, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public PluginsSettingEditorElement(PluginContainer pluginContainer, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
+            DatabaseBarrierPack = databaseBarrierPack;
+                DatabaseLazyWriterPack = databaseLazyWriterPack;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
             PluginItems = new ReadOnlyObservableCollection<PluginSettingEditorElement>(PluginItemsImpl);
@@ -29,6 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
+        IDatabaseBarrierPack DatabaseBarrierPack { get; }
+        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
         EnvironmentParameters EnvironmentParameters{get;}
         IUserAgentManager UserAgentManager { get; }
 
@@ -47,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //var p = new PluginLoadContext
             //throw new NotImplementedException();
             foreach(var plugin in PluginContainer.Plugins) {
-                var element = new PluginSettingEditorElement(plugin, EnvironmentParameters, UserAgentManager, LoggerFactory);
+                var element = new PluginSettingEditorElement(plugin, DatabaseBarrierPack, DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager, LoggerFactory);
                 element.Initialize(); // 無意味だけど呼び出し
                 PluginItemsImpl.Add(element);
             }

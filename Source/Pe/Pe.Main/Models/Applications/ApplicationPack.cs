@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -15,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         Temporary,
     }
 
-    public interface IApplicationPack<out T> : IDisposable
+    public interface IApplicationPack<out T>: IDisposable
     {
         #region property
 
@@ -30,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public abstract class TApplicationPackBase<TInterface, TObject> : DisposerBase, IApplicationPack<TInterface>
+    public abstract class TApplicationPackBase<TInterface, TObject>: DisposerBase, IApplicationPack<TInterface>
         where TObject : TInterface
     {
         protected TApplicationPackBase(TObject main, TObject file, TObject temporary)
@@ -83,47 +84,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IReaderWriterLockerPack : IApplicationPack<IReaderWriterLocker>
+    public interface IReaderWriterLockerPack: IApplicationPack<IReaderWriterLocker>
     { }
 
-    public sealed class ApplicationReaderWriterLockerPack : TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
+    public sealed class ApplicationReaderWriterLockerPack: TApplicationPackBase<IReaderWriterLocker, ApplicationReaderWriterLockerBase>, IReaderWriterLockerPack
     {
         public ApplicationReaderWriterLockerPack(ApplicationMainReaderWriterLocker main, ApplicationFileReaderWriterLocker file, ApplicationTemporaryReaderWriterLocker temporary)
             : base(main, file, temporary)
         { }
     }
 
-    public interface IDatabaseFactoryPack : IApplicationPack<IDatabaseFactory>
+    public interface IDatabaseFactoryPack: IApplicationPack<IDatabaseFactory>
     { }
 
-    public sealed class ApplicationDatabaseFactoryPack : TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
+    public sealed class ApplicationDatabaseFactoryPack: TApplicationPackBase<IDatabaseFactory, ApplicationDatabaseFactory>, IDatabaseFactoryPack
     {
         public ApplicationDatabaseFactoryPack(ApplicationDatabaseFactory main, ApplicationDatabaseFactory file, ApplicationDatabaseFactory temporary)
             : base(main, file, temporary)
         { }
     }
 
-    public class LazyWriterWaitTimePack : TApplicationPackBase<TimeSpan, TimeSpan>
+    public class LazyWriterWaitTimePack: TApplicationPackBase<TimeSpan, TimeSpan>
     {
         public LazyWriterWaitTimePack(TimeSpan main, TimeSpan file, TimeSpan temporary)
             : base(main, file, temporary)
         { }
     }
 
-    public interface IDatabaseLazyWriterPack : IApplicationPack<IDatabaseLazyWriter>
+    public interface IDatabaseLazyWriterPack: IApplicationPack<IDatabaseLazyWriter>
     { }
 
-    public sealed class ApplicationDatabaseLazyWriterPack : TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
+    public sealed class ApplicationDatabaseLazyWriterPack: TApplicationPackBase<IDatabaseLazyWriter, ApplicationDatabaseLazyWriter>, IDatabaseLazyWriterPack
     {
         public ApplicationDatabaseLazyWriterPack(ApplicationDatabaseLazyWriter main, ApplicationDatabaseLazyWriter file, ApplicationDatabaseLazyWriter temporary)
             : base(main, file, temporary)
         { }
     }
 
-    public interface IDatabaseAccessorPack : IApplicationPack<IDatabaseAccessor>
+    public interface IDatabaseAccessorPack: IApplicationPack<IDatabaseAccessor>
     { }
 
-    public sealed class ApplicationDatabaseAccessorPack : TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
+    public sealed class ApplicationDatabaseAccessorPack: TApplicationPackBase<IDatabaseAccessor, ApplicationDatabaseAccessor>, IDatabaseAccessorPack
     {
         public ApplicationDatabaseAccessorPack(ApplicationDatabaseAccessor main, ApplicationDatabaseAccessor file, ApplicationDatabaseAccessor temporary)
             : base(main, file, temporary)
@@ -143,10 +144,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IDatabaseBarrierPack : IApplicationPack<IDatabaseBarrier>
-    { }
+    public interface IDatabaseBarrierPack: IApplicationPack<IDatabaseBarrier>
+    {
 
-    public sealed class ApplicationDatabaseBarrierPack : TApplicationPackBase<IDatabaseBarrier, ApplicationDatabaseBarrier>, IDatabaseBarrierPack
+        #region function
+
+        IApplicationPack<IDatabaseCommander> WaitRead();
+        IApplicationPack<IDatabaseCommander> WaitWrite();
+
+        #endregion
+    }
+
+    public sealed class ApplicationDatabaseBarrierPack: TApplicationPackBase<IDatabaseBarrier, ApplicationDatabaseBarrier>, IDatabaseBarrierPack
     {
         public ApplicationDatabaseBarrierPack(ApplicationDatabaseBarrier main, ApplicationDatabaseBarrier file, ApplicationDatabaseBarrier temporary)
             : base(main, file, temporary)
@@ -162,6 +171,71 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseAccessor(factoryPack.Temporary, loggerFactory)
             );
         }
+
+        #endregion
+
+        #region IDatabaseBarrierPack
+
+        internal Barriers WaitRead()
+        {
+            return new Barriers(Main.WaitRead(), File.WaitRead(), Temporary.WaitRead(), true);
+        }
+        IApplicationPack<IDatabaseCommander> IDatabaseBarrierPack.WaitRead() => WaitRead();
+
+        internal Barriers WaitWrite()
+        {
+            return new Barriers(Main.WaitWrite(), File.WaitWrite(), Temporary.WaitWrite(), false);
+        }
+        IApplicationPack<IDatabaseCommander> IDatabaseBarrierPack.WaitWrite() => WaitRead();
+
+        #endregion
+    }
+
+    internal class Barriers: TApplicationPackBase<IDatabaseCommander, IDatabaseTransaction>
+    {
+        public Barriers(IDatabaseTransaction main, IDatabaseTransaction file, IDatabaseTransaction temporary, bool isReadOnly)
+            : base(main, file, temporary)
+        {
+            IsReadOnly = isReadOnly;
+        }
+
+        #region property
+
+        public bool IsReadOnly { get; }
+
+        #endregion
+
+        #region TApplicationPackBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Main.Dispose();
+                    File.Dispose();
+                    Temporary.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+    }
+
+    internal sealed class TApplicationPack<TInterface, TObject>: TApplicationPackBase<TInterface, TObject>
+        where TObject : TInterface
+    {
+        public TApplicationPack(TObject main, TObject file, TObject temporary)
+            : base(main, file, temporary)
+        { }
+    }
+
+    internal static class TApplicationPack
+    {
+        #region function
+
+        public static TApplicationPack<TObject, TObject> Create<TObject>(TObject main, TObject file, TObject temporary) => new TApplicationPack<TObject, TObject>(main, file, temporary);
 
         #endregion
     }

@@ -6,6 +6,7 @@ using System.Windows.Interactivity;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -25,11 +26,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
+            DatabaseBarrierPack = databaseBarrierPack;
+            DatabaseLazyWriterPack = databaseLazyWriterPack;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
 
@@ -42,6 +45,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
 
+        IDatabaseBarrierPack DatabaseBarrierPack { get; }
+        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IUserAgentManager UserAgentManager { get; }
 
@@ -75,8 +80,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             foreach(var target in targets) {
                 if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                    var pluginContextFactory = new PluginContextFactory(EnvironmentParameters, UserAgentManager);
-                    target.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(target.PluginInformations.PluginIdentifiers));
+                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager);
+                    using(var readerPack = DatabaseBarrierPack.WaitRead()) {
+                        target.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(target.PluginInformations.PluginIdentifiers, readerPack, true));
+                    }
                 }
 
                 result.Add(target);
@@ -87,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public CommandFinderAddonWrapper GetCommandFinder()
         {
-            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, EnvironmentParameters, UserAgentManager, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, DatabaseBarrierPack, DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
         #endregion

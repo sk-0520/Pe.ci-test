@@ -4,21 +4,26 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public abstract class PluginContextFactoryBase
     {
-        protected PluginContextFactoryBase(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
+        protected PluginContextFactoryBase(IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
         {
             EnvironmentParameters = environmentParameters;
+            DatabaseLazyWriterPack = databaseLazyWriterPack;
             UserAgentManager = userAgentManager;
         }
 
         #region property
 
         protected EnvironmentParameters EnvironmentParameters { get; }
+
+        protected IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+
 
         protected IUserAgentManager UserAgentManager { get; }
 
