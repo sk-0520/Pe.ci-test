@@ -62,9 +62,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsLoaded = true;
         }
 
-        protected abstract void SaveImpl(ApplicationDatabaseCommandsPack commandPack);
+        protected abstract void SaveImpl(IDatabaseCommandsPack commandPack);
 
-        public void Save(ApplicationDatabaseCommandsPack commandPack)
+        public void Save(IDatabaseCommandsPack commandPack)
         {
             if(!IsLoaded) {
                 throw new InvalidOperationException(nameof(IsLoaded));

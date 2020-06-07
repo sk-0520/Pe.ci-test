@@ -38,12 +38,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void Save(ApplicationDatabaseCommandsPack commandPack)
+        public void Save(IDatabaseCommandsPack commandPack)
         {
             SaveImpl(commandPack);
         }
 
-        protected abstract void SaveImpl(ApplicationDatabaseCommandsPack commandPack);
+        protected abstract void SaveImpl(IDatabaseCommandsPack commandPack);
 
         #endregion
     }
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppExecuteSettingData() {
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppGeneralSettingData() {
@@ -221,7 +221,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             UpdateKind = setting.UpdateKind;
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             var appUpdateSettingEntityDao = new AppUpdateSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppUpdateSettingData() {
@@ -262,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Position = setting.Position;
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             var appNotifyLogSettingEntityDao = new AppNotifyLogSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new SettingAppNotifyLogSettingData() {
@@ -304,7 +304,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             GroupMenuPosition = setting.GroupMenuPosition;
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             var appLauncherToolbarSettingEntityDao = new AppLauncherToolbarSettingEntityDao(commandPack.Main.Commander, StatementLoader, commandPack.Main.Implementation, LoggerFactory);
             var data = new AppLauncherToolbarSettingData() {
@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             FindTag = setting.FindTag;
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             Debug.Assert(Font != null);
 
@@ -433,7 +433,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsTopmost = setting.IsTopmost;
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             Debug.Assert(Font != null);
 
@@ -509,7 +509,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsTopmost = setting.IsTopmost;
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             Debug.Assert(Font != null);
 

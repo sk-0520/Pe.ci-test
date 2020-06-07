@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Toolbars.AddRange(nonActiveToolbars);
         }
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             foreach(var toolbar in Toolbars) {
                 toolbar.Save(commandPack);

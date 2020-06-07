@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             return context.HasError;
         }
 
-        public void SavePreferences(ApplicationDatabaseCommandsPack databaseCommandPack)
+        public void SavePreferences(IDatabaseCommandsPack databaseCommandPack)
         {
             if(!SupportedPreferences) {
                 throw new InvalidOperationException(nameof(SupportedPreferences));

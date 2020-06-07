@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
 
-        protected override void SaveImpl(ApplicationDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
             var jobs = ReplaceJobEditors
                 .Cast<KeyboardJobSettingEditorElementBase>()

@@ -145,10 +145,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IDatabaseCommandPack: IApplicationPack<IDatabaseCommands>
-    { }
+    public interface IDatabaseCommandsPack: IApplicationPack<IDatabaseCommands>
+    {
+        #region property
 
-    public sealed class ApplicationDatabaseCommandsPack: TApplicationPackBase<IDatabaseCommands, DatabaseCommands>, IDatabaseCommandPack
+        IDatabaseCommonStatus CommonStatus { get; }
+
+        #endregion
+    }
+
+    internal sealed class ApplicationDatabaseCommandsPack: TApplicationPackBase<IDatabaseCommands, DatabaseCommands>, IDatabaseCommandsPack
     {
         public ApplicationDatabaseCommandsPack(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus)
             : base(main, file, temporary)
@@ -156,8 +162,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             CommonStatus = commonStatus;
         }
 
-        #region property
+        #region IDatabaseCommandsPack
 
+        /// <inheritdoc cref="IDatabaseCommandsPack.CommonStatus"/>
         public IDatabaseCommonStatus CommonStatus { get; }
 
         #endregion
