@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -235,25 +237,76 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         }
 
         /// <inheritdoc cref="IPluginPersistentStorage.TryGet{TValue}(string, out TValue)"/>
-        public bool TryGet<TValue>(string key, out TValue value)
+        public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
-            throw new NotImplementedException();
+            var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
+            var data = pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, key);
+            if(data == null) {
+                value = default;
+                return false;
+            }
+
+            switch(data.Format) {
+                case PluginPersistentFormat.SimpleXml:
+                case PluginPersistentFormat.DataXml: {
+                        SerializerBase serializer = data.Format switch
+                        {
+                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            _ => throw new NotImplementedException(),
+                        };
+                        try {
+                            var binary = Encoding.UTF8.GetBytes(data.Value);
+                            using(var stream = new MemoryStream(binary)) {
+                                value = serializer.Load<TValue>(stream);
+                                return true;
+                            }
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            value = default;
+                            return false;
+                        }
+                    }
+
+                case PluginPersistentFormat.Json: {
+                        throw new NotImplementedException();
+                    }
+
+                case PluginPersistentFormat.Text: {
+                        if(typeof(TValue) != typeof(string)) {
+                            value = default;
+                            return false;
+                        }
+
+                        value = (TValue)(object)data.Value;
+                        return true;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+
         }
 
         /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue, PluginPersistentFormat)"/>
         public bool Set<TValue>(string key, TValue value, PluginPersistentFormat format)
         {
+            if(IsReadOnly) {
+                throw new InvalidOperationException(nameof(IsReadOnly));
+            }
+
             throw new NotImplementedException();
         }
         /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue)"/>
-        public bool Set<TValue>(string key, TValue value)
-        {
-            throw new NotImplementedException();
-        }
+        public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistentFormat.Json);
 
         /// <inheritdoc cref="IPluginPersistentStorage.Delete(string)"/>
         public bool Delete(string key)
         {
+            if(IsReadOnly) {
+                throw new InvalidOperationException(nameof(IsReadOnly));
+            }
+
             throw new NotImplementedException();
         }
 
