@@ -179,6 +179,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         IDatabaseCommandsPack WaitRead();
         IDatabaseCommandsPack WaitWrite();
 
+        /// <summary>
+        /// トランザクション処理を確定する。
+        /// <para>トランザクション中でない場合は特に何も起きない。</para>
+        /// </summary>
+        void Save();
+
         #endregion
     }
 
@@ -197,6 +203,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             #region property
 
             public bool IsReadOnly { get; }
+
+            #endregion
+
+            #region function
+
+            public void Commit()
+            {
+                foreach(var tran in Items.OfType<IDatabaseTransaction>()) {
+                    tran.Commit();
+                }
+            }
 
             #endregion
 
@@ -228,6 +245,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             : base(main, file, temporary)
         { }
 
+        #region property
+
+        Barriers? CurrentBarriers { get; set; }
+
+        #endregion
+
         #region function
 
         public static ApplicationDatabaseAccessorPack Create(ApplicationDatabaseFactoryPack factoryPack, ILoggerFactory loggerFactory)
@@ -257,15 +280,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         internal Barriers WaitRead()
         {
-            return new Barriers(WaitReadCore(Main), WaitReadCore(File), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
+            if(CurrentBarriers != null) {
+                throw new InvalidOperationException();
+            }
+
+            CurrentBarriers = new Barriers(WaitReadCore(Main), WaitReadCore(File), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
+            return CurrentBarriers;
         }
         IDatabaseCommandsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
 
         internal Barriers WaitWrite(IDatabaseCommonStatus databaseCommonStatus)
         {
-            return new Barriers(WaitWriteCore(Main), WaitWriteCore(File), WaitWriteCore(Temporary), databaseCommonStatus, true);
+            if(CurrentBarriers != null) {
+                throw new InvalidOperationException();
+            }
+
+            CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(File), WaitWriteCore(Temporary), databaseCommonStatus, true);
+            return CurrentBarriers;
         }
         IDatabaseCommandsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
+
+        public void Save()
+        {
+            CurrentBarriers?.Commit();
+        }
 
         #endregion
     }

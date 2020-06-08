@@ -93,11 +93,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             var prev = CurrentTheme;
             CurrentTheme = theme;
 
-            using(var commandsPack = DatabaseBarrierPack.WaitWrite()) {
-                if(prev != null) {
-                    prev.Unload(PluginKind.Theme, pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers, commandsPack, false));
+            if(prev != null) {
+                using(var writerPack = DatabaseBarrierPack.WaitWrite()) {
+                    prev.Unload(PluginKind.Theme, pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers, writerPack, false));
                 }
-                var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers, commandsPack, true);
+            }
+            using(var readerPack = DatabaseBarrierPack.WaitWrite()) {
+                var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations.PluginIdentifiers, readerPack, true);
                 CurrentTheme.Load(PluginKind.Theme, pluginContext);
             }
         }
