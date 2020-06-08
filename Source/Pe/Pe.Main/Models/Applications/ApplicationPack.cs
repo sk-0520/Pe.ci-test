@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -154,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    internal sealed class ApplicationDatabaseCommandsPack: TApplicationPackBase<IDatabaseCommands, DatabaseCommands>, IDatabaseCommandsPack
+    internal class ApplicationDatabaseCommandsPack: TApplicationPackBase<IDatabaseCommands, DatabaseCommands>, IDatabaseCommandsPack
     {
         public ApplicationDatabaseCommandsPack(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus)
             : base(main, file, temporary)
@@ -170,51 +171,59 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    internal class Barriers: TApplicationPackBase<IDatabaseCommander, IDatabaseTransaction>
-    {
-        public Barriers(IDatabaseTransaction main, IDatabaseTransaction file, IDatabaseTransaction temporary, bool isReadOnly)
-            : base(main, file, temporary)
-        {
-            IsReadOnly = isReadOnly;
-        }
-
-        #region property
-
-        public bool IsReadOnly { get; }
-
-        #endregion
-
-        #region TApplicationPackBase
-
-        protected override void Dispose(bool disposing)
-        {
-            if(!IsDisposed) {
-                if(disposing) {
-                    Main.Dispose();
-                    File.Dispose();
-                    Temporary.Dispose();
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
-        #endregion
-    }
-
     public interface IDatabaseBarrierPack: IApplicationPack<IDatabaseBarrier>
     {
 
         #region function
 
-        IApplicationPack<IDatabaseCommander> WaitRead();
-        IApplicationPack<IDatabaseCommander> WaitWrite();
+        IDatabaseCommandsPack WaitRead();
+        IDatabaseCommandsPack WaitWrite();
 
         #endregion
     }
 
     public sealed class ApplicationDatabaseBarrierPack: TApplicationPackBase<IDatabaseBarrier, ApplicationDatabaseBarrier>, IDatabaseBarrierPack
     {
+        #region define
+
+        internal class Barriers: ApplicationDatabaseCommandsPack
+        {
+            public Barriers(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus, bool isReadOnly)
+                : base(main, file, temporary, commonStatus)
+            {
+                IsReadOnly = isReadOnly;
+            }
+
+            #region property
+
+            public bool IsReadOnly { get; }
+
+            #endregion
+
+            #region TApplicationPackBase
+
+            protected override void Dispose(bool disposing)
+            {
+                if(!IsDisposed) {
+                    if(disposing) {
+                        var disposableItems = Items
+                            .Select(i => i.Commander)
+                            .OfType<IDisposable>()
+                            .ToList()
+                        ;
+                        foreach(var disposableItem in disposableItems) {
+                            disposableItem.Dispose();
+                        }
+                    }
+                }
+
+                base.Dispose(disposing);
+            }
+
+            #endregion
+        }
+
+        #endregion
         public ApplicationDatabaseBarrierPack(ApplicationDatabaseBarrier main, ApplicationDatabaseBarrier file, ApplicationDatabaseBarrier temporary)
             : base(main, file, temporary)
         { }
@@ -230,39 +239,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             );
         }
 
+        DatabaseCommands WaitReadCore(IDatabaseBarrier barrier)
+        {
+            var tran = barrier.WaitRead();
+            return new DatabaseCommands(tran, tran.Implementation);
+        }
+
+        DatabaseCommands WaitWriteCore(IDatabaseBarrier barrier)
+        {
+            var tran = barrier.WaitWrite();
+            return new DatabaseCommands(tran, tran.Implementation);
+        }
+
         #endregion
 
         #region IDatabaseBarrierPack
 
         internal Barriers WaitRead()
         {
-            return new Barriers(Main.WaitRead(), File.WaitRead(), Temporary.WaitRead(), true);
+            return new Barriers(WaitReadCore(Main), WaitReadCore(File), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
         }
-        IApplicationPack<IDatabaseCommander> IDatabaseBarrierPack.WaitRead() => WaitRead();
+        IDatabaseCommandsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
 
-        internal Barriers WaitWrite()
+        internal Barriers WaitWrite(IDatabaseCommonStatus databaseCommonStatus)
         {
-            return new Barriers(Main.WaitWrite(), File.WaitWrite(), Temporary.WaitWrite(), false);
+            return new Barriers(WaitWriteCore(Main), WaitWriteCore(File), WaitWriteCore(Temporary), databaseCommonStatus, true);
         }
-        IApplicationPack<IDatabaseCommander> IDatabaseBarrierPack.WaitWrite() => WaitRead();
+        IDatabaseCommandsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
 
         #endregion
     }
 
-    internal sealed class TApplicationPack<TInterface, TObject>: TApplicationPackBase<TInterface, TObject>
-        where TObject : TInterface
-    {
-        public TApplicationPack(TObject main, TObject file, TObject temporary)
-            : base(main, file, temporary)
-        { }
-    }
-
-    internal static class TApplicationPack
-    {
-        #region function
-
-        public static TApplicationPack<TObject, TObject> Create<TObject>(TObject main, TObject file, TObject temporary) => new TApplicationPack<TObject, TObject>(main, file, temporary);
-
-        #endregion
-    }
 }

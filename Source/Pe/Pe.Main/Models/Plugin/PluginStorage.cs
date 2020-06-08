@@ -183,18 +183,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginPersistentStorage"/>
     public class PluginPersistentStorage: IPluginPersistentStorage, IPLuginId
     {
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommander databaseCommander, bool isReadOnly)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, bool isReadOnly)
         {
             PluginIdentifiers = pluginIdentifiers;
-            DatabaseCommander = databaseCommander;
+            DatabaseCommands = databaseCommands;
             IsReadOnly = isReadOnly;
             Mode = PluginPersistentMode.Commander;
         }
 
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommander databaseCommander, IDatabaseLazyWriter databaseLazyWriter)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter)
         {
             PluginIdentifiers = pluginIdentifiers;
-            DatabaseCommander = databaseCommander;
+            DatabaseCommands = databaseCommands;
             DatabaseLazyWriter = databaseLazyWriter;
             IsReadOnly = false;
             Mode = PluginPersistentMode.LazyWriter;
@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public string PluginName => PluginIdentifiers.PluginName;
 
         PluginPersistentMode Mode { get; }
-        IDatabaseCommander? DatabaseCommander { get; }
+        IDatabaseCommands DatabaseCommands { get; }
         IDatabaseLazyWriter? DatabaseLazyWriter { get; }
 
         #endregion

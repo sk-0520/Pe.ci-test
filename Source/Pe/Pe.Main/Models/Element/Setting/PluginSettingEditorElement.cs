@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPLuginId
     {
-        public PluginSettingEditorElement(IPlugin plugin, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader,  EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public PluginSettingEditorElement(IPlugin plugin, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Plugin = plugin;
@@ -103,10 +103,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
 
-            // NOTE: 上位から保存用のDBアクセス処理を渡して保存すべき
-            var commandPack = TApplicationPack.Create(databaseCommandPack.Main.Commander, databaseCommandPack.File.Commander, databaseCommandPack.Temporary.Commander);
             var factory = CreateContextFactory();
-            var context = factory.CreateSaveContext(Plugin.PluginInformations.PluginIdentifiers, commandPack);
+            var context = factory.CreateSaveContext(Plugin.PluginInformations.PluginIdentifiers, databaseCommandPack);
             Preferences.SavePreferences(context);
         }
 

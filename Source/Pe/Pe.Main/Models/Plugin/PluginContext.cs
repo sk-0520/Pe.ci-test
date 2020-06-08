@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
+    /// <inheritdoc cref="IPluginConstructorContext"/>
     public class PluginConstructorContext: IPluginConstructorContext
     {
         public PluginConstructorContext(ILoggerFactory loggerFactory)
@@ -18,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region IPluginConstructorContext
 
+        /// <inheritdoc cref="IPluginConstructorContext.LoggerFactory"/>
         public ILoggerFactory LoggerFactory { get; }
 
         #endregion

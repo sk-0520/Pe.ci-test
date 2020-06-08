@@ -16,25 +16,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 
         #region function
 
-        public PreferencesLoadContext CreateLoadContext(IPluginIdentifiers pluginIdentifiers, IApplicationPack<IDatabaseCommander> databaseCommanderPack)
+        public PreferencesLoadContext CreateLoadContext(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommanderPack)
         {
             var pluginStorage = CreatePluginStorage(pluginIdentifiers, databaseCommanderPack, true);
             return new PreferencesLoadContext(pluginIdentifiers, pluginStorage, UserAgentManager, new SkeletonImplements());
         }
 
-        public PreferencesCheckContext CreateCheckContext(IPluginIdentifiers pluginIdentifiers, IApplicationPack<IDatabaseCommander> databaseCommanderPack)
+        public PreferencesCheckContext CreateCheckContext(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommanderPack)
         {
             var pluginStorage = CreatePluginStorage(pluginIdentifiers, databaseCommanderPack, true);
             return new PreferencesCheckContext(pluginIdentifiers, pluginStorage, UserAgentManager);
         }
 
-        public PreferencesSaveContext CreateSaveContext(IPluginIdentifiers pluginIdentifiers, IApplicationPack<IDatabaseCommander> databaseCommanderPack)
+        public PreferencesSaveContext CreateSaveContext(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommanderPack)
         {
             var pluginStorage = CreatePluginStorage(pluginIdentifiers, databaseCommanderPack, false);
             return new PreferencesSaveContext(pluginIdentifiers, pluginStorage, UserAgentManager);
         }
 
-        public PreferencesEndContext CreateEndContext(IPluginIdentifiers pluginIdentifiers, IApplicationPack<IDatabaseCommander> databaseCommanderPack)
+        public PreferencesEndContext CreateEndContext(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommanderPack)
         {
             var pluginStorage = CreatePluginStorage(pluginIdentifiers, databaseCommanderPack, true);
             return new PreferencesEndContext(pluginIdentifiers, pluginStorage, UserAgentManager);
