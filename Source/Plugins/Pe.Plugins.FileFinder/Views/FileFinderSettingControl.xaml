@@ -16,8 +16,8 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Text="hidden file"/>
-        <CheckBox Grid.Column="1" Content="検索対象とする"/>
+        <TextBlock Grid.Column="0" Text="隠しファイル"/>
+        <CheckBox Grid.Column="1" IsChecked="{Binding IncludeHiddenFile}" Content="検索対象とする" />
       </Grid>
 
       <Grid>
@@ -26,8 +26,8 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Text="PATH"/>
-        <CheckBox Grid.Column="1" Content="検索対象とする"/>
+        <TextBlock Grid.Column="0" Text="環境変数 %PATH%"/>
+        <CheckBox Grid.Column="1" IsChecked="{Binding IncludePath}" Content="検索対象とする"/>
       </Grid>
 
       <Grid>
@@ -36,13 +36,19 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Text="PATH"/>
-        <ComboBox Grid.Column="1" >
-          <ComboBoxItem>none</ComboBoxItem>
-          <ComboBoxItem>10</ComboBoxItem>
-          <ComboBoxItem>50</ComboBoxItem>
-          <ComboBoxItem>100</ComboBoxItem>
-          <ComboBoxItem>200</ComboBoxItem>
+        <TextBlock Grid.Column="0" Text="%PATH%列挙数"/>
+        <ComboBox Grid.Column="1" SelectedItem="{Binding MaximumPathItem}" ItemsSource="{Binding MaximumPathItems}">
+        </ComboBox>
+      </Grid>
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" SharedSizeGroup="Label" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" Text="%PATH%検索開始文字列"/>
+        <ComboBox Grid.Column="1" SelectedItem="{Binding PathEnabledInputCharCount}" ItemsSource="{Binding PathEnabledInputCharCounts}">
         </ComboBox>
       </Grid>
 

@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
+using ContentTypeTextNet.Pe.Plugins.FileFinder.Models.Data;
 using ContentTypeTextNet.Pe.Plugins.FileFinder.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.FileFinder.Views;
 
@@ -21,7 +22,12 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Preferences
 
         public override UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext)
         {
-            var viewModel = new FileFinderSettingViewModel(preferencesLoadContext.SkeletonImplements);
+            FileFinderSetting setting;
+            if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<FileFinderSetting>("finder", out setting)) {
+                setting = new FileFinderSetting();
+            }
+
+            var viewModel = new FileFinderSettingViewModel(setting, preferencesLoadContext.SkeletonImplements);
 
             var control = new FileFinderSettingControl() {
                 DataContext = viewModel,

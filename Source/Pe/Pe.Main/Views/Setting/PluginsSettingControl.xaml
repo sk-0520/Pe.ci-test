@@ -89,9 +89,23 @@
             </StackPanel>
           </GroupBox>
 
-          <ScrollViewer Visibility="{Binding HasSettingControl, Converter={StaticResource BooleanToVisibilityConverter}}" >
+          <ScrollViewer VerticalScrollBarVisibility="Auto" Visibility="{Binding HasSettingControl, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <GroupBox Header="setting" Content="{Binding SettingControl}" />
           </ScrollViewer>
+
+          <TextBlock Text="setting: not support">
+            <TextBlock.Style>
+              <Style TargetType="TextBlock">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding HasSettingControl}" Value="False" >
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Visibility" Value="Collapsed" />
+              </Style>
+            </TextBlock.Style>
+          </TextBlock>
+
         </StackPanel>
       </GroupBox>
 

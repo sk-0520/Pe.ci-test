@@ -82,7 +82,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
 #pragma warning restore CS8602 // null 参照の可能性があるものの逆参照です。
 #pragma warning restore CS8601 // Null 参照割り当ての可能性があります。
 
-            if(Equals(nowValue, value)) {
+            if(!Equals(nowValue, value)) {
 
                 propertyInfo.SetValue(obj, value);
 
