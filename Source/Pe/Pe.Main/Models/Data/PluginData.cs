@@ -86,4 +86,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class PluginSettingRawValue
+    {
+        public PluginSettingRawValue(PluginPersistentFormat format, string value)
+        {
+            Format = format;
+            Value = value;
+        }
+
+        #region property
+
+        public PluginPersistentFormat Format { get; }
+        public string Value { get; }
+
+        #endregion
+    }
 }

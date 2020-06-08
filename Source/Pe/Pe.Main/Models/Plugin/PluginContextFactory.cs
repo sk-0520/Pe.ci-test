@@ -38,9 +38,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected virtual PluginPersistent CrteatePluginPersistentCommander(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, isReadOnly),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, isReadOnly),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, isReadOnly)
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, DatabaseStatementLoader, isReadOnly),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, DatabaseStatementLoader, isReadOnly),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, DatabaseStatementLoader, isReadOnly)
             );
 
             return pluginPersistent;
@@ -49,9 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected virtual PluginPersistent CrteatePluginPersistentLazyWriter(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
             var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, databaseLazyWriterPack.Main),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, databaseLazyWriterPack.File),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, databaseLazyWriterPack.Temporary)
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader)
             );
 
             return pluginPersistent;

@@ -100,7 +100,41 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         #region function
 
+        /// <summary>
+        /// 指定データは存在するか。
+        /// </summary>
+        /// <param name="key">キー</param>
+        /// <returns></returns>
+        bool Exists(string key);
 
+        /// <summary>
+        /// 指定データを取得する。
+        /// </summary>
+        /// <typeparam name="TValue">格納データ型。</typeparam>
+        /// <param name="key">キー</param>
+        /// <param name="value">取得・変換できた場合に格納。</param>
+        /// <returns>取得・変換できたか。</returns>
+        bool TryGet<TValue>(string key, out TValue value);
+
+        /// <summary>
+        /// 指定データを保存する。
+        /// </summary>
+        /// <typeparam name="TValue">保存データ。</typeparam>
+        /// <param name="key">キー。</param>
+        /// <param name="value">値。</param>
+        /// <param name="format">変換種別。</param>
+        /// <returns></returns>
+        bool Set<TValue>(string key, TValue value, PluginPersistentFormat format);
+        /// <inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistentFormat)"/>
+        /// <para>現行バージョンにおける最適な型を使用する。</para>
+        bool Set<TValue>(string key, TValue value);
+
+        /// <summary>
+        /// 指定データを破棄する。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>破棄成功。</returns>
+        bool Delete(string key);
 
         #endregion
     }

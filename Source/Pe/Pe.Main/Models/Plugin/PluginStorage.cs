@@ -183,19 +183,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginPersistentStorage"/>
     public class PluginPersistentStorage: IPluginPersistentStorage, IPLuginId
     {
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, bool isReadOnly)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly)
         {
             PluginIdentifiers = pluginIdentifiers;
             DatabaseCommands = databaseCommands;
             IsReadOnly = isReadOnly;
+            DatabaseStatementLoader = databaseStatementLoader;
             Mode = PluginPersistentMode.Commander;
         }
 
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader)
         {
             PluginIdentifiers = pluginIdentifiers;
             DatabaseCommands = databaseCommands;
             DatabaseLazyWriter = databaseLazyWriter;
+            DatabaseStatementLoader = databaseStatementLoader;
             IsReadOnly = false;
             Mode = PluginPersistentMode.LazyWriter;
         }
@@ -208,13 +210,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         PluginPersistentMode Mode { get; }
         IDatabaseCommands DatabaseCommands { get; }
         IDatabaseLazyWriter? DatabaseLazyWriter { get; }
-
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         #endregion
 
         #region IPluginPersistentStorage
 
         /// <inheritdoc cref="IPluginPersistentStorage.IsReadOnly"/>
         public bool IsReadOnly { get; }
+
+        /// <inheritdoc cref="IPluginPersistentStorage.Exists(string)"/>
+        public bool Exists(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc cref="IPluginPersistentStorage.TryGet{TValue}(string, out TValue)"/>
+        public bool TryGet<TValue>(string key, out TValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue, PluginPersistentFormat)"/>
+        public bool Set<TValue>(string key, TValue value, PluginPersistentFormat format)
+        {
+            throw new NotImplementedException();
+        }
+        /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue)"/>
+        public bool Set<TValue>(string key, TValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc cref="IPluginPersistentStorage.Delete(string)"/>
+        public bool Delete(string key)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

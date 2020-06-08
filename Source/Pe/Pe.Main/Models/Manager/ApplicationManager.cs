@@ -597,7 +597,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         }
                     }
 
-                    if(pluginsEntityDao.SelecteExistsPlguin(pluginLoadStateItem.PluginId)) {
+                    if(pluginsEntityDao.SelecteExistsPlugin(pluginLoadStateItem.PluginId)) {
                         pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
                         pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());

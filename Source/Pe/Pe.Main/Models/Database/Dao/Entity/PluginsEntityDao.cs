@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public bool SelecteExistsPlguin(Guid pluginId)
+        public bool SelecteExistsPlugin(Guid pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {
