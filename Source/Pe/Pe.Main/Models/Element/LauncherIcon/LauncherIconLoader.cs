@@ -27,20 +27,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
     public class LauncherIconLoader : IconImageLoaderBase, ILauncherItemId
     {
-        public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(iconBox, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         static EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
         int RetryMaxCount { get; } = 5;
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             return Task.Run(() => {
                 IReadOnlyList<byte[]>? imageBinary;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
-                    var dao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var dao = new LauncherItemIconsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                     imageBinary = dao.SelectImageBinary(LauncherItemId, IconBox);
                 }
 
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherItemDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new LauncherItemDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectFileIcon(LauncherItemId);
             }
         }
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 #endif
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
-                    var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                     var existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, IconBox);
                     if(existIconState) {
                         launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
                         launcherItemIconStatusEntityDao.InsertLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     }
 
-                    var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                     launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, IconBox);
                     launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, IconBox, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
@@ -248,10 +248,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
     {
         #region funtion
 
-        public static IconImageLoaderPack CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public static IconImageLoaderPack CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, dispatcherWrapper, loggerFactory))
+                .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, dispatcherWrapper, loggerFactory))
             ;
             var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
             return iconImageLoaderPack;

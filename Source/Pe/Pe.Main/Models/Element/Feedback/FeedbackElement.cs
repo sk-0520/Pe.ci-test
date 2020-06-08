@@ -23,12 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 {
     public class FeedbackElement : WebViewElementBase
     {
-        public FeedbackElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public FeedbackElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(userAgentManager, loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
             CultureService = cultureService;
 
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
         EnvironmentParameters EnvironmentParameters { get; }
         ApiConfiguration ApiConfiguration => EnvironmentParameters.Configuration.Api;
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IOrderManager OrderManager { get; }
         CultureService CultureService { get; }
 
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
             var settingData = await Task.Run(() => {
                 return MainDatabaseBarrier.ReadData(c => {
-                    var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                    var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                     //var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
 
                     var userIdManager = new UserIdManager(LoggerFactory);

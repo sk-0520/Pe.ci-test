@@ -32,14 +32,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
         #endregion
 
-        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteContentElement(Guid noteId, NoteContentKind contentKind, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             NoteId = noteId;
             ContentKind = contentKind;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
 
             DispatcherWrapper = dispatcherWrapper;
 
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new NoteContentsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectExistsContent(NoteId);
             }
         }
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new NoteContentsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
                     NoteId = NoteId,
                     ContentKind = ContentKind,
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new NoteContentsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectFullContent(NoteId);
             }
         }
@@ -225,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new NoteContentsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                var dao = new NoteContentsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 var data = new NoteContentData() {
                     NoteId = NoteId,
                     ContentKind = contentKind,
@@ -297,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             };
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new NoteContentsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 // 環境変数込みで書き込み
                 dao.UpdateLinkEnabled(NoteId, filePath, encoding, noteLinkWatchParameter, DatabaseCommonStatus.CreateCurrentAccount());
 
@@ -348,7 +348,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             IsLink = false;
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new NoteContentsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 dao.UpdateLinkDisabled(NoteId, DatabaseCommonStatus.CreateCurrentAccount());
 
                 commander.Commit();
@@ -371,7 +371,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
 
             NoteContentData linkData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new NoteContentsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new NoteContentsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 linkData = dao.SelectLinkParameter(NoteId);
             }
 

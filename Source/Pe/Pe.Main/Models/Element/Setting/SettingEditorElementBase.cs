@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public abstract class SettingEditorElementBase : ElementBase
     {
-        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             SettingNotifyManager = settingNotifyManager;
@@ -25,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
 
             IdFactory = idFactory;
             DispatcherWrapper = dispatcherWrapper;
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        protected IDatabaseStatementLoader StatementLoader { get; }
+        protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected IIdFactory IdFactory { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 

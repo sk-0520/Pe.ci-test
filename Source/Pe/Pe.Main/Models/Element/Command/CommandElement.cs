@@ -30,12 +30,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement: ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
             OrderManager = orderManager;
             WindowManager = windowManager;
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         IOrderManager OrderManager { get; }
         IWindowManager WindowManager { get; }
@@ -155,11 +155,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             SettingAppCommandSettingData setting;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
             }
 
-            Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             Font.Initialize();
 
             IconBox = setting.IconBox;
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             Width = width;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new AppCommandSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                var dao = new AppCommandSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdatCommandSettingWidth(Width, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }

@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
 
         #endregion
 
-        public StandardInputOutputElement(string captionName, Process process, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, ILoggerFactory loggerFactory)
+        public StandardInputOutputElement(string captionName, Process process, IScreen screen, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             if(!process.EnableRaisingEvents) {
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
             Process = process;
             Screen = screen;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
 
             Process.Exited += Process_Exited;
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         public Process Process { get; }
         IScreen Screen { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IOrderManager OrderManager { get; }
 
         public StreamReceiver? OutputStreamReceiver { get; private set; }
@@ -153,11 +153,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput
         {
             SettingAppStandardInputOutputSettingData setting;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var appStandardInputOutputSettingEntityDao = new AppStandardInputOutputSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 setting = appStandardInputOutputSettingEntityDao.SelectSettingStandardInputOutputSetting();
             }
 
-            Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             Font.Initialize();
 
             OutputForegroundColor = setting.OutputForegroundColor;

@@ -19,21 +19,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherToobarSettingEditorElement : ElementBase, ILauncherToolbarId
     {
-        public LauncherToobarSettingEditorElement(Guid launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
+        public LauncherToobarSettingEditorElement(Guid launcherToolbarId, ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory) : base(loggerFactory)
         {
             LauncherToolbarId = launcherToolbarId;
             AllLauncherGroups = allLauncherGroups;
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
         ObservableCollection<LauncherGroupSettingEditorElement> AllLauncherGroups { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         public FontElement? Font { get; private set; }
         public Guid LauncherGroupId { get; set; }
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Font != null);
 
             Logger.LogError("TODO: ツールバーフォントは基本設定から読む設定になっているので基本的に死ぬ, 要改善");
-            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 
             var defaultLauncherGroupId = LauncherGroupId;
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Commander, StatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Commander, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
             var data = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = LauncherToolbarId,
                 FontId = Font.FontId,
@@ -98,16 +98,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherToolbarsScreenData screenToolbar;
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 data = launcherToolbarsEntityDao.SelectDisplayData(LauncherToolbarId);
 
-                var launcherToolbarDomainDao = new LauncherToolbarDomainDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherToolbarDomainDao = new LauncherToolbarDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 screenToolbar = launcherToolbarDomainDao.SelectScreenToolbar(LauncherToolbarId);
             }
 
             ScreenName = screenToolbar.ScreenName;
 
-            Font = new FontElement(data.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font = new FontElement(data.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             Font.Initialize();
 
             LauncherGroupId = data.LauncherGroupId;

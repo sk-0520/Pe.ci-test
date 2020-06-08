@@ -266,7 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseFactory(true, false)
             );
         }
-        IDatabaseStatementLoader GetStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+        IDatabaseStatementLoader GetDatabaseStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
@@ -299,7 +299,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var idFactory = new IdFactory(loggerFactory);
             using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, false, logger))
             using(var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
-                var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                var statementLoader = GetDatabaseStatementLoader(environmentParameters, loggerFactory);
                 using var statementLoaderDisposer = statementLoader as IDisposable;
                 var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
                 databaseSetupper.Initialize(accessorPack);
@@ -315,7 +315,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var idFactory = new IdFactory(loggerFactory);
 
-            var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+            var statementLoader = GetDatabaseStatementLoader(environmentParameters, loggerFactory);
             using var statementLoaderDisposer = statementLoader as IDisposable;
 
             var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);

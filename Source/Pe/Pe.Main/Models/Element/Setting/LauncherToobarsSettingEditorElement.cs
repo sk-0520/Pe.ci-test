@@ -18,8 +18,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherToobarsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherToobarsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
+        public LauncherToobarsSettingEditorElement(ObservableCollection<LauncherGroupSettingEditorElement> allLauncherGroups, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             AllLauncherGroups = allLauncherGroups;
         }
@@ -40,14 +40,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             IReadOnlyList<Guid> launcherToolbarIds;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 var ids = launcherToolbarsEntityDao.SelectAllLauncherToolbarIds();
                 launcherToolbarIds = ids.ToList();
             }
 
             var toolbars = new List<LauncherToobarSettingEditorElement>();
             foreach(var launcherToolbarId in launcherToolbarIds) {
-                var element = new LauncherToobarSettingEditorElement(launcherToolbarId, AllLauncherGroups, MainDatabaseBarrier, FileDatabaseBarrier, StatementLoader, LoggerFactory);
+                var element = new LauncherToobarSettingEditorElement(launcherToolbarId, AllLauncherGroups, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
                 toolbars.Add(element);
             }
 

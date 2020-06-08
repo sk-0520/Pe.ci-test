@@ -21,13 +21,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
     public class LauncherItemCommandFinder: DisposerBase, ICommandFinder
     {
-        public LauncherItemCommandFinder(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemCommandFinder(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
             NotifyManager = notifyManager;
             DispatcherWrapper = dispatcherWrapper;
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         ILogger Logger { get; }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             // タグ情報再構築
             Logger.LogTrace("タグ情報再構築");
             var tags = MainDatabaseBarrier.ReadData(c => {
-                var launcherTagsEntityDao = new LauncherTagsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 return launcherTagsEntityDao.SelectUniqueTags(launcherItemId).ToHashSet();
             });
             LauncherTags.Remove(launcherItemId);
@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             IReadOnlyList<Guid> ids;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 ids = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
             }
 
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(FindTag) {
                 var tagItems = new Dictionary<Guid, IReadOnlyCollection<string>>(ids.Count);
                 using(var commander = MainDatabaseBarrier.WaitRead()) {
-                    var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                     foreach(var id in ids) {
                         var tags = launcherTagsEntityDao.SelectUniqueTags(id).ToHashSet();
                         if(tags.Count != 0) {

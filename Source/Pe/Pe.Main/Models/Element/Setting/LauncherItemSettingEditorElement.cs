@@ -28,8 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class LauncherItemSettingEditorElement : LauncherItemCustomizeEditorElement, ILauncherItemSettingEditor
     {
-        public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherIconElement iconElement, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
-            : base(launcherItemId, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, loggerFactory)
+        public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherIconElement iconElement, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(launcherItemId, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             if(!iconElement.IsInitialized) {
                 throw new ArgumentException(nameof(iconElement));
