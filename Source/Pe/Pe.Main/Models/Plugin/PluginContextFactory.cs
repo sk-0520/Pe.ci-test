@@ -23,77 +23,77 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
-        protected virtual PluginFile CreatePluginFile(IPluginIdentifiers pluginIdentifiers)
+        protected virtual PluginFile CreatePluginFile(IPluginInformations pluginInformations)
         {
 
             var pluginFile = new PluginFile(
-                new PluginFileStorage(GetUserDirectory(pluginIdentifiers)),
-                new PluginFileStorage(GetMachineDirectory(pluginIdentifiers)),
-                new PluginFileStorage(GetTemporaryDirectory(pluginIdentifiers))
+                new PluginFileStorage(GetUserDirectory(pluginInformations.PluginIdentifiers)),
+                new PluginFileStorage(GetMachineDirectory(pluginInformations.PluginIdentifiers)),
+                new PluginFileStorage(GetTemporaryDirectory(pluginInformations.PluginIdentifiers))
             );
 
             return pluginFile;
         }
 
-        protected virtual PluginPersistent CrteatePluginPersistentCommander(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
+        protected virtual PluginPersistent CrteatePluginPersistentCommander(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
             return pluginPersistent;
         }
 
-        protected virtual PluginPersistent CrteatePluginPersistentLazyWriter(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
+        protected virtual PluginPersistent CrteatePluginPersistentLazyWriter(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
             var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
             );
 
             return pluginPersistent;
         }
 
 
-        protected virtual PluginStorage CreatePluginStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
+        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginIdentifiers),
-                CrteatePluginPersistentCommander(pluginIdentifiers, databaseCommandsPack, isReadOnly)
+                CreatePluginFile(pluginInformations),
+                CrteatePluginPersistentCommander(pluginInformations, databaseCommandsPack, isReadOnly)
             );
 
             return pluginStorage;
         }
 
-        protected virtual PluginStorage CreatePluginStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
+        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
             var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginIdentifiers),
-                CrteatePluginPersistentLazyWriter(pluginIdentifiers, databaseCommandsPack, databaseLazyWriterPack)
+                CreatePluginFile(pluginInformations),
+                CrteatePluginPersistentLazyWriter(pluginInformations, databaseCommandsPack, databaseLazyWriterPack)
             );
 
             return pluginStorage;
         }
 
-        public PluginInitializeContext CreateInitializeContext(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack)
+        public PluginInitializeContext CreateInitializeContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginIdentifiers, databaseCommandsPack, true);
-            return new PluginInitializeContext(pluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
+            return new PluginInitializeContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
-        public PluginUninitializeContext CreateUninitializeContext(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack)
+        public PluginUninitializeContext CreateUninitializeContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginIdentifiers, databaseCommandsPack, false);
-            return new PluginUninitializeContext(pluginIdentifiers, pluginStorage);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, false);
+            return new PluginUninitializeContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
-        public PluginContext CreateContext(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
+        public PluginContext CreateContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
-            var pluginStorage = CreatePluginStorage(pluginIdentifiers, databaseCommandsPack, isReadOnly);
-            return new PluginContext(pluginIdentifiers, pluginStorage, UserAgentManager);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, isReadOnly);
+            return new PluginContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
         }
 
         #endregion

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -18,11 +19,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class DatabaseCommonStatus : IDatabaseCommonStatus
+    public class DatabaseCommonStatus: IDatabaseCommonStatus
     {
         #region define
 
-        class CommonDtoImpl : CommonDtoBase
+        class CommonDtoImpl: CommonDtoBase
         { }
 
         #endregion
@@ -46,6 +47,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
                 Account = Environment.UserName,
                 ProgramName = assemblyName.Name,
                 ProgramVersion = assemblyName.Version,
+            };
+        }
+
+        public static DatabaseCommonStatus CreatePluginAccount(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions)
+        {
+            return new DatabaseCommonStatus() {
+                Account = Environment.UserName,
+                ProgramName = pluginIdentifiers.PluginName,
+                ProgramVersion = pluginVersions.PluginVersion,
             };
         }
 

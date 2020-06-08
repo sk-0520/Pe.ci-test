@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             UserControl result;
             var factory = CreateContextFactory();
             using(var reader = DatabaseBarrierPack.WaitRead()) {
-                var context = factory.CreateLoadContext(Plugin.PluginInformations.PluginIdentifiers, reader);
+                var context = factory.CreateLoadContext(Plugin.PluginInformations, reader);
                 result = Preferences.BeginPreferences(context);
             }
             StartedPreferences = true;
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             PreferencesCheckContext context;
             var factory = CreateContextFactory();
             using(var reader = DatabaseBarrierPack.WaitRead()) {
-                context = factory.CreateCheckContext(Plugin.PluginInformations.PluginIdentifiers, reader);
+                context = factory.CreateCheckContext(Plugin.PluginInformations, reader);
                 Preferences.CheckPreferences(context);
             }
             return context.HasError;
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(StartedPreferences);
 
             var factory = CreateContextFactory();
-            var context = factory.CreateSaveContext(Plugin.PluginInformations.PluginIdentifiers, databaseCommandPack);
+            var context = factory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
             Preferences.SavePreferences(context);
         }
 
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var factory = CreateContextFactory();
             using(var reader = DatabaseBarrierPack.WaitRead()) {
-                var context = factory.CreateEndContext(Plugin.PluginInformations.PluginIdentifiers, reader);
+                var context = factory.CreateEndContext(Plugin.PluginInformations, reader);
                 Preferences.EndPreferences(context);
             }
         }

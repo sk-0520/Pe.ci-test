@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 if(!addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                     var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                     using(var reader = DatabaseBarrierPack.WaitRead()) {
-                        addon.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(addon.PluginInformations.PluginIdentifiers, reader, true));
+                        addon.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(addon.PluginInformations, reader, true));
                     }
                 }
                 var functionUnit = BuildFunctionUnit(addon);

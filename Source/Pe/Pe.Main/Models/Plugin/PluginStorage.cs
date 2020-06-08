@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -187,22 +188,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginPersistentStorage"/>
     public class PluginPersistentStorage: IPluginPersistentStorage, IPLuginId
     {
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
+            PluginVersions = pluginVersions;
             DatabaseCommands = databaseCommands;
             IsReadOnly = isReadOnly;
             DatabaseStatementLoader = databaseStatementLoader;
             Mode = PluginPersistentMode.Commander;
         }
 
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
+            PluginVersions = pluginVersions;
             DatabaseCommands = databaseCommands;
             DatabaseLazyWriter = databaseLazyWriter;
             DatabaseStatementLoader = databaseStatementLoader;
@@ -217,11 +220,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         IPluginIdentifiers PluginIdentifiers { get; }
         public string PluginName => PluginIdentifiers.PluginName;
+        IPluginVersions PluginVersions { get; }
 
         PluginPersistentMode Mode { get; }
         IDatabaseCommands DatabaseCommands { get; }
         IDatabaseLazyWriter? DatabaseLazyWriter { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        #endregion
+
+        #region function
+
+        string NormalizeKey(string key)
+        {
+            return string.IsNullOrWhiteSpace(key)
+                ? string.Empty
+                : key.Trim()
+            ;
+        }
+
         #endregion
 
         #region IPluginPersistentStorage
@@ -233,14 +249,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public bool Exists(string key)
         {
             var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
-            return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, key);
+            return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, NormalizeKey(key));
         }
 
         /// <inheritdoc cref="IPluginPersistentStorage.TryGet{TValue}(string, out TValue)"/>
         public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
             var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
-            var data = pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, key);
+            var data = pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, NormalizeKey(key));
             if(data == null) {
                 value = default;
                 return false;
@@ -269,11 +285,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     }
 
                 case PluginPersistentFormat.Json: {
-                        throw new NotImplementedException();
+                        try {
+                            value = JsonSerializer.Deserialize<TValue>(data.Value);
+                            return true;
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            value = default;
+                            return false;
+                        }
                     }
 
                 case PluginPersistentFormat.Text: {
                         if(typeof(TValue) != typeof(string)) {
+                            Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
                             value = default;
                             return false;
                         }
@@ -293,6 +317,68 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             if(IsReadOnly) {
                 throw new InvalidOperationException(nameof(IsReadOnly));
+            }
+
+            if(value == null) {
+                Logger.LogWarning("value は null のため処理終了");
+                return false;
+            }
+
+            string textValue;
+
+            switch(format) {
+                case PluginPersistentFormat.SimpleXml:
+                case PluginPersistentFormat.DataXml: {
+                        SerializerBase serializer = format switch
+                        {
+                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            _ => throw new NotImplementedException(),
+                        };
+                        try {
+                            using(var stream = new MemoryStream()) {
+                                serializer.Save(value, stream);
+                                textValue = serializer.Encoding.GetString(stream.GetBuffer(), 0, (int)stream.Length);
+                            }
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            return false;
+                        }
+                    }
+                    break;
+
+                case PluginPersistentFormat.Json: {
+                        try {
+                            textValue = JsonSerializer.Serialize(value);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            return false;
+                        }
+                    }
+                    break;
+
+                case PluginPersistentFormat.Text: {
+                        if(typeof(TValue) != typeof(string)) {
+                            Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
+                            textValue = value.ToString()! ?? string.Empty;
+                        } else {
+                            textValue = (string)(object)value;
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var data = new PluginSettingRawValue(format, textValue);
+            var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
+            var normalizedKey = NormalizeKey(key);
+
+            if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
+                pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+            } else {
+                pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
             }
 
             throw new NotImplementedException();

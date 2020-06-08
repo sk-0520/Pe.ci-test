@@ -669,7 +669,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // Pe専用プラグイン
             foreach(var plugin in applicationPlugins) {
                 using(var readerPack = databaseBarrierPack.WaitRead()) {
-                    plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers, readerPack));
+                    plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack));
                 }
                 initializedPlugins.Add(plugin);
             }
@@ -682,7 +682,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var plugin = pluginLoadStateItem.Plugin;
                 try {
                     using(var readerPack = databaseBarrierPack.WaitRead()) {
-                        plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers, readerPack));
+                        plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack));
                     }
                     initializedPlugins.Add(plugin);
                 } catch(Exception ex) {
