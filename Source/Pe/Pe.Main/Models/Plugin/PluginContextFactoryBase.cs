@@ -13,10 +13,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public abstract class PluginContextFactoryBase
     {
-        protected PluginContextFactoryBase(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        protected PluginContextFactoryBase(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+            DatabaseBarrierPack = databaseBarrierPack;
             DatabaseLazyWriterPack = databaseLazyWriterPack;
             DatabaseStatementLoader = databaseStatementLoader;
             EnvironmentParameters = environmentParameters;
@@ -28,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger{ get; }
 
-
+        protected IDatabaseBarrierPack DatabaseBarrierPack { get; }
         protected IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected EnvironmentParameters EnvironmentParameters { get; }

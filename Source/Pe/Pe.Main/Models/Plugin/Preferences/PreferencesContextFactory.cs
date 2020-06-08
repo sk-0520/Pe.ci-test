@@ -11,33 +11,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 {
     public class PreferencesContextFactory: PluginContextFactory
     {
-        public PreferencesContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
-            : base(databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
+        public PreferencesContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+            : base(databaseBarrierPack, databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
         { }
 
         #region function
 
-        public PreferencesLoadContext CreateLoadContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommanderPack)
+        public PreferencesLoadContext CreateLoadContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommanderPack, true);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
             return new PreferencesLoadContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager, new SkeletonImplements());
         }
 
-        public PreferencesCheckContext CreateCheckContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommanderPack)
+        public PreferencesCheckContext CreateCheckContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommanderPack, true);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
             return new PreferencesCheckContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
         }
 
-        public PreferencesSaveContext CreateSaveContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommanderPack)
+        public PreferencesSaveContext CreateSaveContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommanderPack, false);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, false);
             return new PreferencesSaveContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
         }
 
-        public PreferencesEndContext CreateEndContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommanderPack)
+        public PreferencesEndContext CreateEndContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommanderPack, true);
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
             return new PreferencesEndContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
         }
 

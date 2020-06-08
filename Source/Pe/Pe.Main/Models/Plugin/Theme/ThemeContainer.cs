@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(!CurrentThemeIsDefaultTheme) {
                 if(!DefaultTheme.IsLoaded(PluginKind.Theme)) {
                     Logger.LogInformation("標準テーマ先生準備できておらず。");
-                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
+                    var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
                         DefaultTheme.Load(PluginKind.Theme, pluginContextFactory.CreateContext(DefaultTheme.PluginInformations, readerPack, true));
                     }
