@@ -9,6 +9,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
     /// <summary>
     /// プラグインのコンストラクタ時の Pe との架け橋。
+    /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginConstructorContext
@@ -22,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// プラグイン初期化時の Pe との架け橋。
+    /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginInitializeContext
@@ -38,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
     /// <summary>
     /// プラグイン終了時の Pe との架け橋。
+    /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IPluginUninitializeContext
