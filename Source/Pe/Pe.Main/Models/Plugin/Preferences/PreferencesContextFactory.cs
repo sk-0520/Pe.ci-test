@@ -10,8 +10,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 {
     public class PreferencesContextFactory: PluginContextFactory
     {
-        public PreferencesContextFactory(EnvironmentParameters environmentParameters, IDatabaseLazyWriterPack databaseLazyWriterPack, IUserAgentManager userAgentManager)
-            : base(databaseLazyWriterPack, environmentParameters, userAgentManager)
+        public PreferencesContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
+            : base(databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager)
         { }
 
         #region function

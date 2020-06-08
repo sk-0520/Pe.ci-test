@@ -6,6 +6,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -25,13 +26,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         DefaultTheme? _defaultTheme;
 
         #endregion
-        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             DatabaseBarrierPack = databaseBarrierPack;
             DatabaseLazyWriterPack = databaseLazyWriterPack;
+            DatabaseStatementLoader = databaseStatementLoader;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
 
@@ -45,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         ILoggerFactory LoggerFactory { get; }
         IDatabaseBarrierPack DatabaseBarrierPack { get; }
         IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IUserAgentManager UserAgentManager { get; }
 
@@ -122,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(!CurrentThemeIsDefaultTheme) {
                 if(!DefaultTheme.IsLoaded(PluginKind.Theme)) {
                     Logger.LogInformation("標準テーマ先生準備できておらず。");
-                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager);
+                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
                         DefaultTheme.Load(PluginKind.Theme, pluginContextFactory.CreateContext(DefaultTheme.PluginInformations.PluginIdentifiers, readerPack, true));
                     }

@@ -6,6 +6,7 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -24,12 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        protected AddonWrapperBase(IReadOnlyList<IAddon> addons, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected AddonWrapperBase(IReadOnlyList<IAddon> addons, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             DatabaseBarrierPack = databaseBarrierPack;
             DatabaseLazyWriterPack =databaseLazyWriterPack;
+            DatabaseStatementLoader = databaseStatementLoader;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
             PlatformTheme = platformTheme;
@@ -43,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected ILogger Logger { get; }
        protected IDatabaseBarrierPack DatabaseBarrierPack { get; }
         protected IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+        protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected EnvironmentParameters EnvironmentParameters { get; }
         protected IUserAgentManager UserAgentManager { get; }
         protected IPlatformTheme PlatformTheme { get; }
@@ -85,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 Debug.Assert(addon.IsSupported(AddonKind));
 
                 if(!addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager);
+                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager);
                     using(var reader = DatabaseBarrierPack.WaitRead()) {
                         addon.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(addon.PluginInformations.PluginIdentifiers, reader, true));
                     }

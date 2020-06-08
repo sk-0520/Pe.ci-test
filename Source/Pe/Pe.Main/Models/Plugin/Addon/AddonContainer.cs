@@ -6,6 +6,7 @@ using System.Windows.Interactivity;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -26,13 +27,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             DatabaseBarrierPack = databaseBarrierPack;
             DatabaseLazyWriterPack = databaseLazyWriterPack;
+            DatabaseStatementLoader = databaseStatementLoader;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
 
@@ -47,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         IDatabaseBarrierPack DatabaseBarrierPack { get; }
         IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IUserAgentManager UserAgentManager { get; }
 
@@ -80,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             foreach(var target in targets) {
                 if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager);
+                    var pluginContextFactory = new PluginContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
                         target.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(target.PluginInformations.PluginIdentifiers, readerPack, true));
                     }
@@ -94,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public CommandFinderAddonWrapper GetCommandFinder()
         {
-            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, DatabaseBarrierPack, DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
         #endregion

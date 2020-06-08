@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //var p = new PluginLoadContext
             //throw new NotImplementedException();
             foreach(var plugin in PluginContainer.Plugins) {
-                var element = new PluginSettingEditorElement(plugin, DatabaseBarrierPack, DatabaseLazyWriterPack, EnvironmentParameters, UserAgentManager, LoggerFactory);
+                var element = new PluginSettingEditorElement(plugin, DatabaseBarrierPack, DatabaseLazyWriterPack, StatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                 element.Initialize(); // 無意味だけど呼び出し
                 PluginItemsImpl.Add(element);
             }

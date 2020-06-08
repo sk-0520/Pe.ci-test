@@ -17,12 +17,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPLuginId
     {
-        public PluginSettingEditorElement(IPlugin plugin, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack,  EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public PluginSettingEditorElement(IPlugin plugin, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader,  EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Plugin = plugin;
             DatabaseBarrierPack = databaseBarrierPack;
             DatabaseLazyWriterPack = databaseLazyWriterPack;
+            DatabaseStatementLoader = databaseStatementLoader;
             EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
 
@@ -40,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         IDatabaseBarrierPack DatabaseBarrierPack { get; }
         IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IUserAgentManager UserAgentManager { get; }
 
@@ -54,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         PreferencesContextFactory CreateContextFactory()
         {
-            var factory = new PreferencesContextFactory(EnvironmentParameters, DatabaseLazyWriterPack, UserAgentManager);
+            var factory = new PreferencesContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager);
             return factory;
         }
 

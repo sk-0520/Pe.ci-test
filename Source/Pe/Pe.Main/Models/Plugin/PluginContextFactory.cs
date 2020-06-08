@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public class PluginContextFactory: PluginContextFactoryBase
     {
-        public PluginContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
-            : base(databaseLazyWriterPack, environmentParameters, userAgentManager)
+        public PluginContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
+            : base(databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager)
         { }
 
         #region property
