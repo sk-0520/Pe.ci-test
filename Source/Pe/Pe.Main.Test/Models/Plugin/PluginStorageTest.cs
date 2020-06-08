@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -130,9 +132,18 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
 
         }
 
+        void DeletePluginSetting()
+        {
+            using var commadner = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
+            commadner.Execute("delete from PluginSettings where PluginId = @PluginId", new { PluginId = this.Informations.PluginIdentifiers.PluginId });
+            commadner.Commit();
+        }
+
         [TestMethod]
         public void PersistentNormalTest()
         {
+            DeletePluginSetting();
+
             using var writableCommandsPack = Test.DiContainer.Build<IDatabaseBarrierPack>().WaitWrite();
 
             var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
@@ -187,6 +198,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         [TestMethod]
         public void PersistentReadOnlyTest()
         {
+            DeletePluginSetting();
+
             using(var writableCommandsPack = Test.DiContainer.Build<IDatabaseBarrierPack>().WaitWrite()) {
                 var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
                 Assert.IsTrue(persistentNormal.Set("", "test", PluginPersistentFormat.Text));
@@ -219,16 +232,16 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         }
 
         [TestMethod]
-        public void PersistentLazyTest()
+        public void PersistentBarrierTest()
         {
-            using var writableCommandsPack = Test.DiContainer.Build<IDatabaseBarrierPack>().WaitRead();
+            DeletePluginSetting();
 
-            var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, writableCommandsPack.Main, Test.DiContainer.Build<IMainDatabaseLazyWriter>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), Test.DiContainer.Build<ILoggerFactory>());
+            var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), false, Test.DiContainer.Build<ILoggerFactory>());
 
             Assert.IsFalse(persistentNormal.Exists(""));
             Assert.IsFalse(persistentNormal.TryGet<string>("", out _));
             Assert.IsTrue(persistentNormal.Set("", "test", PluginPersistentFormat.Text));
-            Assert.IsFalse(persistentNormal.Exists(""));
+            Assert.IsTrue(persistentNormal.Exists(""));
             Assert.IsTrue(persistentNormal.Exists(" "));
 
             Assert.IsFalse(persistentNormal.TryGet<string>("x", out _));
@@ -241,6 +254,61 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
             Assert.IsFalse(persistentNormal.Delete("x"));
             Assert.IsTrue(persistentNormal.Delete(""));
             Assert.IsFalse(persistentNormal.Exists(""));
+
+
+            var data = new Data() {
+                Int = int.MinValue,
+                Long = long.MaxValue,
+                String = "STRING",
+                Array = new[] { int.MinValue, 0, int.MaxValue },
+                List = new List<int>() {
+                    int.MaxValue, 0, int.MinValue
+                },
+                Dictionary = new Dictionary<string, string>() {
+                    ["key"] = "value",
+                }
+            };
+
+            Assert.IsTrue(persistentNormal.Set("data", data));
+            if(persistentNormal.TryGet<Data>("   data   ", out var test2)) {
+                Assert.IsFalse(object.ReferenceEquals(data, test2));
+
+                Assert.AreEqual(data.Int, test2.Int);
+                Assert.AreEqual(data.Long, test2.Long);
+                Assert.AreEqual(data.String, test2.String);
+                CollectionAssert.AreEqual(data.Array, test2.Array);
+                CollectionAssert.AreEqual(data.List, test2.List);
+                CollectionAssert.AreEqual(data.Dictionary, test2.Dictionary);
+
+            } else {
+                Assert.Fail();
+            }
+        }
+
+
+        [TestMethod]
+        public void PersistentLazyTest()
+        {
+            DeletePluginSetting();
+
+            var persistentNormal = new PluginPersistentStorage(this.Informations.PluginIdentifiers, this.Informations.PluginVersions, Test.DiContainer.Build<IMainDatabaseBarrier>(), Test.DiContainer.Build<IMainDatabaseLazyWriter>(), Test.DiContainer.Build<IDatabaseStatementLoader>(), Test.DiContainer.Build<ILoggerFactory>());
+
+            Assert.IsFalse(persistentNormal.Exists(""));
+            Assert.IsFalse(persistentNormal.TryGet<string>("", out _));
+            Assert.IsTrue(persistentNormal.Set("", "test", PluginPersistentFormat.Text));
+            Assert.IsTrue(persistentNormal.Exists(""));
+            Assert.IsTrue(persistentNormal.Exists(" "));
+
+            Assert.IsFalse(persistentNormal.TryGet<string>("x", out _));
+            if(persistentNormal.TryGet<string>("", out var test1)) {
+                Assert.AreEqual("test", test1);
+            } else {
+                Assert.Fail();
+            }
+
+            Assert.IsFalse(persistentNormal.Delete("x"));
+            Assert.IsFalse(persistentNormal.Delete("")); // 遅延処理時は成功状態不明
+            Assert.IsFalse(persistentNormal.Exists("")); // 遅延処理フラッシュにより存在しないことを検知
 
 
             var data = new Data() {

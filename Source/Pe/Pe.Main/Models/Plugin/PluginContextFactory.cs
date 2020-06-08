@@ -46,12 +46,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginPersistent;
         }
 
-        protected virtual PluginPersistent CrteatePluginPersistentLazyWriter(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
+        protected virtual PluginPersistent CrteatePluginPersistentLazyWriter(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
             var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader, LoggerFactory),
-                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseBarrierPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
             );
 
             return pluginPersistent;
@@ -68,11 +68,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginStorage;
         }
 
-        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
+        protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
             var pluginStorage = new PluginStorage(
                 CreatePluginFile(pluginInformations),
-                CrteatePluginPersistentLazyWriter(pluginInformations, databaseCommandsPack, databaseLazyWriterPack)
+                CrteatePluginPersistentLazyWriter(pluginInformations, databaseBarrierPack, databaseLazyWriterPack)
             );
 
             return pluginStorage;
