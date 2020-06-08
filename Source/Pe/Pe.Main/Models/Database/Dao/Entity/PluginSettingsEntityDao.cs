@@ -55,6 +55,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
+        PluginSettingDto ConvertFromData(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var pluginPersistentFormatTransfer = new EnumTransfer<PluginPersistentFormat>();
+
+            var dto = new PluginSettingDto() {
+                PluginId = pluginId,
+                PluginSettingKey = key,
+                DataType = pluginPersistentFormatTransfer.ToString(data.Format),
+                DataValue = data.Value,
+            };
+            databaseCommonStatus.WriteUpdate(dto);
+
+            return dto;
+        }
+
         public bool SelecteExistsPluginSetting(Guid pluginId, string key)
         {
             var statement = LoadStatement();
@@ -81,6 +96,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var data = ConvertFromDto(dto);
             return data;
+        }
+
+        public bool InsertPluginSetting(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
+
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
+        public bool UpdatePluginSetting(Guid pluginId, string key, PluginSettingRawValue data, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var statement = LoadStatement();
+            var parameter = ConvertFromData(pluginId, key, data, databaseCommonStatus);
+
+            return Commander.Execute(statement, parameter) == 1;
+        }
+
+        public bool DeletePluginSetting(Guid pluginId, string key)
+        {
+            var statement = LoadStatement();
+            var parameter = new PluginSettingDto() {
+                PluginId = pluginId,
+                PluginSettingKey = key,
+            };
+
+            return Commander.Execute(statement, parameter) == 1;
         }
 
         #endregion

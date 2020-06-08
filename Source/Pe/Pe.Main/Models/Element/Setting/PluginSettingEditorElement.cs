@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         PreferencesContextFactory CreateContextFactory()
         {
-            var factory = new PreferencesContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager);
+            var factory = new PreferencesContextFactory(DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
             return factory;
         }
 

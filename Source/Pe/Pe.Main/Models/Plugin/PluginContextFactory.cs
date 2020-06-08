@@ -12,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public class PluginContextFactory: PluginContextFactoryBase
     {
-        public PluginContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
-            : base(databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager)
+        public PluginContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+            : base(databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
         { }
 
         #region property
@@ -38,9 +38,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected virtual PluginPersistent CrteatePluginPersistentCommander(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, DatabaseStatementLoader, isReadOnly),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, DatabaseStatementLoader, isReadOnly),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, DatabaseStatementLoader, isReadOnly)
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
             return pluginPersistent;
@@ -49,9 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected virtual PluginPersistent CrteatePluginPersistentLazyWriter(IPluginIdentifiers pluginIdentifiers, IDatabaseCommandsPack databaseCommandsPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
             var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader),
-                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader)
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Main, databaseLazyWriterPack.Main, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.File, databaseLazyWriterPack.File, DatabaseStatementLoader, LoggerFactory),
+                new PluginPersistentStorage(pluginIdentifiers, databaseCommandsPack.Temporary, databaseLazyWriterPack.Temporary, DatabaseStatementLoader, LoggerFactory)
             );
 
             return pluginPersistent;

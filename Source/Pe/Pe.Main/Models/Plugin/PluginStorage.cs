@@ -7,6 +7,8 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
@@ -183,8 +185,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginPersistentStorage"/>
     public class PluginPersistentStorage: IPluginPersistentStorage, IPLuginId
     {
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
         {
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
             DatabaseCommands = databaseCommands;
             IsReadOnly = isReadOnly;
@@ -192,8 +196,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             Mode = PluginPersistentMode.Commander;
         }
 
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader)
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
             DatabaseCommands = databaseCommands;
             DatabaseLazyWriter = databaseLazyWriter;
@@ -203,6 +209,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         }
 
         #region property
+
+        ILoggerFactory LoggerFactory { get; }
+        ILogger Logger { get; }
 
         IPluginIdentifiers PluginIdentifiers { get; }
         public string PluginName => PluginIdentifiers.PluginName;
@@ -221,7 +230,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginPersistentStorage.Exists(string)"/>
         public bool Exists(string key)
         {
-            throw new NotImplementedException();
+            var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
+            return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, key);
         }
 
         /// <inheritdoc cref="IPluginPersistentStorage.TryGet{TValue}(string, out TValue)"/>

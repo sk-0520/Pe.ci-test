@@ -7,20 +7,26 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     public abstract class PluginContextFactoryBase
     {
-        protected PluginContextFactoryBase(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
+        protected PluginContextFactoryBase(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
         {
-            EnvironmentParameters = environmentParameters;
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             DatabaseLazyWriterPack = databaseLazyWriterPack;
             DatabaseStatementLoader = databaseStatementLoader;
+            EnvironmentParameters = environmentParameters;
             UserAgentManager = userAgentManager;
         }
 
         #region property
+
+        protected ILoggerFactory LoggerFactory { get; }
+        protected ILogger Logger{ get; }
 
 
         protected IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }

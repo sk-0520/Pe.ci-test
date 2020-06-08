@@ -6,13 +6,14 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal class LauncherItemAddonContextFactory: PluginContextFactoryBase
     {
-        public LauncherItemAddonContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
-            :base(databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager)
+        public LauncherItemAddonContextFactory(IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+            : base(databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
         { }
 
         #region property

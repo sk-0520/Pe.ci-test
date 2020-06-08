@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.DirectoryServices;
 using System.Linq;
 using System.Text;
@@ -285,8 +286,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             CurrentBarriers = new Barriers(WaitReadCore(Main), WaitReadCore(File), WaitReadCore(Temporary), DatabaseCommonStatus.CreateCurrentAccount(), true);
+            CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
+
         IDatabaseCommandsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
 
         internal Barriers WaitWrite(IDatabaseCommonStatus databaseCommonStatus)
@@ -296,6 +299,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             CurrentBarriers = new Barriers(WaitWriteCore(Main), WaitWriteCore(File), WaitWriteCore(Temporary), databaseCommonStatus, true);
+            CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
         IDatabaseCommandsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
@@ -306,6 +310,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         }
 
         #endregion
+
+        #region TApplicationPackBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    if(CurrentBarriers != null) {
+                        CurrentBarriers.Disposing -= CurrentBarriers_Disposing;
+                        CurrentBarriers.Dispose();
+                        CurrentBarriers = null;
+                    }
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        private void CurrentBarriers_Disposing(object? sender, EventArgs e)
+        {
+            Debug.Assert(CurrentBarriers != null);
+
+            CurrentBarriers.Disposing -= CurrentBarriers_Disposing;
+            CurrentBarriers = null;
+        }
+
+
     }
 
 }
