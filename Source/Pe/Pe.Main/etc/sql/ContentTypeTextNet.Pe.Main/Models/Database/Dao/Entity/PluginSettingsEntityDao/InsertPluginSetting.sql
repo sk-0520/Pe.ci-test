@@ -2,7 +2,7 @@ insert into
 	PluginSettings
 	(
 		PluginId,
-		[Key],
+		PluginSettingKey,
 		DataType,
 		DataValue,
 
@@ -19,7 +19,7 @@ insert into
 	values
 	(
 /* PluginId              */ @PluginId,
-/* Key                   */ @Key,
+/* @PluginSetting        */ @PluginSettingKey,
 /* DataType              */ @DataType,
 /* DataValue             */ @DataValue,
 

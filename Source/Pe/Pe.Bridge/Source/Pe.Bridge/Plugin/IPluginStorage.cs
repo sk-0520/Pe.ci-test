@@ -118,15 +118,21 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         /// <summary>
         /// 指定データを保存する。
+        /// <para><see cref="PluginPersistentFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
         /// </summary>
         /// <typeparam name="TValue">保存データ。</typeparam>
         /// <param name="key">キー。</param>
         /// <param name="value">値。</param>
         /// <param name="format">変換種別。</param>
-        /// <returns></returns>
+        /// <returns>保存成功・失敗。</returns>
         bool Set<TValue>(string key, TValue value, PluginPersistentFormat format);
-        /// <inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistentFormat)"/>
-        /// <para>現行バージョンにおける最適な型を使用する。</para>
+        /// <summary>
+        /// 現行バージョンにおける最適な型を使用して指定データを保存する。
+        /// </summary>
+        /// <typeparam name="TValue"><inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistentFormat)"/></typeparam>
+        /// <param name="key">キー。</param>
+        /// <param name="value">値。</param>
+        /// <returns>保存成功・失敗。</returns>
         bool Set<TValue>(string key, TValue value);
 
         /// <summary>

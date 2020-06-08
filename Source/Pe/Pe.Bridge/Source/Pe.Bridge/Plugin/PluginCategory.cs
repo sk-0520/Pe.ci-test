@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         public const string Utility = "utility";
         public const string Network = "network";
 
-        public static string Others => "";
+        public const string Others = "";
 
         #endregion
     }

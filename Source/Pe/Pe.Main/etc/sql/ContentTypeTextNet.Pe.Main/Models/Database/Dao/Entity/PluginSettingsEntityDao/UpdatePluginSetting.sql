@@ -12,4 +12,4 @@ set
 where
 	PluginId = @PluginId
 	and
-	[Key] = @Key
+	PluginSettingKey = @PluginSettingKey

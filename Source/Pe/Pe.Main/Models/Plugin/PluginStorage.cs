@@ -117,6 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var tunedFileName = TuneFileName(name);
             var path = CombinePath(directoryName, tunedFileName);
+            FileUtility.MakeFileParentDirectory(path);
             var stream = new FileStream(path, fileMode, FileAccess.ReadWrite, FileShare.Read);
             return stream;
         }
@@ -188,6 +189,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginPersistentStorage"/>
     public class PluginPersistentStorage: IPluginPersistentStorage, IPLuginId
     {
+        /// <summary>
+        /// プラグイン用DB操作処理構築。
+        /// <para>読み込み専用・書き込み可能に分かれる。書き込み専用は基本的に設定画面くらい。</para>
+        /// </summary>
+        /// <param name="pluginIdentifiers"></param>
+        /// <param name="pluginVersions"></param>
+        /// <param name="databaseCommands"></param>
+        /// <param name="databaseStatementLoader"></param>
+        /// <param name="isReadOnly">読み込み専用か。</param>
+        /// <param name="loggerFactory"></param>
         public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
@@ -200,6 +211,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             Mode = PluginPersistentMode.Commander;
         }
 
+        /// <summary>
+        /// プラグイン用DB操作処理構築。
+        /// <para>通常実行時の書き込み処理で、遅延処理される。</para>
+        /// </summary>
+        /// <param name="pluginIdentifiers"></param>
+        /// <param name="pluginVersions"></param>
+        /// <param name="databaseCommands"></param>
+        /// <param name="databaseLazyWriter"></param>
+        /// <param name="databaseStatementLoader"></param>
+        /// <param name="loggerFactory"></param>
         public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
@@ -248,6 +269,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginPersistentStorage.Exists(string)"/>
         public bool Exists(string key)
         {
+            if(Mode == PluginPersistentMode.LazyWriter) {
+                // 遅延書き込み待機を終了
+                Debug.Assert(DatabaseLazyWriter != null);
+                DatabaseLazyWriter.Flush();
+            }
+
             var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
             return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, NormalizeKey(key));
         }
@@ -255,6 +282,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginPersistentStorage.TryGet{TValue}(string, out TValue)"/>
         public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
+            if(Mode == PluginPersistentMode.LazyWriter) {
+                // 遅延書き込み待機を終了
+                Debug.Assert(DatabaseLazyWriter != null);
+                DatabaseLazyWriter.Flush();
+            }
+
             var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
             var data = pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, NormalizeKey(key));
             if(data == null) {
@@ -372,16 +405,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             }
 
             var data = new PluginSettingRawValue(format, textValue);
-            var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
-            var normalizedKey = NormalizeKey(key);
 
-            if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
-                pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
-            } else {
-                pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
+                        var normalizedKey = NormalizeKey(key);
+                        if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
+                            pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                        } else {
+                            pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                        }
+                    }
+                    break;
+
+                case PluginPersistentMode.LazyWriter:
+                    Debug.Assert(DatabaseLazyWriter != null);
+                    DatabaseLazyWriter.Stock(c => {
+                        var pluginSettingsEntityDao = new PluginSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                        var normalizedKey = NormalizeKey(key);
+                        if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
+                            pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                        } else {
+                            pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                        }
+                    });
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
 
-            throw new NotImplementedException();
+            return true;
         }
         /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue)"/>
         public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistentFormat.Json);
@@ -393,7 +447,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 throw new InvalidOperationException(nameof(IsReadOnly));
             }
 
-            throw new NotImplementedException();
+            if(Mode == PluginPersistentMode.LazyWriter) {
+                // 遅延書き込み待機を終了
+                Debug.Assert(DatabaseLazyWriter != null);
+                DatabaseLazyWriter.Flush();
+            }
+
+            var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommands.Commander, DatabaseStatementLoader, DatabaseCommands.Implementation, LoggerFactory);
+            return pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
         }
 
         #endregion
