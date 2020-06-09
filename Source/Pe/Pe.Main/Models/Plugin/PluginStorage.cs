@@ -599,9 +599,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginFiles"/>
-    public class PluginFile: IPluginFiles
+    public class PluginFiles: IPluginFiles
     {
-        public PluginFile(PluginFileStorage user, PluginFileStorage machine, PluginFileStorage temporary)
+        public PluginFiles(PluginFileStorage user, PluginFileStorage machine, PluginFileStorage temporary)
         {
             User = user;
             Machine = machine;
@@ -624,9 +624,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginPersistents"/>
-    public class PluginPersistent: IPluginPersistents
+    public class PluginPersistents: IPluginPersistents
     {
-        public PluginPersistent(PluginPersistentStorage normal, PluginPersistentStorage large, PluginPersistentStorage temporary)
+        public PluginPersistents(PluginPersistentStorage normal, PluginPersistentStorage large, PluginPersistentStorage temporary)
         {
             Normal = normal;
             Large = large;
@@ -651,7 +651,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginStorage"/>
     public class PluginStorage: IPluginStorage
     {
-        public PluginStorage(PluginFile file, PluginPersistent persistent)
+        public PluginStorage(PluginFiles file, PluginPersistents persistent)
         {
             File = file;
             Persistent = persistent;
@@ -660,10 +660,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region IPluginStorage
 
         /// <inheritdoc cref="IPluginStorage.File"/>
-        public PluginFile File { get; }
+        public PluginFiles File { get; }
         IPluginFiles IPluginStorage.File => File;
         /// <inheritdoc cref="IPluginStorage.Persistent"/>
-        public PluginPersistent Persistent { get; }
+        public PluginPersistents Persistent { get; }
         IPluginPersistents IPluginStorage.Persistent => Persistent;
 
         #endregion
