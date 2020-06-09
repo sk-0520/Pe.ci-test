@@ -328,8 +328,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region IPreferences
 
-        /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext)"/>
-        public virtual UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext)
+        /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext, IPreferencesParameter)"/>
+        public virtual UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext, IPreferencesParameter preferencesParameter)
         {
             LoggingNotSupportPreferences();
             if(Preferences != null) {
@@ -337,7 +337,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             }
 
             Preferences = CreatePreferences();
-            return Preferences.BeginPreferences(preferencesLoadContext);
+            return Preferences.BeginPreferences(preferencesLoadContext, preferencesParameter);
         }
 
         /// <inheritdoc cref="IPreferences.CheckPreferences(IPreferencesCheckContext)"/>

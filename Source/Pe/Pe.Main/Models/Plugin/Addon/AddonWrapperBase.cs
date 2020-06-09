@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -27,13 +28,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        protected AddonWrapperBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected AddonWrapperBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             PluginContextFactory = pluginContextFactory;
 
+            UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
             Addons = addons;
@@ -44,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
        protected PluginContextFactory PluginContextFactory { get; }
+        protected IUserAgentFactory UserAgentFactory { get; }
         protected IPlatformTheme PlatformTheme { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         /// <summary>
@@ -82,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <see cref="AddonParameter"/> を普通に作成する。
         /// </summary>
         /// <returns></returns>
-        protected virtual AddonParameter CreateParameter() => new AddonParameter(PlatformTheme, DispatcherWrapper, LoggerFactory);
+        protected virtual AddonParameter CreateParameter() => new AddonParameter(UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
 
         protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 

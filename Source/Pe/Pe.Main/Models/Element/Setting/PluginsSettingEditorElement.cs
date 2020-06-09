@@ -19,17 +19,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginsSettingEditorElement: SettingEditorElementBase
     {
-        public PluginsSettingEditorElement(PluginContainer pluginContainer, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public PluginsSettingEditorElement(PluginContainer pluginContainer, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
             PreferencesContextFactory = preferencesContextFactory;
+
+            UserAgentFactory = userAgentFactory;
+            PlatformTheme = platformTheme;
+
             PluginItems = new ReadOnlyObservableCollection<PluginSettingEditorElement>(PluginItemsImpl);
         }
 
         #region property
 
         PreferencesContextFactory PreferencesContextFactory { get; }
+        IUserAgentFactory UserAgentFactory { get; }
+        IPlatformTheme PlatformTheme { get; }
 
         PluginContainer PluginContainer { get; }
 
@@ -46,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //var p = new PluginLoadContext
             //throw new NotImplementedException();
             foreach(var plugin in PluginContainer.Plugins) {
-                var element = new PluginSettingEditorElement(plugin, PreferencesContextFactory, LoggerFactory);
+                var element = new PluginSettingEditorElement(plugin, PreferencesContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
                 element.Initialize(); // 無意味だけど呼び出し
                 PluginItemsImpl.Add(element);
             }

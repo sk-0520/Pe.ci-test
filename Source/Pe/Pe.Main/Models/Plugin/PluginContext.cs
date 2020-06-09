@@ -114,11 +114,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginContext"/>
     public class PluginContext: PluginIdentifiersContextBase, IPluginContext
     {
-        public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
+        public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
             : base(pluginIdentifiers)
         {
             Storage = storage;
-            UserAgentFactory = userAgentFactory;
         }
 
         #region IPluginContext
@@ -126,9 +125,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginContext.Storage"/>
         public PluginStorage Storage { get; }
         IPluginStorage IPluginContext.Storage => Storage;
-
-        /// <inheritdoc cref="IPluginContext.UserAgentFactory"/>
-        public IUserAgentFactory UserAgentFactory { get; }
 
         #endregion
     }

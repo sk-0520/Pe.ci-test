@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         public PluginContext CreateContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, isReadOnly);
-            return new PluginContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
+            return new PluginContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
         static internal NullPluginContext CreateNullContext(ILoggerFactory loggerFactory)

@@ -27,13 +27,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(PluginContextFactory pluginContextFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             PluginContextFactory = pluginContextFactory;
 
+            UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
         }
@@ -44,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         ILoggerFactory LoggerFactory { get; }
 
         PluginContextFactory PluginContextFactory { get; }
-
+        IUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
@@ -89,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public CommandFinderAddonWrapper GetCommandFinder()
         {
-            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, PluginContextFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
         #endregion

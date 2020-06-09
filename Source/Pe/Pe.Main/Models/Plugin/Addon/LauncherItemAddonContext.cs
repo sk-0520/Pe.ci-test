@@ -9,11 +9,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext
     {
-        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, LauncherItemAddonStorage storage, IUserAgentFactory userAgentFactory)
+        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, LauncherItemAddonStorage storage)
             :base(pluginIdentifiers)
         {
             Storage = storage;
-            UserAgentFactory = userAgentFactory;
         }
 
         #region ILauncherItemAddonContext
@@ -21,9 +20,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <inheritdoc cref="ILauncherItemAddonContext.Storage"/>
         public LauncherItemAddonStorage Storage { get; }
         ILauncherItemAddonStorage ILauncherItemAddonContext.Storage => Storage;
-
-        /// <inheritdoc cref="ILauncherItemAddonContext.UserAgentFactory"/>
-        public IUserAgentFactory UserAgentFactory { get; }
 
         #endregion
     }

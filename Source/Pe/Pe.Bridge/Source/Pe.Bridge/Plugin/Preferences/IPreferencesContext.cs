@@ -20,12 +20,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// </summary>
         IPluginStorage Storage { get; }
 
-        /// <summary>
-        /// <see cref="IUserAgent"/> 生成器。
-        /// </summary>
-        IUserAgentFactory UserAgentFactory { get; }
-
-        ISkeletonImplements SkeletonImplements { get; }
 
         #endregion
     }
@@ -43,11 +37,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// ストレージ操作。
         /// </summary>
         IPluginStorage Storage { get; }
-
-        /// <summary>
-        /// <see cref="IUserAgent"/> 生成器。
-        /// </summary>
-        IUserAgentFactory UserAgentFactory { get; }
 
         /// <summary>
         /// チェック結果。
@@ -71,11 +60,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// </summary>
         IPluginStorage Storage { get; }
 
-        /// <summary>
-        /// <see cref="IUserAgent"/> 生成器。
-        /// </summary>
-        IUserAgentFactory UserAgentFactory { get; }
-
         #endregion
     }
 
@@ -92,11 +76,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// ストレージ操作。
         /// </summary>
         IPluginStorage Storage { get; }
-
-        /// <summary>
-        /// <see cref="IUserAgent"/> 生成器。
-        /// </summary>
-        IUserAgentFactory UserAgentFactory { get; }
 
         /// <summary>
         /// 保存されたか。

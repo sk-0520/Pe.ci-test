@@ -23,14 +23,14 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Preferences
 
         #region PreferencesBase
 
-        public override UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext)
+        public override UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext, IPreferencesParameter preferencesParameter)
         {
             FileFinderSetting? setting;
             if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<FileFinderSetting>(FileFinderConstants.MainSettengKey, out setting)) {
                 setting = new FileFinderSetting();
             }
 
-            SettingViewModel = new FileFinderSettingViewModel(setting, preferencesLoadContext.SkeletonImplements);
+            SettingViewModel = new FileFinderSettingViewModel(setting, preferencesParameter.SkeletonImplements);
 
             var control = new FileFinderSettingControl() {
                 DataContext = SettingViewModel,

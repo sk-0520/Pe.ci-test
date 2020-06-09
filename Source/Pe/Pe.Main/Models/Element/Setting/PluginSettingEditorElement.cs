@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Controls;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -18,11 +19,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPLuginId
     {
-        public PluginSettingEditorElement(IPlugin plugin, PreferencesContextFactory preferencesContextFactory, ILoggerFactory loggerFactory)
+        public PluginSettingEditorElement(IPlugin plugin, PreferencesContextFactory preferencesContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Plugin = plugin;
             PreferencesContextFactory = preferencesContextFactory;
+            UserAgentFactory = userAgentFactory;
+            PlatformTheme = platformTheme;
+            DispatcherWrapper = dispatcherWrapper;
 
             if(Plugin is IPreferences preferences) {
                 SupportedPreferences = true;
@@ -37,6 +41,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public IPlugin Plugin { get; }
 
         PreferencesContextFactory PreferencesContextFactory { get; }
+        IUserAgentFactory UserAgentFactory { get; }
+        IPlatformTheme PlatformTheme { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
 
         public bool SupportedPreferences { get; }
         IPreferences? Preferences { get; }
@@ -58,7 +65,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             UserControl result;
             using(var reader = PreferencesContextFactory.BarrierRead()) {
                 var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
-                result = Preferences.BeginPreferences(context);
+                var skeleton = new SkeletonImplements();
+                var parameter = new PreferencesParameter(skeleton, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                result = Preferences.BeginPreferences(context, parameter);
             }
             StartedPreferences = true;
             return result;
