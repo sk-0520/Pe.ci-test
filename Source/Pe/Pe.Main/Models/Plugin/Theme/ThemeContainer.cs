@@ -95,12 +95,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
             if(prev != null) {
                 using(var writerPack = DatabaseBarrierPack.WaitWrite()) {
-                    prev.Unload(PluginKind.Theme, pluginContextFactory.CreateContext(CurrentTheme.PluginInformations, writerPack, false));
+                    var unloadContext = pluginContextFactory.CreateUnloadContext(CurrentTheme.PluginInformations, writerPack);
+                    prev.Unload(PluginKind.Theme, unloadContext);
                 }
             }
-            using(var readerPack = DatabaseBarrierPack.WaitWrite()) {
-                var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations, readerPack, true);
-                CurrentTheme.Load(PluginKind.Theme, pluginContext);
+            using(var readerPack = DatabaseBarrierPack.WaitRead()) {
+                var loadContext = pluginContextFactory.CreateLoadContex(CurrentTheme.PluginInformations, readerPack);
+                CurrentTheme.Load(PluginKind.Theme, loadContext);
             }
         }
 
@@ -129,7 +130,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
                     Logger.LogInformation("標準テーマ先生準備できておらず。");
                     var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
-                        DefaultTheme.Load(PluginKind.Theme, pluginContextFactory.CreateContext(DefaultTheme.PluginInformations, readerPack, true));
+                        var loadContext = pluginContextFactory.CreateLoadContex(DefaultTheme.PluginInformations, readerPack);
+                        DefaultTheme.Load(PluginKind.Theme, loadContext);
                     }
                 }
             }

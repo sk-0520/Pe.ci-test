@@ -75,6 +75,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
     }
 
+    /// <inheritdoc cref="IPluginUninitializeContext"/>
+    public class PluginLoadContext: PluginIdentifiersContextBase, IPluginLoadContext
+    {
+        public PluginLoadContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+            : base(pluginIdentifiers)
+        {
+            Storage = storage;
+        }
+
+        #region IPluginLoadContext
+
+        /// <inheritdoc cref="IPluginLoadContext.Storage"/>
+        public PluginStorage Storage { get; }
+        IPluginStorage IPluginLoadContext.Storage => Storage;
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IPluginUnloadContext"/>
+    public class PluginUnloadContext: PluginIdentifiersContextBase, IPluginUnloadContext
+    {
+        public PluginUnloadContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+            : base(pluginIdentifiers)
+        {
+            Storage = storage;
+        }
+
+        #region IPluginUnloadContext
+
+        /// <inheritdoc cref="IPluginUnloadContext.Storage"/>
+        public PluginStorage Storage { get; }
+        IPluginStorage IPluginUnloadContext.Storage => Storage;
+
+        #endregion
+    }
+
     /// <inheritdoc cref="IPluginContext"/>
     public class PluginContext: PluginIdentifiersContextBase, IPluginContext
     {

@@ -62,8 +62,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             IsInitialized = false;
         }
 
-        /// <inheritdoc cref="IPlugin.Load(PluginKind, IPluginContext)"/>
-        public void Load(PluginKind pluginKind, IPluginContext pluginContext)
+        /// <inheritdoc cref="IPlugin.Load(PluginKind, IPluginLoadContext)"/>
+        public void Load(PluginKind pluginKind, IPluginLoadContext pluginLoadContext)
         {
             if(pluginKind != PluginKind.Theme) {
                 throw new NotSupportedException();
@@ -79,8 +79,8 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
             }
         }
 
-        /// <inheritdoc cref="IPlugin.Unload(PluginKind)"/>
-        public void Unload(PluginKind pluginKind, IPluginContext pluginContext)
+        /// <inheritdoc cref="IPlugin.Unload(PluginKind, IPluginUnloadContext)"/>
+        public void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext)
         {
             if(IsThemeLoaded) {
                 if(ResourceDictionary != null) {

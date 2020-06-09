@@ -131,6 +131,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return new PluginUninitializeContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
+        public PluginLoadContext CreateLoadContex(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
+        {
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
+            return new PluginLoadContext(pluginInformations.PluginIdentifiers, pluginStorage);
+        }
+
+        public PluginUnloadContext CreateUnloadContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
+        {
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, false);
+            return new PluginUnloadContext(pluginInformations.PluginIdentifiers, pluginStorage);
+        }
+
         public PluginContext CreateContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, isReadOnly);

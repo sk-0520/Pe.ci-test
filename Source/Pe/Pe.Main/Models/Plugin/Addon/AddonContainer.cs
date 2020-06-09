@@ -85,7 +85,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                     var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
-                        target.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(target.PluginInformations, readerPack, true));
+                        var loadContext = pluginContextFactory.CreateLoadContex(target.PluginInformations, readerPack);
+                        target.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                     }
                 }
 

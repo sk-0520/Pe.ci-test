@@ -28,8 +28,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region function
 
-        protected internal abstract void Load(IPluginContext pluginContext);
-        protected internal abstract void Unload(IPluginContext pluginContext);
+        protected internal abstract void Load(IPluginLoadContext pluginLoadContext);
+        protected internal abstract void Unload(IPluginUnloadContext pluginUnloadContext);
 
         #endregion
 
@@ -50,14 +50,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public bool IsInitialized => throw new NotSupportedException();
 
         public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
+        public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();
 
         public bool IsLoaded(PluginKind pluginKind) => throw new NotSupportedException();
 
-        public void Load(PluginKind pluginKind, IPluginContext pluginContext) => throw new NotSupportedException();
-
-        public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();
-
-        public void Unload(PluginKind pluginKind, IPluginContext pluginContext) => throw new NotSupportedException();
+        public void Load(PluginKind pluginKind, IPluginLoadContext pluginLoadContext) => throw new NotSupportedException();
+        public void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext) => throw new NotSupportedException();
 
         #endregion
     }

@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class PluginLoadStateData: DataBase
     {
-        public PluginLoadStateData(Guid pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginLoadContext>? weekLoadContext, IPlugin? plugin)
+        public PluginLoadStateData(Guid pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)
         {
             PluginId = pluginId;
             PluginName = pluginName;
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// 対象プラグインの開放状態。
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Disable"/> だと null。</para>
         /// </summary>
-        public WeakReference<PluginLoadContext>? WeekLoadContext { get; }
+        public WeakReference<PluginAssemblyLoadContext>? WeekLoadContext { get; }
         /// <summary>
         /// 対象プラグイン。
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Enable"/> のみ有効でそれ以外の場合はもうたぶん解放されてる(はず)。</para>
