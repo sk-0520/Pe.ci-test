@@ -313,6 +313,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 cultureServiceChanger.ChangeCulture();
 
                 Logger.LogInformation("設定適用のため各要素生成");
+
+                foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
+                    if(element.SupportedPreferences && element.StartedPreferences) {
+                        Logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.Plugin.PluginInformations.PluginIdentifiers.PluginName, element.Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                        element.EndPreferences();
+                    }
+                }
+
                 RebuildHook();
                 ExecuteElements();
 

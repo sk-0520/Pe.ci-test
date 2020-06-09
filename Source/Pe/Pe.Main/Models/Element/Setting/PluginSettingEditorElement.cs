@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -17,15 +18,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPLuginId
     {
-        public PluginSettingEditorElement(IPlugin plugin, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public PluginSettingEditorElement(IPlugin plugin, PreferencesContextFactory preferencesContextFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Plugin = plugin;
-            DatabaseBarrierPack = databaseBarrierPack;
-            DatabaseLazyWriterPack = databaseLazyWriterPack;
-            DatabaseStatementLoader = databaseStatementLoader;
-            EnvironmentParameters = environmentParameters;
-            UserAgentManager = userAgentManager;
+            PreferencesContextFactory = preferencesContextFactory;
 
             if(Plugin is IPreferences preferences) {
                 SupportedPreferences = true;
@@ -39,11 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public IPlugin Plugin { get; }
 
-        IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        IUserAgentManager UserAgentManager { get; }
+        PreferencesContextFactory PreferencesContextFactory { get; }
 
         public bool SupportedPreferences { get; }
         IPreferences? Preferences { get; }
@@ -54,12 +47,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        PreferencesContextFactory CreateContextFactory()
-        {
-            var factory = new PreferencesContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
-            return factory;
-        }
-
         public UserControl BeginPreferences()
         {
             if(!SupportedPreferences) {
@@ -69,9 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(!StartedPreferences);
 
             UserControl result;
-            var factory = CreateContextFactory();
-            using(var reader = DatabaseBarrierPack.WaitRead()) {
-                var context = factory.CreateLoadContext(Plugin.PluginInformations, reader);
+            using(var reader = PreferencesContextFactory.BarrierRead()) {
+                var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
                 result = Preferences.BeginPreferences(context);
             }
             StartedPreferences = true;
@@ -87,9 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(StartedPreferences);
 
             PreferencesCheckContext context;
-            var factory = CreateContextFactory();
-            using(var reader = DatabaseBarrierPack.WaitRead()) {
-                context = factory.CreateCheckContext(Plugin.PluginInformations, reader);
+            using(var reader = PreferencesContextFactory.BarrierRead()) {
+                context = PreferencesContextFactory.CreateCheckContext(Plugin.PluginInformations, reader);
                 Preferences.CheckPreferences(context);
             }
             return context.HasError;
@@ -103,8 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
 
-            var factory = CreateContextFactory();
-            var context = factory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
+            var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
             Preferences.SavePreferences(context);
         }
 
@@ -118,9 +102,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             // NOTE: 多分ここじゃなくて別んところで呼び出すべき
 
-            var factory = CreateContextFactory();
-            using(var reader = DatabaseBarrierPack.WaitRead()) {
-                var context = factory.CreateEndContext(Plugin.PluginInformations, reader);
+            using(var reader = PreferencesContextFactory.BarrierRead()) {
+                var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformations, reader);
                 Preferences.EndPreferences(context);
             }
         }

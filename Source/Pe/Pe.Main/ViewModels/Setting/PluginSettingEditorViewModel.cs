@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -63,6 +64,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
 
         #region function
+        #endregion
+
+        #region SingleModelViewModelBase
+
+        protected override void ValidateDomain()
+        {
+            base.ValidateDomain();
+
+            if(Model.SupportedPreferences) {
+                Model.CheckPreferences();
+            }
+        }
+
         #endregion
     }
 }
