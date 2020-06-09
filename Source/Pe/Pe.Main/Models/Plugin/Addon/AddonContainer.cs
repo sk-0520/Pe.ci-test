@@ -27,16 +27,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(PluginContextFactory pluginContextFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
-            DatabaseBarrierPack = databaseBarrierPack;
-            DatabaseLazyWriterPack = databaseLazyWriterPack;
-            DatabaseStatementLoader = databaseStatementLoader;
-            EnvironmentParameters = environmentParameters;
-            UserAgentManager = userAgentManager;
+            PluginContextFactory = pluginContextFactory;
 
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
@@ -47,11 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
 
-        IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        IUserAgentManager UserAgentManager { get; }
+        PluginContextFactory PluginContextFactory { get; }
 
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -83,9 +75,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             foreach(var target in targets) {
                 if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                    var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
-                    using(var readerPack = DatabaseBarrierPack.WaitRead()) {
-                        var loadContext = pluginContextFactory.CreateLoadContex(target.PluginInformations, readerPack);
+                    using(var readerPack = PluginContextFactory.BarrierRead()) {
+                        var loadContext = PluginContextFactory.CreateLoadContex(target.PluginInformations, readerPack);
                         target.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                     }
                 }
@@ -98,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public CommandFinderAddonWrapper GetCommandFinder()
         {
-            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, PluginContextFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
         #endregion

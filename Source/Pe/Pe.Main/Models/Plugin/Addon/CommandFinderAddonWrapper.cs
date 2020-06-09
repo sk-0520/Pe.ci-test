@@ -19,8 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     public class CommandFinderAddonWrapper: AddonWrapperBase<ICommandFinder>, ICommandFinder
     {
-        public CommandFinderAddonWrapper(IReadOnlyList<IAddon> addons, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(addons, databaseBarrierPack, databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, platformTheme, dispatcherWrapper, loggerFactory)
+        public CommandFinderAddonWrapper(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(addons, pluginContextFactory, platformTheme, dispatcherWrapper, loggerFactory)
         {
         }
 

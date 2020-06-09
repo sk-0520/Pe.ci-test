@@ -62,6 +62,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected DirectoryInfo GetTemporaryDirectory(IPluginIdentifiers pluginIdentifiers) => GetDirectory(pluginIdentifiers, EnvironmentParameters.UserPluginDataDirectory, BaseDirectoryName);
 
 
+        public IDatabaseCommandsPack BarrierRead() => DatabaseBarrierPack.WaitRead();
+        public IDatabaseCommandsPack BarrierWrite() => DatabaseBarrierPack.WaitWrite();
+
         #endregion
     }
 }
