@@ -266,6 +266,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             WindowManager.Register(windowItem);
             var dialogResult = windowItem.Window.ShowDialog();
 
+            static void EndPreferences(SettingContainerElement settingElement, ILogger logger)
+            {
+                foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
+                    if(element.SupportedPreferences && element.StartedPreferences) {
+                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.Plugin.PluginInformations.PluginIdentifiers.PluginName, element.Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                        element.EndPreferences();
+                    }
+                }
+            }
+
             if(settingElement.IsSubmit) {
                 Logger.LogInformation("設定適用のため現在表示要素の破棄");
                 CloseViews();
@@ -314,12 +324,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 Logger.LogInformation("設定適用のため各要素生成");
 
-                foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
-                    if(element.SupportedPreferences && element.StartedPreferences) {
-                        Logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.Plugin.PluginInformations.PluginIdentifiers.PluginName, element.Plugin.PluginInformations.PluginIdentifiers.PluginId);
-                        element.EndPreferences();
-                    }
-                }
+                EndPreferences(settingElement, Logger);
 
                 RebuildHook();
                 ExecuteElements();
@@ -332,6 +337,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 NotifyLogElement.Refresh();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
+                EndPreferences(settingElement, Logger);
             }
             StartHook();
             StartPlatform();
