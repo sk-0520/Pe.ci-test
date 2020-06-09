@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Preferences
 
         public override UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext)
         {
-            FileFinderSetting setting;
+            FileFinderSetting? setting;
             if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<FileFinderSetting>("finder", out setting)) {
                 setting = new FileFinderSetting();
             }

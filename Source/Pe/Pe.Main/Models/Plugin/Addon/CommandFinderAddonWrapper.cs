@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -77,11 +78,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
         }
 
-        public void Refresh()
+        public void Refresh(IPluginContext pluginContext)
         {
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }
+
+            //TODO: よみこみ！
         }
 
         #endregion

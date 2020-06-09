@@ -149,6 +149,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return new PluginContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
         }
 
+        static internal NullPluginContext CreateNullContext(ILoggerFactory loggerFactory)
+        {
+            var nullPluginInformation = new NullPluginInformation();
+            var nullStorage = new NullPluginStorage(nullPluginInformation.PluginIdentifiers, loggerFactory);
+            return new NullPluginContext(nullStorage);
+        }
+
         #endregion
 
         #region PluginContextFactoryBase

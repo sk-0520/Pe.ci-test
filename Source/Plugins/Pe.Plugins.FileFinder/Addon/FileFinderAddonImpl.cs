@@ -17,11 +17,11 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             AddonKind.CommandFinder,
         };
 
-        protected internal override void Load(IPluginContext pluginContext)
+        protected internal override void Load(IPluginLoadContext pluginLoadContext)
         {
         }
 
-        protected internal override void Unload(IPluginContext pluginContext)
+        protected internal override void Unload(IPluginUnloadContext pluginUnloadContext)
         {
         }
 

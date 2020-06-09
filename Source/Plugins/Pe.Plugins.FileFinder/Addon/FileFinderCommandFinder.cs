@@ -10,7 +10,9 @@ using System.Threading;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Plugins.FileFinder.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
@@ -57,20 +59,20 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         /// <summary>
         /// 隠しファイルを列挙するか。
         /// </summary>
-        bool IncludeHiddenFile { get; } = true;
+        bool IncludeHiddenFile { get; set; }
         /// <summary>
         /// PATHの通っている実行ファイルを列挙するか。
         /// </summary>
-        bool IncludePath { get; } = true;
+        bool IncludePath { get; set; }
         /// <summary>
         /// パスからの列挙において列挙する上限数。
         /// <para>0 で制限しない。</para>
         /// </summary>
-        int MaximumPathItem { get; } = 10;
+        int MaximumPathItem { get; set; }
         /// <summary>
         /// パス検索を有効にする入力文字数(以上)。
         /// </summary>
-        int PathEnabledInputCharCount { get; } = 0;
+        int PathEnabledInputCharCount { get; set; }
 
         #endregion
 
@@ -296,9 +298,19 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             yield break;
         }
 
-        /// <inheritdoc cref="ICommandFinder.Refresh"/>
-        public void Refresh()
-        { }
+        /// <inheritdoc cref="ICommandFinder.Refresh(IPluginContext)"/>
+        public void Refresh(IPluginContext pluginContext)
+        {
+            FileFinderSetting? setting;
+            if(!pluginContext.Storage.Persistent.Normal.TryGet<FileFinderSetting>("finder", out setting)) {
+                setting = new FileFinderSetting();
+            }
+
+            IncludeHiddenFile = setting.IncludeHiddenFile;
+            IncludePath = setting.IncludePath;
+            MaximumPathItem = setting.MaximumPathItem;
+            PathEnabledInputCharCount = setting.PathEnabledInputCharCount;
+        }
 
         #endregion
 

@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
             ThemeKind.Command,
         };
 
-        protected internal override void Load(IPluginContext pluginContext)
+        protected internal override void Load(IPluginLoadContext pluginLoadContext)
         {
             ResourceDictionary = new ResourceDictionary();
             var uri = new Uri("pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicThemeResource.xaml", UriKind.Absolute);
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
             Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
         }
 
-        protected internal override void Unload(IPluginContext pluginContext)
+        protected internal override void Unload(IPluginUnloadContext pluginUnloadContext)
         {
             if(ResourceDictionary != null) {
                 Application.Current.Resources.MergedDictionaries.Add(ResourceDictionary);
