@@ -1,13 +1,31 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 {
     internal class FileFinderCommandItem: ICommandItem
     {
+        #region define
+
+        [DllImport("shell32.dll")]
+        static extern IntPtr ExtractAssociatedIcon(IntPtr hInst, StringBuilder lpIconPath, out ushort lpiIcon);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+        extern static bool DestroyIcon(IntPtr handle);
+
+        #endregion
+
         public FileFinderCommandItem(string path, string fullMatchValue)
         {
             Path = path;
@@ -21,6 +39,9 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         #region property
 
         private string Path { get; }
+
+        //System.Windows.Controls.Image? ImageControl { get; set; }
+        ImageSource? ImageSource { get; set; }
 
         #endregion
 
@@ -49,7 +70,30 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         public object GetIcon(IconBox iconBox)
         {
-            return null!;
+            //var c = char.ToUpper(Path[0]);
+            //if(Path.Length == "C:\\".Length && ('A' <= c && c <= 'Z') && Path[1] == System.IO.Path.VolumeSeparatorChar && System.IO.Path.EndsInDirectorySeparator(Path)) {
+
+            //}
+            //using var icon = Icon.ExtractAssociatedIcon(Path);
+            //Image = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, null);
+            if(ImageSource == null) {
+                var hInstance = Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]);
+                var hIcon = ExtractAssociatedIcon(hInstance, new StringBuilder(Path), out _);
+                try {
+                    using var icon = Icon.FromHandle(hIcon);
+                    ImageSource = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, null);
+                    ImageSource.Freeze();
+                } finally {
+                    DestroyIcon(hIcon);
+                }
+            }
+            var iconSize = new IconSize(iconBox);
+            return new System.Windows.Controls.Image() {
+                Source = ImageSource,
+                Width = iconSize.Width,
+                Height = iconSize.Height,
+            };
+
         }
 
         public bool IsEquals(ICommandItem? commandItem)
