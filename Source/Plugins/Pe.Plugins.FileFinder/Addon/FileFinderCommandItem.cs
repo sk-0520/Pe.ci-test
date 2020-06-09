@@ -10,6 +10,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
@@ -26,14 +27,15 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         #endregion
 
-        public FileFinderCommandItem(string path, string fullMatchValue)
+        public FileFinderCommandItem(string path, string fullMatchValue, IAddonExecutor addonExecutor)
         {
             Path = path;
             FullMatchValue = fullMatchValue;
+            AddonExecutor = addonExecutor;
         }
 
-        public FileFinderCommandItem(string path)
-            : this(path, path)
+        public FileFinderCommandItem(string path, IAddonExecutor addonExecutor)
+            : this(path, path, addonExecutor)
         { }
 
         #region property
@@ -42,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         //System.Windows.Controls.Image? ImageControl { get; set; }
         ImageSource? ImageSource { get; set; }
+
+        IAddonExecutor AddonExecutor { get; }
 
         #endregion
 
@@ -65,7 +69,11 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 
         public void Execute(ICommandExecuteParameter parameter)
         {
-            throw new NotImplementedException();
+            if(parameter.IsExtend) {
+                AddonExecutor.Execute(Path);
+            } else {
+                AddonExecutor.ExtendsExecute(Path);
+            }
         }
 
         public object GetIcon(IconBox iconBox)

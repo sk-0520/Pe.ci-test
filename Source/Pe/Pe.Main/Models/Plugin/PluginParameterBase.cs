@@ -10,12 +10,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginParameter"/>
     public abstract class PluginParameterBase: IPluginParameter
     {
-        protected PluginParameterBase(IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected PluginParameterBase(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
+            PluginInformations = pluginInformations;
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
             LoggerFactory = loggerFactory;
         }
+
+        #region property
+
+        protected IPluginInformations PluginInformations { get; }
+
+        #endregion
 
         #region PluginParameter
 

@@ -15,5 +15,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <see cref="IUserAgent"/> 生成器。
         /// </summary>
         IUserAgentFactory UserAgentFactory { get; }
+        /// <summary>
+        /// 実行処理。
+        /// </summary>
+        IAddonExecutor AddonExecutor { get; }
     }
 }
