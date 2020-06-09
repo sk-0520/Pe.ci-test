@@ -18,10 +18,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// </summary>
     /// <typeparam name="TFunctionUnit"></typeparam>
     public abstract class AddonWrapperBase<TFunctionUnit>: DisposerBase
+        where TFunctionUnit: notnull
     {
         #region variable
 
         IReadOnlyList<TFunctionUnit>? _functionUnits;
+        IReadOnlyDictionary<TFunctionUnit, IAddon>? _functionAddonMap;
 
         #endregion
 
@@ -60,7 +62,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// </summary>
         public IReadOnlyList<TFunctionUnit> FunctionUnits
         {
-            get => this._functionUnits ??= LoadFunctionUnits();
+            get
+            {
+                if(this._functionUnits == null) {
+                    var result = LoadFunctionUnits();
+                    this._functionUnits = result.units;
+                    this._functionAddonMap = result.map;
+                }
+
+                return this._functionUnits;
+            }
         }
 
         #endregion
@@ -75,8 +86,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 
-        protected IReadOnlyList<TFunctionUnit> LoadFunctionUnits()
+        protected (IReadOnlyList<TFunctionUnit> units, IReadOnlyDictionary<TFunctionUnit, IAddon> map) LoadFunctionUnits()
         {
+            var map = new Dictionary<TFunctionUnit, IAddon>();
             var list = new List<TFunctionUnit>(Addons.Count);
             foreach(var addon in Addons) {
                 Debug.Assert(addon.IsSupported(AddonKind));
@@ -89,8 +101,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 }
                 var functionUnit = BuildFunctionUnit(addon);
                 list.Add(functionUnit);
+                map.Add(functionUnit, addon);
             }
-            return list;
+            return (list, map);
+        }
+
+        protected IAddon GetAddon(TFunctionUnit functionUnit)
+        {
+            if(this._functionAddonMap == null) {
+                throw new InvalidOperationException(nameof(FunctionUnits));
+            }
+
+            return this._functionAddonMap[functionUnit];
         }
 
         #endregion

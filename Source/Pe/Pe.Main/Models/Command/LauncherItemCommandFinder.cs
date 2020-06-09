@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
@@ -134,6 +135,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public void Refresh(IPluginContext pluginContext)
         {
+            Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
+
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }

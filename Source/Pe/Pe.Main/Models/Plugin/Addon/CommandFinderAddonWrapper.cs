@@ -80,11 +80,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public void Refresh(IPluginContext pluginContext)
         {
+            Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
+
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }
 
-            //TODO: よみこみ！
+            foreach(var functionUnit in FunctionUnits) {
+                var addon = GetAddon(functionUnit);
+                using(var reader = PluginContextFactory.BarrierRead()) {
+                    var context = PluginContextFactory.CreateContext(addon.PluginInformations, reader, true);
+                    functionUnit.Refresh(context);
+                }
+            }
         }
 
         #endregion
