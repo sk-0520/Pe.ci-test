@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             using(var reader = PreferencesContextFactory.BarrierRead()) {
                 var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
                 var skeleton = new SkeletonImplements();
-                var parameter = new PreferencesParameter(skeleton, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
                 result = Preferences.BeginPreferences(context, parameter);
             }
             StartedPreferences = true;

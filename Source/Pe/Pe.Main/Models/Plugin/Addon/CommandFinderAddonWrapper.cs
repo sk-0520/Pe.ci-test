@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected override ICommandFinder BuildFunctionUnit(IAddon loadedAddon)
         {
-            return loadedAddon.BuildCommandFinder(CreateParameter());
+            return loadedAddon.BuildCommandFinder(CreateParameter(loadedAddon));
         }
 
 

@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -19,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// </summary>
     /// <typeparam name="TFunctionUnit"></typeparam>
     public abstract class AddonWrapperBase<TFunctionUnit>: DisposerBase
-        where TFunctionUnit: notnull
+        where TFunctionUnit : notnull
     {
         #region variable
 
@@ -45,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
-       protected PluginContextFactory PluginContextFactory { get; }
+        protected PluginContextFactory PluginContextFactory { get; }
         protected IUserAgentFactory UserAgentFactory { get; }
         protected IPlatformTheme PlatformTheme { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
@@ -85,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <see cref="AddonParameter"/> を普通に作成する。
         /// </summary>
         /// <returns></returns>
-        protected virtual AddonParameter CreateParameter() => new AddonParameter(UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
 
         protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 
