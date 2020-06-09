@@ -726,6 +726,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        private void UnloadPlugins()
+        {
+            var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+            var plugins = PluginContainer.Plugins.Where(i => i.IsInitialized).ToList();
+            var themePlugins = plugins.Where(i => i.IsLoaded(PluginKind.Theme)).Select(i => new { Plugin = i, Kind = PluginKind.Theme });
+            var addonPlugins = plugins.Where(i => i.IsLoaded(PluginKind.Addon)).Select(i => new { Plugin = i, Kind = PluginKind.Addon });
+
+            using(var writer = pluginContextFactory.BarrierWrite()) {
+                foreach(var item in addonPlugins.Concat(themePlugins)) {
+                    var context = pluginContextFactory.CreateUnloadContext(item.Plugin.PluginInformations, writer);
+                    try {
+                        item.Plugin.Unload(item.Kind, context);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "{0}({1}) {2}", item.Plugin.PluginInformations.PluginIdentifiers.PluginName, item.Plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                    }
+                }
+
+                foreach(var plugin in plugins) {
+                    var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformations, writer);
+                    try {
+                        plugin.Uninitialize(context);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "{0}({1}) {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                    }
+                }
+            }
+
+        }
         private void ApplyCurrentTheme(Guid themePluginId)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
@@ -1202,6 +1230,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public void Exit(bool ignoreUpdate)
         {
             Logger.LogInformation("おわる！");
+
+            UnloadPlugins();
 
             BackupSettingsDefault(ApplicationDiContainer);
 
