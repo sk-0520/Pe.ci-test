@@ -40,6 +40,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #region function
 
         /// <summary>
+        /// 通知領域ウィジェットメニューアイコン。
+        /// </summary>
+        /// <returns></returns>
+        object GetMenuIcon();
+        /// <summary>
+        /// 通知領域ウィジェットメニューヘッダ。
+        /// </summary>
+        /// <returns></returns>
+        string GetMenuHeader();
+
+        /// <summary>
         /// ウィンドウウィジェットを生成。
         /// </summary>
         /// <returns></returns>
@@ -50,6 +61,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         /// <returns></returns>
         IHtmlSource CreateWebViewWidget();
+
+        /// <summary>
+        /// ウィジェットが閉じられた際に呼ばれる。
+        /// </summary>
+        void ClosedWidget();
 
         #endregion
     }
