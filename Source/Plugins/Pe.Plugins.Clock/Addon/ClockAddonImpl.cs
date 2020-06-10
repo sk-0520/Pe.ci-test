@@ -5,18 +5,18 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
 
-namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
+namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
 {
-    internal class FileFinderAddonImpl: AddonBase
+    internal class ClockAddonImpl: AddonBase
     {
-        public FileFinderAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public ClockAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
             : base(pluginConstructorContext, plugin)
         { }
 
         #region AddonBase
 
         protected override IReadOnlyCollection<AddonKind> SupportedKinds { get; } = new[] {
-            AddonKind.CommandFinder,
+            AddonKind.Widget,
         };
 
         protected internal override void Load(IPluginLoadContext pluginLoadContext)
@@ -27,11 +27,13 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         {
         }
 
-        public override ICommandFinder BuildCommandFinder(IAddonParameter parameter)
+        public override IWidget BuildWidget(IAddonParameter parameter)
         {
-            return new FileFinderCommandFinder(parameter);
+            return new ClockWidget(parameter, PluginInformations);
         }
 
+
         #endregion
+
     }
 }

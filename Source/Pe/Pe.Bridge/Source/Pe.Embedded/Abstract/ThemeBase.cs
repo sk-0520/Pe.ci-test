@@ -12,16 +12,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
-    internal abstract class ThemeBase: ITheme
+    internal abstract class ThemeBase: ExtensionBase, ITheme
     {
-        public ThemeBase(IPluginConstructorContext pluginConstructorContext)
-        {
-            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
-        }
+        public ThemeBase(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+            : base(pluginConstructorContext, plugin)
+        { }
 
         #region property
-
-        protected ILogger Logger { get; }
 
         /// <summary>
         /// サポートするテーマ機能を一括定義。
@@ -53,24 +50,6 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public virtual INotifyLogTheme BuildNotifyLogTheme(IThemeParameter parameter) => throw new NotImplementedException();
 
         #endregion
-
-        #region IPlugin
-
-        public IPluginInformations PluginInformations => throw new NotSupportedException();
-
-        public bool IsInitialized => throw new NotSupportedException();
-
-        public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
-        public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();
-
-        public bool IsLoaded(PluginKind pluginKind) => throw new NotSupportedException();
-
-        public void Load(PluginKind pluginKind, IPluginLoadContext pluginLoadContext) => throw new NotSupportedException();
-
-        public void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext) => throw new NotSupportedException();
-
-        #endregion
-
     }
 
     internal abstract class ThemeDetailBase

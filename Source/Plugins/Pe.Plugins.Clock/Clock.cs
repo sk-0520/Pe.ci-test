@@ -2,37 +2,40 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
-using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
-using ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme;
-using Microsoft.Extensions.Logging;
+using ContentTypeTextNet.Pe.Plugins.Clock.Addon;
 
-namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
+namespace ContentTypeTextNet.Pe.Plugins.Clock
 {
-    public class ClassicTheme: PluginBase, ITheme
+    public class Clock: PluginBase, IAddon
     {
         #region variable
 
-        ClassicThemeImpl _theme;
+        ClockAddonImpl _addon;
 
         #endregion
 
-        public ClassicTheme(IPluginConstructorContext pluginConstructorContext)
+        public Clock(IPluginConstructorContext pluginConstructorContext)
             : base(pluginConstructorContext)
         {
-            this._theme = new ClassicThemeImpl(pluginConstructorContext, this);
+            this._addon = new ClockAddonImpl(pluginConstructorContext, this);
         }
 
         #region PluginBase
 
-        internal override ThemeBase Theme => this._theme;
+        internal override AddonBase Addon => this._addon;
+
+        //protected override IPreferences CreatePreferences() => new FileFinderPreferences();
 
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }
+
         protected override void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext)
         { }
 
 
         #endregion
+
     }
 }

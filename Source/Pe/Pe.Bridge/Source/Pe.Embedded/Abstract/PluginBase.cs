@@ -285,6 +285,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             return BuildSupporttedAddon(AddonKind.CommandFinder, nameof(BuildCommandFinder), parameter, p => Addon.BuildCommandFinder(p));
         }
 
+        /// <inheritdoc cref="IAddon.BuildWidget(IAddonParameter)"/>
+        public IWidget BuildWidget(IAddonParameter parameter)
+        {
+            return BuildSupporttedAddon(AddonKind.Widget, nameof(BuildWidget), parameter, p => Addon.BuildWidget(p));
+        }
+
 
         #endregion
 

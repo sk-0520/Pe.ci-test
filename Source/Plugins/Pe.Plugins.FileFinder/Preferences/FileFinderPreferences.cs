@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Controls;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
 using ContentTypeTextNet.Pe.Plugins.FileFinder.Models.Data;
@@ -13,6 +14,10 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Preferences
 {
     public class FileFinderPreferences: PreferencesBase
     {
+        public FileFinderPreferences(IPlugin plugin)
+            : base(plugin)
+        { }
+
         #region proeprty
 
         FileFinderSettingViewModel? SettingViewModel { get; set; }

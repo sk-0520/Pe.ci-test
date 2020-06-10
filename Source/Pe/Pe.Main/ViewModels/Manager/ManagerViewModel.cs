@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         bool _isOpenNoteMenu;
         bool _isOpenSystemMenu;
+        bool _isOpenWidgetsMenu;
         bool _isOpenContextMenu;
         bool _isEnabledManager = true;
 
@@ -119,6 +120,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #endregion
 
+        #region ウィジェット
+
+        public bool IsOpenWidgetsMenu
+        {
+            get => this._isOpenWidgetsMenu;
+            set
+            {
+                SetProperty(ref this._isOpenWidgetsMenu, value);
+                if(IsOpenWidgetsMenu) {
+                    WidgetItems.Refresh();
+                }
+            }
+        }
+
+        #endregion
 
         public bool IsEnabledManager
         {

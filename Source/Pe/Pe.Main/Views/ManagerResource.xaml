@@ -147,7 +147,7 @@
         </Style>
       </Separator.Style>
     </Separator>
-    <MenuItem Header="widgets" ItemsSource="{Binding WidgetItems}">
+    <MenuItem IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="widgets" ItemsSource="{Binding WidgetItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}">
       <MenuItem.Style>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>

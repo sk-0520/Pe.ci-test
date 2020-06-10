@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme.Theme
 {
     internal class ClassicThemeImpl: ThemeBase
     {
-        public ClassicThemeImpl(IPluginConstructorContext pluginConstructorContext)
-            : base(pluginConstructorContext)
+        public ClassicThemeImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+            : base(pluginConstructorContext, plugin)
         { }
 
         #region property

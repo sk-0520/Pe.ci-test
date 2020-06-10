@@ -1052,7 +1052,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public ModelViewModelObservableCollectionManagerBase<WrapModel<IWidget>, WidgetNotifyAreaViewModel> GetWidgetCollection()
         {
             var collection = new ActionModelViewModelObservableCollectionManager<WrapModel<IWidget>, WidgetNotifyAreaViewModel>(Widgets) {
-                ToViewModel = m => ApplicationDiContainer.Build<WidgetNotifyAreaViewModel>(m, (m.Data as WidgetAddonProxy)?.Addon.PluginInformations ?? new NullPluginInformation())
+                ToViewModel = m => {
+                    // internal コンストラクタがとれへんねん・・・
+                    var info = (m.Data as WidgetAddonProxy)?.Addon.PluginInformations ?? new NullPluginInformation();
+                    var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+                    var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
+                    var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
+                    return new WidgetNotifyAreaViewModel(m.Data, info, pluginContextFactory, widgetAddonContextFactory, dispatcherWrapper, LoggerFactory);
+                }
             };
             return collection;
         }

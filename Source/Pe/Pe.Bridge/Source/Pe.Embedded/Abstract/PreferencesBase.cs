@@ -10,6 +10,17 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     public class PreferencesBase: IPreferences
     {
+        protected PreferencesBase(IPlugin plugin)
+        {
+            Plugin = plugin;
+        }
+
+        #region property
+
+        IPlugin Plugin { get; }
+
+        #endregion
+
         #region IPreferences
 
         /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext, IPreferencesParameter)"/>
