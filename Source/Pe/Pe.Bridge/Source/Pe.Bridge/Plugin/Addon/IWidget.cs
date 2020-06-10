@@ -43,29 +43,29 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// 通知領域ウィジェットメニューアイコン。
         /// </summary>
         /// <returns></returns>
-        object GetMenuIcon();
+        object GetMenuIcon(IPluginContext pluginContext);
         /// <summary>
         /// 通知領域ウィジェットメニューヘッダ。
         /// </summary>
         /// <returns></returns>
-        string GetMenuHeader();
+        string GetMenuHeader(IPluginContext pluginContext);
 
         /// <summary>
         /// ウィンドウウィジェットを生成。
         /// </summary>
         /// <returns></returns>
-        Window CreateWindowWidget();
+        Window CreateWindowWidget(IWidgetAddonCreateContext widgetAddonCreateContext);
 
         /// <summary>
         /// WebViewウィジェットを生成。
         /// </summary>
         /// <returns></returns>
-        IHtmlSource CreateWebViewWidget();
+        IHtmlSource CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext);
 
         /// <summary>
         /// ウィジェットが閉じられた際に呼ばれる。
         /// </summary>
-        void ClosedWidget();
+        void ClosedWidget(IWidgetAddonClosedContext widgetAddonClosedContext);
 
         #endregion
     }
