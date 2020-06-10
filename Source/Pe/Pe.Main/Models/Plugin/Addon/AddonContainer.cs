@@ -88,9 +88,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return result;
         }
 
-        public CommandFinderProxyWrapper GetCommandFinder()
+        public CommandFinderAddonProxy GetCommandFinder()
         {
-            return new CommandFinderProxyWrapper(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new CommandFinderAddonProxy(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
 
