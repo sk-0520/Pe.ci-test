@@ -93,6 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return new CommandFinderProxyWrapper(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
+
         #endregion
     }
 }

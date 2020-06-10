@@ -45,6 +45,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <returns></returns>
         ICommandFinder BuildCommandFinder(IAddonParameter parameter);
 
+        /// <summary>
+        /// ウィジェットアドオンの生成。
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        IWidget BuildWidget(IAddonParameter parameter);
 
         #endregion
     }

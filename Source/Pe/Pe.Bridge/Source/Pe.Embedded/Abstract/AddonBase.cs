@@ -39,7 +39,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IAddon.IsSupported(AddonKind)"/>
         public bool IsSupported(AddonKind addonKind) => SupportedKinds.Contains(addonKind);
 
+        /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>
         public virtual ICommandFinder BuildCommandFinder(IAddonParameter parameter) => throw new NotImplementedException();
+
+        /// <inheritdoc cref="IAddon.BuildWidget(IAddonParameter)"/>
+        public virtual IWidget BuildWidget(IAddonParameter parameter) => throw new NotImplementedException();
 
         #endregion
 
