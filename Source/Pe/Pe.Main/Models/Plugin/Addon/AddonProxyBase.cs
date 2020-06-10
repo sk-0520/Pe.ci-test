@@ -16,21 +16,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    /// <summary>
-    /// 特定に機能単位によるアドオン機能のラッパー。
-    /// </summary>
-    /// <typeparam name="TFunctionUnit"></typeparam>
-    public abstract class AddonProxyBase<TFunctionUnit>: DisposerBase
+    public abstract class CommonAddonProxyBase<TFunctionUnit>: DisposerBase
         where TFunctionUnit : notnull
     {
-        #region variable
-
-        IReadOnlyList<TFunctionUnit>? _functionUnits;
-        IReadOnlyDictionary<TFunctionUnit, IAddon>? _functionAddonMap;
-
-        #endregion
-
-        protected AddonProxyBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected CommonAddonProxyBase( PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -40,7 +29,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
-            Addons = addons;
         }
 
         #region property
@@ -51,21 +39,113 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected IUserAgentFactory UserAgentFactory { get; }
         protected IPlatformTheme PlatformTheme { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
-        /// <summary>
-        /// 対象アドオン一覧。
-        /// </summary>
-        protected IReadOnlyList<IAddon> Addons { get; }
 
         /// <summary>
         /// 担当する処理単位。
         /// </summary>
         protected abstract AddonKind AddonKind { get; }
 
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// <see cref="AddonParameter"/> を普通に作成する。
+        /// </summary>
+        /// <returns></returns>
+        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+
+        protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
+
+        #endregion
+
+    }
+
+    /// <summary>
+    /// 特定に機能単位による単独アドオン機能のラッパー。
+    /// </summary>
+    /// <typeparam name="TFunctionUnit"></typeparam>
+    public abstract class AddonProxyBase<TFunctionUnit>: CommonAddonProxyBase<TFunctionUnit>
+        where TFunctionUnit : class
+    {
+        #region variable
+
+        TFunctionUnit? _functionUnit;
+
+        #endregion
+        protected AddonProxyBase(IAddon addon, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
+        {
+            Addon = addon;
+        }
+
+        #region property
+
+        /// <summary>
+        /// 対象アドオン。
+        /// </summary>
+        protected IAddon Addon { get; }
+
+        protected TFunctionUnit FunctionUnit
+        {
+            get
+            {
+                if(this._functionUnit == null) {
+                    Debug.Assert(Addon.IsSupported(AddonKind));
+
+                    if(!Addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
+                        using(var reader = PluginContextFactory.BarrierRead()) {
+                            var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
+                            Addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
+                        }
+                    }
+
+                    this._functionUnit = BuildFunctionUnit(Addon);
+                }
+
+                return this._functionUnit;
+            }
+        }
+
+        #endregion
+
+        #region function
+        #endregion
+    }
+
+    /// <summary>
+    /// 特定に機能単位による複数アドオン機能のラッパー。
+    /// </summary>
+    /// <typeparam name="TFunctionUnit"></typeparam>
+    public abstract class AddonsProxyBase<TFunctionUnit>: CommonAddonProxyBase<TFunctionUnit>
+        where TFunctionUnit : notnull
+    {
+        #region variable
+
+        IReadOnlyList<TFunctionUnit>? _functionUnits;
+        IReadOnlyDictionary<TFunctionUnit, IAddon>? _functionAddonMap;
+
+        #endregion
+
+        protected AddonsProxyBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
+        {
+            Addons = addons;
+        }
+
+        #region property
+
+
+        /// <summary>
+        /// 対象アドオン一覧。
+        /// </summary>
+        protected IReadOnlyList<IAddon> Addons { get; }
+
         /// <summary>
         /// 処理単位一覧。
         /// <para>初回参照時に読み込まれる。</para>
         /// </summary>
-        public IReadOnlyList<TFunctionUnit> FunctionUnits
+        protected IReadOnlyList<TFunctionUnit> FunctionUnits
         {
             get
             {
@@ -82,14 +162,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
 
         #region function
-
-        /// <summary>
-        /// <see cref="AddonParameter"/> を普通に作成する。
-        /// </summary>
-        /// <returns></returns>
-        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
-
-        protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 
         protected (IReadOnlyList<TFunctionUnit> units, IReadOnlyDictionary<TFunctionUnit, IAddon> map) LoadFunctionUnits()
         {
