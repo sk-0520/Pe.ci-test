@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region IWidget
 
-        public WidgetViewType ViewType => throw new NotImplementedException();
+        public WidgetViewType ViewType => FunctionUnit.ViewType;
 
 
         /// <inheritdoc cref="IWidget.GetMenuIcon(IPluginContext)"/>

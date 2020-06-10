@@ -67,6 +67,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
+using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -194,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private DirectoryInfo? TestPluginDirectory { get; }
         private string TestPluginName { get; } = string.Empty;
 
-        private ObservableCollection<WrapModel<IWidget>> Widgets { get; } = new ObservableCollection<WrapModel<IWidget>>();
+        private ObservableCollection<WidgetElement> Widgets { get; } = new ObservableCollection<WidgetElement>();
 
         #endregion
 
@@ -1049,17 +1050,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
-        public ModelViewModelObservableCollectionManagerBase<WrapModel<IWidget>, WidgetNotifyAreaViewModel> GetWidgetCollection()
+        public ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> GetWidgetCollection()
         {
-            var collection = new ActionModelViewModelObservableCollectionManager<WrapModel<IWidget>, WidgetNotifyAreaViewModel>(Widgets) {
-                ToViewModel = m => {
-                    // internal コンストラクタがとれへんねん・・・
-                    var info = (m.Data as WidgetAddonProxy)?.Addon.PluginInformations ?? new NullPluginInformation();
-                    var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
-                    var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
-                    var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
-                    return new WidgetNotifyAreaViewModel(m.Data, info, pluginContextFactory, widgetAddonContextFactory, dispatcherWrapper, LoggerFactory);
-                }
+            var collection = new ActionModelViewModelObservableCollectionManager<WidgetElement, WidgetNotifyAreaViewModel>(Widgets) {
+                ToViewModel = m => ApplicationDiContainer.Build<WidgetNotifyAreaViewModel>(m),
             };
             return collection;
         }
@@ -1168,9 +1162,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         void ExecuteWidgets()
         {
-            //TODO: 表示・日表示状態を読み込んだりの諸々が必要
+            //TODO: 表示・非表示状態を読み込んだりの諸々が必要
             if(Widgets.Count == 0) {
-                Widgets.AddRange(PluginContainer.Addon.GetWidgets().Select(i => WrapModel.Create<IWidget>(i, LoggerFactory)));
+                var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+                var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
+                var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+                var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+
+                foreach(var widget in PluginContainer.Addon.GetWidgets()) {
+                    var info = widget.Addon.PluginInformations;
+                    var element = new WidgetElement(widget, info, pluginContextFactory, widgetAddonContextFactory, mainDatabaseBarrier, databaseStatementLoader, WindowManager, NotifyManager, LoggerFactory);
+                    element.Initialize();
+                    Widgets.Add(element);
+                }
             }
         }
 

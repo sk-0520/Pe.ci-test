@@ -82,16 +82,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// 通知ログ。
         /// </summary>
         NotifyLog,
+
+        /// <summary>
+        /// プラグイン ウィジェット。
+        /// </summary>
+        Widget,
     }
 
     public class WindowItem
     {
+        /// <summary>
+        /// View と Model の間に真っ当な ViewModel が噛んでいる関係を生成。
+        /// <para>Pe 純正の子たち。</para>
+        /// </summary>
+        /// <param name="windowKind"></param>
+        /// <param name="model"></param>
+        /// <param name="window"></param>
         internal WindowItem(WindowKind windowKind, ElementBase model, Window window)
         {
             WindowKind = windowKind;
             Element = model;
             Window = window;
             ViewModel = (ViewModelBase)Window.DataContext;
+        }
+
+        /// <summary>
+        /// View と Model のとは関係のない ViewModel が噛んでいる関係を生成。
+        /// <para>プラグイン系の妾の子たち。</para>
+        /// </summary>
+        /// <param name="windowKind"></param>
+        /// <param name="model"></param>
+        /// <param name="viewModel"></param>
+        /// <param name="window"></param>
+        internal WindowItem(WindowKind windowKind, ElementBase model, ViewModelBase viewModel, Window window)
+        {
+            WindowKind = windowKind;
+            Element = model;
+            Window = window;
+            ViewModel = viewModel;
         }
 
         #region property

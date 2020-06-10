@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
+using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -93,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICollectionView NoteVisibleItems { get; }
         public ICollectionView NoteHiddenItems { get; }
 
-        ModelViewModelObservableCollectionManagerBase<WrapModel<IWidget>, WidgetNotifyAreaViewModel> WidgetCollection { get; }
+        ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
         public ICollectionView WidgetItems { get; }
 
         #endregion

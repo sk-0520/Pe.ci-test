@@ -22,8 +22,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             PluginInformations = pluginInformations;
         }
 
-        public WidgetViewType ViewType => throw new NotImplementedException();
-
         #region property
 
         ILogger Logger { get; }
@@ -37,6 +35,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
         #endregion
 
         #region IWidget
+
+        public WidgetViewType ViewType => WidgetViewType.Window;
 
         public DependencyObject? GetMenuIcon(IPluginContext pluginContext)
         {

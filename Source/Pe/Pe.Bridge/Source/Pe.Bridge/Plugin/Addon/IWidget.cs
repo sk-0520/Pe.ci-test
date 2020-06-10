@@ -52,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// ウィンドウウィジェットを生成。
+        /// <para>ウィンドウの表示・非表示制御は Pe 側にて処理するため <see cref="Window.Show"/> はウィジェット側で実施しないこと。</para>
         /// </summary>
         /// <returns></returns>
         Window CreateWindowWidget(IWidgetAddonCreateContext widgetAddonCreateContext);
