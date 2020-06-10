@@ -67,6 +67,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    PluginCollection.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
         #endregion
 
