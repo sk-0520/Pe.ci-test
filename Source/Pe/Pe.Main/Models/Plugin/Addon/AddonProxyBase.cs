@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// 特定に機能単位によるアドオン機能のラッパー。
     /// </summary>
     /// <typeparam name="TFunctionUnit"></typeparam>
-    public abstract class AddonWrapperBase<TFunctionUnit>: DisposerBase
+    public abstract class AddonProxyBase<TFunctionUnit>: DisposerBase
         where TFunctionUnit : notnull
     {
         #region variable
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        protected AddonWrapperBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected AddonProxyBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());

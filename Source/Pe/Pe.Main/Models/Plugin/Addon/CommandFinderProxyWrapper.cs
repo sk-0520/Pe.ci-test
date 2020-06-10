@@ -17,9 +17,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    public class CommandFinderAddonWrapper: AddonWrapperBase<ICommandFinder>, ICommandFinder
+    public class CommandFinderProxyWrapper: AddonProxyBase<ICommandFinder>, ICommandFinder
     {
-        public CommandFinderAddonWrapper(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandFinderProxyWrapper(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(addons, pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
         {
         }
