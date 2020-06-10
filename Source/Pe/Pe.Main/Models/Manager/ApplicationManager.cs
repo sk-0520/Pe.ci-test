@@ -66,6 +66,7 @@ using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -192,6 +193,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private DirectoryInfo? TestPluginDirectory { get; }
         private string TestPluginName { get; } = string.Empty;
+
+        private ObservableCollection<WrapModel<IWidget>> Widgets { get; } = new ObservableCollection<WrapModel<IWidget>>();
 
         #endregion
 
@@ -1046,6 +1049,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
+        public ModelViewModelObservableCollectionManagerBase<WrapModel<IWidget>, WidgetNotifyAreaViewModel> GetWidgetCollection()
+        {
+            var collection = new ActionModelViewModelObservableCollectionManager<WrapModel<IWidget>, WidgetNotifyAreaViewModel>(Widgets) {
+                ToViewModel = m => ApplicationDiContainer.Build<WidgetNotifyAreaViewModel>(m, (m.Data as WidgetAddonProxy)?.Addon.PluginInformations ?? new NullPluginInformation())
+            };
+            return collection;
+        }
+
         public NoteElement CreateNote(IScreen dockScreen, NoteStartupPosition noteStartupPosition)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
@@ -1148,6 +1159,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.SystemIdle);
         }
 
+        void ExecuteWidgets()
+        {
+            //TODO: 表示・日表示状態を読み込んだりの諸々が必要
+            if(Widgets.Count == 0) {
+                Widgets.AddRange(PluginContainer.Addon.GetWidgets().Select(i => WrapModel.Create<IWidget>(i, LoggerFactory)));
+            }
+        }
+
         public void Execute()
         {
             Logger.LogInformation("がんばる！");
@@ -1160,6 +1179,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StartPlatform();
 
             ExecuteElements();
+            ExecuteWidgets();
+
 #if DEBUG
             DebugExecuteAfter();
 #endif

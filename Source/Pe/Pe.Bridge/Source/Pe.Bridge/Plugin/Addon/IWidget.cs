@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <summary>
     /// ウィジェットビュー種別。
     /// </summary>
-    public enum WidgetViewKind
+    public enum WidgetViewType
     {
         /// <summary>
         /// 通常の<see cref="System.Windows.Window"/>をウィジェット側で生成。
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// このウィジェットのビュー種別。
         /// </summary>
-        WidgetViewKind ViewKind { get; }
+        WidgetViewType ViewType { get; }
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// 通知領域ウィジェットメニューアイコン。
         /// </summary>
         /// <returns></returns>
-        object GetMenuIcon(IPluginContext pluginContext);
+        DependencyObject? GetMenuIcon(IPluginContext pluginContext);
         /// <summary>
         /// 通知領域ウィジェットメニューヘッダ。
         /// </summary>

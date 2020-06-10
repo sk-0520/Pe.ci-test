@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <summary>
         /// 対象アドオン。
         /// </summary>
-        protected IAddon Addon { get; }
+        public IAddon Addon { get; }
 
         protected TFunctionUnit FunctionUnit
         {
@@ -183,7 +183,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return (list, map);
         }
 
-        protected IAddon GetAddon(TFunctionUnit functionUnit)
+        public IAddon GetAddon(TFunctionUnit functionUnit)
         {
             if(this._functionAddonMap == null) {
                 throw new InvalidOperationException(nameof(FunctionUnits));
