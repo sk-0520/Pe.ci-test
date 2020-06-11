@@ -12,6 +12,8 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
@@ -115,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             }
         }
 
-        public void HideView(ViewModelBase callerViewModel)
+        public void HideView()
         {
             if(!ViewCreated) {
                 throw new InvalidOperationException(nameof(ViewCreated));

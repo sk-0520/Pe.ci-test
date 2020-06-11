@@ -1145,6 +1145,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 viewShowStater.StartView();
             }
 
+            ExecuteWidgets();
+
 #if DEBUG
             if(IsDevDebug) {
                 Logger.LogWarning($"{nameof(IsDevDebug)}が有効");
@@ -1176,6 +1178,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Widgets.Add(element);
                 }
             }
+
+            // ViewModel渡す設計は💩で、しかもダミーってのがまた💩
+            foreach(var element in Widgets) {
+                var viewModel = ApplicationDiContainer.Build<TemporaryWidgetViewModel>(element);
+                element.ShowView(viewModel);
+            }
+        }
+
+        void CloseWidgets()
+        {
+            foreach(var widget in Widgets) {
+                if(widget.ViewCreated) {
+                    widget.HideView();
+                }
+            }
         }
 
         public void Execute()
@@ -1190,7 +1207,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StartPlatform();
 
             ExecuteElements();
-            ExecuteWidgets();
 
 #if DEBUG
             DebugExecuteAfter();
@@ -1234,6 +1250,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CloseExtendsExecuteViews();
             CloseLauncherToolbarViews();
             CloseNoteViews();
+
+            CloseWidgets();
         }
 
         void DisposeElementsCore<TElement>(ICollection<TElement> elements)
@@ -1437,6 +1455,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             CloseLauncherToolbarViews();
             CloseNoteViews();
+            CloseWidgets();
 
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();

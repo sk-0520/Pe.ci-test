@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(Model.ViewCreated) {
-                    Model.HideView(this);
+                    Model.HideView();
                 } else {
                     Model.ShowView(this);
                 }
