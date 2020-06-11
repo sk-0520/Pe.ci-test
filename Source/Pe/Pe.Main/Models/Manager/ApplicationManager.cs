@@ -1170,10 +1170,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
                 var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
                 var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+                var cultureService = ApplicationDiContainer.Build<CultureService>();
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
                     var info = widget.Addon.PluginInformations;
-                    var element = new WidgetElement(widget, info, pluginContextFactory, widgetAddonContextFactory, mainDatabaseBarrier, databaseStatementLoader, WindowManager, NotifyManager, LoggerFactory);
+                    var element = new WidgetElement(widget, info, pluginContextFactory, widgetAddonContextFactory, mainDatabaseBarrier, databaseStatementLoader, cultureService, WindowManager, NotifyManager, LoggerFactory);
                     element.Initialize();
                     Widgets.Add(element);
                 }
