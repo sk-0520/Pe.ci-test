@@ -24,12 +24,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 {
     public class WidgetElement: ElementBase, IViewCloseReceiver
     {
-        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, PluginContextFactory pluginContextFactory, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Widget = widget;
             PluginInformations = pluginInformations;
-            PluginContextFactory = pluginContextFactory;
             WidgetAddonContextFactory = widgetAddonContextFactory;
             MainDatabaseBarrier = mainDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
@@ -42,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         IWidget Widget { get; }
         IPluginInformations PluginInformations { get; }
-        PluginContextFactory PluginContextFactory { get; }
+        //PluginContextFactory PluginContextFactory { get; }
         WidgetAddonContextFactory WidgetAddonContextFactory { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
@@ -59,16 +58,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         public string GetMenuHeader()
         {
-            using(var reader = PluginContextFactory.BarrierRead()) {
-                var context = PluginContextFactory.CreateContext(PluginInformations, reader, true);
+            using(var reader = WidgetAddonContextFactory.BarrierRead()) {
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, reader, true);
                 return Widget.GetMenuHeader(context);
             }
         }
 
         public DependencyObject? GetMenuIcon()
         {
-            using(var reader = PluginContextFactory.BarrierRead()) {
-                var context = PluginContextFactory.CreateContext(PluginInformations, reader, true);
+            using(var reader = WidgetAddonContextFactory.BarrierRead()) {
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, reader, true);
                 return Widget.GetMenuIcon(context);
             }
         }
@@ -104,7 +103,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             window.Topmost = false;
             // タスクバーにも表示しない
             window.ShowInTaskbar = false;
-
+            // ウィンドウの透明度は Pe 側で制御
+            window.Opacity = 0;
         }
 
         public void ShowView(ViewModelBase callerViewModel)
@@ -134,11 +134,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             };
             WindowManager.Register(WindowItem);
 
-            window.Loaded += Window_Loaded;
+            WindowItem.Window.Loaded += Window_Loaded;
 
             WindowItem.Window.Show();
             ViewCreated = true;
-
         }
 
         public void HideView()
@@ -183,9 +182,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
                 var context = WidgetAddonContextFactory.CreateClosedContext(PluginInformations, writer);
                 Widget.ClosedWidget(context);
+                WidgetAddonContextFactory.Save();
             }
             WindowItem.Window.Loaded -= Window_Loaded;
-            WindowItem.Window.Activated -= Window_Activated;
+            WindowItem.Window.ContentRendered -= Window_ContentRendered;
 
             WindowItem = null;
             ViewCreated = false;
@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             Debug.Assert(WindowItem != null);
 
             WindowItem.Window.Loaded -= Window_Loaded;
-            WindowItem.Window.Activated += Window_Activated;
+            WindowItem.Window.ContentRendered += Window_ContentRendered;
 
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
                 var context = WidgetAddonContextFactory.CreateContext(PluginInformations, reader, true);
@@ -207,17 +207,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             }
         }
 
-        private void Window_Activated(object? sender, EventArgs e)
+        private void Window_ContentRendered(object? sender, EventArgs e)
         {
             Debug.Assert(WindowItem != null);
+
+            WindowItem.Window.Opacity = 1;
 
             // 書き込みは一応OKにしておく
             using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
                 var context = WidgetAddonContextFactory.CreateContext(PluginInformations, writer, false);
-                Widget.OpeningWidget(context);
+                Widget.OpenedWidget(context);
+                WidgetAddonContextFactory.Save();
             }
-
-            WindowItem.Window.Activated -= Window_Activated;
         }
     }
 }

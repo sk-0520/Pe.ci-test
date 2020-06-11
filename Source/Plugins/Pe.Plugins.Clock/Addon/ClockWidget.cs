@@ -79,6 +79,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
         /// <inheritdoc cref="IWidget.OpeningWidget(IPluginContext)"/>
         public void OpeningWidget(IPluginContext pluginContext)
         {
+            Logger.LogInformation("A");
             if(ViewModel == null) {
                 throw new InvalidOperationException(nameof(ViewModel));
             }
@@ -88,6 +89,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
         /// <inheritdoc cref="IWidget.OpenedWidget(IPluginContext)"/>
         public void OpenedWidget(IPluginContext pluginContext)
         {
+            Logger.LogInformation("B");
             if(ViewModel == null) {
                 throw new InvalidOperationException(nameof(ViewModel));
             }
@@ -99,7 +101,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             if(ViewModel == null) {
                 throw new InvalidOperationException(nameof(ViewModel));
             }
+            if(WidgetView == null) {
+                throw new InvalidOperationException(nameof(WidgetView));
+            }
+
             ViewModel.StopClock();
+            ViewModel = null;
             WidgetView = null;
         }
 

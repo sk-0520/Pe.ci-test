@@ -761,6 +761,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         Logger.LogError(ex, "{0}({1}) {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
                     }
                 }
+
+                pluginContextFactory.Save();
             }
 
         }
@@ -1166,7 +1168,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             //TODO: 表示・非表示状態を読み込んだりの諸々が必要
             if(Widgets.Count == 0) {
-                var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+                //var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
                 var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
                 var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
                 var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
@@ -1174,7 +1176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
                     var info = widget.Addon.PluginInformations;
-                    var element = new WidgetElement(widget, info, pluginContextFactory, widgetAddonContextFactory, mainDatabaseBarrier, databaseStatementLoader, cultureService, WindowManager, NotifyManager, LoggerFactory);
+                    var element = new WidgetElement(widget, info, widgetAddonContextFactory, mainDatabaseBarrier, databaseStatementLoader, cultureService, WindowManager, NotifyManager, LoggerFactory);
                     element.Initialize();
                     Widgets.Add(element);
                 }

@@ -141,6 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginStorage;
         }
 
+        [Obsolete]
         protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, bool isReadOnly)
         {
             var pluginStorage = new PluginStorage(
@@ -151,6 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             return pluginStorage;
         }
 
+        [Obsolete]
         protected virtual PluginStorage CreatePluginStorage(IPluginInformations pluginInformations, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack)
         {
             var pluginStorage = new PluginStorage(
@@ -172,6 +174,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var nullPluginInformation = new NullPluginInformation();
             var nullStorage = new NullPluginStorage(nullPluginInformation.PluginIdentifiers, loggerFactory);
             return new NullPluginContext(nullStorage);
+        }
+
+        /// <summary>
+        /// ミスった。。。
+        /// </summary>
+        public void Save()
+        {
+            DatabaseBarrierPack.Save();
         }
 
         #endregion
