@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
             : base(skeletonImplements, loggerFactory)
         {
             Setting = setting;
+
         }
 
         #region property
