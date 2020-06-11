@@ -7,6 +7,9 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Bridge.ViewModels;
+using ContentTypeTextNet.Pe.Plugins.Clock.Models.Data;
+using ContentTypeTextNet.Pe.Plugins.Clock.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.Clock.Views;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             Logger = parameter.LoggerFactory.CreateLogger(GetType());
             AddonExecutor = parameter.AddonExecutor;
             DispatcherWrapper = parameter.DispatcherWrapper;
+            SkeletonImplements = parameter.SkeletonImplements;
             PluginInformations = pluginInformations;
         }
 
@@ -27,10 +31,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
         ILogger Logger { get; }
         IAddonExecutor AddonExecutor { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
-
+        ISkeletonImplements SkeletonImplements { get; }
         IPluginInformations PluginInformations { get; }
 
         ClockWidgetWindow? WidgetView { get; set; }
+        ClockWidgetViewModel? ViewModel { get; set; }
 
         #endregion
 
@@ -51,7 +56,18 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
 
         public Window CreateWindowWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
-            WidgetView = new ClockWidgetWindow();
+            if(ViewModel != null) {
+                throw new InvalidOperationException(nameof(ViewModel));
+            }
+
+            ClockWidgetSetting? clockWidgetSetting;
+            if(!widgetAddonCreateContext.Storage.Persistent.Normal.TryGet<ClockWidgetSetting>(ClockConstants.WidgetSettengKey, out clockWidgetSetting)) {
+                clockWidgetSetting = new ClockWidgetSetting();
+            }
+            ViewModel = new ClockWidgetViewModel(clockWidgetSetting, SkeletonImplements);
+            WidgetView = new ClockWidgetWindow() {
+                DataContext = ViewModel,
+            };
             return WidgetView;
         }
 
@@ -60,8 +76,30 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             throw new NotSupportedException();
         }
 
+        /// <inheritdoc cref="IWidget.OpeningWidget(IPluginContext)"/>
+        public void OpeningWidget(IPluginContext pluginContext)
+        {
+            if(ViewModel == null) {
+                throw new InvalidOperationException(nameof(ViewModel));
+            }
+            ViewModel.StartClock();
+        }
+
+        /// <inheritdoc cref="IWidget.OpenedWidget(IPluginContext)"/>
+        public void OpenedWidget(IPluginContext pluginContext)
+        {
+            if(ViewModel == null) {
+                throw new InvalidOperationException(nameof(ViewModel));
+            }
+        }
+
+        /// <inheritdoc cref="IWidget.ClosedWidget(IWidgetAddonClosedContext)"/>
         public void ClosedWidget(IWidgetAddonClosedContext widgetAddonClosedContext)
         {
+            if(ViewModel == null) {
+                throw new InvalidOperationException(nameof(ViewModel));
+            }
+            ViewModel.StopClock();
             WidgetView = null;
         }
 

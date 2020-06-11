@@ -64,6 +64,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         IHtmlSource CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext);
 
         /// <summary>
+        /// ウィジェットが開かれる際に呼ばれる。
+        /// </summary>
+        void OpeningWidget(IPluginContext pluginContext);
+
+        /// <summary>
+        /// ウィジェットが開かれた際に呼ばれる。
+        /// </summary>
+        void OpenedWidget(IPluginContext pluginContext);
+
+        /// <summary>
         /// ウィジェットが閉じられた際に呼ばれる。
         /// </summary>
         void ClosedWidget(IWidgetAddonClosedContext widgetAddonClosedContext);

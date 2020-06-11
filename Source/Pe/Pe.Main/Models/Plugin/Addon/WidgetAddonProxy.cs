@@ -64,6 +64,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             throw new NotSupportedException();
         }
 
+        /// <inheritdoc cref="IWidget.OpeningWidget(IPluginContext)"/>
+        public void OpeningWidget(IPluginContext pluginContext)
+        {
+            FunctionUnit.OpeningWidget(pluginContext);
+        }
+
+        /// <inheritdoc cref="IWidget.OpenedWidget(IPluginContext)"/>
+        public void OpenedWidget(IPluginContext pluginContext)
+        {
+            FunctionUnit.OpenedWidget(pluginContext);
+        }
+
         /// <inheritdoc cref="IWidget.ClosedWidget(IWidgetAddonClosedContext)"/>
         public void ClosedWidget(IWidgetAddonClosedContext widgetAddonClosedContext)
         {

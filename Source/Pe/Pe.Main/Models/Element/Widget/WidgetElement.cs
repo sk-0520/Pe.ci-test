@@ -113,29 +113,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 throw new InvalidOperationException(nameof(WindowItem));
             }
 
+            Window window;
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
                 var context = WidgetAddonContextFactory.CreateCreateContex(PluginInformations, reader);
-                var window = Widget.ViewType switch
+                window = Widget.ViewType switch
                 {
                     WidgetViewType.Window => CreateWindowWidget(context),
                     WidgetViewType.WebView => CreateWebViewWidget(context),
                     _ => throw new NotImplementedException(),
                 };
-
-                if(window.IsVisible) {
-                    Logger.LogError("ウィジェットの表示・非表示制御は Pe 側で処理するためウィジェット強制停止");
-                    window.Close();
-                    return;
-                }
-                TuneWindow(window);
-                WindowItem = new WindowItem(WindowKind.Widget, this, callerViewModel, window) {
-                    CloseToDispose = callerViewModel is TemporaryWidgetViewModel, // ダミーのやつは殺して、通知領域のやつは生かしておく
-                };
-                WindowManager.Register(WindowItem);
-
-                WindowItem.Window.Show();
-                ViewCreated = true;
             }
+            if(window.IsVisible) {
+                Logger.LogError("ウィジェットの表示・非表示制御は Pe 側で処理するためウィジェット強制停止");
+                window.Close();
+                return;
+            }
+            TuneWindow(window);
+            WindowItem = new WindowItem(WindowKind.Widget, this, callerViewModel, window) {
+                CloseToDispose = callerViewModel is TemporaryWidgetViewModel, // ダミーのやつは殺して、通知領域のやつは生かしておく
+            };
+            WindowManager.Register(WindowItem);
+
+            window.Loaded += Window_Loaded;
+
+            WindowItem.Window.Show();
+            ViewCreated = true;
+
         }
 
         public void HideView()
@@ -149,7 +152,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
             WindowItem.Window.Close();
         }
-
 
         #endregion
 
@@ -178,6 +180,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             if(WindowItem == null) {
                 throw new InvalidOperationException(nameof(WindowItem));
             }
+            using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
+                var context = WidgetAddonContextFactory.CreateClosedContext(PluginInformations, writer);
+                Widget.ClosedWidget(context);
+            }
+            WindowItem.Window.Loaded -= Window_Loaded;
+            WindowItem.Window.Activated -= Window_Activated;
 
             WindowItem = null;
             ViewCreated = false;
@@ -186,5 +194,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         #endregion
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Debug.Assert(WindowItem != null);
+
+            WindowItem.Window.Loaded -= Window_Loaded;
+            WindowItem.Window.Activated += Window_Activated;
+
+            using(var reader = WidgetAddonContextFactory.BarrierRead()) {
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, reader, true);
+                Widget.OpeningWidget(context);
+            }
+        }
+
+        private void Window_Activated(object? sender, EventArgs e)
+        {
+            Debug.Assert(WindowItem != null);
+
+            // 書き込みは一応OKにしておく
+            using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
+                var context = WidgetAddonContextFactory.CreateContext(PluginInformations, writer, false);
+                Widget.OpeningWidget(context);
+            }
+
+            WindowItem.Window.Activated -= Window_Activated;
+        }
     }
 }

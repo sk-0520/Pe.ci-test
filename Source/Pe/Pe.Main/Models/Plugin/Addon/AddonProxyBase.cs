@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <see cref="AddonParameter"/> を普通に作成する。
         /// </summary>
         /// <returns></returns>
-        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
 
         protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 
