@@ -232,6 +232,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 lazyWriterItemMap.Add(lazyWriter, pausing);
             }
 
+            SaveWidgets();
+
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
             var settingDirectory = environmentParameters.TemporarySettingDirectory;
@@ -282,7 +284,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(settingElement.IsSubmit) {
                 Logger.LogInformation("設定適用のため現在表示要素の破棄");
-                CloseViews();
+                CloseViews(false);
                 DisposeElements();
 
                 // 設定用DBを永続用DBと切り替え
@@ -1171,30 +1173,49 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 //var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
                 var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
                 var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+                var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
                 var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
                 var cultureService = ApplicationDiContainer.Build<CultureService>();
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
                     var info = widget.Addon.PluginInformations;
-                    var element = new WidgetElement(widget, info, widgetAddonContextFactory, mainDatabaseBarrier, databaseStatementLoader, cultureService, WindowManager, NotifyManager, LoggerFactory);
+                    var element = new WidgetElement(widget, info, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, LoggerFactory);
                     element.Initialize();
                     Widgets.Add(element);
                 }
             }
 
+            var showWidgets = new List<WidgetElement>(Widgets.Count);
+            using(var commander = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitRead()) {
+                var pluginWidgetSettingsEntityDao = ApplicationDiContainer.Build<PluginWidgetSettingsEntityDao>(commander, commander.Implementation);
+                foreach(var element in Widgets) {
+                    if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(element.PluginId)) {
+                        var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(element.PluginId);
+                        if(setting.IsVisible) {
+                            showWidgets.Add(element);
+                        }
+                    }
+                }
+            }
+
             // ViewModel渡す設計は💩で、しかもダミーってのがまた💩
-            foreach(var element in Widgets) {
+            foreach(var element in showWidgets) {
                 var viewModel = ApplicationDiContainer.Build<TemporaryWidgetViewModel>(element);
                 element.ShowView(viewModel);
             }
         }
 
+        void SaveWidgets()
+        {
+            foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
+                widget.SaveStatus(true);
+            }
+        }
+
         void CloseWidgets()
         {
-            foreach(var widget in Widgets) {
-                if(widget.ViewCreated) {
-                    widget.HideView();
-                }
+            foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
+                widget.HideView();
             }
         }
 
@@ -1246,7 +1267,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void CloseExtendsExecuteViews() => CloseViewsCore(WindowKind.ExtendsExecute);
         void CloseStandardInputOutputViews() => CloseViewsCore(WindowKind.StandardInputOutput);
 
-        void CloseViews()
+        void CloseViews(bool saveWidgets)
         {
             CloseStandardInputOutputViews();
             CloseLauncherCustomizeViews();
@@ -1254,6 +1275,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CloseLauncherToolbarViews();
             CloseNoteViews();
 
+            if(saveWidgets) {
+                SaveWidgets();
+            }
             CloseWidgets();
         }
 
@@ -1321,7 +1345,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             UninitializeSystem();
 
-            CloseViews();
+            CloseViews(true);
             DisposeElements();
             DisposeWebView();
 
@@ -1458,6 +1482,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             CloseLauncherToolbarViews();
             CloseNoteViews();
+            SaveWidgets();
             CloseWidgets();
 
             DisposeLauncherToolbarElements();
@@ -1999,7 +2024,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     LazyScreenElementReset.Dispose();
 
-                    CloseViews();
+                    CloseViews(false);
                     DisposeElements();
                     DisposeWebView();
 

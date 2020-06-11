@@ -75,7 +75,6 @@ create table [PluginLauncherItemSettings] (
 --// table: PluginWidgetSettings
 create table [PluginWidgetSettings] (
 	[PluginId] text not null /* プラグインID  */,
-	[PluginSettingKey] text not null /* プラグイン設定キー プラグイン側からのキー指定 */,
 	[CreatedTimestamp] datetime not null /* 作成タイムスタンプ UTC */,
 	[CreatedAccount] text not null /* 作成ユーザー名  */,
 	[CreatedProgramName] text not null /* 作成プログラム名  */,
@@ -89,8 +88,7 @@ create table [PluginWidgetSettings] (
 	[Y] real not null /* Y座標 原点: プライマリウィンドウ左上 */,
 	[IsVisible] boolean /* 表示  */,
 	primary key(
-		[PluginId],
-		[PluginSettingKey]
+		[PluginId]
 	),
 	foreign key([PluginId]) references [Plugins]([PluginId])
 )

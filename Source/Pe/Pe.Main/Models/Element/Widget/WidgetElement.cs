@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
@@ -11,6 +12,8 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
@@ -22,15 +25,16 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 {
-    public class WidgetElement: ElementBase, IViewCloseReceiver
+    public class WidgetElement: ElementBase, IViewCloseReceiver, IPluginId
     {
-        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Widget = widget;
             PluginInformations = pluginInformations;
             WidgetAddonContextFactory = widgetAddonContextFactory;
             MainDatabaseBarrier = mainDatabaseBarrier;
+            MainDatabaseLazyWriter = mainDatabaseLazyWriter;
             DatabaseStatementLoader = databaseStatementLoader;
             CultureService = cultureService;
             WindowManager = windowManager;
@@ -44,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         //PluginContextFactory PluginContextFactory { get; }
         WidgetAddonContextFactory WidgetAddonContextFactory { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         CultureService CultureService { get; }
         IWindowManager WindowManager { get; }
@@ -105,6 +110,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             window.ShowInTaskbar = false;
             // ウィンドウの透明度は Pe 側で制御
             window.Opacity = 0;
+
+            // ウィンドウ位置指定
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
+                    var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(PluginId);
+                    window.Left = setting.X;
+                    window.Top = setting.Y;
+                    window.WindowStartupLocation = WindowStartupLocation.Manual;
+                } else {
+                    window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                }
+            }
         }
 
         public void ShowView(ViewModelBase callerViewModel)
@@ -152,6 +170,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             WindowItem.Window.Close();
         }
 
+        public void SaveStatus(bool isVisible)
+        {
+            if(WindowItem == null) {
+                return;
+            }
+
+            ThrowIfDisposed();
+
+            var data = new PluginWidgetSettingData() {
+                X = WindowItem.Window.Left,
+                Y = WindowItem.Window.Top,
+                IsVisible = isVisible, // こいつだけはユーザー操作であるか否かで変わってくる
+            };
+
+
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
+                    pluginWidgetSettingsEntityDao.UpdatePluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                } else {
+                    pluginWidgetSettingsEntityDao.InsertPluginWidgetSetting(PluginId, data, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                }
+                commander.Commit();
+            }
+        }
+
         #endregion
 
         #region ElementBase
@@ -179,6 +223,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             if(WindowItem == null) {
                 throw new InvalidOperationException(nameof(WindowItem));
             }
+
+            if(isUserOperation) {
+                SaveStatus(false);
+            }
+
             using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
                 var context = WidgetAddonContextFactory.CreateClosedContext(PluginInformations, writer);
                 Widget.ClosedWidget(context);
@@ -191,6 +240,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             ViewCreated = false;
         }
 
+
+        #endregion
+
+        #region IPluginId
+
+        public Guid PluginId => PluginInformations.PluginIdentifiers.PluginId;
 
         #endregion
 

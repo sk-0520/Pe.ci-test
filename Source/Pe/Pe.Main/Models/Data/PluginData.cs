@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         IllegalAssembly,
     }
 
-    public interface IPLuginId
+    public interface IPluginId
     {
         #region property
 
@@ -98,6 +99,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public PluginPersistentFormat Format { get; }
         public string Value { get; }
+
+        #endregion
+    }
+
+    public class PluginWidgetSettingData: DataBase
+    {
+        #region proeprty
+
+        [PixelKind(Px.Logical)]
+        public double X { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Y { get; set; }
+        public bool IsVisible { get; set; }
 
         #endregion
     }

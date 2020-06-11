@@ -192,7 +192,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     }
 
     /// <inheritdoc cref="IPluginPersistentStorage"/>
-    public class PluginPersistentStorage: IPluginPersistentStorage, IPLuginId
+    public class PluginPersistentStorage: IPluginPersistentStorage, IPluginId
     {
         /// <summary>
         /// プラグイン用DB操作処理構築。

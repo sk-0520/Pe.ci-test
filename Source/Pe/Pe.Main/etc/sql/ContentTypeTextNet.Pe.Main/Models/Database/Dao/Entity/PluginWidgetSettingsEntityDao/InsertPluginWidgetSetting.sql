@@ -1,10 +1,10 @@
 insert into
-	PluginSettings
+	PluginWidgetSettings
 	(
 		PluginId,
-		PluginSettingKey,
-		DataType,
-		DataValue,
+		X,
+		Y,
+		IsVisible,
 
 		[CreatedTimestamp],
 		[CreatedAccount],
@@ -19,9 +19,9 @@ insert into
 	values
 	(
 /* PluginId              */ @PluginId,
-/* PluginSetting         */ @PluginSettingKey,
-/* DataType              */ @DataType,
-/* DataValue             */ @DataValue,
+/* Y                     */ @X,
+/* X                     */ @Y,
+/* IsVisible             */ @IsVisible,
 
 /*                       */
 /* CreatedTimestamp      */ @CreatedTimestamp,
