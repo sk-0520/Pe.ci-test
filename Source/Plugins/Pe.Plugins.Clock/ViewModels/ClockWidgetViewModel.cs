@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.Clock.Models.Data;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 {
@@ -13,8 +14,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
         DateTime _currentTime;
 
         #endregion
-        public ClockWidgetViewModel(ClockWidgetSetting setting, ISkeletonImplements skeletonImplements)
-            : base(skeletonImplements)
+        public ClockWidgetViewModel(ClockWidgetSetting setting, ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, loggerFactory)
         {
             Setting = setting;
         }

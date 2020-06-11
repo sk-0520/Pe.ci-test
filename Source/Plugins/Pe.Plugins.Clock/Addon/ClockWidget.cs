@@ -19,7 +19,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
     {
         public ClockWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
         {
-            Logger = parameter.LoggerFactory.CreateLogger(GetType());
+            LoggerFactory = parameter.LoggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             AddonExecutor = parameter.AddonExecutor;
             DispatcherWrapper = parameter.DispatcherWrapper;
             SkeletonImplements = parameter.SkeletonImplements;
@@ -28,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
 
         #region property
 
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
         IAddonExecutor AddonExecutor { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -64,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             if(!widgetAddonCreateContext.Storage.Persistent.Normal.TryGet<ClockWidgetSetting>(ClockConstants.WidgetSettengKey, out clockWidgetSetting)) {
                 clockWidgetSetting = new ClockWidgetSetting();
             }
-            ViewModel = new ClockWidgetViewModel(clockWidgetSetting, SkeletonImplements);
+            ViewModel = new ClockWidgetViewModel(clockWidgetSetting, SkeletonImplements, LoggerFactory);
             WidgetView = new ClockWidgetWindow() {
                 DataContext = ViewModel,
             };
