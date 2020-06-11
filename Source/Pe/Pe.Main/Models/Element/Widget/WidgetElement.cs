@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -16,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Views.Converter;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
@@ -85,11 +87,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// ウィジェット用にウィンドウを調節。
+        /// <para>生成時のスタイル変更は<see cref="WidgetViewModelBase.ReceiveViewInitialized(Window)"/>を参照。</para>
+        /// </summary>
+        /// <param name="window"></param>
         void TuneWindow(Window window)
         {
+            Debug.Assert(!window.IsVisible);
+
+            // タイトルバーは強制的に変更
             var titleConvert = new TitleConverter();
             window.Title = (string)titleConvert.Convert($"{PluginInformations.PluginIdentifiers.PluginName}({PluginInformations.PluginIdentifiers.PluginId})", typeof(string), null!, CultureService.Culture);
 
+            // 最前面強制不可・バインディング解除
+            window.Topmost = false;
+            // タスクバーにも表示しない
+            window.ShowInTaskbar = false;
 
         }
 

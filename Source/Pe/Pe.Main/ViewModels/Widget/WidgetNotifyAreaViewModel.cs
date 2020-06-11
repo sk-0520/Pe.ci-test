@@ -18,7 +18,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 {
-    public class WidgetNotifyAreaViewModel: ElementViewModelBase<WidgetElement>, INotifyArea, IViewLifecycleReceiver
+    public class WidgetNotifyAreaViewModel: WidgetViewModelBase<WidgetElement>, INotifyArea
     {
         public WidgetNotifyAreaViewModel(WidgetElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
@@ -59,32 +59,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         ));
 
         #endregion
-
-        #region IViewLifecycleReceiver
-
-        public void ReceiveViewInitialized(Window window)
-        {
-        }
-
-        public void ReceiveViewLoaded(Window window)
-        { }
-
-        public void ReceiveViewUserClosing(CancelEventArgs e)
-        {
-            e.Cancel = !Model.ReceiveViewUserClosing();
-        }
-
-        public void ReceiveViewClosing(CancelEventArgs e)
-        {
-            e.Cancel = !Model.ReceiveViewClosing();
-        }
-
-        public void ReceiveViewClosed(Window window, bool isUserOperation)
-        {
-            Model.ReceiveViewClosed(isUserOperation);
-        }
-
-        #endregion
-
     }
 }
