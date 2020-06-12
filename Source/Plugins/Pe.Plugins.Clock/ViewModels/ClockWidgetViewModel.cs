@@ -12,11 +12,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
     {
         #region variable
 
-        DateTime _currentTime;
-
-        double _hourAngle;
-        double _minutesAngle;
-        double _secondsAngle;
 
         #endregion
 
@@ -26,6 +21,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
             Setting = setting;
             ClockTimer = new DispatcherTimer(DispatcherPriority.Normal);
             ClockTimer.Tick += ClockTimer_Tick;
+
+            Content = Setting.ClockWidgetKind switch
+            {
+                ClockWidgetKind.SimpleAnalog => new ClockWidgetAnalogContentViewModel(skeletonImplements.Clone(), loggerFactory),
+                _ => throw new NotImplementedException(),
+            };
         }
 
         #region property
@@ -34,30 +35,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
         DispatcherTimer ClockTimer { get; }
 
-        public DateTime CurrentTime
-        {
-            get => this._currentTime;
-            set => SetProperty(ref this._currentTime, value);
-        }
-
-        public ClockWidgetKind ClockWidgetKind => Setting.ClockWidgetKind;
-
-        public double HourAngle
-        {
-            get => this._hourAngle;
-            private set => SetProperty(ref this._hourAngle, value);
-        }
-        public double MinutesAngle
-        {
-            get => this._minutesAngle;
-            private set => SetProperty(ref this._minutesAngle, value);
-        }
-        public double SecondsAngle
-        {
-            get => this._secondsAngle;
-            private set => SetProperty(ref this._secondsAngle, value);
-        }
-
+        public ClockWidgetContentBaseViewModel Content { get; }
 
         #endregion
 
@@ -78,13 +56,14 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
         {
             ClockTimer.Stop();
 
-            CurrentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Setting.TimeZone);
+            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Setting.TimeZone);
 
-            SecondsAngle = CurrentTime.Second * 6;
-            MinutesAngle = CurrentTime.Minute * 6;
-            HourAngle = (CurrentTime.Hour * 30) + (CurrentTime.Minute * 0.5);
+            Content.CurrentTime = currentTime;
+            Content.SecondsAngle = currentTime.Second * 6;
+            Content.MinutesAngle = currentTime.Minute * 6;
+            Content.HourAngle = (currentTime.Hour * 30) + (currentTime.Minute * 0.5);
 
-            ClockTimer.Interval = TimeSpan.FromMilliseconds(TimeSpan.FromSeconds(1).TotalMilliseconds - CurrentTime.Millisecond);
+            ClockTimer.Interval = TimeSpan.FromMilliseconds(TimeSpan.FromSeconds(1).TotalMilliseconds - currentTime.Millisecond);
             ClockTimer.Start();
         }
 

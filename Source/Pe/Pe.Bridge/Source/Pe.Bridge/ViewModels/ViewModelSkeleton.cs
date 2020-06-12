@@ -12,6 +12,8 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
     {
         #region function
 
+        ISkeletonImplements Clone();
+
         ICommand CreateCommand(Action execute);
         ICommand CreateCommand<TParameter>(Action<TParameter> execute);
         ICommand CreateCommand(Action execute, Func<bool> canExecute);

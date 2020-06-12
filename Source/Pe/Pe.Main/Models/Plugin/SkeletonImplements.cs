@@ -23,6 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region ISkeletonImplements
 
+        public SkeletonImplements Clone()
+        {
+            return new SkeletonImplements();
+        }
+        ISkeletonImplements ISkeletonImplements.Clone() => Clone();
+
         /// <inheritdoc cref="ISkeletonImplements.CreateCommand(Action)"/>
         public ICommand CreateCommand(Action execute)
         {
