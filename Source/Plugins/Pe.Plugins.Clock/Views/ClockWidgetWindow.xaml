@@ -29,7 +29,7 @@
     <WindowChrome ResizeBorderThickness="0" CaptionHeight="0" CornerRadius="10" GlassFrameThickness="10"/>
   </WindowChrome.WindowChrome>
 
-  <Grid MouseEnter="Window_MouseEnter">
+  <Grid>
     <Viewbox Stretch="Uniform">
       <ContentControl Content="{Binding Content}">
         <ContentControl.ContentTemplate>
@@ -54,7 +54,6 @@
           </DataTemplate>
         </ContentControl.ContentTemplate>
       </ContentControl>
-
     </Viewbox>
 
     <ResizeGrip
@@ -66,6 +65,5 @@
       Width="10"
       Height="10"
     />
-
   </Grid>
 </Window>
