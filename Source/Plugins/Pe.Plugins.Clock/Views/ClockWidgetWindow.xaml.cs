@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -20,6 +21,26 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Views
         public ClockWidgetWindow()
         {
             InitializeComponent();
+        }
+
+        #region proeprty
+
+        Storyboard? PrevStoryboard { get; set; }
+
+        #endregion
+
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            PrevStoryboard?.Stop();
+            PrevStoryboard = (Storyboard)FindResource("fadein");
+            this.resize.BeginStoryboard(PrevStoryboard);
+        }
+
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            PrevStoryboard?.Stop();
+            PrevStoryboard = (Storyboard)FindResource("fadeout");
+            this.resize.BeginStoryboard(PrevStoryboard);
         }
     }
 }

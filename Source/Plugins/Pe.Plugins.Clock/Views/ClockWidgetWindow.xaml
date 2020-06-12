@@ -10,15 +10,26 @@
   Height="200"
   WindowStyle="None"
   AllowsTransparency="True"
+  Background="Transparent"
+  MouseEnter="Window_MouseEnter"
+  MouseLeave="Window_MouseLeave"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
+  <Window.Resources>
+    <Storyboard x:Key="fadein">
+      <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:00.5" To="1" FillBehavior="HoldEnd" AutoReverse="False" />
+    </Storyboard>
+    <Storyboard x:Key="fadeout">
+      <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:05.0" To="0" FillBehavior="HoldEnd" AutoReverse="False" />
+    </Storyboard>
+  </Window.Resources>
   <WindowChrome.WindowChrome>
     <WindowChrome ResizeBorderThickness="0" CaptionHeight="0" CornerRadius="10" GlassFrameThickness="10"/>
   </WindowChrome.WindowChrome>
 
-  <Grid>
+  <Grid MouseEnter="Window_MouseEnter">
     <Viewbox Stretch="Uniform">
       <ContentControl Content="{Binding Content}">
         <ContentControl.ContentTemplate>
@@ -43,10 +54,18 @@
           </DataTemplate>
         </ContentControl.ContentTemplate>
       </ContentControl>
-      
+
     </Viewbox>
 
-    <ResizeGrip x:Name="resize" WindowChrome.ResizeGripDirection="BottomRight" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="10" Height="10" />
-    
+    <ResizeGrip
+      x:Name="resize"
+      WindowChrome.ResizeGripDirection="BottomRight"
+      Opacity="0"
+      VerticalAlignment="Bottom"
+      HorizontalAlignment="Right"
+      Width="10"
+      Height="10"
+    />
+
   </Grid>
 </Window>
