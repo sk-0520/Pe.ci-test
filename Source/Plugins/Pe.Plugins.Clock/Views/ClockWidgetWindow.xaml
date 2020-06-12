@@ -11,6 +11,25 @@
   mc:Ignorable="d"
 >
   <Grid>
+    <Viewbox>
+      <Grid Width="100" Height="100">
+        <Rectangle Margin="0,-30,0,0" Width="5" Height="30" Fill="Red">
+          <Rectangle.RenderTransform>
+            <RotateTransform Angle="{Binding HourAngle}" CenterX="2.5" CenterY="30" />
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Margin="0,-40,0,0" Width="3" Height="40" Fill="Lime">
+          <Rectangle.RenderTransform>
+            <RotateTransform Angle="{Binding MinutesAngle}" CenterX="1.5" CenterY="40" />
+          </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Margin="0,-50,0,0" Width="2" Height="50" Fill="Orange">
+          <Rectangle.RenderTransform>
+            <RotateTransform Angle="{Binding SecondsAngle}" CenterX="1" CenterY="50" />
+          </Rectangle.RenderTransform>
+        </Rectangle>
+      </Grid>
+    </Viewbox>
 
   </Grid>
 </Window>
