@@ -32,8 +32,9 @@
   <Grid>
     <Viewbox Stretch="Uniform">
       <ContentControl Content="{Binding Content}">
-        <ContentControl.ContentTemplate>
-          <DataTemplate DataType="{x:Type plugins_clock_viewmodels:ClockWidgetAnalogContentViewModel}">
+        <ContentControl.Resources>
+
+          <DataTemplate DataType="{x:Type plugins_clock_viewmodels:ClockWidgetSimpleAnalogClockContentViewModel}">
             <Grid Width="100" Height="100">
               <Rectangle Margin="0,-30,0,0" Width="5" Height="30" Fill="Red">
                 <Rectangle.RenderTransform>
@@ -52,7 +53,27 @@
               </Rectangle>
             </Grid>
           </DataTemplate>
-        </ContentControl.ContentTemplate>
+
+          <DataTemplate DataType="{x:Type plugins_clock_viewmodels:ClockWidgetJaggyAnalogClockContentViewModel}">
+            <Grid Width="100" Height="100">
+              <Rectangle RenderOptions.EdgeMode="Aliased" Margin="0,-30,0,0" Width="5" Height="30" Fill="Black" Stroke="White" StrokeThickness="0.5">
+                <Rectangle.RenderTransform>
+                  <RotateTransform Angle="{Binding HourAngle}" CenterX="2.5" CenterY="30" />
+                </Rectangle.RenderTransform>
+              </Rectangle>
+              <Rectangle RenderOptions.EdgeMode="Aliased" Margin="0,-40,0,0" Width="3" Height="40" Fill="Black" Stroke="White" StrokeThickness="0.5">
+                <Rectangle.RenderTransform>
+                  <RotateTransform Angle="{Binding MinutesAngle}" CenterX="1.5" CenterY="40" />
+                </Rectangle.RenderTransform>
+              </Rectangle>
+              <Rectangle RenderOptions.EdgeMode="Aliased" Margin="0,-50,0,0" Width="2" Height="50" Fill="Black" Stroke="White" StrokeThickness="0.5">
+                <Rectangle.RenderTransform>
+                  <RotateTransform Angle="{Binding SecondsAngle}" CenterX="1" CenterY="50" />
+                </Rectangle.RenderTransform>
+              </Rectangle>
+            </Grid>
+          </DataTemplate>
+        </ContentControl.Resources>
       </ContentControl>
     </Viewbox>
 

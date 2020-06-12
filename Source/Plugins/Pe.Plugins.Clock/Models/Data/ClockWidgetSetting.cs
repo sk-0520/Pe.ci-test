@@ -6,8 +6,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Models.Data
 {
     public enum ClockWidgetKind
     {
+
         SimpleAnalog,
-        DotAnalog,
+        JaggyAnalog,
     }
 
     public class ClockWidgetSetting

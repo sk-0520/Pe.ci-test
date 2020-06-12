@@ -47,9 +47,16 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
         #endregion
     }
 
-    public class ClockWidgetAnalogContentViewModel: ClockWidgetContentBaseViewModel
+    public class ClockWidgetSimpleAnalogClockContentViewModel: ClockWidgetContentBaseViewModel
     {
-        public ClockWidgetAnalogContentViewModel(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
+        public ClockWidgetSimpleAnalogClockContentViewModel(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, loggerFactory)
+        { }
+    }
+
+    public class ClockWidgetJaggyAnalogClockContentViewModel: ClockWidgetContentBaseViewModel
+    {
+        public ClockWidgetJaggyAnalogClockContentViewModel(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
             : base(skeletonImplements, loggerFactory)
         { }
     }

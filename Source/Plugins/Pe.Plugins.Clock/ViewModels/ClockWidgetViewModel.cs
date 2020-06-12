@@ -22,9 +22,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
             ClockTimer = new DispatcherTimer(DispatcherPriority.Normal);
             ClockTimer.Tick += ClockTimer_Tick;
 
+            Setting.ClockWidgetKind = ClockWidgetKind.JaggyAnalog;
+
             Content = Setting.ClockWidgetKind switch
             {
-                ClockWidgetKind.SimpleAnalog => new ClockWidgetAnalogContentViewModel(skeletonImplements.Clone(), loggerFactory),
+                ClockWidgetKind.SimpleAnalog => new ClockWidgetSimpleAnalogClockContentViewModel(skeletonImplements.Clone(), loggerFactory),
+                ClockWidgetKind.JaggyAnalog => new ClockWidgetJaggyAnalogClockContentViewModel(skeletonImplements.Clone(), loggerFactory),
                 _ => throw new NotImplementedException(),
             };
         }
