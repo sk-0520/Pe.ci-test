@@ -14,6 +14,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public Guid PluginId { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
         public bool IsVisible { get; set; }
 
         #endregion
@@ -34,6 +36,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string PluginId { get; } = "PluginId";
             public static string X { get; } = "X";
             public static string Y { get; } = "Y";
+            public static string Width { get; } = "Width";
+            public static string Height { get; } = "Height";
             public static string IsVisible { get; } = "IsVisible";
 
             #endregion
@@ -48,6 +52,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var data = new PluginWidgetSettingData() {
                 X = dto.X,
                 Y = dto.Y,
+                Width = dto.Width,
+                Height = dto.Height,
                 IsVisible = dto.IsVisible,
             };
 
@@ -60,6 +66,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 PluginId = pluginId,
                 X = data.X,
                 Y = data.Y,
+                Width = data.Width,
+                Height = data.Height,
                 IsVisible = data.IsVisible,
             };
 

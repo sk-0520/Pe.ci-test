@@ -4,6 +4,8 @@ insert into
 		PluginId,
 		X,
 		Y,
+		Width,
+		Height,
 		IsVisible,
 
 		[CreatedTimestamp],
@@ -21,6 +23,8 @@ insert into
 /* PluginId              */ @PluginId,
 /* Y                     */ @X,
 /* X                     */ @Y,
+/* Width                 */ @Width,
+/* Height                */ @Height,
 /* IsVisible             */ @IsVisible,
 
 /*                       */

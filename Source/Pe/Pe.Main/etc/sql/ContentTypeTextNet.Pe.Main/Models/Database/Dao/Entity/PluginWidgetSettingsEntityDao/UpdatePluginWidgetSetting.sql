@@ -3,6 +3,8 @@ update
 set
 	X          = @X,
 	Y          = @Y,
+	Width      = @Width,
+	Height     = @Height,
 	IsVisible  = @IsVisible,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,

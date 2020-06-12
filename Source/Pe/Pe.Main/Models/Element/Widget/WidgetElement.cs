@@ -118,6 +118,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                     var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(PluginId);
                     window.Left = setting.X;
                     window.Top = setting.Y;
+                    if(window.ResizeMode != ResizeMode.NoResize && !double.IsNaN(setting.Width) && !double.IsNaN(setting.Height)) {
+                        window.Width = setting.Width;
+                        window.Height = setting.Height;
+                    }
+
                     window.WindowStartupLocation = WindowStartupLocation.Manual;
                 } else {
                     window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -183,6 +188,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 Y = WindowItem.Window.Top,
                 IsVisible = isVisible, // こいつだけはユーザー操作であるか否かで変わってくる
             };
+            if(WindowItem.Window.ResizeMode == ResizeMode.NoResize) {
+                data.Width = double.NaN;
+                data.Height = double.NaN;
+            } else {
+                data.Width = WindowItem.Window.Width;
+                data.Height = WindowItem.Window.Height;
+            }
 
 
             using(var commander = MainDatabaseBarrier.WaitWrite()) {

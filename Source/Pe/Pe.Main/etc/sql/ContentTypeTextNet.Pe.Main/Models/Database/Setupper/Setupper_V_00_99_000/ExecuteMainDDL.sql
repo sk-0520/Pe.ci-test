@@ -86,6 +86,8 @@ create table [PluginWidgetSettings] (
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
 	[X] real not null /* X座標 原点: プライマリウィンドウ左上 */,
 	[Y] real not null /* Y座標 原点: プライマリウィンドウ左上 */,
+	[Width] real not null /* 横幅  */,
+	[Height] real not null /* 高さ  */,
 	[IsVisible] boolean /* 表示  */,
 	primary key(
 		[PluginId]

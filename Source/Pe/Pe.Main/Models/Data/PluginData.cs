@@ -111,6 +111,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public double X { get; set; }
         [PixelKind(Px.Logical)]
         public double Y { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Width { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Height { get; set; }
         public bool IsVisible { get; set; }
 
         #endregion

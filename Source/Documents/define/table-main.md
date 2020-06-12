@@ -970,6 +970,8 @@ ___
 |    | o  |                  | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                        |
 |    | o  |                  | X座標                    | X                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 |
 |    | o  |                  | Y座標                    | Y                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 |
+|    | o  |                  | 横幅                     | Width                 | real         | System.Decimal  |              |                                |
+|    | o  |                  | 高さ                     | Height                | real         | System.Decimal  |              |                                |
 |    |    |                  | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                |
 
 ### index
