@@ -101,6 +101,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             ;
         }
 
+        public IReadOnlyList<Guid> GetLauncherItemAddonIds()
+        {
+            return LauncherItemSupportAddons
+                .Select(i => i.PluginInformations.PluginIdentifiers.PluginId)
+                .ToList()
+            ;
+        }
 
         #endregion
     }
