@@ -19,8 +19,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
             : base(skeletonImplements, loggerFactory)
         {
             Setting = setting;
-            ClockTimer = new DispatcherTimer(DispatcherPriority.Normal);
-            ClockTimer.Tick += ClockTimer_Tick;
 
             Setting.ClockWidgetKind = ClockWidgetKind.JaggyAnalog;
 
@@ -36,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
         ClockWidgetSetting Setting { get; }
 
-        DispatcherTimer ClockTimer { get; }
+        DispatcherTimer ClockTimer { get; } = new DispatcherTimer(DispatcherPriority.Normal);
 
         public ClockWidgetContentBaseViewModel Content { get; }
 
@@ -46,13 +44,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
         public void StartClock()
         {
+            ClockTimer.Tick += ClockTimer_Tick;
             ClockTimer.Interval = TimeSpan.FromMilliseconds(500);
             ClockTimer.Start();
         }
 
         public void StopClock()
         {
-
+            ClockTimer.Stop();
+            ClockTimer.Tick -= ClockTimer_Tick;
         }
 
         private void ClockTimer_Tick(object? sender, EventArgs e)
@@ -61,10 +61,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
             var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Setting.TimeZone);
 
-            Content.CurrentTime = currentTime;
-            Content.SecondsAngle = currentTime.Second * 6;
-            Content.MinutesAngle = currentTime.Minute * 6;
-            Content.HourAngle = (currentTime.Hour * 30) + (currentTime.Minute * 0.5);
+            Content.SetTime(currentTime);
 
             ClockTimer.Interval = TimeSpan.FromMilliseconds(TimeSpan.FromSeconds(1).TotalMilliseconds - currentTime.Millisecond);
             ClockTimer.Start();

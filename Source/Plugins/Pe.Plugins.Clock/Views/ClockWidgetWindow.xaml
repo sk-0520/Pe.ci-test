@@ -4,6 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
   xmlns:plugins_clock_viewmodels="clr-namespace:ContentTypeTextNet.Pe.Plugins.Clock.ViewModels"
+  xmlns:plugins_clock_views_converter="clr-namespace:ContentTypeTextNet.Pe.Plugins.Clock.Views.Converter"
 
   Title="ClockWindow"
   Width="200"
@@ -17,6 +18,9 @@
   mc:Ignorable="d"
 >
   <Window.Resources>
+    <plugins_clock_views_converter:ClockHeightToMarginConverter x:Key="ClockHeightToMarginConverter" />
+    <plugins_clock_views_converter:ClockHeightToCenterXConverter x:Key="ClockHeightToCenterXConverter" />
+
     <Storyboard x:Key="fadein">
       <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:00.25" To="1" FillBehavior="HoldEnd" AutoReverse="False" />
     </Storyboard>
@@ -89,41 +93,42 @@
 
           <DataTemplate DataType="{x:Type plugins_clock_viewmodels:ClockWidgetSimpleAnalogClockContentViewModel}">
             <Grid Width="100" Height="100">
-              <Rectangle Margin="0,-30,0,0" Width="5" Height="30" Fill="Red">
+              <Rectangle x:Name="Hour" Width="5" Height="30" Fill="Red" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding HourAngle}" CenterX="2.5" CenterY="30" />
+                  <RotateTransform Angle="{Binding HourAngle}" CenterX="{Binding Width, ElementName=Hour, Converter={StaticResource ClockHeightToCenterXConverter}}" CenterY="{Binding Height, ElementName=Hour}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
-              <Rectangle Margin="0,-40,0,0" Width="3" Height="40" Fill="Lime">
+              <Rectangle x:Name="Minutes" Width="3" Height="40" Fill="Lime" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding MinutesAngle}" CenterX="1.5" CenterY="40" />
+                  <RotateTransform Angle="{Binding MinutesAngle}" CenterX="{Binding Width, ElementName=Minutes, Converter={StaticResource ClockHeightToCenterXConverter}}" CenterY="{Binding Height, ElementName=Minutes}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
-              <Rectangle Margin="0,-50,0,0" Width="2" Height="50" Fill="Orange">
+              <Rectangle x:Name="Seconds" Width="2" Height="50" Fill="Orange" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding SecondsAngle}" CenterX="1" CenterY="50" />
+                  <RotateTransform Angle="{Binding SecondsAngle}" CenterX="{Binding Width, ElementName=Seconds, Converter={StaticResource ClockHeightToCenterXConverter}}" CenterY="{Binding Height, ElementName=Seconds}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
             </Grid>
           </DataTemplate>
 
           <DataTemplate DataType="{x:Type plugins_clock_viewmodels:ClockWidgetJaggyAnalogClockContentViewModel}">
-            <Grid Width="100" Height="100">
-              <Rectangle RenderOptions.EdgeMode="Aliased" Margin="0,-30,0,0" Width="5" Height="30" Fill="Black" Stroke="White" StrokeThickness="0.5">
+            <Grid Width="100" Height="100" RenderOptions.EdgeMode="Aliased">
+              <Rectangle x:Name="Hour" Width="5" Height="30" Fill="Black" Stroke="White" StrokeThickness="0.5" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding HourAngle}" CenterX="2.5" CenterY="30" />
+                  <RotateTransform Angle="{Binding HourAngle}" CenterX="{Binding Width, ElementName=Hour, Converter={StaticResource ClockHeightToCenterXConverter}}" CenterY="{Binding Height, ElementName=Hour}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
-              <Rectangle RenderOptions.EdgeMode="Aliased" Margin="0,-40,0,0" Width="3" Height="40" Fill="Black" Stroke="White" StrokeThickness="0.5">
+              <Rectangle x:Name="Minutes" Width="3" Height="40" Fill="Black" Stroke="White" StrokeThickness="0.5" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding MinutesAngle}" CenterX="1.5" CenterY="40" />
+                  <RotateTransform Angle="{Binding MinutesAngle}" CenterX="{Binding Width, ElementName=Minutes, Converter={StaticResource ClockHeightToCenterXConverter}}" CenterY="{Binding Height, ElementName=Minutes}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
-              <Rectangle RenderOptions.EdgeMode="Aliased" Margin="0,-50,0,0" Width="2" Height="50" Fill="Black" Stroke="White" StrokeThickness="0.5">
+              <Rectangle x:Name="Seconds" Width="2" Height="50" Fill="Black" Stroke="White" StrokeThickness="0.5" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding SecondsAngle}" CenterX="1" CenterY="50" />
+                  <RotateTransform Angle="{Binding SecondsAngle}" CenterX="{Binding Width, ElementName=Seconds, Converter={StaticResource ClockHeightToCenterXConverter}}" CenterY="{Binding Height, ElementName=Seconds}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
+
             </Grid>
           </DataTemplate>
         </ContentControl.Resources>

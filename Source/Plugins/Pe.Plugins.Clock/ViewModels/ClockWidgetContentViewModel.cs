@@ -45,6 +45,19 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
         }
 
         #endregion
+
+        #region function
+
+        public void SetTime(DateTime dateTime)
+        {
+            CurrentTime = dateTime;
+            SecondsAngle = dateTime.Second * 6;
+            MinutesAngle = dateTime.Minute * 6;
+            HourAngle = (dateTime.Hour * 30) + (dateTime.Minute * 0.5);
+
+        }
+
+        #endregion
     }
 
     public class ClockWidgetSimpleAnalogClockContentViewModel: ClockWidgetContentBaseViewModel
