@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
         {
             Setting = setting;
 
-            Setting.ClockWidgetKind = ClockWidgetKind.JaggyAnalog;
+            Setting.ClockWidgetKind = ClockWidgetKind.SimpleAnalog;
 
             Content = Setting.ClockWidgetKind switch
             {

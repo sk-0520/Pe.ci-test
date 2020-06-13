@@ -7,7 +7,7 @@ using System.Windows.Data;
 namespace ContentTypeTextNet.Pe.Plugins.Clock.Views.Converter
 {
     [ValueConversion(typeof(double), typeof(double))]
-    public class ClockHeightToCenterXConverter: IValueConverter
+    public class ClockWidthCenterXConverter: IValueConverter
     {
         #region IValueConverter
 
