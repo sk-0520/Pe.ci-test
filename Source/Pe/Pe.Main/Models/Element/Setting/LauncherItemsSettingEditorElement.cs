@@ -16,22 +16,24 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherItemsSettingEditorElement : SettingEditorElementBase
     {
-        public LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, ISettingNotifyManager settingNotifyManager,IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, PluginContainer pluginContainer, ISettingNotifyManager settingNotifyManager,IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             AllLauncherItems = allLauncherItems;
+            PluginContainer = pluginContainer;
         }
 
         #region property
 
         public ObservableCollection<LauncherItemSettingEditorElement> AllLauncherItems { get; }
-
+        PluginContainer PluginContainer { get; }
         #endregion
 
         #region function
