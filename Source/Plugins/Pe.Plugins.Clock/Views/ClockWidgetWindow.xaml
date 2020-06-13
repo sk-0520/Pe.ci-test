@@ -11,25 +11,77 @@
   WindowStyle="None"
   AllowsTransparency="True"
   Background="Transparent"
-  MouseEnter="Window_MouseEnter"
-  MouseLeave="Window_MouseLeave"
 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d"
 >
   <Window.Resources>
     <Storyboard x:Key="fadein">
-      <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:00.5" To="1" FillBehavior="HoldEnd" AutoReverse="False" />
+      <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:00.25" To="1" FillBehavior="HoldEnd" AutoReverse="False" />
     </Storyboard>
     <Storyboard x:Key="fadeout">
-      <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:05.0" To="0" FillBehavior="HoldEnd" AutoReverse="False" />
+      <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:03.0" To="0" FillBehavior="HoldEnd" AutoReverse="False" />
     </Storyboard>
   </Window.Resources>
   <WindowChrome.WindowChrome>
     <WindowChrome ResizeBorderThickness="0" CaptionHeight="0" CornerRadius="10" GlassFrameThickness="10"/>
   </WindowChrome.WindowChrome>
+  <!--<Window.Style>
+    <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
+        </Trigger>
+      </Style.Triggers>
+      <Setter Property="ResizeMode" Value="CanResize" />
+    </Style>
+  </Window.Style>-->
 
   <Grid>
+    <Grid x:Name="background" Opacity="0">
+      <Grid.Style>
+        <Style TargetType="Grid">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+              <DataTrigger.EnterActions>
+                <BeginStoryboard Storyboard="{StaticResource fadein}" />
+              </DataTrigger.EnterActions>
+              <DataTrigger.ExitActions>
+                <BeginStoryboard Storyboard="{StaticResource fadeout}" />
+              </DataTrigger.ExitActions>
+            </DataTrigger>
+            <!--<DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+              <DataTrigger.EnterActions>
+                <BeginStoryboard Storyboard="{StaticResource fadeout}" />
+              </DataTrigger.EnterActions>
+            </DataTrigger>-->
+            <!--<MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Window}}" Value="True" />
+                <Condition Binding="{Binding IsMouseCaptured, RelativeSource={RelativeSource AncestorType=Window}}" Value="False" />
+              </MultiDataTrigger.Conditions>
+              <MultiDataTrigger.ExitActions>
+                <BeginStoryboard Storyboard="{StaticResource fadeout}" />
+              </MultiDataTrigger.ExitActions>
+            </MultiDataTrigger>-->
+          </Style.Triggers>
+        </Style>
+      </Grid.Style>
+      <Rectangle>
+        <Rectangle.Fill>
+          <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#ff000000" Offset="0" />
+            <GradientStop Color="#80000000" Offset="0.2" />
+            <GradientStop Color="#30000000" Offset="0.4" />
+            <GradientStop Color="#30000000" Offset="0.6" />
+            <GradientStop Color="#80000000" Offset="0.8" />
+            <GradientStop Color="#ff000000" Offset="1" />
+          </LinearGradientBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+    </Grid>
+
+
     <Viewbox Stretch="Uniform">
       <ContentControl Content="{Binding Content}">
         <ContentControl.Resources>
@@ -77,14 +129,18 @@
       </ContentControl>
     </Viewbox>
 
-    <ResizeGrip
+    <TextBlock Foreground="White" Text="{Binding IsMouseOver,ElementName=resize}" />
+
+    <Border
       x:Name="resize"
-      WindowChrome.ResizeGripDirection="BottomRight"
-      Opacity="0"
+      Opacity="{Binding Opacity, ElementName=background}"
       VerticalAlignment="Bottom"
       HorizontalAlignment="Right"
-      Width="10"
-      Height="10"
-    />
+      Cursor="SizeNWSE"
+      Background="Transparent"
+      MouseLeftButtonDown="resize_MouseLeftButtonDown"
+    >
+      <ResizeGrip IsHitTestVisible="False" Width="10" Height="10"/>
+    </Border>
   </Grid>
 </Window>
