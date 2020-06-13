@@ -22,6 +22,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginContext.UserAgentFactory"/>
         public IUserAgentFactory UserAgentFactory => throw new NotSupportedException();
 
+        /// <inheritdoc cref="IPluginCommonContext.IsAvailable"/>
+        public bool IsAvailable => true;
+
         #endregion
     }
 }

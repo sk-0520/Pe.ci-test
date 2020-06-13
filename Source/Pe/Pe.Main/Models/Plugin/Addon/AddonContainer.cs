@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             foreach(var target in targets) {
                 if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                     using(var readerPack = PluginContextFactory.BarrierRead()) {
-                        var loadContext = PluginContextFactory.CreateLoadContex(target.PluginInformations, readerPack);
+                        using var loadContext = PluginContextFactory.CreateLoadContex(target.PluginInformations, readerPack);
                         target.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                     }
                 }

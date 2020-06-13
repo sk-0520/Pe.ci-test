@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
             Window window;
             using(var reader = WidgetAddonContextFactory.BarrierRead()) {
-                var context = WidgetAddonContextFactory.CreateCreateContex(PluginInformations, reader);
+                using var context = WidgetAddonContextFactory.CreateCreateContex(PluginInformations, reader);
                 window = Widget.ViewType switch
                 {
                     WidgetViewType.Window => CreateWindowWidget(context),
@@ -241,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             }
 
             using(var writer = WidgetAddonContextFactory.BarrierWrite()) {
-                var context = WidgetAddonContextFactory.CreateClosedContext(PluginInformations, writer);
+                using var context = WidgetAddonContextFactory.CreateClosedContext(PluginInformations, writer);
                 Widget.ClosedWidget(context);
                 WidgetAddonContextFactory.Save();
             }

@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             UserControl result;
             using(var reader = PreferencesContextFactory.BarrierRead()) {
-                var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
+                using var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
                 var skeleton = new SkeletonImplements();
                 var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
                 result = Preferences.BeginPreferences(context, parameter);
@@ -81,12 +81,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
 
-            PreferencesCheckContext context;
+            bool hasError;
             using(var reader = PreferencesContextFactory.BarrierRead()) {
-                context = PreferencesContextFactory.CreateCheckContext(Plugin.PluginInformations, reader);
+                using var context = PreferencesContextFactory.CreateCheckContext(Plugin.PluginInformations, reader);
                 Preferences.CheckPreferences(context);
+                hasError = context.HasError;
             }
-            return context.HasError;
+            return hasError;
         }
 
         public void SavePreferences(IDatabaseCommandsPack databaseCommandPack)
@@ -97,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
 
-            var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
+            using var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
             Preferences.SavePreferences(context);
         }
 
@@ -112,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             // NOTE: 多分ここじゃなくて別んところで呼び出すべき
 
             using(var reader = PreferencesContextFactory.BarrierRead()) {
-                var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformations, reader);
+                using var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformations, reader);
                 Preferences.EndPreferences(context);
             }
         }

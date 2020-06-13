@@ -689,7 +689,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // Pe専用プラグイン
             foreach(var plugin in applicationPlugins) {
                 using(var readerPack = databaseBarrierPack.WaitRead()) {
-                    plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack));
+                    using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                    plugin.Initialize(context);
                 }
                 initializedPlugins.Add(plugin);
             }
@@ -702,7 +703,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var plugin = pluginLoadStateItem.Plugin;
                 try {
                     using(var readerPack = databaseBarrierPack.WaitRead()) {
-                        plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack));
+                        using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                        plugin.Initialize(context);
                     }
                     initializedPlugins.Add(plugin);
                 } catch(Exception ex) {
@@ -747,7 +749,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             using(var writer = pluginContextFactory.BarrierWrite()) {
                 foreach(var item in addonPlugins.Concat(themePlugins)) {
-                    var context = pluginContextFactory.CreateUnloadContext(item.Plugin.PluginInformations, writer);
+                    using var context = pluginContextFactory.CreateUnloadContext(item.Plugin.PluginInformations, writer);
                     try {
                         item.Plugin.Unload(item.Kind, context);
                     } catch(Exception ex) {
@@ -756,7 +758,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
                 foreach(var plugin in plugins) {
-                    var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformations, writer);
+                    using var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformations, writer);
                     try {
                         plugin.Uninitialize(context);
                     } catch(Exception ex) {

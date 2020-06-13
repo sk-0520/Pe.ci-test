@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
                     if(!Addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                         using(var reader = PluginContextFactory.BarrierRead()) {
-                            var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
+                            using var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
                             Addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                         }
                     }
@@ -172,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
                 if(!addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
                     using(var reader = PluginContextFactory.BarrierRead()) {
-                        var loadContext = PluginContextFactory.CreateLoadContex(addon.PluginInformations, reader);
+                        using var loadContext = PluginContextFactory.CreateLoadContex(addon.PluginInformations, reader);
                         addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                     }
                 }
