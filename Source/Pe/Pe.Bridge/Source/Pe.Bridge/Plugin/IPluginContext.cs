@@ -7,28 +7,28 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
-    /// <summary>
-    /// 各種コンテキストの共通項目。
-    /// <para>基本的にコンテキストは持ち歩いて使用ることはできない。</para>
-    /// </summary>
-    public interface IPluginCommonContext
-    {
-        #region property
+    ///// <summary>
+    ///// 各種コンテキストの共通項目。
+    ///// <para>基本的にコンテキストは持ち歩いて使用ることはできない。</para>
+    ///// </summary>
+    //public interface IPluginCommonContext
+    //{
+    //    #region property
 
-        /// <summary>
-        /// このコンテキストが使用可能か。
-        /// </summary>
-        bool IsAvailable { get; }
+    //    /// <summary>
+    //    /// このコンテキストが使用可能か。
+    //    /// </summary>
+    //    bool IsAvailable { get; }
 
-        #endregion
-    }
+    //    #endregion
+    //}
 
     /// <summary>
     /// プラグインのコンストラクタ時の Pe との架け橋。
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginConstructorContext: IPluginCommonContext
+    public interface IPluginConstructorContext
     {
         #region property
 
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginInitializeContext: IPluginCommonContext
+    public interface IPluginInitializeContext
     {
         #region property
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginUninitializeContext: IPluginCommonContext
+    public interface IPluginUninitializeContext
     {
         #region property
 
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginLoadContext: IPluginCommonContext
+    public interface IPluginLoadContext
     {
         #region property
 
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginUnloadContext: IPluginCommonContext
+    public interface IPluginUnloadContext
     {
         #region property
 
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <para>持ち歩かないこと(必要箇所で都度渡すので勘弁して)。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPluginContext: IPluginCommonContext
+    public interface IPluginContext
     {
         #region property
 

@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     /// <inheritdoc cref="IPluginCommonContext"/>
-    public abstract class PluginCommonContextBase: DisposerBase, IPluginCommonContext
+    public abstract class PluginCommonContextBase: DisposerBase
     {
         #region function
 

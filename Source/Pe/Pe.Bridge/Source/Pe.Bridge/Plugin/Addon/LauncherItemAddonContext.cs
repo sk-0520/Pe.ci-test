@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <para>ランチャーアイテムアドオン内で持ち歩くのは一応OKだけど持ち歩かない方針(なんのこっちゃ)。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface ILauncherItemAddonContext: IPluginCommonContext
+    public interface ILauncherItemAddonContext
     {
         #region property
 

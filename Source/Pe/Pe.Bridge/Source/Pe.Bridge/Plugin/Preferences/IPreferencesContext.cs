@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPreferencesLoadContext: IPluginCommonContext
+    public interface IPreferencesLoadContext
     {
         #region property
 
@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPreferencesCheckContext: IPluginCommonContext
+    public interface IPreferencesCheckContext
     {
         #region property
 
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPreferencesSaveContext: IPluginCommonContext
+    public interface IPreferencesSaveContext
     {
         #region property
 
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IPreferencesEndContext: IPluginCommonContext
+    public interface IPreferencesEndContext
     {
         #region function
 

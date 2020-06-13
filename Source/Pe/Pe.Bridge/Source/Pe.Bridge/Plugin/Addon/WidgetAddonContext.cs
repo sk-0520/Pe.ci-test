@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IWidgetAddonCreateContext: IPluginCommonContext
+    public interface IWidgetAddonCreateContext
     {
         #region property
 
@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <para>持ち歩かないこと。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IWidgetAddonClosedContext: IPluginCommonContext
+    public interface IWidgetAddonClosedContext
     {
         #region property
 
