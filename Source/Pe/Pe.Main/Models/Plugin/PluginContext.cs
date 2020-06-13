@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="_callerMemberName"></param>
         protected void ThrowIfUnavailable([CallerMemberName] string _callerMemberName = "")
         {
-            if(IsDisposed) {
+            if(IsAvailable) {
                 throw new PluginUnavailableContextException(_callerMemberName);
             }
         }
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region IPluginCommonContext
 
         /// <inheritdoc cref="IPluginCommonContext.IsAvailable"/>
-        public bool IsAvailable => IsDisposed;
+        public bool IsAvailable => !IsDisposed;
 
         #endregion
     }

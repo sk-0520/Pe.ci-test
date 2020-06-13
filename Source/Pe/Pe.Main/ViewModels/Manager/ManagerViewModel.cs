@@ -123,6 +123,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #region ウィジェット
 
+        public bool HasWidgetsMenu => 0 < WidgetCollection.Count;
+
         public bool IsOpenWidgetsMenu
         {
             get => this._isOpenWidgetsMenu;

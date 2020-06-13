@@ -140,7 +140,7 @@
       <Separator.Style>
         <Style TargetType="Separator">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding WidgetItems.Count}" Value="0">
+            <DataTrigger Binding="{Binding HasWidgetsMenu}" Value="False">
               <Setter Property="Background" Value="Red" />
             </DataTrigger>
           </Style.Triggers>
@@ -151,7 +151,7 @@
       <MenuItem.Style>
         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
           <Style.Triggers>
-            <DataTrigger Binding="{Binding WidgetItems.Count}" Value="0">
+            <DataTrigger Binding="{Binding HasWidgetsMenu}" Value="False">
               <Setter Property="Background" Value="Red" />
             </DataTrigger>
           </Style.Triggers>
