@@ -80,6 +80,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Views
             SendMessage(hWnd, WM_SYSCOMMAND, SC_SIZE + 8, IntPtr.Zero);
         }
 
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(!IsEnabled) {
+                return;
+            }
+
+            DragMove();
+        }
+
         //private void resize_MouseMove(object sender, MouseEventArgs e)
         //{
 
