@@ -679,9 +679,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            var applicationPlugins = new List<IPlugin>() {
-                ApplicationDiContainer.New<DefaultTheme>(),
+            var applicationPluginTypes = new List<Type>() {
+                typeof(DefaultTheme),
             };
+            var applicationPlugins = new List<IPlugin>(applicationPluginTypes.Count);
+            foreach(var type in applicationPluginTypes) {
+                using var context = ApplicationDiContainer.Build<PluginConstructorContext>();
+                var appPlugin = (IPlugin)ApplicationDiContainer.New(type, new object[] { context });
+                applicationPlugins.Add(appPlugin);
+            }
+
             var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
 
             var databaseBarrierPack = ApplicationDiContainer.Build<IDatabaseBarrierPack>();

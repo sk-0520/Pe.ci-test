@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <param name="_callerMemberName"></param>
         protected void ThrowIfUnavailable([CallerMemberName] string _callerMemberName = "")
         {
-            if(IsAvailable) {
+            if(!IsAvailable) {
                 throw new PluginUnavailableContextException(_callerMemberName);
             }
         }
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
 
     /// <inheritdoc cref="IPluginConstructorContext"/>
-    public class PluginConstructorContext: PluginCommonContextBase
+    public class PluginConstructorContext: PluginCommonContextBase, IPluginConstructorContext
     {
         #region variable
 

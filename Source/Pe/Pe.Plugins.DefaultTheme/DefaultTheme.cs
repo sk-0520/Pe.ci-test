@@ -28,9 +28,9 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
 
         #endregion
 
-        public DefaultTheme(ILoggerFactory loggerFactory)
+        public DefaultTheme(IPluginConstructorContext pluginConstructorContext)
         {
-            Logger = loggerFactory.CreateLogger(GetType());
+            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
