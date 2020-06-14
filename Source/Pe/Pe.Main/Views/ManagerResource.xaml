@@ -10,6 +10,8 @@
 
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Manager"
 >
+  <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
   <ContextMenu x:Key="ContextMenu" IsOpen="{Binding IsOpenContextMenu, Mode=OneWayToSource}">
     <ContextMenu.Resources>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -136,29 +138,8 @@
       <MenuItem Header="{Binding Resources.String_AppManager_System_IsSupportedExplorer_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsSupportedExplorer, Mode=OneWay}" Command="{Binding ToggleSupportExplorerCommand}" />
     </MenuItem>
 
-    <Separator>
-      <Separator.Style>
-        <Style TargetType="Separator">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding HasWidgetsMenu}" Value="False">
-              <Setter Property="Background" Value="Red" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </Separator.Style>
-    </Separator>
-    <MenuItem IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="widgets" ItemsSource="{Binding WidgetItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}">
-      <MenuItem.Style>
-        <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding HasWidgetsMenu}" Value="False">
-              <Setter Property="Background" Value="Red" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </MenuItem.Style>
-    </MenuItem>
-
+    <Separator Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    <MenuItem Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="widgets" ItemsSource="{Binding WidgetItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" />
 
     <Separator />
 
