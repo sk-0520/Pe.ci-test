@@ -15,7 +15,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
 
         #region proeprty
 
+        EyesWidget? EyesWidget { get; set; }
         EyesBackground? EyesBackground { get; set; }
+
 
         #endregion
 
@@ -36,12 +38,20 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
 
         public override IWidget BuildWidget(IAddonParameter parameter)
         {
-            return new EyesWidget(parameter, PluginInformations);
+            EyesWidget = new EyesWidget(parameter, PluginInformations);
+            if(EyesBackground != null) {
+                EyesWidget.Attach(EyesBackground);
+            }
+            return EyesWidget;
         }
 
         public override IBackground BuildBackground(IAddonParameter parameter)
         {
-            return EyesBackground ??= new EyesBackground(parameter, PluginInformations);
+            EyesBackground ??= new EyesBackground(parameter, PluginInformations);
+            if(EyesWidget != null) {
+                EyesWidget.Attach(EyesBackground);
+            }
+            return EyesBackground;
         }
 
 

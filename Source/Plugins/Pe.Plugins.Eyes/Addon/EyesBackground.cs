@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -9,8 +10,28 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
 {
+    public class BackgroundMouseMoveEventArgs: EventArgs
+    {
+        public BackgroundMouseMoveEventArgs(Point location, DateTime timestamp)
+        {
+            Location = location;
+            Timestamp = timestamp;
+        }
+
+        #region property
+
+        public Point Location { get; }
+        public DateTime Timestamp { get; }
+        #endregion
+    }
+
     internal class EyesBackground: IBackground
     {
+        #region event
+
+        public event EventHandler<BackgroundMouseMoveEventArgs>? MouseMoved;
+
+        #endregion
         public EyesBackground(IAddonParameter parameter, IPluginInformations pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
@@ -47,19 +68,19 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
 
         public void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            Logger.LogInformation("down {0}", backgroundAddonKeyboardContext.Key);
+            //Logger.LogInformation("down {0}", backgroundAddonKeyboardContext.Key);
         }
 
         public void HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            Logger.LogInformation("up {0}", backgroundAddonKeyboardContext.Key);
+            //Logger.LogInformation("up {0}", backgroundAddonKeyboardContext.Key);
         }
 
 
         public void HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext)
         {
-            //throw new NotImplementedException();
-            Logger.LogInformation("move {0}", backgroundAddonMouseMoveContext.Location);
+            //Logger.LogInformation("move {0}", backgroundAddonMouseMoveContext.Location);
+            MouseMoved?.Invoke(this, new BackgroundMouseMoveEventArgs(backgroundAddonMouseMoveContext.Location, backgroundAddonMouseMoveContext.TimestampUtc));
         }
 
         public void HookMouseDown(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)

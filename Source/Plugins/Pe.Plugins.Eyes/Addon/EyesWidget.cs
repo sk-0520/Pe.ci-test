@@ -37,6 +37,20 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
         EyesWidgetWindow? WidgetView { get; set; }
         EyesWidgetViewModel? ViewModel { get; set; }
 
+        EyesBackground? EyesBackground { get; set; }
+
+        #endregion
+
+        #region function
+
+        internal void Attach(EyesBackground eyesBackground)
+        {
+            EyesBackground = eyesBackground;
+            if(ViewModel != null) {
+                ViewModel.Attach(EyesBackground);
+            }
+        }
+
         #endregion
 
         #region IWidget
@@ -47,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
         {
             return null;
         }
+
         public string GetMenuHeader(IPluginContext pluginContext)
         {
             return "👀";
@@ -58,8 +73,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
                 throw new InvalidOperationException(nameof(ViewModel));
             }
 
-
             ViewModel = new EyesWidgetViewModel(SkeletonImplements, LoggerFactory);
+            if(EyesBackground != null) {
+                Attach(EyesBackground);
+            }
             WidgetView = new EyesWidgetWindow() {
                 DataContext = ViewModel,
             };

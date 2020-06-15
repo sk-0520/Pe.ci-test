@@ -11,6 +11,11 @@
   mc:Ignorable="d"
 >
   <Grid>
+    <StackPanel>
+      <TextBlock Text="{Binding MouseX}" />
+      <TextBlock Text="{Binding MouseY}" />
+      
+    </StackPanel>
 
   </Grid>
 </Window>
