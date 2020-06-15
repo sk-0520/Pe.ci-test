@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             }
 
             ViewModel.StopClock();
+            ViewModel.Dispose();
             ViewModel = null;
             WidgetView = null;
         }

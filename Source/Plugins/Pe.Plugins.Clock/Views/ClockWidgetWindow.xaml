@@ -21,6 +21,7 @@
   <Window.Resources>
     <plugins_clock_views_converter:ClockHeightToMarginConverter x:Key="ClockHeightToMarginConverter" />
     <plugins_clock_views_converter:ClockWidthCenterXConverter x:Key="ClockWidthCenterXConverter" />
+    <plugins_clock_views_converter:NullConverter x:Key="NullConverter" />
 
     <Storyboard x:Key="fadein">
       <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0.00:00:00.25" To="1" FillBehavior="HoldEnd" AutoReverse="False" />
@@ -102,7 +103,7 @@
                   <DataTemplate>
                     <Border Width="3" Height="60" Margin="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                       <Border.RenderTransform>
-                        <RotateTransform Angle="{Binding}" CenterX="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}" />
+                        <RotateTransform Angle="{Binding Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}" />
                       </Border.RenderTransform>
                       <Rectangle Fill="Black" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=Border}}" Height="10" VerticalAlignment="Top" />
                     </Border>
@@ -115,7 +116,7 @@
                   <DataTemplate>
                     <Border Width="2" Height="60" Margin="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                       <Border.RenderTransform>
-                        <RotateTransform Angle="{Binding}" CenterX="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}" />
+                        <RotateTransform Angle="{Binding Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}" />
                       </Border.RenderTransform>
                       <Rectangle Fill="DarkGray" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=Border}}" Height="2" VerticalAlignment="Top" Margin="0,6,0,0" />
                     </Border>
@@ -126,25 +127,25 @@
 
               <Polygon x:Name="Hour" Points="0,40 2,0 4,40" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="Black" Margin="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Polygon.RenderTransform>
-                  <RotateTransform Angle="{Binding HourAngle}" CenterX="{Binding ActualWidth, ElementName=Hour, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Hour}" />
+                  <RotateTransform Angle="{Binding HourAngle, Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding ActualWidth, ElementName=Hour, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Hour}" />
                 </Polygon.RenderTransform>
               </Polygon>
 
               <Polygon x:Name="Minutes" Points="0,50 1,0 3,50" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="Black" Margin="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Polygon.RenderTransform>
-                  <RotateTransform Angle="{Binding MinutesAngle}" CenterX="{Binding ActualWidth, ElementName=Minutes, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Minutes}" />
+                  <RotateTransform Angle="{Binding MinutesAngle, Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding ActualWidth, ElementName=Minutes, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Minutes}" />
                 </Polygon.RenderTransform>
               </Polygon>
 
               <Polygon x:Name="Seconds" Points="0,60 1,0 2,60 " VerticalAlignment="Center" HorizontalAlignment="Center" Fill="Red" Margin="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Polygon.RenderTransform>
-                  <RotateTransform Angle="{Binding SecondsAngle}" CenterX="{Binding ActualWidth, ElementName=Seconds, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Seconds}" />
+                  <RotateTransform Angle="{Binding SecondsAngle, Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding ActualWidth, ElementName=Seconds, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Seconds}" />
                 </Polygon.RenderTransform>
               </Polygon>
 
               <Polygon x:Name="Seconds2" Points="0,10 1,0 2,10 " VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{Binding Fill, ElementName=Seconds}" Margin="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Polygon.RenderTransform>
-                  <RotateTransform Angle="{Binding SecondsOppositeAngle}" CenterX="{Binding ActualWidth, ElementName=Seconds2, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Seconds2}" />
+                  <RotateTransform Angle="{Binding SecondsOppositeAngle, Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding ActualWidth, ElementName=Seconds2, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding ActualHeight, ElementName=Seconds2}" />
                 </Polygon.RenderTransform>
               </Polygon>
               <Ellipse Width="5" Height="5" Fill="{Binding Fill, ElementName=Seconds}" />
@@ -212,17 +213,17 @@
 
               <Rectangle x:Name="Hour" Width="5" Height="30" Fill="Black" Stroke="White" StrokeThickness="0.5" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding HourAngle}" CenterX="{Binding Width, ElementName=Hour, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding Height, ElementName=Hour}" />
+                  <RotateTransform Angle="{Binding HourAngle, Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding Width, ElementName=Hour, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding Height, ElementName=Hour}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
               <Rectangle x:Name="Minutes" Width="3" Height="40" Fill="Black" Stroke="White" StrokeThickness="0.5" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding MinutesAngle}" CenterX="{Binding Width, ElementName=Minutes, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding Height, ElementName=Minutes}" />
+                  <RotateTransform Angle="{Binding MinutesAngle, Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding Width, ElementName=Minutes, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding Height, ElementName=Minutes}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
               <Rectangle x:Name="Seconds" Width="2" Height="50" Fill="Black" Stroke="White" StrokeThickness="0.5" Margin="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ClockHeightToMarginConverter}}">
                 <Rectangle.RenderTransform>
-                  <RotateTransform Angle="{Binding SecondsAngle}" CenterX="{Binding Width, ElementName=Seconds, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding Height, ElementName=Seconds}" />
+                  <RotateTransform Angle="{Binding SecondsAngle, Converter={StaticResource NullConverter}, ConverterParameter=0}" CenterX="{Binding Width, ElementName=Seconds, Converter={StaticResource ClockWidthCenterXConverter}}" CenterY="{Binding Height, ElementName=Seconds}" />
                 </Rectangle.RenderTransform>
               </Rectangle>
               <Ellipse Width="5" Height="5" Fill="Black" Stroke="White" StrokeThickness="0.5" />

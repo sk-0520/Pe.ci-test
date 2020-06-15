@@ -143,6 +143,8 @@
       <MenuItem.Resources>
         <Style x:Key="WidgetMenuItem" TargetType="MenuItem">
           <Setter Property="ItemsSource" Value="{x:Null}" />
+          <Setter Property="HorizontalContentAlignment" Value="Left" />
+          <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
       </MenuItem.Resources>
       <MenuItem.ItemContainerStyle>

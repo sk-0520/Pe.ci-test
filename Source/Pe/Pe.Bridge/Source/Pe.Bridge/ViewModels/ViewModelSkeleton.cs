@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
     /// プラグイン側でのViewModel作成を簡略化。
     /// <para><see cref="ISkeletonImplements"/>が本体。</para>
     /// </summary>
-    public abstract class ViewModelSkeleton: INotifyPropertyChanged
+    public abstract class ViewModelSkeleton: INotifyPropertyChanged, IDisposable
     {
         protected ViewModelSkeleton(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
         {
@@ -108,6 +108,48 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        #endregion
+
+        #region IDisposable
+
+        public bool IsDisposed { get; private set; }
+
+        protected void ThrowIfDisposed([CallerMemberName] string _callerMemberName = "")
+        {
+            if(IsDisposed) {
+                throw new ObjectDisposedException(_callerMemberName);
+            }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    // TODO: マネージド状態を破棄します (マネージド オブジェクト)
+                }
+
+                // TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
+                // TODO: 大きなフィールドを null に設定します
+                IsDisposed = true;
+            }
+        }
+
+        /// <inheritdoc cref="IDisposable.Dispose"/>
+        public void Dispose()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // TODO: 'Dispose(bool disposing)' にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします
+        ~ViewModelSkeleton()
+        {
+            // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+            Dispose(disposing: false);
+        }
+
 
         #endregion
     }

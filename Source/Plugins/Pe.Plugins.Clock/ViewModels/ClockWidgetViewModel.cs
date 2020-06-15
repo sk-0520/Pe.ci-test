@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
         DispatcherTimer ClockTimer { get; } = new DispatcherTimer(DispatcherPriority.Normal);
 
-        public ClockWidgetContentBaseViewModel Content { get; }
+        public ClockWidgetContentBaseViewModel Content { get; private set; }
 
         #endregion
 
@@ -63,6 +63,21 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
             ClockTimer.Interval = TimeSpan.FromMilliseconds(TimeSpan.FromSeconds(1).TotalMilliseconds - currentTime.Millisecond);
             ClockTimer.Start();
+        }
+
+        #endregion
+
+        #region ViewModelSkeleton
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    Content?.Dispose();
+                    Content = null!;
+                }
+            }
+            base.Dispose(disposing);
         }
 
         #endregion
