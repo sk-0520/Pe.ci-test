@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    public abstract class CommonAddonProxyBase<TFunctionUnit>: DisposerBase
+    internal abstract class CommonAddonProxyBase<TFunctionUnit>: DisposerBase
         where TFunctionUnit : notnull
     {
         protected CommonAddonProxyBase( PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// 特定に機能単位による単独アドオン機能のラッパー。
     /// </summary>
     /// <typeparam name="TFunctionUnit"></typeparam>
-    public abstract class AddonProxyBase<TFunctionUnit>: CommonAddonProxyBase<TFunctionUnit>
+    internal abstract class AddonProxyBase<TFunctionUnit>: CommonAddonProxyBase<TFunctionUnit>
         where TFunctionUnit : class
     {
         #region variable
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// 特定に機能単位による複数アドオン機能のラッパー。
     /// </summary>
     /// <typeparam name="TFunctionUnit"></typeparam>
-    public abstract class AddonsProxyBase<TFunctionUnit>: CommonAddonProxyBase<TFunctionUnit>
+    internal abstract class AddonsProxyBase<TFunctionUnit>: CommonAddonProxyBase<TFunctionUnit>
         where TFunctionUnit : notnull
     {
         #region variable

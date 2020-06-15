@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    public sealed class WidgetAddonProxy: AddonProxyBase<IWidget>, IWidget
+    internal sealed class WidgetAddonProxy: AddonProxyBase<IWidget>, IWidget
     {
         public WidgetAddonProxy(IAddon addon, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(addon, pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)

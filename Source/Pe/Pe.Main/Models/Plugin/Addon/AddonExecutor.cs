@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     /// <inheritdoc cref="IAddonExecutor" />
-    public class AddonExecutor: IAddonExecutor
+    internal class AddonExecutor: IAddonExecutor
     {
         public AddonExecutor(IPluginInformations pluginInformations, ILoggerFactory loggerFactory)
         {

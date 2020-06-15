@@ -266,7 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ;
 
 
-            var settingElement = container.Build<SettingContainerElement>();
+            var settingElement = new SettingContainerElement(container, container.Build<ILoggerFactory>());
             settingElement.Initialize();
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
             WindowManager.Register(windowItem);
