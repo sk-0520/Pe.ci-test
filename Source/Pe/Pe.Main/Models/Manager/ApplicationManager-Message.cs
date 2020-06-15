@@ -524,12 +524,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     }
                 }
             }
+
+            //NOTE: ここでバックグラウンド処理
         }
 
         private void KeyboradHooker_KeyUp(object? sender, KeyboardHookEventArgs e)
         {
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);
+
+            //NOTE: ここでバックグラウンド処理
         }
 
         private void MouseHooker_MouseMove(object? sender, MouseHookEventArgs e)

@@ -54,6 +54,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <returns></returns>
         IWidget BuildWidget(IAddonParameter parameter);
 
+        /// <summary>
+        /// バックグラウンドアドオンの生成。
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        IBackground BuildBackground(IAddonParameter parameter);
+
         #endregion
     }
 }

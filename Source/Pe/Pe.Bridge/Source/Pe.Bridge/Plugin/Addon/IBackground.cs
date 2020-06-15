@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <summary>
     /// バックグラウンド処理種別。
     /// </summary>
-    public enum BackgroundKinds
+    public enum BackgroundKind
     {
         /// <summary>
         /// キーボードフック。
@@ -37,24 +37,27 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     public interface IBackground
     {
         #region property
-
-        /// <summary>
-        /// サポートしているバックグラウンド処理。
-        /// <para>必要な種別を定義しておかないと必要な Hook* 関数が呼ばれない。</para>
-        /// </summary>
-        public BackgroundKinds SupportedKinds { get; }
-
         #endregion
 
         #region function
 
         /// <summary>
+        /// サポートしているバックグラウンド処理。
+        /// <para>必要な種別を定義しておかないと必要な Hook* 関数が呼ばれない。</para>
+        /// </summary>
+        /// <param name="backgroundKind"></param>
+        /// <returns></returns>
+        bool IsSupported(BackgroundKind backgroundKind);
+
+        /// <summary>
         /// キーが押下された。
+        /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
         /// </summary>
         void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext);
         /// <summary>
         /// キーが離された。
+        /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
         /// </summary>
         void HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext);
@@ -62,11 +65,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// マウスが移動した。
+        /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
         /// </summary>
-        void HookMouseMouve(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext);
+        void HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext);
         /// <summary>
         /// マウスのボタンが押された。
+        /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
         /// </summary>
         /// <param name="mouseButton"></param>
@@ -74,6 +79,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         void HookMouseDown(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext);
         /// <summary>
         /// マウスのボタンが離された。
+        /// <para>Pe による無効化・差し替えは無視される。</para>
         /// <para>非同期で呼び出される。</para>
         /// </summary>
         /// <param name="mouseButton"></param>

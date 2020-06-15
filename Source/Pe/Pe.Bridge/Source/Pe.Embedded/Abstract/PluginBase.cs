@@ -291,6 +291,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             return BuildSupporttedAddon(AddonKind.Widget, nameof(BuildWidget), parameter, p => Addon.BuildWidget(p));
         }
 
+        /// <inheritdoc cref="IAddon.BuildBackground(IAddonParameter)"/>
+        public IBackground BuildBackground(IAddonParameter parameter)
+        {
+            return BuildSupporttedAddon(AddonKind.Background, nameof(BuildBackground), parameter, p => Addon.BuildBackground(p));
+        }
+
 
         #endregion
 

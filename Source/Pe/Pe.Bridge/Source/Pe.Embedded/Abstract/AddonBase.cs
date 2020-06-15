@@ -42,6 +42,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IAddon.BuildWidget(IAddonParameter)"/>
         public virtual IWidget BuildWidget(IAddonParameter parameter) => throw new NotImplementedException();
 
+        /// <inheritdoc cref="IAddon.BuildBackground(IAddonParameter)"/>
+        public virtual IBackground BuildBackground(IAddonParameter parameter) => throw new NotImplementedException();
+
         #endregion
     }
 }
