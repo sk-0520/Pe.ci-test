@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region PluginContextFactoryBase
 
-        protected override string BaseDirectoryName => "widget";
+        protected override string BaseDirectoryName => WidgetDirectoryName;
 
         #endregion
     }

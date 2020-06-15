@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region property
 
         protected ILoggerFactory LoggerFactory { get; }
-        protected ILogger Logger{ get; }
+        protected ILogger Logger { get; }
 
         protected IDatabaseBarrierPack DatabaseBarrierPack { get; }
         protected IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
@@ -36,7 +36,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         protected IUserAgentManager UserAgentManager { get; }
 
-        protected abstract string BaseDirectoryName {get;}
+        protected abstract string BaseDirectoryName { get; }
+
+        protected string CommonDirectoryName { get; } = "data";
+        protected string LauncherItemDirectoryName { get; } = "launcher-item";
+        protected string WidgetDirectoryName { get; } = "widget";
 
         #endregion
 

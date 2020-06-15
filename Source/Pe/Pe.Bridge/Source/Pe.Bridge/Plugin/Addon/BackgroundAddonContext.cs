@@ -14,6 +14,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         Key Key { get; }
         bool IsDown { get; }
 
+        DateTime TimestampUtc { get; }
+
         #endregion
     }
 
@@ -26,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         [PixelKind(Px.Device)]
         Point Location { get; }
+        DateTime TimestampUtc { get; }
 
         #endregion
     }
@@ -37,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         MouseButton Button { get; }
         MouseButtonState State { get; }
         bool IsDown { get; }
+        DateTime TimestampUtc { get; }
 
         #endregion
     }
@@ -53,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// パラメータ。
         /// </summary>
         object? Parameter { get; }
+        DateTime TimestampUtc { get; }
 
         #endregion
     }
@@ -74,6 +79,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// パラメータ複製装置。
         /// </summary>
         Func<object, object> ObjectCloner { get; }
+        DateTime TimestampUtc { get; }
 
         #endregion
     }

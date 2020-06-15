@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region PluginContextFactoryBase
 
-        protected override string BaseDirectoryName => "data";
+        protected override string BaseDirectoryName => CommonDirectoryName;
 
         #endregion
     }
