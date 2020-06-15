@@ -384,6 +384,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<PreferencesContextFactory, PreferencesContextFactory>(DiLifecycle.Transient)
                 .Register<LauncherItemAddonContextFactory, LauncherItemAddonContextFactory>(DiLifecycle.Transient)
                 .Register<WidgetAddonContextFactory, WidgetAddonContextFactory>(DiLifecycle.Transient)
+                .Register<BackgroundAddonContextFactory, BackgroundAddonContextFactory>(DiLifecycle.Transient)
 
                 .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
                 .Register<CultureService, CultureService>(cultureService)

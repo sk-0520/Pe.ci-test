@@ -27,12 +27,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             PluginContextFactory = pluginContextFactory;
+            BackgroundAddonContextFactory =backgroundAddonContextFactory;
 
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
@@ -45,6 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         ILoggerFactory LoggerFactory { get; }
 
         PluginContextFactory PluginContextFactory { get; }
+        BackgroundAddonContextFactory BackgroundAddonContextFactory { get; }
+
         IUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -95,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public BackgroundAddonProxy GetBackground()
         {
-            return new BackgroundAddonProxy(BackgroundSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new BackgroundAddonProxy(BackgroundSupportAddons, PluginContextFactory, BackgroundAddonContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
         public IReadOnlyList<WidgetAddonProxy> GetWidgets()

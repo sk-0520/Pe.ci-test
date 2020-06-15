@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -38,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsSupportedExplorer => ExplorerSupporter != null;
 
         Guid KeyboardNotifyLogId { get; set; }
+        private BackgroundAddonProxy? BackgroundAddon { get; set; }
 
         #endregion
 
@@ -178,6 +180,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             IsEnabledHook = false;
+        }
+
+        void StartBackground()
+        {
+            BackgroundAddon = PluginContainer.Addon.GetBackground();
+
+            var hookConfiguration = ApplicationDiContainer.Build<HookConfiguration>();
+            if(hookConfiguration.Keyboard) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.KeyboardHook)) {
+                    if(!KeyboradHooker.IsEnabled) {
+                        Logger.LogInformation("キーボード設定は存在しないがバックグラウンドアドオンでキーボード処理が存在するためキーフックを開始");
+                        KeyboradHooker.Register();
+                        IsEnabledHook = true;
+                    }
+                }
+            }
+
+            if(hookConfiguration.Mouse) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    if(!MouseHooker.IsEnabled) {
+                        Logger.LogInformation("バックグラウンドアドオンでマウス処理が存在するためマウスフックを開始");
+                        MouseHooker.Register();
+                        IsEnabledHook = true;
+                    }
+                }
+            }
         }
 
         public void ToggleHook()
@@ -527,8 +555,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             if(BackgroundAddon != null) {
-                var context = new BackgroundAddonProxyKeyboardContext(e);
-                //BackgroundAddon.HookKeyDown();
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyKeyboardContext(e);
+                    BackgroundAddon.HookKeyDown(context);
+                }
             }
         }
 
@@ -537,7 +567,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);
 
-            //NOTE: ここでバックグラウンド処理
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyKeyboardContext(e);
+                    BackgroundAddon.HookKeyUp(context);
+                }
+            }
         }
 
         private void MouseHooker_MouseMove(object? sender, MouseHookEventArgs e)
@@ -551,6 +586,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 if(!hasCommandLog) {
                     NotifyLogElement.StartView();
                 }
+            }
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    var context = new BackgroundAddonProxyMouseMoveContext(e);
+                    BackgroundAddon.HookMouseMove(context);
+                }
+
             }
         }
 

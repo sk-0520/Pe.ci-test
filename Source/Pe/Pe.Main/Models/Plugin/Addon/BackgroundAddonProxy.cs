@@ -3,48 +3,96 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class BackgroundAddonProxy: AddonsProxyBase<IBackground>
+    internal class BackgroundAddonProxy: AddonsProxyBase<IBackground>, IBackground
     {
-        public BackgroundAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public BackgroundAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(addons, pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
         {
+            BackgroundAddonContextFactory = backgroundAddonContextFactory;
         }
+
+        #region property
+
+        BackgroundAddonContextFactory BackgroundAddonContextFactory { get; }
+
+        IDictionary<BackgroundKind, bool> SupportedCache { get; } = new Dictionary<BackgroundKind, bool>();
+
+        #endregion
 
         #region function
 
         /// <inheritdoc cref="IBackground.IsSupported(BackgroundKind)"/>
         public bool IsSupported(BackgroundKind backgroundKind)
         {
-            return FunctionUnits.Any(i => i.IsSupported(backgroundKind));
+            if(SupportedCache.TryGetValue(backgroundKind, out var value)) {
+                return value;
+            }
+            var result = FunctionUnits.Any(i => i.IsSupported(backgroundKind));
+            return SupportedCache[backgroundKind] = result;
         }
 
         /// <inheritdoc cref="IBackground.HookKeyDown(IBackgroundAddonKeyboardContext)"/>
-        public void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
+        public void HookKeyDown(BackgroundAddonProxyKeyboardContext backgroundAddonKeyboardContext)
+        {
+            Task.Run(() => {
+                var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.KeyboardHook));
+                foreach(var functionUnit in functionUnits) {
+                    var addon = GetAddon(functionUnit);
+                    var context = BackgroundAddonContextFactory.CreateKeyboardContext(addon.PluginInformations, backgroundAddonKeyboardContext.KeyboardHookEventArgs);
+                    functionUnit.HookKeyDown(context);
+                }
+            });
+        }
+        void IBackground.HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
             Debug.Assert(backgroundAddonKeyboardContext.GetType() == typeof(BackgroundAddonProxyKeyboardContext));
-
-            throw new NotImplementedException();
+            HookKeyDown((BackgroundAddonProxyKeyboardContext)backgroundAddonKeyboardContext);
         }
 
         /// <inheritdoc cref="IBackground.HookKeyUp(IBackgroundAddonKeyboardContext)"/>
-        public void HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
+        public void HookKeyUp(BackgroundAddonProxyKeyboardContext backgroundAddonKeyboardContext)
         {
             Debug.Assert(backgroundAddonKeyboardContext.GetType() == typeof(BackgroundAddonProxyKeyboardContext));
-
-            throw new NotImplementedException();
+            Task.Run(() => {
+                var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.KeyboardHook));
+                foreach(var functionUnit in functionUnits) {
+                    var addon = GetAddon(functionUnit);
+                    var context = BackgroundAddonContextFactory.CreateKeyboardContext(addon.PluginInformations, backgroundAddonKeyboardContext.KeyboardHookEventArgs);
+                    functionUnit.HookKeyUp(context);
+                }
+            });
+        }
+        void IBackground.HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
+        {
+            Debug.Assert(backgroundAddonKeyboardContext.GetType() == typeof(BackgroundAddonProxyKeyboardContext));
+            HookKeyUp((BackgroundAddonProxyKeyboardContext)backgroundAddonKeyboardContext);
         }
 
         /// <inheritdoc cref="IBackground.HookMouseMove(IBackgroundAddonMouseMoveContext)"/>
-        public void HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext)
+        public void HookMouseMove(BackgroundAddonProxyMouseMoveContext backgroundAddonMouseMoveContext)
         {
             Debug.Assert(backgroundAddonMouseMoveContext.GetType() == typeof(BackgroundAddonProxyMouseMoveContext));
-            throw new NotImplementedException();
+            Task.Run(() => {
+                var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.MouseHook));
+                foreach(var functionUnit in functionUnits) {
+                    var addon = GetAddon(functionUnit);
+                    var context = BackgroundAddonContextFactory.CreateMouseMoveContex(addon.PluginInformations, backgroundAddonMouseMoveContext.MouseHookEventArgs);
+                    functionUnit.HookMouseMove(context);
+                }
+            });
+        }
+        void IBackground.HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext)
+        {
+            Debug.Assert(backgroundAddonMouseMoveContext.GetType() == typeof(BackgroundAddonProxyMouseMoveContext));
+            HookMouseMove((BackgroundAddonProxyMouseMoveContext)backgroundAddonMouseMoveContext);
         }
 
         /// <inheritdoc cref="IBackground.HookMouseDown(IBackgroundAddonMouseButtonContext)"/>

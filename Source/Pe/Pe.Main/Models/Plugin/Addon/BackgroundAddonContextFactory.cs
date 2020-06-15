@@ -22,20 +22,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public BackgroundAddonKeyboardContext CreateKeyboardContext(IPluginInformations pluginInformations, KeyboardHookEventArgs keyboardHookEventArgs, IDatabaseCommandsPack databaseCommandsPack)
+        public BackgroundAddonKeyboardContext CreateKeyboardContext(IPluginInformations pluginInformations, KeyboardHookEventArgs keyboardHookEventArgs)
         {
             var context = new BackgroundAddonKeyboardContext(pluginInformations.PluginIdentifiers, keyboardHookEventArgs);
             return context;
         }
 
 
-        public BackgroundAddonMouseMoveContext CreateMouseMoveContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs, IDatabaseCommandsPack databaseCommandsPack)
+        public BackgroundAddonMouseMoveContext CreateMouseMoveContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs)
         {
             var context = new BackgroundAddonMouseMoveContext(pluginInformations.PluginIdentifiers, mouseHookEventArgs);
             return context;
         }
 
-        public BackgroundAddonMouseButtonContext CreateMouseButtonContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs, IDatabaseCommandsPack databaseCommandsPack)
+        public BackgroundAddonMouseButtonContext CreateMouseButtonContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs)
         {
             var context = new BackgroundAddonMouseButtonContext(pluginInformations.PluginIdentifiers, mouseHookEventArgs);
             return context;

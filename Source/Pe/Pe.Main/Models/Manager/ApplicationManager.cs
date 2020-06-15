@@ -196,7 +196,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private string TestPluginName { get; } = string.Empty;
 
         private ObservableCollection<WidgetElement> Widgets { get; } = new ObservableCollection<WidgetElement>();
-        private BackgroundAddonProxy? BackgroundAddon { get; set; }
         #endregion
 
         #region function
@@ -782,13 +781,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
             PluginContainer.Theme.SetCurrentTheme(themePluginId, pluginContextFactory);
-        }
-
-        private void RunAddons()
-        {
-            //TODTO: アドオンを実行していく
-            BackgroundAddon = PluginContainer.Addon.GetBackground();
-
         }
 
         void SetStaticPlatformTheme()
@@ -1798,7 +1790,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         internal void StartupEnd()
         {
             StartHook();
-            RunAddons();
+            StartBackground();
+
             DelayCheckUpdateAsync().ConfigureAwait(false);
 #if DEBUG
             DebugStartupEnd();

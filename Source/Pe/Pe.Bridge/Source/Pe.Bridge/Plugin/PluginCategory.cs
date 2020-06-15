@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         public const string FileSystem = "file-system";
         public const string Utility = "utility";
         public const string Network = "network";
+        public const string Toy = "toy";
 
         public const string Others = "";
 
