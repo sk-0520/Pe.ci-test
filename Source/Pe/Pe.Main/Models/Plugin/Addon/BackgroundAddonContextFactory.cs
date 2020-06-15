@@ -22,16 +22,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public BackgroundAddonKeyboardContext CreateKeyboardContext(IPluginInformations pluginInformations, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, KeyboardHookEventArgs keyboardHookEventArgs, IDatabaseCommandsPack databaseCommandsPack)
+        public BackgroundAddonKeyboardContext CreateKeyboardContext(IPluginInformations pluginInformations, KeyboardHookEventArgs keyboardHookEventArgs, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var context = new BackgroundAddonKeyboardContext(pluginInformations.PluginIdentifiers, timestamp, keyboardHookEventArgs.Key, keyboardHookEventArgs.IsDown);
+            var context = new BackgroundAddonKeyboardContext(pluginInformations.PluginIdentifiers, keyboardHookEventArgs);
             return context;
         }
 
 
-        public BackgroundAddonMouseMoveContext CreateMouseMoveContex(IPluginInformations pluginInformations, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, [PixelKind(Px.Device)] Point location, IDatabaseCommandsPack databaseCommandsPack)
+        public BackgroundAddonMouseMoveContext CreateMouseMoveContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var context = new BackgroundAddonMouseMoveContext(pluginInformations.PluginIdentifiers, timestamp, location);
+            var context = new BackgroundAddonMouseMoveContext(pluginInformations.PluginIdentifiers, mouseHookEventArgs);
+            return context;
+        }
+
+        public BackgroundAddonMouseButtonContext CreateMouseButtonContex(IPluginInformations pluginInformations, MouseHookEventArgs mouseHookEventArgs, IDatabaseCommandsPack databaseCommandsPack)
+        {
+            var context = new BackgroundAddonMouseButtonContext(pluginInformations.PluginIdentifiers, mouseHookEventArgs);
             return context;
         }
 

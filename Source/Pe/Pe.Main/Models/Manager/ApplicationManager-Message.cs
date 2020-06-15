@@ -18,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
@@ -525,7 +526,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            //NOTE: ここでバックグラウンド処理
+            if(BackgroundAddon != null) {
+                var context = new BackgroundAddonProxyKeyboardContext(e);
+                //BackgroundAddon.HookKeyDown();
+            }
         }
 
         private void KeyboradHooker_KeyUp(object? sender, KeyboardHookEventArgs e)

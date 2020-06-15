@@ -39,7 +39,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         MouseButton Button { get; }
         MouseButtonState State { get; }
-        bool IsDown { get; }
         DateTime TimestampUtc { get; }
 
         #endregion

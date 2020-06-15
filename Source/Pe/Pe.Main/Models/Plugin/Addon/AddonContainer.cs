@@ -93,6 +93,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return new CommandFinderAddonProxy(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
         }
 
+        public BackgroundAddonProxy GetBackground()
+        {
+            return new BackgroundAddonProxy(BackgroundSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+        }
+
         public IReadOnlyList<WidgetAddonProxy> GetWidgets()
         {
             return WidgetSupportAddons

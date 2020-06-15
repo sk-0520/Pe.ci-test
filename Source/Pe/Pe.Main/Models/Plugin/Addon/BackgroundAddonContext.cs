@@ -7,17 +7,19 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
+    /// <inheritdoc cref="IBackgroundAddonKeyboardContext" />
     internal class BackgroundAddonKeyboardContext: PluginIdentifiersContextBase, IBackgroundAddonKeyboardContext
     {
-        public BackgroundAddonKeyboardContext(IPluginIdentifiers pluginIdentifiers, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, Key key, bool isDown)
+        public BackgroundAddonKeyboardContext(IPluginIdentifiers pluginIdentifiers, KeyboardHookEventArgs keyboardHookEventArgs)
             : base(pluginIdentifiers)
         {
-            Key = key;
-            IsDown = isDown;
-            TimestampUtc = timestamp;
+            Key = keyboardHookEventArgs.Key;
+            IsDown = keyboardHookEventArgs.IsDown;
+            TimestampUtc = keyboardHookEventArgs.Timestamp;
         }
 
         #region IBackgroundAddonKeyboardContext
@@ -34,13 +36,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
+    /// <inheritdoc cref="IBackgroundAddonMouseMoveContext" />
     internal class BackgroundAddonMouseMoveContext: PluginIdentifiersContextBase, IBackgroundAddonMouseMoveContext
     {
-        public BackgroundAddonMouseMoveContext(IPluginIdentifiers pluginIdentifiers, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, [PixelKind(Px.Device)] Point location)
+        public BackgroundAddonMouseMoveContext(IPluginIdentifiers pluginIdentifiers, MouseHookEventArgs mouseHookEventArgs)
             : base(pluginIdentifiers)
         {
-            Location = location;
-            TimestampUtc = timestamp;
+            if(mouseHookEventArgs.IsButtonEvent) {
+                throw new ArgumentException(nameof(mouseHookEventArgs.IsButtonEvent));
+            }
+
+            Location = mouseHookEventArgs.DeviceLocation;
+            TimestampUtc = mouseHookEventArgs.Timestamp;
         }
 
         #region IBackgroundAddonMouseMoveContext
@@ -54,5 +61,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public DateTime TimestampUtc { get; }
 
         #endregion
+    }
+
+    /// <inheritdoc cref="IBackgroundAddonMouseButtonContext" />
+    internal class BackgroundAddonMouseButtonContext: IBackgroundAddonMouseButtonContext
+    {
+        public BackgroundAddonMouseButtonContext(IPluginIdentifiers pluginIdentifiers, MouseHookEventArgs mouseHookEventArgs)
+        {
+            if(!mouseHookEventArgs.IsButtonEvent) {
+                throw new ArgumentException(nameof(mouseHookEventArgs.IsButtonEvent));
+            }
+
+            Button = mouseHookEventArgs.Button;
+            State = mouseHookEventArgs.ButtonState;
+            TimestampUtc = mouseHookEventArgs.Timestamp;
+        }
+
+        #region IBackgroundAddonMouseButtonContext
+
+        /// <inheritdoc cref="IBackgroundAddonMouseButtonContext.Button" />
+        public MouseButton Button { get; }
+        /// <inheritdoc cref="IBackgroundAddonMouseButtonContext.State" />
+        public MouseButtonState State { get; }
+        /// <inheritdoc cref="IBackgroundAddonMouseButtonContext.TimestampUtc" />
+        [Timestamp(DateTimeKind.Utc)]
+        public DateTime TimestampUtc { get; }
+
+        #endregion
+
     }
 }

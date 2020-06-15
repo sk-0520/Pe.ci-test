@@ -9,26 +9,14 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class BackgroundAddonProxy: AddonsProxyBase<IBackground>, IBackground
+    internal class BackgroundAddonProxy: AddonsProxyBase<IBackground>
     {
         public BackgroundAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(addons, pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
         {
         }
 
-        #region AddonWrapperBase
-
-        protected override AddonKind AddonKind => AddonKind.Background;
-
-        protected override IBackground BuildFunctionUnit(IAddon loadedAddon)
-        {
-            return loadedAddon.BuildBackground(CreateParameter(loadedAddon));
-        }
-
-
-        #endregion
-
-        #region IBackground
+        #region function
 
         /// <inheritdoc cref="IBackground.IsSupported(BackgroundKind)"/>
         public bool IsSupported(BackgroundKind backgroundKind)
@@ -39,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <inheritdoc cref="IBackground.HookKeyDown(IBackgroundAddonKeyboardContext)"/>
         public void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            Debug.Assert(backgroundAddonKeyboardContext == null);
+            Debug.Assert(backgroundAddonKeyboardContext.GetType() == typeof(BackgroundAddonProxyKeyboardContext));
 
             throw new NotImplementedException();
         }
@@ -47,14 +35,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <inheritdoc cref="IBackground.HookKeyUp(IBackgroundAddonKeyboardContext)"/>
         public void HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            Debug.Assert(backgroundAddonKeyboardContext == null);
+            Debug.Assert(backgroundAddonKeyboardContext.GetType() == typeof(BackgroundAddonProxyKeyboardContext));
+
             throw new NotImplementedException();
         }
 
         /// <inheritdoc cref="IBackground.HookMouseMove(IBackgroundAddonMouseMoveContext)"/>
         public void HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext)
         {
-            Debug.Assert(backgroundAddonMouseMoveContext == null);
+            Debug.Assert(backgroundAddonMouseMoveContext.GetType() == typeof(BackgroundAddonProxyMouseMoveContext));
             throw new NotImplementedException();
         }
 
@@ -85,5 +74,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
         #endregion
+
+        #region AddonWrapperBase
+
+        protected override AddonKind AddonKind => AddonKind.Background;
+
+        protected override IBackground BuildFunctionUnit(IAddon loadedAddon)
+        {
+            return loadedAddon.BuildBackground(CreateParameter(loadedAddon));
+        }
+
+
+        #endregion
+
     }
 }
