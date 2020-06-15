@@ -20,8 +20,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
         {
             Setting = setting;
 
-            Setting.ClockWidgetKind = ClockWidgetKind.SimpleAnalog;
-
             Content = Setting.ClockWidgetKind switch
             {
                 ClockWidgetKind.SimpleAnalog => new ClockWidgetSimpleAnalogClockContentViewModel(skeletonImplements.Clone(), loggerFactory),

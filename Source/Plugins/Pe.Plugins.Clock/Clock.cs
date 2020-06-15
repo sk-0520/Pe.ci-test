@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
 using ContentTypeTextNet.Pe.Plugins.Clock.Addon;
+using ContentTypeTextNet.Pe.Plugins.Clock.Preferences;
 
 namespace ContentTypeTextNet.Pe.Plugins.Clock
 {
-    public class Clock: PluginBase, IAddon
+    public class Clock: PluginBase, IAddon, IPreferences
     {
         #region variable
 
@@ -26,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock
 
         internal override AddonBase Addon => this._addon;
 
-        //protected override IPreferences CreatePreferences() => new FileFinderPreferences();
+        protected override IPreferences CreatePreferences() => new ClockPreferences(this);
 
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }

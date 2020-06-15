@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace ContentTypeTextNet.Pe.Plugins.Clock.Models.Data
 {
@@ -16,7 +19,23 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Models.Data
         #region property
 
         public ClockWidgetKind ClockWidgetKind { get; set; }
+
+        [XmlIgnore]
+        [IgnoreDataMember]
+        [JsonIgnore]
         public TimeZoneInfo TimeZone { get; set; } = TimeZoneInfo.Local;
+
+        public string TimeZoneId
+        {
+            get
+            {
+                return TimeZone.ToSerializedString();
+            }
+            set
+            {
+                TimeZone = TimeZoneInfo.FromSerializedString(value);
+            }
+        }
 
         #endregion
     }
