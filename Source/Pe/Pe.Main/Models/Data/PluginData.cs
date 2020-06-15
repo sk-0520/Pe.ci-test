@@ -116,6 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         [PixelKind(Px.Logical)]
         public double Height { get; set; }
         public bool IsVisible { get; set; }
+        public bool IsTopmost { get; set; }
 
         #endregion
     }

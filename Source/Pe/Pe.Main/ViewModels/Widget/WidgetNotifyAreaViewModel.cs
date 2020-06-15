@@ -17,39 +17,30 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Manager;
+using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 {
-    public class WidgetNotifyAreaViewModel: WidgetViewModelBase<WidgetElement>, INotifyArea
+    public class WidgetNotifyAreaViewModel: WidgetViewModelBase<WidgetElement>
     {
         public WidgetNotifyAreaViewModel(WidgetElement model, IUserTracker userTracker, IWindowManager windowManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, windowManager, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
+
+        public DependencyObject? MenuIcon => DispatcherWrapper.Get(() => Model.GetMenuIcon());
+        public string MenuHeader => Model.GetMenuHeader();
+        public bool IsVisible => Model.ViewCreated;
+        public bool IsTopmost => Model.IsTopmost;
+
         #endregion
 
         #region command
 
-        #endregion
-
-        #region function
-
-        #endregion
-
-        #region INotifyArea
-
-        public string MenuHeader => Model.GetMenuHeader();
-        public bool MenuHeaderHasAccessKey { get; } = false;
-        public KeyGesture? MenuKeyGesture { get; }
-        public DependencyObject? MenuIcon => DispatcherWrapper.Get(() => Model.GetMenuIcon());
-        public bool MenuHasIcon { get; } = true;
-        public bool MenuIsEnabled { get; } = true;
-        public bool MenuIsChecked => Model.ViewCreated;
-
-        public ICommand MenuCommand => GetOrCreateCommand(() => new DelegateCommand(
+        public ICommand ToggleVisibleCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 if(Model.ViewCreated) {
                     Model.SaveStatus(false);
@@ -58,10 +49,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                     Model.ShowView(this);
                     Model.SaveStatus(true);
                 }
-            },
-            () => MenuIsEnabled
+                RaisePropertyChanged(nameof(IsVisible));
+            }
+        ));
+
+        public ICommand ToggleTopmostCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                Model.ToggleTopmost();
+                RaisePropertyChanged(nameof(IsTopmost));
+            }
         ));
 
         #endregion
+
+        #region function
+
+        #endregion
+
     }
 }

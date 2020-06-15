@@ -1,11 +1,6 @@
 update
 	PluginWidgetSettings
 set
-	X          = @X,
-	Y          = @Y,
-	Width      = @Width,
-	Height     = @Height,
-	IsVisible  = @IsVisible,
 	IsTopmost  = @IsTopmost,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,

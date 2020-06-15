@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pe", "Pe", "{5F4E5428-D9CB-40DD-BB8E-5C62B0EC89C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.ClassicTheme", "Pe.Plugins.ClassicTheme\Pe.Plugins.ClassicTheme.csproj", "{F4668D98-D214-4798-9A66-9637CCBE822C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0FD4365-AB1A-425D-8C5C-B229C687E371} = {C0FD4365-AB1A-425D-8C5C-B229C687E371}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge", "..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj", "{384BE820-2F92-411C-9993-3F533021519B}"
 EndProject
@@ -14,8 +17,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Core", "..\Pe\Pe.Core\Pe.Core.csproj", "{4ADC99CE-F83E-482C-8FC7-FD2F4E974884}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.FileFinder", "Pe.Plugins.FileFinder\Pe.Plugins.FileFinder.csproj", "{04E4AC16-12E4-48FB-BB35-D25D821FA599}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0FD4365-AB1A-425D-8C5C-B229C687E371} = {C0FD4365-AB1A-425D-8C5C-B229C687E371}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Clock", "Pe.Plugins.Clock\Pe.Plugins.Clock.csproj", "{49CD41D0-FC11-4D95-B050-79CE8FCD2863}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0FD4365-AB1A-425D-8C5C-B229C687E371} = {C0FD4365-AB1A-425D-8C5C-B229C687E371}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.PInvoke", "..\Pe\Pe.PInvoke\Pe.PInvoke.csproj", "{ECAA9C2D-900B-4F36-8EAB-147C9B99A363}"
 EndProject
@@ -29,7 +38,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{822F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded", "..\Pe\Pe.Bridge\Source\Pe.Embedded\Pe.Embedded.csproj", "{36EDDBED-D1C6-4643-A693-D575C2D7DBC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Plugins.Eyes", "Pe.Plugins.Eyes\Pe.Plugins.Eyes.csproj", "{44A80EE7-23F9-4F87-90F2-C07B9176755C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Eyes", "Pe.Plugins.Eyes\Pe.Plugins.Eyes.csproj", "{44A80EE7-23F9-4F87-90F2-C07B9176755C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0FD4365-AB1A-425D-8C5C-B229C687E371} = {C0FD4365-AB1A-425D-8C5C-B229C687E371}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

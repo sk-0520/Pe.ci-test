@@ -968,11 +968,12 @@ ___
 |    | o  |                  | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                |
 |    | o  |                  | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                |
 |    | o  |                  | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                        |
-|    | o  |                  | X座標                    | X                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 |
-|    | o  |                  | Y座標                    | Y                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 |
-|    | o  |                  | 横幅                     | Width                 | real         | System.Decimal  |              |                                |
-|    | o  |                  | 高さ                     | Height                | real         | System.Decimal  |              |                                |
-|    |    |                  | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                |
+|    |    |                  | X座標                    | X                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 null時は中央 |
+|    |    |                  | Y座標                    | Y                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 null時は中央 |
+|    |    |                  | 横幅                     | Width                 | real         | System.Decimal  |              | null時はウィジェットの初期サイズ |
+|    |    |                  | 高さ                     | Height                | real         | System.Decimal  |              | null時はウィジェットの初期サイズ |
+|    | o  |                  | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                |
+|    | o  |                  | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                                |
 
 ### index
 

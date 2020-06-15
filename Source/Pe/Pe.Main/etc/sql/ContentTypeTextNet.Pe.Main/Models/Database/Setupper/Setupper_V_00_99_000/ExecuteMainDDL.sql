@@ -84,11 +84,12 @@ create table [PluginWidgetSettings] (
 	[UpdatedProgramName] text not null /* 更新プログラム名  */,
 	[UpdatedProgramVersion] text not null /* 更新プログラムバージョン  */,
 	[UpdatedCount] integer not null /* 更新回数 0始まり */,
-	[X] real not null /* X座標 原点: プライマリウィンドウ左上 */,
-	[Y] real not null /* Y座標 原点: プライマリウィンドウ左上 */,
-	[Width] real not null /* 横幅  */,
-	[Height] real not null /* 高さ  */,
-	[IsVisible] boolean /* 表示  */,
+	[X] real /* X座標 原点: プライマリウィンドウ左上 null時は中央 */,
+	[Y] real /* Y座標 原点: プライマリウィンドウ左上 null時は中央 */,
+	[Width] real /* 横幅 null時はウィジェットの初期サイズ */,
+	[Height] real /* 高さ null時はウィジェットの初期サイズ */,
+	[IsVisible] boolean not null /* 表示  */,
+	[IsTopmost] boolean not null /* 最前面  */,
 	primary key(
 		[PluginId]
 	),

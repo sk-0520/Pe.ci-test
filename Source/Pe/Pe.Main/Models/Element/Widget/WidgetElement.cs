@@ -55,6 +55,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         INotifyManager NotifyManager { get; }
         public bool ViewCreated { get; private set; }
 
+        public bool IsTopmost { get; private set; }
+
         WindowItem? WindowItem { get; set; }
 
         #endregion
@@ -110,20 +112,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             window.ShowInTaskbar = false;
             // ウィンドウの透明度は Pe 側で制御
             window.Opacity = 0;
+            // 最前面表示は Pe 側で制御
+            window.Topmost = false;
 
             // ウィンドウ位置指定
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
                     var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(PluginId);
-                    window.Left = setting.X;
-                    window.Top = setting.Y;
+                    var isTopmost = pluginWidgetSettingsEntityDao.SelectPluginWidgetTopmost(PluginId);
+
+                    window.WindowStartupLocation = WindowStartupLocation.Manual;
+                    window.Topmost = isTopmost;
+
+                    if(!double.IsNaN(setting.X) && !double.IsNaN(setting.Height)) {
+                        window.Left = setting.X;
+                        window.Top = setting.Y;
+                    } else {
+                        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    }
                     if(window.ResizeMode != ResizeMode.NoResize && !double.IsNaN(setting.Width) && !double.IsNaN(setting.Height)) {
                         window.Width = setting.Width;
                         window.Height = setting.Height;
                     }
 
-                    window.WindowStartupLocation = WindowStartupLocation.Manual;
                 } else {
                     window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 }
@@ -175,6 +187,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             WindowItem.Window.Close();
         }
 
+        public void ToggleTopmost()
+        {
+            var newIsTopmost = !IsTopmost;
+            using(var commander = MainDatabaseBarrier.WaitWrite()) {
+                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
+                    pluginWidgetSettingsEntityDao.UpdatePluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                } else {
+                    pluginWidgetSettingsEntityDao.InsertPluginWidgetTopmost(PluginId, newIsTopmost, DatabaseCommonStatus.CreatePluginAccount(PluginInformations.PluginIdentifiers, PluginInformations.PluginVersions));
+                }
+                commander.Commit();
+            }
+
+            IsTopmost = newIsTopmost;
+            if(WindowItem != null) {
+                WindowItem.Window.Topmost = IsTopmost;
+            }
+        }
+
         public void SaveStatus(bool isVisible)
         {
             if(WindowItem == null) {
@@ -187,6 +218,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 X = WindowItem.Window.Left,
                 Y = WindowItem.Window.Top,
                 IsVisible = isVisible, // こいつだけはユーザー操作であるか否かで変わってくる
+                IsTopmost = WindowItem.Window.Topmost,
             };
             if(WindowItem.Window.ResizeMode == ResizeMode.NoResize) {
                 data.Width = double.NaN;
@@ -213,7 +245,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         #region ElementBase
 
         protected override void InitializeImpl()
-        { }
+        {
+            IsTopmost = MainDatabaseBarrier.ReadData(c => {
+                var pluginWidgetSettingsEntityDao = new PluginWidgetSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(PluginId)) {
+                    return pluginWidgetSettingsEntityDao.SelectPluginWidgetTopmost(PluginId);
+                }
+
+                return false;
+            });
+        }
 
         #endregion
 

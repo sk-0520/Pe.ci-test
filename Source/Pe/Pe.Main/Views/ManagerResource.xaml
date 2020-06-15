@@ -139,7 +139,27 @@
     </MenuItem>
 
     <Separator Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" />
-    <MenuItem Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="widgets" ItemsSource="{Binding WidgetItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" />
+    <MenuItem Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="widgets" ItemsSource="{Binding WidgetItems}">
+      <MenuItem.Resources>
+        <Style x:Key="WidgetMenuItem" TargetType="MenuItem">
+          <Setter Property="ItemsSource" Value="{x:Null}" />
+        </Style>
+      </MenuItem.Resources>
+      <MenuItem.ItemContainerStyle>
+        <Style TargetType="MenuItem">
+          <Setter Property="Header" Value="{Binding MenuHeader, Converter={StaticResource EscapeAccessKeyConverter}}" />
+          <Setter Property="Icon" Value="{Binding MenuIcon}" />
+          <Setter Property="ItemsSource">
+            <Setter.Value>
+              <CompositeCollection>
+                <MenuItem Style="{StaticResource WidgetMenuItem}" IsChecked="{Binding IsVisible, Mode=OneWay}" Command="{Binding ToggleVisibleCommand}" Header="show" />
+                <MenuItem Style="{StaticResource WidgetMenuItem}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" Header="topmost" />
+              </CompositeCollection>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </MenuItem.ItemContainerStyle>
+    </MenuItem>
 
     <Separator />
 

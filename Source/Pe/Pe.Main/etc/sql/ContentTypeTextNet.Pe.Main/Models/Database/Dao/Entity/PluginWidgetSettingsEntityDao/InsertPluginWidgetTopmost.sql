@@ -22,11 +22,11 @@ insert into
 	values
 	(
 /* PluginId              */ @PluginId,
-/* Y                     */ @X,
-/* X                     */ @Y,
-/* Width                 */ @Width,
-/* Height                */ @Height,
-/* IsVisible             */ @IsVisible,
+/* Y                     */ null,
+/* X                     */ null,
+/* Width                 */ null,
+/* Height                */ null,
+/* IsVisible             */ false,
 /* IsTopmost             */ @IsTopmost,
 
 /*                       */
