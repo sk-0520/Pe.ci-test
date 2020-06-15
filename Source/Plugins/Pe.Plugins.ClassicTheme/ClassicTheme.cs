@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Plugins.ClassicTheme
         public ClassicTheme(IPluginConstructorContext pluginConstructorContext)
             : base(pluginConstructorContext)
         {
-            this._theme = new ClassicThemeImpl(pluginConstructorContext);
+            this._theme = new ClassicThemeImpl(pluginConstructorContext, this);
         }
 
         #region PluginBase

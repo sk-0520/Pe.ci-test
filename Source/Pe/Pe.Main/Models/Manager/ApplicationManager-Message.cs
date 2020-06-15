@@ -564,7 +564,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("セッション終了検知: Reason = {0}, Cancel = {1}", e.Reason, e.Cancel);
 
-            CloseViews();
+            CloseViews(true);
             DisposeElements();
             BackupSettingsDefault(ApplicationDiContainer);
         }

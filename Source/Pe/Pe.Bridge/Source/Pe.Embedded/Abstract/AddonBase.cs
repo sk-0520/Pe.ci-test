@@ -8,16 +8,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
-    internal abstract class AddonBase: IAddon
+    internal abstract class AddonBase: ExtensionBase, IAddon
     {
-        public AddonBase(IPluginConstructorContext pluginConstructorContext)
-        {
-            Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
-        }
+        public AddonBase(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+            :base(pluginConstructorContext, plugin)
+        { }
 
         #region property
-
-        protected ILogger Logger { get; }
 
         /// <summary>
         /// サポートするテーマ機能を一括定義。
@@ -28,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region function
 
-        protected internal abstract void Load(IPluginContext pluginContext);
-        protected internal abstract void Unload(IPluginContext pluginContext);
+        protected internal abstract void Load(IPluginLoadContext pluginLoadContext);
+        protected internal abstract void Unload(IPluginUnloadContext pluginUnloadContext);
 
         #endregion
 
@@ -39,25 +36,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IAddon.IsSupported(AddonKind)"/>
         public bool IsSupported(AddonKind addonKind) => SupportedKinds.Contains(addonKind);
 
+        /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>
         public virtual ICommandFinder BuildCommandFinder(IAddonParameter parameter) => throw new NotImplementedException();
 
-        #endregion
-
-        #region IPlugin
-
-        public IPluginInformations PluginInformations => throw new NotSupportedException();
-
-        public bool IsInitialized => throw new NotSupportedException();
-
-        public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
-
-        public bool IsLoaded(PluginKind pluginKind) => throw new NotSupportedException();
-
-        public void Load(PluginKind pluginKind, IPluginContext pluginContext) => throw new NotSupportedException();
-
-        public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();
-
-        public void Unload(PluginKind pluginKind, IPluginContext pluginContext) => throw new NotSupportedException();
+        /// <inheritdoc cref="IAddon.BuildWidget(IAddonParameter)"/>
+        public virtual IWidget BuildWidget(IAddonParameter parameter) => throw new NotImplementedException();
 
         #endregion
     }

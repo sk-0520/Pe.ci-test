@@ -1,38 +1,80 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Media.Converters;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    /// <inheritdoc cref="IPluginConstructorContext"/>
-    public class PluginConstructorContext: IPluginConstructorContext
+    /// <inheritdoc cref="IPluginCommonContext"/>
+    public abstract class PluginCommonContextBase: DisposerBase
     {
+        #region function
+
+        /// <summary>
+        /// このコンテキストが使用できない際に<see cref="PluginUnavailableContextException"/>を投げる。
+        /// </summary>
+        /// <param name="_callerMemberName"></param>
+        protected void ThrowIfUnavailable([CallerMemberName] string _callerMemberName = "")
+        {
+            if(!IsAvailable) {
+                throw new PluginUnavailableContextException(_callerMemberName);
+            }
+        }
+
+        protected TValue GetValue<TValue>(TValue value)
+        {
+            ThrowIfUnavailable();
+            return value;
+        }
+
+        #endregion
+
+        #region IPluginCommonContext
+
+        /// <inheritdoc cref="IPluginCommonContext.IsAvailable"/>
+        public bool IsAvailable => !IsDisposed;
+
+        #endregion
+    }
+
+
+    /// <inheritdoc cref="IPluginConstructorContext"/>
+    public class PluginConstructorContext: PluginCommonContextBase, IPluginConstructorContext
+    {
+        #region variable
+
+        readonly ILoggerFactory _loggerFactory;
+
+        #endregion
+
         public PluginConstructorContext(ILoggerFactory loggerFactory)
         {
-            LoggerFactory = loggerFactory;
+            this._loggerFactory = loggerFactory;
         }
 
         #region IPluginConstructorContext
 
         /// <inheritdoc cref="IPluginConstructorContext.LoggerFactory"/>
-        public ILoggerFactory LoggerFactory { get; }
+        public ILoggerFactory LoggerFactory => GetValue(this._loggerFactory);
 
         #endregion
     }
 
-    public abstract class PluginIdentifiersContextBase
+    public abstract class PluginIdentifiersContextBase: PluginCommonContextBase
     {
         protected PluginIdentifiersContextBase(IPluginIdentifiers pluginIdentifiers)
         {
             PluginIdentifiers = pluginIdentifiers;
         }
 
-        #region public
+        #region property
 
         public IPluginIdentifiers PluginIdentifiers { get; }
 
@@ -42,16 +84,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginInitializeContext"/>
     public class PluginInitializeContext: PluginIdentifiersContextBase, IPluginInitializeContext
     {
+        #region variable
+
+        readonly PluginStorage _storage;
+
+        #endregion
+
         public PluginInitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
             : base(pluginIdentifiers)
         {
-            Storage = storage;
+            this._storage = storage;
         }
 
         #region IPluginInitializeContext
 
         /// <inheritdoc cref="IPluginInitializeContext.Storage"/>
-        public PluginStorage Storage { get; }
+        public PluginStorage Storage => GetValue(this._storage);
         IPluginStorage IPluginInitializeContext.Storage => Storage;
 
         #endregion
@@ -60,17 +108,71 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginUninitializeContext"/>
     public class PluginUninitializeContext: PluginIdentifiersContextBase, IPluginUninitializeContext
     {
+        #region variable
+
+        readonly PluginStorage _storage;
+
+        #endregion
+
         public PluginUninitializeContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
             : base(pluginIdentifiers)
         {
-            Storage = storage;
+            this._storage = storage;
         }
 
         #region IPluginUninitializeContext
 
         /// <inheritdoc cref="IPluginUninitializeContext.Storage"/>
-        public PluginStorage Storage { get; }
+        public PluginStorage Storage => GetValue(this._storage);
         IPluginStorage IPluginUninitializeContext.Storage => Storage;
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IPluginUninitializeContext"/>
+    public class PluginLoadContext: PluginIdentifiersContextBase, IPluginLoadContext
+    {
+        #region variable
+
+        readonly PluginStorage _storage;
+
+        #endregion
+
+        public PluginLoadContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+            : base(pluginIdentifiers)
+        {
+            this._storage = storage;
+        }
+
+        #region IPluginLoadContext
+
+        /// <inheritdoc cref="IPluginLoadContext.Storage"/>
+        public PluginStorage Storage => GetValue(this._storage);
+        IPluginStorage IPluginLoadContext.Storage => Storage;
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IPluginUnloadContext"/>
+    public class PluginUnloadContext: PluginIdentifiersContextBase, IPluginUnloadContext
+    {
+        #region variable
+
+        readonly PluginStorage _storage;
+
+        #endregion
+
+        public PluginUnloadContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
+            : base(pluginIdentifiers)
+        {
+            this._storage = storage;
+        }
+
+        #region IPluginUnloadContext
+
+        /// <inheritdoc cref="IPluginUnloadContext.Storage"/>
+        public PluginStorage Storage => GetValue(this._storage);
+        IPluginStorage IPluginUnloadContext.Storage => Storage;
 
         #endregion
     }
@@ -78,21 +180,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginContext"/>
     public class PluginContext: PluginIdentifiersContextBase, IPluginContext
     {
-        public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage, IUserAgentFactory userAgentFactory)
+        #region variable
+
+        readonly PluginStorage _storage;
+
+        #endregion
+
+        public PluginContext(IPluginIdentifiers pluginIdentifiers, PluginStorage storage)
             : base(pluginIdentifiers)
         {
-            Storage = storage;
-            UserAgentFactory = userAgentFactory;
+            this._storage = storage;
         }
 
         #region IPluginContext
 
         /// <inheritdoc cref="IPluginContext.Storage"/>
-        public PluginStorage Storage { get; }
+        public PluginStorage Storage => GetValue(this._storage);
         IPluginStorage IPluginContext.Storage => Storage;
-
-        /// <inheritdoc cref="IPluginContext.UserAgentFactory"/>
-        public IUserAgentFactory UserAgentFactory { get; }
 
         #endregion
     }

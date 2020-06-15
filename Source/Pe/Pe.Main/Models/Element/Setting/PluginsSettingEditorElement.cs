@@ -12,29 +12,30 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginsSettingEditorElement: SettingEditorElementBase
     {
-        public PluginsSettingEditorElement(PluginContainer pluginContainer, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public PluginsSettingEditorElement(PluginContainer pluginContainer, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
-            DatabaseBarrierPack = databaseBarrierPack;
-                DatabaseLazyWriterPack = databaseLazyWriterPack;
-            EnvironmentParameters = environmentParameters;
-            UserAgentManager = userAgentManager;
+            PreferencesContextFactory = preferencesContextFactory;
+
+            UserAgentFactory = userAgentFactory;
+            PlatformTheme = platformTheme;
+
             PluginItems = new ReadOnlyObservableCollection<PluginSettingEditorElement>(PluginItemsImpl);
         }
 
         #region property
 
-        IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
-        EnvironmentParameters EnvironmentParameters{get;}
-        IUserAgentManager UserAgentManager { get; }
+        PreferencesContextFactory PreferencesContextFactory { get; }
+        IUserAgentFactory UserAgentFactory { get; }
+        IPlatformTheme PlatformTheme { get; }
 
         PluginContainer PluginContainer { get; }
 
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             //var p = new PluginLoadContext
             //throw new NotImplementedException();
             foreach(var plugin in PluginContainer.Plugins) {
-                var element = new PluginSettingEditorElement(plugin, DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
+                var element = new PluginSettingEditorElement(plugin, PreferencesContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
                 element.Initialize(); // 無意味だけど呼び出し
                 PluginItemsImpl.Add(element);
             }
@@ -59,7 +60,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
-            //throw new NotImplementedException();
+            foreach(var element in PluginItems) {
+                if(element.SupportedPreferences && element.StartedPreferences) {
+                    element.SavePreferences(commandPack);
+                }
+            }
         }
 
         #endregion

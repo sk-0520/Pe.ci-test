@@ -66,6 +66,8 @@ using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
+using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -193,6 +195,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private DirectoryInfo? TestPluginDirectory { get; }
         private string TestPluginName { get; } = string.Empty;
 
+        private ObservableCollection<WidgetElement> Widgets { get; } = new ObservableCollection<WidgetElement>();
+
         #endregion
 
         #region function
@@ -227,6 +231,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var pausing = lazyWriter.Pause();
                 lazyWriterItemMap.Add(lazyWriter, pausing);
             }
+
+            SaveWidgets();
 
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
@@ -266,9 +272,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             WindowManager.Register(windowItem);
             var dialogResult = windowItem.Window.ShowDialog();
 
+            static void EndPreferences(SettingContainerElement settingElement, ILogger logger)
+            {
+                foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
+                    if(element.SupportedPreferences && element.StartedPreferences) {
+                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.Plugin.PluginInformations.PluginIdentifiers.PluginName, element.Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                        element.EndPreferences();
+                    }
+                }
+            }
+
             if(settingElement.IsSubmit) {
                 Logger.LogInformation("設定適用のため現在表示要素の破棄");
-                CloseViews();
+                CloseViews(false);
                 DisposeElements();
 
                 // 設定用DBを永続用DBと切り替え
@@ -313,6 +329,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 cultureServiceChanger.ChangeCulture();
 
                 Logger.LogInformation("設定適用のため各要素生成");
+
+                EndPreferences(settingElement, Logger);
+
                 RebuildHook();
                 ExecuteElements();
 
@@ -324,6 +343,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 NotifyLogElement.Refresh();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
+                EndPreferences(settingElement, Logger);
             }
             StartHook();
             StartPlatform();
@@ -659,9 +679,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            var applicationPlugins = new List<IPlugin>() {
-                ApplicationDiContainer.New<DefaultTheme>(),
+            var applicationPluginTypes = new List<Type>() {
+                typeof(DefaultTheme),
             };
+            var applicationPlugins = new List<IPlugin>(applicationPluginTypes.Count);
+            foreach(var type in applicationPluginTypes) {
+                using var context = ApplicationDiContainer.Build<PluginConstructorContext>();
+                var appPlugin = (IPlugin)ApplicationDiContainer.New(type, new object[] { context });
+                applicationPlugins.Add(appPlugin);
+            }
+
             var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
 
             var databaseBarrierPack = ApplicationDiContainer.Build<IDatabaseBarrierPack>();
@@ -669,7 +696,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // Pe専用プラグイン
             foreach(var plugin in applicationPlugins) {
                 using(var readerPack = databaseBarrierPack.WaitRead()) {
-                    plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack));
+                    using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                    plugin.Initialize(context);
                 }
                 initializedPlugins.Add(plugin);
             }
@@ -682,7 +710,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var plugin = pluginLoadStateItem.Plugin;
                 try {
                     using(var readerPack = databaseBarrierPack.WaitRead()) {
-                        plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack));
+                        using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                        plugin.Initialize(context);
                     }
                     initializedPlugins.Add(plugin);
                 } catch(Exception ex) {
@@ -718,6 +747,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        private void UnloadPlugins()
+        {
+            var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+            var plugins = PluginContainer.Plugins.Where(i => i.IsInitialized).ToList();
+            var themePlugins = plugins.Where(i => i.IsLoaded(PluginKind.Theme)).Select(i => new { Plugin = i, Kind = PluginKind.Theme });
+            var addonPlugins = plugins.Where(i => i.IsLoaded(PluginKind.Addon)).Select(i => new { Plugin = i, Kind = PluginKind.Addon });
+
+            using(var writer = pluginContextFactory.BarrierWrite()) {
+                foreach(var item in addonPlugins.Concat(themePlugins)) {
+                    using var context = pluginContextFactory.CreateUnloadContext(item.Plugin.PluginInformations, writer);
+                    try {
+                        item.Plugin.Unload(item.Kind, context);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "{0}({1}) {2}", item.Plugin.PluginInformations.PluginIdentifiers.PluginName, item.Plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                    }
+                }
+
+                foreach(var plugin in plugins) {
+                    using var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformations, writer);
+                    try {
+                        plugin.Uninitialize(context);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "{0}({1}) {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                    }
+                }
+
+                pluginContextFactory.Save();
+            }
+
+        }
         private void ApplyCurrentTheme(Guid themePluginId)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
@@ -1004,6 +1063,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
+        public ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> GetWidgetCollection()
+        {
+            var collection = new ActionModelViewModelObservableCollectionManager<WidgetElement, WidgetNotifyAreaViewModel>(Widgets) {
+                ToViewModel = m => ApplicationDiContainer.Build<WidgetNotifyAreaViewModel>(m),
+            };
+            return collection;
+        }
+
         public NoteElement CreateNote(IScreen dockScreen, NoteStartupPosition noteStartupPosition)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
@@ -1091,6 +1158,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 viewShowStater.StartView();
             }
 
+            ExecuteWidgets();
+
 #if DEBUG
             if(IsDevDebug) {
                 Logger.LogWarning($"{nameof(IsDevDebug)}が有効");
@@ -1106,6 +1175,59 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.SystemIdle);
         }
 
+        void ExecuteWidgets()
+        {
+            //TODO: 表示・非表示状態を読み込んだりの諸々が必要
+            if(Widgets.Count == 0) {
+                //var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+                var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
+                var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+                var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
+                var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+                var cultureService = ApplicationDiContainer.Build<CultureService>();
+
+                foreach(var widget in PluginContainer.Addon.GetWidgets()) {
+                    var info = widget.Addon.PluginInformations;
+                    var element = new WidgetElement(widget, info, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, LoggerFactory);
+                    element.Initialize();
+                    Widgets.Add(element);
+                }
+            }
+
+            var showWidgets = new List<WidgetElement>(Widgets.Count);
+            using(var commander = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitRead()) {
+                var pluginWidgetSettingsEntityDao = ApplicationDiContainer.Build<PluginWidgetSettingsEntityDao>(commander, commander.Implementation);
+                foreach(var element in Widgets) {
+                    if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(element.PluginId)) {
+                        var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(element.PluginId);
+                        if(setting.IsVisible) {
+                            showWidgets.Add(element);
+                        }
+                    }
+                }
+            }
+
+            // ViewModel渡す設計は💩で、しかもダミーってのがまた💩
+            foreach(var element in showWidgets) {
+                var viewModel = ApplicationDiContainer.Build<TemporaryWidgetViewModel>(element);
+                element.ShowView(viewModel);
+            }
+        }
+
+        void SaveWidgets()
+        {
+            foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
+                widget.SaveStatus(true);
+            }
+        }
+
+        void CloseWidgets()
+        {
+            foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
+                widget.HideView();
+            }
+        }
+
         public void Execute()
         {
             Logger.LogInformation("がんばる！");
@@ -1118,6 +1240,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StartPlatform();
 
             ExecuteElements();
+
 #if DEBUG
             DebugExecuteAfter();
 #endif
@@ -1153,13 +1276,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void CloseExtendsExecuteViews() => CloseViewsCore(WindowKind.ExtendsExecute);
         void CloseStandardInputOutputViews() => CloseViewsCore(WindowKind.StandardInputOutput);
 
-        void CloseViews()
+        void CloseViews(bool saveWidgets)
         {
             CloseStandardInputOutputViews();
             CloseLauncherCustomizeViews();
             CloseExtendsExecuteViews();
             CloseLauncherToolbarViews();
             CloseNoteViews();
+
+            if(saveWidgets) {
+                SaveWidgets();
+            }
+            CloseWidgets();
         }
 
         void DisposeElementsCore<TElement>(ICollection<TElement> elements)
@@ -1195,6 +1323,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("おわる！");
 
+            UnloadPlugins();
+
             BackupSettingsDefault(ApplicationDiContainer);
 
             if(!ignoreUpdate && ApplicationUpdateInfo.IsReady) {
@@ -1224,7 +1354,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             UninitializeSystem();
 
-            CloseViews();
+            CloseViews(true);
             DisposeElements();
             DisposeWebView();
 
@@ -1361,6 +1491,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             CloseLauncherToolbarViews();
             CloseNoteViews();
+            SaveWidgets();
+            CloseWidgets();
 
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();
@@ -1901,7 +2033,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     LazyScreenElementReset.Dispose();
 
-                    CloseViews();
+                    CloseViews(false);
                     DisposeElements();
                     DisposeWebView();
 

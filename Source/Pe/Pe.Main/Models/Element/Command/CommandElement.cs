@@ -22,6 +22,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Timer = System.Timers.Timer;
@@ -179,8 +180,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 LauncherItemCommandFinder.IconBox = IconBox;
             }
 
+            var pluginContext = PluginContextFactory.CreateNullContext(LoggerFactory);
             foreach(var commandFinder in CommandFinders) {
-                commandFinder.Refresh();
+                commandFinder.Refresh(pluginContext);
             }
         }
 

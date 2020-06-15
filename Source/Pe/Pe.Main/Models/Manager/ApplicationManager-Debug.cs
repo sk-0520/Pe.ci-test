@@ -219,7 +219,7 @@ echo end
 
         public void DebugStartupEnd()
         {
-            DebugSetting();
+            //DebugSetting();
         }
 
         #endregion

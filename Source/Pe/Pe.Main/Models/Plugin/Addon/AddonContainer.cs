@@ -27,17 +27,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
-            DatabaseBarrierPack = databaseBarrierPack;
-            DatabaseLazyWriterPack = databaseLazyWriterPack;
-            DatabaseStatementLoader = databaseStatementLoader;
-            EnvironmentParameters = environmentParameters;
-            UserAgentManager = userAgentManager;
+            PluginContextFactory = pluginContextFactory;
 
+            UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
         }
@@ -47,12 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
 
-        IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        IUserAgentManager UserAgentManager { get; }
-
+        PluginContextFactory PluginContextFactory { get; }
+        IUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
@@ -83,9 +76,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             foreach(var target in targets) {
                 if(!target.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                    var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
-                    using(var readerPack = DatabaseBarrierPack.WaitRead()) {
-                        target.Load(Bridge.Plugin.PluginKind.Addon, pluginContextFactory.CreateContext(target.PluginInformations, readerPack, true));
+                    using(var readerPack = PluginContextFactory.BarrierRead()) {
+                        using var loadContext = PluginContextFactory.CreateLoadContex(target.PluginInformations, readerPack);
+                        target.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                     }
                 }
 
@@ -95,9 +88,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return result;
         }
 
-        public CommandFinderAddonWrapper GetCommandFinder()
+        public CommandFinderAddonProxy GetCommandFinder()
         {
-            return new CommandFinderAddonWrapper(CommandFinderSupportAddons, DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new CommandFinderAddonProxy(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+        }
+
+        public IReadOnlyList<WidgetAddonProxy> GetWidgets()
+        {
+            return WidgetSupportAddons
+                .Select(i => new WidgetAddonProxy(i, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory))
+                .ToList()
+            ;
+        }
+
+        public IReadOnlyList<Guid> GetLauncherItemAddonIds()
+        {
+            return LauncherItemSupportAddons
+                .Select(i => i.PluginInformations.PluginIdentifiers.PluginId)
+                .ToList()
+            ;
         }
 
         #endregion

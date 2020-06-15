@@ -38,6 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
             PluginsSettingEditor = ServiceLocator.Build<PluginsSettingEditorElement>();
 
+            PluginContainer = ServiceLocator.Build<PluginContainer>();
+
             Editors = new SettingEditorElementBase[] {
                 GeneralsSettingEditor,
                 LauncherItemsSettingEditor,
@@ -72,6 +74,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public KeyboardSettingEditorElement KeyboardSettingEditor { get; }
         public PluginsSettingEditorElement PluginsSettingEditor { get; }
         public IReadOnlyList<SettingEditorElementBase> Editors { get; }
+
+        PluginContainer PluginContainer { get; }
 
         #endregion
 
@@ -141,6 +145,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 element.Initialize();
             }
             AllLauncherItems.SetRange(launcherItemElements);
+
+            var launcherItemAddonIds = PluginContainer.Addon.GetLauncherItemAddonIds();
+            foreach(var launcherItemAddonId in launcherItemAddonIds) {
+
+            }
 
             var launcherGroupElements = new List<LauncherGroupSettingEditorElement>(groupIds.Count);
             foreach(var groupId in groupIds) {

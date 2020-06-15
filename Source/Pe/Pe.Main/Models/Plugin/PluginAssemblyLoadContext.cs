@@ -7,12 +7,15 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    public class PluginLoadContext: AssemblyLoadContext
+    /// <summary>
+    /// プラグイン読み込み用処理。
+    /// </summary>
+    public class PluginAssemblyLoadContext: AssemblyLoadContext
     {
-        public PluginLoadContext(FileInfo pluginFile)
+        public PluginAssemblyLoadContext(FileInfo pluginFile)
             : this(pluginFile, true)
         { }
-        public PluginLoadContext(FileInfo pluginFile, bool isCollectible)
+        public PluginAssemblyLoadContext(FileInfo pluginFile, bool isCollectible)
             : base(isCollectible)
         {
             PluginFile = pluginFile;

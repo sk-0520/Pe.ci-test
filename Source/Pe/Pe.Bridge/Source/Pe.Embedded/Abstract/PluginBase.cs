@@ -188,8 +188,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             IsInitialized = true;
         }
 
-        /// <inheritdoc cref="IPlugin.Load(PluginKind, IPluginContext)"/>
-        public void Load(PluginKind pluginKind, IPluginContext pluginContext)
+        /// <inheritdoc cref="IPlugin.Load(PluginKind, IPluginLoadContext)"/>
+        public void Load(PluginKind pluginKind, IPluginLoadContext pluginLoadContext)
         {
             switch(pluginKind) {
                 case PluginKind.Addon:
@@ -197,7 +197,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(IsLoadedAddon) {
                             throw new InvalidOperationException(nameof(IsLoadedAddon));
                         }
-                        Addon.Load(pluginContext);
+                        Addon.Load(pluginLoadContext);
                         IsLoadedAddon = true;
                     } else {
                         throw new NotSupportedException();
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(IsLoadedTheme) {
                             throw new InvalidOperationException(nameof(IsLoadedTheme));
                         }
-                        Theme.Load(pluginContext);
+                        Theme.Load(pluginLoadContext);
                         IsLoadedTheme = true;
                     } else {
                         throw new NotSupportedException();
@@ -220,8 +220,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                     throw new NotImplementedException();
             }
         }
-        /// <inheritdoc cref="IPlugin.Unload(PluginKind, IPluginContext)"/>
-        public void Unload(PluginKind pluginKind, IPluginContext pluginContext)
+        /// <inheritdoc cref="IPlugin.Unload(PluginKind, IPluginUnloadContext)"/>
+        public void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext)
         {
             switch(pluginKind) {
                 case PluginKind.Addon:
@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(!IsLoadedAddon) {
                             throw new InvalidOperationException(nameof(IsLoadedAddon));
                         }
-                        Addon.Unload(pluginContext);
+                        Addon.Unload(pluginUnloadContext);
                         IsLoadedAddon = false;
                     } else {
                         throw new NotSupportedException();
@@ -241,7 +241,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                         if(!IsLoadedTheme) {
                             throw new InvalidOperationException(nameof(IsLoadedTheme));
                         }
-                        Theme.Unload(pluginContext);
+                        Theme.Unload(pluginUnloadContext);
                         IsLoadedAddon = false;
                     } else {
                         throw new NotSupportedException();
@@ -283,6 +283,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public ICommandFinder BuildCommandFinder(IAddonParameter parameter)
         {
             return BuildSupporttedAddon(AddonKind.CommandFinder, nameof(BuildCommandFinder), parameter, p => Addon.BuildCommandFinder(p));
+        }
+
+        /// <inheritdoc cref="IAddon.BuildWidget(IAddonParameter)"/>
+        public IWidget BuildWidget(IAddonParameter parameter)
+        {
+            return BuildSupporttedAddon(AddonKind.Widget, nameof(BuildWidget), parameter, p => Addon.BuildWidget(p));
         }
 
 
@@ -328,8 +334,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region IPreferences
 
-        /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext)"/>
-        public virtual UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext)
+        /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext, IPreferencesParameter)"/>
+        public virtual UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext, IPreferencesParameter preferencesParameter)
         {
             LoggingNotSupportPreferences();
             if(Preferences != null) {
@@ -337,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             }
 
             Preferences = CreatePreferences();
-            return Preferences.BeginPreferences(preferencesLoadContext);
+            return Preferences.BeginPreferences(preferencesLoadContext, preferencesParameter);
         }
 
         /// <inheritdoc cref="IPreferences.CheckPreferences(IPreferencesCheckContext)"/>

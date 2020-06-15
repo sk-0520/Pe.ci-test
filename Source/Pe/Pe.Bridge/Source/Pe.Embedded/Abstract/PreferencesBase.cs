@@ -10,10 +10,21 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     public class PreferencesBase: IPreferences
     {
+        protected PreferencesBase(IPlugin plugin)
+        {
+            Plugin = plugin;
+        }
+
+        #region property
+
+        IPlugin Plugin { get; }
+
+        #endregion
+
         #region IPreferences
 
-        /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext)"/>
-        public virtual UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext) => throw new NotImplementedException();
+        /// <inheritdoc cref="IPreferences.BeginPreferences(IPreferencesLoadContext, IPreferencesParameter)"/>
+        public virtual UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext, IPreferencesParameter preferencesParameter) => throw new NotImplementedException();
 
         /// <inheritdoc cref="IPreferences.CheckPreferences(IPreferencesCheckContext)"/>
         public virtual void CheckPreferences(IPreferencesCheckContext preferencesCheckContext) => throw new NotImplementedException();

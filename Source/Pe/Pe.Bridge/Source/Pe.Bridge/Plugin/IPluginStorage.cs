@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -114,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <param name="key">キー</param>
         /// <param name="value">取得・変換できた場合に格納。</param>
         /// <returns>取得・変換できたか。</returns>
-        bool TryGet<TValue>(string key, out TValue value);
+        bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value);
 
         /// <summary>
         /// 指定データを保存する。

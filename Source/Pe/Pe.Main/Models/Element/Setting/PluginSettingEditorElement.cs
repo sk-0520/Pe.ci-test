@@ -3,29 +3,30 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Controls;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class PluginSettingEditorElement: ElementBase, IPLuginId
+    public class PluginSettingEditorElement: ElementBase, IPluginId
     {
-        public PluginSettingEditorElement(IPlugin plugin, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public PluginSettingEditorElement(IPlugin plugin, PreferencesContextFactory preferencesContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Plugin = plugin;
-            DatabaseBarrierPack = databaseBarrierPack;
-            DatabaseLazyWriterPack = databaseLazyWriterPack;
-            DatabaseStatementLoader = databaseStatementLoader;
-            EnvironmentParameters = environmentParameters;
-            UserAgentManager = userAgentManager;
+            PreferencesContextFactory = preferencesContextFactory;
+            UserAgentFactory = userAgentFactory;
+            PlatformTheme = platformTheme;
+            DispatcherWrapper = dispatcherWrapper;
 
             if(Plugin is IPreferences preferences) {
                 SupportedPreferences = true;
@@ -39,11 +40,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public IPlugin Plugin { get; }
 
-        IDatabaseBarrierPack DatabaseBarrierPack { get; }
-        IDatabaseLazyWriterPack DatabaseLazyWriterPack { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        EnvironmentParameters EnvironmentParameters { get; }
-        IUserAgentManager UserAgentManager { get; }
+        PreferencesContextFactory PreferencesContextFactory { get; }
+        IUserAgentFactory UserAgentFactory { get; }
+        IPlatformTheme PlatformTheme { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
 
         public bool SupportedPreferences { get; }
         IPreferences? Preferences { get; }
@@ -54,12 +54,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        PreferencesContextFactory CreateContextFactory()
-        {
-            var factory = new PreferencesContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
-            return factory;
-        }
-
         public UserControl BeginPreferences()
         {
             if(!SupportedPreferences) {
@@ -69,10 +63,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(!StartedPreferences);
 
             UserControl result;
-            var factory = CreateContextFactory();
-            using(var reader = DatabaseBarrierPack.WaitRead()) {
-                var context = factory.CreateLoadContext(Plugin.PluginInformations, reader);
-                result = Preferences.BeginPreferences(context);
+            using(var reader = PreferencesContextFactory.BarrierRead()) {
+                using var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
+                var skeleton = new SkeletonImplements();
+                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                result = Preferences.BeginPreferences(context, parameter);
             }
             StartedPreferences = true;
             return result;
@@ -86,13 +81,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
 
-            PreferencesCheckContext context;
-            var factory = CreateContextFactory();
-            using(var reader = DatabaseBarrierPack.WaitRead()) {
-                context = factory.CreateCheckContext(Plugin.PluginInformations, reader);
+            bool hasError;
+            using(var reader = PreferencesContextFactory.BarrierRead()) {
+                using var context = PreferencesContextFactory.CreateCheckContext(Plugin.PluginInformations, reader);
                 Preferences.CheckPreferences(context);
+                hasError = context.HasError;
             }
-            return context.HasError;
+            return hasError;
         }
 
         public void SavePreferences(IDatabaseCommandsPack databaseCommandPack)
@@ -103,8 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
 
-            var factory = CreateContextFactory();
-            var context = factory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
+            using var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
             Preferences.SavePreferences(context);
         }
 
@@ -118,9 +112,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             // NOTE: 多分ここじゃなくて別んところで呼び出すべき
 
-            var factory = CreateContextFactory();
-            using(var reader = DatabaseBarrierPack.WaitRead()) {
-                var context = factory.CreateEndContext(Plugin.PluginInformations, reader);
+            using(var reader = PreferencesContextFactory.BarrierRead()) {
+                using var context = PreferencesContextFactory.CreateEndContext(Plugin.PluginInformations, reader);
                 Preferences.EndPreferences(context);
             }
         }

@@ -20,25 +20,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
         public PreferencesLoadContext CreateLoadContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
             var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
-            return new PreferencesLoadContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager, new SkeletonImplements());
+            return new PreferencesLoadContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
         public PreferencesCheckContext CreateCheckContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
             var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
-            return new PreferencesCheckContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
+            return new PreferencesCheckContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
         public PreferencesSaveContext CreateSaveContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
             var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, false);
-            return new PreferencesSaveContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
+            return new PreferencesSaveContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
         public PreferencesEndContext CreateEndContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
             var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
-            return new PreferencesEndContext(pluginInformations.PluginIdentifiers, pluginStorage, UserAgentManager);
+            return new PreferencesEndContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
         #endregion

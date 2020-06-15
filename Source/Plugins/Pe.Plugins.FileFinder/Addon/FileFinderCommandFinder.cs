@@ -10,7 +10,9 @@ using System.Threading;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Plugins.FileFinder.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
@@ -45,32 +47,34 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         public FileFinderCommandFinder(IAddonParameter parameter)
         {
             Logger = parameter.LoggerFactory.CreateLogger(GetType());
+            AddonExecutor = parameter.AddonExecutor;
             DispatcherWrapper = parameter.DispatcherWrapper;
         }
 
         #region property
 
         ILogger Logger { get; }
+        IAddonExecutor AddonExecutor { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         List<PathItem> PathItems { get; } = new List<PathItem>(512);
 
         /// <summary>
         /// 隠しファイルを列挙するか。
         /// </summary>
-        bool IncludeHiddenFile { get; } = true;
+        bool IncludeHiddenFile { get; set; }
         /// <summary>
         /// PATHの通っている実行ファイルを列挙するか。
         /// </summary>
-        bool IncludePath { get; } = true;
+        bool IncludePath { get; set; }
         /// <summary>
         /// パスからの列挙において列挙する上限数。
         /// <para>0 で制限しない。</para>
         /// </summary>
-        int MaximumPathItem { get; } = 10;
+        int MaximumPathItem { get; set; }
         /// <summary>
         /// パス検索を有効にする入力文字数(以上)。
         /// </summary>
-        int PathEnabledInputCharCount { get; } = 0;
+        int PathEnabledInputCharCount { get; set; }
 
         #endregion
 
@@ -128,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             }
 
             if(string.IsNullOrWhiteSpace(filePattern)) {
-                var ownerItem = new FileFinderCommandItem(directoryPath);
+                var ownerItem = new FileFinderCommandItem(directoryPath, AddonExecutor);
                 ownerItem.HeaderValues.Add(new HitValue(directoryPath, false));
                 ownerItem.DescriptionValues.Add(new HitValue("ディレクトリ", false));
                 yield return ownerItem;
@@ -159,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                     : file.FullName
                 ;
                 var fullMatchValue = Path.Combine(directoryPath, file.Name);
-                var item = new FileFinderCommandItem(fullPath);
+                var item = new FileFinderCommandItem(fullPath, AddonExecutor);
 
                 if(string.IsNullOrWhiteSpace(filePattern)) {
                     item.HeaderValues.Add(new HitValue(file.Name, false));
@@ -230,7 +234,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                 var drives = DriveInfo.GetDrives();
                 foreach(var drive in drives) {
                     var driveName = GetDriveName(drive);
-                    var item = new FileFinderCommandItem(drive.RootDirectory.FullName);
+                    var item = new FileFinderCommandItem(drive.RootDirectory.FullName, AddonExecutor);
                     item.HeaderValues.Add(new HitValue(driveName, false));
                     item.Score = hitValuesCreator.GetScore(ScoreKind.Initial, 1) - 10;
 
@@ -283,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
                             break;
                         }
 
-                        var item = new FileFinderCommandItem(pathItem.Path, pathItem.CommandName);
+                        var item = new FileFinderCommandItem(pathItem.Path, pathItem.CommandName, AddonExecutor);
                         item.HeaderValues.AddRange(values);
                         item.DescriptionValues.Add(new HitValue("%PATH%", false));
                         item.Score = hitValuesCreator.CalcScore(pathItem.CommandName, values) - 3;
@@ -296,9 +300,19 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
             yield break;
         }
 
-        /// <inheritdoc cref="ICommandFinder.Refresh"/>
-        public void Refresh()
-        { }
+        /// <inheritdoc cref="ICommandFinder.Refresh(IPluginContext)"/>
+        public void Refresh(IPluginContext pluginContext)
+        {
+            FileFinderSetting? setting;
+            if(!pluginContext.Storage.Persistent.Normal.TryGet<FileFinderSetting>(FileFinderConstants.MainSettengKey, out setting)) {
+                setting = new FileFinderSetting();
+            }
+
+            IncludeHiddenFile = setting.IncludeHiddenFile;
+            IncludePath = setting.IncludePath;
+            MaximumPathItem = setting.MaximumPathItem;
+            PathEnabledInputCharCount = setting.PathEnabledInputCharCount;
+        }
 
         #endregion
 

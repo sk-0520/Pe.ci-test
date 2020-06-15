@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// </summary>
         /// <param name="preferencesLoadContext"></param>
         /// <returns></returns>
-        UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext);
+        UserControl BeginPreferences(IPreferencesLoadContext preferencesLoadContext, IPreferencesParameter preferencesParameter);
 
         /// <summary>
         /// プラグイン設定の検証段階に入った時点で呼び出される。

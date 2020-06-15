@@ -60,14 +60,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグイン機能を使用するための読み込み。
         /// </summary>
         /// <param name="pluginKind">対象機能ごとの読み込み指定。テーマだけ読み込んでアドオンはまだ、みたいな状態。</param>
-        /// <param name="pluginContext"></param>
-        void Load(PluginKind pluginKind, IPluginContext pluginContext);
+        /// <param name="pluginLoadContext"></param>
+        void Load(PluginKind pluginKind, IPluginLoadContext pluginLoadContext);
         /// <summary>
         /// プラグイン機能の使用を終了。
         /// </summary>
         /// <param name="pluginKind">対象機能。</param>
-        /// <param name="pluginContext"></param>
-        void Unload(PluginKind pluginKind, IPluginContext pluginContext);
+        /// <param name="pluginUnloadContext"></param>
+        void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext);
         /// <summary>
         /// プラグイン機能は読み込まれているか。
         /// </summary>

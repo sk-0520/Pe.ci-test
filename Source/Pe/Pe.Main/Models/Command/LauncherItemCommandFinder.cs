@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -15,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
@@ -131,8 +133,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             IsInitialize = true;
         }
 
-        public void Refresh()
+        public void Refresh(IPluginContext pluginContext)
         {
+            Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
+
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }

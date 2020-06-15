@@ -15,9 +15,11 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 using NLog.Fluent;
 
@@ -227,8 +229,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             IsInitialize = true;
         }
 
-        public void Refresh()
+        public void Refresh(IPluginContext pluginContext)
         {
+            Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
+
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }

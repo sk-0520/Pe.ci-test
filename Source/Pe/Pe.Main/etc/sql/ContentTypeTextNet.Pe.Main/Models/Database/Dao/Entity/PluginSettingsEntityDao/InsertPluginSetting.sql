@@ -19,7 +19,7 @@ insert into
 	values
 	(
 /* PluginId              */ @PluginId,
-/* @PluginSetting        */ @PluginSettingKey,
+/* PluginSetting         */ @PluginSettingKey,
 /* DataType              */ @DataType,
 /* DataValue             */ @DataValue,
 

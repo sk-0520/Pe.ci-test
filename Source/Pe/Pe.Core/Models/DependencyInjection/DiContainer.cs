@@ -214,8 +214,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                         continue;
                     }
 
-                    var namedFacories = Factory.ToArray().Where(i => i.Key != name);
-                    foreach(var namedFactory in namedFacories) {
+                    var namedFactories = Factory.ToArray().Where(i => i.Key != name);
+                    foreach(var namedFactory in namedFactories) {
                         if(namedFactory.Value.TryGetValue(parameterInfo.ParameterType, out var factory)) {
                             arguments[i] = factory.Create();
                             break;

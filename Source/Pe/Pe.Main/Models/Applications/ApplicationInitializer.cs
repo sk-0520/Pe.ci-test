@@ -18,6 +18,9 @@ using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
@@ -376,6 +379,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory))
 
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
+
+                .Register<PluginContextFactory, PluginContextFactory>(DiLifecycle.Transient)
+                .Register<PreferencesContextFactory, PreferencesContextFactory>(DiLifecycle.Transient)
+                .Register<LauncherItemAddonContextFactory, LauncherItemAddonContextFactory>(DiLifecycle.Transient)
+                .Register<WidgetAddonContextFactory, WidgetAddonContextFactory>(DiLifecycle.Transient)
+
                 .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
                 .Register<CultureService, CultureService>(cultureService)
 

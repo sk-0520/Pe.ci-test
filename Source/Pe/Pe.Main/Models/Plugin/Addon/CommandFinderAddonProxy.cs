@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -16,10 +17,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    public class CommandFinderAddonWrapper: AddonWrapperBase<ICommandFinder>, ICommandFinder
+    public sealed class CommandFinderAddonProxy: AddonsProxyBase<ICommandFinder>, ICommandFinder
     {
-        public CommandFinderAddonWrapper(IReadOnlyList<IAddon> addons, IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(addons, databaseBarrierPack, databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, platformTheme, dispatcherWrapper, loggerFactory)
+        public CommandFinderAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(addons, pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
         {
         }
 
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected override ICommandFinder BuildFunctionUnit(IAddon loadedAddon)
         {
-            return loadedAddon.BuildCommandFinder(CreateParameter());
+            return loadedAddon.BuildCommandFinder(CreateParameter(loadedAddon));
         }
 
 
@@ -77,10 +78,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
         }
 
-        public void Refresh()
+        public void Refresh(IPluginContext pluginContext)
         {
+            Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
+
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
+            }
+
+            foreach(var functionUnit in FunctionUnits) {
+                var addon = GetAddon(functionUnit);
+                using(var reader = PluginContextFactory.BarrierRead()) {
+                    var context = PluginContextFactory.CreateContext(addon.PluginInformations, reader, true);
+                    functionUnit.Refresh(context);
+                }
             }
         }
 

@@ -10,6 +10,8 @@
 
   xmlns:app_main_viewmodel_manager="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.Manager"
 >
+  <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
   <ContextMenu x:Key="ContextMenu" IsOpen="{Binding IsOpenContextMenu, Mode=OneWayToSource}">
     <ContextMenu.Resources>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -135,6 +137,9 @@
       <MenuItem Header="{Binding Resources.String_AppManager_System_IsDisabledSystemIdle_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsDisabledSystemIdle, Mode=OneWay}" Command="{Binding ToggleDisabledSystemIdleCommand}" />
       <MenuItem Header="{Binding Resources.String_AppManager_System_IsSupportedExplorer_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsSupportedExplorer, Mode=OneWay}" Command="{Binding ToggleSupportExplorerCommand}" />
     </MenuItem>
+
+    <Separator Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    <MenuItem Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="widgets" ItemsSource="{Binding WidgetItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" />
 
     <Separator />
 

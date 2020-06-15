@@ -4,12 +4,15 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Bridge.ViewModels
 {
     public interface ISkeletonImplements
     {
         #region function
+
+        ISkeletonImplements Clone();
 
         ICommand CreateCommand(Action execute);
         ICommand CreateCommand<TParameter>(Action<TParameter> execute);
@@ -25,8 +28,9 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
     /// </summary>
     public abstract class ViewModelSkeleton: INotifyPropertyChanged
     {
-        protected ViewModelSkeleton(ISkeletonImplements skeletonImplements)
+        protected ViewModelSkeleton(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
         {
+            Logger = loggerFactory.CreateLogger(GetType());
             Implements = skeletonImplements;
         }
 
@@ -36,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         /// こいつ経由でViewModel処理を行う。
         /// </summary>
         protected ISkeletonImplements Implements { get; }
-
+        protected ILogger Logger { get; }
         #endregion
 
         #region function

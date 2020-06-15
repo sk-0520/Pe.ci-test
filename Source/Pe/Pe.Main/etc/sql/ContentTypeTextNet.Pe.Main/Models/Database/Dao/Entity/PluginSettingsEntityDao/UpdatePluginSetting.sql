@@ -1,5 +1,5 @@
 update
-	Plugins
+	PluginSettings
 set
 	DataType  = @DataType,
 	DataValue = @DataValue,

@@ -9,19 +9,21 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
 {
     internal class FileFinderAddonImpl: AddonBase
     {
-        public FileFinderAddonImpl(IPluginConstructorContext pluginConstructorContext)
-            : base(pluginConstructorContext)
+        public FileFinderAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+            : base(pluginConstructorContext, plugin)
         { }
+
+        #region AddonBase
 
         protected override IReadOnlyCollection<AddonKind> SupportedKinds { get; } = new[] {
             AddonKind.CommandFinder,
         };
 
-        protected internal override void Load(IPluginContext pluginContext)
+        protected internal override void Load(IPluginLoadContext pluginLoadContext)
         {
         }
 
-        protected internal override void Unload(IPluginContext pluginContext)
+        protected internal override void Unload(IPluginUnloadContext pluginUnloadContext)
         {
         }
 
@@ -29,5 +31,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Addon
         {
             return new FileFinderCommandFinder(parameter);
         }
+
+        #endregion
     }
 }

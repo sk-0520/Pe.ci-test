@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         #region function
 
-        private ThemeParameter CreateParameter() => new ThemeParameter(PlatformTheme, DispatcherWrapper, LoggerFactory);
+        private ThemeParameter CreateParameter(IPlugin addon) => new ThemeParameter(addon.PluginInformations, PlatformTheme, DispatcherWrapper, LoggerFactory);
 
         public void Add(ITheme theme)
         {
@@ -95,12 +96,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
             if(prev != null) {
                 using(var writerPack = DatabaseBarrierPack.WaitWrite()) {
-                    prev.Unload(PluginKind.Theme, pluginContextFactory.CreateContext(CurrentTheme.PluginInformations, writerPack, false));
+                    using var unloadContext = pluginContextFactory.CreateUnloadContext(CurrentTheme.PluginInformations, writerPack);
+                    prev.Unload(PluginKind.Theme, unloadContext);
                 }
             }
-            using(var readerPack = DatabaseBarrierPack.WaitWrite()) {
-                var pluginContext = pluginContextFactory.CreateContext(CurrentTheme.PluginInformations, readerPack, true);
-                CurrentTheme.Load(PluginKind.Theme, pluginContext);
+            using(var readerPack = DatabaseBarrierPack.WaitRead()) {
+                using var loadContext = pluginContextFactory.CreateLoadContex(CurrentTheme.PluginInformations, readerPack);
+                CurrentTheme.Load(PluginKind.Theme, loadContext);
             }
         }
 
@@ -129,7 +131,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
                     Logger.LogInformation("標準テーマ先生準備できておらず。");
                     var pluginContextFactory = new PluginContextFactory(DatabaseBarrierPack, DatabaseLazyWriterPack, DatabaseStatementLoader, EnvironmentParameters, UserAgentManager, LoggerFactory);
                     using(var readerPack = DatabaseBarrierPack.WaitRead()) {
-                        DefaultTheme.Load(PluginKind.Theme, pluginContextFactory.CreateContext(DefaultTheme.PluginInformations, readerPack, true));
+                        using var loadContext = pluginContextFactory.CreateLoadContex(DefaultTheme.PluginInformations, readerPack);
+                        DefaultTheme.Load(PluginKind.Theme, loadContext);
                     }
                 }
             }
@@ -142,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return GetTheme(ThemeKind.General, CreateParameter(), CurrentTheme.BuildGeneralTheme, DefaultTheme.BuildGeneralTheme);
+            return GetTheme(ThemeKind.General, CreateParameter(CurrentTheme), CurrentTheme.BuildGeneralTheme, DefaultTheme.BuildGeneralTheme);
         }
 
         public ILauncherToolbarTheme GetLauncherToolbarTheme()
@@ -150,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return GetTheme(ThemeKind.LauncherToolbar, CreateParameter(), CurrentTheme.BuildLauncherToolbarTheme, DefaultTheme.BuildLauncherToolbarTheme);
+            return GetTheme(ThemeKind.LauncherToolbar, CreateParameter(CurrentTheme), CurrentTheme.BuildLauncherToolbarTheme, DefaultTheme.BuildLauncherToolbarTheme);
         }
 
         public INoteTheme GetNoteTheme()
@@ -158,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return GetTheme(ThemeKind.Note, CreateParameter(), CurrentTheme.BuildNoteTheme, DefaultTheme.BuildNoteTheme);
+            return GetTheme(ThemeKind.Note, CreateParameter(CurrentTheme), CurrentTheme.BuildNoteTheme, DefaultTheme.BuildNoteTheme);
         }
 
         public ICommandTheme GetCommandTheme()
@@ -166,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return GetTheme(ThemeKind.Command, CreateParameter(), CurrentTheme.BuildCommandTheme, DefaultTheme.BuildCommandTheme);
+            return GetTheme(ThemeKind.Command, CreateParameter(CurrentTheme), CurrentTheme.BuildCommandTheme, DefaultTheme.BuildCommandTheme);
         }
 
         public INotifyLogTheme GetNotifyTheme()
@@ -174,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
             if(CurrentTheme == null) {
                 throw new InvalidOperationException();
             }
-            return GetTheme(ThemeKind.Notify, CreateParameter(), CurrentTheme.BuildNotifyLogTheme, DefaultTheme.BuildNotifyLogTheme);
+            return GetTheme(ThemeKind.Notify, CreateParameter(CurrentTheme), CurrentTheme.BuildNotifyLogTheme, DefaultTheme.BuildNotifyLogTheme);
         }
 
         #endregion

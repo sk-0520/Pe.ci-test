@@ -78,6 +78,7 @@
     <Folder Include="doc\help\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Models\Database\Dao\Entity\PluginLauncherItemSettingsEntityDao\" />
     <Folder Include="etc\sql\ContentTypeTextNet.Pe.Main\Models\Database\Dao\Entity\PluginValuesEntityDao\" />
+    <Folder Include="Views\Widget\" />
   </ItemGroup>
 
   <ItemGroup>

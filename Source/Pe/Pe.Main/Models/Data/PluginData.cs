@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         IllegalAssembly,
     }
 
-    public interface IPLuginId
+    public interface IPluginId
     {
         #region property
 
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class PluginLoadStateData: DataBase
     {
-        public PluginLoadStateData(Guid pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginLoadContext>? weekLoadContext, IPlugin? plugin)
+        public PluginLoadStateData(Guid pluginId, string pluginName, Version pluginVersion, PluginState loadState, WeakReference<PluginAssemblyLoadContext>? weekLoadContext, IPlugin? plugin)
         {
             PluginId = pluginId;
             PluginName = pluginName;
@@ -77,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// 対象プラグインの開放状態。
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Disable"/> だと null。</para>
         /// </summary>
-        public WeakReference<PluginLoadContext>? WeekLoadContext { get; }
+        public WeakReference<PluginAssemblyLoadContext>? WeekLoadContext { get; }
         /// <summary>
         /// 対象プラグイン。
         /// <para><see cref="LoadState"/> が <see cref="PluginState.Enable"/> のみ有効でそれ以外の場合はもうたぶん解放されてる(はず)。</para>
@@ -98,6 +99,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public PluginPersistentFormat Format { get; }
         public string Value { get; }
+
+        #endregion
+    }
+
+    public class PluginWidgetSettingData: DataBase
+    {
+        #region proeprty
+
+        [PixelKind(Px.Logical)]
+        public double X { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Y { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Width { get; set; }
+        [PixelKind(Px.Logical)]
+        public double Height { get; set; }
+        public bool IsVisible { get; set; }
 
         #endregion
     }

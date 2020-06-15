@@ -58,6 +58,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public override void Refresh()
         { }
 
+        protected override void ValidateDomain()
+        {
+            base.ValidateDomain();
+
+            foreach(var plugin in PluginCollection.ViewModels) {
+                plugin.Validate();
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    PluginCollection.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
         #endregion
 
     }

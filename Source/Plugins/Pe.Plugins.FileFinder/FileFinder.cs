@@ -21,14 +21,14 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder
         public FileFinder(IPluginConstructorContext pluginConstructorContext)
             : base(pluginConstructorContext)
         {
-            this._addon = new FileFinderAddonImpl(pluginConstructorContext);
+            this._addon = new FileFinderAddonImpl(pluginConstructorContext, this);
         }
 
         #region PluginBase
 
         internal override AddonBase Addon => this._addon;
 
-        protected override IPreferences CreatePreferences() => new FileFinderPreferences();
+        protected override IPreferences CreatePreferences() => new FileFinderPreferences(this);
 
         protected override void InitializeImpl(IPluginInitializeContext pluginInitializeContext)
         { }
