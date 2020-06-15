@@ -174,10 +174,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
                 SetCommandItems(commandItems);
                 //SelectedItem = CommandItems.FirstOrDefault();
-                SelectedItem = prevSelectedItem == null
+                var selectedItem = prevSelectedItem == null
                     ? CommandItems.FirstOrDefault()
                     : CommandItems.FirstOrDefault(i => prevSelectedItem.IsEquals(i))
                 ;
+                if(selectedItem == null || 0 < CommandItems.Count) {
+                    SelectedItem = CommandItems.First();
+                } else {
+                    SelectedItem = selectedItem;
+                }
 
                 if(SelectedItem == null) {
                     CurrentSelectedItem = null;
@@ -474,8 +479,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                     return;
                 }
 
-                foreach(var themePropertyName in ThemeProperties.GetPropertyNames()) {
-                    RaisePropertyChanged(themePropertyName);
+                foreach(var themePropertyName in vm.ThemeProperties.GetPropertyNames()) {
+                    vm.RaisePropertyChanged(themePropertyName);
                 }
             }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
