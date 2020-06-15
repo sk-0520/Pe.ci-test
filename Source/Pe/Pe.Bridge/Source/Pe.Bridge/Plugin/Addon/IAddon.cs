@@ -8,6 +8,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         /// <summary>
         /// ランチャーアイテムとして処理可能アドオン。
+        /// <para>TODO: 現状の実装だとむずかすぃ。。。</para>
         /// </summary>
         LauncherItem,
         /// <summary>
