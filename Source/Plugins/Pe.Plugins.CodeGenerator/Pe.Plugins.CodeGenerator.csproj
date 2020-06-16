@@ -8,7 +8,7 @@
     <WarningsAsErrors />
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <RootNamespace>ContentTypeTextNet.Pe.Plugins.Clock</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Pe.Plugins.CodeGenerator</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -29,4 +29,5 @@
     <Compile Include="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\**\*.cs" Exclude="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\obj\**\*.cs" />
     <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
   </ItemGroup>
+
 </Project>

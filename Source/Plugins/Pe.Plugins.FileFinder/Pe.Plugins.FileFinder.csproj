@@ -28,9 +28,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\**\*.cs" Exclude="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\obj\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
   </ItemGroup>
 </Project>
