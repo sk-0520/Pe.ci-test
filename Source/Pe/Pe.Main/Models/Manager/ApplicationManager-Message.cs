@@ -594,7 +594,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var context = new BackgroundAddonProxyMouseMoveContext(e);
                     BackgroundAddon.HookMouseMove(context);
                 }
-
             }
         }
 
@@ -606,10 +605,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 KeyboardNotifyLogId = Guid.Empty;
             }
             KeyActionChecker.Reset();
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    var context = new BackgroundAddonProxyMouseButtonContext(e);
+                    BackgroundAddon.HookMouseDown(context);
+                }
+            }
         }
 
         private void MouseHooker_MouseUp(object? sender, MouseHookEventArgs e)
-        { }
+        {
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    var context = new BackgroundAddonProxyMouseButtonContext(e);
+                    BackgroundAddon.HookMouseUp(context);
+                }
+            }
+        }
 
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)

@@ -25,6 +25,18 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
         double _rightPupilX;
         double _rightPupilY;
 
+        Color _leftEyeColor = Colors.White;
+        Color _rightEyeColor = Colors.White;
+
+        Color _leftStrokeColor = Colors.Black;
+        Color _rightStrokeColor = Colors.Black;
+
+        Color _leftPupilColor = Colors.Black;
+        Color _rightPupilColor = Colors.Black;
+
+        bool _leftPressed;
+        bool _rightPressed;
+
         #endregion
 
         public EyesWidgetViewModel(EyesWidgetWindow eyesWidgetWindow, ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -56,6 +68,52 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
             get => this._leftPupilY;
             set => SetProperty(ref this._leftPupilY, value);
         }
+
+        public Color LeftEyeColor
+        {
+            get => this._leftEyeColor;
+            set => SetProperty(ref this._leftEyeColor, value);
+        }
+        public Color RightEyeColor
+        {
+            get => this._rightEyeColor;
+            set => SetProperty(ref this._rightEyeColor, value);
+        }
+
+        public Color LeftStrokeColor
+        {
+            get => this._leftStrokeColor;
+            set => SetProperty(ref this._leftStrokeColor, value);
+        }
+        public Color RightStrokeColor
+        {
+            get => this._rightStrokeColor;
+            set => SetProperty(ref this._rightStrokeColor, value);
+        }
+
+
+        public Color LeftPupilColor
+        {
+            get => this._leftPupilColor;
+            set => SetProperty(ref this._leftPupilColor, value);
+        }
+        public Color RightPupilColor
+        {
+            get => this._rightPupilColor;
+            set => SetProperty(ref this._rightPupilColor, value);
+        }
+
+        public bool LeftPressed
+        {
+            get => this._leftPressed;
+            set => SetProperty(ref this._leftPressed, value);
+        }
+        public bool RightPressed
+        {
+            get => this._rightPressed;
+            set => SetProperty(ref this._rightPressed, value);
+        }
+
 
         public double RightPupilX
         {
@@ -97,6 +155,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
 
             EyesBackground = eyesBackground;
             eyesBackground.MouseMoved += EyesBackground_MouseMoved;
+            eyesBackground.MouseDown += EyesBackground_MouseDown;
+            eyesBackground.MouseUp += EyesBackground_MouseUp;
+            eyesBackground.KeyDown += EyesBackground_KeyDown;
+            eyesBackground.KeyUp += EyesBackground_KeyUp;
         }
 
         internal void Detach()
@@ -144,8 +206,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
             DispatcherWrapper.Begin(() => {
                 var deviceCursorLocation = new Point(MouseX, MouseY);
 
-                var cx = EyeWidth / 2 ;
-                var cy = EyeWidth / 2 ;
+                var cx = EyeWidth / 2;
+                var cy = EyeWidth / 2;
                 var checkr = (EyeWidth / 2) * (EyeWidth / 2);
 
                 Point ToPupilLocation(Point deviceCursorLocation, Visual element)
@@ -158,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
                             logicalRelativeLocation.Y - PupilHeight / 2
                         );
                     } else {
-                        double radian = Math.Atan2(logicalRelativeLocation.Y - cy, logicalRelativeLocation.X- cx);
+                        double radian = Math.Atan2(logicalRelativeLocation.Y - cy, logicalRelativeLocation.X - cx);
                         return new Point(
                             cx + (cx - PupilWidth) * Math.Cos(radian) - PupilWidth / 2,
                             cy + (cy - PupilHeight) * Math.Sin(radian) - PupilHeight / 2
@@ -177,5 +239,79 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
 
             }, System.Windows.Threading.DispatcherPriority.Render);
         }
+
+        private void EyesBackground_MouseDown(object? sender, BackgroundMouseButtonEventArgs e)
+        {
+            if(e.Button == System.Windows.Input.MouseButton.Left) {
+                LeftPressed = e.State == System.Windows.Input.MouseButtonState.Pressed;
+            }
+            if(e.Button == System.Windows.Input.MouseButton.Right) {
+                RightPressed = e.State == System.Windows.Input.MouseButtonState.Pressed;
+            }
+        }
+
+        private void EyesBackground_MouseUp(object? sender, BackgroundMouseButtonEventArgs e)
+        {
+            if(e.Button == System.Windows.Input.MouseButton.Left) {
+                LeftPressed = e.State == System.Windows.Input.MouseButtonState.Pressed;
+            }
+            if(e.Button == System.Windows.Input.MouseButton.Right) {
+                RightPressed = e.State == System.Windows.Input.MouseButtonState.Pressed;
+            }
+        }
+
+
+
+        private void EyesBackground_KeyDown(object? sender, BackgroundKeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.LeftShift) {
+                LeftEyeColor = Colors.Red;
+            }
+            if(e.Key == System.Windows.Input.Key.RightShift) {
+                RightEyeColor = Colors.Red;
+            }
+
+            if(e.Key == System.Windows.Input.Key.LeftAlt) {
+                LeftStrokeColor = Colors.Blue;
+            }
+            if(e.Key == System.Windows.Input.Key.RightAlt) {
+                RightStrokeColor = Colors.Blue;
+            }
+
+            if(e.Key == System.Windows.Input.Key.LeftCtrl) {
+                LeftPupilColor = Colors.Lime;
+            }
+            if(e.Key == System.Windows.Input.Key.RightCtrl) {
+                RightPupilColor = Colors.Lime;
+            }
+
+        }
+
+        private void EyesBackground_KeyUp(object? sender, BackgroundKeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.LeftShift) {
+                LeftEyeColor = Colors.White;
+            }
+            if(e.Key == System.Windows.Input.Key.RightShift) {
+                RightEyeColor = Colors.White;
+            }
+
+            if(e.Key == System.Windows.Input.Key.LeftAlt) {
+                LeftStrokeColor = Colors.Black;
+            }
+            if(e.Key == System.Windows.Input.Key.RightAlt) {
+                RightStrokeColor = Colors.Black;
+            }
+
+            if(e.Key == System.Windows.Input.Key.LeftCtrl) {
+                LeftPupilColor = Colors.Black;
+            }
+            if(e.Key == System.Windows.Input.Key.RightCtrl) {
+                RightPupilColor = Colors.Black;
+            }
+
+        }
+
+
     }
 }

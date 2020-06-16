@@ -96,17 +96,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
         /// <inheritdoc cref="IBackground.HookMouseDown(IBackgroundAddonMouseButtonContext)"/>
-        public void HookMouseDown(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
+        public void HookMouseDown(BackgroundAddonProxyMouseButtonContext backgroundAddonMouseButtonContext)
         {
-            Debug.Assert(backgroundAddonMouseButtonContext == null);
-            throw new NotImplementedException();
+            Task.Run(() => {
+                var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.MouseHook));
+                foreach(var functionUnit in functionUnits) {
+                    var addon = GetAddon(functionUnit);
+                    var context = BackgroundAddonContextFactory.CreateMouseButtonContex(addon.PluginInformations, backgroundAddonMouseButtonContext.MouseHookEventArgs);
+                    functionUnit.HookMouseDown(context);
+                }
+            });
+        }
+        void IBackground.HookMouseDown(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
+        {
+            Debug.Assert(backgroundAddonMouseButtonContext.GetType() == typeof(BackgroundAddonProxyMouseButtonContext));
+            HookMouseDown((BackgroundAddonProxyMouseButtonContext)backgroundAddonMouseButtonContext);
         }
 
         /// <inheritdoc cref="IBackground.HookMouseUp(IBackgroundAddonMouseButtonContext)"/>
-        public void HookMouseUp(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
+        public void HookMouseUp(BackgroundAddonProxyMouseButtonContext backgroundAddonMouseButtonContext)
         {
-            Debug.Assert(backgroundAddonMouseButtonContext == null);
-            throw new NotImplementedException();
+            Task.Run(() => {
+                var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.MouseHook));
+                foreach(var functionUnit in functionUnits) {
+                    var addon = GetAddon(functionUnit);
+                    var context = BackgroundAddonContextFactory.CreateMouseButtonContex(addon.PluginInformations, backgroundAddonMouseButtonContext.MouseHookEventArgs);
+                    functionUnit.HookMouseUp(context);
+                }
+            });
+        }
+        void IBackground.HookMouseUp(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
+        {
+            Debug.Assert(backgroundAddonMouseButtonContext.GetType() == typeof(BackgroundAddonProxyMouseButtonContext));
+            HookMouseUp((BackgroundAddonProxyMouseButtonContext)backgroundAddonMouseButtonContext);
         }
 
         /// <inheritdoc cref="IBackground"/>

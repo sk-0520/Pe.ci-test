@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -25,11 +26,47 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
         #endregion
     }
 
+    public class BackgroundMouseButtonEventArgs: EventArgs
+    {
+        public BackgroundMouseButtonEventArgs(MouseButton button, MouseButtonState state,DateTime timestamp)
+        {
+            Button = button;
+            State = state;
+            Timestamp = timestamp;
+        }
+
+        #region property
+
+        public MouseButton Button { get; }
+        public MouseButtonState State { get; }
+        public DateTime Timestamp { get; }
+
+        #endregion
+    }
+
+    public class BackgroundKeyEventArgs: EventArgs
+    {
+        public BackgroundKeyEventArgs(Key key, DateTime timestamp)
+        {
+            Key = key;
+            Timestamp = timestamp;
+        }
+        #region property
+
+        public Key Key { get; }
+        public DateTime Timestamp { get; }
+        #endregion
+    }
+
     internal class EyesBackground: IBackground
     {
         #region event
 
         public event EventHandler<BackgroundMouseMoveEventArgs>? MouseMoved;
+        public event EventHandler<BackgroundMouseButtonEventArgs>? MouseDown;
+        public event EventHandler<BackgroundMouseButtonEventArgs>? MouseUp;
+        public event EventHandler<BackgroundKeyEventArgs>? KeyDown;
+        public event EventHandler<BackgroundKeyEventArgs>? KeyUp;
 
         #endregion
         public EyesBackground(IAddonParameter parameter, IPluginInformations pluginInformations)
@@ -68,29 +105,28 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
 
         public void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            //Logger.LogInformation("down {0}", backgroundAddonKeyboardContext.Key);
+            KeyDown?.Invoke(this, new BackgroundKeyEventArgs(backgroundAddonKeyboardContext.Key, backgroundAddonKeyboardContext.TimestampUtc));
         }
 
         public void HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            //Logger.LogInformation("up {0}", backgroundAddonKeyboardContext.Key);
+            KeyUp?.Invoke(this, new BackgroundKeyEventArgs(backgroundAddonKeyboardContext.Key, backgroundAddonKeyboardContext.TimestampUtc));
         }
 
 
         public void HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext)
         {
-            //Logger.LogInformation("move {0}", backgroundAddonMouseMoveContext.Location);
             MouseMoved?.Invoke(this, new BackgroundMouseMoveEventArgs(backgroundAddonMouseMoveContext.Location, backgroundAddonMouseMoveContext.TimestampUtc));
         }
 
         public void HookMouseDown(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
         {
-            //throw new NotImplementedException();
+            MouseDown?.Invoke(this, new BackgroundMouseButtonEventArgs(backgroundAddonMouseButtonContext.Button, backgroundAddonMouseButtonContext.State, backgroundAddonMouseButtonContext.TimestampUtc));
         }
 
         public void HookMouseUp(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
         {
-            //throw new NotImplementedException();
+            MouseUp?.Invoke(this, new BackgroundMouseButtonEventArgs(backgroundAddonMouseButtonContext.Button, backgroundAddonMouseButtonContext.State, backgroundAddonMouseButtonContext.TimestampUtc));
         }
 
 

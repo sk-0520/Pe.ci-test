@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
     internal class BackgroundAddonProxyMouseButtonContext: IBackgroundAddonMouseButtonContext
     {
-        public BackgroundAddonProxyMouseButtonContext(IPluginIdentifiers pluginIdentifiers, MouseHookEventArgs mouseHookEventArgs)
+        public BackgroundAddonProxyMouseButtonContext(MouseHookEventArgs mouseHookEventArgs)
         {
             MouseHookEventArgs = mouseHookEventArgs;
         }

@@ -28,18 +28,60 @@
       <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Viewbox Stretch="Fill">
           <Canvas Width="{Binding EyeWidth}" Height="{Binding EyeHeight}">
-            <Ellipse x:Name="leftEye" Width="{Binding EyeWidth}" Height="{Binding EyeHeight}" Fill="#ffffff" StrokeThickness="2" Stroke="#000000" />
-            <Ellipse Canvas.Left="{Binding LeftPupilX}" Canvas.Top="{Binding LeftPupilY}" Width="{Binding PupilWidth}" Height="{Binding PupilHeight}" Fill="#000000" />
+            <Ellipse x:Name="leftEye" Width="{Binding EyeWidth}" Height="{Binding EyeHeight}" StrokeThickness="2">
+              <Ellipse.Fill>
+                <SolidColorBrush Color="{Binding LeftEyeColor}" />
+              </Ellipse.Fill>
+              <Ellipse.Stroke>
+                <SolidColorBrush Color="{Binding LeftStrokeColor}" />
+              </Ellipse.Stroke>
+            </Ellipse>
+            <Ellipse Canvas.Left="{Binding LeftPupilX}" Canvas.Top="{Binding LeftPupilY}" Width="{Binding PupilWidth}" Height="{Binding PupilHeight}">
+              <Ellipse.Style>
+                <Style TargetType="Ellipse">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding LeftPressed}" Value="True">
+                      <Setter Property="Stroke" Value="Yellow" />
+                      <Setter Property="StrokeThickness" Value="4" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Ellipse.Style>
+              <Ellipse.Fill>
+                <SolidColorBrush Color="{Binding LeftPupilColor}" />
+              </Ellipse.Fill>
+            </Ellipse>
           </Canvas>
         </Viewbox>
       </Grid>
-      
+
       <Grid Grid.Column="1">
         <Viewbox Stretch="Fill">
           <Canvas Width="{Binding EyeWidth}" Height="{Binding EyeHeight}">
-          <Ellipse x:Name="rightEye" Width="{Binding EyeWidth}" Height="{Binding EyeHeight}" Fill="#ffffff" StrokeThickness="2" Stroke="#000000" />
-          <Ellipse Canvas.Left="{Binding RightPupilX}" Canvas.Top="{Binding RightPupilY}" Width="{Binding PupilWidth}" Height="{Binding PupilHeight}" Fill="#000000" />
-        </Canvas>
+            <Ellipse x:Name="rightEye" Width="{Binding EyeWidth}" Height="{Binding EyeHeight}" StrokeThickness="2">
+              <Ellipse.Fill>
+                <SolidColorBrush Color="{Binding RightEyeColor}" />
+              </Ellipse.Fill>
+              <Ellipse.Stroke>
+                <SolidColorBrush Color="{Binding RightStrokeColor}" />
+              </Ellipse.Stroke>
+            </Ellipse>
+            <Ellipse Canvas.Left="{Binding RightPupilX}" Canvas.Top="{Binding RightPupilY}" Width="{Binding PupilWidth}" Height="{Binding PupilHeight}">
+              <Ellipse.Style>
+                <Style TargetType="Ellipse">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding RightPressed}" Value="True">
+                      <Setter Property="Stroke" Value="Yellow" />
+                      <Setter Property="StrokeThickness" Value="4" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Ellipse.Style>
+              <Ellipse.Fill>
+                <SolidColorBrush Color="{Binding RightPupilColor}" />
+              </Ellipse.Fill>
+            </Ellipse>
+          </Canvas>
         </Viewbox>
       </Grid>
     </Grid>
