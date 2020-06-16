@@ -345,6 +345,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 EndPreferences(settingElement, Logger);
             }
             StartHook();
+            StartBackground();
             StartPlatform();
             InitializeSystem();
 

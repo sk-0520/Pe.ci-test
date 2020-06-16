@@ -214,6 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 StopHook();
             } else {
                 StartHook();
+                StartBackground();
             }
         }
 

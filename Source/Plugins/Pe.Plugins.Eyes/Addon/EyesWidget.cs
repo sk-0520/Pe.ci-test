@@ -73,13 +73,13 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
                 throw new InvalidOperationException(nameof(ViewModel));
             }
 
-            ViewModel = new EyesWidgetViewModel(SkeletonImplements, LoggerFactory);
+            WidgetView = new EyesWidgetWindow();
+            ViewModel = new EyesWidgetViewModel(WidgetView, SkeletonImplements, LoggerFactory);
             if(EyesBackground != null) {
                 Attach(EyesBackground);
             }
-            WidgetView = new EyesWidgetWindow() {
-                DataContext = ViewModel,
-            };
+            WidgetView.DataContext = ViewModel;
+
             return WidgetView;
         }
 
