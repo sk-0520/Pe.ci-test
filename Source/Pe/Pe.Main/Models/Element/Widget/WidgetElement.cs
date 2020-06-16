@@ -20,6 +20,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Views.Converter;
+using ContentTypeTextNet.Pe.Main.Views.Widget;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
@@ -90,7 +91,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         Window CreateWebViewWidget(WidgetAddonCreateContext context)
         {
             Debug.Assert(Widget.ViewType == WidgetViewType.WebView);
-            throw new NotImplementedException();
+
+            var seed = Widget.CreateWebViewWidget(context);
+
+            WebViewWidgetViewModel viewModel;
+            var window = new WebViewWidgetWindow();
+            using(Initializer.Begin(window)) {
+                window.ResizeMode = seed.ResizeMode;
+                window.WindowStyle = seed.WindowStyle;
+                if(window.WindowStyle == WindowStyle.None) {
+                    window.AllowsTransparency = true;
+                }
+                if(0 < seed.ViewSize.Width && 0 < seed.ViewSize.Height && !double.IsNaN(seed.ViewSize.Width) && !double.IsNaN(seed.ViewSize.Height)) {
+                    window.Width = seed.ViewSize.Width;
+                    window.Height = seed.ViewSize.Height;
+                }
+                window.Background = seed.Background;
+
+                viewModel = new WebViewWidgetViewModel(window, seed.HtmlSource, seed.SoilCallback, LoggerFactory);
+                window.DataContext = viewModel;
+            }
+
+            seed.SoilCallback?.Invoke(viewModel);
+
+            return window;
         }
 
         /// <summary>

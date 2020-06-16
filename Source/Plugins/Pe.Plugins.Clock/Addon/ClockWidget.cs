@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             return WidgetView;
         }
 
-        public IHtmlSource CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
+        public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
             throw new NotSupportedException();
         }

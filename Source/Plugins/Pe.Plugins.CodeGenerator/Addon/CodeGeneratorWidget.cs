@@ -7,15 +7,13 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
-using ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels;
-using ContentTypeTextNet.Pe.Plugins.Eyes.Views;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
+namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 {
-    internal class EyesWidget: IWidget
+    internal class CodeGeneratorWidget: IWidget
     {
-        public EyesWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
+        public CodeGeneratorWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -34,28 +32,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
         ISkeletonImplements SkeletonImplements { get; }
         IPluginInformations PluginInformations { get; }
 
-        EyesWidgetWindow? WidgetView { get; set; }
-        EyesWidgetViewModel? ViewModel { get; set; }
-
-        EyesBackground? EyesBackground { get; set; }
-
         #endregion
 
         #region function
-
-        internal void Attach(EyesBackground eyesBackground)
-        {
-            EyesBackground = eyesBackground;
-            if(ViewModel != null) {
-                ViewModel.Attach(EyesBackground);
-            }
-        }
 
         #endregion
 
         #region IWidget
 
-        public WidgetViewType ViewType => WidgetViewType.Window;
+        public WidgetViewType ViewType => WidgetViewType.WebView;
 
         public DependencyObject? GetMenuIcon(IPluginContext pluginContext)
         {
@@ -64,61 +49,39 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
 
         public string GetMenuHeader(IPluginContext pluginContext)
         {
-            return "👀";
+            return System.Reflection.Assembly.GetExecutingAssembly().GetName().FullName;
         }
 
         public Window CreateWindowWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
-            if(ViewModel != null) {
-                throw new InvalidOperationException(nameof(ViewModel));
-            }
-
-            WidgetView = new EyesWidgetWindow();
-            ViewModel = new EyesWidgetViewModel(WidgetView, SkeletonImplements, DispatcherWrapper, LoggerFactory);
-            if(EyesBackground != null) {
-                Attach(EyesBackground);
-            }
-            WidgetView.DataContext = ViewModel;
-
-            return WidgetView;
+            throw new NotSupportedException();
         }
 
         public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
-            throw new NotSupportedException();
+            //var webViewSeed = new WebViewSeed(new HtmlAddress(new Uri("https://google.co.jp")));
+            var webViewSeed = new WebViewSeed(new HtmlSourceCode("<code>HTML CODE!</code>"));
+
+            webViewSeed.SoilCallback = g => {
+                Logger.LogInformation("{0}", g);
+            };
+
+            return webViewSeed;
         }
 
         /// <inheritdoc cref="IWidget.OpeningWidget(IPluginContext)"/>
         public void OpeningWidget(IPluginContext pluginContext)
         {
-            if(ViewModel == null) {
-                throw new InvalidOperationException(nameof(ViewModel));
-            }
-            //ViewModel.StartClock();
         }
 
         /// <inheritdoc cref="IWidget.OpenedWidget(IPluginContext)"/>
         public void OpenedWidget(IPluginContext pluginContext)
         {
-            if(ViewModel == null) {
-                throw new InvalidOperationException(nameof(ViewModel));
-            }
         }
 
         /// <inheritdoc cref="IWidget.ClosedWidget(IWidgetAddonClosedContext)"/>
         public void ClosedWidget(IWidgetAddonClosedContext widgetAddonClosedContext)
         {
-            if(ViewModel == null) {
-                throw new InvalidOperationException(nameof(ViewModel));
-            }
-            if(WidgetView == null) {
-                throw new InvalidOperationException(nameof(WidgetView));
-            }
-
-            //ViewModel.StopClock();
-            ViewModel.Dispose();
-            ViewModel = null;
-            WidgetView = null;
         }
 
         #endregion

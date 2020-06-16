@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
@@ -62,8 +63,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// WebViewウィジェットを生成。
         /// </summary>
-        /// <returns></returns>
-        IHtmlSource CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext);
+        /// <returns>WebViewウィジェット生成方法。</returns>
+        IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext);
 
         /// <summary>
         /// ウィジェットが開かれる際に呼ばれる。
@@ -79,6 +80,83 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// ウィジェットが閉じられた際に呼ばれる。
         /// </summary>
         void ClosedWidget(IWidgetAddonClosedContext widgetAddonClosedContext);
+
+        #endregion
+    }
+
+    public interface IWebViewSeed
+    {
+        #region property
+
+        IHtmlSource HtmlSource { get; }
+
+        /// <summary>
+        /// 生成ウィジェットのウィンドウスタイル。
+        /// <para><see cref="WindowStyle.None"/>の場合に<see cref="Window.AllowsTransparency"/>が有効になる。</para>
+        /// </summary>
+        WindowStyle WindowStyle { get; }
+        /// <summary>
+        /// 生成ウィジェットのリサイズモード。
+        /// </summary>
+        ResizeMode ResizeMode { get; }
+        /// <summary>
+        /// 生成される初期サイズ。
+        /// </summary>
+        Size ViewSize { get; }
+        /// <summary>
+        /// 生成ウィジェットの背景。
+        /// </summary>
+        Brush Background { get; }
+
+        /// <summary>
+        /// 生成後に各種パラメータを受けとるコールバック。
+        /// </summary>
+        Action<IWebViewGrass>? SoilCallback { get; }
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IWebViewSeed"/>
+    public class WebViewSeed: IWebViewSeed
+    {
+        public WebViewSeed(IHtmlAddress htmlAddress)
+        {
+            HtmlSource = htmlAddress;
+        }
+
+        public WebViewSeed(IHtmlSourceCode htmlSourceCode)
+        {
+            HtmlSource = htmlSourceCode;
+        }
+
+        #region IWebViewSeed
+
+        /// <inheritdoc cref="IWebViewSeed.HtmlSource"/>
+        public IHtmlSource HtmlSource { get; }
+
+        /// <inheritdoc cref="IWebViewSeed.WindowStyle"/>
+        public WindowStyle WindowStyle { get; set; } = WindowStyle.SingleBorderWindow;
+        /// <inheritdoc cref="IWebViewSeed.ResizeMode"/>
+        public ResizeMode ResizeMode { get; } = ResizeMode.CanResize;
+        /// <inheritdoc cref="IWebViewSeed.ViewSize"/>
+        public Size ViewSize { get; set; } = new Size(400, 400);
+        /// <inheritdoc cref="IWebViewSeed.Background"/>
+        public Brush Background { get; set; } = SystemColors.WindowBrush;
+
+        /// <inheritdoc cref="IWebViewSeed.SoilCallback"/>
+        public Action<IWebViewGrass>? SoilCallback { get; set; }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// WevView生成後に返される。
+    /// </summary>
+    public interface IWebViewGrass
+    {
+        #region property
+
+        object WebView { get; }
 
         #endregion
     }

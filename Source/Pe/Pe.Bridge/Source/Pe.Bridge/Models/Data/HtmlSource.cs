@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
-    public interface IHtmlAddress
+    public interface IHtmlAddress: IHtmlSource
     {
         #region proeprty
 
@@ -74,12 +74,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
-    public interface IHtmlSourceCode
+    public interface IHtmlSourceCode: IHtmlSource
     {
         #region property
 
         string SourceCode { get; }
-        Uri BaseAddress { get; }
+        Uri? BaseAddress { get; }
 
         #endregion
     }
@@ -87,6 +87,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     /// <inheritdoc cref="IHtmlSourceCode"/>
     public class HtmlSourceCode: HtmlSourceBase, IHtmlSourceCode
     {
+        public HtmlSourceCode(string sourceCode)
+        {
+            SourceCode = sourceCode;
+        }
+
         public HtmlSourceCode(string sourceCode, Uri baseAddress)
         {
             SourceCode = sourceCode;
@@ -98,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <inheritdoc cref="IHtmlSourceCode.SourceCode"/>
         public string SourceCode { get; }
         /// <inheritdoc cref="IHtmlSourceCode.BaseAddress"/>
-        public Uri BaseAddress { get; }
+        public Uri? BaseAddress { get; }
 
         #endregion
 

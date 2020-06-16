@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
         /// <inheritdoc cref="IWidget.CreateWebViewWidget(IWidgetAddonCreateContext)"/>
-        public IHtmlSource CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
+        public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
             if(ViewType == WidgetViewType.WebView) {
                 return FunctionUnit.CreateWebViewWidget(widgetAddonCreateContext);

@@ -44,6 +44,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Eyes", "Pe.Plugi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pe.Plugins.CodeGenerator", "Pe.Plugins.CodeGenerator\Pe.Plugins.CodeGenerator.csproj", "{4634AEED-4EAA-4B2F-9F5A-D0CB6098B6CD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0FD4365-AB1A-425D-8C5C-B229C687E371} = {C0FD4365-AB1A-425D-8C5C-B229C687E371}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
