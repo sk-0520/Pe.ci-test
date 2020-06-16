@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.Preferences
                 setting = new FileFinderSetting();
             }
 
-            SettingViewModel = new FileFinderSettingViewModel(setting, preferencesParameter.SkeletonImplements, preferencesParameter.LoggerFactory);
+            SettingViewModel = new FileFinderSettingViewModel(setting, preferencesParameter.SkeletonImplements, preferencesParameter.DispatcherWrapper, preferencesParameter.LoggerFactory);
 
             var control = new FileFinderSettingControl() {
                 DataContext = SettingViewModel,

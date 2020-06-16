@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.Clock.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -11,8 +12,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 {
     public class ClockSettingViewModel: ViewModelSkeleton
     {
-        public ClockSettingViewModel(ClockWidgetSetting widgetSetting, ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, loggerFactory)
+        public ClockSettingViewModel(ClockWidgetSetting widgetSetting, ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         {
             WidgetSetting = widgetSetting;
         }

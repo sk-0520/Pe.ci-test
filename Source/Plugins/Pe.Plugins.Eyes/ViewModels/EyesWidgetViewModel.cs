@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.Eyes.Addon;
 using ContentTypeTextNet.Pe.Plugins.Eyes.Views;
@@ -21,24 +22,29 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
         double _leftPupilX;
         double _leftPupilY;
 
+        double _rightPupilX;
+        double _rightPupilY;
+
         #endregion
 
-        public EyesWidgetViewModel(EyesWidgetWindow eyesWidgetWindow, ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, loggerFactory)
+        public EyesWidgetViewModel(EyesWidgetWindow eyesWidgetWindow, ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         {
             LeftEye = eyesWidgetWindow.leftEye;
+            RightEye = eyesWidgetWindow.rightEye;
         }
 
         #region property
 
         Ellipse LeftEye { get; }
+        Ellipse RightEye { get; }
 
         public double EyeWidth { get; } = 100;
         public double EyeHeight { get; } = 100;
 
 
-        public double PupilWidth { get; } = 10;
-        public double PupilHeight { get; } = 10;
+        public double PupilWidth { get; } = 20;
+        public double PupilHeight { get; } = 20;
 
         public double LeftPupilX
         {
@@ -49,6 +55,17 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
         {
             get => this._leftPupilY;
             set => SetProperty(ref this._leftPupilY, value);
+        }
+
+        public double RightPupilX
+        {
+            get => this._rightPupilX;
+            set => SetProperty(ref this._rightPupilX, value);
+        }
+        public double RightPupilY
+        {
+            get => this._rightPupilY;
+            set => SetProperty(ref this._rightPupilY, value);
         }
 
         public double MouseX
@@ -124,13 +141,41 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
             MouseX = e.Location.X;
             MouseY = e.Location.Y;
 
-            var deviceCursorLocation = new Point(MouseX, MouseY);
-            var scale = GetDipScale(LeftEye);
-            var logicalCursorLocation = new Point(deviceCursorLocation.X * scale.Y, deviceCursorLocation.Y * scale.Y);
+            DispatcherWrapper.Begin(() => {
+                var deviceCursorLocation = new Point(MouseX, MouseY);
 
-            var relativeLocation = LeftEye.PointFromScreen(logicalCursorLocation);
+                var cx = EyeWidth / 2 ;
+                var cy = EyeWidth / 2 ;
+                var checkr = (EyeWidth / 2) * (EyeWidth / 2);
 
-            Logger.LogInformation("left {0}", relativeLocation);
+                Point ToPupilLocation(Point deviceCursorLocation, Visual element)
+                {
+                    var logicalRelativeLocation = element.PointFromScreen(deviceCursorLocation);
+
+                    if((logicalRelativeLocation.X - cx) * (logicalRelativeLocation.X - cx) + (logicalRelativeLocation.Y - cy) * (logicalRelativeLocation.Y - cy) < checkr) {
+                        return new Point(
+                            logicalRelativeLocation.X - PupilWidth / 2,
+                            logicalRelativeLocation.Y - PupilHeight / 2
+                        );
+                    } else {
+                        double radian = Math.Atan2(logicalRelativeLocation.Y - cy, logicalRelativeLocation.X- cx);
+                        return new Point(
+                            cx + (cx - PupilWidth) * Math.Cos(radian) - PupilWidth / 2,
+                            cy + (cy - PupilHeight) * Math.Sin(radian) - PupilHeight / 2
+                        );
+                    }
+                }
+
+                var left = ToPupilLocation(deviceCursorLocation, LeftEye);
+                LeftPupilX = left.X;
+                LeftPupilY = left.Y;
+
+                var right = ToPupilLocation(deviceCursorLocation, RightEye);
+                RightPupilX = right.X;
+                RightPupilY = right.Y;
+
+
+            }, System.Windows.Threading.DispatcherPriority.Render);
         }
     }
 }

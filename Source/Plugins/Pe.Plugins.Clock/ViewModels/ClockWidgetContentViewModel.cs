@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -23,8 +24,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
         bool _isPm;
 
         #endregion
-        protected ClockWidgetContentBaseViewModel(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, loggerFactory)
+        protected ClockWidgetContentBaseViewModel(ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper,ILoggerFactory loggerFactory)
+            : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         { }
 
         #region property
@@ -97,8 +98,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
     public class ClockWidgetSimpleAnalogClockContentViewModel: ClockWidgetContentBaseViewModel
     {
-        public ClockWidgetSimpleAnalogClockContentViewModel(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, loggerFactory)
+        public ClockWidgetSimpleAnalogClockContentViewModel(ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         {
             HourAngels = Enumerable.Range(0, 12).Select(i => i * 30.0).ToList();
             SecondsAngels = Enumerable.Range(0, 60).Select(i => i * 6.0).Except(HourAngels).ToList();
@@ -114,8 +115,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
     public class ClockWidgetJaggyAnalogClockContentViewModel: ClockWidgetContentBaseViewModel
     {
-        public ClockWidgetJaggyAnalogClockContentViewModel(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, loggerFactory)
+        public ClockWidgetJaggyAnalogClockContentViewModel(ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         { }
     }
 }

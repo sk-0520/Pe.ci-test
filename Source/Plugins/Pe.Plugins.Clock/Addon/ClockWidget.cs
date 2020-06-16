@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.Addon
             if(!widgetAddonCreateContext.Storage.Persistent.Normal.TryGet<ClockWidgetSetting>(ClockConstants.WidgetSettengKey, out clockWidgetSetting)) {
                 clockWidgetSetting = new ClockWidgetSetting();
             }
-            ViewModel = new ClockWidgetViewModel(clockWidgetSetting, SkeletonImplements, LoggerFactory);
+            ViewModel = new ClockWidgetViewModel(clockWidgetSetting, SkeletonImplements, DispatcherWrapper, LoggerFactory);
             WidgetView = new ClockWidgetWindow() {
                 DataContext = ViewModel,
             };

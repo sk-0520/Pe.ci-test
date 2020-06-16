@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.Clock.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -15,15 +16,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Clock.ViewModels
 
         #endregion
 
-        public ClockWidgetViewModel(ClockWidgetSetting setting, ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, loggerFactory)
+        public ClockWidgetViewModel(ClockWidgetSetting setting, ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         {
             Setting = setting;
 
             Content = Setting.ClockWidgetKind switch
             {
-                ClockWidgetKind.SimpleAnalog => new ClockWidgetSimpleAnalogClockContentViewModel(skeletonImplements.Clone(), loggerFactory),
-                ClockWidgetKind.JaggyAnalog => new ClockWidgetJaggyAnalogClockContentViewModel(skeletonImplements.Clone(), loggerFactory),
+                ClockWidgetKind.SimpleAnalog => new ClockWidgetSimpleAnalogClockContentViewModel(skeletonImplements.Clone(), DispatcherWrapper, loggerFactory),
+                ClockWidgetKind.JaggyAnalog => new ClockWidgetJaggyAnalogClockContentViewModel(skeletonImplements.Clone(), DispatcherWrapper, loggerFactory),
                 _ => throw new NotImplementedException(),
             };
         }

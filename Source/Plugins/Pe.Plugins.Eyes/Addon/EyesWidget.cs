@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
             }
 
             WidgetView = new EyesWidgetWindow();
-            ViewModel = new EyesWidgetViewModel(WidgetView, SkeletonImplements, LoggerFactory);
+            ViewModel = new EyesWidgetViewModel(WidgetView, SkeletonImplements, DispatcherWrapper, LoggerFactory);
             if(EyesBackground != null) {
                 Attach(EyesBackground);
             }

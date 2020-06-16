@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Bridge.ViewModels
@@ -28,10 +29,11 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
     /// </summary>
     public abstract class ViewModelSkeleton: INotifyPropertyChanged, IDisposable
     {
-        protected ViewModelSkeleton(ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
+        protected ViewModelSkeleton(ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             Implements = skeletonImplements;
+            DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
@@ -40,6 +42,7 @@ namespace ContentTypeTextNet.Pe.Bridge.ViewModels
         /// こいつ経由でViewModel処理を行う。
         /// </summary>
         protected ISkeletonImplements Implements { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILogger Logger { get; }
         #endregion
 

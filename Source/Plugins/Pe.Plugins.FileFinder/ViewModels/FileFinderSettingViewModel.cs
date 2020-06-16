@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.FileFinder.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -10,8 +11,8 @@ namespace ContentTypeTextNet.Pe.Plugins.FileFinder.ViewModels
 {
     public class FileFinderSettingViewModel: ViewModelSkeleton
     {
-        public FileFinderSettingViewModel(FileFinderSetting setting, ISkeletonImplements skeletonImplements, ILoggerFactory loggerFactory)
-            : base(skeletonImplements, loggerFactory)
+        public FileFinderSettingViewModel(FileFinderSetting setting, ISkeletonImplements skeletonImplements, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         {
             Setting = setting;
         }
