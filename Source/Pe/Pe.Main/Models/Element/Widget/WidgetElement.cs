@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 {
     public class WidgetElement: ElementBase, IViewCloseReceiver, IPluginId
     {
-        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Widget = widget;
@@ -40,10 +40,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             CultureService = cultureService;
             WindowManager = windowManager;
             NotifyManager = notifyManager;
+            DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
 
+        IDispatcherWrapper DispatcherWrapper { get; }
         IWidget Widget { get; }
         IPluginInformations PluginInformations { get; }
         //PluginContextFactory PluginContextFactory { get; }
@@ -108,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 }
                 window.Background = seed.Background;
 
-                viewModel = new WebViewWidgetViewModel(window, seed.HtmlSource, seed.SoilCallback, LoggerFactory);
+                viewModel = new WebViewWidgetViewModel(window, seed.HtmlSource, seed.SoilCallback, DispatcherWrapper, LoggerFactory);
                 window.DataContext = viewModel;
             }
 

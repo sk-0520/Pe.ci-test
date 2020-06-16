@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
@@ -60,7 +61,23 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
         public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
             //var webViewSeed = new WebViewSeed(new HtmlAddress(new Uri("https://google.co.jp")));
-            var webViewSeed = new WebViewSeed(new HtmlSourceCode("<code>HTML CODE!</code>"));
+            var webViewSeed = new WebViewSeed(new HtmlSourceCode(@"
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <title></title>
+</head>
+<body style='background-color: transparent'>
+    <div style='margin: 20px; color: red'>
+        <div class='PE:MOVE-AREA' style='background: #b6ff00'>View Move</div>
+        <h1>HTML!</h1>
+        <span class='PE:RESIZE-AREA' style='background: #b6ff00'>resize</span>
+    </div>
+</body>
+</html>
+")) {
+                Background = Brushes.Transparent,
+                WindowStyle = WindowStyle.None,
+            };
 
             webViewSeed.SoilCallback = g => {
                 Logger.LogInformation("{0}", g);

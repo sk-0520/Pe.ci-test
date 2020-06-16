@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.DirectoryServices;
 using System.Text;
 using System.Windows;
 using CefSharp;
 using CefSharp.Wpf;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -18,11 +20,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
     /// </summary>
     public class WebViewWidgetViewModel: ViewModelBase, IWebViewGrass
     {
-        public WebViewWidgetViewModel(WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, ILoggerFactory loggerFactory)
+        public WebViewWidgetViewModel(WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             WidgetWindow = window;
             WebView = WidgetWindow.webView;
+            DispatcherWrapper = dispatcherWrapper;
             HtmlSource = htmlSource;
             WidgetCallback = widgetCallback;
 
@@ -38,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         WebViewWidgetWindow WidgetWindow { get; }
         IHtmlSource HtmlSource { get; }
         Action<IWebViewGrass>? WidgetCallback { get; }
-
+        IDispatcherWrapper DispatcherWrapper { get; }
         #endregion
 
         #region command
@@ -47,9 +50,44 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         #region function
 
+        void InjectWidget()
+        {
+            var js = @"
+alert(1);
+(function() {
+
+alert(true);
+
+    const styleElement = document.createElement('style');
+    styleElement.textContent(`
+    *.PE:MOVE-AREA {
+        cursor: move;
+    }
+    *.PE:RESIZE-AREA {
+        cursor: nw-resize;
+    }
+    `);
+    document.body.appendChild(styleElement);
+
+    const moveAreaElements = document.querySelectorAll('PE:MOVE-AREA');
+
+    for(const moveAreaElement of moveAreaElements) {
+    }
+
+    const moveAreaElements = document.querySelectorAll('PE:RESIZE-AREA');
+
+alert(true);
+})();";
+            WebView.ExecuteScriptAsync(js);
+            //WebView.JavascriptObjectRepository.Register("Pe_Callback", this, true);
+        }
+
         void LoadHtmlSource(IHtmlSource htmlSource)
         {
             Debug.Assert(WebView.IsLoaded);
+
+            WebView.LoadingStateChanged += WebView_LoadingStateChanged;
+            WebView.FrameLoadEnd += WebView_FrameLoadEnd;
 
             switch(htmlSource.HtmlSourceKind) {
                 case HtmlSourceKind.Address: {
@@ -74,6 +112,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
             if(WidgetCallback != null) {
                 WidgetCallback(this);
+            }
+        }
+
+        private void WebView_FrameLoadEnd(object? sender, FrameLoadEndEventArgs e)
+        {
+            if(e.Frame.IsMain) {
+                DispatcherWrapper.Begin(() => {
+                    InjectWidget();
+                });
+            }
+        }
+
+        private void WebView_LoadingStateChanged(object? sender, LoadingStateChangedEventArgs e)
+        {
+            if(!e.IsLoading) {
+                DispatcherWrapper.Begin(() => {
+                    InjectWidget();
+                });
             }
         }
 

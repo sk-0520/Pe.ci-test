@@ -1180,10 +1180,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
                 var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
                 var cultureService = ApplicationDiContainer.Build<CultureService>();
+                var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
                     var info = widget.Addon.PluginInformations;
-                    var element = new WidgetElement(widget, info, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, LoggerFactory);
+                    var element = new WidgetElement(widget, info, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, dispatcherWrapper, LoggerFactory);
                     element.Initialize();
                     Widgets.Add(element);
                 }
