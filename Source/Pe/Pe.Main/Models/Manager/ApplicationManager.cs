@@ -1318,6 +1318,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("おわる！");
 
+            if(BackgroundAddon != null) {
+                var backgroundAddonProxyRunShutdownContext = new BackgroundAddonProxyRunShutdownContext();
+                BackgroundAddon.RunShutdown(backgroundAddonProxyRunShutdownContext);
+            }
+
             UnloadPlugins();
 
             BackupSettingsDefault(ApplicationDiContainer);

@@ -13,6 +13,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     public enum BackgroundKind
     {
         /// <summary>
+        /// バックグラウンド専用処理。
+        /// </summary>
+        Running,
+        /// <summary>
         /// キーボードフック。
         /// <para>キーボードの押下は取得できるが取り消しは不可。</para>
         /// </summary>
@@ -22,12 +26,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <para>マウスの押下・移動は取得できるが取り消しは不可。</para>
         /// </summary>
         MouseHook,
-        /// <summary>
-        /// DB アクセス時処理割り込み。
-        /// <para>SQL変更・パラメータ変更はできるけど Pe バージョンに依存しまくるし、型の恩恵もないし結果に対してどうこうも出来ない。。</para>
-        /// <para>Pe の実行完了後に動作する。</para>
-        /// </summary>
-        DatabaseAccessHook,
     }
 
     /// <summary>
@@ -48,6 +46,20 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="backgroundKind"></param>
         /// <returns></returns>
         bool IsSupported(BackgroundKind backgroundKind);
+
+        /// <summary>
+        /// バックグランド処理開始時点で呼び出される。
+        /// <para>非同期で呼び出される。</para>
+        /// </summary>
+        /// <param name="backgroundAddonRunStartupContext"></param>
+        void RunStartup(IBackgroundAddonRunStartupContext backgroundAddonRunStartupContext);
+        /// <summary>
+        /// バックグラウンド処理終了時点で呼び出される。
+        /// <para>非同期で呼び出される。</para>
+        /// </summary>
+        /// <param name="backgroundAddonRunShutdownContext"></param>
+        void RunShutdown(IBackgroundAddonRunShutdownContext backgroundAddonRunShutdownContext);
+
 
         /// <summary>
         /// キーが押下された。
@@ -85,21 +97,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="mouseButton"></param>
         /// <param name="mouseButtonState"></param>
         void HookMouseUp(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext);
-
-        /// <summary>
-        /// DBアクセス時にSQLを書き換える。
-        /// </summary>
-        /// <param name="backgroundAddonDatabaseStatementContext"></param>
-        // <returns>書き換え後のSQL文。</returns>
-        string HookDatabaseStatement(IBackgroundAddonDatabaseStatementContext backgroundAddonDatabaseStatementContext);
-
-        /// <summary>
-        /// DBアクセス時にパラメータを書き換える。
-        /// </summary>
-        /// <param name="backgroundAddonDatabaseParameterContext"></param>
-        /// <returns>書き換え後のパラメータ。入力と同じ(参照)であれば書き換えがなかったとみなされる。</returns>
-        object? HookDatabaseParameter(IBackgroundAddonDatabaseParameterContext backgroundAddonDatabaseParameterContext);
-
 
         #endregion
     }

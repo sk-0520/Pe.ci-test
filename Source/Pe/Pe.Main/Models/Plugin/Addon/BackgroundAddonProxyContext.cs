@@ -11,6 +11,12 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
+    internal class BackgroundAddonProxyRunStartupContext: IBackgroundAddonRunStartupContext
+    { }
+
+    internal class BackgroundAddonProxyRunShutdownContext: IBackgroundAddonRunShutdownContext
+    { }
+
     internal class BackgroundAddonProxyKeyboardContext: IBackgroundAddonKeyboardContext
     {
         public BackgroundAddonProxyKeyboardContext(KeyboardHookEventArgs keyboardHookEventArgs)

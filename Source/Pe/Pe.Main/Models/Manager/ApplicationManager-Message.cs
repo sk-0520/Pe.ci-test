@@ -186,6 +186,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             BackgroundAddon = PluginContainer.Addon.GetBackground();
 
+            var backgroundAddonProxyRunStartupContext = new BackgroundAddonProxyRunStartupContext();
+            BackgroundAddon.RunStartup(backgroundAddonProxyRunStartupContext);
+
             var hookConfiguration = ApplicationDiContainer.Build<HookConfiguration>();
             if(hookConfiguration.Keyboard) {
                 if(BackgroundAddon.IsSupported(BackgroundKind.KeyboardHook)) {

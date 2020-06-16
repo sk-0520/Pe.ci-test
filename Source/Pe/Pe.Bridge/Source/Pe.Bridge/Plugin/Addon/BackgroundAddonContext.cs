@@ -7,6 +7,11 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
+    public interface IBackgroundAddonRunStartupContext
+    { }
+    public interface IBackgroundAddonRunShutdownContext
+    { }
+
     public interface IBackgroundAddonKeyboardContext
     {
         #region property
@@ -44,42 +49,4 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #endregion
     }
 
-    public interface IBackgroundAddonDatabaseStatementContext
-    {
-        #region proeprty
-
-        /// <summary>
-        /// SQL文。他プラグインによる変更の可能性あり。
-        /// </summary>
-        string Statement { get; }
-        /// <summary>
-        /// パラメータ。
-        /// </summary>
-        object? Parameter { get; }
-        DateTime TimestampUtc { get; }
-
-        #endregion
-    }
-
-    public interface IBackgroundAddonDatabaseParameterContext
-    {
-        #region proeprty
-
-        /// <summary>
-        /// SQL文。他プラグインによる変更の可能性あり。
-        /// </summary>
-        string Statement { get; }
-        /// <summary>
-        /// パラメータ。
-        /// <para>直接こいつを書き換えるのではなく<see cref="ObjectCloner"/>を経由もしくは自力で複製して書き換え処理を行うこと。他プラグインによる変更の可能性あり。</para>
-        /// </summary>
-        object? Parameter { get; }
-        /// <summary>
-        /// パラメータ複製装置。
-        /// </summary>
-        Func<object, object> ObjectCloner { get; }
-        DateTime TimestampUtc { get; }
-
-        #endregion
-    }
 }

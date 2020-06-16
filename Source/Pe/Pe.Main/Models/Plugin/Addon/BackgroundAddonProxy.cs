@@ -39,6 +39,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return SupportedCache[backgroundKind] = result;
         }
 
+        public void RunStartup(BackgroundAddonProxyRunStartupContext backgroundAddonRunStartupContext)
+        {
+        }
+
+        /// <inheritdoc cref="IBackground.RunStartup(IBackgroundAddonRunStartupContext)"/>
+        void IBackground.RunStartup(IBackgroundAddonRunStartupContext backgroundAddonRunStartupContext)
+        {
+            Debug.Assert(backgroundAddonRunStartupContext.GetType() == typeof(BackgroundAddonProxyRunStartupContext));
+            RunStartup((BackgroundAddonProxyRunStartupContext)backgroundAddonRunStartupContext);
+        }
+        /// <inheritdoc cref="IBackground.RunShutdown(IBackgroundAddonRunShutdownContext)"/>
+        public void RunShutdown(BackgroundAddonProxyRunShutdownContext backgroundAddonRunShutdownContext)
+        {
+
+        }
+        void IBackground.RunShutdown(IBackgroundAddonRunShutdownContext backgroundAddonRunShutdownContext)
+        {
+            Debug.Assert(backgroundAddonRunShutdownContext.GetType() == typeof(BackgroundAddonProxyRunShutdownContext));
+            RunShutdown((BackgroundAddonProxyRunShutdownContext)backgroundAddonRunShutdownContext);
+        }
+
         /// <inheritdoc cref="IBackground.HookKeyDown(IBackgroundAddonKeyboardContext)"/>
         public void HookKeyDown(BackgroundAddonProxyKeyboardContext backgroundAddonKeyboardContext)
         {
@@ -129,18 +150,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             Debug.Assert(backgroundAddonMouseButtonContext.GetType() == typeof(BackgroundAddonProxyMouseButtonContext));
             HookMouseUp((BackgroundAddonProxyMouseButtonContext)backgroundAddonMouseButtonContext);
-        }
-
-        /// <inheritdoc cref="IBackground"/>
-        public string HookDatabaseStatement(IBackgroundAddonDatabaseStatementContext backgroundAddonDatabaseStatementContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc cref="IBackground"/>
-        public object? HookDatabaseParameter(IBackgroundAddonDatabaseParameterContext backgroundAddonDatabaseParameterContext)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

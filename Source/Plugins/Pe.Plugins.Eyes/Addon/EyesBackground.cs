@@ -96,12 +96,24 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
         {
             return backgroundKind switch
             {
+                BackgroundKind.Running => false,
                 BackgroundKind.KeyboardHook => true,
                 BackgroundKind.MouseHook => true,
-                BackgroundKind.DatabaseAccessHook => false,
                 _ => throw new NotImplementedException(),
             };
         }
+
+        public void RunStartup(IBackgroundAddonRunStartupContext backgroundAddonRunStartupContext)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void RunShutdown(IBackgroundAddonRunShutdownContext backgroundAddonRunShutdownContext)
+        {
+            throw new NotSupportedException();
+        }
+
+
 
         public void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
@@ -128,19 +140,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
         {
             MouseUp?.Invoke(this, new BackgroundMouseButtonEventArgs(backgroundAddonMouseButtonContext.Button, backgroundAddonMouseButtonContext.State, backgroundAddonMouseButtonContext.TimestampUtc));
         }
-
-
-        public string HookDatabaseStatement(IBackgroundAddonDatabaseStatementContext backgroundAddonDatabaseStatementContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object? HookDatabaseParameter(IBackgroundAddonDatabaseParameterContext backgroundAddonDatabaseParameterContext)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
 
         #endregion
