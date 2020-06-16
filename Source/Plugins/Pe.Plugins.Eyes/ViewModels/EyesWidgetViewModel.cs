@@ -44,6 +44,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
         {
             LeftEye = eyesWidgetWindow.leftEye;
             RightEye = eyesWidgetWindow.rightEye;
+
+            this._leftPupilX = this._rightPupilX = EyeWidth / 2 - PupilWidth / 2;
+            this._leftPupilY = this._rightPupilY = EyeHeight / 2 - PupilHeight / 2;
         }
 
         #region property
@@ -207,8 +210,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.ViewModels
                 var deviceCursorLocation = new Point(MouseX, MouseY);
 
                 var cx = EyeWidth / 2;
-                var cy = EyeWidth / 2;
-                var checkr = (EyeWidth / 2) * (EyeWidth / 2);
+                var cy = EyeHeight / 2;
+                var checkr = (EyeWidth / 2) * (EyeHeight / 2);
 
                 Point ToPupilLocation(Point deviceCursorLocation, Visual element)
                 {
