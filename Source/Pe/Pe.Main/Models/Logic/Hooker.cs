@@ -326,7 +326,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             };
 
             ButtonState = mouseButtonState;
-            IsButtonEvent = false;
+            IsButtonEvent = true;
         }
 
         #region property
