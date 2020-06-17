@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.DirectoryServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using CefSharp;
@@ -15,6 +16,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -57,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         Action<IWebViewGrass>? WidgetCallback { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
-
+        TimeSpan ScriptTimeout { get; } = TimeSpan.FromMinutes(1);
         WebViewWidgetCallbacks Callbacks { get; }
         #endregion
 
@@ -82,6 +84,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
 
             WebView.JavascriptObjectRepository.Register("pe_callbacks", Callbacks, true);
+
+            if(WidgetCallback != null) {
+                WidgetCallback(this);
+            }
         }
 
         void LoadHtmlSource(IHtmlSource htmlSource)
@@ -110,10 +116,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                 default:
                     throw new NotImplementedException();
             }
+        }
 
-            if(WidgetCallback != null) {
-                WidgetCallback(this);
+        IWebViewScriptResult EvaluateScriptAsyncCore(Task<JavascriptResponse> javascriptResponse)
+        {
+            if(!javascriptResponse.IsCompletedSuccessfully) {
+                Logger.LogError(javascriptResponse.Exception, "{0} スクリプト実行失敗: {2}, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId, javascriptResponse.Exception?.Message);
+                return WebViewScriptResult.Failure();
             }
+            var result = javascriptResponse.Result;
+            if(!result.Success) {
+                Logger.LogError("{0} スクリプト実行失敗: {2}, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId, result.Message);
+            }
+            return new WebViewScriptResult(result);
         }
 
         #endregion
@@ -123,6 +138,47 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         /// <inheritdoc cref="IWebViewGrass.WebView"/>
         public ChromiumWebBrowser WebView { get; }
         object IWebViewGrass.WebView => WebView;
+
+        /// <inheritdoc cref="IWebViewGrass.ExecuteScriptAsync(string)"/>
+        public void ExecuteScriptAsync(string script)
+        {
+            if(WebView.CanExecuteJavascriptInMainFrame) {
+                WebView.ExecuteScriptAsync(script);
+            } else {
+                Logger.LogError("{0} のスクリプト実行不可状態, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
+            }
+        }
+        /// <inheritdoc cref="IWebViewGrass.ExecuteScriptAsync(string, object[])"/>
+        public void ExecuteScriptAsync(string methodName, params object[] parameters)
+        {
+            if(WebView.CanExecuteJavascriptInMainFrame) {
+                WebView.ExecuteScriptAsync(methodName, parameters);
+            } else {
+                Logger.LogError("{0} スクリプト実行不可状態, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
+            }
+        }
+
+        /// <inheritdoc cref="IWebViewGrass.EvaluateScriptAsync(string)"/>
+        public Task<IWebViewScriptResult> EvaluateScriptAsync(string script)
+        {
+            if(WebView.CanExecuteJavascriptInMainFrame) {
+                return WebView.EvaluateScriptAsync(script, ScriptTimeout).ContinueWith(EvaluateScriptAsyncCore);
+            } else {
+                Logger.LogError("{0} スクリプト実行不可状態, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
+                return Task.FromResult<IWebViewScriptResult>(WebViewScriptResult.Failure());
+            }
+        }
+
+        /// <inheritdoc cref="IWebViewGrass.EvaluateScriptAsync(string, object[])"/>
+        public Task<IWebViewScriptResult> EvaluateScriptAsync(string methodName, params object[] parameters)
+        {
+            if(WebView.CanExecuteJavascriptInMainFrame) {
+                return WebView.EvaluateScriptAsync(ScriptTimeout, methodName, parameters).ContinueWith(EvaluateScriptAsyncCore);
+            } else {
+                Logger.LogError("{0} スクリプト実行不可状態, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
+                return Task.FromResult<IWebViewScriptResult>(WebViewScriptResult.Failure());
+            }
+        }
 
         #endregion
 

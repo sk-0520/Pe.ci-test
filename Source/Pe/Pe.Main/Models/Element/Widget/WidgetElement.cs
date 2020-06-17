@@ -116,8 +116,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 window.DataContext = viewModel;
             }
 
-            seed.SoilCallback?.Invoke(viewModel);
-
             return window;
         }
 

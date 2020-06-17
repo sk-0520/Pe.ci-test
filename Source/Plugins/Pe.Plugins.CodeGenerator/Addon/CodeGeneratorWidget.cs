@@ -93,6 +93,12 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 
             webViewSeed.SoilCallback = g => {
                 Logger.LogInformation("{0}", g);
+
+                g.ExecuteScriptAsync("alert('" + PluginInformations.PluginIdentifiers.PluginName + "')");
+                g.EvaluateScriptAsync("1+1").ContinueWith(t => {
+                    g.ExecuteScriptAsync("alert('" + t.Result.Result + "')");
+
+                });
             };
 
             return webViewSeed;

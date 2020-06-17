@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -155,13 +157,44 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     }
 
     /// <summary>
+    /// スクリプト実行結果。
+    /// <para>Pe から提供される。</para>
+    /// </summary>
+    public interface IWebViewScriptResult
+    {
+        #region property
+
+        /// <summary>
+        /// スクリプト実行は成功したか。
+        /// </summary>
+        bool Success { get; }
+
+        /// <summary>
+        /// スクリプト実行結果。
+        /// <para><see cref="Success"/>が偽の場合はデフォルト値が入る(というかさわるべきでない)</para>
+        /// </summary>
+        [MaybeNull]
+        object Result { get; }
+
+        #endregion
+    }
+
+    /// <summary>
     /// WevView生成後に返される。
+    /// <para>Pe から提供される。</para>
     /// </summary>
     public interface IWebViewGrass
     {
         #region property
 
         object WebView { get; }
+
+        void ExecuteScriptAsync(string script);
+        void ExecuteScriptAsync(string methodName, params object[] parameters);
+
+        Task<IWebViewScriptResult> EvaluateScriptAsync(string script);
+        Task<IWebViewScriptResult> EvaluateScriptAsync(string methodName, params object[] parameters);
+
 
         #endregion
     }

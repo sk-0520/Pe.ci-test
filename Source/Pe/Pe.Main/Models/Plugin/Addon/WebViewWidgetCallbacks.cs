@@ -5,7 +5,7 @@ using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
+namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal enum WebViewWidgetResizeDirection
     {
