@@ -71,6 +71,13 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
         <div class='PE-MOVE-AREA' style='background: #b6ff00'>View Move</div>
         <h1>HTML!</h1>
         <span class='PE-RESIZE-AREA' style='background: #b6ff00'>resize</span>
+<ul>
+        <li class='PE-RESIZE-AREA' data-pe-resize='ew' style='background: #b6ff00'>ew</li>
+        <li class='PE-RESIZE-AREA' data-pe-resize='ns' style='background: #b6ff00'>ns</li>
+        <li class='PE-RESIZE-AREA' data-pe-resize='nesw' style='background: #b6ff00'>nesw</li>
+        <li class='PE-RESIZE-AREA' data-pe-resize='nwse' style='background: #b6ff00'>nwse</li>
+</ul>
+
     </div>
 </body>
 </html>
