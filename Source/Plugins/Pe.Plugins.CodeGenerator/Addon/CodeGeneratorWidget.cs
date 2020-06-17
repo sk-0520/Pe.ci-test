@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 
         public string GetMenuHeader(IPluginContext pluginContext)
         {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().FullName;
+            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Name!;
         }
 
         public Window CreateWindowWidget(IWidgetAddonCreateContext widgetAddonCreateContext)

@@ -29,10 +29,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             HtmlSource = htmlSource;
             WidgetCallback = widgetCallback;
 
-            if(WebView.IsLoaded) {
+            if(WebView.IsBrowserInitialized) {
                 LoadHtmlSource(HtmlSource);
             } else {
-                WebView.Loaded += WebView_Loaded;
+                WebView.IsBrowserInitializedChanged += WebView_IsBrowserInitializedChanged;
             }
         }
 
@@ -54,10 +54,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         {
             var js = @"
 alert(1);
-(function() {
+function() {
 
-alert(true);
+alert(2);
 
+/*
     const styleElement = document.createElement('style');
     styleElement.textContent(`
     *.PE:MOVE-AREA {
@@ -76,8 +77,8 @@ alert(true);
 
     const moveAreaElements = document.querySelectorAll('PE:RESIZE-AREA');
 
-alert(true);
-})();";
+*/
+}();";
             WebView.ExecuteScriptAsync(js);
             //WebView.JavascriptObjectRepository.Register("Pe_Callback", this, true);
         }
@@ -143,10 +144,9 @@ alert(true);
 
         #endregion
 
-        private void WebView_Loaded(object sender, RoutedEventArgs e)
+        private void WebView_IsBrowserInitializedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            WebView.Loaded -= WebView_Loaded;
-
+            WebView.IsBrowserInitializedChanged += WebView_IsBrowserInitializedChanged;
             LoadHtmlSource(HtmlSource);
         }
 
