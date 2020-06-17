@@ -1,17 +1,34 @@
 // Pe から引数を追加して強制実行処理
-(function (styleSheet) {
-	async function moveStartAsync(e) {
+(async function (styleSheet) {
+	await CefSharp.BindObjectAsync("pe_callbacks");
+	window.pe_callbacks = pe_callbacks;
+
+	await CefSharp.BindObjectAsync("pe_extensions");
+	window.pe_extensions = pe_extensions;
+
+	var x = await pe_extensions.func(2,2);
+	alert(x);
+
+	/*async*/ function moveStartAsync(e) {
+		if (e.button !== 0) {
+			return;
+		}
+
 		e.preventDefault();
 
-		await CefSharp.BindObjectAsync("pe_callbacks");
+		//await CefSharp.BindObjectAsync("pe_callbacks");
 
 		pe_callbacks.moveStart();
 	}
 
-	async function resizeStartAsync(e) {
+	/*async*/ function resizeStartAsync(e) {
+		if (e.button !== 0) {
+			return;
+		}
+
 		e.preventDefault();
 
-		await CefSharp.BindObjectAsync("pe_callbacks");
+		//await CefSharp.BindObjectAsync("pe_callbacks");
 
 		pe_callbacks.resizeStart(e.currentTarget.dataset.pe_resize);
 	}

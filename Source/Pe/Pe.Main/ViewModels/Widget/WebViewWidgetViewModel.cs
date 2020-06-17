@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
     /// </summary>
     public class WebViewWidgetViewModel: ViewModelBase, IWebViewGrass
     {
-        public WebViewWidgetViewModel(IPluginIdentifiers pluginIdentifiers, WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, object? widgetPluginExtensions, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public WebViewWidgetViewModel(IPluginIdentifiers pluginIdentifiers, WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, object? pluginExtensions, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginIdentifiers = pluginIdentifiers;
@@ -38,8 +38,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             HtmlSource = htmlSource;
             WidgetCallback = widgetCallback;
             EnvironmentParameters = environmentParameters;
+            PluginExtensions = pluginExtensions;
 
-            Callbacks = new WebViewWidgetCallbacks(PluginIdentifiers, widgetPluginExtensions, LoggerFactory);
+            Callbacks = new WebViewWidgetCallbacks(PluginIdentifiers, LoggerFactory);
 
             Callbacks.MoveStarted += Callbacks_MoveStarted;
             Callbacks.ResizeStarted += Callbacks_ResizeStarted;
@@ -61,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         IDispatcherWrapper DispatcherWrapper { get; }
         TimeSpan ScriptTimeout { get; } = TimeSpan.FromMinutes(1);
         WebViewWidgetCallbacks Callbacks { get; }
+        object? PluginExtensions { get; }
         #endregion
 
         #region command
@@ -81,13 +83,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                 injectionStyle = reader.ReadToEnd();
             }
 
-            WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
-
             WebView.JavascriptObjectRepository.Register("pe_callbacks", Callbacks, true);
-
-            if(WidgetCallback != null) {
-                WidgetCallback(this);
+            if(PluginExtensions != null) {
+                WebView.JavascriptObjectRepository.Register("pe_extensions", PluginExtensions, true);
             }
+
+            //WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
+            WebView.EvaluateScriptAsync(injectionScript, injectionStyle).ContinueWith(t => {
+                if(WidgetCallback != null) {
+                    WidgetCallback(this);
+                }
+            });
+
         }
 
         void LoadHtmlSource(IHtmlSource htmlSource)

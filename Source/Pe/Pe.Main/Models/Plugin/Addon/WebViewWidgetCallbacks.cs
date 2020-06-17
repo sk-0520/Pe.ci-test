@@ -65,18 +65,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public event EventHandler<WebViewWidgetResizeEventArgs>? ResizeStarted;
 
         #endregion
-        public WebViewWidgetCallbacks(IPluginIdentifiers pluginIdentifiers, object? extensions, ILoggerFactory loggerFactory)
+        public WebViewWidgetCallbacks(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
-            Extensions = extensions;
         }
 
         #region property
         IPluginIdentifiers PluginIdentifiers { get; }
         ILogger Logger { get; }
-
-        public object? Extensions { get; }
 
         #endregion
 

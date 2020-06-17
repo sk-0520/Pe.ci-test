@@ -14,6 +14,25 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 {
     internal class CodeGeneratorWidget: IWidget
     {
+        #region define
+
+        public class Extensions
+        {
+            #region property
+
+            #endregion
+
+            #region function
+
+            public int Func(int a, int b)
+            {
+                return a + b;
+            }
+
+            #endregion
+        }
+
+        #endregion
         public CodeGeneratorWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
@@ -89,15 +108,19 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 ")) {
                 Background = Brushes.Transparent,
                 WindowStyle = WindowStyle.None,
+                Extensions = new Extensions(),
             };
 
             webViewSeed.SoilCallback = g => {
                 Logger.LogInformation("{0}", g);
 
-                g.ExecuteScriptAsync("alert('" + PluginInformations.PluginIdentifiers.PluginName + "')");
+                //g.ExecuteScriptAsync("alert(window.pe_callbacks)");
                 g.EvaluateScriptAsync("1+1").ContinueWith(t => {
                     g.ExecuteScriptAsync("alert('" + t.Result.Result + "')");
 
+                    g.EvaluateScriptAsync("pe_callbacks.toString()").ContinueWith(tt => {
+                        g.ExecuteScriptAsync("alert('" + tt.Result.Result + "')");
+                    });
                 });
             };
 
