@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         private void WebView_IsBrowserInitializedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            WebView.IsBrowserInitializedChanged += WebView_IsBrowserInitializedChanged;
+            WebView.IsBrowserInitializedChanged -= WebView_IsBrowserInitializedChanged;
             LoadHtmlSource(HtmlSource);
         }
 

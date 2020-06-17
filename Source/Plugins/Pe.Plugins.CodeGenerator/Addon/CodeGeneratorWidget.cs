@@ -68,9 +68,9 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 </head>
 <body style='background-color: transparent'>
     <div style='margin: 20px; color: red'>
-        <div class='PE:MOVE-AREA' style='background: #b6ff00'>View Move</div>
+        <div class='PE-MOVE-AREA' style='background: #b6ff00'>View Move</div>
         <h1>HTML!</h1>
-        <span class='PE:RESIZE-AREA' style='background: #b6ff00'>resize</span>
+        <span class='PE-RESIZE-AREA' style='background: #b6ff00'>resize</span>
     </div>
 </body>
 </html>
