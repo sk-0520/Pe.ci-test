@@ -11,7 +11,10 @@
 		"feedback_uri": "https://script.google.com/macros/s/AKfycbyIlZIe08jdA1CO_NTzzXJtvPgkXhFsxPMffYaP3ihnT2Oki0A/exec",
 		"feedback_src_uri": "https://script.google.com/d/1afpCKUa3N9hqTVxYt4pIjdML4W3bBwSWP3rs9XxtcI-95wfYTvp0cUHe/edit?usp=sharing"
 	},
+	"web": {
+		"developer_tools": true
+	},
 	"hook": {
-		"mouse":  false
+		"mouse": false
 	}
 }

@@ -9,6 +9,7 @@ using CefSharp.Wpf;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
@@ -56,11 +57,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         void InjectWidget()
         {
             string injectionScript;
-            using(var reader = EnvironmentParameters.WebViewWidgetInjectionFile.OpenText()) {
+            using(var reader = EnvironmentParameters.WebViewWidgetInjectionScriptFile.OpenText()) {
                 injectionScript = reader.ReadToEnd();
             }
 
-            WebView.ExecuteScriptAsync(injectionScript);
+            string injectionStyle;
+            using(var reader = EnvironmentParameters.WebViewWidgetInjectionStyleSheetFile.OpenText()) {
+                injectionStyle = reader.ReadToEnd();
+            }
+
+            WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
             //WebView.JavascriptObjectRepository.Register("Pe_Callback", this, true);
         }
 

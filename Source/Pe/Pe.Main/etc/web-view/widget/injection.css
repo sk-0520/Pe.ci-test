@@ -1,0 +1,25 @@
+.Pe_move-area {
+	border: 1px solid lime;
+	cursor: move;
+}
+
+.Pe_resize-area {
+	border: 1px solid red;
+	cursor: nwse-resize;
+}
+
+	.Pe_resize-area[data-Pe_resize='ew'] {
+		cursor: ew-resize;
+	}
+
+	.Pe_resize-area[data-Pe_resize='ns'] {
+		cursor: ns-resize;
+	}
+
+	.Pe_resize-area[data-Pe_resize='nesw'] {
+		cursor: nesw-resize;
+	}
+
+	.Pe_resize-area[data-Pe_resize='nwse'] {
+		cursor: nwse-resize;
+	}

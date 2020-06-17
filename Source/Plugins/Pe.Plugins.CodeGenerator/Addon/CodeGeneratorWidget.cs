@@ -68,14 +68,14 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 </head>
 <body style='background-color: transparent'>
     <div style='margin: 20px; color: red'>
-        <div class='PE-MOVE-AREA' style='background: #b6ff00'>View Move</div>
+        <div class='Pe_move-area' style='background: #b6ff00'>View Move</div>
         <h1>HTML!</h1>
-        <span class='PE-RESIZE-AREA' style='background: #b6ff00'>resize</span>
+        <span class='Pe_resize-area' style='background: #b6ff00'>resize</span>
 <ul>
-        <li class='PE-RESIZE-AREA' data-pe-resize='ew' style='background: #b6ff00'>ew</li>
-        <li class='PE-RESIZE-AREA' data-pe-resize='ns' style='background: #b6ff00'>ns</li>
-        <li class='PE-RESIZE-AREA' data-pe-resize='nesw' style='background: #b6ff00'>nesw</li>
-        <li class='PE-RESIZE-AREA' data-pe-resize='nwse' style='background: #b6ff00'>nwse</li>
+        <li class='Pe_resize-area' data-Pe_resize='ew' style='background: #b6ff00'>ew</li>
+        <li class='Pe_resize-area' data-Pe_resize='ns' style='background: #b6ff00'>ns</li>
+        <li class='Pe_resize-area' data-Pe_resize='nesw' style='background: #b6ff00'>nesw</li>
+        <li class='Pe_resize-area' data-Pe_resize='nwse' style='background: #b6ff00'>nwse</li>
 </ul>
 
     </div>
