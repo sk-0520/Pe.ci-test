@@ -1,27 +1,83 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 {
+    internal enum WebViewWidgetResizeDirection
+    {
+        /// <summary>
+        /// 上。
+        /// </summary>
+        North,
+        /// <summary>
+        /// 下。
+        /// </summary>
+        South,
+        /// <summary>
+        /// 右。
+        /// </summary>
+        East,
+        /// <summary>
+        /// 左。
+        /// </summary>
+        West,
+        /// <summary>
+        /// 右上。
+        /// </summary>
+        NorthEast,
+        /// <summary>
+        /// 左上。
+        /// </summary>
+        NorthWest,
+        /// <summary>
+        /// 左下。
+        /// </summary>
+        SouthWest,
+        /// <summary>
+        /// 右下。
+        /// </summary>
+        SouthEast,
+    }
+
+    internal class WebViewWidgetResizeEventArgs: EventArgs
+    {
+        public WebViewWidgetResizeEventArgs(WebViewWidgetResizeDirection direction)
+        {
+            Direction = direction;
+        }
+
+        #region property
+
+        public WebViewWidgetResizeDirection Direction { get; }
+
+        #endregion
+    }
+
     internal sealed class WebViewWidgetCallbacks
     {
         #region event
 
         public event EventHandler? MoveStarted;
+        public event EventHandler<WebViewWidgetResizeEventArgs>? ResizeStarted;
 
         #endregion
-        public WebViewWidgetCallbacks(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
+        public WebViewWidgetCallbacks(IPluginIdentifiers pluginIdentifiers, object? extensions, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             PluginIdentifiers = pluginIdentifiers;
+            Extensions = extensions;
         }
 
         #region property
         IPluginIdentifiers PluginIdentifiers { get; }
         ILogger Logger { get; }
+
+        public object? Extensions { get; }
+
         #endregion
 
         #region function
@@ -34,6 +90,32 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         public void MoveStart()
         {
             OnMoveStarted();
+        }
+
+        void OnResizeStart(string direction)
+        {
+            var resizeStarted = ResizeStarted;
+            if(resizeStarted != null) {
+                var resizeDirection = direction switch
+                {
+                    "n" => WebViewWidgetResizeDirection.North,
+                    "s" => WebViewWidgetResizeDirection.South,
+                    "e" => WebViewWidgetResizeDirection.East,
+                    "w" => WebViewWidgetResizeDirection.West,
+                    "ne" => WebViewWidgetResizeDirection.NorthEast,
+                    "nw" => WebViewWidgetResizeDirection.NorthWest,
+                    "sw" => WebViewWidgetResizeDirection.SouthWest,
+                    _ => WebViewWidgetResizeDirection.SouthEast,
+                };
+
+                resizeStarted(this, new WebViewWidgetResizeEventArgs(resizeDirection));
+            }
+        }
+
+        public void ResizeStart(string direction)
+        {
+            Logger.LogDebug(direction);
+            OnResizeStart(direction);
         }
 
         #endregion

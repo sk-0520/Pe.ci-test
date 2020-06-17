@@ -113,6 +113,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         Action<IWebViewGrass>? SoilCallback { get; }
 
+        object? Extensions { get; }
+
         #endregion
     }
 
@@ -145,6 +147,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <inheritdoc cref="IWebViewSeed.SoilCallback"/>
         public Action<IWebViewGrass>? SoilCallback { get; set; }
+
+        /// <inheritdoc cref="IWebViewSeed.Extensions"/>
+        public object? Extensions { get; set; }
 
         #endregion
     }

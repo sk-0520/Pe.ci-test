@@ -3,11 +3,20 @@
 	async function moveStartAsync(e) {
 		e.preventDefault();
 
-		await CefSharp.BindObjectAsync("Pe_Callbacks");
+		await CefSharp.BindObjectAsync("pe_callbacks");
 
-		Pe_Callbacks.moveStart();
+		pe_callbacks.moveStart();
 	}
-	const injectionStyleId = 'Pe_injection-style';
+
+	async function resizeStartAsync(e) {
+		e.preventDefault();
+
+		await CefSharp.BindObjectAsync("pe_callbacks");
+
+		pe_callbacks.resizeStart(e.currentTarget.dataset.pe_resize);
+	}
+
+	const injectionStyleId = 'pe_injection-style';
 
 	var injectionStyleElement = document.getElementById(injectionStyleId);
 	if (injectionStyleElement == null) {
@@ -18,10 +27,13 @@
 	}
 
 
-	const moveAreaElements = document.querySelectorAll('.Pe_move-area');
+	const moveAreaElements = document.querySelectorAll('.pe_move-area');
 	for (const moveAreaElement of moveAreaElements) {
 		moveAreaElement.addEventListener('mousedown', moveStartAsync);
 	}
 
-	const resizeAreaElements = document.querySelectorAll('.Pe_resize-area');
+	const resizeAreaElements = document.querySelectorAll('.pe_resize-area');
+	for (const resizeAreaElement of resizeAreaElements) {
+		resizeAreaElement.addEventListener('mousedown', resizeStartAsync);
+	}
 })

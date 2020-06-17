@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
     /// </summary>
     public class WebViewWidgetViewModel: ViewModelBase, IWebViewGrass
     {
-        public WebViewWidgetViewModel(IPluginIdentifiers pluginIdentifiers, WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public WebViewWidgetViewModel(IPluginIdentifiers pluginIdentifiers, WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, object? widgetPluginExtensions, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginIdentifiers = pluginIdentifiers;
@@ -37,9 +37,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             WidgetCallback = widgetCallback;
             EnvironmentParameters = environmentParameters;
 
-            Callbacks = new WebViewWidgetCallbacks(PluginIdentifiers, LoggerFactory);
+            Callbacks = new WebViewWidgetCallbacks(PluginIdentifiers, widgetPluginExtensions, LoggerFactory);
 
             Callbacks.MoveStarted += Callbacks_MoveStarted;
+            Callbacks.ResizeStarted += Callbacks_ResizeStarted;
 
             if(WebView.IsBrowserInitialized) {
                 LoadHtmlSource(HtmlSource);
@@ -80,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
             WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
 
-            WebView.JavascriptObjectRepository.Register("Pe_Callbacks", Callbacks, true);
+            WebView.JavascriptObjectRepository.Register("pe_callbacks", Callbacks, true);
         }
 
         void LoadHtmlSource(IHtmlSource htmlSource)
@@ -147,6 +148,32 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                 NativeMethods.SendMessage(HandleUtility.GetWindowHandle(WidgetWindow), PInvoke.Windows.WM.WM_NCLBUTTONDOWN, new IntPtr((int)HT.HTCAPTION), IntPtr.Zero);
             }, System.Windows.Threading.DispatcherPriority.Normal);
         }
+        private void Callbacks_ResizeStarted(object? sender, WebViewWidgetResizeEventArgs e)
+        {
+            DispatcherWrapper.Begin(() => {
+                if(WidgetWindow.ResizeMode == ResizeMode.NoResize) {
+                    Logger.LogWarning("{0} はリサイズが許可されていない, {1}", PluginIdentifiers.PluginName, PluginIdentifiers.PluginId);
+                    return;
+                }
+
+                WebView.ReleaseMouseCapture();
+                var scSizeEx = (int)SC.SC_SIZE + e.Direction switch
+                {
+                    WebViewWidgetResizeDirection.North => 3,
+                    WebViewWidgetResizeDirection.South => 6,
+                    WebViewWidgetResizeDirection.East => 2,
+                    WebViewWidgetResizeDirection.West => 1,
+                    WebViewWidgetResizeDirection.NorthEast => 5,
+                    WebViewWidgetResizeDirection.NorthWest => 4,
+                    WebViewWidgetResizeDirection.SouthWest => 7,
+                    WebViewWidgetResizeDirection.SouthEast => 8,
+                    _ => throw new NotImplementedException(),
+                };
+
+                NativeMethods.SendMessage(HandleUtility.GetWindowHandle(WidgetWindow), PInvoke.Windows.WM.WM_SYSCOMMAND, new IntPtr(scSizeEx), IntPtr.Zero);
+            }, System.Windows.Threading.DispatcherPriority.Normal);
+        }
+
 
     }
 }

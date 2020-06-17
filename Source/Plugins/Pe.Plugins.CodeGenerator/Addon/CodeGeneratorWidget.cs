@@ -61,21 +61,26 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
         public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
             //var webViewSeed = new WebViewSeed(new HtmlAddress(new Uri("https://google.co.jp")));
-            var webViewSeed = new WebViewSeed(new HtmlSourceCode(@"
-<html xmlns='http://www.w3.org/1999/xhtml'>
+            var webViewSeed = new WebViewSeed(new HtmlSourceCode(@"<!DOCTYPE html>
+<html lang='ja'>
 <head>
+<meta charset='utf-8'>
     <title></title>
 </head>
 <body style='background-color: transparent'>
     <div style='margin: 20px; color: red'>
-        <div class='Pe_move-area' style='background: #b6ff00'>View Move</div>
+        <div class='pe_move-area' style='background: #b6ff00'>View Move</div>
         <h1>HTML!</h1>
-        <span class='Pe_resize-area' style='background: #b6ff00'>resize</span>
+        <span class='pe_resize-area' style='background: #b6ff00'>resize</span>
 <ul>
-        <li class='Pe_resize-area' data-Pe_resize='ew' style='background: #b6ff00'>ew</li>
-        <li class='Pe_resize-area' data-Pe_resize='ns' style='background: #b6ff00'>ns</li>
-        <li class='Pe_resize-area' data-Pe_resize='nesw' style='background: #b6ff00'>nesw</li>
-        <li class='Pe_resize-area' data-Pe_resize='nwse' style='background: #b6ff00'>nwse</li>
+        <li class='pe_resize-area' data-pe_resize='n' style='background: #b6ff00'>n　↑</li>
+        <li class='pe_resize-area' data-pe_resize='s' style='background: #b6ff00'>s　↓</li>
+        <li class='pe_resize-area' data-pe_resize='e' style='background: #b6ff00'>e　→</li>
+        <li class='pe_resize-area' data-pe_resize='w' style='background: #b6ff00'>w　←</li>
+        <li class='pe_resize-area' data-pe_resize='ne' style='background: #b6ff00'>ne　↗</li>
+        <li class='pe_resize-area' data-pe_resize='nw' style='background: #b6ff00'>nw　↖</li>
+        <li class='pe_resize-area' data-pe_resize='se' style='background: #b6ff00'>se　↘</li>
+        <li class='pe_resize-area' data-pe_resize='sw' style='background: #b6ff00'>sw　↙</li>
 </ul>
 
     </div>
