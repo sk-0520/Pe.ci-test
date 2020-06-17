@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 }
                 window.Background = seed.Background;
 
-                viewModel = new WebViewWidgetViewModel(window, seed.HtmlSource, seed.SoilCallback, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
+                viewModel = new WebViewWidgetViewModel(context.PluginIdentifiers, window, seed.HtmlSource, seed.SoilCallback, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
                 window.DataContext = viewModel;
             }
 

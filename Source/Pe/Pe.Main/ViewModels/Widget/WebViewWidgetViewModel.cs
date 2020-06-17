@@ -4,15 +4,19 @@ using System.Diagnostics;
 using System.DirectoryServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Forms;
 using CefSharp;
 using CefSharp.Wpf;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
+using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
@@ -22,15 +26,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
     /// </summary>
     public class WebViewWidgetViewModel: ViewModelBase, IWebViewGrass
     {
-        public WebViewWidgetViewModel(WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public WebViewWidgetViewModel(IPluginIdentifiers pluginIdentifiers, WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            PluginIdentifiers = pluginIdentifiers;
             WidgetWindow = window;
             WebView = WidgetWindow.webView;
             DispatcherWrapper = dispatcherWrapper;
             HtmlSource = htmlSource;
             WidgetCallback = widgetCallback;
             EnvironmentParameters = environmentParameters;
+
+            Callbacks = new WebViewWidgetCallbacks(PluginIdentifiers, LoggerFactory);
+
+            Callbacks.MoveStarted += Callbacks_MoveStarted;
 
             if(WebView.IsBrowserInitialized) {
                 LoadHtmlSource(HtmlSource);
@@ -41,11 +50,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         #region proeprty
 
+        public IPluginIdentifiers PluginIdentifiers { get; }
         WebViewWidgetWindow WidgetWindow { get; }
         IHtmlSource HtmlSource { get; }
         Action<IWebViewGrass>? WidgetCallback { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+
+        WebViewWidgetCallbacks Callbacks { get; }
         #endregion
 
         #region command
@@ -67,7 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             }
 
             WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
-            //WebView.JavascriptObjectRepository.Register("Pe_Callback", this, true);
+
+            WebView.JavascriptObjectRepository.Register("Pe_Callbacks", Callbacks, true);
         }
 
         void LoadHtmlSource(IHtmlSource htmlSource)
@@ -125,6 +138,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                     InjectWidget();
                 });
             }
+        }
+
+        private void Callbacks_MoveStarted(object? sender, EventArgs e)
+        {
+            DispatcherWrapper.Begin(() => {
+                WebView.ReleaseMouseCapture();
+                NativeMethods.SendMessage(HandleUtility.GetWindowHandle(WidgetWindow), PInvoke.Windows.WM.WM_NCLBUTTONDOWN, new IntPtr((int)HT.HTCAPTION), IntPtr.Zero);
+            }, System.Windows.Threading.DispatcherPriority.Normal);
         }
 
     }
