@@ -6,13 +6,16 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
+using CefSharp;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
@@ -178,17 +181,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class WindowManager : ManagerBase, IWindowManager
+    public class WindowManager: ManagerBase, IWindowManager
     {
         public WindowManager(IDiContainer diContainer, CultureService cultureService, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
             CultureService = cultureService;
+            CustomConfiguration = DiContainer.Build<CustomConfiguration>();
         }
 
         #region property
 
         CultureService CultureService { get; }
+        CustomConfiguration CustomConfiguration { get; }
 
         ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();
         ISet<Window> Windows { get; } = new HashSet<Window>();
@@ -222,6 +227,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(!Windows.Add(item.Window)) {
                 return false;
+            }
+
+            if(CustomConfiguration.Web.DeveloperTools) {
+                var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>(item.Window).FirstOrDefault();
+                if(cef != null) {
+                    item.Window.PreviewKeyDown += Window_DeveloperTools_KeyDown;
+                }
             }
 
             item.Window.Language = CultureService.GetXmlLanguage();
@@ -296,7 +308,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(item.ViewModel.IsDisposed || item.Element.IsDisposed) {
                 Logger.LogWarning(
-                    "ウィンドウに紐づく" + nameof(window.DataContext) +", Model がすでに終了しているためウィンドウ破棄: {0} - {1}." + nameof(item.ViewModel.IsDisposed) + "={2} - {3}." + nameof(item.Element.IsDisposed) + "={4}",
+                    "ウィンドウに紐づく" + nameof(window.DataContext) + ", Model がすでに終了しているためウィンドウ破棄: {0} - {1}." + nameof(item.ViewModel.IsDisposed) + "={2} - {3}." + nameof(item.Element.IsDisposed) + "={4}",
                     window,
                     item.ViewModel,
                     item.ViewModel.IsDisposed,
@@ -366,6 +378,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             window.SourceInitialized -= Window_SourceInitialized!;
             window.Closing -= Window_Closing;
             window.Closed -= Window_Closed!;
+            window.PreviewKeyDown -= Window_DeveloperTools_KeyDown;
 
             Windows.Remove(window);
 
@@ -397,6 +410,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 item.ViewModel.Dispose();
             }
         }
+
+        private void Window_DeveloperTools_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            var dev = e.Key == Key.F12;
+            if(!dev && e.Key == Key.I) {
+                var mods = ModifierKeys.Control | ModifierKeys.Shift;
+                dev = (Keyboard.Modifiers & mods) == mods;
+            }
+
+            if(dev) {
+                var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>((Window)sender).FirstOrDefault();
+                if(cef != null) {
+                    if(cef.IsBrowserInitialized && !cef.IsLoading) {
+                        cef.ShowDevTools();
+                    }
+                }
+            }
+        }
+
 
     }
 }

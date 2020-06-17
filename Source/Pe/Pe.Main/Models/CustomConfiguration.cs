@@ -127,12 +127,19 @@ namespace ContentTypeTextNet.Pe.Main.Models
             };
             ViewUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("view_useragent"), map);
             ClientUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("client_useragent"), map);
+            DeveloperTools = section.GetValue<bool>("developer_tools");
         }
 
         #region property
 
         public string ViewUserAgent { get; }
         public string ClientUserAgent { get; }
+
+        /// <summary>
+        /// ウィンドウ生成(インスタンス化)時点でWEBブラウザっぽいのがあればそれに対して開発者ツールを呼び出せる拡張処理を行うか。
+        /// <para>複数あったり動的に生成する場合は個別対応が必要。</para>
+        /// </summary>
+        public bool DeveloperTools { get; }
 
         #endregion
     }
@@ -370,7 +377,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #endregion
     }
-    
+
 
     public class CustomConfiguration
     {
