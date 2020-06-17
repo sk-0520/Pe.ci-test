@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 {
     public class WidgetElement: ElementBase, IViewCloseReceiver, IPluginId
     {
-        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Widget = widget;
@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
             CultureService = cultureService;
             WindowManager = windowManager;
             NotifyManager = notifyManager;
+            EnvironmentParameters = environmentParameters;
             DispatcherWrapper = dispatcherWrapper;
         }
 
@@ -56,6 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
         CultureService CultureService { get; }
         IWindowManager WindowManager { get; }
         INotifyManager NotifyManager { get; }
+        EnvironmentParameters EnvironmentParameters { get; }
         public bool ViewCreated { get; private set; }
 
         public bool IsTopmost { get; private set; }
@@ -110,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 }
                 window.Background = seed.Background;
 
-                viewModel = new WebViewWidgetViewModel(window, seed.HtmlSource, seed.SoilCallback, DispatcherWrapper, LoggerFactory);
+                viewModel = new WebViewWidgetViewModel(window, seed.HtmlSource, seed.SoilCallback, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
                 window.DataContext = viewModel;
             }
 

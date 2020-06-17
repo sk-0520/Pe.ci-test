@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
 using Microsoft.Extensions.Logging;
 
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
     /// </summary>
     public class WebViewWidgetViewModel: ViewModelBase, IWebViewGrass
     {
-        public WebViewWidgetViewModel(WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public WebViewWidgetViewModel(WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             WidgetWindow = window;
@@ -28,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             DispatcherWrapper = dispatcherWrapper;
             HtmlSource = htmlSource;
             WidgetCallback = widgetCallback;
+            EnvironmentParameters = environmentParameters;
 
             if(WebView.IsBrowserInitialized) {
                 LoadHtmlSource(HtmlSource);
@@ -41,6 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         WebViewWidgetWindow WidgetWindow { get; }
         IHtmlSource HtmlSource { get; }
         Action<IWebViewGrass>? WidgetCallback { get; }
+        EnvironmentParameters EnvironmentParameters { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         #endregion
 
@@ -52,34 +55,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         void InjectWidget()
         {
-            var js = @"
-alert(1);
-function() {
+            string injectionScript;
+            using(var reader = EnvironmentParameters.WebViewWidgetInjectionFile.OpenText()) {
+                injectionScript = reader.ReadToEnd();
+            }
 
-alert(2);
-
-/*
-    const styleElement = document.createElement('style');
-    styleElement.textContent(`
-    *.PE:MOVE-AREA {
-        cursor: move;
-    }
-    *.PE:RESIZE-AREA {
-        cursor: nw-resize;
-    }
-    `);
-    document.body.appendChild(styleElement);
-
-    const moveAreaElements = document.querySelectorAll('PE:MOVE-AREA');
-
-    for(const moveAreaElement of moveAreaElements) {
-    }
-
-    const moveAreaElements = document.querySelectorAll('PE:RESIZE-AREA');
-
-*/
-}();";
-            WebView.ExecuteScriptAsync(js);
+            WebView.ExecuteScriptAsync(injectionScript);
             //WebView.JavascriptObjectRepository.Register("Pe_Callback", this, true);
         }
 
@@ -88,7 +69,6 @@ alert(2);
             Debug.Assert(WebView.IsLoaded);
 
             WebView.LoadingStateChanged += WebView_LoadingStateChanged;
-            WebView.FrameLoadEnd += WebView_FrameLoadEnd;
 
             switch(htmlSource.HtmlSourceKind) {
                 case HtmlSourceKind.Address: {
@@ -116,24 +96,6 @@ alert(2);
             }
         }
 
-        private void WebView_FrameLoadEnd(object? sender, FrameLoadEndEventArgs e)
-        {
-            if(e.Frame.IsMain) {
-                DispatcherWrapper.Begin(() => {
-                    InjectWidget();
-                });
-            }
-        }
-
-        private void WebView_LoadingStateChanged(object? sender, LoadingStateChangedEventArgs e)
-        {
-            if(!e.IsLoading) {
-                DispatcherWrapper.Begin(() => {
-                    InjectWidget();
-                });
-            }
-        }
-
         #endregion
 
         #region IWebViewGrass
@@ -148,6 +110,15 @@ alert(2);
         {
             WebView.IsBrowserInitializedChanged += WebView_IsBrowserInitializedChanged;
             LoadHtmlSource(HtmlSource);
+        }
+
+        private void WebView_LoadingStateChanged(object? sender, LoadingStateChangedEventArgs e)
+        {
+            if(!e.IsLoading) {
+                DispatcherWrapper.Begin(() => {
+                    InjectWidget();
+                });
+            }
         }
 
     }

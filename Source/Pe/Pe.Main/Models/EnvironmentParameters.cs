@@ -136,6 +136,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");
         public FileInfo WebViewFeedbackScriptFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.js");
 
+        public DirectoryInfo WebViewWidgetDirectory => CombineDirectory(false, WebViewTemplateDirectory, "widget");
+        public FileInfo WebViewWidgetInjectionFile => CombineFile(WebViewWidgetDirectory, "injection.js");
 
         /// <summary>
         /// 文書ディレクトリ。
