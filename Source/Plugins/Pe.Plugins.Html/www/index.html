@@ -5,25 +5,46 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="script.js"></script>
 	<script>
-
+		window.addEventListener('load', e => {
+			document.getElementById('to-plugin').addEventListener('submit', sampleSubmit);
+		})
 	</script>
 </head>
 <body>
 	<div id="frame">
-		<div class='pe_move-area'>View Move</div>
-		<h1>HTML!</h1>
-		<div id="content">
-			<span class='pe_resize-area'>resize</span>
+		<nav>
 			<ul>
-				<li class='pe_resize-area' data-pe_resize='n'>n　↑</li>
-				<li class='pe_resize-area' data-pe_resize='s'>s　↓</li>
-				<li class='pe_resize-area' data-pe_resize='e'>e　→</li>
-				<li class='pe_resize-area' data-pe_resize='w'>w　←</li>
-				<li class='pe_resize-area' data-pe_resize='ne'>ne　↗</li>
-				<li class='pe_resize-area' data-pe_resize='nw'>nw　↖</li>
-				<li class='pe_resize-area' data-pe_resize='se'>se　↘</li>
-				<li class='pe_resize-area' data-pe_resize='sw'>sw　↙</li>
+				<li class='pe_move-area'></li>
+				<li class='pe_resize-area' data-pe_resize='n'></li>
+				<li class='pe_resize-area' data-pe_resize='s'></li>
+				<li class='pe_resize-area' data-pe_resize='e'></li>
+				<li class='pe_resize-area' data-pe_resize='w'></li>
+				<li class='pe_resize-area' data-pe_resize='ne'></li>
+				<li class='pe_resize-area' data-pe_resize='nw'></li>
+				<li class='pe_resize-area' data-pe_resize='se'></li>
+				<li class='pe_resize-area' data-pe_resize='sw'></li>
 			</ul>
+		</nav>
+
+		<div id="content">
+			<h1>HTML ウィジェット</h1>
+
+			<h2>プラグインへデータ送信し、プラグインからデータを戻す</h2>
+			<form id="to-plugin">
+				<select id="to-plugin-value">
+					<option value="1">朝</option>
+					<option value="2">昼</option>
+					<option value="3">夜</option>
+				</select>
+				<input type="submit" />
+
+				<strong id="from-plugin-value"></strong>
+			</form>
+
+			<h2>プラグインから定期的にデータ受信</h2>
+			<div>
+				<pre id="from-plugin-data"></pre>
+			</div>
 		</div>
 	</div>
 </body>

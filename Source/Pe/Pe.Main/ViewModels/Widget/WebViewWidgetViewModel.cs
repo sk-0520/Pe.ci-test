@@ -83,10 +83,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
                 injectionStyle = reader.ReadToEnd();
             }
 
-            WebView.JavascriptObjectRepository.Register("pe_callbacks", Callbacks, true);
-            if(PluginExtensions != null) {
-                WebView.JavascriptObjectRepository.Register("pe_extensions", PluginExtensions, true);
+
+            if(!WebView.JavascriptObjectRepository.IsBound("pe_callbacks")) {
+                WebView.JavascriptObjectRepository.Register("pe_callbacks", Callbacks, true);
             }
+            if(!WebView.JavascriptObjectRepository.IsBound("pe_extensions")) {
+                if(PluginExtensions != null) {
+                    WebView.JavascriptObjectRepository.Register("pe_extensions", PluginExtensions, true);
+                } else {
+                    // 一応ダミーで作っておく
+                    WebView.JavascriptObjectRepository.Register("pe_extensions", new object(), true);
+                }
+            }
+
+            //WebView.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
 
             Callbacks.Injected += Callbacks_Injected;
 
@@ -94,6 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
 
         }
+
 
         void LoadHtmlSource(IHtmlSource htmlSource)
         {
@@ -257,6 +268,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
             if(WidgetCallback != null) {
                 WidgetCallback(this);
+            }
+        }
+
+        private void JavascriptObjectRepository_ObjectBoundInJavascript(object? sender, CefSharp.Event.JavascriptBindingCompleteEventArgs e)
+        {
+            if(e.ObjectName == "pe_callbacks") {
+                if(!e.ObjectRepository.IsBound("pe_callbacks")) {
+                    e.ObjectRepository.Register("pe_callbacks", Callbacks, true);
+                    Logger.LogDebug("register: pe_callbacks");
+                }
+            }
+            if(e.ObjectName == "pe_extensions") {
+                if(!e.ObjectRepository.IsBound("pe_extensions")) {
+                    e.ObjectRepository.Register("pe_extensions", PluginExtensions, true);
+                    Logger.LogDebug("register: pe_extensions");
+                }
             }
         }
 

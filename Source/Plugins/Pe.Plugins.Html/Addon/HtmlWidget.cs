@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Timers;
 using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -24,9 +26,15 @@ namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
 
             #region function
 
-            public int Func(int a, int b)
+            public string SampleCallback(string value)
             {
-                return a + b;
+                return value switch
+                {
+                    "1" => "おはよう！",
+                    "2" => "こんちは！",
+                    "3" => "おつかれ！",
+                    _ => "💩",
+                };
             }
 
             #endregion
@@ -54,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
 
         IWebViewGrass? WebViewGrass { get; set; }
 
+        Timer? SendTimer { get; set; }
         #endregion
 
         #region function
@@ -61,7 +70,10 @@ namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
         void OnInitialized(IWebViewGrass webViewGrass)
         {
             WebViewGrass = webViewGrass;
-            WebViewGrass.ExecuteScriptAsync("test", new object[0]);
+
+            SendTimer = new Timer(TimeSpan.FromSeconds(10).TotalMilliseconds);
+            SendTimer.Elapsed += SendTimer_Elapsed;
+            SendTimer.Start();
         }
 
         #endregion
@@ -111,8 +123,28 @@ namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
         /// <inheritdoc cref="IWidget.ClosedWidget(IWidgetAddonClosedContext)"/>
         public void ClosedWidget(IWidgetAddonClosedContext widgetAddonClosedContext)
         {
+            if(SendTimer != null) {
+                SendTimer.Stop();
+                SendTimer.Dispose();
+                SendTimer = null;
+            }
         }
 
         #endregion
+
+        private void SendTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Debug.Assert(SendTimer != null);
+
+            SendTimer.Stop();
+
+            var timestamp = DateTime.Now.ToString("u");
+            var memory = GC.GetTotalMemory(false);
+
+            WebViewGrass!.ExecuteScriptAsync("receiveSample", timestamp, memory);
+
+            SendTimer.Start();
+        }
+
     }
 }

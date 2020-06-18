@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using CefSharp;
 using CefSharp.Handler;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
@@ -53,18 +54,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    public class WebViewWidgetRequestHandler: RequestHandler
+    public class WebViewWidgetRequestHandler: PlatformRequestHandler
     {
         public WebViewWidgetRequestHandler(DirectoryInfo widgetDirectory, ILoggerFactory loggerFactory)
+            :base(loggerFactory)
         {
             LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger(GetType());
             WidgetDirectory = widgetDirectory;
         }
 
         #region proeprty
 
-        ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
         DirectoryInfo WidgetDirectory { get; }
 

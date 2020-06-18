@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.Models.WebView;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Views.Converter;
 using ContentTypeTextNet.Pe.Main.Views.Widget;
@@ -120,6 +121,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                 var publicDir = new DirectoryInfo(publicDirPath);
 
                 window.webView.RequestHandler = new WebViewWidgetRequestHandler(publicDir, LoggerFactory);
+                window.webView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
+                window.webView.MenuHandler = new DisableContextMenuHandler();
 
                 viewModel = new WebViewWidgetViewModel(context.PluginIdentifiers, window, seed.HtmlSource, seed.SoilCallback, seed.Extensions, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
                 window.DataContext = viewModel;
