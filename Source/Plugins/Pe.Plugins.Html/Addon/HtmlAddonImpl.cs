@@ -5,11 +5,11 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
 
-namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
+namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
 {
-    internal class CodeGeneratorAddonImpl: AddonBase
+    internal class HtmlAddonImpl: AddonBase
     {
-        public CodeGeneratorAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public HtmlAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
             : base(pluginConstructorContext, plugin)
         { }
 
@@ -27,9 +27,8 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 
         public override IWidget BuildWidget(IAddonParameter parameter)
         {
-            return new CodeGeneratorWidget(parameter, PluginInformations);
+            return new HtmlWidget(parameter, PluginInformations);
         }
-
 
         #endregion
 

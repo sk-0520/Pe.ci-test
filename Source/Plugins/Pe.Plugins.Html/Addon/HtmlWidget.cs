@@ -10,9 +10,9 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
+namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
 {
-    internal class CodeGeneratorWidget: IWidget
+    internal class HtmlWidget: IWidget
     {
         #region define
 
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
         }
 
         #endregion
-        public CodeGeneratorWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
+        public HtmlWidget(IAddonParameter parameter, IPluginInformations pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());

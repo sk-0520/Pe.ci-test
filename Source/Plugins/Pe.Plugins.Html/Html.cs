@@ -4,22 +4,22 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
-using ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon;
+using ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon;
 
-namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator
+namespace ContentTypeTextNet.Pe.Plugins.KeyLogger
 {
-    public class CodeGenerator: PluginBase, IAddon
+    public class Html: PluginBase, IAddon
     {
         #region variable
 
-        CodeGeneratorAddonImpl _addon;
+        HtmlAddonImpl _addon;
 
         #endregion
 
-        public CodeGenerator(IPluginConstructorContext pluginConstructorContext)
+        public Html(IPluginConstructorContext pluginConstructorContext)
             : base(pluginConstructorContext)
         {
-            this._addon = new CodeGeneratorAddonImpl(pluginConstructorContext, this);
+            this._addon = new HtmlAddonImpl(pluginConstructorContext, this);
         }
 
         #region PluginBase
