@@ -114,6 +114,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         Brush Background { get; }
 
         /// <summary>
+        /// pe://plugin/* に割り当たるディレクトリ名。
+        /// <para>プラグインディレクトリをベースとする。</para>
+        /// </summary>
+        string PublicDirectoryName { get; }
+
+        /// <summary>
         /// 生成後に各種パラメータを受けとるコールバック。
         /// <para>内部的な処理諸々が終わった後に有効になる。</para>
         /// </summary>
@@ -132,6 +138,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <inheritdoc cref="IWebViewSeed"/>
     public class WebViewSeed: IWebViewSeed
     {
+        /// <summary>
+        /// URI から生成。
+        /// </summary>
+        /// <param name="htmlAddress"></param>
         public WebViewSeed(IHtmlAddress htmlAddress)
         {
             HtmlSource = htmlAddress;
@@ -155,7 +165,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         public Size ViewSize { get; set; } = new Size(400, 400);
         /// <inheritdoc cref="IWebViewSeed.Background"/>
         public Brush Background { get; set; } = SystemColors.WindowBrush;
-
+        /// <inheritdoc cref="IWebViewSeed.PublicDirectoryName"/>
+        public string PublicDirectoryName { get; set; } = "public";
         /// <inheritdoc cref="IWebViewSeed.SoilCallback"/>
         public Action<IWebViewGrass>? SoilCallback { get; set; }
 

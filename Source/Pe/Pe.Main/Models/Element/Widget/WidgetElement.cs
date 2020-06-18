@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
@@ -28,11 +29,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 {
     public class WidgetElement: ElementBase, IViewCloseReceiver, IPluginId
     {
-        internal WidgetElement(IWidget widget, IPluginInformations pluginInformations, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal WidgetElement(IWidget widget, IPlugin plugin, WidgetAddonContextFactory widgetAddonContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IWindowManager windowManager, INotifyManager notifyManager, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Widget = widget;
-            PluginInformations = pluginInformations;
+            Plugin = plugin;
             WidgetAddonContextFactory = widgetAddonContextFactory;
             MainDatabaseBarrier = mainDatabaseBarrier;
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
@@ -48,7 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
 
         IDispatcherWrapper DispatcherWrapper { get; }
         IWidget Widget { get; }
-        IPluginInformations PluginInformations { get; }
+        IPlugin Plugin { get; }
+        IPluginInformations PluginInformations => Plugin.PluginInformations;
         //PluginContextFactory PluginContextFactory { get; }
         WidgetAddonContextFactory WidgetAddonContextFactory { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
@@ -111,6 +113,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Widget
                     window.Height = seed.ViewSize.Height;
                 }
                 window.Background = seed.Background;
+
+                var pluginDirPath = Path.GetDirectoryName(Plugin.GetType().Assembly.Location)!;
+                var publicDirPath = Path.Combine(pluginDirPath, seed.PublicDirectoryName);
+                Logger.LogTrace(publicDirPath);
+                var publicDir = new DirectoryInfo(publicDirPath);
+
+                window.webView.RequestHandler = new WebViewWidgetRequestHandler(publicDir, LoggerFactory);
 
                 viewModel = new WebViewWidgetViewModel(context.PluginIdentifiers, window, seed.HtmlSource, seed.SoilCallback, seed.Extensions, EnvironmentParameters, DispatcherWrapper, LoggerFactory);
                 window.DataContext = viewModel;

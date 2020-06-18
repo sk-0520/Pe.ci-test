@@ -30,4 +30,13 @@
     <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="www\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="www\script.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

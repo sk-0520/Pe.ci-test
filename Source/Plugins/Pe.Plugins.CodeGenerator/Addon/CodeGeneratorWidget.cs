@@ -52,9 +52,17 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
         ISkeletonImplements SkeletonImplements { get; }
         IPluginInformations PluginInformations { get; }
 
+        IWebViewGrass? WebViewGrass { get; set; }
+
         #endregion
 
         #region function
+
+        void OnInitialized(IWebViewGrass webViewGrass)
+        {
+            WebViewGrass = webViewGrass;
+            WebViewGrass.ExecuteScriptAsync("test", new object[0]);
+        }
 
         #endregion
 
@@ -79,50 +87,12 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
 
         public IWebViewSeed CreateWebViewWidget(IWidgetAddonCreateContext widgetAddonCreateContext)
         {
-            //var webViewSeed = new WebViewSeed(new HtmlAddress(new Uri("https://google.co.jp")));
-            var webViewSeed = new WebViewSeed(new HtmlSourceCode(@"<!DOCTYPE html>
-<html lang='ja'>
-<head>
-<meta charset='utf-8'>
-    <title></title>
-</head>
-<body style='background-color: transparent'>
-    <div style='margin: 20px; color: red'>
-        <div class='pe_move-area' style='background: #b6ff00'>View Move</div>
-        <h1>HTML!</h1>
-        <span class='pe_resize-area' style='background: #b6ff00'>resize</span>
-<ul>
-        <li class='pe_resize-area' data-pe_resize='n' style='background: #b6ff00'>n　↑</li>
-        <li class='pe_resize-area' data-pe_resize='s' style='background: #b6ff00'>s　↓</li>
-        <li class='pe_resize-area' data-pe_resize='e' style='background: #b6ff00'>e　→</li>
-        <li class='pe_resize-area' data-pe_resize='w' style='background: #b6ff00'>w　←</li>
-        <li class='pe_resize-area' data-pe_resize='ne' style='background: #b6ff00'>ne　↗</li>
-        <li class='pe_resize-area' data-pe_resize='nw' style='background: #b6ff00'>nw　↖</li>
-        <li class='pe_resize-area' data-pe_resize='se' style='background: #b6ff00'>se　↘</li>
-        <li class='pe_resize-area' data-pe_resize='sw' style='background: #b6ff00'>sw　↙</li>
-</ul>
-
-    </div>
-</body>
-</html>
-")) {
+            var webViewSeed = new WebViewSeed(new HtmlAddress(new Uri("pe://plugin"))) {
                 Background = Brushes.Transparent,
                 WindowStyle = WindowStyle.None,
                 Extensions = new Extensions(),
-            };
-
-            webViewSeed.SoilCallback = g => {
-                Logger.LogInformation("{0}", g);
-
-                //g.ExecuteScriptAsync("alert(window.pe_callbacks)");
-                //g.EvaluateScriptAsync("1+1").ContinueWith(t => {
-                //    g.ExecuteScriptAsync("alert('" + t.Result.Result + "')");
-                //});
-
-                //g.EvaluateScriptAsync("alert(Pe.extensions)").ContinueWith(tt => {
-                    //g.ExecuteScriptAsync("alert('" + tt.Result.Result + "')");
-                //});
-                g.ExecuteScriptAsync("Pe.extensions.func(1,2).then(v => alert(v))");
+                PublicDirectoryName = "www",
+                SoilCallback = OnInitialized,
             };
 
             return webViewSeed;

@@ -1184,8 +1184,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
 
                 foreach(var widget in PluginContainer.Addon.GetWidgets()) {
-                    var info = widget.Addon.PluginInformations;
-                    var element = new WidgetElement(widget, info, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, environmentParameters, dispatcherWrapper, LoggerFactory);
+                    var element = new WidgetElement(widget, widget.Addon, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, environmentParameters, dispatcherWrapper, LoggerFactory);
                     element.Initialize();
                     Widgets.Add(element);
                 }
