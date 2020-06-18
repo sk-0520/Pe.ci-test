@@ -87,28 +87,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             if(PluginExtensions != null) {
                 WebView.JavascriptObjectRepository.Register("pe_extensions", PluginExtensions, true);
             }
-            WebView.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
 
-            var sw = Stopwatch.StartNew();
-            var i = 0;
-            while(!WebView.JavascriptObjectRepository.IsBound("pe_extensions")) {
-                Logger.LogTrace("{0}, {1}", i++, sw.Elapsed);
-            }
+            Callbacks.Injected += Callbacks_Injected;
 
             //WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
-            WebView.EvaluateScriptAsync(injectionScript, injectionStyle).ContinueWith(t => {
-            //    DispatcherWrapper.Begin(() => {
-            //        if(WidgetCallback != null) {
-            //            WidgetCallback(this);
-            //        }
-            //    }, System.Windows.Threading.DispatcherPriority.SystemIdle);
-            });
+            WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
 
-        }
-
-        private void JavascriptObjectRepository_ObjectBoundInJavascript(object? sender, CefSharp.Event.JavascriptBindingCompleteEventArgs e)
-        {
-            Logger.LogDebug(e.ObjectName);
         }
 
         void LoadHtmlSource(IHtmlSource htmlSource)
@@ -203,6 +187,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         #endregion
 
+        #region WebViewWidgetViewModel
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                WebView.IsBrowserInitializedChanged -= WebView_IsBrowserInitializedChanged;
+
+                Callbacks.MoveStarted -= Callbacks_MoveStarted;
+                Callbacks.ResizeStarted -= Callbacks_ResizeStarted;
+                Callbacks.Injected -= Callbacks_Injected;
+            }
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
         private void WebView_IsBrowserInitializedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             WebView.IsBrowserInitializedChanged -= WebView_IsBrowserInitializedChanged;
@@ -251,6 +251,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             }, System.Windows.Threading.DispatcherPriority.Normal);
         }
 
+        private void Callbacks_Injected(object? sender, EventArgs e)
+        {
+            Callbacks.Injected -= Callbacks_Injected;
+
+            if(WidgetCallback != null) {
+                WidgetCallback(this);
+            }
+        }
 
     }
 }

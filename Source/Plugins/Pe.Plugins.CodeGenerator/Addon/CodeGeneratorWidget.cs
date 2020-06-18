@@ -119,9 +119,10 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
                 //    g.ExecuteScriptAsync("alert('" + t.Result.Result + "')");
                 //});
 
-                g.EvaluateScriptAsync("pe_extensions.toString()").ContinueWith(tt => {
-                    g.ExecuteScriptAsync("alert('" + tt.Result.Result + "')");
-                });
+                //g.EvaluateScriptAsync("alert(Pe.extensions)").ContinueWith(tt => {
+                    //g.ExecuteScriptAsync("alert('" + tt.Result.Result + "')");
+                //});
+                g.ExecuteScriptAsync("Pe.extensions.func(1,2).then(v => alert(v))");
             };
 
             return webViewSeed;

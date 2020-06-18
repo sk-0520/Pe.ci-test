@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public event EventHandler? MoveStarted;
         public event EventHandler<WebViewWidgetResizeEventArgs>? ResizeStarted;
+        public event EventHandler? Injected;
 
         #endregion
         public WebViewWidgetCallbacks(IPluginIdentifiers pluginIdentifiers, ILoggerFactory loggerFactory)
@@ -113,6 +114,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             Logger.LogDebug(direction);
             OnResizeStart(direction);
+        }
+
+        void OnInjected()
+        {
+            Injected?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void CompleteInjection()
+        {
+            OnInjected();
         }
 
         #endregion

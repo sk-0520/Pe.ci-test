@@ -90,6 +90,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         #region property
 
+        /// <summary>
+        /// 表示HTML。
+        /// </summary>
         IHtmlSource HtmlSource { get; }
 
         /// <summary>
@@ -112,9 +115,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// 生成後に各種パラメータを受けとるコールバック。
+        /// <para>内部的な処理諸々が終わった後に有効になる。</para>
         /// </summary>
         Action<IWebViewGrass>? SoilCallback { get; }
 
+        /// <summary>
+        /// プラグイン側から注入するクラス。
+        /// <para>クラスに <code>int Add(int a, int b) => a + b; </code>を定義しておけば JS 側からは <code>Pe.extension.add(1,2) </code> の形で呼び出せる。</para>
+        /// <para><see cref="SoilCallback"/>が動いた後にのみ動作可能。</para>
+        /// </summary>
         object? Extensions { get; }
 
         #endregion
@@ -173,8 +182,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// スクリプト実行結果。
         /// <para><see cref="Success"/>が偽の場合はデフォルト値が入る(というかさわるべきでない)</para>
         /// </summary>
-        [MaybeNull]
-        object Result { get; }
+        object? Result { get; }
 
         #endregion
     }

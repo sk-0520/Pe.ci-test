@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public WebViewScriptResult(bool success, object? result)
         {
             Success = success;
-            Result = result!;
+            Result = result;
         }
 
         #region function
@@ -34,8 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public bool Success { get; }
 
         /// <inheritdoc cref="IWebViewScriptResult.Result"/>
-        [MaybeNull]
-        public object Result { get; }
+        public object? Result { get; }
 
         #endregion
     }

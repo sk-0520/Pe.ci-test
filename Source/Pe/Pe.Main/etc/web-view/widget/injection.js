@@ -1,6 +1,6 @@
 // Pe から引数を追加して強制実行処理
-(async function (styleSheet) {
-	var callbackTask = CefSharp.BindObjectAsync("pe_callbacks");
+(function (styleSheet) {
+	var callbacksTask = CefSharp.BindObjectAsync("pe_callbacks");
 	var extensionsTask = CefSharp.BindObjectAsync("pe_extensions");
 
 	/*async*/ function moveStartAsync(e) {
@@ -48,5 +48,12 @@
 		resizeAreaElement.addEventListener('mousedown', resizeStartAsync);
 	}
 
-	return Promise.all(callbackTask, extensionsTask);
+	Promise.all([callbacksTask, extensionsTask]).then(values => {
+		window.Pe = {
+			callbacks: pe_callbacks,
+			extensions: pe_extensions
+		};
+
+		window.Pe.callbacks.completeInjection();
+	})
 })
