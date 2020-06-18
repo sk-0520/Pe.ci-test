@@ -1,0 +1,14 @@
+body {
+	margin: 0;
+	padding: 10px;
+	overflow: hidden;
+}
+#frame {
+	filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+	border: solid 2px #808080;
+	background: #c0c0c0;
+}
+
+#content {
+	overflow: auto;
+}

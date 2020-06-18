@@ -1,10 +1,8 @@
 .pe_move-area {
-	border: 1px solid lime;
 	cursor: move;
 }
 
 .pe_resize-area {
-	border: 1px solid red;
 	cursor: nwse-resize;
 }
 

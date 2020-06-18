@@ -27,10 +27,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected override IResourceHandler GetResourceHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request)
         {
-            //ResourceHandler has many static methods for dealing with Streams,
-            // byte[], files on disk, strings
-            // Alternatively ou can inheir from IResourceHandler and implement
-            // a custom behaviour that suites your requirements.
             var uri = new Uri(request.Url);
 
             var path = 1 < uri.LocalPath.Length
@@ -42,7 +38,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             if(ext != null && 1 < ext.Length) {
                 mime = Cef.GetMimeType(ext.Substring(1));
             }
-            return ResourceHandler.FromFilePath(path, mime, true);
+
+            try {
+                if(File.Exists(path)) {
+                    return ResourceHandler.FromFilePath(path, mime, true);
+                }
+            } catch(IOException ex) {
+                Logger.LogError(ex, ex.Message);
+            }
+
+            return null!;
         }
 
         #endregion
