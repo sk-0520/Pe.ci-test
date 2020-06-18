@@ -115,12 +115,12 @@ namespace ContentTypeTextNet.Pe.Plugins.CodeGenerator.Addon
                 Logger.LogInformation("{0}", g);
 
                 //g.ExecuteScriptAsync("alert(window.pe_callbacks)");
-                g.EvaluateScriptAsync("1+1").ContinueWith(t => {
-                    g.ExecuteScriptAsync("alert('" + t.Result.Result + "')");
+                //g.EvaluateScriptAsync("1+1").ContinueWith(t => {
+                //    g.ExecuteScriptAsync("alert('" + t.Result.Result + "')");
+                //});
 
-                    g.EvaluateScriptAsync("pe_callbacks.toString()").ContinueWith(tt => {
-                        g.ExecuteScriptAsync("alert('" + tt.Result.Result + "')");
-                    });
+                g.EvaluateScriptAsync("pe_extensions.toString()").ContinueWith(tt => {
+                    g.ExecuteScriptAsync("alert('" + tt.Result.Result + "')");
                 });
             };
 

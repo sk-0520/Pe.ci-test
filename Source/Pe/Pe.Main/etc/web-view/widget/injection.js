@@ -1,13 +1,7 @@
 // Pe から引数を追加して強制実行処理
 (async function (styleSheet) {
-	await CefSharp.BindObjectAsync("pe_callbacks");
-	window.pe_callbacks = pe_callbacks;
-
-	await CefSharp.BindObjectAsync("pe_extensions");
-	window.pe_extensions = pe_extensions;
-
-	var x = await pe_extensions.func(2,2);
-	alert(x);
+	var callbackTask = CefSharp.BindObjectAsync("pe_callbacks");
+	var extensionsTask = CefSharp.BindObjectAsync("pe_extensions");
 
 	/*async*/ function moveStartAsync(e) {
 		if (e.button !== 0) {
@@ -53,4 +47,6 @@
 	for (const resizeAreaElement of resizeAreaElements) {
 		resizeAreaElement.addEventListener('mousedown', resizeStartAsync);
 	}
+
+	return Promise.all(callbackTask, extensionsTask);
 })

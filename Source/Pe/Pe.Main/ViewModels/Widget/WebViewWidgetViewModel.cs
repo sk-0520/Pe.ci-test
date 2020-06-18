@@ -87,14 +87,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
             if(PluginExtensions != null) {
                 WebView.JavascriptObjectRepository.Register("pe_extensions", PluginExtensions, true);
             }
+            WebView.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
+
+            var sw = Stopwatch.StartNew();
+            var i = 0;
+            while(!WebView.JavascriptObjectRepository.IsBound("pe_extensions")) {
+                Logger.LogTrace("{0}, {1}", i++, sw.Elapsed);
+            }
 
             //WebView.ExecuteScriptAsync(injectionScript, injectionStyle);
             WebView.EvaluateScriptAsync(injectionScript, injectionStyle).ContinueWith(t => {
-                if(WidgetCallback != null) {
-                    WidgetCallback(this);
-                }
+            //    DispatcherWrapper.Begin(() => {
+            //        if(WidgetCallback != null) {
+            //            WidgetCallback(this);
+            //        }
+            //    }, System.Windows.Threading.DispatcherPriority.SystemIdle);
             });
 
+        }
+
+        private void JavascriptObjectRepository_ObjectBoundInJavascript(object? sender, CefSharp.Event.JavascriptBindingCompleteEventArgs e)
+        {
+            Logger.LogDebug(e.ObjectName);
         }
 
         void LoadHtmlSource(IHtmlSource htmlSource)
