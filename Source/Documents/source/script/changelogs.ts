@@ -146,6 +146,11 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.7.0.17535 -> 8.8.0.18411"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
