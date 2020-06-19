@@ -86,7 +86,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// <summary>
         /// 通常のプログラムディレクトリ。
         /// </summary>
-        public DirectoryInfo ApplicationDirectory => CombineDirectory(false, RootDirectory, "bin");
+        public DirectoryInfo ApplicationDirectory =>
+#if PRODUCT
+            CombineDirectory(false, RootDirectory, "bin");
+#else
+            CombineDirectory(false, ApplicationBaseDirectory, "bin");
+#endif
         /// <summary>
         /// etc ディレクトリ。
         /// </summary>

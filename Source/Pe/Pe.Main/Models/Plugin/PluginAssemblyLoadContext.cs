@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             Logger = loggerFactory.CreateLogger(GetType());
             PluginFile = pluginFile;
             AssemblyDependencyResolver = new AssemblyDependencyResolver(Path.GetDirectoryName(PluginFile.FullName)!);
-            LibraryDependencyResolvers = libraryDirectories.Select(i => new AssemblyDependencyResolver(i.FullName)).ToArray();
+            LibraryDirectories = libraryDirectories;
         }
 
         #region property
@@ -32,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         FileInfo PluginFile { get; }
         ILogger Logger { get; }
         AssemblyDependencyResolver AssemblyDependencyResolver { get; }
-        IReadOnlyList<AssemblyDependencyResolver> LibraryDependencyResolvers { get; }
+        IReadOnlyList<DirectoryInfo> LibraryDirectories { get; }
         #endregion
 
         #region function
@@ -54,13 +55,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return LoadFromAssemblyPath(assemblyPathFromPlugin);
             }
 
-            foreach(var resolver in LibraryDependencyResolvers) {
+            /*
+            foreach(var libraryDirectory in LibraryDirectories) {
+                var resolver = new AssemblyDependencyResolver(libraryDirectory.FullName);
                 var assemblyPathFromLibrary = resolver.ResolveAssemblyToPath(assemblyName);
                 if(assemblyPathFromLibrary != null) {
-                    Logger.LogDebug("[{0}] 解決[library] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
+                    Logger.LogDebug("[{0}] 解決[library1] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
                     return LoadFromAssemblyPath(assemblyPathFromLibrary);
                 }
             }
+            */
 
             var assemblyPathFromBase = base.Load(assemblyName);
             if(assemblyPathFromBase != null) {
@@ -68,8 +72,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return assemblyPathFromBase;
             }
 
-            Logger.LogDebug("[{0}] 未解決 {1}", PluginFile.Name, assemblyName);
+            /*
+            // アセンブリバージョンとかガン無視
+            foreach(var libraryDirectory in LibraryDirectories) {
+                var assemblyPathFromLibrary = Path.Combine(libraryDirectory.FullName, PathUtility.AppendExtension(assemblyName.Name!, "dll"));
+                if(File.Exists(assemblyPathFromLibrary)) {
+                    Logger.LogDebug("[{0}] 解決[library2] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
+                    return LoadFromAssemblyPath(assemblyPathFromLibrary);
+                }
+            }
+            */
 
+            Logger.LogDebug("[{0}] 未解決 {1}", PluginFile.Name, assemblyName);
             return assemblyPathFromBase;
         }
 
