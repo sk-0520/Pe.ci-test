@@ -151,10 +151,12 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "System.Data.SQLite.Core 1.0.112.2 -> 1.0.113.1"
 					},
 					{
 						"revision": "",
+						"class": "nuget",
 						"subject": "CefSharp.Wpf 79.1.360 -> 81.3.100"
 					},
 					{
