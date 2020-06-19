@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             : base(isCollectible)
         {
             PluginFile = pluginFile;
-            AssemblyDependencyResolver = new AssemblyDependencyResolver(PluginFile.FullName);
+            AssemblyDependencyResolver = new AssemblyDependencyResolver(Path.GetDirectoryName(PluginFile.FullName)!);
         }
 
         #region property
@@ -39,6 +39,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
 
         #region AssemblyLoadContext
+
+        protected override Assembly? Load(AssemblyName assemblyName)
+        {
+            var assemblyPath = AssemblyDependencyResolver.ResolveAssemblyToPath(assemblyName);
+            if(assemblyPath != null) {
+                return LoadFromAssemblyPath(assemblyPath);
+            }
+
+            return base.Load(assemblyName);
+        }
 
         #endregion
     }
