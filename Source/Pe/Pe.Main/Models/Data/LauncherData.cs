@@ -297,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public LauncherHistoryKind Kind { get; set; }
         public string Value { get; set; } = string.Empty;
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastExecuteTimestamp { get; set; }
         #endregion
 

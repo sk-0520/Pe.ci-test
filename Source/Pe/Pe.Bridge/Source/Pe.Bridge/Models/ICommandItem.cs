@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
+    /// <summary>
+    /// コマンドアイテム種別。
+    /// </summary>
     public enum CommandItemKind
     {
         #region property
@@ -13,23 +16,28 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region Pe
         /// <summary>
         /// コマンドはランチャーアイテム。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItem,
         /// <summary>
         /// ランチャーアイテムの名前に一致。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItemName,
         /// <summary>
         /// ランチャーアイテムのコードに一致。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItemCode,
         /// <summary>
         /// ランチャーアイテムのタグに一致。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItemTag,
 
         /// <summary>
         /// アプリケーション固有処理。
+        /// <para>Pe 専用。</para>
         /// </summary>
         ApplicationCommand,
 

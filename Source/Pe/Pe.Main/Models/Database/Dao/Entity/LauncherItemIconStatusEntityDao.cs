@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -44,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public bool InsertLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
+        public bool InsertLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -56,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdateLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, [Timestamp(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
+        public bool UpdateLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 

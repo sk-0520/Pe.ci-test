@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -27,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public Version FirstExecuteVersion { get; set; } = new Version();
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime FirstExecuteTimestamp { get; set; }
 
 

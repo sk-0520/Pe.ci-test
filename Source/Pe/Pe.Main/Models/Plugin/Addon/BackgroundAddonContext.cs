@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             Key = keyboardHookEventArgs.Key;
             IsDown = keyboardHookEventArgs.IsDown;
-            TimestampUtc = keyboardHookEventArgs.Timestamp;
+            Timestamp = keyboardHookEventArgs.Timestamp;
         }
 
         #region IBackgroundAddonKeyboardContext
@@ -29,9 +29,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <inheritdoc cref="IBackgroundAddonKeyboardContext.IsDown" />
         public bool IsDown { get; }
 
-        /// <inheritdoc cref="IBackgroundAddonMouseMoveContext.TimestampUtc" />
-        [Timestamp(DateTimeKind.Utc)]
-        public DateTime TimestampUtc { get; }
+        /// <inheritdoc cref="IBackgroundAddonMouseMoveContext.Timestamp" />
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime Timestamp { get; }
 
         #endregion
     }
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
 
             Location = mouseHookEventArgs.DeviceLocation;
-            TimestampUtc = mouseHookEventArgs.Timestamp;
+            Timestamp = mouseHookEventArgs.Timestamp;
         }
 
         #region IBackgroundAddonMouseMoveContext
@@ -56,9 +56,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         [PixelKind(Px.Device)]
         public Point Location { get; }
 
-        /// <inheritdoc cref="IBackgroundAddonMouseMoveContext.TimestampUtc" />
-        [Timestamp(DateTimeKind.Utc)]
-        public DateTime TimestampUtc { get; }
+        /// <inheritdoc cref="IBackgroundAddonMouseMoveContext.Timestamp" />
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime Timestamp { get; }
 
         #endregion
     }
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             Button = mouseHookEventArgs.Button;
             State = mouseHookEventArgs.ButtonState;
-            TimestampUtc = mouseHookEventArgs.Timestamp;
+            Timestamp = mouseHookEventArgs.Timestamp;
         }
 
         #region IBackgroundAddonMouseButtonContext
@@ -83,9 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public MouseButton Button { get; }
         /// <inheritdoc cref="IBackgroundAddonMouseButtonContext.State" />
         public MouseButtonState State { get; }
-        /// <inheritdoc cref="IBackgroundAddonMouseButtonContext.TimestampUtc" />
-        [Timestamp(DateTimeKind.Utc)]
-        public DateTime TimestampUtc { get; }
+        /// <inheritdoc cref="IBackgroundAddonMouseButtonContext.Timestamp" />
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime Timestamp { get; }
 
         #endregion
 

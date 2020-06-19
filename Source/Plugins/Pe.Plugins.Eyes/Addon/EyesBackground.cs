@@ -117,28 +117,28 @@ namespace ContentTypeTextNet.Pe.Plugins.Eyes.Addon
 
         public void HookKeyDown(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            KeyDown?.Invoke(this, new BackgroundKeyEventArgs(backgroundAddonKeyboardContext.Key, backgroundAddonKeyboardContext.TimestampUtc));
+            KeyDown?.Invoke(this, new BackgroundKeyEventArgs(backgroundAddonKeyboardContext.Key, backgroundAddonKeyboardContext.Timestamp));
         }
 
         public void HookKeyUp(IBackgroundAddonKeyboardContext backgroundAddonKeyboardContext)
         {
-            KeyUp?.Invoke(this, new BackgroundKeyEventArgs(backgroundAddonKeyboardContext.Key, backgroundAddonKeyboardContext.TimestampUtc));
+            KeyUp?.Invoke(this, new BackgroundKeyEventArgs(backgroundAddonKeyboardContext.Key, backgroundAddonKeyboardContext.Timestamp));
         }
 
 
         public void HookMouseMove(IBackgroundAddonMouseMoveContext backgroundAddonMouseMoveContext)
         {
-            MouseMoved?.Invoke(this, new BackgroundMouseMoveEventArgs(backgroundAddonMouseMoveContext.Location, backgroundAddonMouseMoveContext.TimestampUtc));
+            MouseMoved?.Invoke(this, new BackgroundMouseMoveEventArgs(backgroundAddonMouseMoveContext.Location, backgroundAddonMouseMoveContext.Timestamp));
         }
 
         public void HookMouseDown(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
         {
-            MouseDown?.Invoke(this, new BackgroundMouseButtonEventArgs(backgroundAddonMouseButtonContext.Button, backgroundAddonMouseButtonContext.State, backgroundAddonMouseButtonContext.TimestampUtc));
+            MouseDown?.Invoke(this, new BackgroundMouseButtonEventArgs(backgroundAddonMouseButtonContext.Button, backgroundAddonMouseButtonContext.State, backgroundAddonMouseButtonContext.Timestamp));
         }
 
         public void HookMouseUp(IBackgroundAddonMouseButtonContext backgroundAddonMouseButtonContext)
         {
-            MouseUp?.Invoke(this, new BackgroundMouseButtonEventArgs(backgroundAddonMouseButtonContext.Button, backgroundAddonMouseButtonContext.State, backgroundAddonMouseButtonContext.TimestampUtc));
+            MouseUp?.Invoke(this, new BackgroundMouseButtonEventArgs(backgroundAddonMouseButtonContext.Button, backgroundAddonMouseButtonContext.State, backgroundAddonMouseButtonContext.Timestamp));
         }
 
 

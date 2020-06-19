@@ -19,7 +19,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         Key Key { get; }
         bool IsDown { get; }
 
-        DateTime TimestampUtc { get; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        DateTime Timestamp { get; }
 
         #endregion
     }
@@ -33,7 +34,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         [PixelKind(Px.Device)]
         Point Location { get; }
-        DateTime TimestampUtc { get; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        DateTime Timestamp { get; }
 
         #endregion
     }
@@ -44,7 +46,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         MouseButton Button { get; }
         MouseButtonState State { get; }
-        DateTime TimestampUtc { get; }
+        [DateTimeKind(DateTimeKind.Utc)]
+        DateTime Timestamp { get; }
 
         #endregion
     }

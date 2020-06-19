@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.Core.Models
+namespace ContentTypeTextNet.Pe.Bridge.Models
 {
     [AttributeUsage(AttributeTargets.All, Inherited = true, AllowMultiple = false)]
-    public class TimestampAttribute : Attribute
+    public class DateTimeKindAttribute: Attribute
     {
-        public TimestampAttribute(DateTimeKind kind)
+        public DateTimeKindAttribute(DateTimeKind kind)
         {
             DateTimeKind = kind;
         }

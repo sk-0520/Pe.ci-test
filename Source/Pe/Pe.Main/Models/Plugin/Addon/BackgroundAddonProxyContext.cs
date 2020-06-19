@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool IsDown => KeyboardHookEventArgs.IsDown;
 
-        public DateTime TimestampUtc => KeyboardHookEventArgs.Timestamp;
+        public DateTime Timestamp => KeyboardHookEventArgs.Timestamp;
 
         #endregion
     }
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public Point Location => MouseHookEventArgs.DeviceLocation;
 
-        public DateTime TimestampUtc => MouseHookEventArgs.Timestamp;
+        public DateTime Timestamp => MouseHookEventArgs.Timestamp;
 
 
         #endregion
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public MouseButtonState State => MouseHookEventArgs.ButtonState;
 
-        public DateTime TimestampUtc => MouseHookEventArgs.Timestamp;
+        public DateTime Timestamp => MouseHookEventArgs.Timestamp;
 
         #endregion
     }

@@ -207,7 +207,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         /// 生成時間。
         /// </summary>
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Timestamp { get; } = DateTime.UtcNow;
 
         #endregion
@@ -351,7 +351,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         /// 生成時間。
         /// </summary>
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Timestamp { get; } = DateTime.UtcNow;
 
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -159,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         /// <summary>
         /// 最後にチェック対象とした時間。
         /// </summary>
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastCheckTimestamp { get; private set; } = DateTime.MinValue.ToUniversalTime();
 
         #endregion
