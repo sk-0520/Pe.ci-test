@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
@@ -13,16 +14,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// </summary>
     public class PluginAssemblyLoadContext: AssemblyLoadContext
     {
-        public PluginAssemblyLoadContext(FileInfo pluginFile, ILoggerFactory loggerFactory)
-            : this(pluginFile, true, loggerFactory)
+        public PluginAssemblyLoadContext(FileInfo pluginFile, IReadOnlyList<DirectoryInfo> libraryDirectories, ILoggerFactory loggerFactory)
+            : this(pluginFile, libraryDirectories, true, loggerFactory)
         { }
 
-        public PluginAssemblyLoadContext(FileInfo pluginFile, bool isCollectible, ILoggerFactory loggerFactory)
+        public PluginAssemblyLoadContext(FileInfo pluginFile, IReadOnlyList<DirectoryInfo> libraryDirectories, bool isCollectible, ILoggerFactory loggerFactory)
             : base(isCollectible)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             PluginFile = pluginFile;
             AssemblyDependencyResolver = new AssemblyDependencyResolver(Path.GetDirectoryName(PluginFile.FullName)!);
+            LibraryDependencyResolvers = libraryDirectories.Select(i => new AssemblyDependencyResolver(i.FullName)).ToArray();
         }
 
         #region property
@@ -30,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         FileInfo PluginFile { get; }
         ILogger Logger { get; }
         AssemblyDependencyResolver AssemblyDependencyResolver { get; }
-
+        IReadOnlyList<AssemblyDependencyResolver> LibraryDependencyResolvers { get; }
         #endregion
 
         #region function
@@ -46,19 +48,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         protected override Assembly? Load(AssemblyName assemblyName)
         {
-            var assemblyPath = AssemblyDependencyResolver.ResolveAssemblyToPath(assemblyName);
-            if(assemblyPath != null) {
-                Logger.LogDebug("[{0}] 解決 {1}, {2}", PluginFile.Name, assemblyName, assemblyPath);
-                return LoadFromAssemblyPath(assemblyPath);
+            var assemblyPathFromPlugin = AssemblyDependencyResolver.ResolveAssemblyToPath(assemblyName);
+            if(assemblyPathFromPlugin != null) {
+                Logger.LogDebug("[{0}] 解決[plugin] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromPlugin);
+                return LoadFromAssemblyPath(assemblyPathFromPlugin);
             }
 
-            Logger.LogDebug("[{0}] 未解決1 {1}, {2}", PluginFile.Name, assemblyName, assemblyPath);
+            foreach(var resolver in LibraryDependencyResolvers) {
+                var assemblyPathFromLibrary = resolver.ResolveAssemblyToPath(assemblyName);
+                if(assemblyPathFromLibrary != null) {
+                    Logger.LogDebug("[{0}] 解決[library] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
+                    return LoadFromAssemblyPath(assemblyPathFromLibrary);
+                }
+            }
 
-            var result =  base.Load(assemblyName);
+            var assemblyPathFromBase = base.Load(assemblyName);
+            if(assemblyPathFromBase != null) {
+                Logger.LogDebug("[{0}] 解決[base] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromBase);
+                return assemblyPathFromBase;
+            }
 
-            Logger.LogDebug("[{0}] 未解決2 {1}, {2}", PluginFile.Name, assemblyName, result);
+            Logger.LogDebug("[{0}] 未解決 {1}", PluginFile.Name, assemblyName);
 
-            return result;
+            return assemblyPathFromBase;
         }
 
         #endregion

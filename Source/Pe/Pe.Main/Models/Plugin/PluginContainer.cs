@@ -21,19 +21,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
     internal class PluginContainer
     {
-        public PluginContainer(AddonContainer addonContainer, ThemeContainer themeContainer, ILoggerFactory loggerFactory)
+        public PluginContainer(AddonContainer addonContainer, ThemeContainer themeContainer, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
             Addon = addonContainer;
             Theme = themeContainer;
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+            EnvironmentParameters = environmentParameters;
         }
 
         #region property
 
         ILogger Logger { get; }
         ILoggerFactory LoggerFactory { get; }
-
+        EnvironmentParameters EnvironmentParameters { get; }
         HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();
         /// <summary>
         /// プラグイン一覧。
@@ -108,8 +109,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     return new PluginLoadStateData(currentPlugin.PluginId, currentPlugin.Name, new Version(), PluginState.Disable, null, null);
                 }
             }
-
-            var loadContext = new PluginAssemblyLoadContext(pluginFile, LoggerFactory);
+            var libraryDirectories = new[] {
+                EnvironmentParameters.ApplicationDirectory,
+            };
+            var loadContext = new PluginAssemblyLoadContext(pluginFile, libraryDirectories, LoggerFactory);
             Assembly pluginAssembly;
             try {
                 pluginAssembly = loadContext.Load();
