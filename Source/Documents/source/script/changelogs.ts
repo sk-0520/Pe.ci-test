@@ -151,7 +151,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "System.Data.SQLite.Core 1.0.112.2 -> 1.0.113.1"
 					},
 					{
 						"revision": "",
