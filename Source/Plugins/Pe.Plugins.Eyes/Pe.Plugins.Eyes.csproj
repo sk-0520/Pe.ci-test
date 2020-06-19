@@ -27,7 +27,10 @@
 
   <ItemGroup>
     <Compile Include="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\**\*.cs" Exclude="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\obj\**\*.cs" />
-    <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj" />
+    <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
