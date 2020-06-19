@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 }
             }
 
-            var loadContext = new PluginAssemblyLoadContext(pluginFile);
+            var loadContext = new PluginAssemblyLoadContext(pluginFile, LoggerFactory);
             Assembly pluginAssembly;
             try {
                 pluginAssembly = loadContext.Load();

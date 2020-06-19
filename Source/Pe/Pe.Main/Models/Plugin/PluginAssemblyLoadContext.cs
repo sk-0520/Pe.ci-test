@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
@@ -12,12 +13,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// </summary>
     public class PluginAssemblyLoadContext: AssemblyLoadContext
     {
-        public PluginAssemblyLoadContext(FileInfo pluginFile)
-            : this(pluginFile, true)
+        public PluginAssemblyLoadContext(FileInfo pluginFile, ILoggerFactory loggerFactory)
+            : this(pluginFile, true, loggerFactory)
         { }
-        public PluginAssemblyLoadContext(FileInfo pluginFile, bool isCollectible)
+
+        public PluginAssemblyLoadContext(FileInfo pluginFile, bool isCollectible, ILoggerFactory loggerFactory)
             : base(isCollectible)
         {
+            Logger = loggerFactory.CreateLogger(GetType());
             PluginFile = pluginFile;
             AssemblyDependencyResolver = new AssemblyDependencyResolver(Path.GetDirectoryName(PluginFile.FullName)!);
         }
@@ -25,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #region property
 
         FileInfo PluginFile { get; }
+        ILogger Logger { get; }
         AssemblyDependencyResolver AssemblyDependencyResolver { get; }
 
         #endregion
@@ -44,10 +48,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var assemblyPath = AssemblyDependencyResolver.ResolveAssemblyToPath(assemblyName);
             if(assemblyPath != null) {
+                Logger.LogDebug("[{0}] 解決 {1}, {2}", PluginFile.Name, assemblyName, assemblyPath);
                 return LoadFromAssemblyPath(assemblyPath);
             }
 
-            return base.Load(assemblyName);
+            Logger.LogDebug("[{0}] 未解決1 {1}, {2}", PluginFile.Name, assemblyName, assemblyPath);
+
+            var result =  base.Load(assemblyName);
+
+            Logger.LogDebug("[{0}] 未解決2 {1}, {2}", PluginFile.Name, assemblyName, result);
+
+            return result;
         }
 
         #endregion
