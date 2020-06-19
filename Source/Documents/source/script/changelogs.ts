@@ -155,6 +155,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "CefSharp.Wpf 79.1.360 -> 81.3.100"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
