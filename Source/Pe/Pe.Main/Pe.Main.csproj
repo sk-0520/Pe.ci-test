@@ -56,8 +56,8 @@
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
     <PackageReference Include="CefSharp.Wpf" Version="79.1.360" />
     <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.5" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.6.4" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.15" />

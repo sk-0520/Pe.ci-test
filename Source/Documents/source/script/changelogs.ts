@@ -134,7 +134,15 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Logging.Abstractions 3.1.4 -> 3.1.5",
+							"Microsoft.Extensions.Logging 3.1.4 -> 3.1.5",
+							"Microsoft.Extensions.Configuration.Json 3.1.4 -> 3.1.5",
+							"MSTest.TestAdapter 2.1.1 -> 2.1.2",
+							"MSTest.TestFramework 2.1.1 -> 2.1.2"
+						]
 					},
 					{
 						"revision": "",
