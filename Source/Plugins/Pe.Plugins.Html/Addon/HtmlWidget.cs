@@ -103,7 +103,6 @@ namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
                 Background = Brushes.Transparent,
                 WindowStyle = WindowStyle.None,
                 Extensions = new Extensions(),
-                PublicDirectoryName = "www",
                 SoilCallback = OnInitialized,
             };
 
