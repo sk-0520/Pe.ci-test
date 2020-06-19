@@ -134,11 +134,30 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Logging.Abstractions 3.1.4 -> 3.1.5",
+							"Microsoft.Extensions.Logging 3.1.4 -> 3.1.5",
+							"Microsoft.Extensions.Configuration.Json 3.1.4 -> 3.1.5",
+							"MSTest.TestAdapter 2.1.1 -> 2.1.2",
+							"MSTest.TestFramework 2.1.1 -> 2.1.2"
+						]
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.7.0.17535 -> 8.8.0.18411"
+					},
+					{
+						"revision": "",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.112.2 -> 1.0.113.1"
+					},
+					{
+						"revision": "",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 79.1.360 -> 81.3.100"
 					},
 					{
 						"revision": "",
