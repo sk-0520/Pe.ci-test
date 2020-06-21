@@ -55,14 +55,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return LoadFromAssemblyPath(assemblyPathFromPlugin);
             }
 
-            foreach(var libraryDirectory in LibraryDirectories) {
-                var resolver = new AssemblyDependencyResolver(libraryDirectory.FullName);
-                var assemblyPathFromLibrary = resolver.ResolveAssemblyToPath(assemblyName);
-                if(assemblyPathFromLibrary != null) {
-                    Logger.LogDebug("[{0}] 解決[library1] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
-                    return LoadFromAssemblyPath(assemblyPathFromLibrary);
-                }
-            }
+            //foreach(var libraryDirectory in LibraryDirectories) {
+            //    var resolver = new AssemblyDependencyResolver(libraryDirectory.FullName);
+            //    var assemblyPathFromLibrary = resolver.ResolveAssemblyToPath(assemblyName);
+            //    if(assemblyPathFromLibrary != null) {
+            //        Logger.LogDebug("[{0}] 解決[library1] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
+            //        return LoadFromAssemblyPath(assemblyPathFromLibrary);
+            //    }
+            //}
 
             var assemblyPathFromBase = base.Load(assemblyName);
             if(assemblyPathFromBase != null) {
