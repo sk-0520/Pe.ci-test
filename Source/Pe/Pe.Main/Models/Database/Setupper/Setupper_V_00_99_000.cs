@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         /// <inheritdoc cref="SetupperBase.Version"/>
         public override Version Version { get; }
 #if DEBUG || BETA
-         = new Version(0, 98, 1);
+         = new Version(0, 98, 2);
 #else
 #error !!!0.99.000!!!
 #endif
