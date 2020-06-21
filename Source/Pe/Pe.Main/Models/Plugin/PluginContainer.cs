@@ -165,6 +165,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
+            Logger.LogInformation("[{0}]", pluginInterfaceImpl.FullName);
+            foreach(var constructor in pluginInterfaceImpl.GetConstructors()) {
+                var paras = string.Join(", ", constructor.GetParameters().Select(i => $"{i.ParameterType.FullName} {i.Name}"));
+                Logger.LogInformation("-> ", paras);
+
+            }
+
             IPlugin plugin;
             try {
                 // コンストラクタ時にメモリログが参照に残るのを抑制
