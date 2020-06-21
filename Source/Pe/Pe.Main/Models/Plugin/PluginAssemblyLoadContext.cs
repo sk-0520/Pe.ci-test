@@ -72,10 +72,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             // アセンブリバージョンとかガン無視
             foreach(var libraryDirectory in LibraryDirectories) {
-                var assemblyPathFromLibrary = Path.Combine(libraryDirectory.FullName, PathUtility.AppendExtension(assemblyName.Name!, "dll"));
-                if(File.Exists(assemblyPathFromLibrary)) {
-                    Logger.LogDebug("[{0}] 解決[library2] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
-                    return LoadFromAssemblyPath(assemblyPathFromLibrary);
+                var name = assemblyName.Name;
+                var targets = new[] {
+                    "Pe.Bridge",
+                    "Pe.Core",
+                    "Pe.Main",
+                };
+                if(targets.Any(i => i == name)) {
+                    var assemblyPathFromLibrary = Path.Combine(libraryDirectory.FullName, PathUtility.AppendExtension(assemblyName.Name!, "dll"));
+                    if(File.Exists(assemblyPathFromLibrary)) {
+                        Logger.LogDebug("[{0}] 解決[library2] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
+                        return LoadFromAssemblyPath(assemblyPathFromLibrary);
+                    }
                 }
             }
 
