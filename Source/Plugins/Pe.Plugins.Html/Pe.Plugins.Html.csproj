@@ -8,7 +8,7 @@
     <WarningsAsErrors />
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <RootNamespace>ContentTypeTextNet.Pe.Plugins.KeyLogger</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Pe.Plugins.Html</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
