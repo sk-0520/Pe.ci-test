@@ -4,9 +4,9 @@ using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
-using ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon;
+using ContentTypeTextNet.Pe.Plugins.Html.Addon;
 
-namespace ContentTypeTextNet.Pe.Plugins.KeyLogger
+namespace ContentTypeTextNet.Pe.Plugins.Html
 {
     public class Html: PluginBase, IAddon
     {

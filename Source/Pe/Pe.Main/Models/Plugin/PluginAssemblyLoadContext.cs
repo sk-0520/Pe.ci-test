@@ -55,16 +55,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return LoadFromAssemblyPath(assemblyPathFromPlugin);
             }
 
-            /*
-            foreach(var libraryDirectory in LibraryDirectories) {
-                var resolver = new AssemblyDependencyResolver(libraryDirectory.FullName);
-                var assemblyPathFromLibrary = resolver.ResolveAssemblyToPath(assemblyName);
-                if(assemblyPathFromLibrary != null) {
-                    Logger.LogDebug("[{0}] 解決[library1] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
-                    return LoadFromAssemblyPath(assemblyPathFromLibrary);
-                }
-            }
-            */
+            //foreach(var libraryDirectory in LibraryDirectories) {
+            //    var resolver = new AssemblyDependencyResolver(libraryDirectory.FullName);
+            //    var assemblyPathFromLibrary = resolver.ResolveAssemblyToPath(assemblyName);
+            //    if(assemblyPathFromLibrary != null) {
+            //        Logger.LogDebug("[{0}] 解決[library1] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
+            //        return LoadFromAssemblyPath(assemblyPathFromLibrary);
+            //    }
+            //}
 
             var assemblyPathFromBase = base.Load(assemblyName);
             if(assemblyPathFromBase != null) {
@@ -72,16 +70,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return assemblyPathFromBase;
             }
 
-            /*
-            // アセンブリバージョンとかガン無視
-            foreach(var libraryDirectory in LibraryDirectories) {
-                var assemblyPathFromLibrary = Path.Combine(libraryDirectory.FullName, PathUtility.AppendExtension(assemblyName.Name!, "dll"));
-                if(File.Exists(assemblyPathFromLibrary)) {
-                    Logger.LogDebug("[{0}] 解決[library2] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
-                    return LoadFromAssemblyPath(assemblyPathFromLibrary);
-                }
-            }
-            */
+            //// アセンブリバージョンとかガン無視
+            //foreach(var libraryDirectory in LibraryDirectories) {
+            //    var name = assemblyName.Name;
+            //    var targets = new[] {
+            //        "Pe.Bridge",
+            //        "Pe.Core",
+            //        "Pe.Main",
+            //    };
+            //    if(targets.Any(i => i == name)) {
+            //        var assemblyPathFromLibrary = Path.Combine(libraryDirectory.FullName, PathUtility.AppendExtension(assemblyName.Name!, "dll"));
+            //        if(File.Exists(assemblyPathFromLibrary)) {
+            //            Logger.LogDebug("[{0}] 解決[library2] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromLibrary);
+            //            return LoadFromAssemblyPath(assemblyPathFromLibrary);
+            //        }
+            //    }
+            //}
 
             Logger.LogDebug("[{0}] 未解決 {1}", PluginFile.Name, assemblyName);
             return assemblyPathFromBase;

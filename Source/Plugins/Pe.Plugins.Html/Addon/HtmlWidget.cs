@@ -12,7 +12,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Plugins.KeyLogger.Addon
+namespace ContentTypeTextNet.Pe.Plugins.Html.Addon
 {
     internal class HtmlWidget: IWidget
     {

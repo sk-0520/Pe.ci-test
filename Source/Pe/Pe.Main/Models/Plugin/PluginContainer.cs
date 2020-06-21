@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             var pluginDirs = baseDirectory.EnumerateDirectories();
             foreach(var pluginDir in pluginDirs) {
                 var pluginFile = GetPluginFile(pluginDir, pluginDir.Name, extensions);
-                if(pluginFile!= null) {
+                if(pluginFile != null) {
                     yield return pluginFile;
                 }
             }
@@ -125,17 +125,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             Type? pluginInterfaceImpl = null;
             try {
                 // 型情報が変な場合、例外が投げられるがそいつはなんかもう解放できなくなる
-                var pluginTypes = pluginAssembly.GetTypes();
+                var pluginTypes = pluginAssembly.GetTypes();//.Where(i => !(i.IsAbstract || i.IsNotPublic));
                 foreach(var pluginType in pluginTypes) {
                     if(pluginType.IsAbstract || pluginType.IsNotPublic) {
                         continue;
                     }
+                    Logger.LogInformation("{0}", pluginType.FullName);
 
                     var typeInterfaces = pluginType.GetInterfaces();
+                    foreach(var typeInterface in typeInterfaces) {
+                        Logger.LogInformation("> {0}", typeInterface.FullName);
+                    }
                     var plugins = typeInterfaces.FirstOrDefault(i => i == typeof(IPlugin));
                     if(plugins != null) {
                         pluginInterfaceImpl = pluginType;
                         break;
+                    }
+                }
+
+                if(pluginInterfaceImpl == null) {
+                    // プラグインIFがバージョンにより取得できなかった場合はIFを名前から取得する
+                    foreach(var pluginType in pluginTypes) {
+                        if(pluginType.IsAbstract || pluginType.IsNotPublic) {
+                            continue;
+                        }
+
+                        var typeInterfaces = pluginType.GetInterfaces();
+                        var plugins = typeInterfaces.FirstOrDefault(i => i.FullName == typeof(IPlugin).FullName);
+                        if(plugins != null) {
+                            Logger.LogInformation("めっちゃくちゃ");
+                            pluginInterfaceImpl = pluginType;
+                            break;
+                        }
                     }
                 }
             } catch(Exception ex) {
@@ -148,6 +169,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 Logger.LogError("プラグインアセンブリからプラグインインターフェイス取得できず: {0}, {1}", pluginAssembly.FullName, pluginFile.FullName);
                 loadContext.Unload();
                 return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
+            }
+
+            Logger.LogInformation("[{0}]", pluginInterfaceImpl.FullName);
+            foreach(var constructor in pluginInterfaceImpl.GetConstructors()) {
+                var paras = string.Join(", ", constructor.GetParameters().Select(i => $"{i.ParameterType.FullName} {i.Name}"));
+                Logger.LogInformation("-> {0}", paras);
+
             }
 
             IPlugin plugin;
