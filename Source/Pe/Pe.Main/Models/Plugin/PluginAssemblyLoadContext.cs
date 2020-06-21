@@ -55,7 +55,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return LoadFromAssemblyPath(assemblyPathFromPlugin);
             }
 
-            /*
             foreach(var libraryDirectory in LibraryDirectories) {
                 var resolver = new AssemblyDependencyResolver(libraryDirectory.FullName);
                 var assemblyPathFromLibrary = resolver.ResolveAssemblyToPath(assemblyName);
@@ -64,7 +63,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     return LoadFromAssemblyPath(assemblyPathFromLibrary);
                 }
             }
-            */
 
             var assemblyPathFromBase = base.Load(assemblyName);
             if(assemblyPathFromBase != null) {
@@ -72,7 +70,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return assemblyPathFromBase;
             }
 
-            /*
             // アセンブリバージョンとかガン無視
             foreach(var libraryDirectory in LibraryDirectories) {
                 var assemblyPathFromLibrary = Path.Combine(libraryDirectory.FullName, PathUtility.AppendExtension(assemblyName.Name!, "dll"));
@@ -81,7 +78,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     return LoadFromAssemblyPath(assemblyPathFromLibrary);
                 }
             }
-            */
 
             Logger.LogDebug("[{0}] 未解決 {1}", PluginFile.Name, assemblyName);
             return assemblyPathFromBase;
