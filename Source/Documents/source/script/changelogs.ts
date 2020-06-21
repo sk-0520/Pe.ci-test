@@ -91,6 +91,59 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/06/21",
+		"version": "0.98.001",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"subject": "パッケージ周りの更新",
+						"comments": [
+							"プラグイン周り実装を入れたいんだけどアセンブリ周りの解決処理がうまくいかないのでスキップ"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "56ff4b82e73a26ec247688f61583e06381fb89f0",
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Logging.Abstractions 3.1.4 -> 3.1.5",
+							"Microsoft.Extensions.Logging 3.1.4 -> 3.1.5",
+							"Microsoft.Extensions.Configuration.Json 3.1.4 -> 3.1.5",
+							"MSTest.TestAdapter 2.1.1 -> 2.1.2",
+							"MSTest.TestFramework 2.1.1 -> 2.1.2"
+						]
+					},
+					{
+						"revision": "d53e0ef0f070c5ad029a6780e5cfdda91b4aac9e",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.7.0.17535 -> 8.8.0.18411"
+					},
+					{
+						"revision": "efa6c10a3cf595b834f48a69c030827d2c5816a2",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.112.2 -> 1.0.113.1"
+					},
+					{
+						"revision": "7e69657f18a645ece0d3de14645ac3c1d812dffd",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 79.1.360 -> 81.3.100"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/05/24",
 		"version": "0.98.000",
 		"contents": [

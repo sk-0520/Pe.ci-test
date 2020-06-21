@@ -390,7 +390,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            if(NotifyLogs.Remove(notifyLogId)) {
+            if(0 < NotifyLogs.Count && NotifyLogs.Remove(notifyLogId)) {
                 DispatcherWrapper.Begin(() => {
                     if(element.Kind == NotifyLogKind.Topmost) {
                         TopmostNotifyLogsImpl.Remove(element);
