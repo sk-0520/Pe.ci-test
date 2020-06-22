@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -13,16 +15,18 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
     [ValueConversion(typeof(string), typeof(ImageSource))]
     public class IconResourceToImageConveter: IValueConverter
     {
-        #region proeprty
-
-        public int Size { get; set; } = (int)IconBox.Normal;
-
-        #endregion
-
         #region IValueConverter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if(parameter == null) {
+                Debug.WriteLine("[ERROR] パラメータ未設定");
+                if(Debugger.IsAttached) {
+                    Debugger.Break();
+                }
+                return DependencyProperty.UnsetValue;
+            }
+            var size = System.Convert.ToInt32(parameter);
             var resourceUri = new Uri((string)value);
             var decoder = BitmapDecoder.Create(
                 resourceUri,
@@ -30,13 +34,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.Converter
                 BitmapCacheOption.OnDemand
             );
 
-            var result = decoder.Frames.FirstOrDefault(f => f.Width == Size);
-            if(result == default(BitmapFrame)) {
-                // ダメっぽいときは一番近くっぽいのをとるべき。
-                result = decoder.Frames.OrderBy(f => f.Width).First();
+            var result = decoder.Frames.FirstOrDefault(f => f.Width == size);
+            if(result != null) {
+                // ダメっぽいときは一番近くっぽいのをとる。
+                int diff = decoder.Frames.Min(i => Math.Abs(i.PixelWidth - size));
+                result = decoder.Frames.First(i => Math.Abs(i.PixelWidth - size) == diff);
             }
 
-            return result;
+            return result!;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
