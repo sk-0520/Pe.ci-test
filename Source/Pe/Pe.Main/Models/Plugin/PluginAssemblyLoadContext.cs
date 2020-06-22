@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         {
             var assemblyPathFromPlugin = AssemblyDependencyResolver.ResolveAssemblyToPath(assemblyName);
             if(assemblyPathFromPlugin != null) {
-                Logger.LogDebug("[{0}] 解決[plugin] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromPlugin);
+                //Logger.LogDebug("[{0}] 解決[plugin] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromPlugin);
                 return LoadFromAssemblyPath(assemblyPathFromPlugin);
             }
 
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var assemblyPathFromBase = base.Load(assemblyName);
             if(assemblyPathFromBase != null) {
-                Logger.LogDebug("[{0}] 解決[base] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromBase);
+                //Logger.LogDebug("[{0}] 解決[base] {1}, {2}", PluginFile.Name, assemblyName, assemblyPathFromBase);
                 return assemblyPathFromBase;
             }
 
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
             //    }
             //}
 
-            Logger.LogDebug("[{0}] 未解決 {1}", PluginFile.Name, assemblyName);
+            //Logger.LogDebug("[{0}] 未解決 {1}", PluginFile.Name, assemblyName);
             return assemblyPathFromBase;
         }
 
