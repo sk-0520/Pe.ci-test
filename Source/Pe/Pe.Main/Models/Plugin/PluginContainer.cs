@@ -130,11 +130,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     if(pluginType.IsAbstract || pluginType.IsNotPublic) {
                         continue;
                     }
-                    Logger.LogInformation("{0}", pluginType.FullName);
+                    Logger.LogDebug("{0}", pluginType.FullName);
 
                     var typeInterfaces = pluginType.GetInterfaces();
                     foreach(var typeInterface in typeInterfaces) {
-                        Logger.LogInformation("> {0}", typeInterface.FullName);
+                        Logger.LogDebug("> {0}", typeInterface.FullName);
                     }
                     var plugins = typeInterfaces.FirstOrDefault(i => i == typeof(IPlugin));
                     if(plugins != null) {
@@ -154,10 +154,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 return new PluginLoadStateData(currentPlugin?.PluginId ?? Guid.Empty, currentPlugin?.Name ?? pluginFile.Name, new Version(), PluginState.IllegalAssembly, new WeakReference<PluginAssemblyLoadContext>(loadContext), null);
             }
 
-            Logger.LogInformation("[{0}]", pluginInterfaceImpl.FullName);
+            Logger.LogDebug("[{0}]", pluginInterfaceImpl.FullName);
             foreach(var constructor in pluginInterfaceImpl.GetConstructors()) {
                 var paras = string.Join(", ", constructor.GetParameters().Select(i => $"{i.ParameterType.FullName} {i.Name}"));
-                Logger.LogInformation("-> {0}", paras);
+                Logger.LogDebug("-> {0}", paras);
 
             }
 
