@@ -722,6 +722,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             foreach(var plugin in initializedPlugins) {
+                Logger.LogInformation("初期化完了プラグイン: {0}, {1}, {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginVersions.PluginVersion, plugin.PluginInformations.PluginIdentifiers.PluginId);
                 PluginContainer.AddPlugin(plugin);
             }
 
