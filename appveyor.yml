@@ -41,5 +41,5 @@ artifacts:
 cache:
   #- '%USERPROFILE%\.nuget\packages'
   - 'Source\Documents\node_modules'
-  - C:\ProgramData\chocolatey\bin -> appveyor.yml
-  - C:\ProgramData\chocolatey\lib -> appveyor.yml
+  #- C:\ProgramData\chocolatey\bin -> appveyor.yml
+  #- C:\ProgramData\chocolatey\lib -> appveyor.yml
