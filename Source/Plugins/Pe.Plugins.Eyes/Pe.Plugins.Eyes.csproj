@@ -21,11 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.5" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\**\*.cs" Exclude="..\..\Pe\Pe.Bridge\Source\Pe.Embedded\obj\**\*.cs" />
     <ProjectReference Include="..\..\Pe\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj">
       <Private>false</Private>
