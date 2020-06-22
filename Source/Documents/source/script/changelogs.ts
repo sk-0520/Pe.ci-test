@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#623: アプリケーション内で使用する Pe アイコンをもうちときれいに表示する"
 					},
 					{
 						"revision": "",
