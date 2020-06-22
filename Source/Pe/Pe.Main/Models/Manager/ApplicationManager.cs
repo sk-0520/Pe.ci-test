@@ -598,11 +598,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var pluginStateData = new PluginStateData() {
                         PluginId = pluginLoadStateItem.PluginId,
                         Name = pluginLoadStateItem.PluginName,
-                        State = pluginLoadStateItem.LoadState switch
-                        {
-                            PluginState.IllegalAssembly => PluginState.Disable, // アセンブリぶっこわれ系は無効マーク(次も読み込まれると鬱陶しさが花丸)
-                            _ => pluginLoadStateItem.LoadState,
-                        }
+                        State = pluginLoadStateItem.LoadState
                     };
 
                     if(pluginLoadStateItem == testPluginLoadState) {
