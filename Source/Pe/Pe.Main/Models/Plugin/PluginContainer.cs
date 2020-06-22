@@ -142,23 +142,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                         break;
                     }
                 }
-
-                if(pluginInterfaceImpl == null) {
-                    // プラグインIFがバージョンにより取得できなかった場合はIFを名前から取得する
-                    foreach(var pluginType in pluginTypes) {
-                        if(pluginType.IsAbstract || pluginType.IsNotPublic) {
-                            continue;
-                        }
-
-                        var typeInterfaces = pluginType.GetInterfaces();
-                        var plugins = typeInterfaces.FirstOrDefault(i => i.FullName == typeof(IPlugin).FullName);
-                        if(plugins != null) {
-                            Logger.LogInformation("めっちゃくちゃ");
-                            pluginInterfaceImpl = pluginType;
-                            break;
-                        }
-                    }
-                }
             } catch(Exception ex) {
                 Logger.LogError(ex, "プラグインアセンブリ リフレクション失敗: {0}", pluginFile.Name);
                 loadContext.Unload();
