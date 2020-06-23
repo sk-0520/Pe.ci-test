@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return SupportedCache[backgroundKind] = result;
         }
 
+        /// <inheritdoc cref="IBackground.RunStartup(IBackgroundAddonRunStartupContext)"/>
         public void RunStartup(BackgroundAddonProxyRunStartupContext backgroundAddonRunStartupContext)
         {
             var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
@@ -49,13 +50,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
         }
 
-        /// <inheritdoc cref="IBackground.RunStartup(IBackgroundAddonRunStartupContext)"/>
         void IBackground.RunStartup(IBackgroundAddonRunStartupContext backgroundAddonRunStartupContext)
         {
             Debug.Assert(backgroundAddonRunStartupContext.GetType() == typeof(BackgroundAddonProxyRunStartupContext));
             RunStartup((BackgroundAddonProxyRunStartupContext)backgroundAddonRunStartupContext);
         }
 
+        /// <inheritdoc cref="IBackground.RunPause(IBackgroundAddonRunPauseContext)"/>
         public void RunPause(BackgroundAddonProxyRunPauseContext backgroundAddonRunPauseContext)
         {
             var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
@@ -66,11 +67,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             }
         }
 
-        /// <inheritdoc cref="IBackground.RunPause(IBackgroundAddonRunPauseContext)"/>
         void IBackground.RunPause(IBackgroundAddonRunPauseContext backgroundAddonRunPauseContext)
         {
             Debug.Assert(backgroundAddonRunPauseContext.GetType() == typeof(BackgroundAddonProxyRunPauseContext));
             RunPause((BackgroundAddonProxyRunPauseContext)backgroundAddonRunPauseContext);
+        }
+
+        /// <inheritdoc cref="IBackground.RunExecute(IBackgroundAddonRunExecuteContext)"/>
+        public void RunExecute(BackgroundAddonProxyRunExecuteContext backgroundAddonRunExecuteContext)
+        {
+            Task.Run(() => {
+                var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
+                foreach(var functionUnit in functionUnits) {
+                    var addon = GetAddon(functionUnit);
+                    var context = BackgroundAddonContextFactory.CreateRunExecuteContext(addon.PluginInformations, backgroundAddonRunExecuteContext.RunExecuteKind, backgroundAddonRunExecuteContext.Parameter, backgroundAddonRunExecuteContext.Timestamp);
+                    functionUnit.RunExecute(context);
+                }
+            });
+        }
+        void IBackground.RunExecute(IBackgroundAddonRunExecuteContext backgroundAddonRunExecuteContext)
+        {
+            Debug.Assert(backgroundAddonRunExecuteContext.GetType() == typeof(BackgroundAddonProxyRunExecuteContext));
+            RunExecute((BackgroundAddonProxyRunExecuteContext)backgroundAddonRunExecuteContext);
         }
 
 

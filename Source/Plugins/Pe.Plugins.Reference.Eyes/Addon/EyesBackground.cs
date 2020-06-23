@@ -113,6 +113,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
             throw new NotSupportedException();
         }
 
+        public void RunExecute(IBackgroundAddonRunExecuteContext backgroundAddonRunExecuteContext)
+        {
+            throw new NotSupportedException();
+        }
+
         public void RunShutdown(IBackgroundAddonRunShutdownContext backgroundAddonRunShutdownContext)
         {
             throw new NotSupportedException();

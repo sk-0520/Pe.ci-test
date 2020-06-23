@@ -24,6 +24,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     public interface IBackgroundAddonRunShutdownContext
     { }
 
+    /// <summary>
+    /// 実行処理コンテキスト。
+    /// </summary>
+    public interface IBackgroundAddonRunExecuteContext
+    {
+        #region property
+
+        RunExecuteKind RunExecuteKind { get; }
+        object? Parameter { get; }
+
+        [DateTimeKind(DateTimeKind.Utc)]
+        DateTime Timestamp { get; }
+
+        #endregion
+    }
+
     public interface IBackgroundAddonKeyboardContext
     {
         #region property

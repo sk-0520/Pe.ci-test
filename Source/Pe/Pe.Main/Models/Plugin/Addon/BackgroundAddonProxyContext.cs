@@ -28,6 +28,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
+    internal class BackgroundAddonProxyRunExecuteContext: IBackgroundAddonRunExecuteContext
+    {
+        public BackgroundAddonProxyRunExecuteContext(RunExecuteKind runExecuteKind, object? parameter, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
+        {
+            RunExecuteKind = runExecuteKind;
+            Parameter = parameter;
+            Timestamp = timestamp;
+        }
+
+        #region IBackgroundAddonRunPauseContext
+
+        /// <inheritdoc cref="IBackgroundAddonRunExecuteContext.RunExecuteKind"/>
+        public RunExecuteKind RunExecuteKind { get; }
+
+        /// <inheritdoc cref="IBackgroundAddonRunExecuteContext.Parameter"/>
+        public object? Parameter { get; }
+        /// <inheritdoc cref="IBackgroundAddonRunExecuteContext.Timestamp"/>
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime Timestamp { get; }
+
+        #endregion
+    }
+
     internal class BackgroundAddonProxyRunShutdownContext: IBackgroundAddonRunShutdownContext
     { }
 

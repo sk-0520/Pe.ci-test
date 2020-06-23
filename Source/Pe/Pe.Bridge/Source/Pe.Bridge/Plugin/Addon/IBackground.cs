@@ -28,6 +28,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         MouseHook,
     }
 
+    public enum RunExecuteKind
+    {
+
+    }
+
     /// <summary>
     /// バックグラウンドで適当に何かする処理。
     /// <para><see cref="IBackground"/>毎の優先度は存在しない。</para>
@@ -58,9 +63,16 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         /// <param name="backgroundAddonRunPauseContext"></param>
         void RunPause(IBackgroundAddonRunPauseContext backgroundAddonRunPauseContext);
+
+        /// <summary>
+        /// 何かしらが実行された際に呼び出される。
+        /// </summary>
+        /// <para>非同期で呼び出される。</para>
+        /// <param name="backgroundAddonRunExecuteContext"></param>
+        void RunExecute(IBackgroundAddonRunExecuteContext backgroundAddonRunExecuteContext);
+
         /// <summary>
         /// バックグラウンド処理終了時点で呼び出される。
-        /// <para>非同期で呼び出される。</para>
         /// </summary>
         /// <param name="backgroundAddonRunShutdownContext"></param>
         void RunShutdown(IBackgroundAddonRunShutdownContext backgroundAddonRunShutdownContext);

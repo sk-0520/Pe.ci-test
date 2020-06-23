@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -31,6 +32,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public BackgroundAddonRunPauseContext CreateRunPauseContext(IPluginInformations pluginInformations, bool isPausing)
         {
             var context = new BackgroundAddonRunPauseContext(pluginInformations.PluginIdentifiers, isPausing);
+            return context;
+        }
+
+        public BackgroundAddonRunExecuteContext CreateRunExecuteContext(IPluginInformations pluginInformations, RunExecuteKind runExecuteKind, object? parameter, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
+        {
+            var context = new BackgroundAddonRunExecuteContext(pluginInformations.PluginIdentifiers, runExecuteKind, parameter, timestamp);
             return context;
         }
 

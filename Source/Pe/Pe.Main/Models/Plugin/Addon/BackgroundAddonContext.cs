@@ -40,6 +40,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
+    internal class BackgroundAddonRunExecuteContext: PluginIdentifiersContextBase, IBackgroundAddonRunExecuteContext
+    {
+        public BackgroundAddonRunExecuteContext(IPluginIdentifiers pluginIdentifiers, RunExecuteKind runExecuteKind, object? parameter, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
+            : base(pluginIdentifiers)
+        {
+            RunExecuteKind = runExecuteKind;
+            Parameter = parameter;
+            Timestamp = timestamp;
+        }
+
+        #region IBackgroundAddonRunExecuteContext
+
+        /// <inheritdoc cref="IBackgroundAddonRunExecuteContext.RunExecuteKind"/>
+        public RunExecuteKind RunExecuteKind { get; }
+
+        /// <inheritdoc cref="IBackgroundAddonRunExecuteContext.Parameter"/>
+        public object? Parameter { get; }
+
+        /// <inheritdoc cref="IBackgroundAddonRunExecuteContext.Timestamp"/>
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime Timestamp { get; }
+
+        #endregion
+    }
+
+
     /// <inheritdoc cref="IBackgroundAddonRunShutdownContext" />
     internal class BackgroundAddonRunShutdownContext: PluginIdentifiersContextBase, IBackgroundAddonRunShutdownContext
     {
