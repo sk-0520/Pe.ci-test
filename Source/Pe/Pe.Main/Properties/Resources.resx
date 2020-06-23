@@ -1977,6 +1977,33 @@
   <data name="String_Setting_Plugins_Header" xml:space="preserve">
     <value>プラグイン</value>
   </data>
+  <data name="String_AppManager_Widget_A" xml:space="preserve">
+    <value>ウィジェット(_W)</value>
+  </data>
+  <data name="String_AppManager_Widget_Topmost_A" xml:space="preserve">
+    <value>最前面(_T)</value>
+  </data>
+  <data name="String_AppManager_Widget_Visible_A" xml:space="preserve">
+    <value>表示(_V)</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_Header" xml:space="preserve">
+    <value>プラグイン情報</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_PluginId_A" xml:space="preserve">
+    <value>プラグインID</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_SupportVersions_A" xml:space="preserve">
+    <value>サポートバージョン</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_Version_A" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Setting_Header" xml:space="preserve">
+    <value>プラグイン設定</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Setting_NoSupport" xml:space="preserve">
+    <value>このプラグインに設定機能はありません。</value>
+  </data>
   <data name="String_Setting_Plugins_Item_SupportVersions_Format" xml:space="preserve">
     <value>${MIN} - ${MAX}</value>
   </data>

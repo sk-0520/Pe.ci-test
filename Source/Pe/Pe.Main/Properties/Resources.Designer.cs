@@ -599,6 +599,33 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   ウィジェット(_W) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Widget_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_Widget_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   最前面(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Widget_Topmost_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_Widget_Topmost_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   表示(_V) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_AppManager_Widget_Visible_A {
+            get {
+                return ResourceManager.GetString("String_AppManager_Widget_Visible_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   β版直接実行注意 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_BetaVersion_Unknown_Caption {
@@ -5445,6 +5472,60 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Plugins_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Plugins_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグイン情報 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_Information_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Information_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグインID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_Information_PluginId_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Information_PluginId_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   サポートバージョン に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_Information_SupportVersions_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Information_SupportVersions_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   バージョン に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_Information_Version_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Information_Version_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグイン設定 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_Setting_Header {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Setting_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   このプラグインに設定機能はありません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_Setting_NoSupport {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Setting_NoSupport", resourceCulture);
             }
         }
         

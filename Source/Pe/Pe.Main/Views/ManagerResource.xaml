@@ -112,6 +112,31 @@
       </MenuItem.Icon>
     </MenuItem>
 
+    <Separator Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    <MenuItem Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="{Binding Resources.String_AppManager_Widget_A, Source={x:Static app_main:CultureService.Instance}}" ItemsSource="{Binding WidgetItems}">
+      <MenuItem.Resources>
+        <Style x:Key="WidgetMenuItem" TargetType="MenuItem">
+          <Setter Property="ItemsSource" Value="{x:Null}" />
+          <Setter Property="HorizontalContentAlignment" Value="Left" />
+          <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+      </MenuItem.Resources>
+      <MenuItem.ItemContainerStyle>
+        <Style TargetType="MenuItem">
+          <Setter Property="Header" Value="{Binding MenuHeader, Converter={StaticResource EscapeAccessKeyConverter}}" />
+          <Setter Property="Icon" Value="{Binding MenuIcon}" />
+          <Setter Property="ItemsSource">
+            <Setter.Value>
+              <CompositeCollection>
+                <MenuItem Style="{StaticResource WidgetMenuItem}" IsChecked="{Binding IsVisible, Mode=OneWay}" Command="{Binding ToggleVisibleCommand}" Header="{Binding Resources.String_AppManager_Widget_Visible_A, Source={x:Static app_main:CultureService.Instance}}" />
+                <MenuItem Style="{StaticResource WidgetMenuItem}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" Header="{Binding Resources.String_AppManager_Widget_Topmost_A, Source={x:Static app_main:CultureService.Instance}}" />
+              </CompositeCollection>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </MenuItem.ItemContainerStyle>
+    </MenuItem>
+
     <Separator />
 
     <MenuItem IsSubmenuOpen="{Binding IsOpenSystemMenu, Mode=OneWayToSource}" Header="{Binding Resources.String_AppManager_System_A, Source={x:Static app_main:CultureService.Instance}}">
@@ -136,31 +161,6 @@
       <MenuItem Header="{Binding Resources.String_AppManager_System_Hook_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsEnabledHook, Mode=OneWay}" Command="{Binding ToggleHookCommand}" />
       <MenuItem Header="{Binding Resources.String_AppManager_System_IsDisabledSystemIdle_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsDisabledSystemIdle, Mode=OneWay}" Command="{Binding ToggleDisabledSystemIdleCommand}" />
       <MenuItem Header="{Binding Resources.String_AppManager_System_IsSupportedExplorer_A, Source={x:Static app_main:CultureService.Instance}}" IsChecked="{Binding IsSupportedExplorer, Mode=OneWay}" Command="{Binding ToggleSupportExplorerCommand}" />
-    </MenuItem>
-
-    <Separator Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" />
-    <MenuItem Visibility="{Binding HasWidgetsMenu, Converter={StaticResource BooleanToVisibilityConverter}}" IsSubmenuOpen="{Binding IsOpenWidgetsMenu, Mode=OneWayToSource}"  Header="widgets" ItemsSource="{Binding WidgetItems}">
-      <MenuItem.Resources>
-        <Style x:Key="WidgetMenuItem" TargetType="MenuItem">
-          <Setter Property="ItemsSource" Value="{x:Null}" />
-          <Setter Property="HorizontalContentAlignment" Value="Left" />
-          <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
-      </MenuItem.Resources>
-      <MenuItem.ItemContainerStyle>
-        <Style TargetType="MenuItem">
-          <Setter Property="Header" Value="{Binding MenuHeader, Converter={StaticResource EscapeAccessKeyConverter}}" />
-          <Setter Property="Icon" Value="{Binding MenuIcon}" />
-          <Setter Property="ItemsSource">
-            <Setter.Value>
-              <CompositeCollection>
-                <MenuItem Style="{StaticResource WidgetMenuItem}" IsChecked="{Binding IsVisible, Mode=OneWay}" Command="{Binding ToggleVisibleCommand}" Header="show" />
-                <MenuItem Style="{StaticResource WidgetMenuItem}" IsChecked="{Binding IsTopmost, Mode=OneWay}" Command="{Binding ToggleTopmostCommand}" Header="topmost" />
-              </CompositeCollection>
-            </Setter.Value>
-          </Setter>
-        </Style>
-      </MenuItem.ItemContainerStyle>
     </MenuItem>
 
     <Separator />
