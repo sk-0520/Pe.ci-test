@@ -41,6 +41,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public void RunStartup(BackgroundAddonProxyRunStartupContext backgroundAddonRunStartupContext)
         {
+            var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
+            foreach(var functionUnit in functionUnits) {
+                var addon = GetAddon(functionUnit);
+                var context = BackgroundAddonContextFactory.CreateRunStartupContext(addon.PluginInformations);
+                functionUnit.RunStartup(context);
+            }
         }
 
         /// <inheritdoc cref="IBackground.RunStartup(IBackgroundAddonRunStartupContext)"/>
@@ -49,10 +55,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             Debug.Assert(backgroundAddonRunStartupContext.GetType() == typeof(BackgroundAddonProxyRunStartupContext));
             RunStartup((BackgroundAddonProxyRunStartupContext)backgroundAddonRunStartupContext);
         }
+
+        public void RunPause(BackgroundAddonProxyRunPauseContext backgroundAddonRunPauseContext)
+        {
+            var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
+            foreach(var functionUnit in functionUnits) {
+                var addon = GetAddon(functionUnit);
+                var context = BackgroundAddonContextFactory.CreateRunPauseContext(addon.PluginInformations, backgroundAddonRunPauseContext.IsPausing);
+                functionUnit.RunPause(context);
+            }
+        }
+
+        /// <inheritdoc cref="IBackground.RunPause(IBackgroundAddonRunPauseContext)"/>
+        void IBackground.RunPause(IBackgroundAddonRunPauseContext backgroundAddonRunPauseContext)
+        {
+            Debug.Assert(backgroundAddonRunPauseContext.GetType() == typeof(BackgroundAddonProxyRunPauseContext));
+            RunPause((BackgroundAddonProxyRunPauseContext)backgroundAddonRunPauseContext);
+        }
+
+
         /// <inheritdoc cref="IBackground.RunShutdown(IBackgroundAddonRunShutdownContext)"/>
         public void RunShutdown(BackgroundAddonProxyRunShutdownContext backgroundAddonRunShutdownContext)
         {
-
+            var functionUnits = FunctionUnits.Where(i => i.IsSupported(BackgroundKind.Running));
+            foreach(var functionUnit in functionUnits) {
+                var addon = GetAddon(functionUnit);
+                var context = BackgroundAddonContextFactory.CreateRunShutdownContext(addon.PluginInformations);
+                functionUnit.RunShutdown(context);
+            }
         }
         void IBackground.RunShutdown(IBackgroundAddonRunShutdownContext backgroundAddonRunShutdownContext)
         {

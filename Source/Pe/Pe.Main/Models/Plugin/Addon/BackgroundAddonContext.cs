@@ -11,6 +11,47 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
+    /// <inheritdoc cref="IBackgroundAddonRunStartupContext" />
+    internal class BackgroundAddonRunStartupContext: PluginIdentifiersContextBase, IBackgroundAddonRunStartupContext
+    {
+        public BackgroundAddonRunStartupContext(IPluginIdentifiers pluginIdentifiers)
+            : base(pluginIdentifiers)
+        { }
+
+        #region IBackgroundAddonRunStartupContext
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IBackgroundAddonRunPauseContext" />
+    internal class BackgroundAddonRunPauseContext: PluginIdentifiersContextBase, IBackgroundAddonRunPauseContext
+    {
+        public BackgroundAddonRunPauseContext(IPluginIdentifiers pluginIdentifiers, bool isPausing)
+             : base(pluginIdentifiers)
+        {
+            IsPausing = isPausing;
+        }
+
+        #region IBackgroundAddonRunPauseContext
+
+        /// <inheritdoc cref="IBackgroundAddonRunPauseContext.IsPausing" />
+        public bool IsPausing { get; }
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IBackgroundAddonRunShutdownContext" />
+    internal class BackgroundAddonRunShutdownContext: PluginIdentifiersContextBase, IBackgroundAddonRunShutdownContext
+    {
+        public BackgroundAddonRunShutdownContext(IPluginIdentifiers pluginIdentifiers)
+            : base(pluginIdentifiers)
+        { }
+
+        #region IBackgroundAddonRunShutdownContext
+
+        #endregion
+    }
+
     /// <inheritdoc cref="IBackgroundAddonKeyboardContext" />
     internal class BackgroundAddonKeyboardContext: PluginIdentifiersContextBase, IBackgroundAddonKeyboardContext
     {

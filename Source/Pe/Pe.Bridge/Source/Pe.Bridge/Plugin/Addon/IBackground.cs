@@ -54,6 +54,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="backgroundAddonRunStartupContext"></param>
         void RunStartup(IBackgroundAddonRunStartupContext backgroundAddonRunStartupContext);
         /// <summary>
+        /// バックグランド処理を一時停止・再実行する際に呼び出される
+        /// </summary>
+        /// <param name="backgroundAddonRunPauseContext"></param>
+        void RunPause(IBackgroundAddonRunPauseContext backgroundAddonRunPauseContext);
+        /// <summary>
         /// バックグラウンド処理終了時点で呼び出される。
         /// <para>非同期で呼び出される。</para>
         /// </summary>

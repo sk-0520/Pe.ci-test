@@ -14,6 +14,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     internal class BackgroundAddonProxyRunStartupContext: IBackgroundAddonRunStartupContext
     { }
 
+    internal class BackgroundAddonProxyRunPauseContext: IBackgroundAddonRunPauseContext
+    {
+        public BackgroundAddonProxyRunPauseContext(bool isPausing)
+        {
+            IsPausing = isPausing;
+        }
+
+        #region IBackgroundAddonRunPauseContext
+
+        public bool IsPausing { get; }
+
+        #endregion
+    }
+
     internal class BackgroundAddonProxyRunShutdownContext: IBackgroundAddonRunShutdownContext
     { }
 

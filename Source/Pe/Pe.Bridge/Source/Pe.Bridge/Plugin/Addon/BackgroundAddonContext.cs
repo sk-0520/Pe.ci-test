@@ -9,6 +9,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
     public interface IBackgroundAddonRunStartupContext
     { }
+
+    public interface IBackgroundAddonRunPauseContext
+    {
+        #region proeprty
+
+        /// <summary>
+        /// 処理を停止中か。
+        /// </summary>
+        bool IsPausing { get; }
+
+        #endregion
+    }
     public interface IBackgroundAddonRunShutdownContext
     { }
 

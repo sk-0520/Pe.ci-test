@@ -233,6 +233,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             SaveWidgets();
 
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyRunPauseContext(true);
+                    BackgroundAddon.RunPause(context);
+                }
+            }
+
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
             var settingDirectory = environmentParameters.TemporarySettingDirectory;
@@ -356,6 +363,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     pair.Key.ClearStock();
                 }
                 pair.Value.Dispose();
+            }
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyRunPauseContext(false);
+                    BackgroundAddon.RunPause(context);
+                }
             }
 
             if(changing.Success) {

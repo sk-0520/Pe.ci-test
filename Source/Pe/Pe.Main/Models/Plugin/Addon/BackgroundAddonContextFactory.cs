@@ -22,6 +22,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
+        public BackgroundAddonRunStartupContext CreateRunStartupContext(IPluginInformations pluginInformations)
+        {
+            var context = new BackgroundAddonRunStartupContext(pluginInformations.PluginIdentifiers);
+            return context;
+        }
+
+        public BackgroundAddonRunPauseContext CreateRunPauseContext(IPluginInformations pluginInformations, bool isPausing)
+        {
+            var context = new BackgroundAddonRunPauseContext(pluginInformations.PluginIdentifiers, isPausing);
+            return context;
+        }
+
+        public BackgroundAddonRunShutdownContext CreateRunShutdownContext(IPluginInformations pluginInformations)
+        {
+            var context = new BackgroundAddonRunShutdownContext(pluginInformations.PluginIdentifiers);
+            return context;
+        }
+
         public BackgroundAddonKeyboardContext CreateKeyboardContext(IPluginInformations pluginInformations, KeyboardHookEventArgs keyboardHookEventArgs)
         {
             var context = new BackgroundAddonKeyboardContext(pluginInformations.PluginIdentifiers, keyboardHookEventArgs);
