@@ -58,8 +58,8 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="plugin id"/>
-                <TextBlock Grid.Column="1" Text="{Binding PluginId, Mode=OneTime}"/>
+                <Label Grid.Column="0" Style="{StaticResource HeaderLabel}"  Content="plugin id"/>
+                <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding PluginId, Mode=OneTime}"/>
               </Grid>
 
               <Grid>
@@ -68,8 +68,8 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="version"/>
-                <TextBlock Grid.Column="1" Text="{Binding PluginVersion, Mode=OneTime}"/>
+                <Label Grid.Column="0" Style="{StaticResource HeaderLabel}"  Content="version"/>
+                <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding PluginVersion, Mode=OneTime}"/>
               </Grid>
 
               <Grid>
@@ -78,12 +78,8 @@
                   <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="support"/>
-                <TextBlock Grid.Column="1">
-                  <Run Text="{Binding MinimumSupportVersion, Mode=OneTime}" />
-                  <Run Text=" - "/>
-                  <Run Text="{Binding MaximumSupportVersion, Mode=OneTime}" />
-                </TextBlock>
+                <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="support" />
+                <TextBox Grid.Column="1" IsReadOnly="True" Style="{StaticResource Vertical-TextBox}" Text="{Binding SupportVersions, Mode=OneTime}" />
               </Grid>
 
             </StackPanel>

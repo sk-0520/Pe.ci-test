@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Windows.Automation.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
@@ -39,6 +41,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public string PrimaryCategory => Model.Plugin.PluginInformations.PluginCategory.PluginPrimaryCategory;
         public IReadOnlyList<string> SecondaryCategories => Model.Plugin.PluginInformations.PluginCategory.PluginSecondaryCategories;
         public bool HasSecondaryCategories => Model.Plugin.PluginInformations.PluginCategory.PluginSecondaryCategories.Count != 0;
+
+        public string SupportVersions
+        {
+            get
+            {
+                bool IsUnlimitedVersion(Version version) {
+                    return version.Major == 0 && version.Minor == 0 && version.Build == 0;
+                }
+                return TextUtility.ReplaceFromDictionary(
+                    Properties.Resources.String_Setting_Plugins_Item_SupportVersions_Format,
+                    new Dictionary<string, string>() {
+                        ["MIN"] = IsUnlimitedVersion(MinimumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : MinimumSupportVersion.ToString(),
+                        ["MAX"] = IsUnlimitedVersion(MaximumSupportVersion) ? Properties.Resources.String_Setting_Plugins_Item_SupportVersion_Unlimited : MaximumSupportVersion.ToString()
+                    }
+                );
+            }
+        }
 
         public bool HasSettingControl => Model.SupportedPreferences;
 

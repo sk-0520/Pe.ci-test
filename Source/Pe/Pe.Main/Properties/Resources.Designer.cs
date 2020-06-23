@@ -5449,6 +5449,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   制限なし に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_SupportVersion_Unlimited {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_SupportVersion_Unlimited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${MIN} - ${MAX} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_SupportVersions_Format {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_SupportVersions_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   自動スクロール に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_StandardInputOutput_AutoScroll_A {

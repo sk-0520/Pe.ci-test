@@ -1977,4 +1977,10 @@
   <data name="String_Setting_Plugins_Header" xml:space="preserve">
     <value>プラグイン</value>
   </data>
+  <data name="String_Setting_Plugins_Item_SupportVersions_Format" xml:space="preserve">
+    <value>${MIN} - ${MAX}</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_SupportVersion_Unlimited" xml:space="preserve">
+    <value>制限なし</value>
+  </data>
 </root>
