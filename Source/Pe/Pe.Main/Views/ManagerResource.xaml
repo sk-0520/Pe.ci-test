@@ -121,6 +121,9 @@
           <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
       </MenuItem.Resources>
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Plugin}" />
+      </MenuItem.Icon>
       <MenuItem.ItemContainerStyle>
         <Style TargetType="MenuItem">
           <Setter Property="Header" Value="{Binding MenuHeader, Converter={StaticResource EscapeAccessKeyConverter}}" />
