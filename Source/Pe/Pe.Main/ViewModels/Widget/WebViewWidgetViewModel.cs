@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
     /// </summary>
     public class WebViewWidgetViewModel: ViewModelBase, IWebViewGrass
     {
-        public WebViewWidgetViewModel(IPluginIdentifiers pluginIdentifiers, WebViewWidgetWindow window, IHtmlSource htmlSource, Action<IWebViewGrass>? widgetCallback, object? pluginExtensions, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public WebViewWidgetViewModel(IPluginIdentifiers pluginIdentifiers, WebViewWidgetWindow window, HtmlSourceBase htmlSource, Action<IWebViewGrass>? widgetCallback, object? pluginExtensions, EnvironmentParameters environmentParameters, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginIdentifiers = pluginIdentifiers;
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
         public IPluginIdentifiers PluginIdentifiers { get; }
         WebViewWidgetWindow WidgetWindow { get; }
-        IHtmlSource HtmlSource { get; }
+        HtmlSourceBase HtmlSource { get; }
         Action<IWebViewGrass>? WidgetCallback { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         }
 
 
-        void LoadHtmlSource(IHtmlSource htmlSource)
+        void LoadHtmlSource(HtmlSourceBase htmlSource)
         {
             Debug.Assert(WebView.IsLoaded);
 
@@ -114,13 +114,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
 
             switch(htmlSource.HtmlSourceKind) {
                 case HtmlSourceKind.Address: {
-                        var address = (IHtmlAddress)htmlSource;
+                        var address = (HtmlAddress)htmlSource;
                         WebView.Load(address.Address.ToString());
                     }
                     break;
 
                 case HtmlSourceKind.SourceCode: {
-                        var sourceCode = (IHtmlSourceCode)htmlSource;
+                        var sourceCode = (HtmlSourceCode)htmlSource;
                         if(sourceCode.BaseAddress == null) {
                             WebView.LoadHtml(sourceCode.SourceCode);
                         } else {

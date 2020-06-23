@@ -19,49 +19,33 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         SourceCode,
     }
 
-    public interface IHtmlSource
-    {
-        #region property
-
-        /// <summary>
-        /// 自身のHTMLソースの種別。
-        /// </summary>
-        HtmlSourceKind HtmlSourceKind { get; }
-
-        #endregion
-    }
-
-    /// <inheritdoc cref="IHtmlSource"/>
-    public abstract class HtmlSourceBase: IHtmlSource
+    /// <summary>
+    /// HTML 出生地。
+    /// </summary>
+    public abstract class HtmlSourceBase
     {
         #region IHtmlSource
 
-        /// <inheritdoc cref="IHtmlSource.HtmlSourceKind"/>
+        /// <summary>
+        /// HTMLソース種別。
+        /// </summary>
         public abstract HtmlSourceKind HtmlSourceKind { get; }
 
         #endregion
     }
 
-    public interface IHtmlAddress: IHtmlSource
-    {
-        #region proeprty
-
-        Uri Address { get; }
-
-        #endregion
-    }
-
-    /// <inheritdoc cref="IHtmlAddress"/>
-    public class HtmlAddress: HtmlSourceBase, IHtmlAddress
+    /// <summary>
+    /// HTML は URI から生まれる。
+    /// </summary>
+    public class HtmlAddress: HtmlSourceBase
     {
         public HtmlAddress(Uri address)
         {
             Address = address;
         }
 
-        #region IHtmlAddress
+        #region property
 
-        /// <inheritdoc cref="IHtmlAddress.Address"/>
         public Uri Address { get; }
 
         #endregion
@@ -74,18 +58,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
-    public interface IHtmlSourceCode: IHtmlSource
-    {
-        #region property
-
-        string SourceCode { get; }
-        Uri? BaseAddress { get; }
-
-        #endregion
-    }
-
-    /// <inheritdoc cref="IHtmlSourceCode"/>
-    public class HtmlSourceCode: HtmlSourceBase, IHtmlSourceCode
+    /// <summary>
+    /// HTML はコードから生まれる。
+    /// </summary>
+    public class HtmlSourceCode: HtmlSourceBase
     {
         public HtmlSourceCode(string sourceCode)
         {
@@ -98,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
             BaseAddress = baseAddress;
         }
 
-        #region IHtmlSourceCode
+        #region property
 
         /// <inheritdoc cref="IHtmlSourceCode.SourceCode"/>
         public string SourceCode { get; }

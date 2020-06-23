@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// 表示HTML。
         /// </summary>
-        IHtmlSource HtmlSource { get; }
+        HtmlSourceBase HtmlSource { get; }
 
         /// <summary>
         /// 生成ウィジェットのウィンドウスタイル。
@@ -142,12 +142,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// URI から生成。
         /// </summary>
         /// <param name="htmlAddress"></param>
-        public WebViewSeed(IHtmlAddress htmlAddress)
+        public WebViewSeed(HtmlAddress htmlAddress)
         {
             HtmlSource = htmlAddress;
         }
 
-        public WebViewSeed(IHtmlSourceCode htmlSourceCode)
+        public WebViewSeed(HtmlSourceCode htmlSourceCode)
         {
             HtmlSource = htmlSourceCode;
         }
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #region IWebViewSeed
 
         /// <inheritdoc cref="IWebViewSeed.HtmlSource"/>
-        public IHtmlSource HtmlSource { get; }
+        public HtmlSourceBase HtmlSource { get; }
 
         /// <inheritdoc cref="IWebViewSeed.WindowStyle"/>
         public WindowStyle WindowStyle { get; set; } = WindowStyle.SingleBorderWindow;
