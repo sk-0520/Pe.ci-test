@@ -117,9 +117,11 @@
                       <DataTemplate>
                         <TextBlock>
                           <Run Text="{Binding DisplayName, Mode=OneTime}" />
-                          <Run Text=" (" />
-                          <Run Text="{Binding Name, Mode=OneTime}" />
-                          <Run Text=")" />
+                          <TextBlock Opacity="0.7">
+                            <Run Text=" (" />
+                            <Run Text="{Binding Name, Mode=OneTime}" />
+                            <Run Text=")" />
+                          </TextBlock>
                         </TextBlock>
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
@@ -143,9 +145,11 @@
                       <DataTemplate>
                         <TextBlock>
                           <Run Text="{Binding Name, Mode=OneTime}" />
-                          <Run Text=" (" />
-                          <Run Text="{Binding Id, Mode=OneTime}" />
-                          <Run Text=")" />
+                          <TextBlock Opacity="0.7">
+                            <Run Text=" (" />
+                            <Run Text="{Binding Id, Mode=OneTime}" />
+                            <Run Text=")" />
+                          </TextBlock>
                         </TextBlock>
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
