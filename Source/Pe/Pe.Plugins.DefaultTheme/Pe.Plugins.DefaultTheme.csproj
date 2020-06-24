@@ -27,18 +27,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.8.0.18411">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Pe.Bridge\Source\Pe.Bridge\Pe.Bridge.csproj">
       <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
+    <ProjectReference Include="..\Pe.Core\Pe.Core.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>All</ExcludeAssets>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
