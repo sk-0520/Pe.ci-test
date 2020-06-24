@@ -5539,11 +5539,20 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プラグイン非読み込みのため詳細不明。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_Setting_NotLoaded {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Setting_NotLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   このプラグインに設定機能はありません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_Setting_Plugins_Item_Setting_NoSupport {
+        public static string String_Setting_Plugins_Item_Setting_NotSupported {
             get {
-                return ResourceManager.GetString("String_Setting_Plugins_Item_Setting_NoSupport", resourceCulture);
+                return ResourceManager.GetString("String_Setting_Plugins_Item_Setting_NotSupported", resourceCulture);
             }
         }
         

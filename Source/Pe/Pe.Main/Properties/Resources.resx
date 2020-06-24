@@ -2001,7 +2001,7 @@
   <data name="String_Setting_Plugins_Item_Setting_Header" xml:space="preserve">
     <value>プラグイン設定</value>
   </data>
-  <data name="String_Setting_Plugins_Item_Setting_NoSupport" xml:space="preserve">
+  <data name="String_Setting_Plugins_Item_Setting_NotSupported" xml:space="preserve">
     <value>このプラグインに設定機能はありません。</value>
   </data>
   <data name="String_Setting_Plugins_Item_SupportVersions_Format" xml:space="preserve">
@@ -2015,5 +2015,8 @@
   </data>
   <data name="String_Setting_Plugins_Item_NotLoaded_SupportVersions" xml:space="preserve">
     <value>プラグイン非読み込みのためサポートバージョン不明</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Setting_NotLoaded" xml:space="preserve">
+    <value>プラグイン非読み込みのため詳細不明。</value>
   </data>
 </root>

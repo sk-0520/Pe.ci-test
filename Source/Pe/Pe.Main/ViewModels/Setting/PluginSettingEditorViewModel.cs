@@ -63,6 +63,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public bool HasSettingControl => Model.SupportedPreferences;
 
+        public bool IsLoadedPlugin => Model.Plugin != null;
+
         public UserControl? SettingControl
         {
             get

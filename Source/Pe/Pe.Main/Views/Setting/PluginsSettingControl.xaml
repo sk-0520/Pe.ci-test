@@ -90,13 +90,26 @@
             <GroupBox Padding="{StaticResource BasePadding}" Header="{Binding Resources.String_Setting_Plugins_Item_Setting_Header, Source={x:Static app_main:CultureService.Instance}}" Content="{Binding SettingControl}" />
           </ScrollViewer>
 
-          <TextBlock TextAlignment="Center" Margin="{StaticResource AllMargin}" Text="{Binding Resources.String_Setting_Plugins_Item_Setting_NoSupport, Source={x:Static app_main:CultureService.Instance}}">
+          <TextBlock TextAlignment="Center" Margin="{StaticResource AllMargin}">
             <TextBlock.Style>
               <Style TargetType="TextBlock">
                 <Style.Triggers>
-                  <DataTrigger Binding="{Binding HasSettingControl}" Value="False" >
+                  <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                      <Condition Binding="{Binding IsLoadedPlugin}" Value="True" />
+                      <Condition Binding="{Binding HasSettingControl}" Value="False" />
+                    </MultiDataTrigger.Conditions>
                     <Setter Property="Visibility" Value="Visible" />
-                  </DataTrigger>
+                    <Setter Property="Text" Value="{Binding Resources.String_Setting_Plugins_Item_Setting_NotSupported, Source={x:Static app_main:CultureService.Instance}}" />
+                  </MultiDataTrigger>
+                  <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                      <Condition Binding="{Binding IsLoadedPlugin}" Value="False" />
+                      <Condition Binding="{Binding HasSettingControl}" Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Setter Property="Text" Value="{Binding Resources.String_Setting_Plugins_Item_Setting_NotLoaded, Source={x:Static app_main:CultureService.Instance}}" />
+                  </MultiDataTrigger>
                 </Style.Triggers>
                 <Setter Property="Visibility" Value="Collapsed" />
               </Style>
