@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
     /// テーマ一覧。。。
     /// <para>一覧が必要かと問われるとなんも言えねぇ。</para>
     /// </summary>
-    internal class ThemeContainer
+    internal class ThemeContainer: PluginContainerBase
     {
         #region variable
 
@@ -181,5 +181,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         }
 
         #endregion
+
+        #region PluginContainerBase
+
+        /// <inheritdoc cref="PluginContainerBase.Plugins"/>
+        public override IEnumerable<IPlugin> Plugins => Themes;
+
+        #endregion
+
     }
 }

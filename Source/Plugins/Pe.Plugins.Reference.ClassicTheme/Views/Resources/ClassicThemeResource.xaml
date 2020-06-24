@@ -3,12 +3,12 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicTheme.xaml" />
-    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicPathResource.xaml" />
-    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicLauncherToolbarTheme.xaml" />
-    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicNoteTheme.xaml" />
-    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicCommandTheme.xaml" />
-    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.ClassicTheme;component/Views/Resources/ClassicNotifyLogTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.Reference.ClassicTheme;component/Views/Resources/ClassicTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.Reference.ClassicTheme;component/Views/Resources/ClassicPathResource.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.Reference.ClassicTheme;component/Views/Resources/ClassicLauncherToolbarTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.Reference.ClassicTheme;component/Views/Resources/ClassicNoteTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.Reference.ClassicTheme;component/Views/Resources/ClassicCommandTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.Reference.ClassicTheme;component/Views/Resources/ClassicNotifyLogTheme.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -19,6 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public string UserBackupDirectoryPath { get; set; } = string.Empty;
 
+        public Guid ThemePluginId { get; set; }
+
         #endregion
     }
 

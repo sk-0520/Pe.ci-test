@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public SettingContainerElement(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
-            GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>();
+            GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>(ServiceLocator.Build<PluginContainer>().Theme.Plugins.ToList());
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorElement(AllLauncherItems, ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<IFileDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
             LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);

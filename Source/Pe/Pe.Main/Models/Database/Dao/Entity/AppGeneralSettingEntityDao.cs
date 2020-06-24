@@ -17,6 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region property
         public string Language { get; set; } = string.Empty;
         public string UserBackupDirectoryPath { get; set; } = string.Empty;
+        public Guid ThemePluginId { get; set; }
         #endregion
     }
 
@@ -47,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var result = new SettingAppGeneralSettingData() {
                 Language = dto.Language,
                 UserBackupDirectoryPath = dto.UserBackupDirectoryPath,
+                ThemePluginId = dto.ThemePluginId,
             };
             return result;
         }
@@ -75,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var dto = new AppGeneralSettingEntityDto() {
                 Language = data.Language,
                 UserBackupDirectoryPath = data.UserBackupDirectoryPath,
+                ThemePluginId = data.ThemePluginId,
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;

@@ -4666,6 +4666,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   テーマ(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_General_Theme_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_General_Theme_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ユーザーバックアップ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Generals_General_UserBackupDirectory_A {

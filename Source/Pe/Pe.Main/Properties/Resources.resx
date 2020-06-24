@@ -2010,4 +2010,7 @@
   <data name="String_Setting_Plugins_Item_SupportVersion_Unlimited" xml:space="preserve">
     <value>制限なし</value>
   </data>
+  <data name="String_Setting_Generals_General_Theme_A" xml:space="preserve">
+    <value>テーマ(_T)</value>
+  </data>
 </root>

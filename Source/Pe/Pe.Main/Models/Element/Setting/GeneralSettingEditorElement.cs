@@ -6,6 +6,8 @@ using System.IO;
 using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -15,11 +17,12 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public abstract class GeneralSettingEditorElementBase : ElementBase
+    public abstract class GeneralSettingEditorElementBase: ElementBase
     {
         protected GeneralSettingEditorElementBase(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -48,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
-    public class AppExecuteSettingEditorElement : GeneralSettingEditorElementBase
+    public class AppExecuteSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppExecuteSettingEditorElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -73,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 // パラメータを渡せないのでしゃあない
                 var systemExecutor = new SystemExecutor();
                 systemExecutor.ExecuteFile(EnvironmentParameters.HelpFile.FullName);
-            } catch (Exception ex) {
+            } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
             }
         }
@@ -113,17 +116,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     }
 
 
-    public class AppGeneralSettingEditorElement : GeneralSettingEditorElementBase
+    public class AppGeneralSettingEditorElement: GeneralSettingEditorElementBase
     {
-        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public AppGeneralSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IReadOnlyList<IPlugin> themePlugins, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
-        { }
+        {
+            ThemePlugins = themePlugins;
+        }
 
         #region property
 
+        public IReadOnlyList<IPlugin> ThemePlugins { get; }
+
         public CultureInfo CultureInfo { get; set; } = CultureInfo.CurrentCulture;
         public string UserBackupDirectoryPath { get; set; } = string.Empty;
-
+        public Guid ThemePluginId { get; set; }
 
         public bool IsRegisterStartup { get; set; }
         public bool DelayStartup { get; set; }
@@ -149,6 +156,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             CultureInfo = CultureInfo.GetCultureInfo(setting.Language);
 
             UserBackupDirectoryPath = setting.UserBackupDirectoryPath;
+            ThemePluginId = setting.ThemePluginId;
 
             // スタートアップ取得
             var startupRegister = new StartupRegister(LoggerFactory);
@@ -173,6 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             var data = new SettingAppGeneralSettingData() {
                 Language = CultureInfo.Name,
                 UserBackupDirectoryPath = UserBackupDirectoryPath,
+                ThemePluginId = ThemePluginId,
             };
             appGeneralSettingEntityDao.UpdateSettingGeneralSetting(data, commandPack.CommonStatus);
 
@@ -193,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     }
 
 
-    public class AppUpdateSettingEditorElement : GeneralSettingEditorElementBase
+    public class AppUpdateSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppUpdateSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -233,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
-    public class AppNotifyLogSettingEditorElement : GeneralSettingEditorElementBase
+    public class AppNotifyLogSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppNotifyLogSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -319,7 +328,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     }
 
 
-    public class AppCommandSettingEditorElement : GeneralSettingEditorElementBase
+    public class AppCommandSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppCommandSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -393,7 +402,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
 
 
-    public class AppNoteSettingEditorElement : GeneralSettingEditorElementBase
+    public class AppNoteSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppNoteSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -469,7 +478,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
 
 
-    public class AppStandardInputOutputSettingEditorElement : GeneralSettingEditorElementBase
+    public class AppStandardInputOutputSettingEditorElement: GeneralSettingEditorElementBase
     {
         public AppStandardInputOutputSettingEditorElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)

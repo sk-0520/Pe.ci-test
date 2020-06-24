@@ -19,7 +19,20 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    internal class PluginContainer
+    internal abstract class PluginContainerBase
+    {
+        #region function
+
+        /// <summary>
+        /// コンテナの保持しているプラグイン一覧。
+        /// </summary>
+        /// <returns></returns>
+        public abstract IEnumerable<IPlugin> Plugins { get; }
+
+        #endregion
+    }
+
+    internal class PluginContainer: PluginContainerBase
     {
         public PluginContainer(AddonContainer addonContainer, ThemeContainer themeContainer, EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
@@ -36,11 +49,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         ILoggerFactory LoggerFactory { get; }
         EnvironmentParameters EnvironmentParameters { get; }
         HashSet<IPlugin> PluginsImpl { get; } = new HashSet<IPlugin>();
-        /// <summary>
-        /// プラグイン一覧。
-        /// </summary>
-        public IReadOnlyCollection<IPlugin> Plugins => PluginsImpl;
-
         /// <summary>
         /// アドオン用コンテナ。
         /// </summary>
@@ -233,6 +241,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 Addon.Add(addon);
             }
         }
+
+        #endregion
+
+        #region PluginContainerBase
+
+        /// <inheritdoc cref="PluginContainerBase.Plugins"/>
+        public override IEnumerable<IPlugin> Plugins => PluginsImpl;
+
 
         #endregion
     }

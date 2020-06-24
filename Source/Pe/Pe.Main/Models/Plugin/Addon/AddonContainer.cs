@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// <summary>
     /// アドオン用コンテナ。
     /// </summary>
-    internal class AddonContainer
+    internal class AddonContainer: PluginContainerBase
     {
         #region variable
 
@@ -118,5 +118,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
         #endregion
+
+        #region PluginContainerBase
+
+        /// <inheritdoc cref="PluginContainerBase.Plugins"/>
+        public override IEnumerable<IPlugin> Plugins => Addons;
+
+        #endregion
+
     }
 }
