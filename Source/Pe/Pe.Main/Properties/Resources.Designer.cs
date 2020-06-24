@@ -5521,6 +5521,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   プラグイン非読み込みのためサポートバージョン不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_NotLoaded_SupportVersions {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_NotLoaded_SupportVersions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   プラグイン非読み込みのためバージョン不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Plugins_Item_NotLoaded_Version {
+            get {
+                return ResourceManager.GetString("String_Setting_Plugins_Item_NotLoaded_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   プラグイン設定 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Setting_Plugins_Item_Setting_Header {

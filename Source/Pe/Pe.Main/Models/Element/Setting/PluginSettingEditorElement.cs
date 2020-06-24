@@ -19,9 +19,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPluginId
     {
-        internal PluginSettingEditorElement(IPlugin plugin, PreferencesContextFactory preferencesContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            PluginState = pluginState;
             Plugin = plugin;
             PreferencesContextFactory = preferencesContextFactory;
             UserAgentFactory = userAgentFactory;
@@ -38,7 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region property
 
-        public IPlugin Plugin { get; }
+        public PluginStateData PluginState { get; }
+        public IPlugin? Plugin { get; }
 
         PreferencesContextFactory PreferencesContextFactory { get; }
         IUserAgentFactory UserAgentFactory { get; }
@@ -61,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             Debug.Assert(Preferences != null);
             Debug.Assert(!StartedPreferences);
+            Debug.Assert(Plugin != null);
 
             UserControl result;
             using(var reader = PreferencesContextFactory.BarrierRead()) {
@@ -80,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
+            Debug.Assert(Plugin != null);
 
             bool hasError;
             using(var reader = PreferencesContextFactory.BarrierRead()) {
@@ -97,6 +101,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
+            Debug.Assert(Plugin != null);
 
             using var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
             Preferences.SavePreferences(context);
@@ -109,6 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
             Debug.Assert(Preferences != null);
             Debug.Assert(StartedPreferences);
+            Debug.Assert(Plugin != null);
 
             // NOTE: 多分ここじゃなくて別んところで呼び出すべき
 
@@ -129,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region IPLuginId
 
-        public Guid PluginId => Plugin.PluginInformations.PluginIdentifiers.PluginId;
+        public Guid PluginId => PluginState.PluginId;
 
         #endregion
     }

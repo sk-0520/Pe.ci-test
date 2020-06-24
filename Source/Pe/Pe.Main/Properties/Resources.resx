@@ -2013,4 +2013,10 @@
   <data name="String_Setting_Generals_General_Theme_A" xml:space="preserve">
     <value>テーマ(_T)</value>
   </data>
+  <data name="String_Setting_Plugins_Item_NotLoaded_SupportVersions" xml:space="preserve">
+    <value>プラグイン非読み込みのためサポートバージョン不明</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_NotLoaded_Version" xml:space="preserve">
+    <value>プラグイン非読み込みのためバージョン不明</value>
+  </data>
 </root>

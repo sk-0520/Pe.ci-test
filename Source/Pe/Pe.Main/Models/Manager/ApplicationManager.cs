@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
                     if(element.SupportedPreferences && element.StartedPreferences) {
-                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.Plugin.PluginInformations.PluginIdentifiers.PluginName, element.Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.PluginState.Name, element.PluginState.PluginId);
                         element.EndPreferences();
                     }
                 }

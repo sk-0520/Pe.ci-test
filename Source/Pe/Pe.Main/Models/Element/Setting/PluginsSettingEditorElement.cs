@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Management;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -8,11 +9,13 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
+using ContentTypeTextNet.Pe.Plugins.DefaultTheme;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -49,11 +52,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void LoadImpl()
         {
-            //var p = new PluginLoadContext
-            //throw new NotImplementedException();
-            foreach(var plugin in PluginContainer.Plugins) {
-                var element = new PluginSettingEditorElement(plugin, PreferencesContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
-                element.Initialize(); // 無意味だけど呼び出し
+            var pluginStates = MainDatabaseBarrier.ReadData(c => {
+                var pluginsEntityDao = new PluginsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                return pluginsEntityDao.SelectePlguinStateData().ToList();
+            });
+
+            // 標準テーマがなければ追加
+            if(!pluginStates.Any(i => i.PluginId == DefaultTheme.Informations.PluginIdentifiers.PluginId)) {
+                pluginStates.Insert(0, new Data.PluginStateData() {
+                    Name = DefaultTheme.Informations.PluginIdentifiers.PluginName,
+                    PluginId = DefaultTheme.Informations.PluginIdentifiers.PluginId,
+                    State = Data.PluginState.Enable,
+                });
+            }
+
+            foreach(var pluginState in pluginStates) {
+                var plugin = PluginContainer.Plugins.FirstOrDefault(i => pluginState.PluginId == i.PluginInformations.PluginIdentifiers.PluginId);
+                var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                element.Initialize();
                 PluginItemsImpl.Add(element);
             }
         }
