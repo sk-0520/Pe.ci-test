@@ -338,6 +338,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 EndPreferences(settingElement, Logger);
 
+                ApplyThemeSetting();
                 RebuildHook();
                 ExecuteElements();
 
@@ -788,6 +789,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
         }
+
+        private void ApplyThemeSetting()
+        {
+            var themePluginId = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
+                var appGeneralSettingEntityDao = ApplicationDiContainer.Build<AppGeneralSettingEntityDao>(c, c.Implementation);
+                try {
+                    return appGeneralSettingEntityDao.SelectThemePluginId();
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, "テーマプラグインID取得失敗のため標準テーマを使用");
+                    return DefaultTheme.Informations.PluginIdentifiers.PluginId;
+                }
+            });
+            ApplyCurrentTheme(themePluginId);
+        }
+
         private void ApplyCurrentTheme(Guid themePluginId)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
@@ -959,16 +975,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MakeMessageWindow();
 
             LoadPlugins();
-            var themePluginId = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
-                var appGeneralSettingEntityDao = ApplicationDiContainer.Build<AppGeneralSettingEntityDao>(c, c.Implementation);
-                try {
-                    return appGeneralSettingEntityDao.SelectThemePluginId();
-                } catch(Exception ex) {
-                    Logger.LogWarning(ex, "テーマプラグインID取得失敗のため標準テーマを使用");
-                    return DefaultTheme.Informations.PluginIdentifiers.PluginId;
-                }
-            });
-            ApplyCurrentTheme(themePluginId);
+            ApplyThemeSetting();
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");
