@@ -88,6 +88,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
+        public Version SelectLastUsePluginVersion(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId
+            };
+            return Commander.QueryFirstOrDefault<Version>(statement, parameter);
+        }
+
         public bool SelecteExistsPlugin(Guid pluginId)
         {
             var statement = LoadStatement();

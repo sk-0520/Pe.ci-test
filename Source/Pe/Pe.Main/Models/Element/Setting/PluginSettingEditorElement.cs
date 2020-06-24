@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
@@ -19,12 +20,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPluginId
     {
-        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginState = pluginState;
             Plugin = plugin;
             PreferencesContextFactory = preferencesContextFactory;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            DatabaseStatementLoader = databaseStatementLoader;
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
             DispatcherWrapper = dispatcherWrapper;
@@ -43,6 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public IPlugin? Plugin { get; }
 
         PreferencesContextFactory PreferencesContextFactory { get; }
+        IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -51,6 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         IPreferences? Preferences { get; }
 
         public bool StartedPreferences { get; private set; }
+
+        public Version PluginVersion { get; private set; } = new Version();
 
         #endregion
 
@@ -129,7 +136,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region ElementBase
 
         protected override void InitializeImpl()
-        { }
+        {
+            if(Plugin != null) {
+                PluginVersion = Plugin.PluginInformations.PluginVersions.PluginVersion;
+            } else {
+                var pluginVersion = MainDatabaseBarrier.ReadData(c => {
+                    var pluginsEntityDao = new PluginsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                    return pluginsEntityDao.SelectLastUsePluginVersion(PluginId);
+                });
+                if(pluginVersion != null) {
+                    PluginVersion = pluginVersion;
+                }
+            }
+        }
 
         #endregion
 

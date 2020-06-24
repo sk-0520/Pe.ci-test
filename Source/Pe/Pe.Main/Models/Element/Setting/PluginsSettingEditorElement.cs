@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             foreach(var pluginState in pluginStates) {
                 var plugin = PluginContainer.Plugins.FirstOrDefault(i => pluginState.PluginId == i.PluginInformations.PluginIdentifiers.PluginId);
-                var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                var element = new PluginSettingEditorElement(pluginState, plugin, PreferencesContextFactory, MainDatabaseBarrier, DatabaseStatementLoader, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
                 element.Initialize();
                 PluginItemsImpl.Add(element);
             }

@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public string PluginName => Model.PluginState.Name;
-        public string PluginVersion => Model.Plugin?.PluginInformations.PluginVersions.PluginVersion.ToString() ?? Properties.Resources.String_Setting_Plugins_Item_NotLoaded_Version;
+        public string PluginVersion => Model.PluginVersion.ToString();
         public Guid PluginId => Model.PluginId;
         public string? PrimaryCategory => Model.Plugin?.PluginInformations.PluginCategory.PluginPrimaryCategory;
         public IReadOnlyList<string> SecondaryCategories => Model.Plugin?.PluginInformations.PluginCategory.PluginSecondaryCategories ?? new List<string>();
