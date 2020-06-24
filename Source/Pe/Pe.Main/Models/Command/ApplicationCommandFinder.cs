@@ -15,9 +15,11 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 using NLog.Fluent;
 
@@ -227,15 +229,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             IsInitialize = true;
         }
 
-        public void Refresh()
+        public void Refresh(IPluginContext pluginContext)
         {
+            Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
+
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }
         }
 
 
-        public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
@@ -259,14 +263,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             foreach(var parameter in Parameters) {
                 var parameterMatches = hitValuesCreator.GetMatches(parameter.Header, inputRegex);
                 if(parameterMatches.Any()) {
-                    var ranges = hitValuesCreator.ConvertRanges(inputValue, parameterMatches);
-                    var hitValue = hitValuesCreator.ConvertHitValues(inputValue, parameter.Header, ranges);
+                    var ranges = hitValuesCreator.ConvertRanges(parameterMatches);
+                    var hitValue = hitValuesCreator.ConvertHitValues(parameter.Header, ranges);
 
                     var element = new ApplicationCommandItemElement(parameter, DispatcherWrapper, LoggerFactory);
                     element.Initialize();
 
                     element.EditableHeaderValues.SetRange(hitValue);
-                    element.EditableScore = hitValuesCreator.CalcScore(inputValue, parameter.Header, element.EditableHeaderValues);
+                    element.EditableScore = hitValuesCreator.CalcScore(parameter.Header, element.EditableHeaderValues);
                     yield return element;
                 }
             }

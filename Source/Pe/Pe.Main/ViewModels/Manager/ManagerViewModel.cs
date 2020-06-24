@@ -5,7 +5,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -14,11 +16,13 @@ using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
+using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.ViewModels.Note;
+using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
@@ -31,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         bool _isOpenNoteMenu;
         bool _isOpenSystemMenu;
+        bool _isOpenWidgetsMenu;
         bool _isOpenContextMenu;
         bool _isEnabledManager = true;
 
@@ -44,6 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
             LauncherToolbarCollection = ApplicationManager.GetLauncherNotifyCollection();
             LauncherToolbarItems = LauncherToolbarCollection.ViewModels;
+
+            WidgetCollection = ApplicationManager.GetWidgetCollection();
+            WidgetItems = WidgetCollection.GetDefaultView();
 
             NoteCollection = ApplicationManager.GetNoteCollection();
             NoteVisibleItems = NoteCollection.CreateView();
@@ -86,6 +94,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public ICollectionView NoteVisibleItems { get; }
         public ICollectionView NoteHiddenItems { get; }
 
+        ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
+        public ICollectionView WidgetItems { get; }
+
         #endregion
 
         #region システム
@@ -110,6 +121,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #endregion
 
+        #region ウィジェット
+
+        public bool HasWidgetsMenu => 0 < WidgetCollection.Count;
+
+        public bool IsOpenWidgetsMenu
+        {
+            get => this._isOpenWidgetsMenu;
+            set
+            {
+                SetProperty(ref this._isOpenWidgetsMenu, value);
+                if(IsOpenWidgetsMenu) {
+                    WidgetItems.Refresh();
+                }
+            }
+        }
+
+        #endregion
 
         public bool IsEnabledManager
         {

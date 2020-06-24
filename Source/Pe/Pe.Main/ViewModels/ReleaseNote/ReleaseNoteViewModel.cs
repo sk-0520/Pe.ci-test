@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
 
         //PropertyChangedHooker PropertyChangedHooker { get; }
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Release => Model?.UpdateItem.Release ?? DateTime.UtcNow;
         public Version Version => Model?.UpdateItem.Version ?? new Version();
         public string Revision => Model?.UpdateItem.Revision ?? string.Empty;

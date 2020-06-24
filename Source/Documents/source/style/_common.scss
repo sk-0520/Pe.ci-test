@@ -38,7 +38,7 @@ aside.tips, aside.warning, aside.bugs, aside.ref {
 	border-bottom: 1px solid;
 }
 
-aside.tips aside.title, aside.warning em.title, aside.bug em.title, aside.ref em.title {
+aside.tips aside.title, aside.warning em.title, aside.bugs em.title, aside.ref em.title {
 		display: block;
 		font-style: normal;
 		margin-bottom: 0.7ex;
@@ -54,7 +54,7 @@ aside.tips aside.title, aside.warning em.title, aside.bug em.title, aside.ref em
 		background: #fef;
 	}
 
-	aside.bug {
+	aside.bugs {
 		border-color: #f88;
 		background: #fee;
 	}

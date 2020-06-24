@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region property
 
         public Action<IDatabaseTransaction> Action { get; }
-        [Timestamp(DateTimeKind.Unspecified)]
+        [DateTimeKind(DateTimeKind.Unspecified)]
         public DateTime StockTimestamp { get; } = DateTime.UtcNow;
 
         #endregion

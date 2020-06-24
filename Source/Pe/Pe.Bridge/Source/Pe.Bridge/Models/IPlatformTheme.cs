@@ -5,12 +5,24 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models
 {
+    /// <summary>
+    /// OS テーマ種別。
+    /// </summary>
     public enum PlatformThemeKind
     {
+        /// <summary>
+        /// 黒。
+        /// </summary>
         Dark,
+        /// <summary>
+        /// 白。
+        /// </summary>
         Light,
     }
 
+    /// <summary>
+    /// OS テーマ色の集合。
+    /// </summary>
     public readonly struct PlatformThemeColors
     {
         public PlatformThemeColors(Color background, Color foreground, Color control, Color border)
@@ -23,14 +35,29 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
 
         #region property
 
+        /// <summary>
+        /// 背景色。
+        /// </summary>
         public Color Background { get; }
+        /// <summary>
+        /// 前景色。
+        /// </summary>
         public Color Foreground { get; }
+        /// <summary>
+        /// コントロール基本色。
+        /// </summary>
         public Color Control { get; }
+        /// <summary>
+        /// 境界線。
+        /// </summary>
         public Color Border { get; }
 
         #endregion
     }
 
+    /// <summary>
+    /// アクセントカラー。
+    /// </summary>
     public readonly struct PlatformAccentColors
     {
         public PlatformAccentColors(Color accent, Color baseColor, Color highlight, Color active, Color disable)

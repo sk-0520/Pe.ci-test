@@ -18,7 +18,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class SettingContainerViewModel : ElementViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
+    public class SettingContainerViewModel: ElementViewModelBase<SettingContainerElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -26,24 +26,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public SettingContainerViewModel(SettingContainerElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, ILauncherGroupTheme launcherGroupTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public SettingContainerViewModel(SettingContainerElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             GeneralTheme = generalTheme;
-            LauncherGroupTheme = launcherGroupTheme;
 
             AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
             };
             AllLauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.AllLauncherGroups) {
-                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, LauncherGroupTheme, DispatcherWrapper, LoggerFactory),
+                ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory),
             };
 
             GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, configuration, generalTheme, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
-            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, AllLauncherGroupCollection, launcherGroupTheme, DispatcherWrapper, LoggerFactory);
+            LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, AllLauncherGroupCollection, DispatcherWrapper, LoggerFactory);
             LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, AllLauncherGroupCollection, generalTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
+            PluginsSettingEditor = new PluginsSettingEditorViewModel(Model.PluginsSettingEditor, DispatcherWrapper, LoggerFactory);
 
             EditorItems = new List<ISettingEditorViewModel>() {
                 GeneralSettingEditor,
@@ -51,15 +51,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 LauncherGroupsSettingEditor,
                 LauncherToobarsSettingEditor,
                 KeyboardSettingEditor,
+                PluginsSettingEditor,
             };
+#if DEBUG
+            this._selectedEditor = PluginsSettingEditor;
+#else
             this._selectedEditor = GeneralSettingEditor;
-            //this._selectedEditor = KeyboardSettingEditor;
+#endif
         }
 
         #region property
 
         IGeneralTheme GeneralTheme { get; }
-        ILauncherGroupTheme LauncherGroupTheme { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();
 
@@ -90,6 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public LauncherGroupsSettingEditorViewModel LauncherGroupsSettingEditor { get; }
         public LauncherToobarsSettingEditorViewModel LauncherToobarsSettingEditor { get; }
         public KeyboardSettingEditorViewModel KeyboardSettingEditor { get; }
+        public PluginsSettingEditorViewModel PluginsSettingEditor { get; }
         #endregion
 
         #region command

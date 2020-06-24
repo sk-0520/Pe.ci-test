@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 using Prism.Commands;
@@ -109,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             : this(content, DateTime.UtcNow)
         { }
 
-        public NotifyLogContent(string content, [Timestamp(DateTimeKind.Utc)] DateTime timestamp)
+        public NotifyLogContent(string content, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
         {
             Message = content;
             Timestamp = timestamp;
@@ -118,7 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region IReadOnlyNotifyLogContent
 
         public string Message { get; }
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Timestamp { get; }
 
         #endregion

@@ -102,6 +102,9 @@
     <app_core_views:RequestTrigger SourceObject="{Binding ScrollSelectedItemRequest}">
       <prism:InvokeCommandAction Command="{Binding ScrollSelectedItemCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding FocusEndRequest}">
+      <prism:InvokeCommandAction Command="{Binding FocusEndCommand, ElementName=root}" />
+    </app_core_views:RequestTrigger>
     <i:EventTrigger EventName="Activated">
       <i:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
     </i:EventTrigger>
@@ -165,8 +168,8 @@
                 <DataTrigger Binding="{Binding InputState}" Value="Finding">
                   <Setter Property="BorderBrush" Value="{Binding InputFindingBorderBrush}" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding InputState}" Value="Listup">
-                  <Setter Property="BorderBrush" Value="{Binding InputListupBorderBrush}" />
+                <DataTrigger Binding="{Binding InputState}" Value="Complete">
+                  <Setter Property="BorderBrush" Value="{Binding InputCompleteBorderBrush}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding InputState}" Value="NotFound">
                   <Setter Property="BorderBrush" Value="{Binding InputNotFoundBorderBrush}" />
@@ -191,6 +194,8 @@
               <KeyBinding Gesture="Esc" Command="{Binding HideCommand}" />
               <KeyBinding Gesture="Up" Command="{Binding UpSelectItemCommand}" />
               <KeyBinding Gesture="Down" Command="{Binding DownSelectItemCommand}" />
+              <KeyBinding Gesture="Right" Modifiers="Ctrl" Command="{Binding EnterSelectedItemCommand}" />
+              <KeyBinding Gesture="Tab" Command="{Binding EnterSelectedItemCommand}" />
             </TextBox.InputBindings>
 
             <TextBox.Style>
@@ -200,9 +205,9 @@
                     <Setter Property="Background" Value="{Binding InputEmptyBackground}" />
                     <Setter Property="Foreground" Value="{Binding InputEmptyForeground}" />
                   </DataTrigger>
-                  <DataTrigger Binding="{Binding InputState}" Value="Listup">
-                    <Setter Property="Background" Value="{Binding InputListupBackground}" />
-                    <Setter Property="Foreground" Value="{Binding InputListupForeground}" />
+                  <DataTrigger Binding="{Binding InputState}" Value="Complete">
+                    <Setter Property="Background" Value="{Binding InputCompleteBackground}" />
+                    <Setter Property="Foreground" Value="{Binding InputCompleteForeground}" />
                   </DataTrigger>
                   <DataTrigger Binding="{Binding InputState}" Value="NotFound">
                     <Setter Property="Background" Value="{Binding InputNotFoundBackground}" />
@@ -308,6 +313,7 @@
                 <VirtualizingStackPanel
                   VirtualizingStackPanel.IsVirtualizing="True"
                   VirtualizingStackPanel.VirtualizationMode="Recycling"
+                  ScrollUnit="Item"
                 />
               </ItemsPanelTemplate>
             </ListBox.ItemsPanel>

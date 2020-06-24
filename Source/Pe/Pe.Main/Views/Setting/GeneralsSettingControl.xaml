@@ -117,10 +117,41 @@
                       <DataTemplate>
                         <TextBlock>
                           <Run Text="{Binding DisplayName, Mode=OneTime}" />
-                          <Run Text=" (" />
-                          <Run Text="{Binding Name, Mode=OneTime}" />
-                          <Run Text=")" />
+                          <TextBlock Opacity="0.7">
+                            <Run Text=" (" />
+                            <Run Text="{Binding Name, Mode=OneTime}" />
+                            <Run Text=")" />
+                          </TextBlock>
                         </TextBlock>
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Style="{StaticResource LabelDefinition}" />
+                    <ColumnDefinition Style="{StaticResource ContentDefinition}" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Setting_Generals_General_Theme_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <ComboBox Grid.Column="1" Style="{StaticResource Vertical-ComboBox}" ItemsSource="{Binding ThemePluginItems}" SelectedValuePath="Id" SelectedValue="{Binding ThemePluginId}">
+                    <ComboBox.ItemsPanel>
+                      <ItemsPanelTemplate>
+                        <VirtualizingStackPanel ScrollUnit="Item" />
+                      </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                          <ContentControl Style="{StaticResource Image-Small}" Margin="{StaticResource ImageLabel-Small-Margin}" Content="{Binding PluginIcon}" />
+                          <TextBlock Text="{Binding Name, Mode=OneTime}" />
+                          <TextBlock Opacity="0.7">
+                            <Run Text=" (" />
+                            <Run Text="{Binding Id, Mode=OneTime}" />
+                            <Run Text=")" />
+                          </TextBlock>
+                        </StackPanel>
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>

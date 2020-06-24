@@ -89,6 +89,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
             }
         ));
 
+        public ICommand FocusEndCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+            () => {
+                this.inputCommand.Select(this.inputCommand.Text.Length, 0);
+            }
+        ));
+
         #endregion
 
         #region Window

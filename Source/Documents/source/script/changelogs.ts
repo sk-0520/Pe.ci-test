@@ -2,7 +2,7 @@ declare function makeChangelogLink(): void;
 
 const changelogs = [
 	/*
-						"class": "compatibility" "notice" "nuget" "myget"
+						"class": "compatibility" "notice" "nuget" "myget" "plugin-compatibility"
 						"comments": [
 							""
 						]
@@ -117,7 +117,11 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#509: プラグイン機構の構築",
+						"comments": [
+							"まだまだ甘いし達成できてない目標もあるけど実運用しながら機能拡張できるようにしていきたいのでリリース",
+							"ドキュメントもまだ全然かけてないのでソースが正。んで頻繁に互換性が失われる想定"
+						]
 					},
 					{
 						"revision": "",

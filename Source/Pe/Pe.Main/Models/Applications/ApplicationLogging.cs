@@ -129,13 +129,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public LoggerFactory Factory { get; }
 
+        bool ReceivePausing { get; set; } = false;
+
+
         #endregion
 
         #region function
 
         public void ReceiveLog(LogEventInfo logEventInfo, object[] parameters)
         {
+            if(ReceivePausing) {
+                return;
+            }
+
             LogItems.Enqueue(logEventInfo);
+        }
+
+        internal IDisposable PauseReceiveLog()
+        {
+            ReceivePausing = true;
+            return new ActionDisposer(d => ReceivePausing = false);
         }
 
         public IReadOnlyList<LogEventInfo> GetLogItems() => LogItems.ToArray();

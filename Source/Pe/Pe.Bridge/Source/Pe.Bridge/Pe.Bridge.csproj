@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Platforms>x64;x86</Platforms>
+    <Platforms>x64;x86;x64</Platforms>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <LangVersion>8.0</LangVersion>
@@ -11,6 +11,7 @@
     <RootNamespace>ContentTypeTextNet.Pe.Bridge</RootNamespace>
     <Copyright>Copyright © 2019-@YYYY@ @NAME@ &lt;@SITE@&gt;</Copyright>
     <Configurations>Debug;Release;Debug-DisabledAnalyzers</Configurations>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

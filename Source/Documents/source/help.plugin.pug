@@ -1,0 +1,33 @@
+extends template/_layout.pug
+
+block BLOCK_LAYOUT_VAR
+	- var VAR_LAYOUT_TITLE = 'プラグイン'
+
+block BLOCK_LAYOUT_CONTENT
+	aside.warning
+		p プラグインは Pe の実行権限で実行されます。
+		p インストールされたプラグインが悪意ある処理を実行した場合に Pe 側で防御する術はありません。
+
+	section
+		h2 プラグイン機能
+		p プラグイン機能により Pe の機能拡張を行えます。
+			| 実装については
+			a(href="dev.plugin.pug") 開発用資料
+			| を確認してください
+	
+	section
+		h2 インストール方法
+		p プラグインを指定ディレクトリに配置することにより(多分)活性化します。
+		p 基本の配置先は
+			em.dir %LOCALAPPDATA%\Pe\plugin\modules
+			| で、
+			em.dir プラグインディレクトリ名
+			| として配置します。
+		p PLUGIN.dll というプラグインがあれば、
+			samp 
+				em.dir %LOCALAPPDATA%\Pe\plugin\modules\PLUGIN\PLUGIN.dll
+			| として配置します。
+
+		aside.bugs
+			p 今んとこ動けばいいや実装なのでアンインストール・自動アップデートなどの補助は Pe から実施しません、というか未実装。
+

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -22,10 +23,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         IReadOnlyNotifyLogContent Content { get; }
 
         public string Message => Content.Message;
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Timestamp => Content.Timestamp;
 
-        [Timestamp(DateTimeKind.Local)]
+        [DateTimeKind(DateTimeKind.Local)]
         public DateTime LocalTimestamp => Content.Timestamp.ToLocalTime();
 
         #endregion

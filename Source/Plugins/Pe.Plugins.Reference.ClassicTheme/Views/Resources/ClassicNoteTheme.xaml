@@ -1,0 +1,45 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+
+  <BlurEffect
+    x:Key="ClassicTheme.GetBlindEffect"
+    Radius="10"
+    RenderingBias="Performance"
+  />
+
+  <Border
+    x:Key="ClassicTheme.GetBlindContent"
+    BorderThickness="0"
+    SnapsToDevicePixels="True"
+  >
+    <Border.Background>
+      <DrawingBrush
+        Viewport="0,0,4,4"
+        ViewportUnits="Absolute"
+        Stretch="None"
+        TileMode="Tile"
+        Opacity="0.5"
+      >
+        <DrawingBrush.Drawing>
+          <GeometryDrawing>
+            <GeometryDrawing.Geometry>
+              <LineGeometry StartPoint="0,0" EndPoint="4,0">
+              </LineGeometry>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Pen>
+              <!-- ロジック側で色変更 -->
+              <Pen Thickness="1" Brush="Transparent" />
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+        </DrawingBrush.Drawing>
+      </DrawingBrush>
+    </Border.Background>
+    <!--<Border.Effect>
+      <BlurEffect Radius="2" />
+    </Border.Effect>-->
+  </Border>
+
+
+</ResourceDictionary>

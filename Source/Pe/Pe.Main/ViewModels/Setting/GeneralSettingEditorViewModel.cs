@@ -5,10 +5,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -39,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public abstract class GeneralSettingEditorViewModelBase<TModel> : SettingItemViewModelBase<TModel>, IGeneralSettingEditor
+    public abstract class GeneralSettingEditorViewModelBase<TModel>: SettingItemViewModelBase<TModel>, IGeneralSettingEditor
         where TModel : GeneralSettingEditorElementBase
     {
         protected GeneralSettingEditorViewModelBase(TModel model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -67,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
     }
 
-    public sealed class AppExecuteSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppExecuteSettingEditorElement>
+    public sealed class AppExecuteSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppExecuteSettingEditorElement>
     {
         public AppExecuteSettingEditorViewModel(AppExecuteSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -123,8 +125,47 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     }
 
 
-    public sealed class AppGeneralSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppGeneralSettingEditorElement>
+    public sealed class AppGeneralSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppGeneralSettingEditorElement>
     {
+        #region define
+
+        public class ThemePluginItemViewModel: ViewModelBase
+        {
+            public ThemePluginItemViewModel(IPlugin plugin, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+                : base(loggerFactory)
+            {
+                Plugin = plugin;
+                DispatcherWrapper = dispatcherWrapper;
+            }
+
+            #region property
+
+            IPlugin Plugin { get; }
+            IDispatcherWrapper DispatcherWrapper { get; }
+
+            public string Name => Plugin.PluginInformations.PluginIdentifiers.PluginName;
+            public Guid Id => Plugin.PluginInformations.PluginIdentifiers.PluginId;
+
+            public DependencyObject PluginIcon
+            {
+                get
+                {
+                    return DispatcherWrapper.Get(() => {
+                        try {
+                            return Plugin.GetIcon(IconBox.Small);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, "[{0}] {1}, {2}", Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                            return null!;
+                        }
+                    });
+                }
+            }
+
+            #endregion
+        }
+
+        #endregion
+
         public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IReadOnlyCollection<string> cultureNames, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
@@ -132,6 +173,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             var cultures = cultureNames.Select(i => CultureInfo.GetCultureInfo(i));
             CultureInfoItems.Add(CultureInfo.InvariantCulture);
             CultureInfoItems.AddRange(cultures);
+
+            ThemePluginItems = Model.ThemePlugins.Select(i => new ThemePluginItemViewModel(i, DispatcherWrapper, LoggerFactory)).ToList();
         }
 
         #region property
@@ -151,6 +194,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => Model.UserBackupDirectoryPath;
             set => SetModelValue(value);
         }
+
+        public Guid ThemePluginId
+        {
+            get => Model.ThemePluginId;
+            set => SetModelValue(value);
+        }
+
+        public IReadOnlyList<ThemePluginItemViewModel> ThemePluginItems { get; }
 
         public bool IsRegisterStartup
         {
@@ -206,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public sealed class AppUpdateSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppUpdateSettingEditorElement>
+    public sealed class AppUpdateSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppUpdateSettingEditorElement>
     {
         public AppUpdateSettingEditorViewModel(AppUpdateSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -236,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #endregion
     }
 
-    public sealed class AppNotifyLogSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppNotifyLogSettingEditorElement>
+    public sealed class AppNotifyLogSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppNotifyLogSettingEditorElement>
     {
         public AppNotifyLogSettingEditorViewModel(AppNotifyLogSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -311,7 +362,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     }
 
 
-    public sealed class AppCommandSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppCommandSettingEditorElement>
+    public sealed class AppCommandSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppCommandSettingEditorElement>
     {
         public AppCommandSettingEditorViewModel(AppCommandSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -393,7 +444,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     }
 
 
-    public sealed class AppNoteSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppNoteSettingEditorElement>
+    public sealed class AppNoteSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppNoteSettingEditorElement>
     {
         public AppNoteSettingEditorViewModel(AppNoteSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
@@ -470,7 +521,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
     }
 
 
-    public sealed class AppStandardInputOutputSettingEditorViewModel : GeneralSettingEditorViewModelBase<AppStandardInputOutputSettingEditorElement>
+    public sealed class AppStandardInputOutputSettingEditorViewModel: GeneralSettingEditorViewModelBase<AppStandardInputOutputSettingEditorElement>
     {
         public AppStandardInputOutputSettingEditorViewModel(AppStandardInputOutputSettingEditorElement model, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)

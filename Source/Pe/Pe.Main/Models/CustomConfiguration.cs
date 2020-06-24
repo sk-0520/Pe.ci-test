@@ -17,6 +17,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region function
 
+        protected static IReadOnlyList<T> GetList<T>(IConfigurationSection section, string key)
+        {
+            return section.GetSection(key).Get<T[]>();
+        }
+
         protected static Size GetSize(IConfigurationSection section, string key)
         {
             var size = section.GetSection(key);
@@ -122,12 +127,19 @@ namespace ContentTypeTextNet.Pe.Main.Models
             };
             ViewUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("view_useragent"), map);
             ClientUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("client_useragent"), map);
+            DeveloperTools = section.GetValue<bool>("developer_tools");
         }
 
         #region property
 
         public string ViewUserAgent { get; }
         public string ClientUserAgent { get; }
+
+        /// <summary>
+        /// ウィンドウ生成(インスタンス化)時点でWEBブラウザっぽいのがあればそれに対して開発者ツールを呼び出せる拡張処理を行うか。
+        /// <para>複数あったり動的に生成する場合は個別対応が必要。</para>
+        /// </summary>
+        public bool DeveloperTools { get; }
 
         #endregion
     }
@@ -346,6 +358,27 @@ namespace ContentTypeTextNet.Pe.Main.Models
     }
 
 
+    public class PluginConfiguration: ConfigurationBase
+    {
+        public PluginConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            Extentions = GetList<string>(section, "extentions");
+        }
+
+        #region property
+
+        /// <summary>
+        /// プラグインとなり得る拡張子。
+        /// <para>先に一致したものを優先する。</para>
+        /// </summary>
+        public IReadOnlyList<string> Extentions { get; }
+
+
+        #endregion
+    }
+
+
     public class CustomConfiguration
     {
         public CustomConfiguration(IConfigurationRoot configurationRoot)
@@ -363,6 +396,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
+            Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
         }
 
         #region property
@@ -380,6 +414,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public NoteConfiguration Note { get; }
         public CommandConfiguration Command { get; }
         public PlatformConfiguration Platform { get; }
+        public PluginConfiguration Plugin { get; }
         #endregion
     }
 }

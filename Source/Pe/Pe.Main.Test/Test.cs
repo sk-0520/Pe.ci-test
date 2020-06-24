@@ -44,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Main.Test
             var diContainer = testDiContainer.CreateDiContainer(LoggerFactory);
             var testDatabase = new TestDatabase();
             testDatabase.Initialize(diContainer);
+
+            DiContainer = diContainer;
         }
 
         [AssemblyCleanup]

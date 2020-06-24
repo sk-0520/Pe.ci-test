@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using Dapper;
 using Microsoft.Extensions.Logging;
@@ -228,11 +229,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Logger.LogTrace(statement, parameter);
         }
 
-        protected virtual void LoggingExecuteResult(int result, [Timestamp(DateTimeKind.Local)] DateTime startTime, [Timestamp(DateTimeKind.Local)] DateTime endTime)
+        protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
         }
-        protected virtual void LoggingDataTable(DataTable table, [Timestamp(DateTimeKind.Local)] DateTime startTime, [Timestamp(DateTimeKind.Local)] DateTime endTime)
+        protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
         }

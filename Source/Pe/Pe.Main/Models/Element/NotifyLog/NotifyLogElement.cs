@@ -28,11 +28,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         VerticalAlignment _cursorVerticalAlignment = VerticalAlignment.Top;
 
         #endregion
-        public NotifyLogElement(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, INotifyManager notifyManager, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
+        public NotifyLogElement(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, INotifyManager notifyManager, IOrderManager orderManager, IWindowManager windowManager, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             NotifyManager = notifyManager;
             OrderManager = orderManager;
             WindowManager = windowManager;
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         #region property
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         private INotifyManager NotifyManager { get; }
         private IOrderManager OrderManager { get; }
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog
         private void RefreshSetting()
         {
             var setting = MainDatabaseBarrier.ReadData(c => {
-                var dao = new AppNotifyLogSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                var dao = new AppNotifyLogSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 return dao.SelectSettingNotifyLogSetting();
             });
             IsVisible = setting.IsVisible;

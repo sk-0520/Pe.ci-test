@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.CrashReport.Models.Data
         public string Revision { get; set; } = string.Empty;
 
         [DataMember]
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Timestamp { get; set; }
         [DataMember]
         public string Exception { get; set; } = string.Empty;

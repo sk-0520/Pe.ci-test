@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
@@ -22,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// <summary>
     /// プラグインの既定インターフェイス。
     /// <para><see cref="Addon.IAddon"/>か<see cref="Theme.ITheme"/>をさらに実装している必要あり。</para>
+    /// <para>設定機能を有する場合はさらに<see cref="Preferences.IPreferences"/>を実装する必要あり。</para>
     /// </summary>
     public interface IPlugin
     {
@@ -53,25 +56,35 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグイン終了。
         /// <para>可能な限りプラグイン開放可能な状態になること。</para>
         /// </summary>
-        void Uninitialize();
+        void Uninitialize(IPluginUninitializeContext pluginUninitializeContext);
 
         /// <summary>
         /// プラグイン機能を使用するための読み込み。
         /// </summary>
         /// <param name="pluginKind">対象機能ごとの読み込み指定。テーマだけ読み込んでアドオンはまだ、みたいな状態。</param>
-        /// <param name="pluginContext"></param>
-        void Load(PluginKind pluginKind, IPluginContext pluginContext);
+        /// <param name="pluginLoadContext"></param>
+        void Load(PluginKind pluginKind, IPluginLoadContext pluginLoadContext);
         /// <summary>
         /// プラグイン機能の使用を終了。
         /// </summary>
         /// <param name="pluginKind">対象機能。</param>
-        void Unload(PluginKind pluginKind);
+        /// <param name="pluginUnloadContext"></param>
+        void Unload(PluginKind pluginKind, IPluginUnloadContext pluginUnloadContext);
         /// <summary>
         /// プラグイン機能は読み込まれているか。
         /// </summary>
         /// <param name="pluginKind"></param>
         /// <returns></returns>
         bool IsLoaded(PluginKind pluginKind);
+
+
+        /// <summary>
+        /// プラグインを示すアイコンを取得。
+        /// <para>この処理は<see cref="IsInitialized"/>の状態にかかわらず実行可能であること。</para>
+        /// </summary>
+        /// <param name="iconBox"></param>
+        /// <returns></returns>
+        DependencyObject GetIcon(IconBox iconBox);
 
         #endregion
     }

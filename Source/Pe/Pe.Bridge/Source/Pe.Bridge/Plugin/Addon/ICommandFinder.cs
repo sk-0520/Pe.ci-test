@@ -23,9 +23,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// 現在状態を更新。
         /// </summary>
-        void Refresh();
+        void Refresh(IPluginContext pluginContext);
 
-        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken);
+        IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken);
 
         #endregion
     }

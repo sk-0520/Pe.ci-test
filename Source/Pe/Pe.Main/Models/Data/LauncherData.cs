@@ -200,6 +200,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Normal,
     }
 
+    public enum LauncherGroupImageName
+    {
+        DirectoryNormal,
+        DirectoryOpen,
+        File,
+        Gear,
+        Config,
+        Builder,
+        Bookmark,
+        Book,
+        Light,
+        Shortcut,
+        Storage,
+        Cloud,
+        User,
+    }
+
     /// <summary>
     /// グループメニューの表示位置。
     /// </summary>
@@ -280,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public LauncherHistoryKind Kind { get; set; }
         public string Value { get; set; } = string.Empty;
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastExecuteTimestamp { get; set; }
         #endregion
 

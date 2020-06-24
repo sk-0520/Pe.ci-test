@@ -64,6 +64,10 @@ using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
+using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -104,27 +108,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
             PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
 
+            // プラグインコンテナ自体を登録
+            ApplicationDiContainer.Register<PluginContainer, PluginContainer>(PluginContainer);
+
+            // テーマIFをDI登録
             ApplicationDiContainer.Register<IGeneralTheme, IGeneralTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetGeneralTheme());
             ApplicationDiContainer.Register<ILauncherToolbarTheme, ILauncherToolbarTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherToolbarTheme());
-            ApplicationDiContainer.Register<ILauncherGroupTheme, ILauncherGroupTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetLauncherGroupTheme());
             ApplicationDiContainer.Register<INoteTheme, INoteTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNoteTheme());
             ApplicationDiContainer.Register<ICommandTheme, ICommandTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetCommandTheme());
             ApplicationDiContainer.Register<INotifyLogTheme, INotifyLogTheme>(DiLifecycle.Transient, () => PluginContainer.Theme.GetNotifyTheme());
-
+            //// アドオンIFをDI登録
+            //ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
-            var applicationCommandFinder = ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters());
-            CommandElement = ApplicationDiContainer.Build<CommandElement>(applicationCommandFinder);
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
+
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
 
             var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
             LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
+
+            if(!string.IsNullOrWhiteSpace(initializer.TestPluginDirectoryPath)) {
+                TestPluginDirectory = new DirectoryInfo(initializer.TestPluginDirectoryPath);
+                TestPluginName = initializer.TestPluginName;
+            }
         }
 
         #region property
@@ -155,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
-        CommandElement CommandElement { get; }
+        CommandElement? CommandElement { get; set; }
         NotifyLogElement NotifyLogElement { get; }
         //FeedbackElement? FeedbackElement { get; set; }
         HwndSource? MessageWindowHandleSource { get; set; }
@@ -180,6 +192,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private bool ResetWaiting { get; set; }
         private LazyAction LazyScreenElementReset { get; }
 
+        private DirectoryInfo? TestPluginDirectory { get; }
+        private string TestPluginName { get; } = string.Empty;
+
+        private ObservableCollection<WidgetElement> Widgets { get; } = new ObservableCollection<WidgetElement>();
         #endregion
 
         #region function
@@ -193,9 +209,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StopHook();
             UninitializeSystem();
 
-            if(CommandElement.ViewCreated) {
-                CommandElement.HideView(true);
+            if(CommandElement != null) {
+                if(CommandElement.ViewCreated) {
+                    CommandElement.HideView(true);
+                }
             }
+
             if(NotifyLogElement.ViewCreated) {
                 NotifyLogElement.HideView(true);
             }
@@ -210,6 +229,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 lazyWriter.Flush();
                 var pausing = lazyWriter.Pause();
                 lazyWriterItemMap.Add(lazyWriter, pausing);
+            }
+
+            SaveWidgets();
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyRunPauseContext(true);
+                    BackgroundAddon.RunPause(context);
+                }
             }
 
             // 現在DBを編集用として再構築
@@ -244,15 +272,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ;
 
 
-            var settingElement = container.Build<SettingContainerElement>();
+            var settingElement = new SettingContainerElement(container, container.Build<ILoggerFactory>());
             settingElement.Initialize();
             var windowItem = OrderManager.CreateSettingWindow(settingElement);
             WindowManager.Register(windowItem);
             var dialogResult = windowItem.Window.ShowDialog();
 
+            static void EndPreferences(SettingContainerElement settingElement, ILogger logger)
+            {
+                foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
+                    if(element.SupportedPreferences && element.StartedPreferences) {
+                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.PluginState.Name, element.PluginState.PluginId);
+                        element.EndPreferences();
+                    }
+                }
+            }
+
             if(settingElement.IsSubmit) {
                 Logger.LogInformation("設定適用のため現在表示要素の破棄");
-                CloseViews();
+                CloseViews(false);
                 DisposeElements();
 
                 // 設定用DBを永続用DBと切り替え
@@ -297,16 +335,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 cultureServiceChanger.ChangeCulture();
 
                 Logger.LogInformation("設定適用のため各要素生成");
+
+                EndPreferences(settingElement, Logger);
+
+                ApplyThemeSetting();
                 RebuildHook();
                 ExecuteElements();
-                if(CommandElement.IsInitialized) {
-                    CommandElement.Refresh();
+
+                if(CommandElement != null) {
+                    if(CommandElement.IsInitialized) {
+                        CommandElement.Refresh();
+                    }
                 }
                 NotifyLogElement.Refresh();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
+                EndPreferences(settingElement, Logger);
             }
             StartHook();
+            StartBackground();
             StartPlatform();
             InitializeSystem();
 
@@ -317,6 +364,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     pair.Key.ClearStock();
                 }
                 pair.Value.Dispose();
+            }
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyRunPauseContext(false);
+                    BackgroundAddon.RunPause(context);
+                }
             }
 
             if(changing.Success) {
@@ -506,23 +560,255 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void LoadPlugins()
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+            var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
 
-            foreach(var plugin in PluginContainer.GetPlugins()) {
-                plugin.Initialize(pluginContextFactory.CreateInitializeContext(plugin.PluginInformations.PluginIdentifiers));
+            // プラグインディレクトリからプラグインDLL列挙
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.Configuration.Plugin.Extentions);
+
+            // プラグイン情報取得
+            var pluginStateItems = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(c, c.Implementation);
+                return pluginsEntityDao.SelectePlguinStateData().ToList();
+            });
+
+            FileInfo? testPluginFile = null;
+            if(TestPluginDirectory != null) {
+                var pluginName = string.IsNullOrWhiteSpace(TestPluginName) ? TestPluginDirectory.Name : TestPluginName;
+                testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.Configuration.Plugin.Extentions);
+            }
+
+            // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
+            var pluginLoadStateItems = new List<PluginLoadStateData>();
+            var pluginConstructorContext = ApplicationDiContainer.Build<PluginConstructorContext>();
+            foreach(var pluginFile in pluginFiles) {
+                var loadStateData = PluginContainer.LoadPlugin(pluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                pluginLoadStateItems.Add(loadStateData);
+            }
+
+            PluginLoadStateData? testPluginLoadState = null;
+            if(testPluginFile != null) {
+                testPluginLoadState = PluginContainer.LoadPlugin(testPluginFile, pluginStateItems, BuildStatus.Version, pluginConstructorContext, Logging.PauseReceiveLog);
+                pluginLoadStateItems.Add(testPluginLoadState);
+            }
+
+            // 戻ってきた突合情報を反映
+            var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+            using(var commander = barrier.WaitWrite()) {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+                foreach(var pluginLoadStateItem in pluginLoadStateItems) {
+                    // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
+                    if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
+                        Logger.LogWarning("プラグイン {0} はもろもろおかしい", pluginLoadStateItem.PluginName);
+                        if(pluginLoadStateItem == testPluginLoadState) {
+#if DEBUG
+                            if(Debugger.IsAttached) {
+                                Debugger.Break();
+                            }
+#endif
+                            Logger.LogWarning("テスト用プラグインはおかしいためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
+                        }
+                        continue;
+                    }
+
+                    var pluginStateData = new PluginStateData() {
+                        PluginId = pluginLoadStateItem.PluginId,
+                        Name = pluginLoadStateItem.PluginName,
+                        State = pluginLoadStateItem.LoadState
+                    };
+
+                    if(pluginLoadStateItem == testPluginLoadState) {
+                        if(pluginStateData.State == PluginState.Disable) {
+#if DEBUG
+                            if(Debugger.IsAttached) {
+                                Debugger.Break();
+                            }
+#endif
+                            Logger.LogWarning("テスト用プラグインは読み込み失敗したためデータ登録処理スキップ: {0}, {1}", testPluginFile!.FullName, pluginLoadStateItem.LoadState);
+                            continue;
+                        }
+                    }
+
+                    if(pluginsEntityDao.SelecteExistsPlugin(pluginLoadStateItem.PluginId)) {
+                        pluginsEntityDao.UpdatePluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
+                    } else {
+                        pluginsEntityDao.InsertPluginStateData(pluginStateData, DatabaseCommonStatus.CreateCurrentAccount());
+                    }
+                }
+
+                commander.Commit();
+            }
+
+            var enabledPluginLoadStateItems = pluginLoadStateItems
+                .Where(i => i.LoadState == PluginState.Enable)
+                .ToList()
+            ;
+            var disabledPluginLoadStateItems = pluginLoadStateItems
+                .Except(enabledPluginLoadStateItems)
+                .Where(i => i.WeekLoadContext != null)
+                .ToList()
+            ;
+            if(0 < disabledPluginLoadStateItems.Count) {
+                // アンロード対象の解放待ち
+                foreach(var counter in new Counter(10)) {
+                    if(counter.IsFirst || counter.IsLast || (counter.CurrentCount == counter.MaxCount / 2)) {
+                        GarbageCollection(true);
+                    } else {
+                        GarbageCollection(false);
+                    }
+
+                    var unloadedItems = new List<PluginLoadStateData>();
+                    foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
+                        if(disabledPluginLoadStateItem.WeekLoadContext!.TryGetTarget(out _)) {
+                            Logger.LogInformation("[{0}/{1}] アンロード待ち: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        } else {
+                            Logger.LogInformation("[{0}/{1}] アンロード完了: {2}, {3}", counter.CurrentCount, counter.MaxCount, disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                            unloadedItems.Add(disabledPluginLoadStateItem);
+                        }
+                    }
+                    foreach(var removeItem in unloadedItems) {
+                        disabledPluginLoadStateItems.Remove(removeItem);
+                    }
+                    if(disabledPluginLoadStateItems.Count == 0) {
+                        break;
+                    }
+                }
+                if(0 < disabledPluginLoadStateItems.Count) {
+                    GarbageCollection(true);
+                    foreach(var disabledPluginLoadStateItem in disabledPluginLoadStateItems) {
+                        if(disabledPluginLoadStateItem.WeekLoadContext!.TryGetTarget(out _)) {
+                            Logger.LogWarning("[LAST] アンロード待機超過: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        } else {
+                            Logger.LogInformation("[LAST] アンロード完了: {0}, {1}", disabledPluginLoadStateItem.PluginName, disabledPluginLoadStateItem.PluginId);
+                        }
+                    }
+                }
+
+                if(disabledPluginLoadStateItems.Count == 0) {
+                    Logger.LogInformation("不要プラグイン解放完了");
+                } else {
+                    Logger.LogWarning("不要プラグイン解放不完全: {0}", disabledPluginLoadStateItems.Count);
+                }
+            }
+
+            var applicationPluginTypes = new List<Type>() {
+                typeof(DefaultTheme),
+            };
+            var applicationPlugins = new List<IPlugin>(applicationPluginTypes.Count);
+            foreach(var type in applicationPluginTypes) {
+                using var context = ApplicationDiContainer.Build<PluginConstructorContext>();
+                var appPlugin = (IPlugin)ApplicationDiContainer.New(type, new object[] { context });
+                applicationPlugins.Add(appPlugin);
+            }
+
+            var initializedPlugins = new List<IPlugin>(enabledPluginLoadStateItems.Count + applicationPlugins.Count);
+
+            var databaseBarrierPack = ApplicationDiContainer.Build<IDatabaseBarrierPack>();
+
+            // Pe専用プラグイン
+            foreach(var plugin in applicationPlugins) {
+                using(var readerPack = databaseBarrierPack.WaitRead()) {
+                    using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                    plugin.Initialize(context);
+                }
+                initializedPlugins.Add(plugin);
+            }
+
+            // 通常プラグイン
+            foreach(var pluginLoadStateItem in enabledPluginLoadStateItems) {
+                Debug.Assert(pluginLoadStateItem.Plugin != null);
+
+                Logger.LogInformation("プラグイン初期化処理: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                var plugin = pluginLoadStateItem.Plugin;
+                try {
+                    using(var readerPack = databaseBarrierPack.WaitRead()) {
+                        using var context = pluginContextFactory.CreateInitializeContext(plugin.PluginInformations, readerPack);
+                        plugin.Initialize(context);
+                    }
+                    initializedPlugins.Add(plugin);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, "プラグイン初期化失敗: {0}, {1}, {2}", ex.Message, pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                    if(pluginLoadStateItem.WeekLoadContext!.TryGetTarget(out var loadContext)) {
+                        Logger.LogWarning("プラグイン初期化失敗のため解放だけ指示: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                        loadContext.Unload();
+                    } else {
+                        Logger.LogError("プラグイン参照が切れてる恐怖: {0}, {1}", pluginLoadStateItem.PluginName, pluginLoadStateItem.PluginId);
+                    }
+                }
+            }
+
+            foreach(var plugin in initializedPlugins) {
+                Logger.LogInformation("初期化完了プラグイン: {0}, {1}, {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginVersions.PluginVersion, plugin.PluginInformations.PluginIdentifiers.PluginId);
                 PluginContainer.AddPlugin(plugin);
+            }
+
+            // プラグイン情報を更新
+            if(0 < initializedPlugins.Count) {
+                using(var commander = barrier.WaitWrite()) {
+                    var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+                    foreach(var initializedPlugin in initializedPlugins) {
+                        pluginsEntityDao.UpdatePluginRunningState(
+                            initializedPlugin.PluginInformations.PluginIdentifiers.PluginId,
+                            initializedPlugin.PluginInformations.PluginVersions.PluginVersion,
+                            BuildStatus.Version,
+                            DatabaseCommonStatus.CreateCurrentAccount()
+                        );
+                    }
+
+                    commander.Commit();
+                }
             }
         }
 
-        private void ApplyCurrentTheme(IPluginIdentifiers pluginIdentifiers)
+        private void UnloadPlugins()
+        {
+            var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+            var plugins = PluginContainer.Plugins.Where(i => i.IsInitialized).ToList();
+            var themePlugins = plugins.Where(i => i.IsLoaded(PluginKind.Theme)).Select(i => new { Plugin = i, Kind = PluginKind.Theme });
+            var addonPlugins = plugins.Where(i => i.IsLoaded(PluginKind.Addon)).Select(i => new { Plugin = i, Kind = PluginKind.Addon });
+
+            using(var writer = pluginContextFactory.BarrierWrite()) {
+                foreach(var item in addonPlugins.Concat(themePlugins)) {
+                    using var context = pluginContextFactory.CreateUnloadContext(item.Plugin.PluginInformations, writer);
+                    try {
+                        item.Plugin.Unload(item.Kind, context);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "{0}({1}) {2}", item.Plugin.PluginInformations.PluginIdentifiers.PluginName, item.Plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                    }
+                }
+
+                foreach(var plugin in plugins) {
+                    using var context = pluginContextFactory.CreateUninitializeContext(plugin.PluginInformations, writer);
+                    try {
+                        plugin.Uninitialize(context);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "{0}({1}) {2}", plugin.PluginInformations.PluginIdentifiers.PluginName, plugin.PluginInformations.PluginIdentifiers.PluginId, ex.Message);
+                    }
+                }
+
+                pluginContextFactory.Save();
+            }
+
+        }
+
+        private void ApplyThemeSetting()
+        {
+            var themePluginId = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
+                var appGeneralSettingEntityDao = ApplicationDiContainer.Build<AppGeneralSettingEntityDao>(c, c.Implementation);
+                try {
+                    return appGeneralSettingEntityDao.SelectThemePluginId();
+                } catch(Exception ex) {
+                    Logger.LogWarning(ex, "テーマプラグインID取得失敗のため標準テーマを使用");
+                    return DefaultTheme.Informations.PluginIdentifiers.PluginId;
+                }
+            });
+            ApplyCurrentTheme(themePluginId);
+        }
+
+        private void ApplyCurrentTheme(Guid themePluginId)
         {
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
 
-            PluginContainer.Theme.SetCurrentTheme(pluginIdentifiers, pluginContextFactory);
-        }
-
-        private void RunAddons()
-        {
-            //TODTO: アドオンを実行していく
+            PluginContainer.Theme.SetCurrentTheme(themePluginId, pluginContextFactory);
         }
 
         void SetStaticPlatformTheme()
@@ -689,7 +975,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             MakeMessageWindow();
 
             LoadPlugins();
-            ApplyCurrentTheme(DefaultTheme.Informations.PluginIdentifiers);
+            ApplyThemeSetting();
 
             Logger = LoggerFactory.CreateLogger(GetType());
             Logger.LogDebug("初期化完了");
@@ -790,6 +1076,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             return collection;
         }
 
+        public ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> GetWidgetCollection()
+        {
+            var collection = new ActionModelViewModelObservableCollectionManager<WidgetElement, WidgetNotifyAreaViewModel>(Widgets) {
+                ToViewModel = m => ApplicationDiContainer.Build<WidgetNotifyAreaViewModel>(m),
+            };
+            return collection;
+        }
+
         public NoteElement CreateNote(IScreen dockScreen, NoteStartupPosition noteStartupPosition)
         {
             var idFactory = ApplicationDiContainer.Build<IIdFactory>();
@@ -877,6 +1171,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 viewShowStater.StartView();
             }
 
+            ExecuteWidgets();
+
 #if DEBUG
             if(IsDevDebug) {
                 Logger.LogWarning($"{nameof(IsDevDebug)}が有効");
@@ -892,6 +1188,60 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, DispatcherPriority.SystemIdle);
         }
 
+        void ExecuteWidgets()
+        {
+            //TODO: 表示・非表示状態を読み込んだりの諸々が必要
+            if(Widgets.Count == 0) {
+                //var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
+                var widgetAddonContextFactory = ApplicationDiContainer.Build<WidgetAddonContextFactory>();
+                var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
+                var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
+                var databaseStatementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+                var cultureService = ApplicationDiContainer.Build<CultureService>();
+                var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
+                var dispatcherWrapper = ApplicationDiContainer.Build<IDispatcherWrapper>();
+
+                foreach(var widget in PluginContainer.Addon.GetWidgets()) {
+                    var element = new WidgetElement(widget, widget.Addon, widgetAddonContextFactory, mainDatabaseBarrier, mainDatabaseLazyWriter, databaseStatementLoader, cultureService, WindowManager, NotifyManager, environmentParameters, dispatcherWrapper, LoggerFactory);
+                    element.Initialize();
+                    Widgets.Add(element);
+                }
+            }
+
+            var showWidgets = new List<WidgetElement>(Widgets.Count);
+            using(var commander = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitRead()) {
+                var pluginWidgetSettingsEntityDao = ApplicationDiContainer.Build<PluginWidgetSettingsEntityDao>(commander, commander.Implementation);
+                foreach(var element in Widgets) {
+                    if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(element.PluginId)) {
+                        var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(element.PluginId);
+                        if(setting.IsVisible) {
+                            showWidgets.Add(element);
+                        }
+                    }
+                }
+            }
+
+            // ViewModel渡す設計は💩で、しかもダミーってのがまた💩
+            foreach(var element in showWidgets) {
+                var viewModel = ApplicationDiContainer.Build<TemporaryWidgetViewModel>(element);
+                element.ShowView(viewModel);
+            }
+        }
+
+        void SaveWidgets()
+        {
+            foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
+                widget.SaveStatus(true);
+            }
+        }
+
+        void CloseWidgets()
+        {
+            foreach(var widget in Widgets.Where(i => i.ViewCreated)) {
+                widget.HideView();
+            }
+        }
+
         public void Execute()
         {
             Logger.LogInformation("がんばる！");
@@ -904,6 +1254,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             StartPlatform();
 
             ExecuteElements();
+
 #if DEBUG
             DebugExecuteAfter();
 #endif
@@ -939,13 +1290,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void CloseExtendsExecuteViews() => CloseViewsCore(WindowKind.ExtendsExecute);
         void CloseStandardInputOutputViews() => CloseViewsCore(WindowKind.StandardInputOutput);
 
-        void CloseViews()
+        void CloseViews(bool saveWidgets)
         {
             CloseStandardInputOutputViews();
             CloseLauncherCustomizeViews();
             CloseExtendsExecuteViews();
             CloseLauncherToolbarViews();
             CloseNoteViews();
+
+            if(saveWidgets) {
+                SaveWidgets();
+            }
+            CloseWidgets();
         }
 
         void DisposeElementsCore<TElement>(ICollection<TElement> elements)
@@ -981,6 +1337,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("おわる！");
 
+            if(BackgroundAddon != null) {
+                var backgroundAddonProxyRunShutdownContext = new BackgroundAddonProxyRunShutdownContext();
+                BackgroundAddon.RunShutdown(backgroundAddonProxyRunShutdownContext);
+            }
+
+            UnloadPlugins();
+
             BackupSettingsDefault(ApplicationDiContainer);
 
             if(!ignoreUpdate && ApplicationUpdateInfo.IsReady) {
@@ -1010,7 +1373,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             UninitializeSystem();
 
-            CloseViews();
+            CloseViews(true);
             DisposeElements();
             DisposeWebView();
 
@@ -1070,8 +1433,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ShowCommandView()
         {
-            if(!CommandElement.IsInitialized) {
+            if(CommandElement == null) {
+                CommandElement = ApplicationDiContainer.Build<CommandElement>();
                 CommandElement.Initialize();
+
+                var commandFinders = new ICommandFinder[] {
+                    ApplicationDiContainer.Build<LauncherItemCommandFinder>(),
+                    ApplicationDiContainer.Build<ApplicationCommandFinder>(CreateApplicationCommandParameters()),
+                    PluginContainer.Addon.GetCommandFinder(),
+                };
+
+                foreach(var commandFinder in commandFinders) {
+                    CommandElement.AddCommandFinder(commandFinder);
+                }
+                CommandElement.Refresh();
             }
 
             CommandElement.StartView();
@@ -1135,6 +1510,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             CloseLauncherToolbarViews();
             CloseNoteViews();
+            SaveWidgets();
+            CloseWidgets();
 
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();
@@ -1438,8 +1815,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         internal void StartupEnd()
         {
             StartHook();
-            RunAddons();
+            StartBackground();
+
             DelayCheckUpdateAsync().ConfigureAwait(false);
+#if DEBUG
+            DebugStartupEnd();
+#endif
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1215:\"GC.Collect\" should not be called")]
@@ -1672,7 +2053,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     LazyScreenElementReset.Dispose();
 
-                    CloseViews();
+                    CloseViews(false);
                     DisposeElements();
                     DisposeWebView();
 

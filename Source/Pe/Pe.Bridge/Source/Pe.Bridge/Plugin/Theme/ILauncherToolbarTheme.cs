@@ -23,9 +23,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         [return: PixelKind(Px.Logical)]
         Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth);
 
-        DependencyObject GetToolbarImage(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong);
-        DependencyObject GetToolbarPositionImage(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox);
-
         ControlTemplate GetLauncherItemNormalButtonControlTemplate();
         ControlTemplate GetLauncherItemToggleButtonControlTemplate();
 

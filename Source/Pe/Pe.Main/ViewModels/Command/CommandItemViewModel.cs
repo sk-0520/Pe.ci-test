@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3897:Classes that provide \"Equals(<T>)\" should implement \"IEquatable<T>\"")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4035:Classes implementing \"IEquatable<T>\" should be sealed", Justification = "<保留中>")]
     public class CommandItemViewModel : ViewModelBase
     {
         #region variable
@@ -40,6 +42,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public CommandItemKind Kind => Item.Kind;
         public double Score => Item.Score;
 
+        public string FullMatchValue => Item.FullMatchValue;
+
         public IReadOnlyList<HitValueItemViewModel> HeaderValues { get; }
         public IReadOnlyList<HitValueItemViewModel> DescriptionValues { get; }
         public IReadOnlyList<HitValueItemViewModel> ExtendDescriptionValues { get; }
@@ -63,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             get
             {
-                var icon = Item.GetIcon(IconBox);
+                var icon = DispatcherWrapper.Get(() => Item.GetIcon(IconBox));
                 if(icon is IconImageLoaderBase iconLoader) {
                     return new IconViewerViewModel(iconLoader, DispatcherWrapper, LoggerFactory) {
                         UseCache = true,
@@ -85,6 +89,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
             var parameter = new CommandExecuteParameter(screen, isExtend);
             Item.Execute(parameter);
         }
+
+        public bool IsEquals(CommandItemViewModel commandItemViewModel)
+        {
+            return Item.IsEquals(commandItemViewModel.Item);
+        }
+
+
+        #endregion
+
+        #region IEquatable>
 
 
         #endregion

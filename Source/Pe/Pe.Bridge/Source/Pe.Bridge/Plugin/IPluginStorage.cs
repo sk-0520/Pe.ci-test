@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -87,7 +88,60 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// </summary>
     public interface IPluginPersistentStorage
     {
+        #region property
+
+        /// <summary>
+        /// 永続データアクセスは読み取り専用か。
+        /// <para>読み取り専用の場合、書き込み処理実行で例外発生。</para>
+        /// </summary>
+        bool IsReadOnly { get; }
+
+        #endregion
+
+
         #region function
+
+        /// <summary>
+        /// 指定データは存在するか。
+        /// </summary>
+        /// <param name="key">キー</param>
+        /// <returns></returns>
+        bool Exists(string key);
+
+        /// <summary>
+        /// 指定データを取得する。
+        /// </summary>
+        /// <typeparam name="TValue">格納データ型。</typeparam>
+        /// <param name="key">キー</param>
+        /// <param name="value">取得・変換できた場合に格納。</param>
+        /// <returns>取得・変換できたか。</returns>
+        bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value);
+
+        /// <summary>
+        /// 指定データを保存する。
+        /// <para><see cref="PluginPersistentFormat.Text"/>を使用する以外は原則使用せず<see cref="Set{TValue}(string, TValue)"/>を用いること。</para>
+        /// </summary>
+        /// <typeparam name="TValue">保存データ。</typeparam>
+        /// <param name="key">キー。</param>
+        /// <param name="value">値。</param>
+        /// <param name="format">変換種別。</param>
+        /// <returns>保存成功・失敗。</returns>
+        bool Set<TValue>(string key, TValue value, PluginPersistentFormat format);
+        /// <summary>
+        /// 現行バージョンにおける最適な型を使用して指定データを保存する。
+        /// </summary>
+        /// <typeparam name="TValue"><inheritdoc cref="SetValue{TValue}(string, TValue, PluginPersistentFormat)"/></typeparam>
+        /// <param name="key">キー。</param>
+        /// <param name="value">値。</param>
+        /// <returns>保存成功・失敗。</returns>
+        bool Set<TValue>(string key, TValue value);
+
+        /// <summary>
+        /// 指定データを破棄する。
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>破棄成功。</returns>
+        bool Delete(string key);
 
         #endregion
     }

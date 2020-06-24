@@ -80,7 +80,11 @@ section *.myget:before
 	content: "[myget]";
 	color: #0a0;
 }
-
+section *.plugin-compatibility:before
+{
+	content: "[プラグイン互換性]";
+	color: #f74;
+}
 section *.comment
 {
 	font-size: 90%;

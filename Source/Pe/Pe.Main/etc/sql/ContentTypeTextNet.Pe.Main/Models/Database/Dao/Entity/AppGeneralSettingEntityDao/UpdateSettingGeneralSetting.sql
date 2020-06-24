@@ -3,6 +3,7 @@ update
 set
 	Language                = @Language,
 	UserBackupDirectoryPath = @UserBackupDirectoryPath,
+	ThemePluginId           = @ThemePluginId,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

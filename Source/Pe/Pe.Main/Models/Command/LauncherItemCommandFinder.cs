@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -15,19 +16,20 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.Command;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
     public class LauncherItemCommandFinder: DisposerBase, ICommandFinder
     {
-        public LauncherItemCommandFinder(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemCommandFinder(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
             NotifyManager = notifyManager;
             DispatcherWrapper = dispatcherWrapper;
@@ -39,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         ILogger Logger { get; }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
@@ -72,14 +74,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                     EditableKind = kind,
                 };
                 result.Initialize();
-                var ranges = hitValuesCreator.ConvertRanges(input, nameMatches);
-                var hitValue = hitValuesCreator.ConvertHitValues(input, targetValue, ranges);
+                var ranges = hitValuesCreator.ConvertRanges(nameMatches);
+                var hitValue = hitValuesCreator.ConvertHitValues(targetValue, ranges);
                 if(kind == CommandItemKind.LauncherItemName) {
                     result.EditableHeaderValues.SetRange(hitValue);
-                    result.EditableScore = hitValuesCreator.CalcScore(input, targetValue, result.EditableHeaderValues);
+                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableHeaderValues);
                 } else {
                     result.EditableDescriptionValues.SetRange(hitValue);
-                    result.EditableScore = hitValuesCreator.CalcScore(input, targetValue, result.EditableDescriptionValues);
+                    result.EditableScore = hitValuesCreator.CalcScore(targetValue, result.EditableDescriptionValues);
                 }
                 return result;
             }
@@ -104,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             // タグ情報再構築
             Logger.LogTrace("タグ情報再構築");
             var tags = MainDatabaseBarrier.ReadData(c => {
-                var launcherTagsEntityDao = new LauncherTagsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                var launcherTagsEntityDao = new LauncherTagsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 return launcherTagsEntityDao.SelectUniqueTags(launcherItemId).ToHashSet();
             });
             LauncherTags.Remove(launcherItemId);
@@ -131,15 +133,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             IsInitialize = true;
         }
 
-        public void Refresh()
+        public void Refresh(IPluginContext pluginContext)
         {
+            Debug.Assert(pluginContext.GetType() == typeof(NullPluginContext));
+
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
             }
 
             IReadOnlyList<Guid> ids;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 ids = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
             }
 
@@ -157,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             if(FindTag) {
                 var tagItems = new Dictionary<Guid, IReadOnlyCollection<string>>(ids.Count);
                 using(var commander = MainDatabaseBarrier.WaitRead()) {
-                    var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                    var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                     foreach(var id in ids) {
                         var tags = launcherTagsEntityDao.SelectUniqueTags(id).ToHashSet();
                         if(tags.Count != 0) {
@@ -174,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
         }
 
-        public IEnumerable<ICommandItem> ListupCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        public IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             if(!IsInitialize) {
                 throw new InvalidOperationException(nameof(IsInitialize));
