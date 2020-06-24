@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Windows;
 using System.Windows.Automation.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -39,6 +40,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public string? PrimaryCategory => Model.Plugin?.PluginInformations.PluginCategory.PluginPrimaryCategory;
         public IReadOnlyList<string> SecondaryCategories => Model.Plugin?.PluginInformations.PluginCategory.PluginSecondaryCategories ?? new List<string>();
         public bool HasSecondaryCategories => SecondaryCategories.Count != 0;
+
+        public DependencyObject PluginIcon
+        {
+            get
+            {
+                if(Model.Plugin == null) {
+                    return null!;
+                }
+
+                return DispatcherWrapper.Get(() => {
+                    try {
+                        return Model.Plugin.GetIcon(Bridge.Models.Data.IconBox.Small);
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, "[{0}] {1}, {2}", Model.Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Model.Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                        return null!;
+                    }
+                });
+            }
+        }
 
         public string SupportVersions
         {

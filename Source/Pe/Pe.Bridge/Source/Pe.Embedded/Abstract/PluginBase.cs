@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -46,6 +49,31 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         #endregion
 
         #region function
+
+        protected virtual DependencyObject GetIconImpl(IconBox iconBox) => null!;
+
+        /// <summary>
+        /// プラグインアセンブリの /Plugin.icon を取得する。
+        /// </summary>
+        /// <param name="iconBox"></param>
+        /// <returns></returns>
+        protected DependencyObject GetPluginIcon(IconBox iconBox)
+        {
+            var asm = Assembly.GetExecutingAssembly();
+            var asmName = asm.GetName().Name;
+            var uri = new Uri("pack://application:,,,/" + asmName + ";component/Plugin.ico");
+            var s = Application.Current.Resources;
+            try {
+                var bitmap = new BitmapImage(uri);
+                var image = new System.Windows.Controls.Image() {
+                    Source = bitmap,
+                };
+                return image;
+            } catch(IOException ex) {
+                Logger.LogError(ex, ex.Message);
+            }
+            return null!;
+        }
 
         protected abstract void InitializeImpl(IPluginInitializeContext pluginInitializeContext);
         protected abstract void UninitializeImpl(IPluginUninitializeContext pluginUninitializeContext);
@@ -168,6 +196,21 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }
+
+        /// <inheritdoc cref="IPlugin.GetIcon(IconBox)"/>
+        public DependencyObject GetIcon(IconBox iconBox)
+        {
+            try {
+                var result = GetIconImpl(iconBox);
+                if(result != null) {
+                    return result;
+                }
+            } catch(NotImplementedException ex) {
+                Logger.LogWarning(ex, ex.Message);
+            }
+
+            return GetPluginIcon(iconBox);
+        }
 
         /// <inheritdoc cref="IPlugin"/>
         public void Initialize(IPluginInitializeContext pluginInitializeContext)

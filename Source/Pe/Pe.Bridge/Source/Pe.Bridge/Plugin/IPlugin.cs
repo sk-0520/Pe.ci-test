@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
@@ -74,6 +76,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <param name="pluginKind"></param>
         /// <returns></returns>
         bool IsLoaded(PluginKind pluginKind);
+
+
+        /// <summary>
+        /// プラグインを示すアイコンを取得。
+        /// <para>この処理は<see cref="IsInitialized"/>の状態にかかわらず実行可能であること。</para>
+        /// </summary>
+        /// <param name="iconBox"></param>
+        /// <returns></returns>
+        DependencyObject GetIcon(IconBox iconBox);
 
         #endregion
     }

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -130,18 +131,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public class ThemePluginItemViewModel: ViewModelBase
         {
-            public ThemePluginItemViewModel(IPlugin plugin, ILoggerFactory loggerFactory)
+            public ThemePluginItemViewModel(IPlugin plugin, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
                 : base(loggerFactory)
             {
                 Plugin = plugin;
+                DispatcherWrapper = dispatcherWrapper;
             }
 
             #region property
 
             IPlugin Plugin { get; }
+            IDispatcherWrapper DispatcherWrapper { get; }
 
             public string Name => Plugin.PluginInformations.PluginIdentifiers.PluginName;
             public Guid Id => Plugin.PluginInformations.PluginIdentifiers.PluginId;
+
+            public DependencyObject PluginIcon
+            {
+                get
+                {
+                    return DispatcherWrapper.Get(() => {
+                        try {
+                            return Plugin.GetIcon(IconBox.Small);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, "[{0}] {1}, {2}", Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Plugin.PluginInformations.PluginIdentifiers.PluginId);
+                            return null!;
+                        }
+                    });
+                }
+            }
 
             #endregion
         }
@@ -156,7 +174,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             CultureInfoItems.Add(CultureInfo.InvariantCulture);
             CultureInfoItems.AddRange(cultures);
 
-            ThemePluginItems = Model.ThemePlugins.Select(i => new ThemePluginItemViewModel(i, LoggerFactory)).ToList();
+            ThemePluginItems = Model.ThemePlugins.Select(i => new ThemePluginItemViewModel(i, DispatcherWrapper, LoggerFactory)).ToList();
         }
 
         #region property

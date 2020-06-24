@@ -120,6 +120,7 @@ try {
 	$appIconPath = Join-Path 'Resource\Icon' $appIconName
 
 	Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
+	Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Plugins.DefaultTheme\App.ico' -Force
 
 	# ビルド開始
 	$defines = @()

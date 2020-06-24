@@ -143,19 +143,20 @@
                     </ComboBox.ItemsPanel>
                     <ComboBox.ItemTemplate>
                       <DataTemplate>
-                        <TextBlock>
-                          <Run Text="{Binding Name, Mode=OneTime}" />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                          <ContentControl Style="{StaticResource Image-Small}" Margin="{StaticResource ImageLabel-Small-Margin}" Content="{Binding PluginIcon}" />
+                          <TextBlock Text="{Binding Name, Mode=OneTime}" />
                           <TextBlock Opacity="0.7">
                             <Run Text=" (" />
                             <Run Text="{Binding Id, Mode=OneTime}" />
                             <Run Text=")" />
                           </TextBlock>
-                        </TextBlock>
+                        </StackPanel>
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>
                 </Grid>
-                
+
                 <Grid>
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Style="{StaticResource LabelDefinition}" />

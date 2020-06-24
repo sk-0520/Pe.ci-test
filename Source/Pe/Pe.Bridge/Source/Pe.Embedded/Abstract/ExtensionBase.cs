@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using Microsoft.Extensions.Logging;
 
@@ -26,6 +28,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public IPluginInformations PluginInformations => Plugin.PluginInformations;
 
         public bool IsInitialized => Plugin.IsInitialized;
+
+        public DependencyObject GetIcon(IconBox iconBox) => throw new NotSupportedException();
 
         public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
         public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();

@@ -30,7 +30,26 @@
     <ListBox x:Name="listPlugins" Grid.Column="0" SelectedItem="{Binding Editor.SelectedPlugin, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.PluginItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding PluginName}" />
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <ContentControl Margin="{StaticResource ImageLabel-Small-Margin}">
+              <ContentControl.Style>
+                <Style TargetType="ContentControl" BasedOn="{StaticResource Image-Small}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding PluginIcon}" Value="{x:Null}">
+                      <Setter Property="Content">
+                        <Setter.Value>
+                          <Control Template="{StaticResource App-Image-Plugin-HasError}" />
+                        </Setter.Value>
+                      </Setter>
+                    </DataTrigger>
+                  </Style.Triggers>
+                  <Setter Property="Content" Value="{Binding PluginIcon}" />
+                </Style>
+              </ContentControl.Style>
+            </ContentControl>
+
+            <TextBlock Text="{Binding PluginName}" />
+          </StackPanel>
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
