@@ -53,11 +53,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
                 PluginsSettingEditor,
             };
-#if DEBUG
-            this._selectedEditor = PluginsSettingEditor;
-#else
+//#if DEBUG
+//            this._selectedEditor = PluginsSettingEditor;
+//#else
+//            this._selectedEditor = GeneralSettingEditor;
+//#endif
             this._selectedEditor = GeneralSettingEditor;
-#endif
         }
 
         #region property
