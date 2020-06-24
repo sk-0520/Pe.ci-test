@@ -24,39 +24,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
 
         #region function
-        /// <summary>
-        ///呼び出し元のスレッドがこの <see cref="Dispatcher"/> に関連付けられたスレッドであるかどうかを判断します。
-        /// </summary>
-        /// <remarks>https://docs.microsoft.com/ja-jp/dotnet/api/system.windows.threading.dispatcher.checkaccess?view=netframework-4.8</remarks>
-        /// <returns></returns>
+        /// <inheritdoc cref="Dispatcher.CheckAccess"/>
         bool CheckAccess();
-        /// <summary>
-        /// 呼び出し元のスレッドがこの <see cref="Dispatcher"/> にアクセスできるかどうかを確認します。
-        /// </summary>
+        /// <inheritdoc cref="Dispatcher.VerifyAccess"/>
         void VerifyAccess();
 
-        [Obsolete]
-        void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
-        [Obsolete]
-        void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
-        [Obsolete]
-        void Invoke(Action action, DispatcherPriority dispatcherPriority);
-        [Obsolete]
-        void Invoke(Action action);
-        [Obsolete]
-        void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout);
-        [Obsolete]
-        void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
-        [Obsolete]
-        void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
-        [Obsolete]
-        void Invoke<TArgument>(Action<TArgument> action, TArgument argument);
-
+        /// <inheritdoc cref="Dispatcher.InvokeAsync(Action, DispatcherPriority, CancellationToken)"/>
         Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        /// <inheritdoc cref="InvokeAsync(Action, DispatcherPriority, CancellationToken)"/>
         Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="InvokeAsync(Action, DispatcherPriority, CancellationToken)"/>
         Task InvokeAsync(Action action);
+        /// <inheritdoc cref="Dispatcher.InvokeAsync{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
         Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        /// <inheritdoc cref="InvokeAsync{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
         Task<TResult> InvokeAsync<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="InvokeAsync{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
         Task<TResult> InvokeAsync<TResult>(Func<TResult> func);
 
 
@@ -69,27 +52,26 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <param name="dispatcherPriority"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        /// <inheritdoc cref="Get{T, TArg}(Func{TArg, T}, DispatcherPriority, CancellationToken)"/>
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
-        /// <summary>
-        /// <see cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <param name="dispatcherPriority"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="Get{T, TArg}(Func{TArg, T}, DispatcherPriority, CancellationToken)"/>
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority);
-        /// <summary>
-        /// <see cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="func"></param>
-        /// <returns></returns>
+        /// <inheritdoc cref="Get{T, TArg}(Func{TArg, T}, DispatcherPriority, CancellationToken)"/>
         T Get<T>(Func<T> func);
 
-        DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority);
-        DispatcherOperation Begin(Action action);
+        /// <summary>
+        /// <inheritdoc cref="Dispatcher.BeginInvoke(Delegate, DispatcherPriority, object[])"/>
+        /// </summary>
+        /// <param name="action">実施する処理。</param>
+        /// <param name="dispatcherPriority"></param>
+        /// <param name="argument">パラメータ。</param>
         DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
         DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument);
+        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
+        DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
+        DispatcherOperation Begin(Action action);
 
         #endregion
     }
