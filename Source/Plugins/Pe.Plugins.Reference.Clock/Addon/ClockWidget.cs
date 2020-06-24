@@ -47,8 +47,27 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public DependencyObject? GetMenuIcon(IPluginContext pluginContext)
         {
-            return new TextBlock() {
-                Text = DateTime.Now.Hour.ToString()
+            return new Viewbox() {
+                Stretch = System.Windows.Media.Stretch.Fill,
+                StretchDirection = StretchDirection.Both,
+                Child = new TextBlock() {
+                    Text = (DateTime.Now.Hour < 12 ? DateTime.Now.Hour : DateTime.Now.Hour - 12) switch
+                    {
+                        0 => "🕛",
+                        1 => "🕐",
+                        2 => "🕑",
+                        3 => "🕒",
+                        4 => "🕓",
+                        5 => "🕔",
+                        6 => "🕕",
+                        7 => "🕖",
+                        8 => "🕗",
+                        9 => "🕘",
+                        10 => "🕙",
+                        11 => "🕚",
+                        _ => "⏰",
+                    }
+                }
             };
         }
         public string GetMenuHeader(IPluginContext pluginContext)
