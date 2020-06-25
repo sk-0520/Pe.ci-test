@@ -142,7 +142,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#649: ランチャーアイテム再試行処理のキャンセルが効いていない",
+						"comments": [
+							"正確にはコマンドが効いていない"
+						]
 					},
 					{
 						"revision": "",
