@@ -51,6 +51,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// コマンド実行時の状態パラメータ。
+    /// </summary>
     public interface ICommandExecuteParameter
     {
         #region property
