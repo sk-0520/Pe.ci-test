@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
 
             settings.RegisterScheme(
                 new CefSharp.CefCustomScheme() {
-                    SchemeName = ApplicationSchemeHandlerFactory.SchemeName,
-                    DomainName = ApplicationSchemeHandlerFactory.DomainName,
-                    SchemeHandlerFactory = new ApplicationSchemeHandlerFactory(environmentParameters, LoggerFactory)
+                    SchemeName = ApplicationStorageSchemeHandlerFactory.SchemeName,
+                    DomainName = ApplicationStorageSchemeHandlerFactory.DomainName,
+                    SchemeHandlerFactory = new ApplicationStorageSchemeHandlerFactory(environmentParameters, LoggerFactory)
                 }
             );
 

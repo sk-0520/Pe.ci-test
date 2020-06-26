@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
 {
-    public class ApplicationSchemeHandlerFactory: ISchemeHandlerFactory
+    public class ApplicationStorageSchemeHandlerFactory: ISchemeHandlerFactory
     {
-        public ApplicationSchemeHandlerFactory(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+        public ApplicationStorageSchemeHandlerFactory(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
             EnvironmentParameters = environmentParameters;
@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
         EnvironmentParameters EnvironmentParameters { get; }
 
         public static string SchemeName => "pe";
-        public static string DomainName => "app";
+        public static string DomainName => "storage";
 
         #endregion
 
