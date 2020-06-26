@@ -162,7 +162,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#650: 内蔵ブラウザのリソース取得をC#処理からCefSharpで直接行う"
 					},
 					{
 						"revision": "",
