@@ -205,22 +205,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// </summary>
         public void ShowSettingView()
         {
-            StopPlatform();
-            StopHook();
-            UninitializeSystem();
-
-            if(CommandElement != null) {
-                if(CommandElement.ViewCreated) {
-                    CommandElement.HideView(true);
-                }
-            }
-
-            if(NotifyLogElement.ViewCreated) {
-                NotifyLogElement.HideView(true);
-            }
-            using var _silent_ = NotifyLogElement.ToSilent();
-
-            var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+            SaveWidgets();
+            using var viewPausing = PauseAllViews();
 
             Logger.LogDebug("遅延書き込み処理停止");
             var lazyWriterPack = ApplicationDiContainer.Get<IDatabaseLazyWriterPack>();
@@ -229,15 +215,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 lazyWriter.Flush();
                 var pausing = lazyWriter.Pause();
                 lazyWriterItemMap.Add(lazyWriter, pausing);
-            }
-
-            SaveWidgets();
-
-            if(BackgroundAddon != null) {
-                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
-                    var context = new BackgroundAddonProxyRunPauseContext(true);
-                    BackgroundAddon.RunPause(context);
-                }
             }
 
             // 現在DBを編集用として再構築
@@ -352,10 +329,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
                 EndPreferences(settingElement, Logger);
             }
-            StartHook();
-            StartBackground();
-            StartPlatform();
-            InitializeSystem();
 
             Logger.LogDebug("遅延書き込み処理再開");
             foreach(var pair in lazyWriterItemMap) {
@@ -366,25 +339,64 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 pair.Value.Dispose();
             }
 
-            if(BackgroundAddon != null) {
-                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
-                    var context = new BackgroundAddonProxyRunPauseContext(false);
-                    BackgroundAddon.RunPause(context);
-                }
-            }
-
-            if(changing.Success) {
-                changing.SuccessValue?.Dispose();
-            }
-
             settingElement.Dispose();
             container.UnregisterDatabase();
             container.Dispose();
         }
 
+        /// <summary>
+        /// 一時的に表示系と表示処理に起因する処理を停止する。
+        /// <para>モーダルダイアログ表示の際に使用する。</para>
+        /// </summary>
+        /// <returns></returns>
+        IDisposable PauseAllViews()
+        {
+            StopPlatform();
+            StopHook();
+            UninitializeSystem();
+
+            if(CommandElement != null) {
+                if(CommandElement.ViewCreated) {
+                    CommandElement.HideView(true);
+                }
+            }
+            if(NotifyLogElement.ViewCreated) {
+                NotifyLogElement.HideView(true);
+            }
+
+            var silent = NotifyLogElement.ToSilent();
+            var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyRunPauseContext(true);
+                    BackgroundAddon.RunPause(context);
+                }
+            }
+
+            return new ActionDisposer(d => {
+                StartHook();
+                StartBackground();
+                StartPlatform();
+                InitializeSystem();
+
+                if(BackgroundAddon != null) {
+                    if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                        var context = new BackgroundAddonProxyRunPauseContext(false);
+                        BackgroundAddon.RunPause(context);
+                    }
+                }
+
+                if(changing.Success) {
+                    changing.SuccessValue?.Dispose();
+                }
+                silent.Dispose();
+            });
+        }
+
         public void ShowStartupView(bool isFirstSetup)
         {
-            var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+            using var viewPausing = PauseAllViews();
 
             using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer
@@ -405,8 +417,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     }
                 }
             }
-
-            changing.SuccessValue?.Dispose();
         }
 
 #if DEBUG
@@ -495,7 +505,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ShowAboutView()
         {
-            var changing = StatusManagerImpl.ChangeLimitedBoolean(StatusProperty.CanCallNotifyAreaMenu, false);
+            using var viewPausing = PauseAllViews();
 
             using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer
@@ -511,8 +521,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 view.ShowDialog();
             }
-
-            changing.SuccessValue?.Dispose();
         }
 
         public void ShowHelp()
