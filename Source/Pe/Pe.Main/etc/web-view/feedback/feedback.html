@@ -3,11 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title><!--${FEEDBACK-TITLE}--></title>
-	<!--<script>/*${HTML-TEMPLATE-JQUERY}*/</script>-->
-	<script>/*${HTML-TEMPLATE-MARKED}*/</script>
-	<!--<script>/*${FEEDBACK-TEMPLATE-SCRIPT}*/</script>-->
-	<!--<style>/*${HTML-TEMPLATE-BASIC-STYLE}*/</style>-->
-	<!--<style>/*${FEEDBACK-TEMPLATE-STYLE}*/</style>-->
+	<script src="pe://app/etc/web-view/third-party/Marked/marked.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="pe://app/etc/web-view/feedback/feedback.css" />
 	<script>
 		function updatePreview(markdownSource) {
@@ -18,10 +14,10 @@
 			renderer.link = (href, title, text) => {
 				return '<a target="_blank" href="' + href + '" title="' + title + '">' + text + '</a>';
 			}
-			const markdownHtmlSource = marked(markdownSource, { renderer: renderer});
+			const markdownHtmlSource = marked(markdownSource, { renderer: renderer });
 			previewElement.innerHTML = markdownHtmlSource;
 		}
-		/*
+			/*
 		function setKindFormatCore(contentElement) {
 			const kindElement = document.getElementById('kind');
 			var kind = kindElement.value;

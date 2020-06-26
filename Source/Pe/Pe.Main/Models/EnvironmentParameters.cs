@@ -126,20 +126,18 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo MainSqlDirectory => CombineDirectory(false, SqlDirectory, "ContentTypeTextNet.Pe.Main");
 
         public DirectoryInfo WebViewTemplateDirectory => CombineDirectory(false, EtcDirectory, "web-view");
-        public DirectoryInfo WebViewThirdPartyDirectory => CombineDirectory(false, WebViewTemplateDirectory, "third-party");
-
-
-        public DirectoryInfo WebViewScriptDirectory => CombineDirectory(false, WebViewTemplateDirectory, "script");
-        public DirectoryInfo WebViewJqueryDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "jquery");
-        public FileInfo WebViewJqueryScriptFile => CombineFile(WebViewJqueryDirectory, "jquery.js");
-        public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "Marked");
-        public FileInfo WebViewMarkedScriptFile => CombineFile(WebViewMarkedDirectory, "marked.min.js");
-        public DirectoryInfo WebViewStyleDirectory => CombineDirectory(false, WebViewTemplateDirectory, "style");
+        //public DirectoryInfo WebViewThirdPartyDirectory => CombineDirectory(false, WebViewTemplateDirectory, "third-party");
+        //public DirectoryInfo WebViewScriptDirectory => CombineDirectory(false, WebViewTemplateDirectory, "script");
+        //public DirectoryInfo WebViewJqueryDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "jquery");
+        //public FileInfo WebViewJqueryScriptFile => CombineFile(WebViewJqueryDirectory, "jquery.js");
+        //public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "Marked");
+        //public FileInfo WebViewMarkedScriptFile => CombineFile(WebViewMarkedDirectory, "marked.min.js");
+        //public DirectoryInfo WebViewStyleDirectory => CombineDirectory(false, WebViewTemplateDirectory, "style");
         //public FileInfo WebViewBasicStyleFile => CombineFile(WebViewStyleDirectory, "basic.css");
         public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(false, WebViewTemplateDirectory, "feedback");
         public FileInfo WebViewFeedbackTemplateFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.html");
-        public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");
-        public FileInfo WebViewFeedbackScriptFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.js");
+        //public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");
+        //public FileInfo WebViewFeedbackScriptFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.js");
 
         public DirectoryInfo WebViewWidgetDirectory => CombineDirectory(false, WebViewTemplateDirectory, "widget");
         public FileInfo WebViewWidgetInjectionScriptFile => CombineFile(WebViewWidgetDirectory, "injection.js");
