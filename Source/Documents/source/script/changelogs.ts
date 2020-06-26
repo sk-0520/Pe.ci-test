@@ -149,7 +149,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#651: %PATH% から設定されたランチャーアイテムのコンテキストメニューの活性処理で %PATH% を考慮する"
 					},
 					{
 						"revision": "",
