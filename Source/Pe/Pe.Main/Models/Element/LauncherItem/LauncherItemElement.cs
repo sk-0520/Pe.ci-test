@@ -105,17 +105,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
 
             var expandedPath = Environment.ExpandEnvironmentVariables(pathData.Path ?? string.Empty);
-            if(!Path.IsPathRooted(expandedPath)) {
-                var pathItem = EnvironmentPathExecuteFileCache.FindExecuteItem(expandedPath, LoggerFactory);
-                if(pathItem != null) {
-                    expandedPath = pathItem.File.FullName;
-                } else {
-                    Logger.LogWarning("指定されたコマンドからパス取得失敗: {0}", expandedPath);
-                }
-            }
+            var fullPath = EnvironmentPathExecuteFileCache.ToFullPathIfExistsCommand(expandedPath, LoggerFactory);
             var result = new LauncherFileDetailData() {
                 PathData = pathData,
-                FullPath = expandedPath,
+                FullPath = fullPath,
             };
 
             return result;
@@ -161,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
             fileData.Caption = Name;
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, redoData, screen);
 
             return result;
@@ -234,7 +227,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        private void IncrementExecuteCount() {
+        private void IncrementExecuteCount()
+        {
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
                 var dao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 dao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
@@ -283,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
 
             return result;
@@ -301,7 +295,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
 
             return result;
@@ -321,18 +315,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             var pathData = GetExecutePath();
-            var value = Path.GetDirectoryName(pathData.Path);
+            var path = Environment.ExpandEnvironmentVariables(pathData.Path ?? string.Empty);
+
+            var value = Path.GetDirectoryName(path);
             if(string.IsNullOrEmpty(value)) {
-                if(!PathUtility.IsNetworkDirectoryPath(pathData.Path)) {
-                    Logger.LogWarning("親ディレクトリ不明: {0}, {1}", pathData.Path, LauncherItemId);
-                    return;
+                if(!PathUtility.IsNetworkDirectoryPath(path)) {
+                    var fullPath = EnvironmentPathExecuteFileCache.ToFullPathIfExistsCommand(path, LoggerFactory);
+                    if(ReferenceEquals(fullPath, path) || fullPath == null) {
+                        Logger.LogWarning("親ディレクトリ不明: {0}, {1}", path, LauncherItemId);
+                        return;
+                    }
+                    value = Path.GetDirectoryName(fullPath);
+                    if(string.IsNullOrEmpty(value)) {
+                        Logger.LogWarning("親ディレクトリ不明: {0}, {1}", fullPath, LauncherItemId);
+                        return;
+                    }
+                } else {
+                    var owner = PathUtility.GetNetworkOwnerName(path);
+                    if(string.IsNullOrEmpty(owner)) {
+                        Logger.LogWarning("親ディレクトリ不明: {0}, {1}", path, LauncherItemId);
+                        return;
+                    }
+                    value = owner;
                 }
-                var owner = PathUtility.GetNetworkOwnerName(pathData.Path);
-                if(string.IsNullOrEmpty(owner)) {
-                    Logger.LogWarning("親ディレクトリ不明: {0}, {1}", pathData.Path, LauncherItemId);
-                    return;
-                }
-                value = owner;
             }
             ClipboardManager.CopyText(value, ClipboardNotify.None);
         }
@@ -387,7 +392,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             launcherExecutor.ShowProperty(pathData);
         }
 

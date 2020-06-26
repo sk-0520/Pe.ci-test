@@ -18,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.ViewModels._Debug_;
 using ContentTypeTextNet.Pe.Main.Views._Debug_;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
@@ -95,7 +96,7 @@ rem ping 127.0.0.1
 test
 echo end
             ", Encoding.GetEncoding("shift_jis"));
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, new ApplicationDispatcherWrapper(), LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache.Instance, OrderManager, NotifyManager, new ApplicationDispatcherWrapper(), LoggerFactory);
             var data = new LauncherFileData() {
                 //Path = batchPath,
                 Path = "cmd",

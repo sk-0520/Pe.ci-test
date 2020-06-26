@@ -202,6 +202,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return pathItem;
         }
 
+        /// <summary>
+        /// 指定されたパスがコマンドとして有効ならフルパスへ変換する。
+        /// </summary>
+        /// <param name="path">対象パス。</param>
+        /// <returns>フルパス。<param name="path" />がすでにフルパスの場合やコマンドが見つからない場合は<param name="path" />をそのまま返す。</returns>
+        public static string ToFullPathIfExistsCommand(this EnvironmentPathExecuteFileCache @this, string path, ILoggerFactory loggerFactory)
+        {
+            if(!Path.IsPathRooted(path)) {
+                var pathItem = @this.FindExecuteItem(path, loggerFactory);
+                if(pathItem != null) {
+                    return pathItem.File.FullName;
+                }
+            }
+
+            return path;
+        }
+
+
         #endregion
     }
 }

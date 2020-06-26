@@ -61,13 +61,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
     public class LauncherExecutor
     {
-        public LauncherExecutor(IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherExecutor(EnvironmentPathExecuteFileCache environmentPathExecuteFileCache, IOrderManager orderManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
             OrderManager = orderManager;
             NotifyManager = notifyManager;
             DispatcherWrapper = dispatcherWrapper;
+            EnvironmentPathExecuteFileCache = environmentPathExecuteFileCache;
         }
 
         #region property
@@ -77,6 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         IDispatcherWrapper DispatcherWrapper { get; }
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
+        EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; }
 
         #endregion
 
@@ -145,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             RedoExecutor? redoExecutor = null;
             if(redoData.RedoMode != RedoMode.None) {
                 redoExecutor = new RedoExecutor(
-                    new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory),
+                    new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory),
                     result,
                     new RedoParameter(
                         pathParameter,
@@ -214,9 +216,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var path = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
+            var fullPath = EnvironmentPathExecuteFileCache.ToFullPathIfExistsCommand(path, LoggerFactory);
             try {
                 var systemExecutor = new SystemExecutor();
-                var process = systemExecutor.OpenDirectoryWithFileSelect(path);
+                var process = systemExecutor.OpenDirectoryWithFileSelect(fullPath);
                 var result = new LauncherExecuteResult() {
                     Kind = kind,
                     Process = process,
@@ -236,9 +239,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var path = Environment.ExpandEnvironmentVariables(pathParameter.WorkDirectoryPath ?? string.Empty);
+            var fullPath = EnvironmentPathExecuteFileCache.ToFullPathIfExistsCommand(path, LoggerFactory);
             try {
                 var systemExecutor = new SystemExecutor();
-                var process = systemExecutor.ExecuteFile(path!);
+                var process = systemExecutor.ExecuteFile(fullPath);
                 var result = new LauncherExecuteResult() {
                     Kind = kind,
                     Process = process,
@@ -258,8 +262,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var path = Environment.ExpandEnvironmentVariables(pathParameter.Path ?? string.Empty);
+            var fullPath = EnvironmentPathExecuteFileCache.ToFullPathIfExistsCommand(path, LoggerFactory);
             var systemExecutor = new SystemExecutor();
-            systemExecutor.ShowProperty(path);
+            systemExecutor.ShowProperty(fullPath);
         }
 
         #endregion
