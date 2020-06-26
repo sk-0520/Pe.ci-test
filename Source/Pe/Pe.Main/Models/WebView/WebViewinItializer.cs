@@ -11,11 +11,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
     {
         public WebViewinItializer(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
         #endregion
@@ -35,6 +37,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             settings.UserAgent = environmentParameters.Configuration.Web.ViewUserAgent;
 
             settings.PersistSessionCookies = true;
+
+            settings.RegisterScheme(
+                new CefSharp.CefCustomScheme() {
+                    SchemeName = ApplicationStorageSchemeHandlerFactory.SchemeName,
+                    DomainName = ApplicationStorageSchemeHandlerFactory.DomainName,
+                    SchemeHandlerFactory = new ApplicationStorageSchemeHandlerFactory(environmentParameters, LoggerFactory)
+                }
+            );
 
             CefSharp.Cef.Initialize(settings);
         }

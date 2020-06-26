@@ -13,6 +13,6 @@
   mc:Ignorable="d"
   >
   <Grid>
-    <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" />
+    <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" RenderOptions.BitmapScalingMode="NearestNeighbor" />
   </Grid>
 </Window>

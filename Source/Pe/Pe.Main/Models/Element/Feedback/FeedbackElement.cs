@@ -154,25 +154,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
         {
             const string feedbackHtml = "feedback-html";
             //const string feedbackScript = "FEEDBACK-TEMPLATE-SCRIPT";
-            const string feedbackStyle = "FEEDBACK-TEMPLATE-STYLE";
+            //const string feedbackStyle = "FEEDBACK-TEMPLATE-STYLE";
             var fileMap = new Dictionary<string, FileInfo>() {
                 [feedbackHtml] = EnvironmentParameters.WebViewFeedbackTemplateFile,
-                [HtmlTemplateJqury] = EnvironmentParameters.WebViewJqueryScriptFile,
-                [HtmlTemplateMarked] = EnvironmentParameters.WebViewMarkedScriptFile,
-                [HtmlTemplateBasicStyle] = EnvironmentParameters.WebViewBasicStyleFile,
+                //[HtmlTemplateJqury] = EnvironmentParameters.WebViewJqueryScriptFile,
+                //[HtmlTemplateMarked] = EnvironmentParameters.WebViewMarkedScriptFile,
+                //[HtmlTemplateBasicStyle] = EnvironmentParameters.WebViewBasicStyleFile,
                 //[feedbackScript] = EnvironmentParameters.WebViewFeedbackScriptFile,
-                [feedbackStyle] = EnvironmentParameters.WebViewFeedbackStyleFile,
+                //[feedbackStyle] = EnvironmentParameters.WebViewFeedbackStyleFile,
             };
             var sourceMap = await LoadSourceFilesAsync(fileMap);
 
             var map = new WebViewTemplateDictionary() {
                 [HtmlTemplateLang] = new CultureWebViewTemplate(CultureService.Instance.Culture),
-                [HtmlTemplateJqury] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateJqury]),
-                [HtmlTemplateMarked] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateMarked]),
-                [HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
+                //[HtmlTemplateJqury] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateJqury]),
+                //[HtmlTemplateMarked] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateMarked]),
+                //[HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
                 //[feedbackScript] = new RawTextWebViewTemplate(sourceMap[feedbackScript]),
-                [feedbackStyle] = new RawTextWebViewTemplate(sourceMap[feedbackStyle]),
-                //["FEEDBACK-TITLE"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Title),
+                //[feedbackStyle] = new RawTextWebViewTemplate(sourceMap[feedbackStyle]),
+                ["FEEDBACK-TITLE"] = new HtmlTextWebViewTemplate("FEEDBACK"),
                 //["FEEDBACK-DESCRIPTION"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Description),
                 //["FEEDBACK-WARNING"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Warning),
                 //["FEEDBACK-SUBJECT"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Subject),

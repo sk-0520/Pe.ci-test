@@ -37,7 +37,7 @@
     </Grid.RowDefinitions>
 
     <Grid Grid.Row="0">
-      <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" />
+      <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" RenderOptions.BitmapScalingMode="NearestNeighbor" />
     </Grid>
 
     <TextBlock Grid.Row="1" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="{StaticResource AllMargin}">
