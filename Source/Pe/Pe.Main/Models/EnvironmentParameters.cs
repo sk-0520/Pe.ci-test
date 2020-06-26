@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo RootDirectory { get; }
 
 #if !PRODUCT
-        DirectoryInfo ApplicationBaseDirectory { get; }
+        internal DirectoryInfo ApplicationBaseDirectory { get; }
 #endif
 
         public FileInfo RootApplication => CombineFile(RootDirectory, "Pe.exe");
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DirectoryInfo WebViewMarkedDirectory => CombineDirectory(false, WebViewThirdPartyDirectory, "Marked");
         public FileInfo WebViewMarkedScriptFile => CombineFile(WebViewMarkedDirectory, "marked.min.js");
         public DirectoryInfo WebViewStyleDirectory => CombineDirectory(false, WebViewTemplateDirectory, "style");
-        public FileInfo WebViewBasicStyleFile => CombineFile(WebViewStyleDirectory, "basic.css");
+        //public FileInfo WebViewBasicStyleFile => CombineFile(WebViewStyleDirectory, "basic.css");
         public DirectoryInfo WebViewFeedbackTemplateDirectory => CombineDirectory(false, WebViewTemplateDirectory, "feedback");
         public FileInfo WebViewFeedbackTemplateFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.html");
         public FileInfo WebViewFeedbackStyleFile => CombineFile(WebViewFeedbackTemplateDirectory, "feedback.css");

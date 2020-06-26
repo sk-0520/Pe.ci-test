@@ -159,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                 [feedbackHtml] = EnvironmentParameters.WebViewFeedbackTemplateFile,
                 [HtmlTemplateJqury] = EnvironmentParameters.WebViewJqueryScriptFile,
                 [HtmlTemplateMarked] = EnvironmentParameters.WebViewMarkedScriptFile,
-                [HtmlTemplateBasicStyle] = EnvironmentParameters.WebViewBasicStyleFile,
+                //[HtmlTemplateBasicStyle] = EnvironmentParameters.WebViewBasicStyleFile,
                 //[feedbackScript] = EnvironmentParameters.WebViewFeedbackScriptFile,
                 [feedbackStyle] = EnvironmentParameters.WebViewFeedbackStyleFile,
             };
@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
                 [HtmlTemplateLang] = new CultureWebViewTemplate(CultureService.Instance.Culture),
                 [HtmlTemplateJqury] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateJqury]),
                 [HtmlTemplateMarked] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateMarked]),
-                [HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
+                //[HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
                 //[feedbackScript] = new RawTextWebViewTemplate(sourceMap[feedbackScript]),
                 [feedbackStyle] = new RawTextWebViewTemplate(sourceMap[feedbackStyle]),
                 //["FEEDBACK-TITLE"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Title),
