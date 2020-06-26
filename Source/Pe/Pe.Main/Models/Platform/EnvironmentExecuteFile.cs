@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                     .Select(i => i.Trim().ToLower())
                     .OrderBy(i => i == ".exe" ? 0 : 1)
                     .ThenBy(i => i)
-                    .Select(i => addWildcard ? "*" + i: i)
+                    .Select(i => addWildcard ? "*" + i : i)
                     .ToList()
                 ;
                 if(result.Any()) {
@@ -179,6 +180,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             return PathItemsCache;
         }
+        #endregion
+    }
+
+    public static class EnvironmentPathExecuteFileCacheExtensions
+    {
+        #region function
+
+        /// <summary>
+        /// コマンドから実ファイルを取得。
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="command"></param>
+        /// <param name="loggerFactory"></param>
+        /// <returns></returns>
+        public static EnvironmentPathExecuteItem? FindExecuteItem(this EnvironmentPathExecuteFileCache @this, string command, ILoggerFactory loggerFactory)
+        {
+            var pathItems = @this.GetItems(loggerFactory);
+            var environmentExecuteFile = new EnvironmentExecuteFile(loggerFactory);
+            var pathItem = environmentExecuteFile.Get(command, pathItems);
+            return pathItem;
+        }
+
         #endregion
     }
 }

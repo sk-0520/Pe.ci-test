@@ -231,22 +231,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return Task.Run(() => {
                 Detail = Model.LoadFileDetail();
 
-                var workingDirectoryPath = Environment.ExpandEnvironmentVariables(Detail.PathData?.WorkDirectoryPath ?? string.Empty);
+                var workingDirectoryPath = Environment.ExpandEnvironmentVariables(Detail.PathData.WorkDirectoryPath);
                 if(!string.IsNullOrWhiteSpace(workingDirectoryPath)) {
                     CanCopyWorkingDirectory = true;
                     if(Directory.Exists(workingDirectoryPath)) {
                         ExistsWorkingDirectory = true;
                     }
                 }
-                CanCopyOption = !string.IsNullOrEmpty(Detail.PathData?.Option);
+                CanCopyOption = !string.IsNullOrEmpty(Detail.PathData.Option);
 
-                ExistsPath = FileUtility.Exists(Detail?.FullPath);
+                ExistsPath = FileUtility.Exists(Detail.FullPath);
                 CanExecutePath = ExistsPath;
 
-                var parentDirectoryPath = Path.GetDirectoryName(Detail?.FullPath);
+                var parentDirectoryPath = Path.GetDirectoryName(Detail.FullPath);
                 ExistsParentDirectory = Directory.Exists(parentDirectoryPath);
                 CanOpenParentDirectory = ExistsParentDirectory;
-                CanCopyParentDirectory = !PathUtility.IsRootName(Detail?.FullPath);
+                CanCopyParentDirectory = !PathUtility.IsRootName(Detail.FullPath);
             });
         }
 

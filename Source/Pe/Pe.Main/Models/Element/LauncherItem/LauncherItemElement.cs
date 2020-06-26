@@ -18,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
 
@@ -57,6 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         IFileDatabaseBarrier? FileDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+        EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
         public string Name { get; private set; } = string.Empty;
         public string Code { get; private set; } = string.Empty;
@@ -101,8 +103,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
-            //TODO: PATHの考慮.
+
             var expandedPath = Environment.ExpandEnvironmentVariables(pathData.Path ?? string.Empty);
+            if(!Path.IsPathRooted(expandedPath)) {
+                var pathItem = EnvironmentPathExecuteFileCache.FindExecuteItem(expandedPath, LoggerFactory);
+                if(pathItem != null) {
+                    expandedPath = pathItem.File.FullName;
+                } else {
+                    Logger.LogWarning("指定されたコマンドからパス取得失敗: {0}", expandedPath);
+                }
+            }
             var result = new LauncherFileDetailData() {
                 PathData = pathData,
                 FullPath = expandedPath,
