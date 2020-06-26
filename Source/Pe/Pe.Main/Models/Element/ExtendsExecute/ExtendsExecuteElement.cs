@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
             ThrowIfDisposed();
 
             try {
-                var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+                var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache.Instance, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
                 var result = launcherExecutor.Execute(LauncherItemKind.File, fileData, fileData, environmentVariables, redoData, screen);
                 return result;
             } catch(Exception ex) {
