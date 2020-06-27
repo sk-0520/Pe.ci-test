@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -104,7 +105,73 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public class CronItemSettingFactory
     {
+        public CronItemSettingFactory(int seed)
+        {
+            Random = new Random(seed);
+        }
+
+        public CronItemSettingFactory()
+            : this(Environment.TickCount)
+        { }
+
         #region function
+
+        Random Random { get; }
+
+        #endregion
+
+        #region function
+
+        bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
+        {
+            if(string.IsNullOrWhiteSpace(cronPattern)) {
+                resultException = new ArgumentException(nameof(cronPattern));
+                resultSetting = default;
+                return false;
+            }
+
+            var values = cronPattern.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
+            if(values.Length == 1 && values[0][0] == '@') {
+                switch(values[0]) {
+                    case "@hourly":
+                    case "@daily":
+                    case "@weekly":
+                    case "@monthly":
+                        break;
+
+                    default:
+                        resultException = new Exception($"{nameof(cronPattern)}: {values[0]}");
+                        resultSetting = default;
+                        return false;
+                }
+            }
+            if(values.Length != 5) {
+                resultException = new Exception($"{nameof(cronPattern)}: {cronPattern} -> {values.Length}");
+                resultSetting = default;
+                return false;
+            }
+
+            var minutes = values[0];
+            var hour = values[1];
+            var day = values[2];
+            var month = values[3];
+            var week = values[4];
+
+
+        }
+
+        public bool TryParse(string cronPattern, [NotNullWhen(true)] out CronItemSetting? result)
+        {
+            return TryParseCore(cronPattern, out _, out result);
+        }
+
+        public CronItemSetting Parse(string cronPattern)
+        {
+            if(TryParseCore(cronPattern, out var ex, out var result)) {
+                return result;
+            }
+            throw ex;
+        }
 
         #endregion
     }
