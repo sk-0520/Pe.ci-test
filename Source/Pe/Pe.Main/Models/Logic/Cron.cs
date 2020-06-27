@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
@@ -37,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         CancelAndStart,
     }
 
+    [DateTimeKind(DateTimeKind.Utc)]
     public interface IReadOnlyCronItemSetting
     {
         #region property
@@ -70,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    [DateTimeKind(DateTimeKind.Utc)]
     public class CronItemSetting: IReadOnlyCronItemSetting
     {
         #region IReadOnlyCronItemSetting
@@ -95,6 +98,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         IReadOnlyList<DayOfWeek> IReadOnlyCronItemSetting.DayOfWeeks => DayOfWeeks;
 
         public MultipleExecuteMode Mode { get; }
+
+        #endregion
+    }
+
+    public class CronItemSettingFactory
+    {
+        #region function
 
         #endregion
     }
@@ -260,11 +270,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             base.Dispose(disposing);
         }
 
+        internal IEnumerable<CronItem> GetItemFromTime([DateTimeKind(DateTimeKind.Utc)] DateTime dateTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void ExecuteItems(IEnumerable<CronItem> items)
+        {
+
+        }
+
         #endregion
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            throw new NotImplementedException();
+            Debug.Assert(Timer != null);
+            Timer.Stop();
+
+            var utc = e.SignalTime.ToUniversalTime();
+            var items = GetItemFromTime(utc);
+            ExecuteItems(items);
+
+            Timer.Start();
         }
 
 
