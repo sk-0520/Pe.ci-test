@@ -175,12 +175,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             if(value == "*") {
                 return Enumerable.Range(min, max);
             } else if(value.Contains('/')) {
-                throw new NotImplementedException();
+                var elements = value.Split('/');
+                if(elements.Length != 2) {
+                    throw new ArgumentException(value);
+                }
+                var a = elements[0];
+                var b = elements[1];
+                throw new NotImplementedException("やるべきこと #550 に対してやること多すぎるからちょっと今はこれ以上しんどいので気が向いたら対応する");
             } else {
                 var numericRange = new NumericRange(false, ",", "-");
                 return numericRange.Parse(value);
             }
+        }
 
+        IEnumerable<DayOfWeek> ConvertWeek(string value)
+        {
+            if(value == "*") {
+                return EnumUtility.GetMembers<DayOfWeek>();
+            } else {
+                var numericRange = new NumericRange(false, ",", "-");
+                return numericRange.Parse(value)
+                    .Select(i => i == 7 ? 0: i) // 7 は 日曜日(0) 判定
+                    .Select(i => (DayOfWeek)i)
+                ;
+            }
         }
 
         bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
@@ -228,7 +246,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             try {
                 var setting = new CronItemSetting();
 
-                setting.Minutes.AddRange(ConvertRange(minutes, 0, 23));
+                setting.Minutes.AddRange(ConvertRange(minutes, 0, 60));
+                setting.Hours.AddRange(ConvertRange(hour, 0, 24));
+                setting.Days.AddRange(ConvertRange(day, 1, 31));
+                setting.Months.AddRange(ConvertRange(month, 1, 12));
+                setting.DayOfWeeks.AddRange(ConvertWeek(week));
 
                 resultException = default;
                 resultSetting = setting;

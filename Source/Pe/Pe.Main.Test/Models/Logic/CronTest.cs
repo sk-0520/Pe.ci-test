@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -36,6 +37,77 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
                 Assert.IsTrue(true);
             }
 
+        }
+
+        [TestMethod]
+        public void Parse_At_Test()
+        {
+            var cisf = new CronItemSettingFactory();
+
+            var h = cisf.Parse("@hourly");
+            Assert.AreEqual(1, h.Minutes.Count);
+            Assert.AreEqual(0, h.Hours.Count);
+            Assert.AreEqual(0, h.Days.Count);
+            Assert.AreEqual(0, h.Months.Count);
+            Assert.AreEqual(0, h.DayOfWeeks.Count);
+
+            var d = cisf.Parse("@daily");
+            Assert.AreEqual(1, d.Minutes.Count);
+            Assert.AreEqual(1, d.Hours.Count);
+            Assert.AreEqual(0, d.Days.Count);
+            Assert.AreEqual(0, d.Months.Count);
+            Assert.AreEqual(0, d.DayOfWeeks.Count);
+        }
+
+        [TestMethod]
+        public void Parse_Simple_Test()
+        {
+            var cisf = new CronItemSettingFactory();
+
+            {
+                var full = cisf.Parse("* 0 0 0 0");
+                Assert.AreEqual(60, full.Minutes.Count);
+                Assert.AreEqual(1, full.Hours.Count);
+                Assert.AreEqual(1, full.Days.Count);
+                Assert.AreEqual(1, full.Months.Count);
+                Assert.AreEqual(1, full.DayOfWeeks.Count);
+            }
+
+            {
+                var full = cisf.Parse("0 * 0 0 0");
+                Assert.AreEqual(1, full.Minutes.Count);
+                Assert.AreEqual(24, full.Hours.Count);
+                Assert.AreEqual(1, full.Days.Count);
+                Assert.AreEqual(1, full.Months.Count);
+                Assert.AreEqual(1, full.DayOfWeeks.Count);
+            }
+
+            {
+                var full = cisf.Parse("0 0 * 0 0");
+                Assert.AreEqual(1, full.Minutes.Count);
+                Assert.AreEqual(1, full.Hours.Count);
+                Assert.AreEqual(31, full.Days.Count);
+                Assert.AreEqual(1, full.Months.Count);
+                Assert.AreEqual(1, full.DayOfWeeks.Count);
+            }
+
+            {
+                var full = cisf.Parse("0 0 0 * 0");
+                Assert.AreEqual(1, full.Minutes.Count);
+                Assert.AreEqual(1, full.Hours.Count);
+                Assert.AreEqual(1, full.Days.Count);
+                Assert.AreEqual(12, full.Months.Count);
+                Assert.AreEqual(1, full.DayOfWeeks.Count);
+            }
+
+            {
+                var full = cisf.Parse("0 0 0 0 *");
+                Assert.AreEqual(1, full.Minutes.Count);
+                Assert.AreEqual(1, full.Hours.Count);
+                Assert.AreEqual(1, full.Days.Count);
+                Assert.AreEqual(1, full.Months.Count);
+                Assert.AreEqual(7, full.DayOfWeeks.Count);
+            }
         }
 
         #endregion
