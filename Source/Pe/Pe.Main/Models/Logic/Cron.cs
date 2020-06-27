@@ -76,6 +76,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    public static class IReadOnlyCronItemSettingExtensions
+    {
+        #region function
+
+        /// <summary>
+        /// アイテムが時間と抑制時間から有効であるか判定。
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="excludeTime"></param>
+        /// <returns></returns>
+        public static bool IsLive(this IReadOnlyCronItemSetting @this, DateTime timestamp, TimeSpan excludeTime)
+        {
+            return false;
+        }
+
+        #endregion
+    }
+
     [DateTimeKind(DateTimeKind.Local)]
     public class CronItemSetting: IReadOnlyCronItemSetting
     {

@@ -2,11 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
 {
+    [TestClass]
+    public class IReadOnlyCronItemSettingExtensionsTest
+    {
+        #region function
+
+        public void IsLiveTest()
+        {
+            // テストしたい思いと🍶で死んでる脳。心は何処
+            var cisf = new CronItemSettingFactory();
+        }
+
+        #endregion
+    }
+
     [TestClass]
     public class CronItemSettingFactoryTest
     {
@@ -117,6 +132,12 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
     public class CronSchedulerTest
     {
         #region function
+
+        //[TestMethod]
+        //public void GetItemFromTimeTest()
+        //{
+        //    var cs = new CronScheduler(Timeout.InfiniteTimeSpan, TimeSpan.FromSeconds(1));
+        //}
 
         #endregion
     }
