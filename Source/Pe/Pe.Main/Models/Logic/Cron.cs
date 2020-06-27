@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Transactions;
+using System.Xml.Schema;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 
@@ -79,10 +82,47 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public CronItemSetting()
         { }
 
+        internal CronItemSetting(int minutes, int hour, int day, int month)
+        {
+            Minutes.Add(EnforceMinutes(minutes, nameof(minutes)));
+            Hours.Add(EnforceHour(hour, nameof(hour)));
+            Days.Add(EnforceDay(day, nameof(day)));
+            Months.Add(EnforceMonth(month, nameof(month)));
+            DayOfWeeks.AddRange(EnumUtility.GetMembers<DayOfWeek>());
+        }
+
         internal CronItemSetting(int minutes, int hour, int day, int month, DayOfWeek dayOfWeek)
         {
-
+            Minutes.Add(EnforceMinutes(minutes, nameof(minutes)));
+            Hours.Add(EnforceHour(hour, nameof(hour)));
+            Days.Add(EnforceDay(day, nameof(day)));
+            Months.Add(EnforceMonth(month, nameof(month)));
+            DayOfWeeks.Add(dayOfWeek);
         }
+
+        #region function
+
+        static int Enforce(int value, int min, int max, string valueArgumentName)
+        {
+            if(min <= value && value <= max) {
+                return value;
+            }
+
+            throw new ArgumentException(valueArgumentName);
+        }
+
+        static int EnforceMinutes(int value, string valueArgumentName) => Enforce(value, 0, 59, valueArgumentName);
+        static int EnforceHour(int value, string valueArgumentName) => Enforce(value, 0, 23, valueArgumentName);
+        /// <summary>
+        /// 年情報がないのでうるう年とか月最終日は知らん。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="valueArgumentName"></param>
+        /// <returns></returns>
+        static int EnforceDay(int value, string valueArgumentName) => Enforce(value, 1, 31, valueArgumentName);
+        static int EnforceMonth(int value, string valueArgumentName) => Enforce(value, 1, 12, valueArgumentName);
+
+        #endregion
 
         #region IReadOnlyCronItemSetting
 
@@ -130,6 +170,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
+        IEnumerable<int> ConvertRange(string value, int min, int max)
+        {
+            if(value == "*") {
+                return Enumerable.Range(min, max);
+            } else if(value.Contains('/')) {
+                throw new NotImplementedException();
+            } else {
+                var numericRange = new NumericRange(false, ",", "-");
+                return numericRange.Parse(value);
+            }
+
+        }
+
         bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
         {
             if(string.IsNullOrWhiteSpace(cronPattern)) {
@@ -142,10 +195,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             if(values.Length == 1 && values[0][0] == '@') {
                 switch(values[0]) {
                     case "@hourly":
+                        resultException = default;
+                        resultSetting = new CronItemSetting();
+                        resultSetting.Minutes.Add(Random.Next(1, 59));
+                        return true;
+
                     case "@daily":
-                    case "@weekly":
-                    case "@monthly":
-                        break;
+                        resultException = default;
+                        resultSetting = new CronItemSetting();
+                        resultSetting.Minutes.Add(Random.Next(1, 59));
+                        resultSetting.Hours.Add(Random.Next(0, 23));
+                        return true;
 
                     default:
                         resultException = new Exception($"{nameof(cronPattern)}: {values[0]}");
@@ -165,7 +225,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             var month = values[3];
             var week = values[4];
 
+            try {
+                var setting = new CronItemSetting();
 
+                setting.Minutes.AddRange(ConvertRange(minutes, 0, 23));
+
+                resultException = default;
+                resultSetting = setting;
+                return true;
+            } catch(Exception ex) {
+                resultException = ex;
+                resultSetting = default;
+                return false;
+            }
         }
 
         public bool TryParse(string cronPattern, [NotNullWhen(true)] out CronItemSetting? result)
