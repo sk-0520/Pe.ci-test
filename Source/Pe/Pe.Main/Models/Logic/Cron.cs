@@ -76,6 +76,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     [DateTimeKind(DateTimeKind.Utc)]
     public class CronItemSetting: IReadOnlyCronItemSetting
     {
+        public CronItemSetting()
+        { }
+
+        internal CronItemSetting(int minutes, int hour, int day, int month, DayOfWeek dayOfWeek)
+        {
+
+        }
+
         #region IReadOnlyCronItemSetting
 
         /// <inheritdoc cref="IReadOnlyCronItemSetting.Minutes"/>
@@ -122,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
+        bool TryParseCore(bool isUtc, string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
         {
             if(string.IsNullOrWhiteSpace(cronPattern)) {
                 resultException = new ArgumentException(nameof(cronPattern));
@@ -160,14 +168,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         }
 
-        public bool TryParse(string cronPattern, [NotNullWhen(true)] out CronItemSetting? result)
+        public bool TryParseUtc(string cronPattern, [NotNullWhen(true)] out CronItemSetting? result)
         {
-            return TryParseCore(cronPattern, out _, out result);
+            return TryParseCoreUtc(true, cronPattern, out _, out result);
         }
 
-        public CronItemSetting Parse(string cronPattern)
+        public CronItemSetting ParseUtc(string cronPattern)
         {
-            if(TryParseCore(cronPattern, out var ex, out var result)) {
+            if(TryParseCore(true, cronPattern, out var ex, out var result)) {
                 return result;
             }
             throw ex;
