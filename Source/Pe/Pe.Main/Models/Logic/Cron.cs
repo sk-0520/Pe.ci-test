@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         CancelAndStart,
     }
 
-    [DateTimeKind(DateTimeKind.Utc)]
+    [DateTimeKind(DateTimeKind.Local)]
     public interface IReadOnlyCronItemSetting
     {
         #region property
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    [DateTimeKind(DateTimeKind.Utc)]
+    [DateTimeKind(DateTimeKind.Local)]
     public class CronItemSetting: IReadOnlyCronItemSetting
     {
         public CronItemSetting()
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        bool TryParseCore(bool isUtc, string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
+        bool TryParseCore(string cronPattern, [NotNullWhen(false)] out Exception? resultException, [NotNullWhen(true)] out CronItemSetting? resultSetting)
         {
             if(string.IsNullOrWhiteSpace(cronPattern)) {
                 resultException = new ArgumentException(nameof(cronPattern));
@@ -168,14 +168,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         }
 
-        public bool TryParseUtc(string cronPattern, [NotNullWhen(true)] out CronItemSetting? result)
+        public bool TryParse(string cronPattern, [NotNullWhen(true)] out CronItemSetting? result)
         {
-            return TryParseCoreUtc(true, cronPattern, out _, out result);
+            return TryParseCore(cronPattern, out _, out result);
         }
 
-        public CronItemSetting ParseUtc(string cronPattern)
+        public CronItemSetting Parse(string cronPattern)
         {
-            if(TryParseCore(true, cronPattern, out var ex, out var result)) {
+            if(TryParseCore(cronPattern, out var ex, out var result)) {
                 return result;
             }
             throw ex;
@@ -345,7 +345,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             base.Dispose(disposing);
         }
 
-        internal IEnumerable<CronItem> GetItemFromTime([DateTimeKind(DateTimeKind.Utc)] DateTime dateTime)
+        internal IEnumerable<CronItem> GetItemFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
         {
             throw new NotImplementedException();
         }
@@ -362,8 +362,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Debug.Assert(Timer != null);
             Timer.Stop();
 
-            var utc = e.SignalTime.ToUniversalTime();
-            var items = GetItemFromTime(utc);
+            var items = GetItemFromTime(e.SignalTime);
             ExecuteItems(items);
 
             Timer.Start();
