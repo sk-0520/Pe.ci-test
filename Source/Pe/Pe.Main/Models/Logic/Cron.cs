@@ -11,6 +11,7 @@ using System.Transactions;
 using System.Xml.Schema;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
@@ -81,13 +82,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region function
 
         /// <summary>
-        /// アイテムが時間と抑制時間から有効であるか判定。
+        /// アイテムが時間から有効であるか判定。
         /// </summary>
         /// <param name="this"></param>
         /// <param name="timestamp"></param>
-        /// <param name="excludeTime"></param>
         /// <returns></returns>
-        public static bool IsLive(this IReadOnlyCronItemSetting @this, DateTime timestamp, TimeSpan excludeTime)
+        public static bool IsLive(this IReadOnlyCronItemSetting @this, DateTime timestamp)
         {
             return false;
         }
@@ -310,9 +310,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    internal class CronItem
+    internal class CronJob
     {
-        public CronItem(Guid cronItemId, IReadOnlyCronItemSetting setting, ICronExecutor executor)
+        public CronJob(Guid cronItemId, IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
             CronItemId = cronItemId;
             Setting = setting;
@@ -330,6 +330,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    /// <summary>
+    /// 1分間隔で処理を監視し、ジョブを起動させる。
+    /// </summary>
     public class CronScheduler: DisposerBase
     {
         #region define
@@ -364,27 +367,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         ///
         /// </summary>
-        /// <param name="pollingTime"><see cref="PollingTime" /></param>
-        /// <param name="excludeTime"><see cref="ExcludeTime"/></param>
-        public CronScheduler(TimeSpan pollingTime, TimeSpan excludeTime)
+        public CronScheduler(ILoggerFactory loggerFactory)
         {
-            PollingTime = pollingTime;
-            ExcludeTime = excludeTime;
+            Logger = loggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
-        /// <summary>
-        /// 監視間隔。
-        /// </summary>
-        public TimeSpan PollingTime { get; }
-        /// <summary>
-        /// アイテム実行時に指定時間からこの時間を超過しているものを対象外とする。
-        /// <para>停止後に実行すると一気に実行アイテムが流れそうなのでそれを抑制。</para>
-        /// </summary>
-        public TimeSpan ExcludeTime { get; }
+        ILogger Logger { get; }
 
-        ISet<CronItem> Items { get; } = new HashSet<CronItem>();
+        ISet<CronJob> Jobs { get; } = new HashSet<CronJob>();
 
         System.Timers.Timer? Timer { get; set; }
 
@@ -394,16 +386,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
+        /// <summary>
+        /// 次回実行時までの待機時間を判定。
+        /// </summary>
+        /// <returns></returns>
+        internal double GetNextJobTime([DateTimeKind(DateTimeKind.Local)] DateTime nowTime)
+        {
+            //var nextTime = new DateTime(nowTime.Year, nowTime.Month, nowTime.Day, nowTime.Hour, nowTime.Minute, 0).AddMinutes(1);
+            var nextTime = new DateTime(nowTime.Ticks - (nowTime.Ticks % TimeSpan.TicksPerMinute), DateTimeKind.Local).AddMinutes(1);
+            return (nextTime - nowTime).TotalMilliseconds;
+        }
+
         public void Start()
         {
             if(IsRunning) {
                 throw new InvalidOperationException(nameof(IsRunning));
             }
 
-            Timer = new System.Timers.Timer() {
-                Interval = PollingTime.TotalMilliseconds,
-            };
+            Timer = new System.Timers.Timer();
             Timer.Elapsed += Timer_Elapsed;
+            Timer.Interval = GetNextJobTime(DateTime.Now);
         }
 
         public void Stop()
@@ -420,11 +422,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Timer = null;
         }
 
-        CronItem AddScheduleCore(IReadOnlyCronItemSetting setting, ICronExecutor executor)
+        CronJob AddScheduleCore(IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
             var cronItemId = Guid.NewGuid();
-            var item = new CronItem(cronItemId, setting, executor);
-            Items.Add(item);
+            var item = new CronJob(cronItemId, setting, executor);
+            Jobs.Add(item);
             return item;
         }
 
@@ -458,12 +460,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             base.Dispose(disposing);
         }
 
-        internal IEnumerable<CronItem> GetItemFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
+        internal IEnumerable<CronJob> GetItemFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
         {
             throw new NotImplementedException();
         }
 
-        internal void ExecuteItems(IEnumerable<CronItem> items)
+        internal void ExecuteItems(IEnumerable<CronJob> items)
         {
 
         }

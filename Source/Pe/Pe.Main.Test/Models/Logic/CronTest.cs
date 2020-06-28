@@ -133,6 +133,25 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
     {
         #region function
 
+        [TestMethod]
+        [DataRow(60000, "2020-06-28T20:42:00.000")]
+        [DataRow( 1000, "2020-06-28T20:42:59.000")]
+        [DataRow(29999, "2020-06-28T20:42:30.001")]
+        [DataRow(30000, "2020-06-28T20:42:30.000")]
+        [DataRow(30001, "2020-06-28T20:42:29.999")]
+        [DataRow( 1000, "2020-06-28T20:59:59.000")]
+        [DataRow( 1000, "2020-06-30T23:59:59.000")]
+        [DataRow( 1000, "2020-12-31T23:59:59.000")]
+        [DataRow(  500, "2020-06-28T20:42:59.500")]
+        [DataRow(    1, "2020-06-28T20:42:59.999")]
+        public void GetNextJobTimeTest(double result, string iso8601)
+        {
+            var input = DateTime.Parse(iso8601);
+            var cs = new CronScheduler(Test.LoggerFactory);
+            var actual = cs.GetNextJobTime(input);
+            Assert.AreEqual(result, actual);
+        }
+
         //[TestMethod]
         //public void GetItemFromTimeTest()
         //{
