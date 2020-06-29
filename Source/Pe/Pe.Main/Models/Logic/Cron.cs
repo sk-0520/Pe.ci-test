@@ -445,6 +445,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return AddScheduleCore(setting, new CronExecutorWrapper(executor)).CronJobId;
         }
 
+        /// <summary>
+        /// 指定のスケジュールを破棄。
+        /// <para>実行中のものは実行しっぱで参照が切れる。</para>
+        /// </summary>
+        /// <param name="cronJobId"></param>
+        /// <returns></returns>
         public bool RemoveSchedule(Guid cronJobId)
         {
             var job = Jobs.FirstOrDefault(i => i.CronJobId == cronJobId);
@@ -452,6 +458,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 return false;
             }
             return Jobs.Remove(job);
+        }
+
+        /// <summary>
+        /// すべてのスケジュールを破棄。
+        /// <para>実行中のものは実行しっぱで参照が切れる。</para>
+        /// </summary>
+        public void ClearAllSchedule()
+        {
+            Jobs.Clear();
         }
 
         #endregion
