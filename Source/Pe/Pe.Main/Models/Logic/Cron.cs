@@ -390,11 +390,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// 次回実行時までの待機時間を判定。
         /// </summary>
         /// <returns></returns>
-        internal double GetNextJobTime([DateTimeKind(DateTimeKind.Local)] DateTime nowTime)
+        internal TimeSpan GetNextJobTime([DateTimeKind(DateTimeKind.Local)] DateTime nowTime)
         {
             //var nextTime = new DateTime(nowTime.Year, nowTime.Month, nowTime.Day, nowTime.Hour, nowTime.Minute, 0).AddMinutes(1);
             var nextTime = new DateTime(nowTime.Ticks - (nowTime.Ticks % TimeSpan.TicksPerMinute), DateTimeKind.Local).AddMinutes(1);
-            return (nextTime - nowTime).TotalMilliseconds;
+            return nextTime - nowTime;
         }
 
         public void Start()
@@ -405,7 +405,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             Timer = new System.Timers.Timer();
             Timer.Elapsed += Timer_Elapsed;
-            Timer.Interval = GetNextJobTime(DateTime.Now);
+            Timer.Interval = GetNextJobTime(DateTime.Now).TotalMilliseconds;
         }
 
         public void Stop()

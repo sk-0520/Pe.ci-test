@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
             var input = DateTime.Parse(iso8601);
             var cs = new CronScheduler(Test.LoggerFactory);
             var actual = cs.GetNextJobTime(input);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(result, actual.TotalMilliseconds);
         }
 
         //[TestMethod]
