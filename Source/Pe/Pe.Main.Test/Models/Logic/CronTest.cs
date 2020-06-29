@@ -144,11 +144,11 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
         [DataRow( 1000, "2020-12-31T23:59:59.000")]
         [DataRow(  500, "2020-06-28T20:42:59.500")]
         [DataRow(    1, "2020-06-28T20:42:59.999")]
-        public void GetNextJobTimeTest(double result, string iso8601)
+        public void GetNextJobWaitTimeTest(double result, string iso8601)
         {
             var input = DateTime.Parse(iso8601);
             var cs = new CronScheduler(Test.LoggerFactory);
-            var actual = cs.GetNextJobTime(input);
+            var actual = cs.GetNextJobWaitTime(input);
             Assert.AreEqual(result, actual.TotalMilliseconds);
         }
 
