@@ -312,16 +312,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     internal class CronJob
     {
-        public CronJob(Guid cronItemId, IReadOnlyCronItemSetting setting, ICronExecutor executor)
+        public CronJob(Guid cronJobId, IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
-            CronItemId = cronItemId;
+            CronJobId = cronJobId;
             Setting = setting;
             Executor = executor;
         }
 
         #region property
 
-        public Guid CronItemId { get; }
+        public Guid CronJobId { get; }
         public IReadOnlyCronItemSetting Setting { get; }
         public ICronExecutor Executor { get; }
 
@@ -424,25 +424,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         CronJob AddScheduleCore(IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
-            var cronItemId = Guid.NewGuid();
-            var item = new CronJob(cronItemId, setting, executor);
+            var cronJobId = Guid.NewGuid();
+            var item = new CronJob(cronJobId, setting, executor);
             Jobs.Add(item);
             return item;
         }
 
         public Guid AddSchedule(IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
-            return AddScheduleCore(setting, executor).CronItemId;
+            return AddScheduleCore(setting, executor).CronJobId;
         }
 
         public Guid AddSchedule(IReadOnlyCronItemSetting setting, Func<CancellationToken, Task> executor)
         {
-            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).CronItemId;
+            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).CronJobId;
         }
 
         public Guid AddSchedule(IReadOnlyCronItemSetting setting, Func<Task> executor)
         {
-            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).CronItemId;
+            return AddScheduleCore(setting, new CronExecutorWrapper(executor)).CronJobId;
+        }
+
+        public bool RemoveSchedule(Guid cronJobId)
+        {
+            var job = Jobs.FirstOrDefault(i => i.CronJobId == cronJobId);
+            if(job == null) {
+                return false;
+            }
+            return Jobs.Remove(job);
         }
 
         #endregion
