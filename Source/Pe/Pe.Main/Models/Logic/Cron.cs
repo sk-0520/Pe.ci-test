@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="this"></param>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        public static bool IsLive(this IReadOnlyCronItemSetting @this, DateTime timestamp)
+        public static bool IsEnabled(this IReadOnlyCronItemSetting @this, DateTime timestamp)
         {
             return false;
         }
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             } else {
                 var numericRange = new NumericRange(false, ",", "-");
                 return numericRange.Parse(value)
-                    .Select(i => i == 7 ? 0: i) // 7 は 日曜日(0) 判定
+                    .Select(i => i == 7 ? 0 : i) // 7 は 日曜日(0) 判定
                     .Select(i => (DayOfWeek)i)
                 ;
             }
@@ -310,10 +310,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    internal class CronJob
+    internal class CronJob: DisposerBase
     {
-        public CronJob(Guid cronJobId, IReadOnlyCronItemSetting setting, ICronExecutor executor)
+        public CronJob(Guid cronJobId, IReadOnlyCronItemSetting setting, ICronExecutor executor, ILoggerFactory loggerFactory)
         {
+            Logger = loggerFactory.CreateLogger(GetType());
             CronJobId = cronJobId;
             Setting = setting;
             Executor = executor;
@@ -321,11 +322,53 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region property
 
+        private ILogger Logger { get; }
+
         public Guid CronJobId { get; }
         public IReadOnlyCronItemSetting Setting { get; }
-        public ICronExecutor Executor { get; }
 
-        public CancellationTokenSource? CancellationTokenSource { get; set; }
+        ICronExecutor Executor { get; }
+
+        CancellationTokenSource? CancellationTokenSource { get; set; }
+
+        /// <summary>
+        /// 最後に実行した時間。
+        /// </summary>
+        [DateTimeKind(DateTimeKind.Local)]
+        public DateTime LastExecuteTimestamp { get; private set; } = DateTime.MinValue;
+
+        #endregion
+
+        #region function
+
+        public Task ExecuteAsyn(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region DisposerBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(disposing) {
+                    if(CancellationTokenSource != null) {
+                        if(!CancellationTokenSource.IsCancellationRequested) {
+                            try {
+                                CancellationTokenSource.Cancel();
+                            } catch(AggregateException ex) {
+                                Logger.LogWarning(ex, "{0}, {1}", ex.Message, CronJobId);
+                            }
+                        }
+                        CancellationTokenSource.Dispose();
+                        CancellationTokenSource = null;
+                    }
+                }
+            }
+            base.Dispose(disposing);
+        }
 
         #endregion
     }
@@ -369,11 +412,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         public CronScheduler(ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
         }
 
         #region property
 
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
         ISet<CronJob> Jobs { get; } = new HashSet<CronJob>();
@@ -425,7 +470,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         CronJob AddScheduleCore(IReadOnlyCronItemSetting setting, ICronExecutor executor)
         {
             var cronJobId = Guid.NewGuid();
-            var item = new CronJob(cronJobId, setting, executor);
+            var item = new CronJob(cronJobId, setting, executor, LoggerFactory);
             Jobs.Add(item);
             return item;
         }
@@ -484,7 +529,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             base.Dispose(disposing);
         }
 
-        internal IEnumerable<CronJob> GetItemFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
+        internal IEnumerable<CronJob> GetItemsFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
         {
             throw new NotImplementedException();
         }
@@ -501,7 +546,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Debug.Assert(Timer != null);
             Timer.Stop();
 
-            var items = GetItemFromTime(e.SignalTime);
+            var items = GetItemsFromTime(e.SignalTime);
             ExecuteItems(items);
 
             Timer.Start();
