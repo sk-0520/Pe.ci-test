@@ -357,6 +357,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class ScheduleConfiguration: ConfigurationBase
+    {
+        public ScheduleConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+
+            LauncherItemIconRefresh = section.GetValue<string>("launcher-item-icon-refresh");
+        }
+
+        #region function
+
+        public string LauncherItemIconRefresh { get; }
+
+        #endregion
+    }
 
     public class PluginConfiguration: ConfigurationBase
     {
@@ -396,6 +411,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
+            Schedule = new ScheduleConfiguration(configurationRoot.GetSection("schedule"));
             Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
         }
 
@@ -414,6 +430,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public NoteConfiguration Note { get; }
         public CommandConfiguration Command { get; }
         public PlatformConfiguration Platform { get; }
+        public ScheduleConfiguration Schedule { get; }
         public PluginConfiguration Plugin { get; }
         #endregion
     }

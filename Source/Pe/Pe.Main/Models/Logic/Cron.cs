@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         public List<DayOfWeek> DayOfWeeks { get; set; } = new List<DayOfWeek>();
         IReadOnlyList<DayOfWeek> IReadOnlyCronItemSetting.DayOfWeeks => DayOfWeeks;
 
-        public MultipleExecuteMode Mode { get; }
+        public MultipleExecuteMode Mode { get; set; }
 
         #endregion
     }

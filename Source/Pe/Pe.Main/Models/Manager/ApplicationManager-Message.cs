@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
@@ -549,10 +550,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CronScheduler.ClearAllSchedule();
 
             var factory = new CronItemSettingFactory();
-            CronScheduler.AddSchedule(factory.Parse("* * * * *"), c => {
-                Logger.LogInformation("ダミーアイコンリフレッシュ");
-                return Task.CompletedTask;
-            });
+
+            var launcherItemIconRefreshSetting = factory.Parse(ApplicationDiContainer.Build<ScheduleConfiguration>().LauncherItemIconRefresh);
+            launcherItemIconRefreshSetting.Mode = MultipleExecuteMode.Skip;
+            CronScheduler.AddSchedule(launcherItemIconRefreshSetting, ApplicationDiContainer.Build<IconRefresher>());
         }
 
         private void StartScheduler()
