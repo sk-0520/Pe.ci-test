@@ -95,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    /// <inheritdoc cref="IReadOnlyCronItemSetting"/>
     [DateTimeKind(DateTimeKind.Local)]
     public class CronItemSetting: IReadOnlyCronItemSetting
     {
@@ -310,6 +311,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
+    /// <summary>
+    /// 状態を持ち歩くジョブ。
+    /// </summary>
     internal class CronJob: DisposerBase
     {
         public CronJob(Guid cronJobId, IReadOnlyCronItemSetting setting, ICronExecutor executor, ILoggerFactory loggerFactory)
@@ -324,11 +328,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         private ILogger Logger { get; }
 
+        /// <summary>
+        /// ジョブ自身のID。
+        /// </summary>
         public Guid CronJobId { get; }
+
+        /// <summary>
+        /// 設定。
+        /// </summary>
         public IReadOnlyCronItemSetting Setting { get; }
 
+        /// <summary>
+        /// 実行処理。
+        /// </summary>
         ICronExecutor Executor { get; }
 
+        /// <summary>
+        /// 自身の実行キャンセル通知。
+        /// </summary>
         CancellationTokenSource? CancellationTokenSource { get; set; }
 
         /// <summary>
@@ -336,6 +353,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         [DateTimeKind(DateTimeKind.Local)]
         public DateTime LastExecuteTimestamp { get; private set; } = DateTime.MinValue;
+        /// <summary>
+        /// 現在実行中か。
+        /// </summary>
+        public bool IsRunning{ get; private set; }
 
         #endregion
 
