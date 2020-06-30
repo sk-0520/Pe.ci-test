@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -89,7 +90,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <returns></returns>
         public static bool IsEnabled(this IReadOnlyCronItemSetting @this, DateTime timestamp)
         {
-            return false;
+            static bool IsIn<T>(T value, IEnumerable<T> range)
+                where T : struct
+            {
+                foreach(var element in range) {
+                    if(value.Equals(element)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            if(!IsIn(timestamp.Minute, @this.Minutes)) {
+                return false;
+            }
+            if(!IsIn(timestamp.Hour, @this.Hours)) {
+                return false;
+            }
+
+            if(@this.DayOfWeeks.Count != 7) {
+                if(IsIn(timestamp.DayOfWeek, @this.DayOfWeeks)) {
+                    // 曜日指定があれば日は無視して月確認
+                    if(IsIn(timestamp.Month, @this.Months)) {
+                        return true;
+                    }
+                } else if(@this.Days.Count == 31) {
+                    // 曜日指定ありで日指定なしの場合は曜日に合わない時点で一致しないと判定
+                    return false;
+                }
+            }
+
+            if(!IsIn(timestamp.Day, @this.Days)) {
+                return false;
+            }
+
+            if(!IsIn(timestamp.Month, @this.Months)) {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
@@ -356,7 +396,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <summary>
         /// 現在実行中か。
         /// </summary>
-        public bool IsRunning{ get; private set; }
+        public bool IsRunning { get; private set; }
 
         #endregion
 
@@ -550,12 +590,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             base.Dispose(disposing);
         }
 
-        internal IEnumerable<CronJob> GetItemsFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
+        /// <summary>
+        /// 時間及び設定から実行可能なジョブ一覧を取得。
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        private IReadOnlyList<CronJob> GetItemsFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
         {
-            throw new NotImplementedException();
+            // ここで実行中だからどうとかは行わない
+            return Jobs
+                .Where(i => i.LastExecuteTimestamp < dateTime) // 試してもしてないけど時刻変更対応
+                .Where(i => i.Setting.IsEnabled(dateTime))
+                .ToList()
+            ;
         }
 
-        internal void ExecuteItems(IEnumerable<CronJob> items)
+        private void ExecuteItems(IEnumerable<CronJob> items)
         {
 
         }
