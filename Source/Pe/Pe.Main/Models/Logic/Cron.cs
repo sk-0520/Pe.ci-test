@@ -346,7 +346,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        Task ExecuteAsyn(CancellationToken cancellationToken);
+        Task ExecuteAsync(CancellationToken cancellationToken);
 
         #endregion
     }
@@ -390,6 +390,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         /// <summary>
         /// 最後に実行した時間。
+        /// <para>実行を開始した時間で実行終了の時間ではない。</para>
         /// </summary>
         [DateTimeKind(DateTimeKind.Local)]
         public DateTime LastExecuteTimestamp { get; private set; } = DateTime.MinValue;
@@ -402,9 +403,60 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        public Task ExecuteAsyn(CancellationToken cancellationToken)
+        public Task ExecuteAsync()
         {
-            throw new NotImplementedException();
+            if(IsRunning) {
+                switch(Setting.Mode) {
+                    case MultipleExecuteMode.Skip:
+                        Logger.LogInformation("実行中ジョブのため未実行, {0}", CronJobId);
+                        return Task.CompletedTask;
+
+                    case MultipleExecuteMode.Start:
+                        Logger.LogTrace("実行中ジョブの重複実行, {0}", CronJobId);
+                        break;
+
+                    case MultipleExecuteMode.CancelAndStart: {
+                            Logger.LogTrace("実行中ジョブ停止からの実行, {0}", CronJobId);
+                            var cts = CancellationTokenSource;
+                            if(cts != null) {
+                                try {
+                                    cts.Cancel();
+                                } catch(Exception ex) {
+                                    Logger.LogError(ex, "ジョブキャンセル失敗のため未実行, {0}, {1}", ex.Message, CronJobId);
+                                    return Task.CompletedTask;
+                                }
+                            }
+                            break;
+                        }
+
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
+            if(Setting.Mode == MultipleExecuteMode.CancelAndStart) {
+                CancellationTokenSource?.Dispose();
+                CancellationTokenSource = new CancellationTokenSource();
+            }
+
+            var cancelToken = CancellationTokenSource?.Token ?? CancellationToken.None;
+
+            IsRunning = true;
+            LastExecuteTimestamp = DateTime.Now;
+
+            return Executor.ExecuteAsync(cancelToken).ContinueWith(t => {
+                if(t.IsCompletedSuccessfully) {
+                    if(!IsRunning) {
+                        Logger.LogWarning("実行終了したが実行中フラグが実行していないことになっている, {0}", CronJobId);
+                    }
+
+                    IsRunning = false;
+                    CancellationTokenSource?.Dispose();
+                    CancellationTokenSource = null;
+                } else if(t.Exception != null) {
+                    Logger.LogError(t.Exception, "{0}", t.Exception.Message);
+                }
+            });
         }
 
         #endregion
@@ -461,7 +513,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             #region ICronExecutor
 
-            public Task ExecuteAsyn(CancellationToken cancellationToken) => Executor(cancellationToken);
+            public Task ExecuteAsync(CancellationToken cancellationToken) => Executor(cancellationToken);
 
             #endregion
         }
@@ -595,7 +647,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        private IReadOnlyList<CronJob> GetItemsFromTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
+        private IReadOnlyList<CronJob> GetJobsByTime([DateTimeKind(DateTimeKind.Local)] DateTime dateTime)
         {
             // ここで実行中だからどうとかは行わない
             return Jobs
@@ -605,9 +657,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             ;
         }
 
-        private void ExecuteItems(IEnumerable<CronJob> items)
+        private void ExecuteJobs(IEnumerable<CronJob> jobs)
         {
-
+            foreach(var job in jobs) {
+                Logger.LogTrace("ジョブ実行: {0} = {1}, {2} = {3}, {4}", nameof(job.Setting.Mode), job.Setting.Mode, nameof(job.IsRunning), job.IsRunning, job.CronJobId);
+                job.ExecuteAsync().ConfigureAwait(false);
+            }
         }
 
         #endregion
@@ -617,8 +672,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Debug.Assert(Timer != null);
             Timer.Stop();
 
-            var items = GetItemsFromTime(e.SignalTime);
-            ExecuteItems(items);
+            var jobs = GetJobsByTime(e.SignalTime);
+            ExecuteJobs(jobs);
 
             Timer.Start();
         }
