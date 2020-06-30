@@ -125,6 +125,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
             KeyActionAssistant = new KeyActionAssistant(LoggerFactory);
 
+            CronScheduler = new CronScheduler(LoggerFactory);
+
             ApplicationUpdateInfo = ApplicationDiContainer.Build<UpdateInfo>();
 
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
@@ -317,6 +319,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                 ApplyThemeSetting();
                 RebuildHook();
+                RebuildSchedulerSetting();
                 ExecuteElements();
 
                 if(CommandElement != null) {
@@ -352,6 +355,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         IDisposable PauseAllViews()
         {
             StopPlatform();
+            StopScheduler();
             StopHook();
             UninitializeSystem();
 
@@ -376,6 +380,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return new ActionDisposer(d => {
                 StartHook();
+                StartScheduler();
                 StartBackground();
                 StartPlatform();
                 InitializeSystem();
@@ -1258,6 +1263,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 #endif
             InitializeSystem();
             InitializeHook();
+            InitializeScheduler();
 
             StartPlatform();
 
@@ -1378,6 +1384,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             StopHook();
             DisposeHook();
+
+            StopScheduler();
 
             UninitializeSystem();
 
@@ -1823,6 +1831,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         internal void StartupEnd()
         {
             StartHook();
+            StartScheduler();
             StartBackground();
 
             DelayCheckUpdateAsync().ConfigureAwait(false);
@@ -2064,6 +2073,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     CloseViews(false);
                     DisposeElements();
                     DisposeWebView();
+
+                    CronScheduler.Dispose();
 
                     //MessageWindowDispatcherWapper?.Begin(() => {
                     //    MessageWindowHandleSource?.Dispose();

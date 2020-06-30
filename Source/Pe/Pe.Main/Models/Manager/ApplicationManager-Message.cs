@@ -41,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         Guid KeyboardNotifyLogId { get; set; }
         private BackgroundAddonProxy? BackgroundAddon { get; set; }
 
+        private CronScheduler CronScheduler { get; }
+
         #endregion
 
         #region function
@@ -111,8 +113,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void InitializeHook()
         {
             KeyActionAssistant.SelfJobInputId = KeyActionChecker.SelfJobInputId;
-
-            var builder = ApplicationDiContainer.Build<KeyActionFactory>();
 
             KeyboradHooker.KeyDown += KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp += KeyboradHooker_KeyUp;
@@ -537,6 +537,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(c, c.Implementation);
                 appPlatformSettingEntityDao.UpdateSupportExplorer(flag, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
+        }
+
+        private void InitializeScheduler()
+        {
+            RebuildSchedulerSetting();
+        }
+
+        private void RebuildSchedulerSetting()
+        {
+            CronScheduler.ClearAllSchedule();
+
+            var factory = new CronItemSettingFactory();
+            CronScheduler.AddSchedule(factory.Parse("* * * * *"), c => {
+                Logger.LogInformation("ダミーアイコンリフレッシュ");
+                return Task.CompletedTask;
+            });
+        }
+
+        private void StartScheduler()
+        {
+            Logger.LogInformation("スケジューラ実行");
+            CronScheduler.Start();
+        }
+
+        private void StopScheduler()
+        {
+            if(CronScheduler.IsRunning) {
+                Logger.LogInformation("スケジューラ停止");
+                CronScheduler.Stop();
+            }
         }
 
         #endregion

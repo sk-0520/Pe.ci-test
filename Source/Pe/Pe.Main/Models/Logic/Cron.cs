@@ -564,6 +564,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Timer = new System.Timers.Timer();
             Timer.Elapsed += Timer_Elapsed;
             Timer.Interval = GetNextJobWaitTime(DateTime.Now).TotalMilliseconds;
+
+            Timer.Start();
         }
 
         public void Stop()
@@ -635,7 +637,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Stop();
+                    if(IsRunning) {
+                        Stop();
+                    }
                 }
             }
 
@@ -675,6 +679,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             var jobs = GetJobsByTime(e.SignalTime);
             ExecuteJobs(jobs);
 
+            Timer.Interval = GetNextJobWaitTime(DateTime.Now).TotalMilliseconds;
             Timer.Start();
         }
 
