@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
 
                 diContainer
-                    .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+                    .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(TimeSpan.FromSeconds(10)))
                     .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
                     .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
@@ -388,7 +388,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<WidgetAddonContextFactory, WidgetAddonContextFactory>(DiLifecycle.Transient)
                 .Register<BackgroundAddonContextFactory, BackgroundAddonContextFactory>(DiLifecycle.Transient)
 
-                .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+                .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.Configuration.General.DispatcherWait))
                 .Register<CultureService, CultureService>(cultureService)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)

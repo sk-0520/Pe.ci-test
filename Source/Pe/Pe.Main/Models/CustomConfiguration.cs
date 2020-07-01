@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             ProjectWebSiteUri = section.GetValue<Uri>("project_website_uri");
             UpdateCheckUri = section.GetValue<Uri>("version_check_uri");
             UpdateWait = section.GetValue<TimeSpan>("update_wait");
+            DispatcherWait = section.GetValue<TimeSpan>("dispatcher_wait");
 
             CanSendCrashReport = section.GetValue<bool>("can_send_crash_report");
             UnhandledExceptionHandled = section.GetValue<bool>("unhandled_exception_handled");
@@ -82,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Uri ProjectWebSiteUri { get; }
         public Uri UpdateCheckUri { get; }
         public TimeSpan UpdateWait { get; }
+        public TimeSpan DispatcherWait { get; }
 
         public bool CanSendCrashReport { get; }
         public bool UnhandledExceptionHandled { get; }

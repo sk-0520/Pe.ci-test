@@ -20,9 +20,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="dispatcher">ラップする対象。</param>
         public DispatcherWrapper(Dispatcher dispatcher)
+            :this(dispatcher, TimeSpan.FromMinutes(1))
+        { }
+
+        public DispatcherWrapper(Dispatcher dispatcher, TimeSpan waitTime)
         {
             Dispatcher = dispatcher;
+            WaitTime = waitTime;
         }
+
+        #region property
+
+        protected TimeSpan WaitTime { get; set; }
+
+        #endregion
 
         #region IDispatcherWapper
 
@@ -78,8 +89,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     result = func();
                     resultWait.Set();
                 }), dispatcherPriority);
-                resultWait.Wait(cancellationToken);
-                return result;
+                if(resultWait.Wait(WaitTime, cancellationToken)) {
+                    return result;
+                }
+                throw new TimeoutException(WaitTime.ToString());
             }
         }
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority)
@@ -120,6 +133,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public CurrentDispatcherWrapper()
             : base(Dispatcher.CurrentDispatcher)
+        { }
+
+        public CurrentDispatcherWrapper(TimeSpan waitTime)
+            : base(Dispatcher.CurrentDispatcher, waitTime)
         { }
     }
 }
