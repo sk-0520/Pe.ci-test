@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
-        public IEnumerable<LauncherIconStatus> SelectLauncherItemIconStatus(Guid launcherItemId)
+        public IEnumerable<LauncherIconStatus> SelectLauncherItemIconAllSizeStatus(Guid launcherItemId)
         {
             var statement = LoadStatement();
             var parameter = new {
@@ -82,6 +82,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Query<LauncherItemIconLastUpdatedStatusDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
+        }
+
+        public LauncherIconStatus? SelectLauncherItemIconSingleSizeStatus(Guid launcherItemId, IconBox iconBox)
+        {
+            var iconBoxTransfer = new EnumTransfer<IconBox>();
+
+            var statement = LoadStatement();
+            var parameter = new {
+                LauncherItemId = launcherItemId,
+                IconBox = iconBoxTransfer.ToString(iconBox)
+            };
+            var dto = Commander.QueryFirstOrDefault<LauncherItemIconLastUpdatedStatusDto>(statement, parameter);
+            if(dto == null) {
+                return null;
+            }
+            return ConvertFromDto(dto);
         }
 
         public bool InsertLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
