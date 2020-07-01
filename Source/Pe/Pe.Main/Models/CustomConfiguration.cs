@@ -243,6 +243,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class LauncherItemConfiguration: ConfigurationBase
+    {
+        public LauncherItemConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            IconRefreshTime = section.GetValue<TimeSpan>("icon_refresh_time");
+        }
+
+        #region property
+
+        public TimeSpan IconRefreshTime { get; }
+
+        #endregion
+    }
+
     public class LauncherToolbarConfiguration: ConfigurationBase
     {
         public LauncherToolbarConfiguration(IConfigurationSection section)
@@ -363,7 +378,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             : base(section)
         {
 
-            LauncherItemIconRefresh = section.GetValue<string>("launcher-item-icon-refresh");
+            LauncherItemIconRefresh = section.GetValue<string>("launcher_item_icon_refresh");
         }
 
         #region function
@@ -406,6 +421,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
             Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
+            LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
@@ -425,6 +441,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DisplayConfiguration Display { get; }
         public HookConfiguration Hook { get; }
         public NotifyLogConfiguration NotifyLog { get; }
+        public LauncherItemConfiguration LauncherItem { get; }
         public LauncherToolbarConfiguration LauncherToobar { get; }
         public LauncherGroupConfiguration LauncherGroup { get; }
         public NoteConfiguration Note { get; }

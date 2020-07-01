@@ -553,7 +553,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var launcherItemIconRefreshSetting = factory.Parse(ApplicationDiContainer.Build<ScheduleConfiguration>().LauncherItemIconRefresh);
             launcherItemIconRefreshSetting.Mode = MultipleExecuteMode.Skip;
-            CronScheduler.AddSchedule(launcherItemIconRefreshSetting, ApplicationDiContainer.Build<IconRefresher>());
+
+            var launcherItemConfiguration = ApplicationDiContainer.Build<LauncherItemConfiguration>();
+
+            CronScheduler.AddSchedule(launcherItemIconRefreshSetting, ApplicationDiContainer.Build<IconRefresher>(launcherItemConfiguration.IconRefreshTime));
         }
 
         private void StartScheduler()

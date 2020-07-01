@@ -460,5 +460,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class LauncherIconStatus
+    {
+        public LauncherIconStatus(IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp)
+        {
+            IconBox = iconBox;
+            LastUpdatedTimestamp = lastUpdatedTimestamp;
+        }
+
+        #region proeprty
+
+        public IconBox IconBox { get; }
+
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime LastUpdatedTimestamp { get; }
+
+        #endregion
+    }
+
 
 }
