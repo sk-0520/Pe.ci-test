@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -14,9 +17,30 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
-    public class IconRefresher: ICronExecutor
+    internal sealed class LauncherIconRefreshLoader: LauncherIconLoader
     {
-        public IconRefresher(TimeSpan refreshTime, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherIconRefreshLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(launcherItemId, iconBox, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, new CurrentDispatcherWrapper(), loggerFactory)
+        { }
+
+        #region property
+
+        #endregion
+
+        #region function
+
+        public Task LoadAndSaveAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        #endregion
+    }
+
+
+    public class LauncherIconRefresher: ICronExecutor
+    {
+        public LauncherIconRefresher(TimeSpan refreshTime, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -48,6 +72,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return status;
         }
 
+        private Task UpdateTargetAsync(Guid launcherItemId, LauncherIconStatus target, CancellationToken cancellationToken)
+        {
+            var loader = new LauncherIconRefreshLoader(launcherItemId, target.IconBox, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            return loader.LoadAndSaveAsync();
+        }
+
+
         #endregion
 
         #region ICronExecutor
@@ -60,14 +91,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 return dao.SelectAllLauncherItemIds().ToList();
             });
 
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 foreach(var launcherItemId in allLauncherItemIds) {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    var target = GetUpdateTartget(launcherItemId);
-                    Logger.LogInformation("{0}: {1}", launcherItemId, target.Count);
+                    var targets = GetUpdateTartget(launcherItemId);
 
-                    cancellationToken.ThrowIfCancellationRequested();
+                    foreach(var target in targets) {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        await UpdateTargetAsync(launcherItemId, target, cancellationToken);
+                    }
                 }
             });
         }

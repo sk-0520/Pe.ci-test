@@ -556,7 +556,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var launcherItemConfiguration = ApplicationDiContainer.Build<LauncherItemConfiguration>();
 
-            CronScheduler.AddSchedule(launcherItemIconRefreshSetting, ApplicationDiContainer.Build<IconRefresher>(launcherItemConfiguration.IconRefreshTime));
+            CronScheduler.AddSchedule(launcherItemIconRefreshSetting, ApplicationDiContainer.Build<LauncherIconRefresher>(launcherItemConfiguration.IconRefreshTime));
         }
 
         private void StartScheduler()
