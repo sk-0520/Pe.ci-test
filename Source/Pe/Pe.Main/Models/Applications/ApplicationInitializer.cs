@@ -370,11 +370,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<DisplayConfiguration, DisplayConfiguration>(environmentParameters.Configuration.Display)
                 .Register<HookConfiguration, HookConfiguration>(environmentParameters.Configuration.Hook)
                 .Register<NotifyLogConfiguration, NotifyLogConfiguration>(environmentParameters.Configuration.NotifyLog)
+                .Register<LauncherItemConfiguration, LauncherItemConfiguration>(environmentParameters.Configuration.LauncherItem)
                 .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.Configuration.LauncherToobar)
                 .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.Configuration.LauncherGroup)
                 .Register<NoteConfiguration, NoteConfiguration>(environmentParameters.Configuration.Note)
                 .Register<CommandConfiguration, CommandConfiguration>(environmentParameters.Configuration.Command)
                 .Register<PlatformConfiguration, PlatformConfiguration>(environmentParameters.Configuration.Platform)
+                .Register<ScheduleConfiguration, ScheduleConfiguration>(environmentParameters.Configuration.Schedule)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory))
 

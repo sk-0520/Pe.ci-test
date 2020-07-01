@@ -23,7 +23,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Logging;
 
-namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
+namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     public class LauncherIconLoader : IconImageLoaderBase, ILauncherItemId
     {
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             return GetIconImageAsync(editIconData, cancellationToken);
         }
 
-        async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
+        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             return null;
         }
 
-        Task WriteStreamAsync(BitmapSource iconImage, Stream stream)
+        protected Task WriteStreamAsync(BitmapSource iconImage, Stream stream)
         {
             Debug.Assert(iconImage.IsFrozen);
             ThrowIfDisposed();
@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
             });
         }
 
-        async Task SaveImageAsync(BitmapSource iconImage)
+        protected async Task SaveImageAsync(BitmapSource iconImage)
         {
             ThrowIfDisposed();
 

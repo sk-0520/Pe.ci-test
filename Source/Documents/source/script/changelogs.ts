@@ -125,7 +125,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#550: 定期的にアイコン情報を更新する"
 					},
 					{
 						"revision": "",

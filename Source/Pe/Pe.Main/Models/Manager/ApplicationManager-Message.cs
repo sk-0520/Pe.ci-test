@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
@@ -40,6 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         Guid KeyboardNotifyLogId { get; set; }
         private BackgroundAddonProxy? BackgroundAddon { get; set; }
+
+        private CronScheduler CronScheduler { get; }
 
         #endregion
 
@@ -111,8 +114,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void InitializeHook()
         {
             KeyActionAssistant.SelfJobInputId = KeyActionChecker.SelfJobInputId;
-
-            var builder = ApplicationDiContainer.Build<KeyActionFactory>();
 
             KeyboradHooker.KeyDown += KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp += KeyboradHooker_KeyUp;
@@ -537,6 +538,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var appPlatformSettingEntityDao = ApplicationDiContainer.Build<AppPlatformSettingEntityDao>(c, c.Implementation);
                 appPlatformSettingEntityDao.UpdateSupportExplorer(flag, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
+        }
+
+        private void InitializeScheduler()
+        {
+            RebuildSchedulerSetting();
+        }
+
+        private void RebuildSchedulerSetting()
+        {
+            CronScheduler.ClearAllSchedule();
+
+            var factory = new CronItemSettingFactory();
+
+            var launcherItemIconRefreshSetting = factory.Parse(ApplicationDiContainer.Build<ScheduleConfiguration>().LauncherItemIconRefresh);
+            launcherItemIconRefreshSetting.Mode = MultipleExecuteMode.Skip;
+
+            var launcherItemConfiguration = ApplicationDiContainer.Build<LauncherItemConfiguration>();
+
+            CronScheduler.AddSchedule(launcherItemIconRefreshSetting, ApplicationDiContainer.Build<LauncherIconRefresher>(launcherItemConfiguration.IconRefreshTime));
+        }
+
+        private void StartScheduler()
+        {
+            Logger.LogInformation("スケジューラ実行");
+            CronScheduler.Start();
+        }
+
+        private void StopScheduler()
+        {
+            if(CronScheduler.IsRunning) {
+                Logger.LogInformation("スケジューラ停止");
+                CronScheduler.Stop();
+            }
         }
 
         #endregion

@@ -243,6 +243,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class LauncherItemConfiguration: ConfigurationBase
+    {
+        public LauncherItemConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            IconRefreshTime = section.GetValue<TimeSpan>("icon_refresh_time");
+        }
+
+        #region property
+
+        public TimeSpan IconRefreshTime { get; }
+
+        #endregion
+    }
+
     public class LauncherToolbarConfiguration: ConfigurationBase
     {
         public LauncherToolbarConfiguration(IConfigurationSection section)
@@ -357,6 +372,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class ScheduleConfiguration: ConfigurationBase
+    {
+        public ScheduleConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+
+            LauncherItemIconRefresh = section.GetValue<string>("launcher_item_icon_refresh");
+        }
+
+        #region function
+
+        public string LauncherItemIconRefresh { get; }
+
+        #endregion
+    }
 
     public class PluginConfiguration: ConfigurationBase
     {
@@ -391,11 +421,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
             Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
+            LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
+            Schedule = new ScheduleConfiguration(configurationRoot.GetSection("schedule"));
             Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
         }
 
@@ -409,11 +441,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DisplayConfiguration Display { get; }
         public HookConfiguration Hook { get; }
         public NotifyLogConfiguration NotifyLog { get; }
+        public LauncherItemConfiguration LauncherItem { get; }
         public LauncherToolbarConfiguration LauncherToobar { get; }
         public LauncherGroupConfiguration LauncherGroup { get; }
         public NoteConfiguration Note { get; }
         public CommandConfiguration Command { get; }
         public PlatformConfiguration Platform { get; }
+        public ScheduleConfiguration Schedule { get; }
         public PluginConfiguration Plugin { get; }
         #endregion
     }
