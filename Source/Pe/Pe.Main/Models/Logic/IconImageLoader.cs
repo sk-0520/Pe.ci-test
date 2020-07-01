@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        protected IconImageLoaderBase(IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected IconImageLoaderBase(IconBox iconBox, IDispatcherWrapper? dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             IconBox = iconBox;
@@ -30,7 +30,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region property
 
         public IconBox IconBox { get; }
-        protected IDispatcherWrapper DispatcherWrapper { get; }
+
+        /// <summary>
+        /// 非 null の場合に、<see cref="DependencyObject"/>操作時に指定の<see cref="IDispatcherWrapper"/>で処理する。
+        /// </summary>
+        protected IDispatcherWrapper? DispatcherWrapper { get; }
 
         RunningStatus RunningStatusImpl { get; }
         public IRunningStatus RunningStatus => RunningStatusImpl;
@@ -58,12 +62,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     }
                 }
                 stream.Position = 0;
-                var iconImage = DispatcherWrapper.Get(() => {
-                    var imageLoader = new ImageLoader(LoggerFactory);
+
+                static BitmapSource LoadImage(Stream stream, ILoggerFactory loggerFactory)
+                {
+                    var imageLoader = new ImageLoader(loggerFactory);
                     var image = imageLoader.Load(stream);
                     FreezableUtility.SafeFreeze(image);
                     return image;
-                });
+                }
+                var iconImage = DispatcherWrapper?.Get(() => LoadImage(stream, LoggerFactory)) ?? LoadImage(stream, LoggerFactory);
+
                 return iconImage;
             }
         }
@@ -84,10 +92,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var scaleX = iconSize.Width / (double)bitmapSource.PixelWidth;
                 var scaleY = iconSize.Height / (double)bitmapSource.PixelHeight;
                 Logger.LogTrace("scale: {0}x{1}", scaleX, scaleY);
-                DispatcherWrapper.Get(() => {
+
+                static BitmapSource ResizeCore(BitmapSource bitmapSource, double scaleX, double scaleY)
+                {
                     var transformedBitmap = FreezableUtility.GetSafeFreeze(new TransformedBitmap(bitmapSource, new ScaleTransform(scaleX, scaleY)));
                     return FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap));
-                });
+                }
+
+                return DispatcherWrapper?.Get(() => ResizeCore(bitmapSource, scaleX, scaleY)) ?? ResizeCore(bitmapSource, scaleX, scaleY);
             }
 
             return bitmapSource;
@@ -114,18 +126,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     Logger.LogDebug("画像ファイルとして読み込み {0}", path);
                     var imageLoader = new ImageLoader(LoggerFactory);
                     using(var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                        iconImage = DispatcherWrapper.Get(() => {
+
+                        static BitmapSource LoadCore(ImageLoader imageLoader, Stream stream)
+                        {
                             var image = imageLoader.Load(stream);
                             return FreezableUtility.GetSafeFreeze(image);
-                        });
+                        }
+                        iconImage = DispatcherWrapper?.Get(() => LoadCore(imageLoader, stream)) ?? LoadCore(imageLoader, stream);
                     }
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", path);
                     var iconLoader = new IconLoader(LoggerFactory);
-                    iconImage = DispatcherWrapper.Get(() => {
-                        var image = iconLoader.Load(path, new IconSize(IconBox), iconData.Index);
+                    static BitmapSource LoadCore(string path, int index, IconBox iconBox, IconLoader iconLoader)
+                    {
+                        var image = iconLoader.Load(path, new IconSize(iconBox), index);
                         return FreezableUtility.GetSafeFreeze(image!);
-                    });
+                    }
+                    iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, iconLoader);
                 }
 
                 return iconImage;

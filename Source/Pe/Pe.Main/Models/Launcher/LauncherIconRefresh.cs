@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
     internal sealed class LauncherIconRefreshLoader: LauncherIconLoader
     {
         public LauncherIconRefreshLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(launcherItemId, iconBox, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, new CurrentDispatcherWrapper(), loggerFactory)
+            : base(launcherItemId, iconBox, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, null, loggerFactory)
         { }
 
         #region property
@@ -54,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     }
                     return Task.CompletedTask;
                 } finally {
-                    DispatcherWrapper.Dispatcher.InvokeShutdown();
+                    Dispatcher.CurrentDispatcher.InvokeShutdown();
                 }
             });
 

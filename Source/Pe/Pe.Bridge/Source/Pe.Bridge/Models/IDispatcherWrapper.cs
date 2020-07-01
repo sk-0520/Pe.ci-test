@@ -46,17 +46,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <summary>
         /// 対象 <see cref="Dispatcher"/> でなんかした結果を取得する。
         /// <para>内部的には停止状態。</para>
+        /// <para>癌。</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <param name="dispatcherPriority"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <inheritdoc cref="Get{T, TArg}(Func{TArg, T}, DispatcherPriority, CancellationToken)"/>
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
-        /// <inheritdoc cref="Get{T, TArg}(Func{TArg, T}, DispatcherPriority, CancellationToken)"/>
+        /// <inheritdoc cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
         T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="Get{T, TArg}(Func{TArg, T}, DispatcherPriority, CancellationToken)"/>
+        /// <inheritdoc cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
         T Get<T>(Func<T> func);
 
         /// <summary>
