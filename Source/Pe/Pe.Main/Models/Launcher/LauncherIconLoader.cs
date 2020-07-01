@@ -97,6 +97,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 return GetIconImageAsync(editIconData, cancellationToken);
             }
 
+            if(string.IsNullOrWhiteSpace(editIconData.Path)) {
+                // 無効パスのため後続処理不要
+                return Task.FromResult(default(BitmapSource));
+            }
+
             var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);
             var environmentExecuteFile = new EnvironmentExecuteFile(LoggerFactory);
             var pathItem = environmentExecuteFile.Get(editIconData.Path, pathItems);
