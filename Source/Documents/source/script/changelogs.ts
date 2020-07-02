@@ -2,7 +2,7 @@ declare function makeChangelogLink(): void;
 
 const changelogs = [
 	/*
-						"class": "compatibility" "notice" "nuget" "myget"
+						"class": "compatibility" "notice" "nuget" "myget" "plugin-compatibility"
 						"comments": [
 							""
 						]
@@ -91,6 +91,85 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/07/02",
+		"version": "0.99.000",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "",
+						"subject": "プラグインを実装した",
+						"comments": [
+							"今のところかなり限定的で気楽に試せるようなものではないけど一区切り",
+							"プラグイン共通ライブラリ(Pe.Bridge)バージョンは Pe と連動しない",
+							"将来的にはインストール・アンインストールを Pe 側からできるようにしたりする予定",
+							"参照実装: <Pe.git>/Source/Plugins",
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "b3e624137a3aadebf85cfb0399d35fe6f0578ab7",
+						"subject": "#509: プラグイン機構の構築",
+						"comments": [
+							"まだまだ甘いし達成できてない目標もあるけど実運用しながら機能拡張できるようにしていきたいのでリリース",
+							"ドキュメントもまだ全然かけてないのでソースが正。んで頻繁に互換性が失われる想定"
+						]
+					},
+					{
+						"revision": "fe77f8d8e95e42df01d492306492506f6b1c04ce",
+						"subject": "#550: 定期的にアイコン情報を更新する"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "84d12a472783693eea5fb863bfb9a7ccef461126",
+						"subject": "#623: アプリケーション内で使用する Pe アイコンをもうちときれいに表示する"
+					},
+					{
+						"revision": "37f6d64b3b62b9a91d3ec762101a0fffb321896b",
+						"subject": "#649: ランチャーアイテム再試行処理のキャンセルが効いていない",
+						"comments": [
+							"色々試したけどアクティブ→非アクティブを連続するとダメっぽいので初っ端から非アクティブにした",
+							"副次的効果として #654 に対応"
+						]
+					},
+					{
+						"revision": "37f6d64b3b62b9a91d3ec762101a0fffb321896b",
+						"subject": "#654: 通知ログがウィンドウアクティブ状態をまだまだ奪う"
+					},
+					{
+						"revision": "410f71ec484e3bcc3a8de783cc1117c5968cd9e5",
+						"subject": "#651: %PATH% から設定されたランチャーアイテムのコンテキストメニューの活性処理で %PATH% を考慮する"
+					},
+					{
+						"revision": "e6ae31d10d40ac86f70f1f584d52c900422eeb08",
+						"subject": "#652: バージョン情報表示中はコマンド表示できないようにする",
+						"comments": [
+							"スタート・設定・バージョン情報を表示した際にフック等の処理を停止するようにした"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "a3503a67c914f7b40e726e2810e29e8144a11022",
+						"subject": "#650: 内蔵ブラウザのリソース取得をC#処理からCefSharpで直接行う"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/06/21",
 		"version": "0.98.001",
 		"contents": [
@@ -134,10 +213,6 @@ const changelogs = [
 						"revision": "7e69657f18a645ece0d3de14645ac3c1d812dffd",
 						"class": "nuget",
 						"subject": "CefSharp.Wpf 79.1.360 -> 81.3.100"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}

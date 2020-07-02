@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json.Serialization;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -76,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region IReadOnlyUpdateItemData
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         [DataMember]
         [JsonPropertyName("release")]
         public DateTime Release { get; set; }

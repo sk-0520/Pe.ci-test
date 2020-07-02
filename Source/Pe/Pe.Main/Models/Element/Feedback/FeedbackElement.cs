@@ -23,12 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 {
     public class FeedbackElement : WebViewElementBase
     {
-        public FeedbackElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public FeedbackElement(EnvironmentParameters environmentParameters, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CultureService cultureService, IOrderManager orderManager, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
             : base(userAgentManager, loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             OrderManager = orderManager;
             CultureService = cultureService;
 
@@ -40,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
         EnvironmentParameters EnvironmentParameters { get; }
         ApiConfiguration ApiConfiguration => EnvironmentParameters.Configuration.Api;
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IOrderManager OrderManager { get; }
         CultureService CultureService { get; }
 
@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
 
             var settingData = await Task.Run(() => {
                 return MainDatabaseBarrier.ReadData(c => {
-                    var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                    var appExecuteSettingEntityDao = new AppExecuteSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                     //var appGeneralSettingEntityDao = new AppGeneralSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
 
                     var userIdManager = new UserIdManager(LoggerFactory);
@@ -154,25 +154,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Feedback
         {
             const string feedbackHtml = "feedback-html";
             //const string feedbackScript = "FEEDBACK-TEMPLATE-SCRIPT";
-            const string feedbackStyle = "FEEDBACK-TEMPLATE-STYLE";
+            //const string feedbackStyle = "FEEDBACK-TEMPLATE-STYLE";
             var fileMap = new Dictionary<string, FileInfo>() {
                 [feedbackHtml] = EnvironmentParameters.WebViewFeedbackTemplateFile,
-                [HtmlTemplateJqury] = EnvironmentParameters.WebViewJqueryScriptFile,
-                [HtmlTemplateMarked] = EnvironmentParameters.WebViewMarkedScriptFile,
-                [HtmlTemplateBasicStyle] = EnvironmentParameters.WebViewBasicStyleFile,
+                //[HtmlTemplateJqury] = EnvironmentParameters.WebViewJqueryScriptFile,
+                //[HtmlTemplateMarked] = EnvironmentParameters.WebViewMarkedScriptFile,
+                //[HtmlTemplateBasicStyle] = EnvironmentParameters.WebViewBasicStyleFile,
                 //[feedbackScript] = EnvironmentParameters.WebViewFeedbackScriptFile,
-                [feedbackStyle] = EnvironmentParameters.WebViewFeedbackStyleFile,
+                //[feedbackStyle] = EnvironmentParameters.WebViewFeedbackStyleFile,
             };
             var sourceMap = await LoadSourceFilesAsync(fileMap);
 
             var map = new WebViewTemplateDictionary() {
                 [HtmlTemplateLang] = new CultureWebViewTemplate(CultureService.Instance.Culture),
-                [HtmlTemplateJqury] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateJqury]),
-                [HtmlTemplateMarked] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateMarked]),
-                [HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
+                //[HtmlTemplateJqury] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateJqury]),
+                //[HtmlTemplateMarked] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateMarked]),
+                //[HtmlTemplateBasicStyle] = new RawTextWebViewTemplate(sourceMap[HtmlTemplateBasicStyle]),
                 //[feedbackScript] = new RawTextWebViewTemplate(sourceMap[feedbackScript]),
-                [feedbackStyle] = new RawTextWebViewTemplate(sourceMap[feedbackStyle]),
-                //["FEEDBACK-TITLE"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Title),
+                //[feedbackStyle] = new RawTextWebViewTemplate(sourceMap[feedbackStyle]),
+                ["FEEDBACK-TITLE"] = new HtmlTextWebViewTemplate("FEEDBACK"),
                 //["FEEDBACK-DESCRIPTION"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Description),
                 //["FEEDBACK-WARNING"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Warning),
                 //["FEEDBACK-SUBJECT"] = new HtmlTextWebViewTemplate(Properties.Resources.String_Feedback_Subject),

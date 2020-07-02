@@ -204,6 +204,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         public bool Handled { get; set; }
 
+        /// <summary>
+        /// 生成時間。
+        /// </summary>
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime Timestamp { get; } = DateTime.UtcNow;
+
         #endregion
 
     }
@@ -320,7 +326,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             };
 
             ButtonState = mouseButtonState;
-            IsButtonEvent = false;
+            IsButtonEvent = true;
         }
 
         #region property
@@ -341,6 +347,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// 処理したか。
         /// </summary>
         public bool Handled { get; set; }
+
+        /// <summary>
+        /// 生成時間。
+        /// </summary>
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime Timestamp { get; } = DateTime.UtcNow;
 
         #endregion
     }

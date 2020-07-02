@@ -8,6 +8,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         /// <summary>
         /// ランチャーアイテムとして処理可能アドオン。
+        /// <para>TODO: 現状の実装だとむずかすぃ。。。</para>
         /// </summary>
         LauncherItem,
         /// <summary>
@@ -37,8 +38,29 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <returns></returns>
         bool IsSupported(AddonKind addonKind);
 
+        /// <summary>
+        /// コマンド型アドオンの生成。
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         ICommandFinder BuildCommandFinder(IAddonParameter parameter);
 
+        /// <summary>
+        /// ウィジェットアドオンの生成。
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        IWidget BuildWidget(IAddonParameter parameter);
+
+        /// <summary>
+        /// バックグラウンドアドオンの生成。
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        IBackground BuildBackground(IAddonParameter parameter);
 
         #endregion
     }

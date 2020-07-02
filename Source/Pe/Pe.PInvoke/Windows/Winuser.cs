@@ -2723,6 +2723,9 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         public static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
         [DllImport("user32.dll")]
         public static extern uint MapVirtualKey(uint uCode, MAPVK uMapType);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        public static extern IntPtr GetDesktopWindow();
     }
 
 

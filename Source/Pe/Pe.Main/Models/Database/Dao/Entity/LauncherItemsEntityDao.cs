@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -23,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         long IconIndex { get; }
         bool IsEnabledCommandLauncher { get; }
         long ExecuteCount { get; }
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         DateTime LastExecuteTimestamp { get; }
         string Comment { get; }
 
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public long IconIndex { get; set; }
         public bool IsEnabledCommandLauncher { get; set; }
         public long ExecuteCount { get; set; }
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastExecuteTimestamp { get; set; }
         public string Comment { get; set; } = string.Empty;
 

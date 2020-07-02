@@ -1,6 +1,7 @@
 select
 	AppGeneralSetting.Language,
-	AppGeneralSetting.UserBackupDirectoryPath
+	AppGeneralSetting.UserBackupDirectoryPath,
+	AppGeneralSetting.ThemePluginId
 from
 	AppGeneralSetting
 where

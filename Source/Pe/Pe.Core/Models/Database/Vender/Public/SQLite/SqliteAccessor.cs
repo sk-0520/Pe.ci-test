@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
@@ -73,6 +74,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database.Vender.Public.SQLite
             return DatabaseAccessor.QueryFirst<T>(statement, parameter);
         }
 
+        [return: MaybeNull]
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {
             return DatabaseAccessor.QueryFirstOrDefault<T>(statement, parameter);

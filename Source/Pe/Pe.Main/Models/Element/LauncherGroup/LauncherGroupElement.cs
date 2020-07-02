@@ -16,23 +16,23 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
-    public class LauncherGroupElement : ElementBase, ILauncherGroupId
+    public class LauncherGroupElement: ElementBase, ILauncherGroupId
     {
-        public LauncherGroupElement(Guid launcherGroupId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
+        public LauncherGroupElement(Guid launcherGroupId, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherGroupId = launcherGroupId;
 
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             IdFactory = idFactory;
         }
 
         #region property
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IIdFactory IdFactory { get; }
 
         public string Name { get; private set; } = string.Empty;
@@ -56,10 +56,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
             LauncherGroupData data;
             IEnumerable<Guid> launcherItemIds;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new LauncherGroupsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new LauncherGroupsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 data = dao.SelectLauncherGroup(LauncherGroupId);
 
-                var launcherItemsLoader = new LauncherItemsLoader(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherItemsLoader = new LauncherItemsLoader(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 launcherItemIds = launcherItemsLoader.LoadLauncherItemIds(LauncherGroupId, data.Kind);
             }
 

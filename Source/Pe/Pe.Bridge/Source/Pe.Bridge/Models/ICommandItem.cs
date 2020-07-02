@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
+    /// <summary>
+    /// コマンドアイテム種別。
+    /// </summary>
     public enum CommandItemKind
     {
         #region property
@@ -13,27 +16,33 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region Pe
         /// <summary>
         /// コマンドはランチャーアイテム。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItem,
         /// <summary>
         /// ランチャーアイテムの名前に一致。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItemName,
         /// <summary>
         /// ランチャーアイテムのコードに一致。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItemCode,
         /// <summary>
         /// ランチャーアイテムのタグに一致。
+        /// <para>Pe 専用。</para>
         /// </summary>
         LauncherItemTag,
 
         /// <summary>
         /// アプリケーション固有処理。
+        /// <para>Pe 専用。</para>
         /// </summary>
         ApplicationCommand,
 
         #endregion
+
         /// <summary>
         /// プラグイン処理により生成。
         /// </summary>
@@ -42,6 +51,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #endregion
     }
 
+    /// <summary>
+    /// コマンド実行時の状態パラメータ。
+    /// </summary>
     public interface ICommandExecuteParameter
     {
         #region property
@@ -66,6 +78,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region property
 
         /// <summary>
+        /// このアイテムを選択可能な入力文字列。
+        /// <para>この文字列を入力すれば確実にリストアップされることを保証する</para>
+        /// </summary>
+        public string FullMatchValue { get; }
+
+        /// <summary>
         /// 小さく表示する種別文言。
         /// </summary>
         CommandItemKind Kind { get; }
@@ -83,7 +101,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// </summary>
         IReadOnlyList<HitValue> ExtendDescriptionValues { get; }
 
-
+        /// <summary>
+        /// 表示優先度。
+        /// <para><see cref="ScoreKind"/>と<see cref="IHitValuesCreator"/>からもろもろ算出する。</para>
+        /// </summary>
         int Score { get; }
 
         #endregion
@@ -103,6 +124,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// </summary>
         /// <param name="parameter">実行パラメータ。</param>
         void Execute(ICommandExecuteParameter parameter);
+
+        /// <summary>
+        /// 対象が自身と同等であるかを調べる。
+        /// </summary>
+        /// <param name="commandItem"></param>
+        /// <returns></returns>
+        bool IsEquals(ICommandItem? commandItem);
 
         #endregion
     }

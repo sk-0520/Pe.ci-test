@@ -85,6 +85,9 @@
       <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding KeyboardSettingEditor}">
         <app_main_views_setting:KeyboardSettingControl Editor="{Binding KeyboardSettingEditor}" />
       </TabItem>
+      <TabItem Header="{Binding Tag.Header, RelativeSource={RelativeSource Mode=Self}}" IsSelected="{Binding Tag.IsSelected, RelativeSource={RelativeSource Mode=Self}}" Tag="{Binding PluginsSettingEditor}">
+        <app_main_views_setting:PluginsSettingControl Editor="{Binding PluginsSettingEditor}" />
+      </TabItem>
     </TabControl>
 
     <UniformGrid Grid.Row="1" Style="{StaticResource DialogCommand}">

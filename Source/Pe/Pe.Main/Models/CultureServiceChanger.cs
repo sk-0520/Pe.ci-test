@@ -14,12 +14,12 @@ namespace ContentTypeTextNet.Pe.Main.Models
 {
     public class CultureServiceChanger
     {
-        public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, CustomConfiguration configuration, ILoggerFactory loggerFactory)
+        public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CustomConfiguration configuration, ILoggerFactory loggerFactory)
         {
             CultureService = cultureService;
             WindowManager = windowManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             Configuration = configuration;
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         CultureService CultureService { get; }
         IWindowManager WindowManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         CustomConfiguration Configuration { get; }
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         {
             string lang;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new AppGeneralSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new AppGeneralSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 lang = dao.SelectLanguage();
             }
 

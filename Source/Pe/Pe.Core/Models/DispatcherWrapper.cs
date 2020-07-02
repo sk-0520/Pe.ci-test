@@ -20,9 +20,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="dispatcher">ラップする対象。</param>
         public DispatcherWrapper(Dispatcher dispatcher)
+            :this(dispatcher, TimeSpan.FromMinutes(1))
+        { }
+
+        public DispatcherWrapper(Dispatcher dispatcher, TimeSpan waitTime)
         {
             Dispatcher = dispatcher;
+            WaitTime = waitTime;
         }
+
+        #region property
+
+        protected TimeSpan WaitTime { get; set; }
+
+        #endregion
 
         #region IDispatcherWapper
 
@@ -31,58 +42,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public bool CheckAccess() => Dispatcher.CheckAccess();
 
         public void VerifyAccess() => Dispatcher.VerifyAccess();
-
-        [Obsolete]
-        public void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
-        {
-            if(CheckAccess()) {
-                action();
-            } else {
-                Dispatcher.Invoke(action, dispatcherPriority, cancellationToken, timeout);
-            }
-        }
-        [Obsolete]
-        public void Invoke(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
-        {
-            Invoke(action, dispatcherPriority, cancellationToken, Timeout.InfiniteTimeSpan);
-        }
-        [Obsolete]
-        public void Invoke(Action action, DispatcherPriority dispatcherPriority)
-        {
-            Invoke(action, dispatcherPriority, CancellationToken.None, Timeout.InfiniteTimeSpan);
-        }
-        [Obsolete]
-        public void Invoke(Action action)
-        {
-            // https://referencesource.microsoft.com/#WindowsBase/Base/System/Windows/Threading/Dispatcher.cs,560
-            Invoke(action, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
-        }
-
-        [Obsolete]
-        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken, TimeSpan timeout)
-        {
-            if(CheckAccess()) {
-                action(argument);
-            } else {
-                Dispatcher.Invoke(action, dispatcherPriority, cancellationToken, timeout);
-            }
-        }
-        [Obsolete]
-        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
-        {
-            Invoke(action, argument, dispatcherPriority, cancellationToken, Timeout.InfiniteTimeSpan);
-        }
-        [Obsolete]
-        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
-        {
-            Invoke(action, argument, dispatcherPriority, CancellationToken.None, Timeout.InfiniteTimeSpan);
-        }
-
-        [Obsolete]
-        public void Invoke<TArgument>(Action<TArgument> action, TArgument argument)
-        {
-            Invoke(action, argument, DispatcherPriority.Send, CancellationToken.None, Timeout.InfiniteTimeSpan);
-        }
 
         public Task InvokeAsync(Action action, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {
@@ -130,8 +89,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     result = func();
                     resultWait.Set();
                 }), dispatcherPriority);
-                resultWait.Wait(cancellationToken);
-                return result;
+                if(resultWait.Wait(WaitTime, cancellationToken)) {
+                    return result;
+                }
+                throw new TimeoutException(WaitTime.ToString());
             }
         }
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority)
@@ -143,6 +104,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Get(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
+        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        {
+            return Dispatcher.BeginInvoke(action, dispatcherPriority, argument);
+        }
+        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument)
+        {
+            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send, argument);
+        }
 
         public DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority)
         {
@@ -153,14 +122,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Dispatcher.BeginInvoke(action, DispatcherPriority.Send);
         }
 
-        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
-        {
-            return Dispatcher.BeginInvoke(action, dispatcherPriority, argument);
-        }
-        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument)
-        {
-            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send, argument);
-        }
 
         #endregion
     }
@@ -172,6 +133,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public CurrentDispatcherWrapper()
             : base(Dispatcher.CurrentDispatcher)
+        { }
+
+        public CurrentDispatcherWrapper(TimeSpan waitTime)
+            : base(Dispatcher.CurrentDispatcher, waitTime)
         { }
     }
 }

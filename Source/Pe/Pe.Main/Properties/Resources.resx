@@ -1439,10 +1439,10 @@
   <data name="String_AppManager_Reboot_Update_A" xml:space="preserve">
     <value>アップデートして再起動(_R)</value>
   </data>
-  <data name="String_Unknown_BetaVersion_Caption" xml:space="preserve">
+  <data name="String_BetaVersion_Unknown_Caption" xml:space="preserve">
     <value>β版直接実行注意</value>
   </data>
-  <data name="String_Unknown_BetaVersion_Message" xml:space="preserve">
+  <data name="String_BetaVersion_Unknown_Message" xml:space="preserve">
     <value>本バージョンはβ版です。
 不具合修正確確認や動作確認のために使用されます。
 
@@ -1953,5 +1953,70 @@
   </data>
   <data name="String_Setting_Generals_LauncherToolbar_GroupMenuPosition_A" xml:space="preserve">
     <value>グループメニュー位置</value>
+  </data>
+  <data name="String_TestPlugin_Data_Caption" xml:space="preserve">
+    <value>プラグインテスト</value>
+  </data>
+  <data name="String_TestPlugin_Data_Message_Format" xml:space="preserve">
+    <value>テストプラグインが指定されていますがデータディレクトリが指定されていません
+ユーザーデータデータディレクトリ(${COMMAND-USER-KEY}):  ${USER-DIR}
+端末データデータディレクトリ(${COMMAND-MACHINE-KEY}): ${MACHINE-DIR}
+一時データディレクトリ(${COMMAND-TEMP-KEY}): ${TEMP-DIR}
+
+このまま続行すると Pe の既存データを壊す可能性があります
+このまま実行してもよろしいですか。</value>
+  </data>
+  <data name="String_TestPlugin_NotFound_Caption" xml:space="preserve">
+    <value>プラグインテスト</value>
+  </data>
+  <data name="String_TestPlugin_NotFound_Message_Format" xml:space="preserve">
+    <value>指定されたプラグインディレクトリが存在しません
+パス: ${PATH}
+アプリケーションを終了します</value>
+  </data>
+  <data name="String_Setting_Plugins_Header" xml:space="preserve">
+    <value>プラグイン</value>
+  </data>
+  <data name="String_AppManager_Widget_A" xml:space="preserve">
+    <value>ウィジェット(_W)</value>
+  </data>
+  <data name="String_AppManager_Widget_Topmost_A" xml:space="preserve">
+    <value>最前面(_T)</value>
+  </data>
+  <data name="String_AppManager_Widget_Visible_A" xml:space="preserve">
+    <value>表示(_V)</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_Header" xml:space="preserve">
+    <value>プラグイン情報</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_PluginId_A" xml:space="preserve">
+    <value>プラグインID</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_SupportVersions_A" xml:space="preserve">
+    <value>サポートバージョン</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Information_Version_A" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Setting_Header" xml:space="preserve">
+    <value>プラグイン設定</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Setting_NotSupported" xml:space="preserve">
+    <value>このプラグインに設定機能はありません。</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_SupportVersions_Format" xml:space="preserve">
+    <value>${MIN} - ${MAX}</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_SupportVersion_Unlimited" xml:space="preserve">
+    <value>制限なし</value>
+  </data>
+  <data name="String_Setting_Generals_General_Theme_A" xml:space="preserve">
+    <value>テーマ(_T)</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_NotLoaded_SupportVersions" xml:space="preserve">
+    <value>プラグイン非読み込みのためサポートバージョン不明</value>
+  </data>
+  <data name="String_Setting_Plugins_Item_Setting_NotLoaded" xml:space="preserve">
+    <value>プラグイン非読み込みのため詳細不明。</value>
   </data>
 </root>

@@ -30,19 +30,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #endregion
 
-        public FontElement(Guid fontId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public FontElement(Guid fontId, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             FontId = fontId;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
 
         public Guid FontId { get; protected set; }
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        protected IDatabaseStatementLoader StatementLoader { get; }
+        protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         public virtual string FamilyName
         {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new FontsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new FontsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 return dao.SelectFont(FontId);
             }
         }
@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
                 IsItalic = IsItalic,
             };
 
-            var dao = new FontsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var dao = new FontsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
             dao.InsertFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
 
             FontId = fontId;
@@ -201,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
                     CreateAndSaveFontId(c, c.Implementation);
                 }
 
-                var dao = new FontsEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                var dao = new FontsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 updater(dao, DatabaseCommonStatus.CreateCurrentAccount());
             }, uniqueKey);
 
@@ -262,19 +262,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
             using(var commander = MainDatabaseBarrier.WaitRead()) {
                 switch(DefaultFontKind) {
                     case DefaultFontKind.Note: {
-                            var dao = new AppNoteSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            var dao = new AppNoteSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                             defaultFontId = dao.SelectAppNoteSettingFontId();
                         }
                         break;
 
                     case DefaultFontKind.Command: {
-                            var dao = new AppCommandSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            var dao = new AppCommandSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                             defaultFontId = dao.SelectCommandSettingFontId();
                         }
                         break;
 
                     case DefaultFontKind.LauncherToolbar: {
-                            var dao = new AppLauncherToolbarSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                            var dao = new AppLauncherToolbarSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                             defaultFontId = dao.SelectAppLauncherToolbarSettingFontId();
                         }
                         break;

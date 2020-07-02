@@ -1,0 +1,13 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+>
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/DefaultTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/DefaultPathResource.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/DefaultLauncherToolbarTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/DefaultNoteTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/DefaultCommandTheme.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/Pe.Plugins.DefaultTheme;component/Views/Resources/DefaultNotifyLogTheme.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

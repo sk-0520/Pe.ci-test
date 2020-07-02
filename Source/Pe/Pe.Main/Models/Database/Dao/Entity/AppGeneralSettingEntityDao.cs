@@ -12,15 +12,16 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class AppGeneralSettingEntityDto : CommonDtoBase
+    internal class AppGeneralSettingEntityDto: CommonDtoBase
     {
         #region property
         public string Language { get; set; } = string.Empty;
         public string UserBackupDirectoryPath { get; set; } = string.Empty;
+        public Guid ThemePluginId { get; set; }
         #endregion
     }
 
-    public class AppGeneralSettingEntityDao : EntityDaoBase
+    public class AppGeneralSettingEntityDao: EntityDaoBase
     {
         public AppGeneralSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
@@ -47,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var result = new SettingAppGeneralSettingData() {
                 Language = dto.Language,
                 UserBackupDirectoryPath = dto.UserBackupDirectoryPath,
+                ThemePluginId = dto.ThemePluginId,
             };
             return result;
         }
@@ -56,10 +58,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             return Commander.QueryFirst<string>(statement);
         }
+
         public string SelectUserBackupDirectoryPath()
         {
             var statement = LoadStatement();
             return Commander.QueryFirst<string>(statement);
+        }
+
+        public Guid SelectThemePluginId()
+        {
+            var statement = LoadStatement();
+            return Commander.QueryFirst<Guid>(statement);
         }
 
         public bool UpdateSettingGeneralSetting(SettingAppGeneralSettingData data, IDatabaseCommonStatus commonStatus)
@@ -68,6 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var dto = new AppGeneralSettingEntityDto() {
                 Language = data.Language,
                 UserBackupDirectoryPath = data.UserBackupDirectoryPath,
+                ThemePluginId = data.ThemePluginId,
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;

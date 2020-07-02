@@ -50,6 +50,8 @@
   <sys:Double x:Key="Icon-Stroke-Normal">1</sys:Double>
   <sys:Double x:Key="Icon-Stroke-Big">1</sys:Double>
 
+  <Thickness x:Key="ImageLabel-Small-Margin">2,0,1,0</Thickness>
+
   <!--#region controls-->
 
   <!--#region toolbar -->
@@ -385,7 +387,7 @@
   <Style x:Key="ImageLabel-Small" TargetType="StackPanel">
     <Style.Resources>
       <Style TargetType="Control" BasedOn="{StaticResource Image-Small}">
-        <Setter Property="Margin" Value="2,0,1,0" />
+        <Setter Property="Margin" Value="{StaticResource ImageLabel-Small-Margin}" />
       </Style>
       <Style TargetType="AccessText" />
       <Style TargetType="TextBlock" />
@@ -419,5 +421,11 @@
       <TextBlock Text="{Binding Common.Name}" />
     </StackPanel>
   </DataTemplate>
+
+  <DropShadowEffect x:Key="Effect-Strong"
+    Color="{DynamicResource {x:Static SystemColors.MenuHighlightColorKey}}"
+    ShadowDepth="0"
+    BlurRadius="8"
+  />
 
 </ResourceDictionary>

@@ -45,6 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
                 ToViewModel = m => new NotifyLogItemViewModel(m, UserTracker, DispatcherWrapper, LoggerFactory)
             };
             StreamNotifyLogItems = StreamNotifyLogCollection.GetDefaultView();
+
+            ExecuteLogCommand = new DelegateCommand<NotifyLogItemViewModel>(
+                vm => {
+                    Model.ExecuteLogById(vm.NotifyLogId);
+                }
+            );
         }
 
         #region property
@@ -97,11 +103,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         #region command
 
-        public ICommand ExecuteLogCommand => GetOrCreateCommand(() => new DelegateCommand<NotifyLogItemViewModel>(
-            vm => {
-                Model.ExecuteLogById(vm.NotifyLogId);
-            }
-        ));
+        //public ICommand ExecuteLogCommand => GetOrCreateCommand(() => new DelegateCommand<NotifyLogItemViewModel>(
+        //    vm => {
+        //        Model.ExecuteLogById(vm.NotifyLogId);
+        //    }
+        //));
+        public ICommand ExecuteLogCommand { get; }
 
         #endregion
 

@@ -46,14 +46,14 @@ try {
 	$version = GetAppVersion
 	$revision = (git rev-parse HEAD)
 
-	function UpdateElement([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
+	function InsertElement([string] $value, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
 		$element = $xml.SelectSingleNode($targetXpath);
 		if ($null -eq $element) {
 			$propGroup = $xml.SelectSingleNode($parentXpath)
 			$element = $xml.CreateElement($elementName);
 			$propGroup.AppendChild($element) | Out-Null;
+			$element.InnerText = $value
 		}
-		$element.InnerText = $value
 	}
 
 	function ReplaceElement([hashtable] $map, [xml] $xml, [string] $targetXpath, [string] $parentXpath, [string] $elementName) {
@@ -80,8 +80,8 @@ try {
 		Write-Output $projectFile.Name
 		$xml = [XML](Get-Content $projectFile  -Encoding UTF8)
 
-		UpdateElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
-		UpdateElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
+		InsertElement $version $xml '/Project/PropertyGroup[1]/Version[1]' '/Project/PropertyGroup[1]' 'Version'
+		InsertElement $revision $xml '/Project/PropertyGroup[1]/InformationalVersion[1]' '/Project/PropertyGroup[1]' 'InformationalVersion'
 		$repMap = @{
 			'@YYYY@' = '2020'
 			'@NAME@' = 'sk'
@@ -120,6 +120,7 @@ try {
 	$appIconPath = Join-Path 'Resource\Icon' $appIconName
 
 	Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Main\Resources\Icon\App.ico' -Force
+	Copy-Item -Path $appIconPath -Destination 'Source\Pe\Pe.Plugins.DefaultTheme\App.ico' -Force
 
 	# ビルド開始
 	$defines = @()

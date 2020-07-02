@@ -15,10 +15,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 {
     public class KeyActionFactory
     {
-        public KeyActionFactory(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, ILoggerFactory loggerFactory)
+        public KeyActionFactory(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
         }
@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #region property
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
@@ -55,9 +55,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             var result = new List<KeyItem>();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var keyActionsEntityDao = new KeyActionsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
 
                 foreach(var keyAction in keyActionsEntityDao.SelectAllKeyActionsFromKind(keyActionKind)) {
                     var keyItem = CreateKeyItem(keyAction, keyOptionsEntityDao, keyMappingsEntityDao);
@@ -75,9 +75,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             var noPressedKinds = new[] { KeyActionKind.Replace, KeyActionKind.Disable };
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var keyActionsEntityDao = new KeyActionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var keyActionsEntityDao = new KeyActionsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var keyOptionsEntityDao = new KeyOptionsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var keyMappingsEntityDao = new KeyMappingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 foreach(var keyAction in keyActionsEntityDao.SelectAllKeyActionsIgnoreKinds(noPressedKinds)) {
                     var keyItem = CreateKeyItem(keyAction, keyOptionsEntityDao, keyMappingsEntityDao);
                     result.Add(keyItem);

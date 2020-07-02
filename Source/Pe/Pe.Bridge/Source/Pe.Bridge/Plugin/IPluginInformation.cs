@@ -5,6 +5,9 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
 {
+    /// <summary>
+    /// プラグイン識別。
+    /// </summary>
     public interface IPluginIdentifiers
     {
         #region property
@@ -13,18 +16,19 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグインの識別ID。
         /// <para>重複してるとバグる。</para>
         /// </summary>
-        public Guid PluginId { get; }
+        Guid PluginId { get; }
 
         /// <summary>
         /// プラグインを人が見て判断するための名前。
-        /// <para><see cref="PluginId"/>と異なり重複してもいいけどなるべく重複しない方針。</para>
+        /// <para><see cref="PluginId"/>程ではないが重複しない方針。</para>
         /// <para>ローカライズは考えなくていい。</para>
         /// </summary>
-        public string PluginName { get; }
+        string PluginName { get; }
 
         #endregion
     }
 
+    /// <inheritdoc cref="IPluginIdentifiers"/>
     public class PluginIdentifiers: IPluginIdentifiers
     {
         public PluginIdentifiers(Guid pluginId, string pluginName)
@@ -92,17 +96,21 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #endregion
     }
 
+    /// <summary>
+    /// Pe の解釈可能なライセンス一覧。
+    /// <para>const なのでバージョンアップ時に変になるかもねー。</para>
+    /// </summary>
     public static class PluginLicense
     {
         #region property
 
-        public static string Unknown => "unknown";
+        public const string Unknown = "unknown";
 
-        public static string DoWhatTheF_ckYouWantToPublicLicense1 => "WTFPLv1";
-        public static string DoWhatTheF_ckYouWantToPublicLicense2 => "WTFPLv2";
-        public static string GnuGeneralPublicLicense1 => "GPLv1";
-        public static string GnuGeneralPublicLicense2 => "GPLv2";
-        public static string GnuGeneralPublicLicense3 => "GPLv3";
+        public const string DoWhatTheF_ckYouWantToPublicLicense1 = "WTFPLv1";
+        public const string DoWhatTheF_ckYouWantToPublicLicense2 = "WTFPLv2";
+        public const string GnuGeneralPublicLicense1 = "GPLv1";
+        public const string GnuGeneralPublicLicense2 = "GPLv2";
+        public const string GnuGeneralPublicLicense3 = "GPLv3";
 
         #endregion
     }
@@ -146,7 +154,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
     /// </summary>
     public interface IPluginInformations
     {
-
         /// <summary>
         /// プラグインID。
         /// </summary>
@@ -159,16 +166,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// 作者情報。
         /// </summary>
         IPluginAuthors PluginAuthors { get; }
+
+        /// <summary>
+        /// プラグインカテゴリ。
+        /// </summary>
+        IPluginCategory PluginCategory { get; }
     }
 
     /// <inheritdoc cref="IPluginInformations"/>
     public class PluginInformations: IPluginInformations
     {
-        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors)
+        public PluginInformations(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IPluginAuthors pluginAuthors, IPluginCategory pluginCategory)
         {
             PluginIdentifiers = pluginIdentifiers;
             PluginVersions = pluginVersions;
             PluginAuthors = pluginAuthors;
+            PluginCategory = pluginCategory;
         }
 
         #region IPluginInformations
@@ -182,6 +195,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// <inheritdoc cref="IPluginInformations.PluginAuthors"/>
         public IPluginAuthors PluginAuthors { get; }
 
+        /// <inheritdoc cref="IPluginInformations.PluginCategory"/>
+        public IPluginCategory PluginCategory { get; }
         #endregion
     }
 }

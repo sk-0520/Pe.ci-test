@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     /// </summary>
     public sealed class ApplicationDispatcherWrapper : DispatcherWrapper
     {
-        public ApplicationDispatcherWrapper()
-            : base(Application.Current.Dispatcher)
+        public ApplicationDispatcherWrapper(TimeSpan waitTime)
+            : base(Application.Current.Dispatcher, waitTime)
         { }
 
     }

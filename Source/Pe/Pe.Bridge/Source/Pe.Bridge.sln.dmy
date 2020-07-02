@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge", "Pe.Bridge\Pe.B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Bridge.Test", "Pe.Bridge.Test\Pe.Bridge.Test.csproj", "{A55F3FD0-B2BE-4965-AAC7-F2AC32741375}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.PluginBase", "Pe.PluginBase\Pe.PluginBase.csproj", "{E456F960-C54E-4B01-BCEC-3A22C46B9775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded", "Pe.Embedded\Pe.Embedded.csproj", "{E456F960-C54E-4B01-BCEC-3A22C46B9775}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

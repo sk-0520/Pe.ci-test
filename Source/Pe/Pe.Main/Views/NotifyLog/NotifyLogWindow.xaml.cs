@@ -60,20 +60,21 @@ namespace ContentTypeTextNet.Pe.Main.Views.NotifyLog
 
         protected override void OnActivated(EventArgs e)
         {
-            base.OnActivated(e);
+            // #654対応: そもそもアクティブイベントも何もかも無視するようにした
+            //base.OnActivated(e);
 
-            var baseWdinwHandle = HandleUtility.GetWindowHandle(this);
-            var hWnd = baseWdinwHandle;
-            do {
-                hWnd = NativeMethods.GetWindow(hWnd, GW.GW_HWNDNEXT);
-                if(baseWdinwHandle == hWnd) {
-                    Logger.LogWarning("次のウィンドウ取得できず");
-                    return;
-                }
-            } while(!NativeMethods.IsWindowVisible(hWnd));
+            //var baseWdinwHandle = HandleUtility.GetWindowHandle(this);
+            //var hWnd = baseWdinwHandle;
+            //do {
+            //    hWnd = NativeMethods.GetWindow(hWnd, GW.GW_HWNDNEXT);
+            //    if(baseWdinwHandle == hWnd) {
+            //        Logger.LogWarning("次のウィンドウ取得できず");
+            //        return;
+            //    }
+            //} while(!NativeMethods.IsWindowVisible(hWnd));
 
-            Logger.LogDebug("アクティブウィンドウ移譲: {0} -> {1}", baseWdinwHandle, hWnd);
-            NativeMethods.SetActiveWindow(hWnd);
+            //Logger.LogDebug("アクティブウィンドウ移譲: {0} -> {1}", baseWdinwHandle, hWnd);
+            //NativeMethods.SetActiveWindow(hWnd);
         }
 
         #endregion

@@ -200,6 +200,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         Normal,
     }
 
+    public enum LauncherGroupImageName
+    {
+        DirectoryNormal,
+        DirectoryOpen,
+        File,
+        Gear,
+        Config,
+        Builder,
+        Bookmark,
+        Book,
+        Light,
+        Shortcut,
+        Storage,
+        Cloud,
+        User,
+    }
+
     /// <summary>
     /// グループメニューの表示位置。
     /// </summary>
@@ -280,7 +297,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         public LauncherHistoryKind Kind { get; set; }
         public string Value { get; set; } = string.Empty;
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastExecuteTimestamp { get; set; }
         #endregion
 
@@ -439,6 +456,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
             RetryCount = 1,
             WaitTime = TimeSpan.FromSeconds(1),
         };
+
+        #endregion
+    }
+
+    public class LauncherIconStatus
+    {
+        public LauncherIconStatus(IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp)
+        {
+            IconBox = iconBox;
+            LastUpdatedTimestamp = lastUpdatedTimestamp;
+        }
+
+        #region proeprty
+
+        public IconBox IconBox { get; }
+
+        [DateTimeKind(DateTimeKind.Utc)]
+        public DateTime LastUpdatedTimestamp { get; }
 
         #endregion
     }

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Main;
@@ -86,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main
                         }
                         var model = new CrashReport.Models.Element.CrashReportElement(options, initializer.Logging.Factory);
                         model.Initialize();
-                        var viewModel = new CrashReport.ViewModels.CrashReportViewModel(model, new Models.Telemetry.UserTracker(initializer.Logging.Factory), new ApplicationDispatcherWrapper(), initializer.Logging.Factory);
+                        var viewModel = new CrashReport.ViewModels.CrashReportViewModel(model, new Models.Telemetry.UserTracker(initializer.Logging.Factory), new ApplicationDispatcherWrapper(Timeout.InfiniteTimeSpan), initializer.Logging.Factory);
                         MainWindow = new CrashReport.Views.CrashReportWindow() {
                             DataContext = viewModel,
                         };

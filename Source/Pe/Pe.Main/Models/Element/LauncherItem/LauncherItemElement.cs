@@ -18,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
 
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #endregion
 
-        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader statementLoader, LauncherIconElement launcherIconElement, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, LauncherIconElement launcherIconElement, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -41,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ClipboardManager = clipboardManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             DispatcherWrapper = dispatcherWrapper;
 
             Icon = launcherIconElement;
@@ -55,8 +56,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier? FileDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
+        EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
 
         public string Name { get; private set; } = string.Empty;
         public string Code { get; private set; } = string.Empty;
@@ -81,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsDao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherItemsDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
                 Name = launcherItemData.Name;
@@ -98,14 +100,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             LauncherExecutePathData pathData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
-            //TODO: PATHの考慮.
+
             var expandedPath = Environment.ExpandEnvironmentVariables(pathData.Path ?? string.Empty);
+            var fullPath = EnvironmentPathExecuteFileCache.ToFullPathIfExistsCommand(expandedPath, LoggerFactory);
             var result = new LauncherFileDetailData() {
                 PathData = pathData,
-                FullPath = expandedPath,
+                FullPath = fullPath,
             };
 
             return result;
@@ -115,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         {
             ThrowIfDisposed();
 
-            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, StatementLoader, implementation, LoggerFactory);
+            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
@@ -127,9 +130,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             List<LauncherEnvironmentVariableData> envItems;
             LauncherRedoData redoData;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
-                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
 
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
                 if(customArgument != null) {
@@ -151,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
             fileData.Caption = Name;
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.Execute(Kind, fileData, fileData, envItems, redoData, screen);
 
             return result;
@@ -224,9 +227,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             }
         }
 
-        private void IncrementExecuteCount() {
+        private void IncrementExecuteCount()
+        {
             using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new LauncherItemsEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var dao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 dao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
                 commander.Commit();
             }
@@ -257,7 +261,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 return launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
         }
@@ -273,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenParentDirectory(Kind, pathData);
 
             return result;
@@ -291,7 +295,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             var result = launcherExecutor.OpenWorkingDirectory(Kind, pathData);
 
             return result;
@@ -311,18 +315,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             var pathData = GetExecutePath();
-            var value = Path.GetDirectoryName(pathData.Path);
+            var path = Environment.ExpandEnvironmentVariables(pathData.Path ?? string.Empty);
+
+            var value = Path.GetDirectoryName(path);
             if(string.IsNullOrEmpty(value)) {
-                if(!PathUtility.IsNetworkDirectoryPath(pathData.Path)) {
-                    Logger.LogWarning("親ディレクトリ不明: {0}, {1}", pathData.Path, LauncherItemId);
-                    return;
+                if(!PathUtility.IsNetworkDirectoryPath(path)) {
+                    var fullPath = EnvironmentPathExecuteFileCache.ToFullPathIfExistsCommand(path, LoggerFactory);
+                    if(ReferenceEquals(fullPath, path) || fullPath == null) {
+                        Logger.LogWarning("親ディレクトリ不明: {0}, {1}", path, LauncherItemId);
+                        return;
+                    }
+                    value = Path.GetDirectoryName(fullPath);
+                    if(string.IsNullOrEmpty(value)) {
+                        Logger.LogWarning("親ディレクトリ不明: {0}, {1}", fullPath, LauncherItemId);
+                        return;
+                    }
+                } else {
+                    var owner = PathUtility.GetNetworkOwnerName(path);
+                    if(string.IsNullOrEmpty(owner)) {
+                        Logger.LogWarning("親ディレクトリ不明: {0}, {1}", path, LauncherItemId);
+                        return;
+                    }
+                    value = owner;
                 }
-                var owner = PathUtility.GetNetworkOwnerName(pathData.Path);
-                if(string.IsNullOrEmpty(owner)) {
-                    Logger.LogWarning("親ディレクトリ不明: {0}, {1}", pathData.Path, LauncherItemId);
-                    return;
-                }
-                value = owner;
             }
             ClipboardManager.CopyText(value, ClipboardNotify.None);
         }
@@ -377,7 +392,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             var pathData = GetExecutePath();
 
-            var launcherExecutor = new LauncherExecutor(OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
+            var launcherExecutor = new LauncherExecutor(EnvironmentPathExecuteFileCache, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
             launcherExecutor.ShowProperty(pathData);
         }
 

@@ -44,6 +44,26 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         #endregion
 
+        #region command
+
+        public ICommand ScrollSelectedItemCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
+            o => {
+                this.listItems.ScrollIntoView(this.listItems.SelectedItem);
+            }
+        ));
+
+        public ICommand FocusEndCommand => CommandStore.GetOrCreate(() => new DelegateCommand(
+            () => {
+                this.inputCommand.Select(this.inputCommand.Text.Length, 0);
+            }
+        ));
+
+        #endregion
+
+        #region function
+
+        #endregion
+
         #region IsExtendProperty
 
         public static readonly DependencyProperty IsExtendProperty = DependencyProperty.Register(
@@ -73,21 +93,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Command
 
         #endregion
 
-
         #region IDpiScaleOutputor
 
         public Point GetDpiScale() => UIUtility.GetDpiScale(this);
         public IScreen GetOwnerScreen() => Screen.FromHandle(HandleUtility.GetWindowHandle(this));
-
-        #endregion
-
-        #region function
-
-        public ICommand ScrollSelectedItemCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
-            o => {
-                this.listItems.ScrollIntoView(this.listItems.SelectedItem);
-            }
-        ));
 
         #endregion
 

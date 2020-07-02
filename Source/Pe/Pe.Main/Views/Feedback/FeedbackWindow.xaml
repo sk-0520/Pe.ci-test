@@ -157,6 +157,7 @@
                   </DataTrigger>
                 </Style.Triggers>
                 <Setter Property="IsEnabled" Value="True" />
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
               </Style>
             </cef_sharp_wpf:ChromiumWebBrowser.Style>
           </cef_sharp_wpf:ChromiumWebBrowser>

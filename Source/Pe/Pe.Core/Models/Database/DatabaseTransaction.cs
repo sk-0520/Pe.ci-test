@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
 
@@ -98,6 +99,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return DatabaseAccessor.QueryFirst<T>(statement, parameter, this);
         }
 
+        [return: MaybeNull]
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {
             return DatabaseAccessor.QueryFirstOrDefault<T>(statement, parameter, this);

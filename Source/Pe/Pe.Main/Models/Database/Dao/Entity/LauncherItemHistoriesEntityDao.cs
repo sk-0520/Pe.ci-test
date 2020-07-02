@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public string Kind { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastExecuteTimestamp { get; set; }
 
         #endregion

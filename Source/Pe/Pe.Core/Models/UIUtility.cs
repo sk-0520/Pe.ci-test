@@ -358,7 +358,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
         public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes)
         {
-            return IsEnabledEventArea(dependencyObject, enableElementTypes, new Type[0]);
+            return IsEnabledEventArea(dependencyObject, enableElementTypes, Array.Empty<Type>());
         }
     }
 }

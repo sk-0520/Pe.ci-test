@@ -14,30 +14,40 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        public string ConvertHumanLikeByte(long byteSize, string sizeFormat, string[] terms)
+        /// <summary>
+        /// 人間様が読みやすい形にサイズ(バイト数)を整える。
+        /// </summary>
+        /// <param name="byteSize"></param>
+        /// <param name="sizeFormat"></param>
+        /// <param name="terms"></param>
+        /// <returns></returns>
+        public string ConvertHumanReadableByte(long byteSize, string sizeFormat, IReadOnlyList<string> terms)
         {
             double size = byteSize;
             int order = 0;
-            while(size >= 1024 && ++order < terms.Length) {
+            while(size >= 1024 && ++order < terms.Count) {
                 size = size / 1024;
             }
 
             return string.Format(sizeFormat, size, terms[order]);
         }
 
-        public string ConvertHumanLikeByte(long byteSize, string[] terms)
+        /// <inheritdoc cref="ConvertHumanReadableByte(long, string, IReadOnlyList{string})"/>
+        public string ConvertHumanReadableByte(long byteSize, IReadOnlyList<string> terms)
         {
-            return ConvertHumanLikeByte(byteSize, "{0:0.00} {1}", terms);
+            return ConvertHumanReadableByte(byteSize, "{0:0.00} {1}", terms);
         }
 
-        public string ConvertHumanLikeByte(long byteSize, string sizeFormat)
+        /// <inheritdoc cref="ConvertHumanReadableByte(long, string, IReadOnlyList{string})"/>
+        public string ConvertHumanReadableByte(long byteSize, string sizeFormat)
         {
-            return ConvertHumanLikeByte(byteSize, sizeFormat, Terms);
+            return ConvertHumanReadableByte(byteSize, sizeFormat, Terms);
         }
 
-        public string ConvertHumanLikeByte(long byteSize)
+        /// <inheritdoc cref="ConvertHumanReadableByte(long, string, IReadOnlyList{string})"/>
+        public string ConvertHumanReadableByte(long byteSize)
         {
-            return ConvertHumanLikeByte(byteSize, Terms);
+            return ConvertHumanReadableByte(byteSize, Terms);
         }
 
         #endregion

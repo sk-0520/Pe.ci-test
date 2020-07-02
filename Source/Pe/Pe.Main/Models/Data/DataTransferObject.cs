@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
@@ -21,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         DateTime CreatedTimestamp { get; }
         string? CreatedAccount { get; }
         string? CreatedProgramName { get; }
@@ -33,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         DateTime CreatedTimestamp { get; set; }
         string? CreatedAccount { get; set; }
         string? CreatedProgramName { get; set; }
@@ -46,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         DateTime UpdatedTimestamp { get; }
         string? UpdatedAccount { get; }
         long UpdatedCount { get; }
@@ -59,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region property
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         DateTime UpdatedTimestamp { get; set; }
         string? UpdatedAccount { get; set; }
         string? UpdatedProgramName { get; set; }
@@ -73,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region IReadOnlyCreateDto
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime CreatedTimestamp { get; set; }
         public string? CreatedAccount { get; set; }
         public string? CreatedProgramName { get; set; }
@@ -85,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region IReadOnlyUpdateDto
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime UpdatedTimestamp { get; set; }
         public string? UpdatedAccount { get; set; }
         public string? UpdatedProgramName { get; set; }
@@ -104,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         #region IWritableCreateDto
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime CreatedTimestamp { get; set; }
         public string? CreatedAccount { get; set; }
         public string? CreatedProgramName { get; set; }
@@ -114,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region IWritableUpdateDto
 
-        [Timestamp(DateTimeKind.Utc)]
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime UpdatedTimestamp { get; set; }
         public string? UpdatedAccount { get; set; }
         public string? UpdatedProgramName { get; set; }

@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <summary>
         /// 検索完了。
         /// </summary>
-        Listup,
+        Complete,
         /// <summary>
         /// 検索対象なし。
         /// </summary>
@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 
     public interface ICommandTheme
     {
-        #region property
+        #region function
 
         /// <summary>
         /// ウィンドウの背景ブラシ取得。

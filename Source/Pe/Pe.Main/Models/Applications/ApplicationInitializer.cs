@@ -18,6 +18,9 @@ using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Models.WebView;
 using Microsoft.Extensions.Logging;
 
@@ -47,6 +50,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         string CommandLineSwitchDebugDevelopMode { get; } = "debug-dev-mode";
         public bool IsDebugDevelopMode { get; private set; }
 #endif
+        /// <summary>
+        /// テストプラグイン格納ディレクトリパス。
+        /// </summary>
+        string CommandLineTestPluginDirectoryPath { get; } = "test-plugin-dir";
+        /// <summary>
+        /// テストプラグイン名。
+        /// <para>通常は<see cref="CommandLineTestPluginDirectoryPath"/>のディレクトリ名を使用するが、デバッグ実行時などのプラグインディレクトリ名とプラグイン名が異なる場合に指定する。</para>
+        /// <para>なお指定の際には拡張子を除外すること(plugin-name.dll -> plugin-name)</para>
+        /// </summary>
+        string CommandLineTestPluginName { get; } = "test-plugin-name";
 
         public bool IsFirstStartup { get; private set; }
         public RunMode RunMode { get; private set; }
@@ -61,6 +74,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         public Mutex? Mutex { get; private set; }
 
+        public string TestPluginDirectoryPath { get; private set; } = string.Empty;
+        public string TestPluginName { get; private set; } = string.Empty;
         #endregion
 
         #region function
@@ -93,6 +108,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 #if DEBUG
             commandLine.Add(longKey: CommandLineSwitchDebugDevelopMode, hasValue: false);
 #endif
+            commandLine.Add(longKey: CommandLineTestPluginDirectoryPath, hasValue: true);
+            commandLine.Add(longKey: CommandLineTestPluginName, hasValue: true);
 
             commandLine.Parse();
 
@@ -108,8 +125,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             }
 
             var result = MessageBox.Show(
-                Properties.Resources.String_Unknown_BetaVersion_Message,
-                Properties.Resources.String_Unknown_BetaVersion_Caption,
+                Properties.Resources.String_BetaVersion_Unknown_Message,
+                Properties.Resources.String_BetaVersion_Unknown_Caption,
                 MessageBoxButton.OKCancel,
                 MessageBoxImage.Warning,
                 MessageBoxResult.Cancel
@@ -118,6 +135,64 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return result == MessageBoxResult.OK;
         }
 #endif
+        bool ShowCommandLineTestPlugin(CommandLine commandLine, EnvironmentParameters environmentParameters)
+        {
+            var testPluginDirectoryPath = commandLine.GetValue(CommandLineTestPluginDirectoryPath, string.Empty);
+            if(string.IsNullOrWhiteSpace(testPluginDirectoryPath)) {
+                return true;
+            }
+
+            var expandedTestPluginDirectoryPath = Environment.ExpandEnvironmentVariables(testPluginDirectoryPath);
+
+            if(!Directory.Exists(expandedTestPluginDirectoryPath)) {
+                MessageBox.Show(
+                    TextUtility.ReplaceFromDictionary(
+                        Properties.Resources.String_TestPlugin_NotFound_Message_Format,
+                        new Dictionary<string, string>() {
+                            ["PATH"] = testPluginDirectoryPath,
+                        }
+                    ),
+                    Properties.Resources.String_TestPlugin_NotFound_Caption,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                return false;
+            }
+
+            var userDirKey = commandLine.GetValue(EnvironmentParameters.CommandLineKeyUserDirectory, string.Empty);
+            var machineDirKey = commandLine.GetValue(EnvironmentParameters.CommandLineKeyMachineDirectory, string.Empty);
+            var tempDirKey = commandLine.GetValue(EnvironmentParameters.CommandLineKeyTemporaryDirectory, string.Empty);
+
+            var hasEmpty = new[] { userDirKey, machineDirKey, tempDirKey, }.Any(i => string.IsNullOrWhiteSpace(i));
+            if(hasEmpty) {
+                var result = MessageBox.Show(
+                    TextUtility.ReplaceFromDictionary(
+                        Properties.Resources.String_TestPlugin_Data_Message_Format,
+                        new Dictionary<string, string>() {
+                            ["COMMAND-USER-KEY"] = EnvironmentParameters.CommandLineKeyUserDirectory,
+                            ["COMMAND-MACHINE-KEY"] = EnvironmentParameters.CommandLineKeyMachineDirectory,
+                            ["COMMAND-TEMP-KEY"] = EnvironmentParameters.CommandLineKeyTemporaryDirectory,
+                            ["USER-DIR"] = userDirKey,
+                            ["MACHINE-DIR"] = machineDirKey,
+                            ["TEMP-DIR"] = tempDirKey,
+                        }
+                    ),
+                    Properties.Resources.String_TestPlugin_Data_Caption,
+                    MessageBoxButton.OKCancel,
+                    MessageBoxImage.Warning,
+                    MessageBoxResult.Cancel
+                );
+
+                if(result != MessageBoxResult.OK) {
+                    return false;
+                }
+            }
+
+            TestPluginDirectoryPath = expandedTestPluginDirectoryPath;
+            TestPluginName = commandLine.GetValue(CommandLineTestPluginName, string.Empty);
+
+            return true;
+        }
 
         ApplicationEnvironmentParameters InitializeEnvironment(CommandLine commandLine)
         {
@@ -144,7 +219,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
 
                 diContainer
-                    .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+                    .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(TimeSpan.FromSeconds(10)))
                     .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
                     .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
@@ -194,7 +269,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 new ApplicationDatabaseFactory(true, false)
             );
         }
-        IDatabaseStatementLoader GetStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
+        IDatabaseStatementLoader GetDatabaseStatementLoader(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory)
         {
             DatabaseAccessor? statementAccessor = null;
             environmentParameters.SqlStatementAccessorFile.Refresh();
@@ -227,7 +302,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var idFactory = new IdFactory(loggerFactory);
             using(var factoryPack = CreateDatabaseFactoryPack(environmentParameters, false, logger))
             using(var accessorPack = ApplicationDatabaseAccessorPack.Create(factoryPack, loggerFactory)) {
-                var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+                var statementLoader = GetDatabaseStatementLoader(environmentParameters, loggerFactory);
                 using var statementLoaderDisposer = statementLoader as IDisposable;
                 var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
                 databaseSetupper.Initialize(accessorPack);
@@ -243,7 +318,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var idFactory = new IdFactory(loggerFactory);
 
-            var statementLoader = GetStatementLoader(environmentParameters, loggerFactory);
+            var statementLoader = GetDatabaseStatementLoader(environmentParameters, loggerFactory);
             using var statementLoaderDisposer = statementLoader as IDisposable;
 
             var databaseSetupper = new DatabaseSetupper(idFactory, statementLoader, loggerFactory);
@@ -295,16 +370,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<DisplayConfiguration, DisplayConfiguration>(environmentParameters.Configuration.Display)
                 .Register<HookConfiguration, HookConfiguration>(environmentParameters.Configuration.Hook)
                 .Register<NotifyLogConfiguration, NotifyLogConfiguration>(environmentParameters.Configuration.NotifyLog)
+                .Register<LauncherItemConfiguration, LauncherItemConfiguration>(environmentParameters.Configuration.LauncherItem)
                 .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.Configuration.LauncherToobar)
                 .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.Configuration.LauncherGroup)
                 .Register<NoteConfiguration, NoteConfiguration>(environmentParameters.Configuration.Note)
                 .Register<CommandConfiguration, CommandConfiguration>(environmentParameters.Configuration.Command)
                 .Register<PlatformConfiguration, PlatformConfiguration>(environmentParameters.Configuration.Platform)
+                .Register<ScheduleConfiguration, ScheduleConfiguration>(environmentParameters.Configuration.Schedule)
 
                 .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory))
 
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
-                .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient)
+
+                .Register<PluginContextFactory, PluginContextFactory>(DiLifecycle.Transient)
+                .Register<PreferencesContextFactory, PreferencesContextFactory>(DiLifecycle.Transient)
+                .Register<LauncherItemAddonContextFactory, LauncherItemAddonContextFactory>(DiLifecycle.Transient)
+                .Register<WidgetAddonContextFactory, WidgetAddonContextFactory>(DiLifecycle.Transient)
+                .Register<BackgroundAddonContextFactory, BackgroundAddonContextFactory>(DiLifecycle.Transient)
+
+                .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.Configuration.General.DispatcherWait))
                 .Register<CultureService, CultureService>(cultureService)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
@@ -446,6 +530,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                         logger.LogInformation("使用許諾得られず");
                         return false;
                     }
+                }
+            }
+
+            if(RunMode != RunMode.CrashReport) {
+                if(!ShowCommandLineTestPlugin(commandLine, environmentParameters)) {
+                    return false;
                 }
             }
 

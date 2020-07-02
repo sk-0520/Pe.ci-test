@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        static IReadOnlyList<ObjectDumpItem> EmptyChildren { get; } = new ObjectDumpItem[0];
+        static IReadOnlyList<ObjectDumpItem> EmptyChildren { get; } = Array.Empty<ObjectDumpItem>();
 
         public ISet<Type> IgnoreNestedMembers { get; } = new HashSet<Type>() {
             typeof(bool),

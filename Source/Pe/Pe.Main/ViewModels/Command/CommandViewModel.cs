@@ -26,7 +26,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 {
-    public class CommandViewModel : ElementViewModelBase<CommandElement>, IViewLifecycleReceiver
+    public class CommandViewModel: ElementViewModelBase<CommandElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -70,6 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         #region property
         public RequestSender ScrollSelectedItemRequest { get; } = new RequestSender();
+        public RequestSender FocusEndRequest { get; } = new RequestSender();
 
         IGeneralTheme GeneralTheme { get; }
         ICommandTheme CommandTheme { get; }
@@ -139,8 +140,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 #if DEBUG
             DispatcherWrapper.VerifyAccess();
 #endif
-            CurrentSelectedItem = SelectedItem;
-            SetProperty(ref this._inputValue, value);
+            var prevSelectedItem = CurrentSelectedItem = SelectedItem;
+
+            //SetProperty(ref this._inputValue, value);
+            this._inputValue = value;
 
             var prevInputCancellationTokenSource = InputCancellationTokenSource;
             if(prevInputCancellationTokenSource != null) {
@@ -162,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 DispatcherWrapper.VerifyAccess();
 #endif
 
-                var commandItems = await Model.ListupCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token);
+                var commandItems = await Model.EnumerateCommandItemsAsync(this._inputValue, InputCancellationTokenSource.Token);
                 InputCancellationTokenSource?.Dispose();
                 InputCancellationTokenSource = null;
 #if DEBUG
@@ -170,16 +173,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 #endif
 
                 SetCommandItems(commandItems);
-                SelectedItem = CommandItems.FirstOrDefault();
+                //SelectedItem = CommandItems.FirstOrDefault();
+                var selectedItem = prevSelectedItem == null
+                    ? CommandItems.FirstOrDefault()
+                    : CommandItems.FirstOrDefault(i => prevSelectedItem.IsEquals(i))
+                ;
+                if(selectedItem == null || 0 < CommandItems.Count) {
+                    SelectedItem = CommandItems.First();
+                } else {
+                    SelectedItem = selectedItem;
+                }
+
                 if(SelectedItem == null) {
                     CurrentSelectedItem = null;
                     InputState = InputState.NotFound;
                 } else if(!string.IsNullOrWhiteSpace(InputValue)) {
-                    InputState = InputState.Listup;
+                    InputState = InputState.Complete;
                 }
+                ScrollSelectedItemRequest.Send();
+
             } catch(OperationCanceledException ex) {
                 Logger.LogDebug(ex, "入力処理はキャンセルされた");
-
             }
         }
 
@@ -234,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Finding);
         [ThemeProperty]
-        public Brush InputListupBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Listup);
+        public Brush InputCompleteBorderBrush => CommandTheme.GetInputBorderBrush(InputState.Complete);
         [ThemeProperty]
         public Brush InputNotFoundBorderBrush => CommandTheme.GetInputBorderBrush(InputState.NotFound);
 
@@ -243,7 +257,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingBackground => CommandTheme.GetInputBackground(InputState.Finding);
         [ThemeProperty]
-        public Brush InputListupBackground => CommandTheme.GetInputBackground(InputState.Listup);
+        public Brush InputCompleteBackground => CommandTheme.GetInputBackground(InputState.Complete);
         [ThemeProperty]
         public Brush InputNotFoundBackground => CommandTheme.GetInputBackground(InputState.NotFound);
 
@@ -252,7 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         [ThemeProperty]
         public Brush InputFindingForeground => CommandTheme.GetInputForeground(InputState.Finding);
         [ThemeProperty]
-        public Brush InputListupForeground => CommandTheme.GetInputForeground(InputState.Listup);
+        public Brush InputCompleteForeground => CommandTheme.GetInputForeground(InputState.Complete);
         [ThemeProperty]
         public Brush InputNotFoundForeground => CommandTheme.GetInputForeground(InputState.NotFound);
 
@@ -291,6 +305,27 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public ICommand DownSelectItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 UpDownSelectItem(false);
+            }
+        ));
+
+        public ICommand EnterSelectedItemCommand => GetOrCreateCommand(() => new DelegateCommand(
+            async () => {
+                if(SelectedItem == null) {
+                    return;
+                }
+
+                Logger.LogTrace("補完！");
+                var now = SelectedItem;
+
+                await ChangeInutValueAsync(now.FullMatchValue);
+
+                RaisePropertyChanged(nameof(InputValue));
+
+                // 識別できんから無理だわ
+                //SelectedItem = now;
+
+                FocusEndRequest.Send();
+                ScrollSelectedItemRequest.Send();
             }
         ));
 
@@ -444,8 +479,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                     return;
                 }
 
-                foreach(var themePropertyName in ThemeProperties.GetPropertyNames()) {
-                    RaisePropertyChanged(themePropertyName);
+                foreach(var themePropertyName in vm.ThemeProperties.GetPropertyNames()) {
+                    vm.RaisePropertyChanged(themePropertyName);
                 }
             }, this, System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }

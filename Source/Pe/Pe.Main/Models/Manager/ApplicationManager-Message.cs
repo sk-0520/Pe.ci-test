@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -16,8 +17,10 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
@@ -37,6 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public bool IsSupportedExplorer => ExplorerSupporter != null;
 
         Guid KeyboardNotifyLogId { get; set; }
+        private BackgroundAddonProxy? BackgroundAddon { get; set; }
+
+        private CronScheduler CronScheduler { get; }
 
         #endregion
 
@@ -109,8 +115,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             KeyActionAssistant.SelfJobInputId = KeyActionChecker.SelfJobInputId;
 
-            var builder = ApplicationDiContainer.Build<KeyActionFactory>();
-
             KeyboradHooker.KeyDown += KeyboradHooker_KeyDown;
             KeyboradHooker.KeyUp += KeyboradHooker_KeyUp;
 
@@ -179,12 +183,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             IsEnabledHook = false;
         }
 
+        void StartBackground()
+        {
+            BackgroundAddon = PluginContainer.Addon.GetBackground();
+
+            var backgroundAddonProxyRunStartupContext = new BackgroundAddonProxyRunStartupContext();
+            BackgroundAddon.RunStartup(backgroundAddonProxyRunStartupContext);
+
+            var hookConfiguration = ApplicationDiContainer.Build<HookConfiguration>();
+            if(hookConfiguration.Keyboard) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.KeyboardHook)) {
+                    if(!KeyboradHooker.IsEnabled) {
+                        Logger.LogInformation("キーボード設定は存在しないがバックグラウンドアドオンでキーボード処理が存在するためキーフックを開始");
+                        KeyboradHooker.Register();
+                        IsEnabledHook = true;
+                    }
+                }
+            }
+
+            if(hookConfiguration.Mouse) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    if(!MouseHooker.IsEnabled) {
+                        Logger.LogInformation("バックグラウンドアドオンでマウス処理が存在するためマウスフックを開始");
+                        MouseHooker.Register();
+                        IsEnabledHook = true;
+                    }
+                }
+            }
+        }
+
         public void ToggleHook()
         {
             if(IsEnabledHook) {
                 StopHook();
             } else {
                 StartHook();
+                StartBackground();
             }
         }
 
@@ -506,6 +540,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }, UniqueKeyPool.Get());
         }
 
+        private void InitializeScheduler()
+        {
+            RebuildSchedulerSetting();
+        }
+
+        private void RebuildSchedulerSetting()
+        {
+            CronScheduler.ClearAllSchedule();
+
+            var factory = new CronItemSettingFactory();
+
+            var launcherItemIconRefreshSetting = factory.Parse(ApplicationDiContainer.Build<ScheduleConfiguration>().LauncherItemIconRefresh);
+            launcherItemIconRefreshSetting.Mode = MultipleExecuteMode.Skip;
+
+            var launcherItemConfiguration = ApplicationDiContainer.Build<LauncherItemConfiguration>();
+
+            CronScheduler.AddSchedule(launcherItemIconRefreshSetting, ApplicationDiContainer.Build<LauncherIconRefresher>(launcherItemConfiguration.IconRefreshTime));
+        }
+
+        private void StartScheduler()
+        {
+            Logger.LogInformation("スケジューラ実行");
+            CronScheduler.Start();
+        }
+
+        private void StopScheduler()
+        {
+            if(CronScheduler.IsRunning) {
+                Logger.LogInformation("スケジューラ停止");
+                CronScheduler.Stop();
+            }
+        }
+
         #endregion
 
         private void KeyboradHooker_KeyDown(object? sender, KeyboardHookEventArgs e)
@@ -524,12 +591,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     }
                 }
             }
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyKeyboardContext(e);
+                    BackgroundAddon.HookKeyDown(context);
+                }
+            }
         }
 
         private void KeyboradHooker_KeyUp(object? sender, KeyboardHookEventArgs e)
         {
             var jobs = KeyActionChecker.Find(e.IsDown, e.Key, new ModifierKeyStatus(), e.kbdll);
             ExecuteKeyUpJobsAsync(jobs, e.Key, e.modifierKeyStatus).ConfigureAwait(false);
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(Bridge.Plugin.Addon.BackgroundKind.KeyboardHook)) {
+                    var context = new BackgroundAddonProxyKeyboardContext(e);
+                    BackgroundAddon.HookKeyUp(context);
+                }
+            }
         }
 
         private void MouseHooker_MouseMove(object? sender, MouseHookEventArgs e)
@@ -544,6 +625,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     NotifyLogElement.StartView();
                 }
             }
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    var context = new BackgroundAddonProxyMouseMoveContext(e);
+                    BackgroundAddon.HookMouseMove(context);
+                }
+            }
         }
 
         private void MouseHooker_MouseDown(object? sender, MouseHookEventArgs e)
@@ -554,17 +642,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 KeyboardNotifyLogId = Guid.Empty;
             }
             KeyActionChecker.Reset();
+
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    var context = new BackgroundAddonProxyMouseButtonContext(e);
+                    BackgroundAddon.HookMouseDown(context);
+                }
+            }
         }
 
         private void MouseHooker_MouseUp(object? sender, MouseHookEventArgs e)
-        { }
+        {
+            if(BackgroundAddon != null) {
+                if(BackgroundAddon.IsSupported(BackgroundKind.MouseHook)) {
+                    var context = new BackgroundAddonProxyMouseButtonContext(e);
+                    BackgroundAddon.HookMouseUp(context);
+                }
+            }
+        }
 
 
         void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             Logger.LogInformation("セッション終了検知: Reason = {0}, Cancel = {1}", e.Reason, e.Cancel);
 
-            CloseViews();
+            CloseViews(true);
             DisposeElements();
             BackupSettingsDefault(ApplicationDiContainer);
         }

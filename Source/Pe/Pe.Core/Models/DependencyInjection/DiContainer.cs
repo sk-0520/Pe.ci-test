@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -214,8 +215,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                         continue;
                     }
 
-                    var namedFacories = Factory.ToArray().Where(i => i.Key != name);
-                    foreach(var namedFactory in namedFacories) {
+                    var namedFactories = Factory.ToArray().Where(i => i.Key != name);
+                    foreach(var namedFactory in namedFactories) {
                         if(namedFactory.Value.TryGetValue(parameterInfo.ParameterType, out var factory)) {
                             arguments[i] = factory.Create();
                             break;
@@ -234,7 +235,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         }
 
-        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, out object? createdObject)
+        bool TryNewObjectCore(Type objectType, string name, bool isCached, DiConstructorCache constructorCache, IEnumerable<object> manualParameters, [MaybeNullWhen(false)] out object createdObject)
         {
             var parameters = constructorCache.ParameterInfos;
             var parameterInjections = constructorCache.ParameterInjections;
@@ -243,17 +244,17 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 if(!isCached) {
                     Constructors[name].TryAdd(objectType, constructorCache);
                 }
-                createdObject = constructorCache.Create(new object[0]);
+                createdObject = constructorCache.Create(Array.Empty<object>());
                 return true;
             }
 
             var arguments = CreateParameters(name, parameters, parameterInjections, manualParameters);
             if(arguments == null) {
-                createdObject = default(object);
+                createdObject = default;
                 return false;
             }
             if(arguments.Length != parameters.Count) {
-                createdObject = default(object);
+                createdObject = default;
                 return false;
             }
 
@@ -264,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return true;
         }
 
-        bool TryNewObject(Type objectType, string name, IEnumerable<object> manualParameters, bool useFactoryCache, out object createdObject)
+        bool TryNewObject(Type objectType, string name, IEnumerable<object> manualParameters, bool useFactoryCache, [MaybeNullWhen(false)] out object createdObject)
         {
             if(ObjectPool[name].TryGetValue(objectType, out var poolValue)) {
                 createdObject = poolValue;
@@ -313,7 +314,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                 }
             }
 
-            createdObject = default!;
+            createdObject = default;
             return false;
         }
 
@@ -330,7 +331,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             throw new DiException($"{type}: create error {name}");
         }
 
-        bool TryGetInstance(Type interfaceType, string name, IEnumerable<object> manualParameters, out object value)
+        bool TryGetInstance(Type interfaceType, string name, IEnumerable<object> manualParameters, [MaybeNullWhen(false)] out object value)
         {
             if(ObjectPool[name].TryGetValue(interfaceType, out var poolValue)) {
                 value = poolValue;

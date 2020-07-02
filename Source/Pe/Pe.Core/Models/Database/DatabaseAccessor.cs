@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using Dapper;
 using Microsoft.Extensions.Logging;
@@ -44,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="statement"></param>
         /// <param name="parameter"></param>
         /// <returns>一番最初に見つかったデータ。見つかんなかったら default(T)</returns>
+        [return: MaybeNull]
         T QueryFirstOrDefault<T>(string statement, object? parameter = null);
         /// <summary>
         /// 単一データ取得。
@@ -126,6 +129,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
 
         T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        [return: MaybeNull]
         T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
         T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
 
@@ -228,11 +232,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Logger.LogTrace(statement, parameter);
         }
 
-        protected virtual void LoggingExecuteResult(int result, [Timestamp(DateTimeKind.Local)] DateTime startTime, [Timestamp(DateTimeKind.Local)] DateTime endTime)
+        protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
         }
-        protected virtual void LoggingDataTable(DataTable table, [Timestamp(DateTimeKind.Local)] DateTime startTime, [Timestamp(DateTimeKind.Local)] DateTime endTime)
+        protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
         }
@@ -318,6 +322,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return QueryFirst<T>(statement, parameter, null);
         }
 
+        [return: MaybeNull]
         public virtual T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction)
         {
             ThrowIfDisposed();
@@ -327,6 +332,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return BaseConnection.QueryFirstOrDefault<T>(formattedStatement, parameter, transaction?.Transaction);
         }
 
+        [return: MaybeNull]
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();

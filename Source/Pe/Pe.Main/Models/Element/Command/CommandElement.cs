@@ -22,20 +22,21 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Timer = System.Timers.Timer;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
-    public class CommandElement : ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
+    public class CommandElement: ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(ApplicationCommandFinder applicationCommandFinder, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
             MainDatabaseLazyWriter = mainDatabaseLazyWriter;
             OrderManager = orderManager;
             WindowManager = windowManager;
@@ -51,22 +52,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 Interval = customConfiguration.Command.ViewCloseWaitTime.TotalMilliseconds,
             };
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
-
-            ApplicationCommandFinder = applicationCommandFinder;
-            LauncherItemCommandFinder = new LauncherItemCommandFinder(MainDatabaseBarrier, StatementLoader, OrderManager, NotifyManager, DispatcherWrapper, LoggerFactory);
-
-            var commandFinders = new List<ICommandFinder>() {
-                LauncherItemCommandFinder,
-                ApplicationCommandFinder,
-            };
-            CommandFinders = commandFinders;
         }
 
         #region property
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        IDatabaseStatementLoader StatementLoader { get; }
+        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IMainDatabaseLazyWriter MainDatabaseLazyWriter { get; }
         IOrderManager OrderManager { get; }
         IWindowManager WindowManager { get; }
@@ -84,9 +76,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         Timer ViewCloseTimer { get; }
         Timer IconClearTimer { get; }
 
-        LauncherItemCommandFinder LauncherItemCommandFinder { get; }
-        ApplicationCommandFinder ApplicationCommandFinder { get; }
-        IReadOnlyCollection<ICommandFinder> CommandFinders { get; }
+        LauncherItemCommandFinder? LauncherItemCommandFinder { get; set; }
+
+        List<ICommandFinder> CommandFindersImpl { get; } = new List<ICommandFinder>(2);
+        IReadOnlyCollection<ICommandFinder> CommandFinders => CommandFindersImpl;
 
         #endregion
 
@@ -126,7 +119,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             Logger.LogDebug("アイコンキャッシュ破棄開始");
 
-            LauncherItemCommandFinder.ClearIcon();
+            if(LauncherItemCommandFinder != null) {
+                LauncherItemCommandFinder.ClearIcon();
+            }
 
             StopIconClear();
             Logger.LogDebug("アイコンキャッシュ破棄終了");
@@ -161,11 +156,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             SettingAppCommandSettingData setting;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, StatementLoader, commander.Implementation, LoggerFactory);
+                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
             }
 
-            Font = new FontElement(setting.FontId, MainDatabaseBarrier, StatementLoader, LoggerFactory);
+            Font = new FontElement(setting.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             Font.Initialize();
 
             IconBox = setting.IconBox;
@@ -179,22 +174,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             // アイテム一覧とったりなんかしたりあれこれしたり
             RefreshSetting();
 
-            // 諦め
-            LauncherItemCommandFinder.FindTag = FindTag;
-            LauncherItemCommandFinder.IconBox = IconBox;
+            if(LauncherItemCommandFinder != null) {
+                // 諦め
+                LauncherItemCommandFinder.FindTag = FindTag;
+                LauncherItemCommandFinder.IconBox = IconBox;
+            }
 
+            var pluginContext = PluginContextFactory.CreateNullContext(LoggerFactory);
             foreach(var commandFinder in CommandFinders) {
-                commandFinder.Refresh();
+                commandFinder.Refresh(pluginContext);
             }
         }
 
-        IEnumerable<ICommandItem> ListupCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
+        IEnumerable<ICommandItem> EnumerateCommandItems(string inputValue, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
         {
             var simpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             var regex = simpleRegexFactory.CreateFilterRegex(inputValue);
 
             foreach(var commandFinder in CommandFinders) {
-                var items = commandFinder.ListupCommandItems(inputValue, regex, hitValuesCreator, cancellationToken);
+                var items = commandFinder.EnumerateCommandItems(inputValue, regex, hitValuesCreator, cancellationToken);
                 foreach(var item in items) {
                     yield return item;
                 }
@@ -203,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
 
 
-        public Task<IReadOnlyList<ICommandItem>> ListupCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
+        public Task<IReadOnlyList<ICommandItem>> EnumerateCommandItemsAsync(string inputValue, CancellationToken cancellationToken)
         {
             return Task.Run(() => {
                 Logger.LogTrace("検索開始");
@@ -212,7 +210,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
                 var hitValuesCreator = new HitValuesCreator(LoggerFactory);
 
                 var commandItems = new List<ICommandItem>();
-                foreach(var item in ListupCommandItems(inputValue, hitValuesCreator, cancellationToken)) {
+                foreach(var item in EnumerateCommandItems(inputValue, hitValuesCreator, cancellationToken)) {
                     commandItems.Add(item);
                     Logger.LogDebug(string.Join(" - ", item.HeaderValues.Select(i => i.Value)));
                 }
@@ -237,9 +235,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             Width = width;
 
             MainDatabaseLazyWriter.Stock(c => {
-                var dao = new AppCommandSettingEntityDao(c, StatementLoader, c.Implementation, LoggerFactory);
+                var dao = new AppCommandSettingEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 dao.UpdatCommandSettingWidth(Width, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
+        }
+
+        public void AddCommandFinder(ICommandFinder commandFinder)
+        {
+            if(!commandFinder.IsInitialize) {
+                commandFinder.Initialize();
+            }
+
+            CommandFindersImpl.Add(commandFinder);
+
+            if(commandFinder is LauncherItemCommandFinder launcherItemCommandFinder) {
+                LauncherItemCommandFinder = launcherItemCommandFinder;
+            }
         }
 
         #endregion
@@ -249,7 +260,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         protected override void InitializeImpl()
         {
             foreach(var commandFinder in CommandFinders) {
-                commandFinder.Initialize();
+                if(!commandFinder.IsInitialize) {
+                    commandFinder.Initialize();
+                }
             }
 
             Refresh();

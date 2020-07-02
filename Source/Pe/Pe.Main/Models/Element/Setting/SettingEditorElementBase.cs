@@ -12,42 +12,12 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class DatabaseCommander
-    {
-        public DatabaseCommander(IDatabaseCommander commander, IDatabaseImplementation implementation)
-        {
-            Commander = commander;
-            Implementation = implementation;
-        }
-
-        #region property
-
-        public IDatabaseCommander Commander { get; }
-        public IDatabaseImplementation Implementation { get; }
-
-        #endregion
-    }
-
-    public sealed class DatabaseCommandPack : TApplicationPackBase<DatabaseCommander, DatabaseCommander>
-    {
-        public DatabaseCommandPack(DatabaseCommander main, DatabaseCommander file, DatabaseCommander temporary, IDatabaseCommonStatus commonStatus)
-            : base(main, file, temporary)
-        {
-            CommonStatus=commonStatus;
-        }
-
-        #region property
-
-        public IDatabaseCommonStatus CommonStatus { get; }
-        #endregion
-    }
-
     /// <summary>
     /// 各設定項目の親。
     /// </summary>
     public abstract class SettingEditorElementBase : ElementBase
     {
-        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             SettingNotifyManager = settingNotifyManager;
@@ -55,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
-            StatementLoader = statementLoader;
+            DatabaseStatementLoader = databaseStatementLoader;
 
             IdFactory = idFactory;
             DispatcherWrapper = dispatcherWrapper;
@@ -70,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
-        protected IDatabaseStatementLoader StatementLoader { get; }
+        protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected IIdFactory IdFactory { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
@@ -92,9 +62,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IsLoaded = true;
         }
 
-        protected abstract void SaveImpl(DatabaseCommandPack commandPack);
+        protected abstract void SaveImpl(IDatabaseCommandsPack commandPack);
 
-        public void Save(DatabaseCommandPack commandPack)
+        public void Save(IDatabaseCommandsPack commandPack)
         {
             if(!IsLoaded) {
                 throw new InvalidOperationException(nameof(IsLoaded));

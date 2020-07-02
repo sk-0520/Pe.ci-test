@@ -17,6 +17,11 @@ namespace ContentTypeTextNet.Pe.Main.Models
 
         #region function
 
+        protected static IReadOnlyList<T> GetList<T>(IConfigurationSection section, string key)
+        {
+            return section.GetSection(key).Get<T[]>();
+        }
+
         protected static Size GetSize(IConfigurationSection section, string key)
         {
             var size = section.GetSection(key);
@@ -56,6 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             ProjectWebSiteUri = section.GetValue<Uri>("project_website_uri");
             UpdateCheckUri = section.GetValue<Uri>("version_check_uri");
             UpdateWait = section.GetValue<TimeSpan>("update_wait");
+            DispatcherWait = section.GetValue<TimeSpan>("dispatcher_wait");
 
             CanSendCrashReport = section.GetValue<bool>("can_send_crash_report");
             UnhandledExceptionHandled = section.GetValue<bool>("unhandled_exception_handled");
@@ -77,6 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public Uri ProjectWebSiteUri { get; }
         public Uri UpdateCheckUri { get; }
         public TimeSpan UpdateWait { get; }
+        public TimeSpan DispatcherWait { get; }
 
         public bool CanSendCrashReport { get; }
         public bool UnhandledExceptionHandled { get; }
@@ -122,12 +129,19 @@ namespace ContentTypeTextNet.Pe.Main.Models
             };
             ViewUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("view_useragent"), map);
             ClientUserAgent = TextUtility.ReplaceFromDictionary(section.GetValue<string>("client_useragent"), map);
+            DeveloperTools = section.GetValue<bool>("developer_tools");
         }
 
         #region property
 
         public string ViewUserAgent { get; }
         public string ClientUserAgent { get; }
+
+        /// <summary>
+        /// ウィンドウ生成(インスタンス化)時点でWEBブラウザっぽいのがあればそれに対して開発者ツールを呼び出せる拡張処理を行うか。
+        /// <para>複数あったり動的に生成する場合は個別対応が必要。</para>
+        /// </summary>
+        public bool DeveloperTools { get; }
 
         #endregion
     }
@@ -227,6 +241,21 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public TimeSpan CommandLogDisplayTime { get; }
 
         public TimeSpan FadeoutTime { get; }
+
+        #endregion
+    }
+
+    public class LauncherItemConfiguration: ConfigurationBase
+    {
+        public LauncherItemConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            IconRefreshTime = section.GetValue<TimeSpan>("icon_refresh_time");
+        }
+
+        #region property
+
+        public TimeSpan IconRefreshTime { get; }
 
         #endregion
     }
@@ -345,6 +374,42 @@ namespace ContentTypeTextNet.Pe.Main.Models
         #endregion
     }
 
+    public class ScheduleConfiguration: ConfigurationBase
+    {
+        public ScheduleConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+
+            LauncherItemIconRefresh = section.GetValue<string>("launcher_item_icon_refresh");
+        }
+
+        #region function
+
+        public string LauncherItemIconRefresh { get; }
+
+        #endregion
+    }
+
+    public class PluginConfiguration: ConfigurationBase
+    {
+        public PluginConfiguration(IConfigurationSection section)
+            : base(section)
+        {
+            Extentions = GetList<string>(section, "extentions");
+        }
+
+        #region property
+
+        /// <summary>
+        /// プラグインとなり得る拡張子。
+        /// <para>先に一致したものを優先する。</para>
+        /// </summary>
+        public IReadOnlyList<string> Extentions { get; }
+
+
+        #endregion
+    }
+
 
     public class CustomConfiguration
     {
@@ -358,11 +423,14 @@ namespace ContentTypeTextNet.Pe.Main.Models
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
             Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
+            LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
+            Schedule = new ScheduleConfiguration(configurationRoot.GetSection("schedule"));
+            Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
         }
 
         #region property
@@ -375,11 +443,14 @@ namespace ContentTypeTextNet.Pe.Main.Models
         public DisplayConfiguration Display { get; }
         public HookConfiguration Hook { get; }
         public NotifyLogConfiguration NotifyLog { get; }
+        public LauncherItemConfiguration LauncherItem { get; }
         public LauncherToolbarConfiguration LauncherToobar { get; }
         public LauncherGroupConfiguration LauncherGroup { get; }
         public NoteConfiguration Note { get; }
         public CommandConfiguration Command { get; }
         public PlatformConfiguration Platform { get; }
+        public ScheduleConfiguration Schedule { get; }
+        public PluginConfiguration Plugin { get; }
         #endregion
     }
 }

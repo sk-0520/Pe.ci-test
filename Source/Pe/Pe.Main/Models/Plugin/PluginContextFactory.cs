@@ -3,77 +3,55 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 {
-    public class PluginContextFactory
+    internal class PluginContextFactory: PluginContextFactoryBase
     {
-        public PluginContextFactory(EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager)
-        {
-            EnvironmentParameters = environmentParameters;
-            UserAgentManager = userAgentManager;
-        }
+        public PluginContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+            : base(databaseBarrierPack, databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
+        { }
 
         #region property
 
-        EnvironmentParameters EnvironmentParameters { get; }
-        IUserAgentManager UserAgentManager { get; }
+
         #endregion
 
         #region function
 
-        string ConvertDirectoryName(IPluginIdentifiers pluginId)
+        public PluginInitializeContext CreateInitializeContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            return pluginId.PluginId.ToString();
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
+            return new PluginInitializeContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
-        PluginFile CreatePluginFile(IPluginIdentifiers pluginId)
+        public PluginUninitializeContext CreateUninitializeContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var dirName = ConvertDirectoryName(pluginId);
-
-            var pluginFile = new PluginFile(
-                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.UserPluginDirectory.FullName, dirName))),
-                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.MachinePluginDirectory.FullName, dirName))),
-                new PluginFileStorage(new DirectoryInfo(Path.Combine(EnvironmentParameters.TemporaryPluginDirectory.FullName, dirName)))
-            );
-
-            return pluginFile;
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, false);
+            return new PluginUninitializeContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
-        PluginPersistent CrteatePluginPersistent(IPluginIdentifiers pluginId)
+        public PluginLoadContext CreateLoadContex(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            // DB渡す？ バリア渡す？ 遅延渡す？
-            var pluginPersistent = new PluginPersistent(
-                new PluginPersistentStorage(),
-                new PluginPersistentStorage(),
-                new PluginPersistentStorage()
-            );
-
-            return pluginPersistent;
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, true);
+            return new PluginLoadContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
-        PluginStorage CreatePluginStorage(IPluginIdentifiers pluginId)
+        public PluginUnloadContext CreateUnloadContext(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var pluginStorage = new PluginStorage(
-                CreatePluginFile(pluginId),
-                CrteatePluginPersistent(pluginId)
-            );
-
-            return pluginStorage;
+            var pluginStorage = CreatePluginStorage(pluginInformations, databaseCommandsPack, false);
+            return new PluginUnloadContext(pluginInformations.PluginIdentifiers, pluginStorage);
         }
 
-        public PluginInitializeContext CreateInitializeContext(IPluginIdentifiers pluginIdentifiers)
-        {
-            var pluginStorage = CreatePluginStorage(pluginIdentifiers);
-            return new PluginInitializeContext(pluginIdentifiers, pluginStorage);
-        }
+        #endregion
 
-        public PluginContext CreateContext(IPluginIdentifiers pluginIdentifiers)
-        {
-            var pluginStorage = CreatePluginStorage(pluginIdentifiers);
-            return new PluginContext(pluginIdentifiers, pluginStorage, UserAgentManager);
-        }
+        #region PluginContextFactoryBase
+
+        protected override string BaseDirectoryName => CommonDirectoryName;
 
         #endregion
     }
