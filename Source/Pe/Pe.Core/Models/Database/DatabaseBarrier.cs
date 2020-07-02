@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
@@ -65,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return Transaction.QueryFirst<T>(statement, parameter);
         }
 
+        [return: MaybeNull]
         public T QueryFirstOrDefault<T>(string statement, object? parameter = null)
         {
             ThrowIfDisposed();
