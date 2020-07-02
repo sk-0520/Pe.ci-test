@@ -401,7 +401,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public void ShowStartupView(bool isFirstSetup)
         {
-            using var viewPausing = PauseAllViews();
+            using var viewPausing = isFirstSetup
+                ? new ActionDisposer(d => { Logger.LogInformation("初回スタートアップ終了"); })
+                : PauseAllViews()
+            ;
 
             using(var diContainer = ApplicationDiContainer.CreateChildContainer()) {
                 diContainer
