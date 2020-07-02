@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Attributes
         public PluginCategoryAttribute(string primary)
         {
             Primary = primary;
-            Secondaries = new string[0];
+            Secondaries = Array.Empty<string>();
         }
 
         public PluginCategoryAttribute(string primary, string secondary, params string[] secondaries)

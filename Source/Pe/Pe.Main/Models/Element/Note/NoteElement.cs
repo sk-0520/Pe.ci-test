@@ -646,7 +646,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             }, UniqueKeyPool.Get());
         }
 
-        public NoteLayoutData GetLayout()
+        public NoteLayoutData? GetLayout()
         {
             ThrowIfDisposed();
 

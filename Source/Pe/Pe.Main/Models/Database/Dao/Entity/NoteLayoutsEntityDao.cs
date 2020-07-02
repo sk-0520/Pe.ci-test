@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
-        public NoteLayoutData SelectLayout(Guid noteId, NoteLayoutKind layoutKind)
+        public NoteLayoutData? SelectLayout(Guid noteId, NoteLayoutKind layoutKind)
         {
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
 

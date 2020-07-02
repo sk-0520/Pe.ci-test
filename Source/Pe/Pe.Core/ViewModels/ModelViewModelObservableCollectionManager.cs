@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             var index = IndexOf(viewModel);
 
             if(index == -1) {
-                return default(TModel);
+                return default;
             }
 
             return Collection[index];
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             var index = IndexOf(model);
 
             if(index == -1) {
-                return default(TViewModel);
+                return default;
             }
 
             return EditableViewModels[index];
@@ -187,12 +187,9 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         protected override void ReplaceItemsImpl(IReadOnlyList<TModel> newItems, IReadOnlyList<TModel> oldItems)
         {
             // TODO: 正直こいつがいつ呼ばれるのか分かってない
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-            ReplaceItemsKindImpl(ObservableCollectionKind.Before, newItems, oldItems, null, null);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
-#pragma warning disable CS8625 // null リテラルを null 非許容参照型に変換できません。
-            ReplaceItemsKindImpl(ObservableCollectionKind.After, newItems, oldItems, null, null);
-#pragma warning restore CS8625 // null リテラルを null 非許容参照型に変換できません。
+            ReplaceItemsKindImpl(ObservableCollectionKind.Before, newItems, oldItems, Array.Empty<TViewModel>(), Array.Empty<TViewModel>());
+
+            ReplaceItemsKindImpl(ObservableCollectionKind.After, newItems, oldItems, Array.Empty<TViewModel>(), Array.Empty<TViewModel>());
         }
 
         protected override void MoveItemsImpl(int newStartingIndex, int oldStartingIndex)
@@ -301,7 +298,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
 
             Debug.Assert(StockModels != null);
             StockModels.Add(model);
-            return default(TViewModel);
+            return default;
         }
 
         protected override void AddItemsKindImpl(ObservableCollectionKind kind, IReadOnlyList<TModel> newModels, IReadOnlyList<TViewModel> newViewModels)

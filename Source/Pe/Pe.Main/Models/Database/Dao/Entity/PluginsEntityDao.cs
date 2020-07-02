@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public Version SelectLastUsePluginVersion(Guid pluginId)
+        public Version? SelectLastUsePluginVersion(Guid pluginId)
         {
             var statement = LoadStatement();
             var parameter = new {

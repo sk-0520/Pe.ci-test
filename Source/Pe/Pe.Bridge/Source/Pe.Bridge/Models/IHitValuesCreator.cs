@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         {
             var matches = hitValuesCreator.GetMatches(source, regex);
             if(matches.Count == 0) {
-                return new HitValue[0];
+                return Array.Empty<HitValue>();
             }
             var sourceSpan = source.AsSpan();
             var ranges = hitValuesCreator.ConvertRanges(matches);
