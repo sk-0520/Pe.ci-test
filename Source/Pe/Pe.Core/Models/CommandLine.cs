@@ -95,24 +95,21 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region ICommandLineValue
 
-        /// <summary>
-        /// <see cref="ICommandLineValue.Items"/>
-        /// </summary>
+        /// <inheritdoc cref="ICommandLineValue.Items"/>
         public List<string> Items { get; } = new List<string>();
-        /// <summary>
-        /// <see cref="ICommandLineValue.Items"/>
-        /// </summary>
         IReadOnlyList<string> ICommandLineValue.Items => Items;
 
-        /// <summary>
-        /// <see cref="ICommandLineValue.First"/>
-        /// </summary>
+        /// <inheritdoc cref="ICommandLineValue.First"/>
         public string First => Items.First();
 
         #endregion
 
         #region function
 
+        /// <summary>
+        /// 値の追加。
+        /// </summary>
+        /// <param name="value"></param>
         public void Add(string value)
         {
             Items.Add(value);

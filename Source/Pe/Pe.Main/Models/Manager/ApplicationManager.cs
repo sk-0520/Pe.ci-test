@@ -1867,9 +1867,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation(
                 "GC(FULL:{0}): {1}({2}) -> {3}({4}), 差分: {5}({6}), 所要時間: {7}",
                 full,
-                sizeConverter.ConvertHumanLikeByte(old), old,
-                sizeConverter.ConvertHumanLikeByte(now), now,
-                sizeConverter.ConvertHumanLikeByte(old - now), old - now,
+                sizeConverter.ConvertHumanReadableByte(old), old,
+                sizeConverter.ConvertHumanReadableByte(now), now,
+                sizeConverter.ConvertHumanReadableByte(old - now), old - now,
                 endTimestamp - startTimestamp
             );
         }

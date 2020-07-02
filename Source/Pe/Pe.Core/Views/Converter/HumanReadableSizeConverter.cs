@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 namespace ContentTypeTextNet.Pe.Core.Views.Converter
 {
     [ValueConversion(typeof(long), typeof(string))]
-    public class HumanLikeSizeConverter : IValueConverter
+    public class HumanReadableSizeConverter : IValueConverter
     {
         #region property
 
@@ -25,10 +25,10 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
             var sizeConverter = new SizeConverter();
 
             if(string.IsNullOrWhiteSpace(SizeFormat)) {
-                return sizeConverter.ConvertHumanLikeByte(size);
+                return sizeConverter.ConvertHumanReadableByte(size);
             }
 
-            return sizeConverter.ConvertHumanLikeByte(size, SizeFormat);
+            return sizeConverter.ConvertHumanReadableByte(size, SizeFormat);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                                 await localStream.WriteAsync(downloadChunk, 0, donwloadSize);
                                 totalDownloadedSize += donwloadSize;
                                 sizePerTime.Add(donwloadSize);
-                                var size = sizeConverter.ConvertHumanLikeByte(sizePerTime.Size, format, trems);
+                                var size = sizeConverter.ConvertHumanReadableByte(sizePerTime.Size, format, trems);
                                 userNotifyProgress.Report(totalDownloadedSize / (double)updateItem.ArchiveSize, size);
                             } else {
                                 userNotifyProgress.End();

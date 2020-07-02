@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows;
 
@@ -9,7 +10,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region function
 
-        public static bool TryGet<T>(this IDataObject @this, out T value)
+        /// <summary>
+        /// <see cref="IDataObject"/>から安全にデータを取得する。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="this"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool TryGet<T>(this IDataObject @this, [MaybeNullWhen(false)] out T value)
         {
             var type = typeof(T);
             if(@this.GetDataPresent(type)) {
@@ -19,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     return true;
                 }
             }
-            value = default!;
+            value = default;
             return false;
         }
 
