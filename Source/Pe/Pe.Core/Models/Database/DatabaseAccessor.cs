@@ -10,6 +10,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
+    /// <summary>
+    /// データ読み込みを担当。
+    /// <para>データが変更されるかはDBMS次第(シーケンスとか知らんし)</para>
+    /// </summary>
     public interface IDatabaseReader
     {
         /// <summary>
@@ -67,6 +71,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         DataTable GetDataTable(string statement, object? parameter = null);
     }
 
+    /// <summary>
+    /// データ書き込みを担当。
+    /// <para>それが実際に書き込んでいるのかはDBMS次第。</para>
+    /// </summary>
     public interface IDatabaseWriter
     {
         /// <summary>
@@ -84,6 +92,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     public interface IDatabaseCommander : IDatabaseReader, IDatabaseWriter
     { }
 
+    /// <summary>
+    /// DBアクセス処理。
+    /// </summary>
     public interface IDatabaseAccessor : IDatabaseCommander
     {
         #region property
@@ -93,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         IDbConnection BaseConnection { get; }
         /// <summary>
-        /// <see cref="IDatabaseFactory"/>
+        /// 対象DBに対する生成処理機。
         /// </summary>
         IDatabaseFactory DatabaseFactory { get; }
 
@@ -108,47 +119,51 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IDisposable StopConnection();
 
-        /// <summary>
-        /// 指定の型で問い合わせ。
-        /// </summary>
-        /// <typeparam name="T">問い合わせ型</typeparam>
-        /// <param name="statement">データベース文。</parameter>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
-        /// <param name="transaction">トランザクション。 null ならトランザクションなし。</parameter>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
-        /// <returns></returns>
+        /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
         IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
-        /// <summary>
-        /// 動的型で問い合わせ。
-        /// </summary>
-        /// <param name="statement">データベース文。</param>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</param>
-        /// <param name="transaction">トランザクション。 null ならトランザクションなし。</parameter>
-        /// <param name="buffered"><see cref="Dapper.SqlMapper.Query"/>のbufferd</parameter>
-        /// <returns></returns>
+        /// <inheritdoc cref="IDatabaseReader.Query(string, object?, bool)"/>
         IEnumerable<dynamic> Query(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
-
+        /// <inheritdoc cref="IDatabaseReader.QueryFirst{T}(string, object?)"/>
         T QueryFirst<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        /// <inheritdoc cref="IDatabaseReader.QueryFirstOrDefault{T}(string, object?)"/>
         [return: MaybeNull]
         T QueryFirstOrDefault<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
+        /// <inheritdoc cref="IDatabaseReader.QuerySingle{T}(string, object?)"/>
         T QuerySingle<T>(string statement, object? parameter, IDatabaseTransaction? transaction);
-
-        /// <summary>
-        /// insert, update, delete, select(sequence) 的なデータ変動するやつを実行。
-        /// </summary>
-        /// <param name="statement">データベース文。</parameter>
-        /// <param name="parameter"><paramref name="statement"/>に対するパラメータ。</parameter>
-        /// <param name="transaction">トランザクション。 null ならトランザクションなし。</parameter>
-        /// <returns>影響行数。</returns>
-        int Execute(string statement, object? parameter, IDatabaseTransaction? transaction);
+        /// <inheritdoc cref="IDatabaseReader.GetDataTable(string, object?)"/>
         DataTable GetDataTable(string statement, object? parameter, IDatabaseTransaction? transaction);
 
+        /// <inheritdoc cref="IDatabaseWriter.Execute(string, object?)"/>
+        int Execute(string statement, object? parameter, IDatabaseTransaction? transaction);
+
+        /// <inheritdoc cref="BeginTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginTransaction();
+        /// <summary>
+        /// トランザクションの開始。
+        /// </summary>
+        /// <returns></returns>
         IDatabaseTransaction BeginTransaction(IsolationLevel isolationLevel);
+
+
+        /// <inheritdoc cref="BeginReadOnlyTransaction(IsolationLevel)"/>
         IDatabaseTransaction BeginReadOnlyTransaction();
+        /// <summary>
+        /// 読み込み専用でトランザクション開始。
+        /// <para>意味わからん名前だけどいるの！</para>
+        /// </summary>
+        /// <param name="isolationLevel"></param>
+        /// <returns></returns>
         IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);
 
+        /// <inheritdoc cref="Batch(Func{IDatabaseCommander, bool}, IsolationLevel)"/>
         IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor);
+        /// <summary>
+        /// バッチ処理の実行。
+        /// <para>処理成功時に自動的にコミットされる。</para>
+        /// </summary>
+        /// <param name="executor">処理内容。</param>
+        /// <param name="isolationLevel"></param>
+        /// <returns>処理実行結果。</returns>
         IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor, IsolationLevel isolationLevel);
 
         #endregion
@@ -273,6 +288,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return new ActionDisposer(d => { });
         }
 
+        /// <inheritdoc cref="IDatabaseAccessor.Query{T}(string, object?, IDatabaseTransaction?, bool)"/>
         public virtual IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered)
         {
             ThrowIfDisposed();
@@ -282,6 +298,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return BaseConnection.Query<T>(formattedStatement, parameter, transaction?.Transaction, buffered);
         }
 
+        /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
         public IEnumerable<T> Query<T>(string statement, object? parameter = null, bool buffered = true)
         {
             ThrowIfDisposed();
