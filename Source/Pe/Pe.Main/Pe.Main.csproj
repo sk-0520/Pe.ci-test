@@ -13,7 +13,6 @@
     <Nullable>enable</Nullable>
     <RootNamespace>ContentTypeTextNet.Pe.Main</RootNamespace>
     <AssemblyName>Pe.Main</AssemblyName>
-    <InformationalVersion>0000000000000000000000000000000000000000</InformationalVersion>
     <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <Product>Pe</Product>
