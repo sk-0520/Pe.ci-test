@@ -13,16 +13,32 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
+    /// <summary>
+    /// 要素の属する(?)DPIを出力。
+    /// <para>ウィンドウのいるディスプレイのDPIを出力する感じ。</para>
+    /// </summary>
     public interface IDpiScaleOutputor
     {
         #region function
 
+        /// <summary>
+        /// 96 px に対する現在 DPI スケール。
+        /// </summary>
+        /// <returns></returns>
         Point GetDpiScale();
+        /// <summary>
+        /// 所属しているディスプレイの取得。
+        /// </summary>
+        /// <returns></returns>
         IScreen GetOwnerScreen();
 
         #endregion
     }
 
+    /// <summary>
+    /// 空の <see cref="IDpiScaleOutputor"/>。
+    /// <para>固定値を取得する。</para>
+    /// </summary>
     public sealed class EmptyDpiScaleOutputor: IDpiScaleOutputor
     {
         #region IDpiScaleOutputor
