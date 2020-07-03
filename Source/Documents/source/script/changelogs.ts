@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#659: CI 処理時のコミットリビジョン埋め込み処理をスキップしている"
 					},
 					{
 						"revision": "",
