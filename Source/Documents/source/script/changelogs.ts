@@ -155,7 +155,8 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 81.3.100 -> 83.4.20"
 					},
 					{
 						"revision": "",
