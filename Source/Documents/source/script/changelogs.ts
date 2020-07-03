@@ -91,6 +91,33 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/07/03",
+		"version": "0.99.001",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#658: ランチャーアイテム更新間隔にて分が毎分になっている "
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/07/02",
 		"version": "0.99.000",
 		"contents": [
