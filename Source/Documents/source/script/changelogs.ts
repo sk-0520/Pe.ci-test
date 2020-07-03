@@ -176,7 +176,21 @@ const changelogs = [
 		]
 	},
 	{
-		"date": "2020/07/02",
+		"date": "2020/07/03",
+		"version": "0.99.001",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "60ed1438fab4d615d1f5ac25978eaf74ad3f2c51",
+						"subject": "#658: ランチャーアイテム更新間隔にて分が毎分になっている "
+					},
+				]
+			}
+		]
+	},
+	{		"date": "2020/07/02",
 		"version": "0.99.000",
 		"contents": [
 			{
