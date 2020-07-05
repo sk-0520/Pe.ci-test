@@ -11,7 +11,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
+        /// <summary>
+        /// 範囲の開始点。
+        /// </summary>
         T Minimum { get; }
+
+        /// <summary>
+        /// 範囲の終了点。
+        /// </summary>
         T Maximum { get; }
 
         #endregion
@@ -22,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable, DataContract]
-    public struct MinMax<T> : IReadOnlyMinMax<T>
+    public struct MinMax<T>: IReadOnlyMinMax<T>
         where T : IComparable
     {
         public MinMax(T minimum, T maximum)
@@ -33,14 +40,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region IReadOnlyRange
 
-        /// <summary>
-        /// 範囲の開始点。
-        /// </summary>
         [DataMember]
         public T Minimum { get; set; }
-        /// <summary>
-        /// 範囲の終了点。
-        /// </summary>
         [DataMember]
         public T Maximum { get; set; }
 
@@ -95,12 +96,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
+        /// <summary>
+        /// 標準値。
+        /// </summary>
         T Default { get; }
 
         #endregion
     }
 
-    public struct MinMaxDefault<T> : IReadOnlyMinMaxDefault<T>
+    public struct MinMaxDefault<T>: IReadOnlyMinMaxDefault<T>
         where T : IComparable
     {
         public MinMaxDefault(T minimum, T maximum, T defaultValue)
@@ -112,14 +116,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
-        /// <summary>
-        /// 範囲の開始点。
-        /// </summary>
         [DataMember]
         public T Minimum { get; set; }
-        /// <summary>
-        /// 範囲の終了点。
-        /// </summary>
         [DataMember]
         public T Maximum { get; set; }
 
