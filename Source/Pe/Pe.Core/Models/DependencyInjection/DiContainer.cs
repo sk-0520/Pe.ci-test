@@ -35,10 +35,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// プールしているオブジェクトをコンテナに任せるか選択。
         /// </summary>
-        /// <param name="isDisposeObjectPool">解放処理をコンテナに任せるか</param>
-        public DiContainer(bool isDisposeObjectPool)
+        /// <param name="managingResource">解放処理をコンテナに任せるか</param>
+        public DiContainer(bool managingResource)
         {
-            IsDisposeObjectPool = isDisposeObjectPool;
+            ManagingResource = managingResource;
         }
 
         #region property
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// 解放処理をコンテナに任せるか。
         /// </summary>
-        protected bool IsDisposeObjectPool { get; }
+        protected bool ManagingResource { get; }
 
         /// <summary>
         /// IF → 実体 のマッピング。
@@ -539,7 +539,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         public virtual IScopeDiContainer Scope()
         {
-            var cloneContainer = new ScopeDiContainer(IsDisposeObjectPool);
+            var cloneContainer = new ScopeDiContainer(ManagingResource);
             foreach(var pair in Mapping.ToArray()) {
                 var map = cloneContainer.Mapping[pair.Key];
                 foreach(var sub in pair.Value) {
@@ -740,7 +740,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     foreach(var factory in Factory.Values.SelectMany(i => i.Values)) {
                         factory.Dispose();
                     }
-                    if(IsDisposeObjectPool) {
+                    if(ManagingResource) {
                         foreach(var pair in ObjectPool.ToArray()) {
                             foreach(var sub in pair.Value) {
                                 // 自分自身が処理中なので無視
