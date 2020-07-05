@@ -59,15 +59,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <para>http://stackoverflow.com/questions/974598/find-all-controls-in-wpf-window-by-type</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj)
+        public static IEnumerable<T> FindVisualChildren<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(depObj != null) {
-                var childCount = VisualTreeHelper.GetChildrenCount(depObj);
+            if(dependencyObject != null) {
+                var childCount = VisualTreeHelper.GetChildrenCount(dependencyObject);
                 for(int i = 0; i < childCount; i++) {
-                    var child = VisualTreeHelper.GetChild(depObj, i);
+                    var child = VisualTreeHelper.GetChild(dependencyObject, i);
                     if(child != null) {
                         var childObj = child as T;
                         if(childObj != null) {
@@ -87,13 +87,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 論理ツリーから子孫を取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj)
+        public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(depObj != null) {
-                foreach(var child in LogicalTreeHelper.GetChildren(depObj).OfType<DependencyObject>()) {
+            if(dependencyObject != null) {
+                foreach(var child in LogicalTreeHelper.GetChildren(dependencyObject).OfType<DependencyObject>()) {
                     if(child != null) {
                         var childObj = child as T;
                         if(childObj != null) {
@@ -111,53 +111,53 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 表示要素・論理要素から子孫を取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static IEnumerable<T> FindChildren<T>(DependencyObject depObj)
+        public static IEnumerable<T> FindChildren<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            return FindLogicalChildren<T>(depObj).Concat(FindVisualChildren<T>(depObj));
+            return FindLogicalChildren<T>(dependencyObject).Concat(FindVisualChildren<T>(dependencyObject));
         }
 
         /// <summary>
         /// 指定要素の表示要素から親要素を取得する。
         /// </summary>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static DependencyObject? GetVisualParent(DependencyObject depObj)
+        public static DependencyObject? GetVisualParent(DependencyObject dependencyObject)
         {
-            return VisualTreeHelper.GetParent(depObj);
+            return VisualTreeHelper.GetParent(dependencyObject);
         }
 
         /// <summary>
         /// 指定要素の表示要素から親要素を取得する。
         /// </summary>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static DependencyObject? GetLogicalParent(DependencyObject depObj)
+        public static DependencyObject? GetLogicalParent(DependencyObject dependencyObject)
         {
-            return LogicalTreeHelper.GetParent(depObj);
+            return LogicalTreeHelper.GetParent(dependencyObject);
         }
 
-        public static DependencyObject? GetParent(DependencyObject depObj)
+        public static DependencyObject? GetParent(DependencyObject dependencyObject)
         {
-            return GetLogicalParent(depObj) ?? GetVisualParent(depObj);
+            return GetLogicalParent(dependencyObject) ?? GetVisualParent(dependencyObject);
         }
 
         /// <summary>
         /// 指定要素の表示要素から指定した祖先要素を取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static T? GetVisualClosest<T>(DependencyObject depObj)
+        public static T? GetVisualClosest<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(depObj == null) {
+            if(dependencyObject == null) {
                 return null;
             }
 
-            var parent = GetVisualParent(depObj);
+            var parent = GetVisualParent(dependencyObject);
             var element = parent as T;
             if(element != null) {
                 return element;
@@ -171,16 +171,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 指定要素の論理要素から指定した祖先要素を取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static T? GetLogicalClosest<T>(DependencyObject depObj)
+        public static T? GetLogicalClosest<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(depObj == null) {
+            if(dependencyObject == null) {
                 return null;
             }
 
-            var parent = GetLogicalParent(depObj);
+            var parent = GetLogicalParent(dependencyObject);
             var element = parent as T;
             if(element != null) {
                 return element;
@@ -194,16 +194,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 指定要素から指定した祖先要素を取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="depObj"></param>
+        /// <param name="dependencyObject"></param>
         /// <returns></returns>
-        public static T? GetClosest<T>(DependencyObject depObj)
+        public static T? GetClosest<T>(DependencyObject dependencyObject)
             where T : DependencyObject
         {
-            if(depObj == null) {
+            if(dependencyObject == null) {
                 return null;
             }
 
-            var parent = GetLogicalParent(depObj) ?? GetVisualParent(depObj);
+            var parent = GetLogicalParent(dependencyObject) ?? GetVisualParent(dependencyObject);
             var element = parent as T;
             if(element != null) {
                 return element;
