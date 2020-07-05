@@ -29,13 +29,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
         }
 
         protected static MinMax<T> GetMinMax<T>(IConfigurationSection section, string key)
-            where T : IComparable
+            where T : IComparable<T>
         {
             var size = section.GetSection(key);
             return new MinMax<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"));
         }
         protected static MinMaxDefault<T> GetMinMaxDefault<T>(IConfigurationSection section, string key)
-            where T : IComparable
+            where T : IComparable<T>
         {
             var size = section.GetSection(key);
             return new MinMaxDefault<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"), size.GetValue<T>("default"));

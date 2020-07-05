@@ -7,7 +7,7 @@ using System.Text;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     public interface IReadOnlyMinMax<out T>
-        where T : IComparable
+            where T : IComparable<T>
     {
         #region property
 
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <typeparam name="T"></typeparam>
     [Serializable, DataContract]
     public struct MinMax<T>: IReadOnlyMinMax<T>
-        where T : IComparable
+            where T : IComparable<T>
     {
         public MinMax(T minimum, T maximum)
         {
@@ -55,13 +55,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public static class MinMax
     {
         public static MinMax<T> Create<T>(T head, T tail)
-            where T : IComparable
+            where T : IComparable<T>
         {
             return new MinMax<T>(head, tail);
         }
 
         public static MinMax<T> Parse<T>(string value)
-            where T : IComparable
+            where T : IComparable<T>
         {
             var values = value.Split(',');
 
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         public static bool TryParse<T>(string value, out MinMax<T> result)
-            where T : IComparable
+            where T : IComparable<T>
         {
             try {
                 result = Parse<T>(value);
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     public interface IReadOnlyMinMaxDefault<out T>: IReadOnlyMinMax<T>
-        where T : IComparable
+            where T : IComparable<T>
     {
         #region property
 
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     public struct MinMaxDefault<T>: IReadOnlyMinMaxDefault<T>
-        where T : IComparable
+            where T : IComparable<T>
     {
         public MinMaxDefault(T minimum, T maximum, T defaultValue)
         {
@@ -133,13 +133,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
     public static class MinMaxDefault
     {
         public static MinMaxDefault<T> Create<T>(T minimum, T maximum, T defaultValue)
-            where T : IComparable
+            where T : IComparable<T>
         {
             return new MinMaxDefault<T>(minimum, maximum, defaultValue);
         }
 
         public static MinMaxDefault<T> Parse<T>(string value)
-            where T : IComparable
+            where T : IComparable<T>
         {
             var values = value.Split(',');
 
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         public static bool TryParse<T>(string value, out MinMaxDefault<T> result)
-            where T : IComparable
+            where T : IComparable<T>
         {
             try {
                 result = Parse<T>(value);
@@ -179,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="value"></param>
         /// <returns></returns>
         public static bool IsIn<T>(this IReadOnlyMinMax<T> range, T value)
-            where T : IComparable
+            where T : IComparable<T>
         {
             return 0 <= value.CompareTo(range.Minimum) && value.CompareTo(range.Maximum) <= 0;
         }
