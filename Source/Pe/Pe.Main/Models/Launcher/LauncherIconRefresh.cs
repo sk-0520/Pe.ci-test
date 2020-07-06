@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                         if(image != null) {
                             // 内部でシャットダウン
                             Logger.LogDebug("ランチャーアイテムのアイコン更新開始: {0}, {1}", IconBox, LauncherItemId);
-                            return SaveImageAsync(image);
+                            return SaveImageAsync(image, iconScale);
                         } else {
                             Logger.LogDebug("ランチャーアイテムのアイコン更新失敗: {0}, {1}", IconBox, LauncherItemId);
                         }
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             using(var commander = FileDatabaseBarrier.WaitRead()) {
                 var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconBox);
+                var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconBox, target.IconScale);
                 if(nowStatus == null) {
                     // 対象アイテムは破棄された
                     return Task.CompletedTask;
