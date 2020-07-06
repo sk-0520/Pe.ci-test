@@ -53,6 +53,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         public IconBox IconBox => Model.IconBox;
 
+        /// <summary>
+        /// すでに読み込んだアイコンはキャッシュを使用する。
+        /// </summary>
         public bool UseCache
         {
             get => this._useCache;
