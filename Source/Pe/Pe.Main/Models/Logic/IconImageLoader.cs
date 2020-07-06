@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     var iconLoader = new IconLoader(LoggerFactory);
                     static BitmapSource LoadCore(string path, int index, IconBox iconBox, IconLoader iconLoader)
                     {
-                        var image = iconLoader.Load(path, new IconSize(iconBox), index);
+                        var image = iconLoader.Load(path, index, new IconSize(iconBox));
                         return FreezableUtility.GetSafeFreeze(image!);
                     }
                     iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, iconLoader);

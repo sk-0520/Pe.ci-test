@@ -222,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="hasIcon"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        BitmapSource? LoadNormalIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
+        BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
             Debug.Assert(new[] { IconBox.Small, IconBox.Normal }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
@@ -285,7 +285,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="hasIcon"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        BitmapSource? LoadLargeIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
+        BitmapSource? LoadLargeIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
             //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
             Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => i == iconSize.Width), iconSize.ToString());
@@ -352,7 +352,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconIndex">アイコンインデックス。</param>
         /// <param name="logger"></param>
         /// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-        public BitmapSource? Load(string iconPath, IconSize iconSize, int iconIndex)
+        public BitmapSource? Load(string iconPath, int iconIndex, IconSize iconSize)
         {
             // 実行形式
             var hasIcon = PathUtility.HasIconPath(iconPath);
@@ -360,9 +360,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             BitmapSource result;
             if(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal) {
-                result = LoadNormalIcon(iconPath, iconSize, useIconIndex, hasIcon)!;
+                result = LoadNormalIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
             } else {
-                result = LoadLargeIcon(iconPath, iconSize, useIconIndex, hasIcon)!;
+                result = LoadLargeIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
             }
 
             return result;
