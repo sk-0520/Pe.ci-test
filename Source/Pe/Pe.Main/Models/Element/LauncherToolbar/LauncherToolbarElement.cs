@@ -262,10 +262,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             ThrowIfDisposed();
 
-            ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconBox);
-            IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconBox, IsIconOnly, TextWidth);
-            DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
-            HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
+            ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconBox, IconSize.DefaultScale);
+            IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconBox, IconSize.DefaultScale, IsIconOnly, TextWidth);
+            DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconBox, IconSize.DefaultScale, IsIconOnly, TextWidth);
+            HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, IconBox, IconSize.DefaultScale, IsIconOnly, TextWidth);
         }
 
         void LoadLauncherToolbar()

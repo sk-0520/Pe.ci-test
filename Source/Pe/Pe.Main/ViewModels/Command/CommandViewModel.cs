@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public Brush GripInactiveBrush => CommandTheme.GetGripBrush(false);
 
         [ThemeProperty]
-        public Thickness SelectedIconMargin => CommandTheme.GetSelectedIconMargin(IconBox);
+        public Thickness SelectedIconMargin => CommandTheme.GetSelectedIconMargin(IconBox, IconSize.DefaultScale);
 
         [ThemeProperty]
         public Thickness InputBorderThickness => CommandTheme.GetInputBorderThickness();
@@ -271,7 +271,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public Brush InputNotFoundForeground => CommandTheme.GetInputForeground(InputState.NotFound);
 
         [ThemeProperty]
-        public ControlTemplate ExecuteButtonControlTemplate => CommandTheme.GetExecuteButtonControlTemplate(IconBox);
+        public ControlTemplate ExecuteButtonControlTemplate => CommandTheme.GetExecuteButtonControlTemplate(IconBox, IconSize.DefaultScale);
 
         #endregion
 

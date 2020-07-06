@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 {
                     return DispatcherWrapper.Get(() => {
                         try {
-                            return Plugin.GetIcon(IconBox.Small);
+                            return Plugin.GetIcon(IconBox.Small, IconSize.DefaultScale);
                         } catch(Exception ex) {
                             Logger.LogError(ex, "[{0}] {1}, {2}", Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Plugin.PluginInformations.PluginIdentifiers.PluginId);
                             return null!;

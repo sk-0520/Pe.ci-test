@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// </summary>
         /// <param name="iconBox"></param>
         /// <returns></returns>
-        DependencyObject GetIcon(IconBox iconBox);
+        DependencyObject GetIcon(IconBox iconBox, Point iconScale);
 
         #endregion
     }

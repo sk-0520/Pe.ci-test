@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
@@ -32,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         /// <param name="iconBox"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(IconBox iconBox);
+        object GetIcon(IconBox iconBox, Point iconScale);
 
         /// <summary>
         /// アイテムの実行。

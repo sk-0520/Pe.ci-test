@@ -63,14 +63,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// <returns></returns>
         Brush GetGripBrush(bool isActive);
 
-        Thickness GetSelectedIconMargin(IconBox iconBox);
+        Thickness GetSelectedIconMargin(IconBox iconBox, Point iconScale);
 
         Thickness GetInputBorderThickness();
         Brush GetInputBorderBrush(InputState inputState);
         Brush GetInputForeground(InputState inputState);
         Brush GetInputBackground(InputState inputState);
 
-        ControlTemplate GetExecuteButtonControlTemplate(IconBox icon);
+        ControlTemplate GetExecuteButtonControlTemplate(IconBox icon, Point iconScale);
 
         #endregion
     }

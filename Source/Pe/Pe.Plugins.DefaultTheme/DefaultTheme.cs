@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         public bool IsInitialized { get; private set; }
 
         /// <inheritdoc cref="IPlugin.GetIcon(IconBox)"/>
-        public DependencyObject GetIcon(IconBox iconBox)
+        public DependencyObject GetIcon(IconBox iconBox, System.Windows.Point iconScale)
         {
             var uri = new Uri("pack://application:,,,/Pe.Plugins.DefaultTheme;component/App.ico");
             var bitmap = new BitmapImage(uri);

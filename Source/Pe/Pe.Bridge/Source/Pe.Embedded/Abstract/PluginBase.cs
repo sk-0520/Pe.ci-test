@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// </summary>
         /// <param name="iconBox"></param>
         /// <returns></returns>
-        protected DependencyObject GetPluginIcon(IconBox iconBox)
+        protected DependencyObject GetPluginIcon(IconBox iconBox, Point iconScale)
         {
             var asm = Assembly.GetExecutingAssembly();
             var asmName = asm.GetName().Name;
@@ -198,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public bool IsInitialized { get; private set; }
 
         /// <inheritdoc cref="IPlugin.GetIcon(IconBox)"/>
-        public DependencyObject GetIcon(IconBox iconBox)
+        public DependencyObject GetIcon(IconBox iconBox, Point iconScale)
         {
             try {
                 var result = GetIconImpl(iconBox);
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 Logger.LogWarning(ex, ex.Message);
             }
 
-            return GetPluginIcon(iconBox);
+            return GetPluginIcon(iconBox, iconScale);
         }
 
         /// <inheritdoc cref="IPlugin"/>

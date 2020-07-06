@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         public bool IsInitialized => Plugin.IsInitialized;
 
-        public DependencyObject GetIcon(IconBox iconBox) => throw new NotSupportedException();
+        public DependencyObject GetIcon(IconBox iconBox, Point iconScale) => throw new NotSupportedException();
 
         public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
         public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();

@@ -21,13 +21,13 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
         #region ILauncherToolbarTheme
 
         [return: PixelKind(Px.Logical)]
-        public Thickness GetButtonPadding(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox)
+        public Thickness GetButtonPadding(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox, Point iconScale)
         {
             return new Thickness(10);
         }
 
         [return: PixelKind(Px.Logical)]
-        public Size GetDisplaySize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        public Size GetDisplaySize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBox, Point iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
             return new Size(
                 GetHorizontal(buttonPadding) + GetHorizontal(iconMargin) + (int)iconBox + (isIconOnly ? 0 : textWidth),
@@ -36,13 +36,13 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
         }
 
         [return: PixelKind(Px.Logical)]
-        public Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        public Size GetHiddenSize([PixelKind(Px.Logical)] Thickness buttonPadding, [PixelKind(Px.Logical)] Thickness iconMargin, IconBox iconBox, Point iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
             return new Size(8, 8);
         }
 
         [return: PixelKind(Px.Logical)]
-        public Thickness GetIconMargin(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        public Thickness GetIconMargin(AppDesktopToolbarPosition toolbarPosition, IconBox iconBox, Point iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
             return new Thickness(0);
         }
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
             return GetResourceValue<ControlTemplate>(nameof(ClassicLauncherToolbarTheme), nameof(GetLauncherItemToggleButtonControlTemplate));
         }
 
-        public Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
+        public Brush GetToolbarBackground(AppDesktopToolbarPosition toolbarPosition, ViewState viewState, IconBox iconBox, Point iconScale, bool isIconOnly, [PixelKind(Px.Logical)] double textWidth)
         {
             return SystemColors.ControlBrush;
         }

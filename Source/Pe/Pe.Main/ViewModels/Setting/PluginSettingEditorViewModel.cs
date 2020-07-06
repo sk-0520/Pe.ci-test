@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Automation.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
@@ -51,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
                 return DispatcherWrapper.Get(() => {
                     try {
-                        return Model.Plugin.GetIcon(Bridge.Models.Data.IconBox.Small);
+                        return Model.Plugin.GetIcon(Bridge.Models.Data.IconBox.Small, IconSize.DefaultScale);
                     } catch(Exception ex) {
                         Logger.LogError(ex, "[{0}] {1}, {2}", Model.Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Model.Plugin.PluginInformations.PluginIdentifiers.PluginId);
                         return null!;

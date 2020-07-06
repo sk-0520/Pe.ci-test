@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
             return 8;
         }
 
-        public Thickness GetSelectedIconMargin(IconBox iconBox) => new Thickness(1);
+        public Thickness GetSelectedIconMargin(IconBox iconBox, Point iconScale) => new Thickness(1);
 
         public Thickness GetInputBorderThickness()
         {
@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
             return SystemColors.ControlDarkBrush;
         }
 
-        public ControlTemplate GetExecuteButtonControlTemplate(IconBox icon)
+        public ControlTemplate GetExecuteButtonControlTemplate(IconBox icon, Point iconScale)
         {
             return GetResourceValue<ControlTemplate>(nameof(ClassicCommandTheme), nameof(GetExecuteButtonControlTemplate));
         }
