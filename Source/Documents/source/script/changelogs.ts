@@ -121,6 +121,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#662: ランチャーアイテム自動登録で登録時ではなくプレビュー時にショートカットを展開する"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					},
 					{
