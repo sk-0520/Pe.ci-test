@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -22,11 +23,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         #region variable
         #endregion
 
-        public CommandItemViewModel(ICommandItem item, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandItemViewModel(ICommandItem item, IconBox iconBox, Point iconScale, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             Item = item;
             IconBox = iconBox;
+            IconScale = iconScale;
             DispatcherWrapper = dispatcherWrapper;
 
             HeaderValues = Item.HeaderValues.Select(i => new HitValueItemViewModel(i, LoggerFactory)).ToList();
@@ -38,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         ICommandItem Item { get; }
         IconBox IconBox { get; }
+        Point IconScale { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         public CommandItemKind Kind => Item.Kind;
         public double Score => Item.Score;
@@ -67,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             get
             {
-                var icon = DispatcherWrapper.Get(() => Item.GetIcon(IconBox));
+                var icon = DispatcherWrapper.Get(() => Item.GetIcon(IconBox, IconScale));
                 if(icon is IconImageLoaderBase iconLoader) {
                     return new IconViewerViewModel(iconLoader, DispatcherWrapper, LoggerFactory) {
                         UseCache = true,

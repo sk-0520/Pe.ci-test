@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             }
         }
 
-        public object GetIcon(IconBox iconBox)
+        public object GetIcon(IconBox iconBox, System.Windows.Point iconScale)
         {
             //var c = char.ToUpper(Path[0]);
             //if(Path.Length == "C:\\".Length && ('A' <= c && c <= 'Z') && Path[1] == System.IO.Path.VolumeSeparatorChar && System.IO.Path.EndsInDirectorySeparator(Path)) {
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
                     DestroyIcon(hIcon);
                 }
             }
-            var iconSize = new IconSize(iconBox);
+            var iconSize = new IconSize(iconBox, iconScale);
             return new System.Windows.Controls.Image() {
                 Source = ImageSource,
                 Width = iconSize.Width,

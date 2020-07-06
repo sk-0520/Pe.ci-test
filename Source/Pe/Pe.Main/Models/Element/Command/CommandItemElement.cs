@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region function
 
-        protected abstract object GetIconImpl(IconBox iconBox);
+        protected abstract object GetIconImpl(IconBox iconBox, Point iconScale);
         protected abstract void ExecuteImpl(ICommandExecuteParameter parameter);
         protected abstract bool EqualsImpl(CommandItemElementBase commandItemElement);
 
@@ -86,11 +86,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         }
         public int Score => EditableScore;
 
-        public object GetIcon(IconBox iconBox)
+        public object GetIcon(IconBox iconBox, Point iconScale)
         {
             DispatcherWrapper.VerifyAccess();
 
-            return GetIconImpl(iconBox);
+            return GetIconImpl(iconBox, iconScale);
         }
         public void Execute(ICommandExecuteParameter parameter) => ExecuteImpl(parameter);
 
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public override CommandItemKind Kind => EditableKind;
 
-        protected override object GetIconImpl(IconBox iconBox)
+        protected override object GetIconImpl(IconBox iconBox, Point iconScale)
         {
             return LauncherItemElement.Icon.IconImageLoaderPack.IconItems[iconBox];
         }
@@ -189,9 +189,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             Parameter.Executor(parameter);
         }
 
-        protected override object GetIconImpl(IconBox iconBox)
+        protected override object GetIconImpl(IconBox iconBox, Point iconScale)
         {
-            return Parameter.IconGetter(iconBox);
+            return Parameter.IconGetter(iconBox, iconScale);
             //return Application.Current.Resources["pack://application:,,,/Pe.Main;component/Resources/Icon/App.ico"];
         }
 

@@ -400,7 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             var prevItems = CommandItems;
             CommandItems = commandItems
-                .Select(i => new CommandItemViewModel(i, IconBox, DispatcherWrapper, LoggerFactory))
+                .Select(i => new CommandItemViewModel(i, IconBox, DpiScaleOutputor.GetDpiScale(), DispatcherWrapper, LoggerFactory))
                 .ToList()
             ;
             foreach(var item in prevItems) {

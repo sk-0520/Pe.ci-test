@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
@@ -117,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// </summary>
         /// <param name="iconBox"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(IconBox iconBox);
+        object GetIcon(IconBox iconBox, Point iconScale);
 
         /// <summary>
         /// コマンドアイテムの実行。
