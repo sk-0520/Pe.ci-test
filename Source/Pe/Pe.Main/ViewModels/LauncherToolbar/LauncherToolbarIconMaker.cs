@@ -20,8 +20,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         DependencyObject GetToolbarImageCore(IScreen currentScreen, IReadOnlyList<IScreen> allScreens, IconBox iconBox, bool isStrong)
         {
             var basePos = new Point(Math.Abs(allScreens.Min(s => s.DeviceBounds.Left)), Math.Abs(allScreens.Min(s => s.DeviceBounds.Top)));
-            var screenOperator = new ScreenOperator(NullLoggerFactory.Instance);
-            var drawSize = new IconSize(iconBox, screenOperator.GetDpiScale(currentScreen));
+            //var screenOperator = new ScreenOperator(NullLoggerFactory.Instance);
+            // WPF上の表示にお任せなのでDPIは96固定でOK
+            var drawSize = new IconSize(iconBox, IconSize.DefaultScale);
             var maxArea = new Rect() {
                 X = allScreens.Min(s => s.DeviceBounds.Left),
                 Y = allScreens.Min(s => s.DeviceBounds.Top)
