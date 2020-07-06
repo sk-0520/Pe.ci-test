@@ -47,6 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             LauncherCollection = new ActionModelViewModelObservableCollectionManager<WrapModel<Guid>, LauncherItemSettingEditorViewModel>(Model.LauncherItems) {
                 ManagingResource = false, // 共有アイテムを使用しているので破棄させない
                 ToViewModel = (m) => {
+                    //TODO: #634
                     var itemVm = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == m.Data);
                     return itemVm.Clone();
                 },
