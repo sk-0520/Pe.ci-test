@@ -142,7 +142,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#663: ランチャーアイテム自動登録でサブディレクトリが読み込めていない"
 					},
 					{
 						"revision": "",
