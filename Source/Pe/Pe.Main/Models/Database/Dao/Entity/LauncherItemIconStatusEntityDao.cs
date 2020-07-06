@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.LauncherItemId] = launcherItemId;
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconBox);
-            parameter[Column.IconScale] = iconScale;
+            parameter[Column.IconScale] = iconScale.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
             return Commander.Execute(statement, parameter) == 1;
         }
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.LauncherItemId] = launcherItemId;
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconBox);
-            parameter[Column.IconScale] = iconScale;
+            parameter[Column.IconScale] = iconScale.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
             return Commander.Execute(statement, parameter) == 1;
         }

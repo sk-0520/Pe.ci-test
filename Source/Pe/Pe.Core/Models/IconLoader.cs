@@ -224,6 +224,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
+            Debug.Assert(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal);
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             // 16, 32 px
@@ -355,7 +356,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var useIconIndex = Math.Abs(iconIndex);
 
             BitmapSource result;
-            if(iconSize.Width <= (int)IconBox.Normal) {
+            if(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal) {
                 result = LoadNormalIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
             } else {
                 result = LoadLargeIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
