@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -52,7 +53,14 @@ namespace ContentTypeTextNet.Pe.Main.Views
         {
             if(d is ImageViewerControl control) {
                 if(e.NewValue is IconViewerViewModel iconViewer) {
-                    var iconScale = UIUtility.GetDpiScale(control);
+                    var rootVisual = UIUtility.GetClosest<Window>(control);
+                    if(rootVisual == null) {
+                        var popup = UIUtility.GetClosest<Popup>(control);
+                        if(popup != null && popup.PlacementTarget != null) {
+                            rootVisual = UIUtility.GetClosest<Window>(popup.PlacementTarget);
+                        }
+                    }
+                    var iconScale = UIUtility.GetDpiScale(rootVisual ?? (Visual)control);
                     control.parent.Width = (int)iconViewer.IconBox;//.ToWidth();
                     control.parent.Height = (int)iconViewer.IconBox;//.ToHeight();
                     if(control.IsLoaded) {
