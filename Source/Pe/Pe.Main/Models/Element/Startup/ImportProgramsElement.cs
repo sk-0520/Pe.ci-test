@@ -95,10 +95,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             var elements = dirPaths
                 .Select(s => new DirectoryInfo(s))
                 .SelectMany(d => GetFiles(d))
-                .Select(d => {
-                    Logger.LogInformation(d.FullName);
-                    return d;
-                })
                 .Where(f => PathUtility.IsShortcut(f.Name) || PathUtility.IsProgram(f.Name))
                 .GroupBy(f => f.Name)
                 .OrderBy(g => g.Key)
