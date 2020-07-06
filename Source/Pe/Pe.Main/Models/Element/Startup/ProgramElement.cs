@@ -58,11 +58,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 return;
             }
 
-            // ƒVƒ‡[ƒgƒJƒbƒg‚ÌƒŠƒ“ƒNæƒpƒX‚Æİ’èƒAƒCƒRƒ“ƒpƒX‚ªˆÙ‚È‚ê‚Îİ’èƒAƒCƒRƒ“ƒpƒX‚ğ—Dæ‚·‚é
+            // ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã®ãƒªãƒ³ã‚¯å…ˆãƒ‘ã‚¹ã¨è¨­å®šã‚¢ã‚¤ã‚³ãƒ³ãƒ‘ã‚¹ãŒç•°ãªã‚Œã°è¨­å®šã‚¢ã‚¤ã‚³ãƒ³ãƒ‘ã‚¹ã‚’å„ªå…ˆã™ã‚‹
             if(!string.IsNullOrWhiteSpace(targetIconPath)) {
                 var expandedIconPath = Environment.ExpandEnvironmentVariables(targetIconPath);
                 var iconIndex = targetIconIndex;
-                // ƒpƒX‚ªˆÙ‚È‚é‚Ì‚Í‚à‚Æ‚æ‚èƒpƒX‚ª“¯‚¶‚Å‚àƒAƒCƒRƒ“ƒCƒ“ƒfƒbƒNƒXw’è‚ª‚ ‚ê‚ÎƒAƒCƒRƒ“‚ğ—Dæ
+                // ãƒ‘ã‚¹ãŒç•°ãªã‚‹ã®ã¯ã‚‚ã¨ã‚ˆã‚Šãƒ‘ã‚¹ãŒåŒã˜ã§ã‚‚ã‚¢ã‚¤ã‚³ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æŒ‡å®šãŒã‚ã‚Œã°ã‚¢ã‚¤ã‚³ãƒ³ã‚’å„ªå…ˆ
                 if(!PathUtility.IsEqual(targetPath, expandedIconPath) || iconIndex != 0) {
                     IconImageLoader.Dispose();
                     IconImageLoader = new IconImageLoader(
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 }
             }
 
-            // ‚Æ‚è‚Ü‘ÎÛƒŠƒ“ƒNæƒpƒX‚ğw’è
+            // ã¨ã‚Šã¾å¯¾è±¡ãƒªãƒ³ã‚¯å…ˆãƒ‘ã‚¹ã‚’æŒ‡å®š
             IconImageLoader.Dispose();
             IconImageLoader = new IconImageLoader(
                 new Data.IconData() {
@@ -108,7 +108,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     ApplyShortcutFileIconLoader(targetPath, shortcutFile.IconPath, shortcutFile.IconIndex);
                     return;
                 } catch(Exception ex) {
-                    Logger.LogError(ex, "{0}, ƒVƒ‡[ƒgƒJƒbƒgî•ñ“Ç‚İ‚İ¸”s‚Ì‚½‚ßƒVƒ‡[ƒgƒJƒbƒgƒtƒ@ƒCƒ‹‚©‚çˆ—: {1}", ex.Message, FileInfo.FullName);
+                    Logger.LogError(ex, "{0}, ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆæƒ…å ±èª­ã¿è¾¼ã¿å¤±æ•—ã®ãŸã‚ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å‡¦ç†: {1}", ex.Message, FileInfo.FullName);
                 }
             }
 
