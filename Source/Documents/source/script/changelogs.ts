@@ -117,7 +117,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#655: ランチャーアイテム自動登録にてアンインストールファイルと思しきファイル名は登録対象外とする"
 					},
 					{
 						"revision": "",

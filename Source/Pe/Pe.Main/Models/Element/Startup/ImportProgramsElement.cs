@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -22,9 +23,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
     public class ImportProgramsElement : ContextElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ImportProgramsElement(LauncherItemConfiguration launcherItemConfiguration, IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
+            LauncherItemConfiguration = launcherItemConfiguration;
             DatabaseBarrier = databaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             WindowManager = windowManager;
@@ -33,6 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         }
 
         #region property
+
+        LauncherItemConfiguration LauncherItemConfiguration { get; }
 
         IMainDatabaseBarrier DatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
@@ -65,9 +69,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
             return files.Concat(subFiles);
         }
 
+        IReadOnlyList<Regex> GetAutoImportUntargetRegexItems()
+        {
+            return LauncherItemConfiguration.AutoImportUntargetPatterns
+                .Select(i => new Regex(i, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace))
+                .ToList()
+            ;
+        }
+
         void LoadPrograms()
         {
             ThrowIfDisposed();
+
+            var autoImportUntargetRegexItems = GetAutoImportUntargetRegexItems();
 
             var dirPaths = new[] {
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu),
@@ -82,9 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 .GroupBy(f => f.Name)
                 .OrderBy(g => g.Key)
                 .Select(g => g.First())
-                .Select(f => new ProgramElement(f, DispatcherWrapper, LoggerFactory) {
-                    IsImport = true,
-                })
+                .Select(f => new ProgramElement(f, autoImportUntargetRegexItems, DispatcherWrapper, LoggerFactory))
             ;
 
             foreach(var element in elements) {
