@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 
 namespace ContentTypeTextNet.Pe.Main.Views
@@ -20,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
     /// <summary>
     /// ImageViewerControl.xaml の相互作用ロジック
     /// </summary>
-    public partial class ImageViewerControl : UserControl
+    public partial class ImageViewerControl: UserControl
     {
         public ImageViewerControl()
         {
@@ -51,10 +52,11 @@ namespace ContentTypeTextNet.Pe.Main.Views
         {
             if(d is ImageViewerControl control) {
                 if(e.NewValue is IconViewerViewModel iconViewer) {
+                    var iconScale = UIUtility.GetDpiScale(control);
                     control.parent.Width = (int)iconViewer.IconBox;//.ToWidth();
                     control.parent.Height = (int)iconViewer.IconBox;//.ToHeight();
                     if(control.IsLoaded) {
-                        iconViewer.LoadAsync(CancellationToken.None).ConfigureAwait(false);
+                        iconViewer.LoadAsync(iconScale, CancellationToken.None).ConfigureAwait(false);
                     }
                 }
             }
@@ -68,7 +70,8 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
             var iconViewer = IconViewer;
             if(iconViewer != null) {
-                iconViewer.LoadAsync(CancellationToken.None).ConfigureAwait(false);
+                var iconScale = UIUtility.GetDpiScale(this);
+                iconViewer.LoadAsync(iconScale, CancellationToken.None).ConfigureAwait(false);
             }
         }
     }

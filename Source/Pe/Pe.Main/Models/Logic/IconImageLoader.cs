@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return bitmapSource;
         }
 
-        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, CancellationToken cancellationToken)
+        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, Point iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -137,21 +137,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", path);
                     var iconLoader = new IconLoader(LoggerFactory);
-                    static BitmapSource LoadCore(string path, int index, IconBox iconBox, IconLoader iconLoader)
+                    static BitmapSource LoadCore(string path, int index, IconBox iconBox, Point iconScale, IconLoader iconLoader)
                     {
-                        var image = iconLoader.Load(path, index, new IconSize(iconBox));
+                        var image = iconLoader.Load(path, index, new IconSize(iconBox), iconScale);
                         return FreezableUtility.GetSafeFreeze(image!);
                     }
-                    iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, iconLoader);
+                    iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, iconScale, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, iconScale, iconLoader);
                 }
 
                 return iconImage;
             });
         }
 
-        protected abstract Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken);
+        protected abstract Task<BitmapSource?> LoadImplAsync(Point iconScale, CancellationToken cancellationToken);
 
-        public async Task<BitmapSource?> LoadAsync(bool useCache, CancellationToken cancellationToken)
+        public async Task<BitmapSource?> LoadAsync(bool useCache, Point iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -163,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             RunningStatusImpl.State = RunningState.Running;
             try {
-                var iconImage = await LoadImplAsync(cancellationToken);
+                var iconImage = await LoadImplAsync(iconScale, cancellationToken);
                 RunningStatusImpl.State = RunningState.End;
                 if(useCache) {
                     CachedImage = iconImage;
@@ -218,9 +218,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IconImageLoaderBase
 
-        protected override Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken)
+        protected override Task<BitmapSource?> LoadImplAsync(Point iconScale, CancellationToken cancellationToken)
         {
-            return GetIconImageAsync(IconData, cancellationToken);
+            return GetIconImageAsync(IconData, iconScale, cancellationToken);
         }
 
         #endregion

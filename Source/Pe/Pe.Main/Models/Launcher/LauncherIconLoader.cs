@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -50,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync()
+        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(Point iconScale)
         {
             ThrowIfDisposed();
 
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IReadOnlyIconData iconData, CancellationToken cancellationToken)
+        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IReadOnlyIconData iconData, Point iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             };
 
             if(Path.IsPathFullyQualified(editIconData.Path)) {
-                return GetIconImageAsync(editIconData, cancellationToken);
+                return GetIconImageAsync(editIconData, iconScale, cancellationToken);
             }
 
             if(string.IsNullOrWhiteSpace(editIconData.Path)) {
@@ -112,14 +113,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             editIconData.Path = pathItem.File.FullName;
             editIconData.Index = 0;
-            return GetIconImageAsync(editIconData, cancellationToken);
+            return GetIconImageAsync(editIconData, iconScale, cancellationToken);
         }
 
-        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, bool tuneSize, CancellationToken cancellationToken)
+        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, Point iconScale, bool tuneSize, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, cancellationToken).ConfigureAwait(false);
+            var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, iconScale, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 if(tuneSize) {
                     return ResizeImage(iconImage);
@@ -131,7 +132,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             //}
 
-            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, cancellationToken).ConfigureAwait(false);
+            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, iconScale, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
                 if(tuneSize) {
                     return ResizeImage(commandImage);
@@ -189,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         }
 
-        async Task<BitmapSource?> MakeImageAsync(CancellationToken cancellationToken)
+        async Task<BitmapSource?> MakeImageAsync(Point iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -197,7 +198,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var launcherIconData = GetIconData();
 
             // アイコン取得
-            var iconImage = await GetImageAsync(launcherIconData, true, cancellationToken).ConfigureAwait(false);
+            var iconImage = await GetImageAsync(launcherIconData, iconScale, true, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 // データ書き込み(失敗してもアイコンが取得できてるならOK)
                 var _ = SaveImageAsync(iconImage);
@@ -213,17 +214,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region IconImageLoaderBase
 
-        protected override async Task<BitmapSource?> LoadImplAsync(CancellationToken cancellationToken)
+        protected override async Task<BitmapSource?> LoadImplAsync(Point iconScale, CancellationToken cancellationToken)
         {
             var counter = new Counter(RetryMaxCount);
             foreach(var count in counter) {
                 try {
-                    var existisResult = await LoadExistsImageAsync().ConfigureAwait(false);
+                    var existisResult = await LoadExistsImageAsync(iconScale).ConfigureAwait(false);
                     if(existisResult.Success) {
                         return existisResult.SuccessValue;
                     }
 
-                    var image = await MakeImageAsync(cancellationToken).ConfigureAwait(false);
+                    var image = await MakeImageAsync(iconScale, cancellationToken).ConfigureAwait(false);
                     return image;
                 } catch(SynchronizationLockException ex) {
                     if(count.IsLast) {

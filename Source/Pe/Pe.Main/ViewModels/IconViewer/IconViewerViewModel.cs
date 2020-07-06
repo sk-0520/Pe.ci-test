@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -69,9 +70,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         #region function
 
-        public async Task LoadAsync(CancellationToken cancellationToken)
+        public async Task LoadAsync(Point iconScale, CancellationToken cancellationToken)
         {
-            this._imageSource = await Model.LoadAsync(UseCache, cancellationToken);
+            this._imageSource = await Model.LoadAsync(UseCache, iconScale, cancellationToken);
             RaisePropertyChanged(nameof(ImageSource));
         }
 

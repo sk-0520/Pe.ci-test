@@ -350,9 +350,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconPath">対象ファイルパス。</param>
         /// <param name="iconSize">アイコンサイズ。</param>
         /// <param name="iconIndex">アイコンインデックス。</param>
-        /// <param name="logger"></param>
+        /// <param name="iconScale">画面DPIスケール。</param>
         /// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-        public BitmapSource? Load(string iconPath, int iconIndex, IconSize iconSize)
+        public BitmapSource? Load(string iconPath, int iconIndex, IconSize iconSize, Point iconScale)
         {
             // 実行形式
             var hasIcon = PathUtility.HasIconPath(iconPath);

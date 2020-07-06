@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        public Task LoadAndSaveAsync(CancellationToken cancellationToken)
+        public Task LoadAndSaveAsync(Point iconScale, CancellationToken cancellationToken)
         {
             // アイコンパス取得
             var launcherIconData = GetIconData();
@@ -39,7 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             // アイコン取得
             Logger.LogDebug("ランチャーアイテムのアイコン取得開始: {0}, [{1}], [{2}], {3}", IconBox, launcherIconData.Path, launcherIconData.Icon, LauncherItemId);
 
-            GetImageAsync(launcherIconData, true, cancellationToken).ContinueWith(t => {
+            GetImageAsync(launcherIconData, iconScale, true, cancellationToken).ContinueWith(t => {
                 try {
                     if(t.IsCompletedSuccessfully) {
                         var image = t.Result;
@@ -129,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var loader = new LauncherIconRefreshLoader(launcherItemId, target.IconBox, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            return loader.LoadAndSaveAsync(cancellationToken);
+            return loader.LoadAndSaveAsync(target.IconScale, cancellationToken);
         }
 
 

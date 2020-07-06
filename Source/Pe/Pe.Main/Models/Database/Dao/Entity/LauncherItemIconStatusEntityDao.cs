@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -21,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             public Guid LauncherItemId { get; set; }
             public string IconBox { get; set; } = string.Empty;
+            public double IconScale { get; set; } = 1;
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed")]
             public DateTime LastUpdatedTimestamp { get; set; }
@@ -57,6 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var iconBoxTransfer = new EnumTransfer<IconBox>();
             return new LauncherIconStatus(
                 iconBoxTransfer.ToEnum(dto.IconBox),
+                new Point(dto.IconScale, dto.IconScale),
                 dto.LastUpdatedTimestamp
             );
         }
