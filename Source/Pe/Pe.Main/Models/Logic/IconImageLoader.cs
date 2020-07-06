@@ -81,11 +81,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
-        protected BitmapSource ResizeImage(BitmapSource bitmapSource)
+        protected BitmapSource ResizeImage(BitmapSource bitmapSource, Point iconScale)
         {
             ThrowIfDisposed();
 
-            var iconSize = new IconSize(IconBox);
+            var iconSize = new IconSize(IconBox, iconScale);
 
             if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
                 Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
@@ -139,7 +139,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     var iconLoader = new IconLoader(LoggerFactory);
                     static BitmapSource LoadCore(string path, int index, IconBox iconBox, Point iconScale, IconLoader iconLoader)
                     {
-                        var image = iconLoader.Load(path, index, new IconSize(iconBox), iconScale);
+                        var iconSize = new IconSize(iconBox, iconScale);
+                        var image = iconLoader.Load(path, index, iconSize);
                         return FreezableUtility.GetSafeFreeze(image!);
                     }
                     iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, iconScale, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, iconScale, iconLoader);

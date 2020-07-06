@@ -97,6 +97,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return device.DeviceString;
         }
 
+        public System.Windows.Point GetDpiScale(IScreen screen)
+        {
+            //foreach(var screem in GetScreens(screen.DeviceName)) {
+            //    if(screem.PixelsPerXLogicalInch.HasValue && screem.PixelsPerYLogicalInch.HasValue) {
+            //        return new System.Windows.Point(
+            //            screem.PixelsPerXLogicalInch.Value / 96.0,
+            //            screem.PixelsPerXLogicalInch.Value / 96.0
+            //        );
+            //    }
+            //}
+            var hDC = NativeMethods.CreateDC("DISPLAY", screen.DeviceName, null!, IntPtr.Zero);
+            try {
+                var dpiX = NativeMethods.GetDeviceCaps(hDC, DeviceCap.LOGPIXELSX);
+                var dpiY = NativeMethods.GetDeviceCaps(hDC, DeviceCap.LOGPIXELSY);
+                return new System.Windows.Point(
+                    dpiX / 96.0,
+                    dpiY / 96.0
+                );
+            } finally {
+                if(hDC != IntPtr.Zero) {
+                    NativeMethods.DeleteDC(hDC);
+                }
+            }
+        }
+
         public bool RegisterDatabase(IScreen screen, IDatabaseCommander commander, IDatabaseStatementLoader databaseStatementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
         {
             var screensDao = new ScreensEntityDao(commander, databaseStatementLoader, implementation, LoggerFactory);

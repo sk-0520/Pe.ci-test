@@ -56,12 +56,20 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
             Width = Height = boxSize;
         }
 
-        public IconSize(IconBox iconBox)
+        public IconSize(IconBox iconBox, Point iconScale)
         {
-            Width = Height = (int)iconBox;
+            // ここだけ X/Y 見るのもどうなんやろね
+            Width = (int)((int)iconBox * iconScale.X);
+            Height = (int)((int)iconBox * iconScale.Y);
         }
 
+
         #region property
+
+        /// <summary>
+        /// DPI が取得できないところで使用するしゃあなしDPIスケール。
+        /// </summary>
+        public static Point DefaultScale => new Point(1, 1);
 
         /// <summary>
         /// 横幅。

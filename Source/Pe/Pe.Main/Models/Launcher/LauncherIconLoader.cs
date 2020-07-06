@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, iconScale, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 if(tuneSize) {
-                    return ResizeImage(iconImage);
+                    return ResizeImage(iconImage, iconScale);
                 }
                 return iconImage;
             }
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, iconScale, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
                 if(tuneSize) {
-                    return ResizeImage(commandImage);
+                    return ResizeImage(commandImage, iconScale);
                 }
                 return commandImage;
             }

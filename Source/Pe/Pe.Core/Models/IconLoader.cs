@@ -224,7 +224,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
-            Debug.Assert(new[] { IconBox.Small, IconBox.Normal }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             // 16, 32 px
@@ -287,8 +286,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         BitmapSource? LoadLargeIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
-            //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             if(hasIcon) {
@@ -350,16 +347,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconPath">対象ファイルパス。</param>
         /// <param name="iconSize">アイコンサイズ。</param>
         /// <param name="iconIndex">アイコンインデックス。</param>
-        /// <param name="iconScale">画面DPIスケール。</param>
         /// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-        public BitmapSource? Load(string iconPath, int iconIndex, IconSize iconSize, Point iconScale)
+        public BitmapSource? Load(string iconPath, int iconIndex, IconSize iconSize)
         {
             // 実行形式
             var hasIcon = PathUtility.HasIconPath(iconPath);
             var useIconIndex = Math.Abs(iconIndex);
 
             BitmapSource result;
-            if(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal) {
+            if(iconSize.Width <= (int)IconBox.Normal) {
                 result = LoadNormalIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
             } else {
                 result = LoadLargeIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
