@@ -35,10 +35,10 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// プールしているオブジェクトをコンテナに任せるか選択。
         /// </summary>
-        /// <param name="isDisposeObjectPool">解放処理をコンテナに任せるか</param>
-        public DiContainer(bool isDisposeObjectPool)
+        /// <param name="managingResource">解放処理をコンテナに任せるか</param>
+        public DiContainer(bool managingResource)
         {
-            IsDisposeObjectPool = isDisposeObjectPool;
+            ManagingResource = managingResource;
         }
 
         #region property
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <summary>
         /// 解放処理をコンテナに任せるか。
         /// </summary>
-        protected bool IsDisposeObjectPool { get; }
+        protected bool ManagingResource { get; }
 
         /// <summary>
         /// IF → 実体 のマッピング。
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// </summary>
         protected DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>> Constructors { get; } = new DiNamedContainer<ConcurrentDictionary<Type, DiConstructorCache>>();
         protected DiNamedContainer<ConcurrentDictionary<Type, object>> ObjectPool { get; } = new DiNamedContainer<ConcurrentDictionary<Type, object>>();
-        protected IList<DiDirtyMember> DirtyMembers { get; } = new List<DiDirtyMember>();
+        protected IList<DiInjectionMember> InjectionMembers { get; } = new List<DiInjectionMember>();
 
         #endregion
 
@@ -404,7 +404,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             // 強制付け替え処理の実施
             var dirtyPairs = memberItems
                 .Join(
-                    DirtyMembers.Where(d => d.BaseType.IsAssignableFrom(targetType)),
+                    InjectionMembers.Where(d => d.BaseType.IsAssignableFrom(targetType)),
                     m => m.MemberInfo.Name,
                     d => d.MemberInfo.Name,
                     (m, d) => new { Item = m, Dirty = d }
@@ -539,7 +539,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         public virtual IScopeDiContainer Scope()
         {
-            var cloneContainer = new ScopeDiContainer(IsDisposeObjectPool);
+            var cloneContainer = new ScopeDiContainer(ManagingResource);
             foreach(var pair in Mapping.ToArray()) {
                 var map = cloneContainer.Mapping[pair.Key];
                 foreach(var sub in pair.Value) {
@@ -564,8 +564,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     constructor.TryAdd(sub.Key, sub.Value);
                 }
             }
-            foreach(var item in DirtyMembers) {
-                cloneContainer.DirtyMembers.Add(item);
+            foreach(var item in InjectionMembers) {
+                cloneContainer.InjectionMembers.Add(item);
             }
 
             return cloneContainer;
@@ -641,35 +641,35 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
             return this;
         }
 
-        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister(Type, string, Type)"/>
-        public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType)
+        /// <inheritdoc cref="IDiRegisterContainer.RegisterMember(Type, string, Type)"/>
+        public IDiRegisterContainer RegisterMember(Type baseType, string memberName, Type objectType)
         {
-            return DirtyRegister(baseType, memberName, objectType, string.Empty);
+            return RegisterMember(baseType, memberName, objectType, string.Empty);
         }
-        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister(Type, string, Type, string)"/>
-        public IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType, string name)
+        /// <inheritdoc cref="IDiRegisterContainer.RegisterMember(Type, string, Type, string)"/>
+        public IDiRegisterContainer RegisterMember(Type baseType, string memberName, Type objectType, string name)
         {
             var memberInfo = baseType.GetMember(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.SetField | BindingFlags.GetProperty | BindingFlags.SetProperty);
             if(memberInfo == null || memberInfo.Length != 1) {
                 throw new NullReferenceException(memberName);
             }
-            var member = new DiDirtyMember(baseType, memberInfo[0], objectType, TuneName(name));
-            if(DirtyMembers.Any(m => m.BaseType == member.BaseType && m.MemberInfo.Name == member.MemberInfo.Name)) {
+            var member = new DiInjectionMember(baseType, memberInfo[0], objectType, TuneName(name));
+            if(InjectionMembers.Any(m => m.BaseType == member.BaseType && m.MemberInfo.Name == member.MemberInfo.Name)) {
                 throw new ArgumentException($"{baseType}.{memberInfo}");
             }
-            DirtyMembers.Add(member);
+            InjectionMembers.Add(member);
 
             return this;
         }
-        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string)"/>
-        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName)
+        /// <inheritdoc cref="IDiRegisterContainer.RegisterMember{TBase, TObject}(string)"/>
+        public IDiRegisterContainer RegisterMember<TBase, TObject>(string memberName)
         {
-            return DirtyRegister(typeof(TBase), memberName, typeof(TObject), string.Empty);
+            return RegisterMember(typeof(TBase), memberName, typeof(TObject), string.Empty);
         }
-        /// <inheritdoc cref="IDiRegisterContainer.DirtyRegister{TBase, TObject}(string, string)"/>
-        public IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName, string name)
+        /// <inheritdoc cref="IDiRegisterContainer.RegisterMember{TBase, TObject}(string, string)"/>
+        public IDiRegisterContainer RegisterMember<TBase, TObject>(string memberName, string name)
         {
-            return DirtyRegister(typeof(TBase), memberName, typeof(TObject), name);
+            return RegisterMember(typeof(TBase), memberName, typeof(TObject), name);
         }
 
         /// <inheritdoc cref="IDiRegisterContainer.Unregister(Type)"/>
@@ -740,7 +740,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                     foreach(var factory in Factory.Values.SelectMany(i => i.Values)) {
                         factory.Dispose();
                     }
-                    if(IsDisposeObjectPool) {
+                    if(ManagingResource) {
                         foreach(var pair in ObjectPool.ToArray()) {
                             foreach(var sub in pair.Value) {
                                 // 自分自身が処理中なので無視

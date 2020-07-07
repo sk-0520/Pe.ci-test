@@ -627,14 +627,14 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
         }
 
         [TestMethod]
-        public void DirtyRegisterTest()
+        public void RegisterMemberTest()
         {
             var dic = new DiContainer();
             dic.Register<I1, C1>(DiLifecycle.Transient);
 
-            dic.DirtyRegister<D1, I1>("I1_1");
-            Assert.ThrowsException<NullReferenceException>(() => dic.DirtyRegister<D1, I1>("I1_0"));
-            Assert.ThrowsException<ArgumentException>(() => dic.DirtyRegister<D1, I1>("I1_1"));
+            dic.RegisterMember<D1, I1>("I1_1");
+            Assert.ThrowsException<NullReferenceException>(() => dic.RegisterMember<D1, I1>("I1_0"));
+            Assert.ThrowsException<ArgumentException>(() => dic.RegisterMember<D1, I1>("I1_1"));
         }
 
 #if PrivateObject
@@ -711,8 +711,8 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models.DependencyInjection
             dic.Register<I1, C1>(DiLifecycle.Transient);
             dic.Register<ID2, D2>(DiLifecycle.Transient);
 
-            dic.DirtyRegister<D2, I1>("I1_3");
-            dic.DirtyRegister<D2, I1>(nameof(D1.I1_4));
+            dic.RegisterMember<D2, I1>("I1_3");
+            dic.RegisterMember<D2, I1>(nameof(D1.I1_4));
 
             var d = (D2)dic.Build<ID2>();
             Assert.IsNotNull(d.I1_1);

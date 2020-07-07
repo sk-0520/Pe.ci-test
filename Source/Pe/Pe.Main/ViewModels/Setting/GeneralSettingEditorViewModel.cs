@@ -131,16 +131,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public class ThemePluginItemViewModel: ViewModelBase
         {
-            public ThemePluginItemViewModel(IPlugin plugin, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            public ThemePluginItemViewModel(IPlugin plugin, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
                 : base(loggerFactory)
             {
                 Plugin = plugin;
+                ImageLoader = imageLoader;
                 DispatcherWrapper = dispatcherWrapper;
             }
 
             #region property
 
             IPlugin Plugin { get; }
+            IImageLoader ImageLoader { get; }
             IDispatcherWrapper DispatcherWrapper { get; }
 
             public string Name => Plugin.PluginInformations.PluginIdentifiers.PluginName;
@@ -152,7 +154,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 {
                     return DispatcherWrapper.Get(() => {
                         try {
-                            return Plugin.GetIcon(IconBox.Small);
+                            var scale = ImageLoader.GetPrimaryDpiScale();
+                            return Plugin.GetIcon(ImageLoader, new IconScale(IconBox.Small, scale));
                         } catch(Exception ex) {
                             Logger.LogError(ex, "[{0}] {1}, {2}", Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Plugin.PluginInformations.PluginIdentifiers.PluginId);
                             return null!;
@@ -166,7 +169,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IReadOnlyCollection<string> cultureNames, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AppGeneralSettingEditorViewModel(AppGeneralSettingEditorElement model, IReadOnlyCollection<string> cultureNames, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             CultureInfoItems = new ObservableCollection<CultureInfo>();
@@ -174,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             CultureInfoItems.Add(CultureInfo.InvariantCulture);
             CultureInfoItems.AddRange(cultures);
 
-            ThemePluginItems = Model.ThemePlugins.Select(i => new ThemePluginItemViewModel(i, DispatcherWrapper, LoggerFactory)).ToList();
+            ThemePluginItems = Model.ThemePlugins.Select(i => new ThemePluginItemViewModel(i, imageLoader, DispatcherWrapper, LoggerFactory)).ToList();
         }
 
         #region property

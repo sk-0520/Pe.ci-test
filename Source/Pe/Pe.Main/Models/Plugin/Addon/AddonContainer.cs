@@ -27,16 +27,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             PluginContextFactory = pluginContextFactory;
-            BackgroundAddonContextFactory =backgroundAddonContextFactory;
+            BackgroundAddonContextFactory = backgroundAddonContextFactory;
 
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
+            ImageLoader = imageLoader;
             DispatcherWrapper = dispatcherWrapper;
         }
 
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         IUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
+        IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
         /// <summary>
@@ -93,18 +95,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public CommandFinderAddonProxy GetCommandFinder()
         {
-            return new CommandFinderAddonProxy(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new CommandFinderAddonProxy(CommandFinderSupportAddons, PluginContextFactory, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
         }
 
         public BackgroundAddonProxy GetBackground()
         {
-            return new BackgroundAddonProxy(BackgroundSupportAddons, PluginContextFactory, BackgroundAddonContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+            return new BackgroundAddonProxy(BackgroundSupportAddons, PluginContextFactory, BackgroundAddonContextFactory, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
         }
 
         public IReadOnlyList<WidgetAddonProxy> GetWidgets()
         {
             return WidgetSupportAddons
-                .Select(i => new WidgetAddonProxy(i, PluginContextFactory, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory))
+                .Select(i => new WidgetAddonProxy(i, PluginContextFactory, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory))
                 .ToList()
             ;
         }

@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     internal abstract class CommonAddonProxyBase<TFunctionUnit>: DisposerBase
         where TFunctionUnit : notnull
     {
-        protected CommonAddonProxyBase( PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected CommonAddonProxyBase( PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
+            ImageLoader = imageLoader;
             DispatcherWrapper = dispatcherWrapper;
         }
 
@@ -38,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected PluginContextFactory PluginContextFactory { get; }
         protected IUserAgentFactory UserAgentFactory { get; }
         protected IPlatformTheme PlatformTheme { get; }
+        protected IImageLoader ImageLoader { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <see cref="AddonParameter"/> を普通に作成する。
         /// </summary>
         /// <returns></returns>
-        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
 
         protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 
@@ -73,8 +75,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         TFunctionUnit? _functionUnit;
 
         #endregion
-        protected AddonProxyBase(IAddon addon, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
+        protected AddonProxyBase(IAddon addon, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginContextFactory, userAgentFactory, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         {
             Addon = addon;
         }
@@ -127,8 +129,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        protected AddonsProxyBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
+        protected AddonsProxyBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginContextFactory, userAgentFactory, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         {
             Addons = addons;
         }

@@ -9,10 +9,10 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 {
     /// <inheritdoc cref="IThemeParameter"/>
-    internal class ThemeParameter : PluginParameterBase, IThemeParameter
+    internal class ThemeParameter: PluginParameterBase, IThemeParameter
     {
-        public ThemeParameter(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginInformations, platformTheme, dispatcherWrapper, loggerFactory)
+        public ThemeParameter(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginInformations, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         { }
 
         #region IThemeParameter

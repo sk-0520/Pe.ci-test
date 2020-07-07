@@ -125,11 +125,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         public ApplicationCommandParameter CreateParameter(ApplicationCommand applicationCommand, Action<ICommandExecuteParameter> executor)
         {
             var descriptions = ToDescriptions(applicationCommand);
-            return new ApplicationCommandParameter(ToHeader(applicationCommand), descriptions.narmal, descriptions.extend, iconBox => {
+            return new ApplicationCommandParameter(ToHeader(applicationCommand), descriptions.narmal, descriptions.extend, (in IconScale iconScale) => {
                 var control = new Control();
                 using(Initializer.Begin(control)) {
                     control.Template = (ControlTemplate)Application.Current.Resources["App-Image-Command"];
-                    control.Style = iconBox switch
+                    control.Style = iconScale.Box switch
                     {
                         IconBox.Small => (Style)Application.Current.Resources["Image-Small"],
                         IconBox.Normal => (Style)Application.Current.Resources["Image-Normal"],
@@ -146,9 +146,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         #endregion
     }
 
+    public delegate object IconGetter(in IconScale iconScale);
+
     public class ApplicationCommandParameter
     {
-        public ApplicationCommandParameter(string header, string description, string extendDescription, Func<IconBox, object> iconGetter, Action<ICommandExecuteParameter> executor)
+        public ApplicationCommandParameter(string header, string description, string extendDescription, IconGetter iconGetter, Action<ICommandExecuteParameter> executor)
         {
             Header = header ?? throw new ArgumentNullException(nameof(header));
             Description = description ?? throw new ArgumentNullException(nameof(description));
@@ -162,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         public string Header { get; }
         public string Description { get; }
         public string ExtendDescription { get; }
-        public Func<IconBox, object> IconGetter { get; }
+        public IconGetter IconGetter { get; }
         public Action<ICommandExecuteParameter> Executor { get; }
 
         #endregion

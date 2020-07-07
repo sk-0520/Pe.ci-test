@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
     /// <summary>
     /// 対象オブジェクトのプロパティに値を設定。
     /// </summary>
-    public sealed class DiDirtyMember
+    public sealed class DiInjectionMember
     {
         /// <summary>
         ///
@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <param name="memberInfo"><paramref name="baseType"/>の対象プロパティ。</param>
         /// <param name="objectType">設定する値。</param>
         /// <param name="name">名前。</param>
-        public DiDirtyMember(Type baseType, MemberInfo memberInfo, Type objectType, string name)
+        public DiInjectionMember(Type baseType, MemberInfo memberInfo, Type objectType, string name)
         {
             BaseType = baseType;
             MemberInfo = memberInfo;

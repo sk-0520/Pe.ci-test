@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// <summary>
         /// アイテム削除時に対象 ViewModel の <see cref="TViewModel.Dispose"/> を呼び出すか。
         /// </summary>
-        public bool RemoveViewModelToDispose { get; set; } = true;
+        public bool ManagingResource { get; set; } = true;
 
         public int Count => EditableViewModels.Count;
 
@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
             foreach(var counter in new Counter(oldViewModels.Count)) {
                 EditableViewModels.RemoveAt(oldStartingIndex);
             }
-            if(RemoveViewModelToDispose) {
+            if(ManagingResource) {
                 foreach(var oldViewModel in oldViewModels) {
                     oldViewModel.Dispose();
                 }

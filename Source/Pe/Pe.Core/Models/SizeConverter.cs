@@ -8,7 +8,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        public string[] Terms { get; } = new[] { "byte", "KB", "MB", "GB" };
+        /// <summary>
+        /// サイズ単位。
+        /// </summary>
+        public string[] Terms { get; } = new[] { "byte", "KB", "MB", "GB", "TB" };
+
+        /// <summary>
+        /// 1KB のサイズ。
+        /// </summary>
+        public int KbSize { get; } = 1024;
 
         #endregion
 
@@ -25,8 +33,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             double size = byteSize;
             int order = 0;
-            while(size >= 1024 && ++order < terms.Count) {
-                size = size / 1024;
+            while(size >= KbSize && ++order < terms.Count) {
+                size = size / KbSize;
             }
 
             return string.Format(sizeFormat, size, terms[order]);

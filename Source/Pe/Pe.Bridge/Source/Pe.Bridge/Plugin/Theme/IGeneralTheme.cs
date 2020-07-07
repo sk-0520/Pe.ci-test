@@ -21,9 +21,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         /// パスのイメージを取得。
         /// </summary>
         /// <param name="kind"></param>
-        /// <param name="iconBox">イメージの基準サイズ。本体側で調整されるためどれくらいの大きさで使用されるかの指針にのみ使用する。</param>
+        /// <param name="iconScale">イメージの基準サイズ。本体側で調整されるためどれくらいの大きさで使用されるかの指針にのみ使用する。</param>
         /// <returns></returns>
-        Geometry GetPathImage(GeneralPathImageKind kind, IconBox iconBox);
+        Geometry GetPathImage(GeneralPathImageKind kind, in IconScale iconScale);
 
         #endregion
     }

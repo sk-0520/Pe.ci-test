@@ -89,6 +89,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     }
                 }
 
+                if(value != null && value.IsLazyLoad) {
+                    value.LazyLoad();
+                }
                 SetProperty(ref this._selectedItem, value);
 
                 ScrollToTopCustomizeRequest.Send();

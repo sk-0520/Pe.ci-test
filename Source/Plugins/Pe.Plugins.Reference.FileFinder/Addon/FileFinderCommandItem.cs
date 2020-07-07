@@ -27,15 +27,16 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 
         #endregion
 
-        public FileFinderCommandItem(string path, string fullMatchValue, IAddonExecutor addonExecutor)
+        public FileFinderCommandItem(string path, string fullMatchValue, IImageLoader imageLoader, IAddonExecutor addonExecutor)
         {
             Path = path;
             FullMatchValue = fullMatchValue;
+            ImageLoader = imageLoader;
             AddonExecutor = addonExecutor;
         }
 
-        public FileFinderCommandItem(string path, IAddonExecutor addonExecutor)
-            : this(path, path, addonExecutor)
+        public FileFinderCommandItem(string path, IImageLoader imageLoader, IAddonExecutor addonExecutor)
+            : this(path, path, imageLoader, addonExecutor)
         { }
 
         #region property
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         //System.Windows.Controls.Image? ImageControl { get; set; }
         ImageSource? ImageSource { get; set; }
 
+        IImageLoader ImageLoader { get; }
         IAddonExecutor AddonExecutor { get; }
 
         #endregion
@@ -76,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             }
         }
 
-        public object GetIcon(IconBox iconBox)
+        public object GetIcon(in IconScale iconScale)
         {
             //var c = char.ToUpper(Path[0]);
             //if(Path.Length == "C:\\".Length && ('A' <= c && c <= 'Z') && Path[1] == System.IO.Path.VolumeSeparatorChar && System.IO.Path.EndsInDirectorySeparator(Path)) {
@@ -85,21 +87,25 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             //using var icon = Icon.ExtractAssociatedIcon(Path);
             //Image = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, null);
             if(ImageSource == null) {
-                var hInstance = Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]);
-                var hIcon = ExtractAssociatedIcon(hInstance, new StringBuilder(Path), out _);
-                try {
-                    using var icon = Icon.FromHandle(hIcon);
-                    ImageSource = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, null);
-                    ImageSource.Freeze();
-                } finally {
-                    DestroyIcon(hIcon);
-                }
+                //var hInstance = Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]);
+                //var hIcon = ExtractAssociatedIcon(hInstance, new StringBuilder(Path), out _);
+                //try {
+                //    using var icon = Icon.FromHandle(hIcon);
+                //    ImageSource = Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, null);
+                //    ImageSource.Freeze();
+                //} finally {
+                //    DestroyIcon(hIcon);
+                //}
+                ImageSource = ImageLoader.LoadIconFromFile(Path, 0, iconScale);
+                ImageSource?.Freeze();
             }
-            var iconSize = new IconSize(iconBox);
+            var iconSize = iconScale.ToIconSize();
             return new System.Windows.Controls.Image() {
                 Source = ImageSource,
-                Width = iconSize.Width,
-                Height = iconSize.Height,
+                //Width = iconSize.Width,
+                //Height = iconSize.Height,
+                Width = (int)iconScale.Box,
+                Height = (int)iconScale.Box,
             };
 
         }

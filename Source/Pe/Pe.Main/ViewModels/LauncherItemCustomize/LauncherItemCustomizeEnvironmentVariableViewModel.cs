@@ -15,7 +15,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeEnvironmentVariableViewModel : LauncherItemCustomizeDetailViewModelBase, IFlushable
+    public class LauncherItemCustomizeEnvironmentVariableViewModel: LauncherItemCustomizeDetailViewModelBase, IFlushable
     {
         #region variable
 
@@ -25,23 +25,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #endregion
 
         public LauncherItemCustomizeEnvironmentVariableViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, dispatcherWrapper ,loggerFactory)
+            : base(model, dispatcherWrapper, loggerFactory)
         {
             EnvironmentVariableLazyChanger = new LazyAction("環境変数編集:" + Model.LauncherItemId.ToString(), TimeSpan.FromSeconds(5), LoggerFactory);
-
-            var envItems = Model.EnvironmentVariableItems!;
-            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
-            MergeTextDocument = envConf.CreateMergeDocument(envItems);
-            RemoveTextDocument = envConf.CreateRemoveDocument(envItems);
-
-            MergeTextDocument.TextChanged += TextDocument_TextChanged;
-            RemoveTextDocument.TextChanged += TextDocument_TextChanged;
         }
 
         #region property
         LazyAction EnvironmentVariableLazyChanger { get; }
-        public TextDocument MergeTextDocument { get; }
-        public TextDocument RemoveTextDocument { get; }
+        public TextDocument? MergeTextDocument { get; private set; }
+        public TextDocument? RemoveTextDocument { get; private set; }
 
         #endregion
 
@@ -54,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
+        [Obsolete]
         public IReadOnlyCollection<LauncherEnvironmentVariableData> GetEnvironmentVariableItems()
         {
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
@@ -68,8 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         {
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
 
-            var envMergeItems = DispatcherWrapper.Get(() => envConf.GetMergeItems(MergeTextDocument));
-            var envRemoveItems = DispatcherWrapper.Get(() => envConf.GetRemoveItems(RemoveTextDocument));
+            var envMergeItems = DispatcherWrapper.Get(() => envConf.GetMergeItems(MergeTextDocument!));
+            var envRemoveItems = DispatcherWrapper.Get(() => envConf.GetRemoveItems(RemoveTextDocument!));
             var envVarItems = envConf.Join(envMergeItems, envRemoveItems);
 
             Model.EnvironmentVariableItems!.SetRange(envVarItems);
@@ -86,8 +79,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     EnvironmentVariableLazyChanger.Dispose();
                 }
 
-                MergeTextDocument.TextChanged -= TextDocument_TextChanged;
-                RemoveTextDocument.TextChanged -= TextDocument_TextChanged;
+                if(MergeTextDocument != null) {
+                    MergeTextDocument.TextChanged -= TextDocument_TextChanged;
+                }
+                if(RemoveTextDocument != null) {
+                    RemoveTextDocument.TextChanged -= TextDocument_TextChanged;
+                }
             }
 
             base.Dispose(disposing);
@@ -95,11 +92,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
-            //var envItems = Model.LoadEnvironmentVariableItems();
-            //var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
+            if(Model.IsLazyLoad) {
+                return;
+            }
 
-            //MergeTextDocument = envConf.CreateMergeDocument(envItems);
-            //RemoveTextDocument = envConf.CreateRemoveDocument(envItems);
+            var envItems = Model.EnvironmentVariableItems!;
+            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
+            MergeTextDocument = envConf.CreateMergeDocument(envItems);
+            RemoveTextDocument = envConf.CreateRemoveDocument(envItems);
+
+            MergeTextDocument.TextChanged += TextDocument_TextChanged;
+            RemoveTextDocument.TextChanged += TextDocument_TextChanged;
         }
 
         protected override void ValidateDomain()
@@ -114,6 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #endregion
 
         #region IFlushable
+
         public void Flush()
         {
             EnvironmentVariableLazyChanger.SafeFlush();
@@ -123,6 +127,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         private void TextDocument_TextChanged(object? sender, EventArgs e)
         {
+            if(Model.IsLazyLoad) {
+                return;
+            }
+
             EnvironmentVariableLazyChanger.DelayAction(ChangedEnvironmentVariable);
         }
 

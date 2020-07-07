@@ -12,5 +12,7 @@ where
 	LauncherItemId = @LauncherItemId
 	and
 	IconBox = @IconBox
+	and
+	IconScale = @IconScale
 
 

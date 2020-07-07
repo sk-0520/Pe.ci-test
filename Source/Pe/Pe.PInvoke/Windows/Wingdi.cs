@@ -51,9 +51,9 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
         DT_INTERNAL = 0x00001000,
         /// <summary>
         /// 文字列の最後の部分が長方形領域に納まり切らない場合、はみ出す部分が切り取られ、末尾に省略符号（...）が追加されます。文字列の最後ではない場所にある単語が長方形領域からはみ出す場合は、省略記号なしで切り取られます。
-        /// 
+        ///
         /// DT_MODIFYSTRING フラグがセットされていない限り、文字列が変更されることはありません。
-        /// 
+        ///
         /// DT_PATH_ELLIPSIS および DT_WORD_ELLIPSIS の説明も参照してください。
         /// </summary>
         DT_END_ELLIPSIS = 0x00008000,
@@ -463,5 +463,8 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         [DllImport("gdi32.dll")]
         public static extern int GetDeviceCaps(IntPtr hdc, DeviceCap nIndex);
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr CreateDC(string lpszDriver, string lpszDevice, string lpszOutput, IntPtr lpInitData);
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -20,11 +21,12 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 {
-    public class ImportProgramsElement : ContextElementBase
+    public class ImportProgramsElement: ContextElementBase
     {
-        public ImportProgramsElement(IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ImportProgramsElement(LauncherItemConfiguration launcherItemConfiguration, IMainDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IWindowManager windowManager, IIdFactory idFactory, IDiContainer diContainer, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
+            LauncherItemConfiguration = launcherItemConfiguration;
             DatabaseBarrier = databaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             WindowManager = windowManager;
@@ -33,6 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
         }
 
         #region property
+
+        LauncherItemConfiguration LauncherItemConfiguration { get; }
 
         IMainDatabaseBarrier DatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
@@ -47,27 +51,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
 
         #region function
 
-        IEnumerable<FileInfo> GetFiles(DirectoryInfo directory)
+        IReadOnlyCollection<FileInfo> GetFiles(DirectoryInfo directory)
         {
             ThrowIfDisposed();
 
+            List<FileInfo> result = new List<FileInfo>();
+            var files = directory.EnumerateFiles();
+            result.AddRange(files);
+
             var subDirs = directory.EnumerateDirectories();
-            IEnumerable<FileInfo> subFiles = new FileInfo[0];
             foreach(var subDir in subDirs) {
                 try {
-                    subFiles = GetFiles(subDir);
+                    var subFiles = GetFiles(subDir);
+                    result.AddRange(subFiles);
                 } catch(UnauthorizedAccessException ex) {
                     Logger.LogWarning(ex, ex.Message);
                 }
             }
 
-            var files = directory.EnumerateFiles();
-            return files.Concat(subFiles);
+            return result;
+        }
+
+        IReadOnlyList<Regex> GetAutoImportUntargetRegexItems()
+        {
+            return LauncherItemConfiguration.AutoImportUntargetPatterns
+                .Select(i => new Regex(i, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace))
+                .ToList()
+            ;
         }
 
         void LoadPrograms()
         {
             ThrowIfDisposed();
+
+            var autoImportUntargetRegexItems = GetAutoImportUntargetRegexItems();
 
             var dirPaths = new[] {
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu),
@@ -82,9 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 .GroupBy(f => f.Name)
                 .OrderBy(g => g.Key)
                 .Select(g => g.First())
-                .Select(f => new ProgramElement(f, DispatcherWrapper, LoggerFactory) {
-                    IsImport = true,
-                })
+                .Select(f => new ProgramElement(f, autoImportUntargetRegexItems, DispatcherWrapper, LoggerFactory))
             ;
 
             foreach(var element in elements) {

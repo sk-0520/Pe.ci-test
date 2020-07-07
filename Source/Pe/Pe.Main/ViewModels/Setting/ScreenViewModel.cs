@@ -56,8 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             get
             {
-                var screenOperator = new ScreenOperator(LoggerFactory);
-                return screenOperator.GetName(Screen);
+                return ScreenUtility.GetName(Screen, LoggerFactory);
             }
         }
         public string ScreenDeviceName => Screen.DeviceName;

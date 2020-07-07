@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
                                 value.Dispose();
                             }
 
-                            if(IsDisposeObjectPool) {
+                            if(ManagingResource) {
                                 if(ObjectPool[name].TryGetValue(type, out var poolObject)) {
                                     if(poolObject != this && poolObject is IDisposable disposer) {
                                         disposer.Dispose();
