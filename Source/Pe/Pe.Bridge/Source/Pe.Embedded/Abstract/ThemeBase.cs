@@ -7,7 +7,6 @@ using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
