@@ -22,22 +22,26 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeRedoViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
-            Redo = Model.Redo ?? throw new InvalidOperationException(nameof(Model.Redo));
+            if(!Model.IsLazyLoad) {
+                if(Model.Redo == null) {
+                    throw new ArgumentNullException(nameof(model));
+                }
+            }
         }
 
         #region property
 
-        LauncherRedoData Redo { get; }
+        LauncherRedoData Redo => Model.Redo!;
 
         public RedoMode RedoMode
         {
             get => Redo.RedoMode;
-            set => SetPropertyValue(Redo, value);
+            set => SetPropertyValue(Redo!, value);
         }
         public int WaitTimeSeconds
         {
             get => (int)Redo.WaitTime.TotalSeconds;
-            set => SetPropertyValue(Redo, TimeSpan.FromSeconds(value), nameof(Redo.WaitTime));
+            set => SetPropertyValue(Redo!, TimeSpan.FromSeconds(value), nameof(Redo.WaitTime));
         }
         public int RetryCount
         {
@@ -61,8 +65,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
+            if(Model.IsLazyLoad) {
+                return;
+            }
+
             var numericRange = new NumericRange();
-            if(Redo.SuccessExitCodes.Any()) {
+            if(Redo!.SuccessExitCodes.Any()) {
                 SuccessExitCodes = numericRange.ToString(Redo.SuccessExitCodes);
             } else {
                 SuccessExitCodes = "0";
@@ -75,11 +83,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public void Flush()
         {
+            if(Model.IsLazyLoad) {
+                return;
+            }
+
             var numericRange = new NumericRange();
             if(numericRange.TryParse(SuccessExitCodes, out var values)) {
-                Redo.SuccessExitCodes.SetRange(values);
+                Redo!.SuccessExitCodes.SetRange(values);
             } else {
-                Redo.SuccessExitCodes.SetRange(new[] { 0 });
+                Redo!.SuccessExitCodes.SetRange(new[] { 0 });
             }
         }
 

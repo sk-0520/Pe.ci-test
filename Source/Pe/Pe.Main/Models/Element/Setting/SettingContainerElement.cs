@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
@@ -129,31 +130,50 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             IReadOnlyList<Guid> launcherItemIds;
             IReadOnlyList<Guid> groupIds;
+
+            var appLauncherItemsMap = new Dictionary<Guid, LauncherSettingCommonData>();
+
             using(var commander = ServiceLocator.Get<IMainDatabaseBarrier>().WaitRead()) {
                 var launcherItemsEntityDao = ServiceLocator.Build<LauncherItemsEntityDao>(commander, commander.Implementation);
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
 
                 var launcherGroupsEntityDao = ServiceLocator.Build<LauncherGroupsEntityDao>(commander, commander.Implementation);
                 groupIds = launcherGroupsEntityDao.SelectAllLauncherGroupIds().ToList();
-            }
 
+                var launcherTagsEntityDao = ServiceLocator.Build<LauncherTagsEntityDao>(commander, commander.Implementation);
+                var allTagMap = launcherTagsEntityDao.SelectAllTags();
+
+                foreach(var data in launcherItemsEntityDao.SelectApplicationLauncherItems()) {
+                    var setting = new LauncherSettingCommonData() {
+                        LauncherItemId = data.LauncherItemId,
+                        Kind = data.Kind,
+                        Code = data.Code,
+                        Name = data.Name,
+                        Icon = data.Icon,
+                        IsEnabledCommandLauncher = data.IsEnabledCommandLauncher,
+                        Comment = data.Comment,
+                    };
+                    if(allTagMap.TryGetValue(setting.LauncherItemId, out var tags)) {
+                        setting.Tags.SetRange(tags);
+                    }
+                    appLauncherItemsMap[data.LauncherItemId] = setting;
+                }
+
+                //var launcherItemDomainDao = ServiceLocator.Build<LauncherItemDomainDao>(commander, commander.Implementation);
+            }
 
             var launcherItemElements = new List<LauncherItemSettingEditorElement>(launcherItemIds.Count);
             foreach(var launcherItemId in launcherItemIds) {
                 var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, ServiceLocator.Get<IMainDatabaseBarrier>(), ServiceLocator.Get<IFileDatabaseBarrier>(), ServiceLocator.Get<IDatabaseStatementLoader>(), ServiceLocator.Get<IDispatcherWrapper>(), LoggerFactory);
                 var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
                 launcherIconElement.Initialize();
-                var element = ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement);
+                var element = appLauncherItemsMap.TryGetValue(launcherItemId, out var setting)
+                    ? ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement, setting)
+                    : ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement)
+                ;
                 launcherItemElements.Add(element);
             }
 
-            var map = new Dictionary<Guid, LauncherItemData>();
-            using(var commander = ServiceLocator.Build<IMainDatabaseBarrier>().WaitRead()) {
-                var launcherItemsDao = ServiceLocator.Build<LauncherItemsEntityDao>(commander, commander.Implementation);
-                foreach(var data in launcherItemsDao.SelectApplicationLauncherItems()) {
-                    map[data.LauncherItemId] = data;
-                }
-            }
 
             /* パラで回しても1秒くらいしか変わらんかった
             if(launcherItemElements.Count < 100) {

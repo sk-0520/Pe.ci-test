@@ -20,7 +20,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
 
-    public class LauncherItemCustomizeFileViewModel : LauncherItemCustomizeDetailViewModelBase
+    public class LauncherItemCustomizeFileViewModel: LauncherItemCustomizeDetailViewModelBase
     {
         #region variable
 
@@ -43,16 +43,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             if(Model.Kind != Models.Data.LauncherItemKind.File) {
                 throw new ArgumentException(nameof(model) + "." + nameof(Model.Kind));
             }
-            if(Model.File == null) {
-                throw new ArgumentNullException(nameof(model) + "." + nameof(Model.File));
+            if(!Model.IsLazyLoad) {
+                if(Model.File == null) {
+                    throw new ArgumentNullException(nameof(model) + "." + nameof(Model.File));
+                }
             }
-            File = Model.File;
+
             FileSelectRequest = fileSelectRequest;
         }
 
         #region property
 
-        LauncherFileData File {get;}
+        LauncherFileData File => Model.File!;
 
         public bool IsDropDownPathItems
         {
@@ -239,6 +241,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             //IsEnabledStandardInputOutput = data.IsEnabledStandardInputOutput;
             //StandardInputOutputEncoding = data.StandardInputOutputEncoding;
             //RunAdministrator = data.RunAdministrator;
+
+            if(Model.IsLazyLoad) {
+                return;
+            }
 
             var pathItems = EnvironmentPathExecuteFileCache.GetItems(LoggerFactory);
             PathItems.SetRange(pathItems.Select(i => new EnvironmentPathExecuteItemViewModel(i, LoggerFactory)));

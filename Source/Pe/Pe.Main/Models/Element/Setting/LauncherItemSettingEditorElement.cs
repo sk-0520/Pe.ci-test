@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
@@ -13,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public interface ILauncherItemSettingEditor : ILauncherItemId, INotifyPropertyChanged
+    public interface ILauncherItemSettingEditor: ILauncherItemId, INotifyPropertyChanged
     {
         #region property
         string Name { get; }
@@ -26,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #endregion
     }
 
-    public class LauncherItemSettingEditorElement : LauncherItemCustomizeEditorElement, ILauncherItemSettingEditor
+    public class LauncherItemSettingEditorElement: LauncherItemCustomizeEditorElement, ILauncherItemSettingEditor
     {
         public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherIconElement iconElement, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(launcherItemId, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -38,10 +39,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Icon = iconElement;
         }
 
+        public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherIconElement iconElement, LauncherSettingCommonData setting, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : this(launcherItemId, iconElement, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        {
+            IsLazyLoad = true;
+
+            Name = setting.Name;
+            Code = setting.Code;
+            Kind = setting.Kind;
+            IconData = setting.Icon;
+            IsEnabledCommandLauncher = setting.IsEnabledCommandLauncher;
+            Comment = setting.Comment;
+            TagItems.SetRange(setting.Tags);
+        }
+
         #region property
+
         #endregion
 
         #region function
+
+        internal void LazyLoad()
+        {
+            LoadFile();
+
+            IsLazyLoad = false;
+        }
 
         #endregion
 

@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
@@ -29,6 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public bool IsLazyLoad => Editor.IsLazyLoad;
+
         [IgnoreValidation]
         LauncherItemSettingEditorElement Editor { get; }
         [IgnoreValidation]
@@ -42,7 +45,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             return new LauncherItemSettingEditorViewModel(Editor, Icon, DispatcherWrapper, LoggerFactory);
         }
 
+        internal void LazyLoad()
+        {
+            if(!IsLazyLoad) {
+                throw new InvalidOperationException(nameof(IsLazyLoad));
+            }
+
+            Editor.LazyLoad();
+        }
+
         #endregion
+
+        #region LauncherItemCustomizeEditorViewModel
+
+        protected override bool SkipValidation => IsLazyLoad;
 
         protected override void Dispose(bool disposing)
         {
@@ -55,5 +71,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.Dispose(disposing);
         }
 
+        #endregion
     }
 }

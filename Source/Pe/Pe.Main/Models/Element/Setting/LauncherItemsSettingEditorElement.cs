@@ -223,7 +223,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected override void SaveImpl(IDatabaseCommandsPack commandPack)
         {
-            foreach(var item in AllLauncherItems) {
+            foreach(var item in AllLauncherItems.Where(i => !i.IsLazyLoad)) {
                 var needToIconClear = item.SaveItem(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
                 if(needToIconClear) {
                     item.ClearIcon(commandPack.File.Commander, commandPack.File.Implementation);
