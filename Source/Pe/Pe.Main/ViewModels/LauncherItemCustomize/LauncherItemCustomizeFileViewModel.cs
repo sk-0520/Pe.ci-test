@@ -245,7 +245,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
             var encItems = Encoding.GetEncodings().Select(i => new EncodingViewModel(i, LoggerFactory));
             EncodingItems.SetRange(encItems);
-            SelectedStandardInputOutputEncoding = EncodingItems.FirstOrDefault(i => i.CodePage == StandardInputOutputEncoding.CodePage) ?? new EncodingViewModel(StandardInputOutputEncoding, LoggerFactory);
+            this._selectedStandardInputOutputEncoding = EncodingItems.FirstOrDefault(i => i.CodePage == StandardInputOutputEncoding.CodePage) ?? new EncodingViewModel(StandardInputOutputEncoding, LoggerFactory);
         }
 
         #endregion
