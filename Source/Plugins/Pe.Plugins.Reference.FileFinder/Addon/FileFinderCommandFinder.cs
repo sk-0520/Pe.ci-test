@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
         {
             Logger = parameter.LoggerFactory.CreateLogger(GetType());
             AddonExecutor = parameter.AddonExecutor;
+            ImageLoader = parameter.ImageLoader;
             DispatcherWrapper = parameter.DispatcherWrapper;
         }
 
@@ -55,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 
         ILogger Logger { get; }
         IAddonExecutor AddonExecutor { get; }
+        IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         List<PathItem> PathItems { get; } = new List<PathItem>(512);
 
@@ -132,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
             }
 
             if(string.IsNullOrWhiteSpace(filePattern)) {
-                var ownerItem = new FileFinderCommandItem(directoryPath, AddonExecutor);
+                var ownerItem = new FileFinderCommandItem(directoryPath, ImageLoader, AddonExecutor);
                 ownerItem.HeaderValues.Add(new HitValue(directoryPath, false));
                 ownerItem.DescriptionValues.Add(new HitValue("ディレクトリ", false));
                 yield return ownerItem;
@@ -163,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
                     : file.FullName
                 ;
                 var fullMatchValue = Path.Combine(directoryPath, file.Name);
-                var item = new FileFinderCommandItem(fullPath, AddonExecutor);
+                var item = new FileFinderCommandItem(fullPath, ImageLoader, AddonExecutor);
 
                 if(string.IsNullOrWhiteSpace(filePattern)) {
                     item.HeaderValues.Add(new HitValue(file.Name, false));
@@ -234,7 +236,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
                 var drives = DriveInfo.GetDrives();
                 foreach(var drive in drives) {
                     var driveName = GetDriveName(drive);
-                    var item = new FileFinderCommandItem(drive.RootDirectory.FullName, AddonExecutor);
+                    var item = new FileFinderCommandItem(drive.RootDirectory.FullName, ImageLoader, AddonExecutor);
                     item.HeaderValues.Add(new HitValue(driveName, false));
                     item.Score = hitValuesCreator.GetScore(ScoreKind.Initial, 1) - 10;
 
@@ -287,7 +289,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
                             break;
                         }
 
-                        var item = new FileFinderCommandItem(pathItem.Path, pathItem.CommandName, AddonExecutor);
+                        var item = new FileFinderCommandItem(pathItem.Path, pathItem.CommandName, ImageLoader, AddonExecutor);
                         item.HeaderValues.AddRange(values);
                         item.DescriptionValues.Add(new HitValue("%PATH%", false));
                         item.Score = hitValuesCreator.CalcScore(pathItem.CommandName, values) - 3;
