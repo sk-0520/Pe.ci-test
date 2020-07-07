@@ -390,6 +390,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
                 .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.Configuration.General.DispatcherWait))
                 .Register<CultureService, CultureService>(cultureService)
+                .Register<IImageLoader, ImageLoader>(DiLifecycle.Transient)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
             ;
