@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
@@ -103,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <returns></returns>
         public readonly IconBox ToIconBox()
         {
-            var size = IsSquare ? Width: Math.Max(Width, Height);
+            var size = IsSquare ? Width : Math.Max(Width, Height);
             var kinds = new[] { IconBox.Small, IconBox.Normal, IconBox.Big, IconBox.Large };
             foreach(var kind in kinds) {
                 if(size <= (int)kind) {
@@ -119,6 +121,58 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         #region object
 
         public readonly override string? ToString() => $"{Width} x {Height}";
+
+        #endregion
+    }
+
+    /// <summary>
+    /// アイコンの大きさとDPIを持ち歩く。
+    /// </summary>
+    public readonly struct IconScale
+    {
+        public IconScale(IconBox box, Point scale)
+        {
+            if(double.IsNaN(scale.X) || double.IsInfinity(scale.X) || scale.X < 1) {
+                throw new ArgumentException(nameof(scale) + "." + nameof(scale.X));
+            }
+            if(double.IsNaN(scale.Y) || double.IsInfinity(scale.Y) || scale.Y < 1) {
+                throw new ArgumentException(nameof(scale) + "." + nameof(scale.Y));
+            }
+
+            Box = box;
+            Scale = scale;
+        }
+
+        #region property
+
+        /// <summary>
+        /// アイコン基本サイズ。
+        /// </summary>
+        public IconBox Box { get; }
+
+        /// <summary>
+        /// DPIスケール。
+        /// </summary>
+        public Point Scale { get; }
+
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// 現在の設定値から<see cref="IconSize"/>を算出。
+        /// </summary>
+        /// <returns></returns>
+        public readonly IconSize ToIconSize() => new IconSize(Box, Scale);
+
+        #endregion
+
+        #region funcrion
+
+        public override string ToString()
+        {
+            return $"{nameof(IconScale)}: {Box}, {Scale.X}x{Scale.Y} -> {((int)Box) * Scale.X}x{((int)Box) * Scale.Y}";
+        }
 
         #endregion
     }

@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
 
         #region IGeneralTheme
 
-        public Geometry GetPathImage(GeneralPathImageKind kind, IconBox iconBox, Point iconScale)
+        public Geometry GetPathImage(GeneralPathImageKind kind, in IconScale iconScale)
         {
             var baseKey = "Path-General-" + kind.ToString();
             return GetResourceValue<Geometry>(nameof(ClassicGeneralTheme), baseKey);

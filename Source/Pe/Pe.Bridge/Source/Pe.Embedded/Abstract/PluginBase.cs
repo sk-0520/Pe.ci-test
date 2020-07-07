@@ -50,14 +50,14 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region function
 
-        protected virtual DependencyObject GetIconImpl(IconBox iconBox) => null!;
+        protected virtual DependencyObject GetIconImpl(in IconScale iconScale) => null!;
 
         /// <summary>
         /// プラグインアセンブリの /Plugin.icon を取得する。
         /// </summary>
-        /// <param name="iconBox"></param>
+        /// <param name="iconScale"></param>
         /// <returns></returns>
-        protected DependencyObject GetPluginIcon(IconBox iconBox, Point iconScale)
+        protected DependencyObject GetPluginIcon(in IconScale iconScale)
         {
             var asm = Assembly.GetExecutingAssembly();
             var asmName = asm.GetName().Name;
@@ -197,11 +197,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }
 
-        /// <inheritdoc cref="IPlugin.GetIcon(IconBox)"/>
-        public DependencyObject GetIcon(IconBox iconBox, Point iconScale)
+        /// <inheritdoc cref="IPlugin.GetIcon(IconScale)"/>
+        public DependencyObject GetIcon(in IconScale iconScale)
         {
             try {
-                var result = GetIconImpl(iconBox);
+                var result = GetIconImpl(iconScale);
                 if(result != null) {
                     return result;
                 }
@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 Logger.LogWarning(ex, ex.Message);
             }
 
-            return GetPluginIcon(iconBox, iconScale);
+            return GetPluginIcon(iconScale);
         }
 
         /// <inheritdoc cref="IPlugin"/>

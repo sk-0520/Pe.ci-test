@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return 8;
         }
 
-        public Thickness GetSelectedIconMargin(IconBox iconBox, Point iconScale) => new Thickness(1);
+        public Thickness GetSelectedIconMargin(in IconScale iconScale) => new Thickness(1);
 
         public Thickness GetInputBorderThickness()
         {
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return FreezableUtility.GetSafeFreeze(new SolidColorBrush(color));
         }
 
-        public ControlTemplate GetExecuteButtonControlTemplate(IconBox icon, Point iconScale)
+        public ControlTemplate GetExecuteButtonControlTemplate(in IconScale iconScale)
         {
             return GetResourceValue<ControlTemplate>(nameof(DefaultCommandTheme), nameof(GetExecuteButtonControlTemplate));
         }

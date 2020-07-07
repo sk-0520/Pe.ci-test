@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Windows;
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
                 return DispatcherWrapper.Get(() => {
                     try {
-                        return Model.Plugin.GetIcon(Bridge.Models.Data.IconBox.Small, IconSize.DefaultScale);
+                        return Model.Plugin.GetIcon(new IconScale(IconBox.Small, IconSize.DefaultScale));
                     } catch(Exception ex) {
                         Logger.LogError(ex, "[{0}] {1}, {2}", Model.Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Model.Plugin.PluginInformations.PluginIdentifiers.PluginId);
                         return null!;

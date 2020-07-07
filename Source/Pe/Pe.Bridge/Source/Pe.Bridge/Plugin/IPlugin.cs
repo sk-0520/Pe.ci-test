@@ -82,9 +82,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// プラグインを示すアイコンを取得。
         /// <para>この処理は<see cref="IsInitialized"/>の状態にかかわらず実行可能であること。</para>
         /// </summary>
-        /// <param name="iconBox"></param>
+        /// <param name="iconScale"></param>
         /// <returns></returns>
-        DependencyObject GetIcon(IconBox iconBox, Point iconScale);
+        DependencyObject GetIcon(in IconScale iconScale);
 
         #endregion
     }

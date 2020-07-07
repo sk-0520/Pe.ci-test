@@ -136,13 +136,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         [ThemeProperty]
         public object ToolbarMainIcon
         {
-            get => GeneralTheme.GetPathImage(GeneralPathImageKind.Menu, IconBox, IconSize.DefaultScale);
+            get => GeneralTheme.GetPathImage(GeneralPathImageKind.Menu, new IconScale(IconBox, IconSize.DefaultScale));
         }
 
         [ThemeProperty]
         public Brush ToolbarBackground
         {
-            get => LauncherToolbarTheme.GetToolbarBackground(ToolbarPosition, ViewState.Active, IconBox, IconSize.DefaultScale, IsIconOnly, TextWidth);
+            get => LauncherToolbarTheme.GetToolbarBackground(ToolbarPosition, ViewState.Active, new IconScale(IconBox, IconSize.DefaultScale), IsIconOnly, TextWidth);
         }
 
         [ThemeProperty]

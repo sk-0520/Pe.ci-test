@@ -238,7 +238,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public Brush GripInactiveBrush => CommandTheme.GetGripBrush(false);
 
         [ThemeProperty]
-        public Thickness SelectedIconMargin => CommandTheme.GetSelectedIconMargin(IconBox, IconSize.DefaultScale);
+        public Thickness SelectedIconMargin => CommandTheme.GetSelectedIconMargin(new IconScale(IconBox, IconSize.DefaultScale));
 
         [ThemeProperty]
         public Thickness InputBorderThickness => CommandTheme.GetInputBorderThickness();
@@ -271,7 +271,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         public Brush InputNotFoundForeground => CommandTheme.GetInputForeground(InputState.NotFound);
 
         [ThemeProperty]
-        public ControlTemplate ExecuteButtonControlTemplate => CommandTheme.GetExecuteButtonControlTemplate(IconBox, IconSize.DefaultScale);
+        public ControlTemplate ExecuteButtonControlTemplate => CommandTheme.GetExecuteButtonControlTemplate(new IconScale(IconBox, IconSize.DefaultScale));
 
         #endregion
 
@@ -400,7 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             var prevItems = CommandItems;
             CommandItems = commandItems
-                .Select(i => new CommandItemViewModel(i, IconBox, DpiScaleOutputor.GetDpiScale(), DispatcherWrapper, LoggerFactory))
+                .Select(i => new CommandItemViewModel(i, new IconScale(IconBox, DpiScaleOutputor.GetDpiScale()), DispatcherWrapper, LoggerFactory))
                 .ToList()
             ;
             foreach(var item in prevItems) {

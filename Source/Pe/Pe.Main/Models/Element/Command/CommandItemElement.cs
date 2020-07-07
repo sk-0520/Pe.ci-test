@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         #region function
 
-        protected abstract object GetIconImpl(IconBox iconBox, Point iconScale);
+        protected abstract object GetIconImpl(in IconScale iconScale);
         protected abstract void ExecuteImpl(ICommandExecuteParameter parameter);
         protected abstract bool EqualsImpl(CommandItemElementBase commandItemElement);
 
@@ -86,11 +86,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         }
         public int Score => EditableScore;
 
-        public object GetIcon(IconBox iconBox, Point iconScale)
+        public object GetIcon(in IconScale iconScale)
         {
             DispatcherWrapper.VerifyAccess();
 
-            return GetIconImpl(iconBox, iconScale);
+            return GetIconImpl(iconScale);
         }
         public void Execute(ICommandExecuteParameter parameter) => ExecuteImpl(parameter);
 
@@ -134,9 +134,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         public override CommandItemKind Kind => EditableKind;
 
-        protected override object GetIconImpl(IconBox iconBox, Point iconScale)
+        protected override object GetIconImpl(in IconScale iconScale)
         {
-            return LauncherItemElement.Icon.IconImageLoaderPack.IconItems[iconBox];
+            return LauncherItemElement.Icon.IconImageLoaderPack.IconItems[iconScale.Box];
         }
 
         protected override void ExecuteImpl(ICommandExecuteParameter parameter)
@@ -189,9 +189,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             Parameter.Executor(parameter);
         }
 
-        protected override object GetIconImpl(IconBox iconBox, Point iconScale)
+        protected override object GetIconImpl(in IconScale iconScale)
         {
-            return Parameter.IconGetter(iconBox, iconScale);
+            return Parameter.IconGetter(iconScale);
             //return Application.Current.Resources["pack://application:,,,/Pe.Main;component/Resources/Icon/App.ico"];
         }
 

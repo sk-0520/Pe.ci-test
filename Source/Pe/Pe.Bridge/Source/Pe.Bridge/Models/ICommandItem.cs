@@ -116,9 +116,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// アイコン取得。
         /// <para>UIスレッド上で実行を保証。</para>
         /// </summary>
-        /// <param name="iconBox"></param>
+        /// <param name="iconScale"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(IconBox iconBox, Point iconScale);
+        object GetIcon(in IconScale iconScale);
 
         /// <summary>
         /// コマンドアイテムの実行。
