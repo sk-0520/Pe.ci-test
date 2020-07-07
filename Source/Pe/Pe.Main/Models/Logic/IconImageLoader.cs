@@ -47,6 +47,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
+        /// <summary>
+        /// 画像を即時読み込み。
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns>returns>
+        private BitmapSource LoadFromStream(Stream stream)
+        {
+            var bitmapImage = new BitmapImage();
+            using(Initializer.Begin(bitmapImage)) {
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.CreateOptions = BitmapCreateOptions.None;
+                bitmapImage.StreamSource = stream;
+            }
+            return bitmapImage;
+        }
+
+
         protected BitmapSource? ToImage(IReadOnlyList<byte[]>? imageBynaryItems)
         {
             ThrowIfDisposed();
@@ -63,14 +80,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 }
                 stream.Position = 0;
 
-                static BitmapSource LoadImage(Stream stream, ILoggerFactory loggerFactory)
+                static BitmapSource LoadImage(Func<Stream, BitmapSource> loader, Stream stream)
                 {
-                    var imageLoader = new ImageLoader(loggerFactory);
-                    var image = imageLoader.Load(stream);
+                    var image = loader(stream);
                     FreezableUtility.SafeFreeze(image);
                     return image;
                 }
-                var iconImage = DispatcherWrapper?.Get(() => LoadImage(stream, LoggerFactory)) ?? LoadImage(stream, LoggerFactory);
+                var iconImage = DispatcherWrapper?.Get(() => LoadImage(LoadFromStream, stream)) ?? LoadImage(LoadFromStream, stream);
 
                 return iconImage;
             }
@@ -124,15 +140,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
                 if(isFile && PathUtility.HasExtensions(path, ImageFileExtensions)) {
                     Logger.LogDebug("画像ファイルとして読み込み {0}", path);
-                    var imageLoader = new ImageLoader(LoggerFactory);
                     using(var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-
-                        static BitmapSource LoadCore(ImageLoader imageLoader, Stream stream)
+                        static BitmapSource LoadCore(Func<Stream, BitmapSource> loader, Stream stream)
                         {
-                            var image = imageLoader.Load(stream);
+                            var image = loader(stream);
                             return FreezableUtility.GetSafeFreeze(image);
                         }
-                        iconImage = DispatcherWrapper?.Get(() => LoadCore(imageLoader, stream)) ?? LoadCore(imageLoader, stream);
+                        iconImage = DispatcherWrapper?.Get(() => LoadCore(LoadFromStream, stream)) ?? LoadCore(LoadFromStream, stream);
                     }
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", path);

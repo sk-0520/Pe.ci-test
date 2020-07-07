@@ -60,7 +60,16 @@
                 <Setter Property="Padding" Value="{StaticResource BasePadding}" />
               </Style>
             </StackPanel.Resources>
-            <Image Source="{Binding Source='pack://application:,,,/Resources/Icon/App.ico', Converter={StaticResource IconResourceToImageConveter}, ConverterParameter=128}" Width="128" Height="128" />
+            <Image Width="128" Height="128">
+              <Image.Source>
+                <MultiBinding Converter="{StaticResource IconResourceToImageConveter}" ConverterParameter="128">
+                  <MultiBinding.Bindings>
+                    <Binding Source="pack://application:,,,/Resources/Icon/App.ico" />
+                    <Binding RelativeSource="{RelativeSource AncestorType=Window}" />
+                  </MultiBinding.Bindings>
+                </MultiBinding>
+              </Image.Source>
+            </Image>
 
             <Button Command="{Binding OpenForumUriCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
