@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 {
