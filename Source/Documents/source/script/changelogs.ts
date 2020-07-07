@@ -164,8 +164,8 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "60ed1438fab4d615d1f5ac25978eaf74ad3f2c51",
-						"subject": "#658: ランチャーアイテム更新間隔にて分が毎分になっている "
-					},
+						"subject": "#658: ランチャーアイテム更新間隔にて分が毎分になっている"
+					}
 				]
 			}
 		]
