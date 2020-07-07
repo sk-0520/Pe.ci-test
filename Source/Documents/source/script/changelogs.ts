@@ -139,17 +139,17 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "27afe5cd24dfb4879f9559890ce8cbd2048b8a08",
 						"class": "nuget",
-						"subject": "CefSharp.Wpf 81.3.100 -> 83.4.20"
-					},
-					{
-						"revision": "",
-						"class": "nuget",
-						"subject": "SonarAnalyzer.CSharp 8.8.0.18411 -> 8.9.0.19135",
+						"subject": "CefSharp.Wpf 81.3.100 -> 83.4.20",
 						"comments": [
 							"WebView処理周りで透過効かなくなってるっぽいなー"
 						]
+					},
+					{
+						"revision": "034b6f79c849e418f75685a5757426cc7faaad02",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.8.0.18411 -> 8.9.0.19135"
 					}
 				]
 			}
