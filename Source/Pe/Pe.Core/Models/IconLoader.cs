@@ -118,25 +118,25 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
             if(hGroup == IntPtr.Zero) {
-                Debug.WriteLine($"return {nameof(NativeMethods.FindResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.FindResource)}");
                 return null;
             }
 
             var hLoadGroup = NativeMethods.LoadResource(hModule, hGroup);
             if(hLoadGroup == IntPtr.Zero) {
-                Debug.WriteLine($"return {nameof(NativeMethods.LoadResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.LoadResource)}");
                 return null;
             }
 
             var resData = NativeMethods.LockResource(hLoadGroup);
             if(resData == IntPtr.Zero) {
-                Debug.WriteLine($"return {nameof(NativeMethods.LockResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.LockResource)}");
                 return null;
             }
 
             var resSize = NativeMethods.SizeofResource(hModule, hGroup);
             if(resSize == 0) {
-                Debug.WriteLine($"return {nameof(NativeMethods.SizeofResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.SizeofResource)}");
                 return null;
             }
 
