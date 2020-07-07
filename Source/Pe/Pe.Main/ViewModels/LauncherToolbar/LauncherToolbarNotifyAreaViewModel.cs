@@ -19,7 +19,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
-    public class LauncherToolbarNotifyAreaViewModel : SingleModelViewModelBase<LauncherToolbarElement>
+    public class LauncherToolbarNotifyAreaViewModel: SingleModelViewModelBase<LauncherToolbarElement>
     {
         public LauncherToolbarNotifyAreaViewModel(LauncherToolbarElement model, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, IWindowManager windowManager, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -73,8 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             get
             {
-                var screenOperator = new ScreenOperator(LoggerFactory);
-                return screenOperator.GetName(Model.DockScreen);
+                return ScreenUtility.GetName(Model.DockScreen, LoggerFactory);
             }
         }
         public bool MenuHeaderHasAccessKey { get; } = false;

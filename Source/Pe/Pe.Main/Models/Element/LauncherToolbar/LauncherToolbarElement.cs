@@ -224,8 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 var toolbarsDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 toolbarsDao.InsertNewToolbar(toolbarId, newFontId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var screenOperator = new ScreenOperator(LoggerFactory);
-                screenOperator.RegisterDatabase(DockScreen, commander, DatabaseStatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+                ScreenUtility.RegisterDatabase(DockScreen, commander, DatabaseStatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount(), LoggerFactory);
 
                 commander.Commit();
             }
@@ -535,8 +534,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             if(isUserOperation) {
                 if(!IsVisible) {
-                    var screenOperator = new ScreenOperator(LoggerFactory);
-                    var screenName = screenOperator.GetName(DockScreen);
+                    var screenName = ScreenUtility.GetName(DockScreen, LoggerFactory);
 
                     var notifyMessage = new NotifyMessage(
                        NotifyLogKind.Undo,
