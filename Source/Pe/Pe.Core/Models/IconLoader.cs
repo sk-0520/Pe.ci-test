@@ -157,51 +157,50 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var binaryList = new List<byte[]>();
             EnumResNameProc proc = (hMod, type, name, lp) => {
                 var binaryGroupIconData = GetResourceBinaryData(hMod, name, ResType.GROUP_ICON);
-                if(binaryGroupIconData != null) {
-                    var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
-                    //Debug.WriteLine("iconCount = {0}", iconCount);
+                if(binaryGroupIconData == null) {
+                    return true;
+                }
 
-                    var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
+                var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
+
+                var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
+                for(var i = 0; i < iconCount; i++) {
+                    var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
+                    if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
+                        break;
+                    }
+                    var length = BitConverter.ToInt32(
+                        binaryGroupIconData,
+                        readOffset
+                    );
+                    totalSize += length;
+                }
+
+                // TODO:BinaryChunkedStreamがまともに動くなら切り替える
+                using(var stream = new BinaryWriter(new MemoryStream(totalSize))) {
+                    stream.Write(binaryGroupIconData, 0, sizeofICONDIR);
+
+                    var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
                     foreach(var i in Enumerable.Range(0, iconCount)) {
-                        var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
-                        if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
-                            break;
+                        stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
+                        var offsetWrite = sizeofICONDIR + sizeofGRPICONDIRENTRY * i;
+                        if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
+                            continue;
                         }
-                        var length = BitConverter.ToInt32(
-                            binaryGroupIconData,
-                            readOffset
-                        );
-                        //Debug.WriteLine("[{0}] = {1} byte", i, length);
-                        totalSize += length;
-                    }
-                    //Debug.WriteLine("totalSize = {0}", totalSize);
+                        stream.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
+                        stream.Write(picOffset);
 
-                    // TODO:BinaryChunkedStreamがまともに動くなら切り替える
-                    using(var stream = new BinaryWriter(new MemoryStream(totalSize))) {
-                        stream.Write(binaryGroupIconData, 0, sizeofICONDIR);
+                        stream.Seek(picOffset, SeekOrigin.Begin);
 
-                        var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
-                        foreach(var i in Enumerable.Range(0, iconCount)) {
-                            stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
-                            var offsetWrite = sizeofICONDIR + sizeofGRPICONDIRENTRY * i;
-                            if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
-                                continue;
-                            }
-                            stream.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
-                            stream.Write(picOffset);
-
-                            stream.Seek(picOffset, SeekOrigin.Begin);
-
-                            ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
-                            var pic = GetResourceBinaryData(hModule, new IntPtr(id), ResType.ICON);
-                            if(pic != null) {
-                                stream.Write(pic, 0, pic.Length);
-                                picOffset += pic.Length;
-                            }
+                        ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
+                        var pic = GetResourceBinaryData(hMod, new IntPtr(id), ResType.ICON);
+                        if(pic != null) {
+                            stream.Write(pic, 0, pic.Length);
+                            picOffset += pic.Length;
                         }
-
-                        binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());
                     }
+
+                    binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());
                 }
 
                 return true;
