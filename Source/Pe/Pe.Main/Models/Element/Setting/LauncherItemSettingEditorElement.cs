@@ -41,6 +41,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
         #endregion
 
+        #region function
+
+        #endregion
+
         #region LauncherItemCustomizeEditorElement
 
         protected override void Dispose(bool disposing)

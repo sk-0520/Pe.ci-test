@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -145,6 +146,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var element = ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement);
                 launcherItemElements.Add(element);
             }
+
+            var map = new Dictionary<Guid, LauncherItemData>();
+            using(var commander = ServiceLocator.Build<IMainDatabaseBarrier>().WaitRead()) {
+                var launcherItemsDao = ServiceLocator.Build<LauncherItemsEntityDao>(commander, commander.Implementation);
+                foreach(var data in launcherItemsDao.SelectApplicationLauncherItems()) {
+                    map[data.LauncherItemId] = data;
+                }
+            }
+
+            /* パラで回しても1秒くらいしか変わらんかった
+            if(launcherItemElements.Count < 100) {
+                foreach(var element in launcherItemElements) {
+                    element.Initialize();
+                }
+            } else {
+                Parallel.ForEach(launcherItemElements, element => element.Initialize());
+            }
+            */
             foreach(var element in launcherItemElements) {
                 element.Initialize();
             }
