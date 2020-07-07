@@ -91,45 +91,19 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.001",
+		"date": "2020/07/07",
+		"version": "0.99.010",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "2905eecdf7571684c20a7f3d02c987a7a98e7718",
 						"subject": "#655: ランチャーアイテム自動登録にてアンインストールファイルと思しきファイル名は登録対象外とする"
 					},
 					{
-						"revision": "",
+						"revision": "f7bef111cad2bad7aa64e118b86f95b10402b9b0",
 						"subject": "#662: ランチャーアイテム自動登録で登録時ではなくプレビュー時にショートカットを展開する"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -137,15 +111,15 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "db840540ea24cc00404149cc3d68c0dfbc5bf23e",
 						"subject": "#659: CI 処理時のコミットリビジョン埋め込み処理をスキップしている"
 					},
 					{
-						"revision": "",
+						"revision": "846999268fa3e8a6e774768e3bdf62c9e6ad035c",
 						"subject": "#663: ランチャーアイテム自動登録でサブディレクトリが読み込めていない"
 					},
 					{
-						"revision": "",
+						"revision": "8527b589cb5e9d58e372ed2ab4b11d0452568230",
 						"subject": "#661: アイコン取得時に基本サイズ以外にDPIスケールも考慮する",
 						"comments": [
 							"DPI が取れたり取れなかったりのヤケクソ DPI スケール反映",
@@ -153,15 +127,11 @@ const changelogs = [
 						]
 					},
 					{
-						"revision": "",
+						"revision": "6bce56ab96d2c491ab4a3eebb3eb6152bec87366",
 						"subject": "#634: 設定画面を開く際にやたらめったら時間がかかる",
 						"comments": [
 							"かなり手を入れたのでバグってたらめんご"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -176,15 +146,10 @@ const changelogs = [
 					{
 						"revision": "",
 						"class": "nuget",
-						"subject": "SonarAnalyzer.CSharp 8.8.0.18411 -> 8.9.0.19135"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "SonarAnalyzer.CSharp 8.8.0.18411 -> 8.9.0.19135",
+						"comments": [
+							"WebView処理周りで透過効かなくなってるっぽいなー"
+						]
 					}
 				]
 			}
