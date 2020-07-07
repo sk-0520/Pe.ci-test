@@ -19,11 +19,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public PluginsSettingEditorViewModel(PluginsSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public PluginsSettingEditorViewModel(PluginsSettingEditorElement model, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
+            ImageLoader = imageLoader;
             PluginCollection = new ActionModelViewModelObservableCollectionManager<PluginSettingEditorElement, PluginSettingEditorViewModel>(Model.PluginItems) {
-                ToViewModel = m => new PluginSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
+                ToViewModel = m => new PluginSettingEditorViewModel(m, ImageLoader, DispatcherWrapper, LoggerFactory),
             };
             PluginItems = PluginCollection.GetDefaultView();
         }
@@ -38,6 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get => this._selectedPlugin;
             set => SetProperty(ref this._selectedPlugin, value);
         }
+
+        IImageLoader ImageLoader { get; }
 
         #endregion
 

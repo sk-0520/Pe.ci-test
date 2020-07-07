@@ -45,7 +45,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public PluginStateData PluginState { get; }
         public IPlugin? Plugin { get; }
-
         PreferencesContextFactory PreferencesContextFactory { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }

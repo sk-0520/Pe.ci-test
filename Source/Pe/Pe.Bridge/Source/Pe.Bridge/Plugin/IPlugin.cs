@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         /// </summary>
         /// <param name="iconScale"></param>
         /// <returns></returns>
-        DependencyObject GetIcon(in IconScale iconScale);
+        DependencyObject GetIcon(IImageLoader imageLoader, in IconScale iconScale);
 
         #endregion
     }

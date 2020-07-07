@@ -26,14 +26,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public PluginSettingEditorViewModel(PluginSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public PluginSettingEditorViewModel(PluginSettingEditorElement model, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
+            ImageLoader = imageLoader;
             DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
 
+        IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public string PluginName => Model.PluginState.Name;
@@ -53,7 +55,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
                 return DispatcherWrapper.Get(() => {
                     try {
-                        return Model.Plugin.GetIcon(new IconScale(IconBox.Small, IconSize.DefaultScale));
+                        var scale = ImageLoader.GetPrimaryDpiScale();
+                        return Model.Plugin.GetIcon(ImageLoader, new IconScale(IconBox.Small, scale));
                     } catch(Exception ex) {
                         Logger.LogError(ex, "[{0}] {1}, {2}", Model.Plugin.PluginInformations.PluginIdentifiers.PluginName, ex.Message, Model.Plugin.PluginInformations.PluginIdentifiers.PluginId);
                         return null!;

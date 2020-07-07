@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         public bool IsInitialized => Plugin.IsInitialized;
 
-        public DependencyObject GetIcon(in IconScale iconScale) => throw new NotSupportedException();
+        public DependencyObject GetIcon(IImageLoader imageLoader, in IconScale iconScale) => throw new NotSupportedException();
 
         public void Initialize(IPluginInitializeContext pluginInitializeContext) => throw new NotSupportedException();
         public void Uninitialize(IPluginUninitializeContext pluginUninitializeContext) => throw new NotSupportedException();
