@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
 
-        public object GroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
+        public object GroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, IconSize.DefaultScale, false);
 
         [IgnoreValidation]
         public LauncherItemSettingEditorViewModel? SelectedLauncherItem

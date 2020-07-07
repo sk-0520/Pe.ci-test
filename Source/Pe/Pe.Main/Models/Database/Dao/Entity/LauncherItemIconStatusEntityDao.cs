@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -21,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             public Guid LauncherItemId { get; set; }
             public string IconBox { get; set; } = string.Empty;
+            public double IconScale { get; set; } = 1;
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed")]
             public DateTime LastUpdatedTimestamp { get; set; }
@@ -43,6 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             public static string LauncherItemId => "LauncherItemId";
             public static string IconBox => "IconBox";
+            public static string IconScale => "IconScale";
             public static string LastUpdatedTimestamp => "LastUpdatedTimestamp";
 
             #endregion
@@ -57,18 +60,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var iconBoxTransfer = new EnumTransfer<IconBox>();
             return new LauncherIconStatus(
                 iconBoxTransfer.ToEnum(dto.IconBox),
+                new Point(dto.IconScale, dto.IconScale),
                 dto.LastUpdatedTimestamp
             );
         }
 
-        public bool SelecteExistLauncherItemIconState(Guid launcherItemId, IconBox iconBox)
+        public bool SelecteExistLauncherItemIconState(Guid launcherItemId, IconBox iconBox, Point iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
-                IconBox = iconBoxTransfer.ToString(iconBox)
+                IconBox = iconBoxTransfer.ToString(iconBox),
+                IconScale = iconScale.X,
             };
             return Commander.QueryFirstOrDefault<bool>(statement, parameter);
         }
@@ -84,14 +89,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             ;
         }
 
-        public LauncherIconStatus? SelectLauncherItemIconSingleSizeStatus(Guid launcherItemId, IconBox iconBox)
+        public LauncherIconStatus? SelectLauncherItemIconSingleSizeStatus(Guid launcherItemId, IconBox iconBox, Point iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
             var parameter = new {
                 LauncherItemId = launcherItemId,
-                IconBox = iconBoxTransfer.ToString(iconBox)
+                IconBox = iconBoxTransfer.ToString(iconBox),
+                IconScale = iconScale.X,
             };
             var dto = Commander.QueryFirstOrDefault<LauncherItemIconLastUpdatedStatusDto>(statement, parameter);
             if(dto == null) {
@@ -100,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
+        public bool InsertLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, Point iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -108,11 +114,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.LauncherItemId] = launcherItemId;
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconBox);
+            parameter[Column.IconScale] = iconScale.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
             return Commander.Execute(statement, parameter) == 1;
         }
 
-        public bool UpdateLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
+        public bool UpdateLastUpdatedIconTimestamp(Guid launcherItemId, IconBox iconBox, Point iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -120,6 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter[Column.LauncherItemId] = launcherItemId;
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconBox);
+            parameter[Column.IconScale] = iconScale.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
             return Commander.Execute(statement, parameter) == 1;
         }

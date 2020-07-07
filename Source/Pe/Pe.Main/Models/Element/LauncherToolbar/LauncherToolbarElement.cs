@@ -224,8 +224,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 var toolbarsDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                 toolbarsDao.InsertNewToolbar(toolbarId, newFontId, DockScreen.DeviceName, DatabaseCommonStatus.CreateCurrentAccount());
 
-                var screenOperator = new ScreenOperator(LoggerFactory);
-                screenOperator.RegisterDatabase(DockScreen, commander, DatabaseStatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+                ScreenUtility.RegisterDatabase(DockScreen, commander, DatabaseStatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount(), LoggerFactory);
 
                 commander.Commit();
             }
@@ -262,10 +261,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             ThrowIfDisposed();
 
-            ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, IconBox);
-            IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, IconBox, IsIconOnly, TextWidth);
-            DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
-            HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, IconBox, IsIconOnly, TextWidth);
+            var iconScale = new IconScale(IconBox, IconSize.DefaultScale);
+
+            ButtonPadding = LauncherToolbarTheme.GetButtonPadding(ToolbarPosition, iconScale);
+            IconMargin = LauncherToolbarTheme.GetIconMargin(ToolbarPosition, iconScale, IsIconOnly, TextWidth);
+            DisplaySize = LauncherToolbarTheme.GetDisplaySize(ButtonPadding, IconMargin, iconScale, IsIconOnly, TextWidth);
+            HiddenSize = LauncherToolbarTheme.GetHiddenSize(ButtonPadding, IconMargin, iconScale, IsIconOnly, TextWidth);
         }
 
         void LoadLauncherToolbar()
@@ -533,8 +534,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         {
             if(isUserOperation) {
                 if(!IsVisible) {
-                    var screenOperator = new ScreenOperator(LoggerFactory);
-                    var screenName = screenOperator.GetName(DockScreen);
+                    var screenName = ScreenUtility.GetName(DockScreen, LoggerFactory);
 
                     var notifyMessage = new NotifyMessage(
                        NotifyLogKind.Undo,

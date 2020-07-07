@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 {
     public class PreferencesParameter: PluginParameterBase, IPreferencesParameter
     {
-        public PreferencesParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginInformations, platformTheme, dispatcherWrapper, loggerFactory)
+        public PreferencesParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginInformations, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         {
             SkeletonImplements = skeletonImplements;
             UserAgentFactory = userAgentFactory;

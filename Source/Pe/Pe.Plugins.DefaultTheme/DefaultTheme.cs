@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -53,11 +54,13 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }
 
-        /// <inheritdoc cref="IPlugin.GetIcon(IconBox)"/>
-        public DependencyObject GetIcon(IconBox iconBox)
+        /// <inheritdoc cref="IPlugin.GetIcon(IImageLoader, in IconScale)"/>
+        public DependencyObject GetIcon(IImageLoader imageLoader, in IconScale iconScale)
         {
             var uri = new Uri("pack://application:,,,/Pe.Plugins.DefaultTheme;component/App.ico");
-            var bitmap = new BitmapImage(uri);
+
+            var decoder = BitmapDecoder.Create(uri, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+            var bitmap = imageLoader.GetImageFromFrames(decoder.Frames, iconScale);
             var image = new System.Windows.Controls.Image() {
                 Source = bitmap,
             };

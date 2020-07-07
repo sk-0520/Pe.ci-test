@@ -12,6 +12,6 @@
   d:DesignWidth="800"
 >
   <Grid x:Name="parent">
-    <Image Source="{Binding IconViewer.ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <Image UseLayoutRounding="True" Source="{Binding IconViewer.ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}" />
   </Grid>
 </UserControl>

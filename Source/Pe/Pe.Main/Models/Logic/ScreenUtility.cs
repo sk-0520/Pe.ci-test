@@ -17,20 +17,8 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public class ScreenOperator
+    public static class ScreenUtility
     {
-        public ScreenOperator(ILoggerFactory loggerFactory)
-        {
-            LoggerFactory = loggerFactory;
-            Logger = loggerFactory.CreateLogger(GetType());
-        }
-
-        #region property
-
-        ILoggerFactory LoggerFactory { get; }
-        ILogger Logger { get; }
-
-        #endregion
 
         #region function
 
@@ -43,8 +31,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
         }
 
-        IEnumerable<Win32_DesktopMonitor> GetScreens(string? deviceName)
+        static IEnumerable<Win32_DesktopMonitor> GetScreens(string? deviceName, ILoggerFactory loggerFactory)
         {
+            ILogger? logger = null;
             string query = "SELECT * FROM Win32_DesktopMonitor";
             if(!string.IsNullOrWhiteSpace(deviceName)) {
                 //var id = new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
@@ -61,7 +50,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     try {
                         item.Import(mng);
                     } catch(Exception ex) {
-                        Logger.LogWarning(ex, ex.Message);
+                        if(logger == null) {
+                            logger = loggerFactory.CreateLogger(typeof(ScreenUtility));
+                        }
+                        logger.LogWarning(ex, ex.Message);
                         continue;
                     }
 
@@ -76,9 +68,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// <param name="screen"></param>
         /// <param name = "logger"></param>
         /// <returns></returns>
-        public string GetName(IScreen screen)
+        public static string GetName(IScreen screen, ILoggerFactory loggerFactory)
         {
-            foreach(var screem in GetScreens(screen.DeviceName)) {
+            foreach(var screem in GetScreens(screen.DeviceName, loggerFactory)) {
                 if(!string.IsNullOrWhiteSpace(screem.Name)) {
                     var id = DeviceToId(screen.DeviceName);
                     return string.Format("{0}. {1}", id, screem.Name);
@@ -97,9 +89,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return device.DeviceString;
         }
 
-        public bool RegisterDatabase(IScreen screen, IDatabaseCommander commander, IDatabaseStatementLoader databaseStatementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
+        public static System.Windows.Point GetDpiScale(IScreen screen)
         {
-            var screensDao = new ScreensEntityDao(commander, databaseStatementLoader, implementation, LoggerFactory);
+            //foreach(var screem in GetScreens(screen.DeviceName)) {
+            //    if(screem.PixelsPerXLogicalInch.HasValue && screem.PixelsPerYLogicalInch.HasValue) {
+            //        return new System.Windows.Point(
+            //            screem.PixelsPerXLogicalInch.Value / 96.0,
+            //            screem.PixelsPerXLogicalInch.Value / 96.0
+            //        );
+            //    }
+            //}
+            var hDC = NativeMethods.CreateDC("DISPLAY", screen.DeviceName, null!, IntPtr.Zero);
+            try {
+                var dpiX = NativeMethods.GetDeviceCaps(hDC, DeviceCap.LOGPIXELSX);
+                var dpiY = NativeMethods.GetDeviceCaps(hDC, DeviceCap.LOGPIXELSY);
+                return new System.Windows.Point(
+                    dpiX / 96.0,
+                    dpiY / 96.0
+                );
+            } finally {
+                if(hDC != IntPtr.Zero) {
+                    NativeMethods.DeleteDC(hDC);
+                }
+            }
+        }
+
+        public static bool RegisterDatabase(IScreen screen, IDatabaseCommander commander, IDatabaseStatementLoader databaseStatementLoader, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus, ILoggerFactory loggerFactory)
+        {
+            var screensDao = new ScreensEntityDao(commander, databaseStatementLoader, implementation, loggerFactory);
             if(!screensDao.SelectExistsScreen(screen.DeviceName)) {
                 return screensDao.InsertScreen(screen, databaseCommonStatus);
             }

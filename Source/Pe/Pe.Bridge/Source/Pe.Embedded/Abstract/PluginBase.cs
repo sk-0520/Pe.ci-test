@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
@@ -50,21 +51,22 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region function
 
-        protected virtual DependencyObject GetIconImpl(IconBox iconBox) => null!;
+        protected virtual DependencyObject GetIconImpl(in IconScale iconScale) => null!;
 
         /// <summary>
         /// プラグインアセンブリの /Plugin.icon を取得する。
         /// </summary>
-        /// <param name="iconBox"></param>
+        /// <param name="iconScale"></param>
         /// <returns></returns>
-        protected DependencyObject GetPluginIcon(IconBox iconBox)
+        protected DependencyObject GetPluginIcon(IImageLoader imageLoader, in IconScale iconScale)
         {
             var asm = Assembly.GetExecutingAssembly();
             var asmName = asm.GetName().Name;
             var uri = new Uri("pack://application:,,,/" + asmName + ";component/Plugin.ico");
-            var s = Application.Current.Resources;
             try {
-                var bitmap = new BitmapImage(uri);
+                var decoder = BitmapDecoder.Create(uri, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+                var bitmap = imageLoader.GetImageFromFrames(decoder.Frames, iconScale);
+                //var bitmap = new BitmapImage(uri);
                 var image = new System.Windows.Controls.Image() {
                     Source = bitmap,
                 };
@@ -197,11 +199,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IPlugin.IsInitialized"/>
         public bool IsInitialized { get; private set; }
 
-        /// <inheritdoc cref="IPlugin.GetIcon(IconBox)"/>
-        public DependencyObject GetIcon(IconBox iconBox)
+        /// <inheritdoc cref="IPlugin.GetIcon(IImageLoader, IconScale)"/>
+        public DependencyObject GetIcon(IImageLoader imageLoader, in IconScale iconScale)
         {
             try {
-                var result = GetIconImpl(iconBox);
+                var result = GetIconImpl(iconScale);
                 if(result != null) {
                     return result;
                 }
@@ -209,7 +211,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                 Logger.LogWarning(ex, ex.Message);
             }
 
-            return GetPluginIcon(iconBox);
+            return GetPluginIcon(imageLoader, iconScale);
         }
 
         /// <inheritdoc cref="IPlugin"/>

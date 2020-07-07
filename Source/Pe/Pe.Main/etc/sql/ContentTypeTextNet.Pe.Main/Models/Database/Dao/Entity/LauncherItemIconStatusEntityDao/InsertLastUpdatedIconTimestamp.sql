@@ -3,6 +3,7 @@ insert into
 	(
 		LauncherItemId,
 		IconBox,
+		IconScale,
 		LastUpdatedTimestamp,
 
 		[CreatedTimestamp],
@@ -19,6 +20,7 @@ insert into
 	(
 /* LauncherItemId           */ @LauncherItemId,
 /* IconBox                  */ @IconBox,
+/* IconScale                */ @IconScale,
 /* LastUpdatedTimestamp     */ @LastUpdatedTimestamp,
 /*                          */
 /* CreatedTimestamp         */ @CreatedTimestamp,

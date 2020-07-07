@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -462,15 +463,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class LauncherIconStatus
     {
-        public LauncherIconStatus(IconBox iconBox, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp)
+        public LauncherIconStatus(IconBox iconBox, Point iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp)
         {
             IconBox = iconBox;
+            IconScale = iconScale;
             LastUpdatedTimestamp = lastUpdatedTimestamp;
         }
 
         #region proeprty
 
         public IconBox IconBox { get; }
+        public Point IconScale { get; }
 
         [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastUpdatedTimestamp { get; }

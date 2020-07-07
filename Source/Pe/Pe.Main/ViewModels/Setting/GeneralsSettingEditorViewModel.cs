@@ -11,13 +11,13 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public class GeneralsSettingEditorViewModel : SettingEditorViewModelBase<GeneralsSettingEditorElement>
+    public class GeneralsSettingEditorViewModel: SettingEditorViewModelBase<GeneralsSettingEditorElement>
     {
-        public GeneralsSettingEditorViewModel(GeneralsSettingEditorElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public GeneralsSettingEditorViewModel(GeneralsSettingEditorElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             AppExecuteSettingEditor = new AppExecuteSettingEditorViewModel(Model.AppExecuteSettingEditor, DispatcherWrapper, LoggerFactory);
-            AppGeneralSettingEditor = new AppGeneralSettingEditorViewModel(Model.AppGeneralSettingEditor, configuration.General.SupportCultures, DispatcherWrapper, LoggerFactory);
+            AppGeneralSettingEditor = new AppGeneralSettingEditorViewModel(Model.AppGeneralSettingEditor, configuration.General.SupportCultures, imageLoader, DispatcherWrapper, LoggerFactory);
             AppUpdateSettingEditor = new AppUpdateSettingEditorViewModel(Model.AppUpdateSettingEditor, DispatcherWrapper, LoggerFactory);
             AppNotifyLogSettingEditor = new AppNotifyLogSettingEditorViewModel(Model.AppNotifyLogSettingEditor, DispatcherWrapper, LoggerFactory);
             AppLauncherToolbarSettingEditor = new AppLauncherToolbarSettingEditorViewModel(Model.AppLauncherToolbarSettingEditor, DispatcherWrapper, LoggerFactory);
