@@ -49,6 +49,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #endregion
 
         #region SingleModelViewModelBase
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                Model.PropertyChanged -= Model_PropertyChanged;
+            }
+            base.Dispose(disposing);
+        }
+
+        protected override void AttachModelEventsImpl()
+        {
+            base.AttachModelEventsImpl();
+
+            Model.PropertyChanged += Model_PropertyChanged;
+        }
+
+        protected override void DetachModelEventsImpl()
+        {
+            base.DetachModelEventsImpl();
+
+            Model.PropertyChanged -= Model_PropertyChanged;
+        }
+
         #endregion
 
         #region ILauncherItemId
@@ -56,5 +79,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public Guid LauncherItemId => Model.LauncherItemId;
 
         #endregion
+
+        private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(Model.IsLazyLoad) && !Model.IsLazyLoad) {
+                Model.PropertyChanged -= Model_PropertyChanged;
+                Initialize();
+            }
+        }
+
+
     }
 }

@@ -155,10 +155,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
-            Name = Model.Name;
-            Code = Model.Code;
-            IconData = new IconData(Model.IconData);
-            IsEnabledCommandLauncher = Model.IsEnabledCommandLauncher;
+            //Name = Model.Name;
+            //Code = Model.Code;
+            //IconData = new IconData(Model.IconData);
+            //IsEnabledCommandLauncher = Model.IsEnabledCommandLauncher;
         }
 
         #endregion

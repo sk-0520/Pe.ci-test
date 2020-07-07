@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         /// <summary>
         /// ランチャーアイテム変更通知。
-        /// <para>受け取り手によるが可能な限り<see cref="IOrderManager.RefreshLauncherItemElement(Guid)"/>を先に読んでおくこと。</para>
+        /// <para>ランチャーアイテム使用機能側に変更を通知するだけなので受け取り手によるが可能な限り<see cref="IOrderManager.RefreshLauncherItemElement(Guid)"/>を先に呼んでおくこと。</para>
         /// </summary>
         /// <param name="launcherItemId">変更されたランチャーアイテムID。</param>
         void SendLauncherItemChanged(Guid launcherItemId);

@@ -154,7 +154,10 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#634: 設定画面を開く際にやたらめったら時間がかかる",
+						"comments": [
+							"かなり手を入れたのでバグってたらめんご"
+						]
 					},
 					{
 						"revision": "",

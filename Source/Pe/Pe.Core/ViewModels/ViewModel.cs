@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// 検証無視。
     /// </summary>
     [System.AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-    public sealed class IgnoreValidationAttribute : Attribute
+    public sealed class IgnoreValidationAttribute: Attribute
     {
         // This is a positional argument
         public IgnoreValidationAttribute()
@@ -75,6 +75,11 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         /// プロパティ変更時のイベントキャッシュ。
         /// </summary>
         ConcurrentDictionary<string, PropertyChangedEventArgs> PropertyChangedEventArgsCache { get; } = new ConcurrentDictionary<string, PropertyChangedEventArgs>();
+
+        /// <summary>
+        /// このVMは検証対象か。
+        /// </summary>
+        protected virtual bool SkipValidation { get; } = false;
 
         #endregion
 
@@ -188,6 +193,10 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         private (IReadOnlyCollection<PropertyInfo> properties, IReadOnlyCollection<ViewModelBase> childViewModels) GetValidationItems()
         {
             ThrowIfDisposed();
+
+            if(SkipValidation) {
+                return (Array.Empty<PropertyInfo>(), Array.Empty<ViewModelBase>());
+            }
 
             var type = GetType();
             //var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -468,7 +477,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
     /// model と対になる ViewModel の基底クラス。
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
-    public abstract class SingleModelViewModelBase<TModel> : ViewModelBase
+    public abstract class SingleModelViewModelBase<TModel>: ViewModelBase
         where TModel : INotifyPropertyChanged
     {
         protected SingleModelViewModelBase(TModel model, ILoggerFactory loggerFactory)
@@ -554,7 +563,7 @@ namespace ContentTypeTextNet.Pe.Core.ViewModels
         #endregion
     }
 
-    public class SimpleDataViewModel<TData> : ViewModelBase
+    public class SimpleDataViewModel<TData>: ViewModelBase
     {
         #region variable
 

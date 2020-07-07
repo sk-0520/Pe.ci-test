@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class LauncherTagsRowDto : RowDtoBase
+    internal class LauncherTagsRowDto: RowDtoBase
     {
         #region property
 
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #endregion
     }
 
-    public class LauncherTagsEntityDao : EntityDaoBase
+    public class LauncherTagsEntityDao: EntityDaoBase
     {
         public LauncherTagsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
@@ -57,6 +57,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
             };
             return Commander.Query<string>(statement, parameter);
+        }
+
+        public IDictionary<Guid, List<string>> SelectAllTags()
+        {
+            var statement = LoadStatement();
+            var map = Commander.Query<(Guid id, string tag)>(statement)
+                .GroupBy(i => i.id, i => i.tag)
+                .ToDictionary(i => i.Key, i => i.ToList())
+            ;
+            return map;
         }
 
         public void InsertTags(Guid launcherItemId, IEnumerable<string> tags, IDatabaseCommonStatus commonStatus)

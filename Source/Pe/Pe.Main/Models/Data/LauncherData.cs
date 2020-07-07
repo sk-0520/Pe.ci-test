@@ -481,5 +481,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class LauncherSettingCommonData: LauncherItemData
+    {
+        #region property
 
+        public IList<string> Tags { get; set; } = new List<string>();
+
+        #endregion
+    }
 }
