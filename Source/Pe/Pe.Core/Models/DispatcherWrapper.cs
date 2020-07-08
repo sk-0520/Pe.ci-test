@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,14 +14,52 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="Dispatcher"/>の使用をラップ。
     /// <para><see cref="Dispatcher"/>自体は大公開しているがなんかそれっぽく楽に使いたい。</para>
     /// </summary>
-    public class DispatcherWrapper : IDispatcherWrapper
+    public class DispatcherWrapper: IDispatcherWrapper
     {
+        #region define
+
+        class WaitBag<TResult>
+        {
+            public WaitBag(ManualResetEventSlim resetEvent, CancellationToken cancellationToken)
+            {
+                ResetEvent = resetEvent;
+                CancellationToken = cancellationToken;
+            }
+
+            #region property
+
+            public ManualResetEventSlim ResetEvent { get; }
+            public CancellationToken CancellationToken { get; }
+
+            [MaybeNull]
+            public TResult Result { get; set; } = default!;
+
+            #endregion
+        }
+
+        class WaitBag<TResult, TParameter>: WaitBag<TResult>
+        {
+            public WaitBag(ManualResetEventSlim resetEvent, TParameter parameter, CancellationToken cancellationToken)
+                : base(resetEvent, cancellationToken)
+            {
+                Parameter = parameter;
+            }
+
+            #region property
+
+            public TParameter Parameter { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         /// <summary>
         /// <paramref name="dispatcher"/>をラップする。
         /// </summary>
         /// <param name="dispatcher">ラップする対象。</param>
         public DispatcherWrapper(Dispatcher dispatcher)
-            :this(dispatcher, TimeSpan.FromMinutes(1))
+            : this(dispatcher, TimeSpan.FromMinutes(1))
         { }
 
         public DispatcherWrapper(Dispatcher dispatcher, TimeSpan waitTime)
@@ -129,7 +168,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 生成元の<see cref="Dispatcher"/>を用いて<see cref="DispatcherWrapper"/>を生成する。
     /// </summary>
-    public sealed class CurrentDispatcherWrapper : DispatcherWrapper
+    public sealed class CurrentDispatcherWrapper: DispatcherWrapper
     {
         public CurrentDispatcherWrapper()
             : base(Dispatcher.CurrentDispatcher)
