@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
 
         #region function
+
         /// <inheritdoc cref="Dispatcher.CheckAccess"/>
         bool CheckAccess();
         /// <inheritdoc cref="Dispatcher.VerifyAccess"/>
@@ -42,22 +43,28 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <inheritdoc cref="InvokeAsync{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
         Task<TResult> InvokeAsync<TResult>(Func<TResult> func);
 
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument);
 
         /// <summary>
         /// 対象 <see cref="Dispatcher"/> でなんかした結果を取得する。
         /// <para>内部的には停止状態。</para>
         /// <para>癌。</para>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
         /// <param name="func"></param>
         /// <param name="dispatcherPriority"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
-        /// <inheritdoc cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
-        T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority);
-        /// <inheritdoc cref="Get{T}(Func{T}, DispatcherPriority, CancellationToken)"/>
-        T Get<T>(Func<T> func);
+        TResult Get<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken);
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        TResult Get<TResult>(Func<TResult> func, DispatcherPriority dispatcherPriority);
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        TResult Get<TResult>(Func<TResult> func);
 
         /// <summary>
         /// <inheritdoc cref="Dispatcher.BeginInvoke(Delegate, DispatcherPriority, object[])"/>

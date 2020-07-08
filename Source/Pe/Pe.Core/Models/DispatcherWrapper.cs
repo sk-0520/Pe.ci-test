@@ -16,44 +16,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public class DispatcherWrapper: IDispatcherWrapper
     {
-        #region define
-
-        class WaitBag<TResult>
-        {
-            public WaitBag(ManualResetEventSlim resetEvent, CancellationToken cancellationToken)
-            {
-                ResetEvent = resetEvent;
-                CancellationToken = cancellationToken;
-            }
-
-            #region property
-
-            public ManualResetEventSlim ResetEvent { get; }
-            public CancellationToken CancellationToken { get; }
-
-            [MaybeNull]
-            public TResult Result { get; set; } = default!;
-
-            #endregion
-        }
-
-        class WaitBag<TResult, TParameter>: WaitBag<TResult>
-        {
-            public WaitBag(ManualResetEventSlim resetEvent, TParameter parameter, CancellationToken cancellationToken)
-                : base(resetEvent, cancellationToken)
-            {
-                Parameter = parameter;
-            }
-
-            #region property
-
-            public TParameter Parameter { get; }
-
-            #endregion
-        }
-
-        #endregion
-
         /// <summary>
         /// <paramref name="dispatcher"/>をラップする。
         /// </summary>
@@ -116,20 +78,41 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return InvokeAsync(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
+        public TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        {
+            if(CheckAccess()) {
+                return func(argument);
+            } else {
+                using var waitBag = new Toybag<TArgument, TResult>(func, new ManualResetEventSlim(), argument, cancellationToken);
+                Dispatcher.BeginInvoke(dispatcherPriority, new Action<Toybag<TArgument, TResult>>(bag => {
+                    bag.CancellationToken.ThrowIfCancellationRequested();
+                    bag.Result = bag.Method(bag.Parameter);
+                    bag.Event.Set();
+                }), waitBag);
+                if(waitBag.Event.Wait(WaitTime, cancellationToken)) {
+                    return waitBag.Result!;
+                }
+                throw new TimeoutException(WaitTime.ToString());
+            }
+        }
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        public TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority) => Get(func, argument, dispatcherPriority, CancellationToken.None);
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        public TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument) => Get(func, argument, DispatcherPriority.Send, CancellationToken.None);
+
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {
             if(CheckAccess()) {
                 return func();
             } else {
-                T result = default!;
-                using var resultWait = new ManualResetEventSlim();
-                Dispatcher.BeginInvoke(new Action(() => {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = func();
-                    resultWait.Set();
-                }), dispatcherPriority);
-                if(resultWait.Wait(WaitTime, cancellationToken)) {
-                    return result;
+                using var waitBag = new Toybag<T>(func, new ManualResetEventSlim(), cancellationToken);
+                Dispatcher.BeginInvoke(dispatcherPriority, new Action<Toybag<T>>(bag => {
+                    bag.CancellationToken.ThrowIfCancellationRequested();
+                    bag.Result = bag.Method();
+                    bag.Event.Set();
+                }), waitBag);
+                if(waitBag.Event.Wait(WaitTime, cancellationToken)) {
+                    return waitBag.Result!;
                 }
                 throw new TimeoutException(WaitTime.ToString());
             }
