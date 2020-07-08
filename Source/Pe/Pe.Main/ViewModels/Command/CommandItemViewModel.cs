@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             get
             {
-                var icon = DispatcherWrapper.Get(() => Item.GetIcon(IconScale));
+                var icon = DispatcherWrapper.Get(i => i.item.GetIcon(i.iconScale), (item: Item, iconScale: IconScale)) ;
                 if(icon is IconImageLoaderBase iconLoader) {
                     return new IconViewerViewModel(iconLoader, DispatcherWrapper, LoggerFactory) {
                         UseCache = true,
