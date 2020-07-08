@@ -126,22 +126,32 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Get(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
-        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
         {
-            return Dispatcher.BeginInvoke(action, dispatcherPriority, argument);
+            if(CheckAccess()) {
+                action(argument);
+                return Task.CompletedTask;
+            } else {
+                return Dispatcher.BeginInvoke(dispatcherPriority, action, argument).Task;
+            }
         }
-        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument)
+        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument)
         {
-            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send, argument);
+            return Begin(action, argument, DispatcherPriority.Send);
         }
 
-        public DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority)
+        public Task Begin(Action action, DispatcherPriority dispatcherPriority)
         {
-            return Dispatcher.BeginInvoke(action, dispatcherPriority);
+            if(CheckAccess()) {
+                action();
+                return Task.CompletedTask;
+            } else {
+                return Dispatcher.BeginInvoke(dispatcherPriority, action).Task;
+            }
         }
-        public DispatcherOperation Begin(Action action)
+        public Task Begin(Action action)
         {
-            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send);
+            return Begin(action, DispatcherPriority.Send);
         }
 
 

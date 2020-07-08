@@ -1145,7 +1145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     foreach(var noteElement in noteElements) {
                         noteElement.SetTopmost(true);
                     }
-                }, DispatcherPriority.SystemIdle).Task.ContinueWith(t => {
+                }, DispatcherPriority.SystemIdle).ContinueWith(t => {
                     foreach(var noteElement in noteElements) {
                         noteElement.SetTopmost(false);
                     }

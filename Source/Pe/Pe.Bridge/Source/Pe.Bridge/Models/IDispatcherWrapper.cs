@@ -72,13 +72,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         /// <param name="action">実施する処理。</param>
         /// <param name="dispatcherPriority"></param>
         /// <param name="argument">パラメータ。</param>
-        DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
+        Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority);
         /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument);
+        Task Begin<TArgument>(Action<TArgument> action, TArgument argument);
         /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority);
+        Task Begin(Action action, DispatcherPriority dispatcherPriority);
         /// <inheritdoc cref="Begin{TArgument}(Action{TArgument}, TArgument, DispatcherPriority)"/>
-        DispatcherOperation Begin(Action action);
+        Task Begin(Action action);
 
         #endregion
     }
