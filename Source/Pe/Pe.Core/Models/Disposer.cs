@@ -105,11 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public ActionDisposer(Action<bool> action)
         {
-            if(action == null) {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            Action = action;
+            Action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         #region property
@@ -139,11 +135,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public ActionDisposer(Action<bool, TArgument> action, TArgument argument)
         {
-            if(action == null) {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            Action = action;
+            Action = action ?? throw new ArgumentNullException(nameof(action));
             Argument = argument;
         }
 
