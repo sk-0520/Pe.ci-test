@@ -164,6 +164,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
+    /// <summary>
+    /// <see cref="ActionDisposer"/>, <see cref="ActionDisposer{TArgument}"/> の生成ヘルパー。
+    /// </summary>
+    public static class ActionDisposerHelper
+    {
+        #region function
+
+        public static ActionDisposer Create(Action<bool> action) => new ActionDisposer(action);
+        public static ActionDisposer<TArgument> Create<TArgument>(Action<bool, TArgument> action, TArgument argument) => new ActionDisposer<TArgument>(action, argument);
+
+        #endregion
+    }
+
     public class DisposableStocker : DisposerBase
     {
         #region property
