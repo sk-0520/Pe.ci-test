@@ -27,16 +27,5 @@ namespace ContentTypeTextNet.Pe.Bridge.Test.Models.Data
             }
         }
 
-        [TestMethod]
-        [DataRow(IconBox.Small, 16)]
-        [DataRow(IconBox.Normal, 32)]
-        [DataRow(IconBox.Big, 48)]
-        [DataRow(IconBox.Large, 256)]
-        public void ToIconSizeTest(IconBox result, int size)
-        {
-            var iconSize = new IconSize(size);
-            var test = iconSize.ToIconBox();
-            Assert.AreEqual(result, test);
-        }
     }
 }

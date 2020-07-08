@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// 正方形か。
         /// </summary>
-        readonly bool IsSquare => Width == Height;
+        public readonly bool IsSquare => Width == Height;
         #endregion
 
         #region function
@@ -96,24 +96,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// </summary>
         /// <returns></returns>
         public readonly Size ToSize() => new Size(Width, Height);
-
-        /// <summary>
-        /// <see cref="IconBox"/> への変換。
-        /// <para>可能な限り合わせるけどわっけ分からんくなったら<see cref="IconBox.Large"/>になる。</para>
-        /// </summary>
-        /// <returns></returns>
-        public readonly IconBox ToIconBox()
-        {
-            var size = IsSquare ? Width : Math.Max(Width, Height);
-            var kinds = new[] { IconBox.Small, IconBox.Normal, IconBox.Big, IconBox.Large };
-            foreach(var kind in kinds) {
-                if(size <= (int)kind) {
-                    return kind;
-                }
-            }
-
-            return IconBox.Large;
-        }
 
         #endregion
 
