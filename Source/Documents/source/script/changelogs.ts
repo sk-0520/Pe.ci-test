@@ -155,7 +155,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#667: Visual Studio 2019 Image Library の使用を明記する"
 					},
 					{
 						"revision": "",
