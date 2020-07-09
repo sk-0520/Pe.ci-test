@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {
-    public class ApplicationDatabaseFactory : SqliteFactory
+    public class ApplicationDatabaseFactory: SqliteFactory
     {
         #region define
         #endregion
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     }
 
 
-    public class ApplicationDatabaseImplementation : SqliteImplementation
+    public class ApplicationDatabaseImplementation: SqliteImplementation
     {
         #region property
 
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public class ApplicationDatabaseAccessor : SqliteAccessor
+    public class ApplicationDatabaseAccessor: SqliteAccessor
     {
         public ApplicationDatabaseAccessor(IDatabaseFactory connectionCreator, ILogger logger)
             : base(connectionCreator, logger)
@@ -252,7 +252,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     }
 
 
-    public class ApplicationDatabaseStatementLoader : DatabaseStatementLoaderBase, IDisposable
+    public class ApplicationDatabaseStatementLoader: DatabaseStatementLoaderBase, IDisposable
     {
         #region define
 
@@ -298,6 +298,9 @@ limit
         DirectoryInfo BaseDirectory { get; }
         ReferencePool<string, string> StatementCache { get; }
 
+        /// <summary>
+        /// SQLファイルを優先して読み込む。
+        /// </summary>
         bool GivePriorityToFile { get; }
         DatabaseAccessor? StatementAccessor { get; }
 
@@ -318,11 +321,9 @@ limit
 
         string CreateCacheFromFile(string filePath)
         {
-            using(var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, SqlFileBufferSize)) {
-                using(var reader = new StreamReader(stream, SqlFileEncoding)) {
-                    return reader.ReadToEnd();
-                }
-            }
+            using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, SqlFileBufferSize);
+            using var reader = new StreamReader(stream, SqlFileEncoding);
+            return reader.ReadToEnd();
         }
 
         string CreateCacheFromAccessor(string key)
@@ -336,8 +337,7 @@ limit
         string CreateCache(string key)
         {
 #if DEBUG
-            var sp = Stopwatch.StartNew();
-            using var x = new ActionDisposer(d => Logger.LogTrace("SQL読み込み時間: {0}, {1}", sp.Elapsed, key));
+            using var x = ActionDisposerHelper.Create((d, sw) => Logger.LogTrace("SQL読み込み時間: {0}, {1}", sw.Elapsed, key), Stopwatch.StartNew());
 #endif
             if(StatementAccessor == null) {
                 return CreateCacheFromFile(ConvertFileName(key));

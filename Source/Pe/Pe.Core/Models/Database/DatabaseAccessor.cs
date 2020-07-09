@@ -247,10 +247,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Logger.LogTrace(statement, parameter);
         }
 
+        [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
+        [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
         }
+        [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
+        [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
+        [SuppressMessage("Performance", "HAA0503:Explicit new anonymous object allocation")]
         protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
@@ -272,7 +277,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             ThrowIfDisposed();
 
             if(!IsOpend) {
-                return new ActionDisposer(d => { });
+                return ActionDisposerHelper.CreateEmpty();
             }
 
             if(!StoppingConnection) {
@@ -285,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                 });
             }
 
-            return new ActionDisposer(d => { });
+            return ActionDisposerHelper.CreateEmpty();
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.Query{T}(string, object?, IDatabaseTransaction?, bool)"/>

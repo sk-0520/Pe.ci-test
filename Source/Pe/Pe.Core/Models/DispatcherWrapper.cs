@@ -126,6 +126,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Get(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
+        [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
         {
             if(CheckAccess()) {

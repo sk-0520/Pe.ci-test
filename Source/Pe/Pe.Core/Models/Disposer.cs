@@ -169,10 +169,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// </summary>
     public static class ActionDisposerHelper
     {
+        #region define
+
+        class EmptyDisposer: IDisposable
+        {
+            public void Dispose()
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        #endregion
         #region function
 
         public static ActionDisposer Create(Action<bool> action) => new ActionDisposer(action);
         public static ActionDisposer<TArgument> Create<TArgument>(Action<bool, TArgument> action, TArgument argument) => new ActionDisposer<TArgument>(action, argument);
+
+        /// <summary>
+        /// <see cref="IDisposable"/>とのIFを合わせるための空処理。
+        /// </summary>
+        /// <returns></returns>
+        public static IDisposable CreateEmpty() => new EmptyDisposer();
 
         #endregion
     }
@@ -187,6 +204,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public TDisposable Add<TDisposable>(TDisposable disposable)
             where TDisposable : IDisposable
         {

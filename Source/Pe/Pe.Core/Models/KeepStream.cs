@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         /// <summary>
         /// <inheritdoc cref="KeepStream(Stream, bool)"/>
-        /// <para>位置も戻る</para>
+        /// <para>位置も戻る。</para>
         /// </summary>
         /// <param name="stream"><inheritdoc cref="KeepStream(Stream, bool)"/></param>
         public KeepStream(Stream stream)

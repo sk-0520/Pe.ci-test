@@ -146,6 +146,12 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return func(commander);
         }
 
+        public static TResult ReadData<TArgument, TResult>(this IDatabaseBarrier @this, Func<IDatabaseTransaction, TArgument, TResult> func, TArgument argument)
+        {
+            using var commander = @this.WaitRead();
+            return func(commander, argument);
+        }
+
         #endregion
     }
 

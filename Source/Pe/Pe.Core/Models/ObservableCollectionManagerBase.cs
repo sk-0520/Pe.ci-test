@@ -17,11 +17,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         private ObservableCollectionManagerBase(IReadOnlyList<TValue> collection, INotifyCollectionChanged collectionNotifyCollectionChanged)
         {
-            if(collection == null) {
-                throw new ArgumentNullException(nameof(collection));
-            }
+            Collection = collection ?? throw new ArgumentNullException(nameof(collection));
 
-            Collection = collection;
             CollectionNotifyCollectionChanged = collectionNotifyCollectionChanged;
             CollectionNotifyCollectionChanged.CollectionChanged += Collection_CollectionChanged;
         }
@@ -167,11 +164,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
         }
 
+
         /// <summary>
         /// インデックスを取得。
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public int IndexOf(TValue value)
         {
             ThrowIfDisposed();

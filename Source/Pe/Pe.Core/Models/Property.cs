@@ -291,7 +291,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
-        PropertyAccesser GetAccessor(string propertyName) => AccesserCache.GetOrAdd(propertyName, s => {
+        private PropertyAccesser GetAccessor(string propertyName) => AccesserCache.GetOrAdd(propertyName, s => {
             var propertyInfo = Properties[s];
             return new PropertyAccesser(OwnerExpression, propertyInfo);
         });

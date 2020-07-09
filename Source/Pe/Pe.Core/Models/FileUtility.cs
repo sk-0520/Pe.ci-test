@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="filePath">読み込むファイルパス。</param>
         /// <returns>ストリーム。</returns>
+        [Obsolete]
         public static BinaryReader CreateBinaryReader(string filePath)
         {
             var stream = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
@@ -31,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="startIndex">読み出し位置</param>
         /// <param name="readLength">読み出しサイズ</param>
         /// <returns></returns>
+        [Obsolete]
         public static byte[] ToBinary(string filePath, int startIndex, int readLength)
         {
             byte[] buffer;
@@ -47,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="filePath">ファイルパス</param>
         /// <returns></returns>
+        [Obsolete]
         public static byte[] ToBinary(string filePath)
         {
             var fileInfo = new FileInfo(filePath);

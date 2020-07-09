@@ -120,16 +120,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         object? GetMemberValue(object target, MemberInfo memberInfo)
         {
-            switch(memberInfo.MemberType) {
-                case MemberTypes.Field:
-                    return ((FieldInfo)memberInfo).GetValue(target);
-
-                case MemberTypes.Property:
-                    return ((PropertyInfo)memberInfo).GetValue(target);
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return memberInfo.MemberType switch
+            {
+                MemberTypes.Field => ((FieldInfo)memberInfo).GetValue(target),
+                MemberTypes.Property => ((PropertyInfo)memberInfo).GetValue(target),
+                _ => throw new NotImplementedException(),
+            };
         }
 
         int GetNextNest(int nest) => nest < 0 ? -1 : nest - 1;
@@ -260,7 +256,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 if(!CanGetValue(member, ignoreAutoMember)) {
                     continue;
                 }
-                if(member is IEnumerable seq) {
+                if(member is IEnumerable) {
                     continue;
                 }
 
@@ -341,9 +337,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         public void WriteDump(IEnumerable<ObjectDumpItem> dumpItems, Stream stream)
         {
-            using(var writer = new StreamWriter(stream, Encoding.UTF8, 1024 * 4, true)) {
-                WriteDump(dumpItems, writer);
-            }
+            using var writer = new StreamWriter(stream, Encoding.UTF8, 1024 * 4, true);
+            WriteDump(dumpItems, writer);
         }
 
 
