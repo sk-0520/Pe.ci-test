@@ -122,16 +122,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return value.Equals(GetNullValue(value.GetType()));
         }
 
-        public override string PreFormatStatement(string statement)
-        {
-            return string.Join(
-                Environment.NewLine,
-                TextUtility.ReadLines(statement)
-                    .Select(s => s.Trim())
-                    .SkipWhile(s => IsIgnoreStatement(s))
-            );
-        }
-
         #endregion
     }
 
@@ -167,7 +157,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var indent = "    ";
 
             var lines = TextUtility.ReadLines(statement).ToList();
-            var width = (1 + (int)Math.Log10(lines.Count)).ToString();
 
             var sb = new StringBuilder(lines.Sum(s => s.Length) * 2);
 
@@ -202,7 +191,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             sb.AppendLine("[SQL]");
             foreach(var line in lines.Counting(1)) {
                 sb.Append(indent);
-                sb.AppendFormat("{0," + width + "}: ", line.Number);
                 sb.AppendLine(line.Value);
             }
             if(parameter != null) {

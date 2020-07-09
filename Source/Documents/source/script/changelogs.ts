@@ -155,7 +155,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#668: SQLの実行ログにてスペース破棄とか行番号追加とか、いる？"
 					},
 					{
 						"revision": "",
