@@ -117,7 +117,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "カラーパレット選択時のカーソル・視覚状態を変更"
 					},
 					{
 						"revision": "",
