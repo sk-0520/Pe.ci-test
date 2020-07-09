@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         /// <param name="iconBox"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(IconBox iconBox, Point iconScale);
+        object GetIcon(IconBox iconBox, Point dpiScale);
 
         /// <summary>
         /// アイテムの実行。

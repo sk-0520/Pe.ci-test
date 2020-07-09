@@ -97,11 +97,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
-        protected BitmapSource ResizeImage(BitmapSource bitmapSource, Point iconScale)
+        protected BitmapSource ResizeImage(BitmapSource bitmapSource, Point dpiScale)
         {
             ThrowIfDisposed();
 
-            var iconSize = new IconSize(IconBox, iconScale);
+            var iconSize = new IconSize(IconBox, dpiScale);
 
             if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
                 Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return bitmapSource;
         }
 
-        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, Point iconScale, CancellationToken cancellationToken)
+        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, Point dpiScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -151,22 +151,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", path);
                     var iconLoader = new IconLoader(LoggerFactory);
-                    static BitmapSource LoadCore(string path, int index, IconBox iconBox, Point iconScale, IconLoader iconLoader)
+                    static BitmapSource LoadCore(string path, int index, IconBox iconBox, Point dpiScale, IconLoader iconLoader)
                     {
-                        var iconSize = new IconSize(iconBox, iconScale);
+                        var iconSize = new IconSize(iconBox, dpiScale);
                         var image = iconLoader.Load(path, index, iconSize);
                         return FreezableUtility.GetSafeFreeze(image!);
                     }
-                    iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, iconScale, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, iconScale, iconLoader);
+                    iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, dpiScale, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, dpiScale, iconLoader);
                 }
 
                 return iconImage;
             });
         }
 
-        protected abstract Task<BitmapSource?> LoadImplAsync(Point iconScale, CancellationToken cancellationToken);
+        protected abstract Task<BitmapSource?> LoadImplAsync(Point dpiScale, CancellationToken cancellationToken);
 
-        public async Task<BitmapSource?> LoadAsync(bool useCache, Point iconScale, CancellationToken cancellationToken)
+        public async Task<BitmapSource?> LoadAsync(bool useCache, Point dpiScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             RunningStatusImpl.State = RunningState.Running;
             try {
-                var iconImage = await LoadImplAsync(iconScale, cancellationToken);
+                var iconImage = await LoadImplAsync(dpiScale, cancellationToken);
                 RunningStatusImpl.State = RunningState.End;
                 if(useCache) {
                     CachedImage = iconImage;
@@ -233,9 +233,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IconImageLoaderBase
 
-        protected override Task<BitmapSource?> LoadImplAsync(Point iconScale, CancellationToken cancellationToken)
+        protected override Task<BitmapSource?> LoadImplAsync(Point dpiScale, CancellationToken cancellationToken)
         {
-            return GetIconImageAsync(IconData, iconScale, cancellationToken);
+            return GetIconImageAsync(IconData, dpiScale, cancellationToken);
         }
 
         #endregion

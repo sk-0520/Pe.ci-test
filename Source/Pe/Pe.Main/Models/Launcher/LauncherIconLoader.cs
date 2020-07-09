@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(Point iconScale)
+        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(Point dpiScale)
         {
             ThrowIfDisposed();
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 IReadOnlyList<byte[]>? imageBinary;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconBox, iconScale);
+                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconBox, dpiScale);
                 }
 
                 if(imageBinary != null && imageBinary.Count == 0) {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IReadOnlyIconData iconData, Point iconScale, CancellationToken cancellationToken)
+        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IReadOnlyIconData iconData, Point dpiScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             };
 
             if(Path.IsPathFullyQualified(editIconData.Path)) {
-                return GetIconImageAsync(editIconData, iconScale, cancellationToken);
+                return GetIconImageAsync(editIconData, dpiScale, cancellationToken);
             }
 
             if(string.IsNullOrWhiteSpace(editIconData.Path)) {
@@ -113,17 +113,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             editIconData.Path = pathItem.File.FullName;
             editIconData.Index = 0;
-            return GetIconImageAsync(editIconData, iconScale, cancellationToken);
+            return GetIconImageAsync(editIconData, dpiScale, cancellationToken);
         }
 
-        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, Point iconScale, bool tuneSize, CancellationToken cancellationToken)
+        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, Point dpiScale, bool tuneSize, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
-            var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, iconScale, cancellationToken).ConfigureAwait(false);
+            var iconImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Icon, dpiScale, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 if(tuneSize) {
-                    return ResizeImage(iconImage, iconScale);
+                    return ResizeImage(iconImage, dpiScale);
                 }
                 return iconImage;
             }
@@ -132,10 +132,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
             //}
 
-            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, iconScale, cancellationToken).ConfigureAwait(false);
+            var commandImage = await GetImageCoreAsync(launcherIconData.Kind, launcherIconData.Path, dpiScale, cancellationToken).ConfigureAwait(false);
             if(commandImage != null) {
                 if(tuneSize) {
-                    return ResizeImage(commandImage, iconScale);
+                    return ResizeImage(commandImage, dpiScale);
                 }
                 return commandImage;
             }
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             });
         }
 
-        protected async Task SaveImageAsync(BitmapSource iconImage, Point iconScale)
+        protected async Task SaveImageAsync(BitmapSource iconImage, Point dpiScale)
         {
             ThrowIfDisposed();
 
@@ -172,16 +172,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                    var existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, IconBox, iconScale);
+                    var existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, IconBox, dpiScale);
                     if(existIconState) {
-                        launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                        launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, IconBox, dpiScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
-                        launcherItemIconStatusEntityDao.InsertLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                        launcherItemIconStatusEntityDao.InsertLastUpdatedIconTimestamp(LauncherItemId, IconBox, dpiScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     }
 
                     var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                    launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, IconBox, iconScale);
-                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, IconBox, iconScale, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, IconBox, dpiScale);
+                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, IconBox, dpiScale, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
                 }
 
@@ -190,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         }
 
-        async Task<BitmapSource?> MakeImageAsync(Point iconScale, CancellationToken cancellationToken)
+        async Task<BitmapSource?> MakeImageAsync(Point dpiScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -198,10 +198,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             var launcherIconData = GetIconData();
 
             // アイコン取得
-            var iconImage = await GetImageAsync(launcherIconData, iconScale, true, cancellationToken).ConfigureAwait(false);
+            var iconImage = await GetImageAsync(launcherIconData, dpiScale, true, cancellationToken).ConfigureAwait(false);
             if(iconImage != null) {
                 // データ書き込み(失敗してもアイコンが取得できてるならOK)
-                var _ = SaveImageAsync(iconImage, iconScale);
+                var _ = SaveImageAsync(iconImage, dpiScale);
             } else {
                 Logger.LogWarning("アイコン取得失敗: {0}, {1}", LauncherItemId, ObjectDumper.GetDumpString(launcherIconData));
             }
@@ -214,17 +214,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region IconImageLoaderBase
 
-        protected override async Task<BitmapSource?> LoadImplAsync(Point iconScale, CancellationToken cancellationToken)
+        protected override async Task<BitmapSource?> LoadImplAsync(Point dpiScale, CancellationToken cancellationToken)
         {
             var counter = new Counter(RetryMaxCount);
             foreach(var count in counter) {
                 try {
-                    var existisResult = await LoadExistsImageAsync(iconScale).ConfigureAwait(false);
+                    var existisResult = await LoadExistsImageAsync(dpiScale).ConfigureAwait(false);
                     if(existisResult.Success) {
                         return existisResult.SuccessValue;
                     }
 
-                    var image = await MakeImageAsync(iconScale, cancellationToken).ConfigureAwait(false);
+                    var image = await MakeImageAsync(dpiScale, cancellationToken).ConfigureAwait(false);
                     return image;
                 } catch(SynchronizationLockException ex) {
                     if(count.IsLast) {

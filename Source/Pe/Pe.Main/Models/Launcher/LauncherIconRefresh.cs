@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        public Task LoadAndSaveAsync(Point iconScale, CancellationToken cancellationToken)
+        public Task LoadAndSaveAsync(Point dpiScale, CancellationToken cancellationToken)
         {
             // アイコンパス取得
             var launcherIconData = GetIconData();
@@ -40,14 +40,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             // アイコン取得
             Logger.LogDebug("ランチャーアイテムのアイコン取得開始: {0}, [{1}], [{2}], {3}", IconBox, launcherIconData.Path, launcherIconData.Icon, LauncherItemId);
 
-            GetImageAsync(launcherIconData, iconScale, true, cancellationToken).ContinueWith(t => {
+            GetImageAsync(launcherIconData, dpiScale, true, cancellationToken).ContinueWith(t => {
                 try {
                     if(t.IsCompletedSuccessfully) {
                         var image = t.Result;
                         if(image != null) {
                             // 内部でシャットダウン
                             Logger.LogDebug("ランチャーアイテムのアイコン更新開始: {0}, {1}", IconBox, LauncherItemId);
-                            return SaveImageAsync(image, iconScale);
+                            return SaveImageAsync(image, dpiScale);
                         } else {
                             Logger.LogDebug("ランチャーアイテムのアイコン更新失敗: {0}, {1}", IconBox, LauncherItemId);
                         }
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             using(var commander = FileDatabaseBarrier.WaitRead()) {
                 var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconBox, target.IconScale);
+                var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconBox, target.DpiScale);
                 if(nowStatus == null) {
                     // 対象アイテムは破棄された
                     return Task.CompletedTask;
@@ -130,7 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var loader = new LauncherIconRefreshLoader(launcherItemId, target.IconBox, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
-            return loader.LoadAndSaveAsync(target.IconScale, cancellationToken);
+            return loader.LoadAndSaveAsync(target.DpiScale, cancellationToken);
         }
 
 

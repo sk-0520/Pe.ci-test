@@ -70,9 +70,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         #region function
 
-        public async Task LoadAsync(Point iconScale, CancellationToken cancellationToken)
+        public async Task LoadAsync(Point dpiScale, CancellationToken cancellationToken)
         {
-            this._imageSource = await Model.LoadAsync(UseCache, iconScale, cancellationToken);
+            this._imageSource = await Model.LoadAsync(UseCache, dpiScale, cancellationToken);
             RaisePropertyChanged(nameof(ImageSource));
         }
 

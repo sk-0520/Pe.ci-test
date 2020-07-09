@@ -36,11 +36,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
             };
         }
 
-        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, Point iconScale, bool isStrong)
+        DependencyObject GetGroupImageCore(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, Point dpiScale, bool isStrong)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
-                var iconSize = new IconSize(iconBox, iconScale);
+                var iconSize = new IconSize(iconBox, dpiScale);
                 viewBox.Width = iconSize.Width;
                 viewBox.Height = iconSize.Height;
 
@@ -70,9 +70,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
             return viewBox;
         }
 
-        public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, Point iconScale, bool isStrong)
+        public DependencyObject GetGroupImage(LauncherGroupImageName imageName, Color imageColor, IconBox iconBox, Point dpiScale, bool isStrong)
         {
-            return GetGroupImageCore(imageName, imageColor, iconBox, iconScale, isStrong);
+            return GetGroupImageCore(imageName, imageColor, iconBox, dpiScale, isStrong);
         }
 
         #endregion
