@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -18,8 +20,13 @@ using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
-    public class ImportProgramsViewModel : ElementViewModelBase<ImportProgramsElement>
+    public class ImportProgramsViewModel : ElementViewModelBase<ImportProgramsElement>, IViewLifecycleReceiver
     {
+        #region variable
+
+        bool _nowImporting;
+
+        #endregion
         public ImportProgramsViewModel(ImportProgramsElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
@@ -35,6 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         ActionModelViewModelObservableCollectionManager<ProgramElement, ProgramViewModel> ProgramCollection { get; }
         public ReadOnlyObservableCollection<ProgramViewModel> ProgramItems => ProgramCollection.ViewModels;
 
+        public bool NowImporting
+        {
+            get => this._nowImporting;
+            private set => SetProperty(ref this._nowImporting, value);
+        }
+
         #endregion
 
         #region command
@@ -48,8 +61,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public ICommand CloseCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 CloseRequest.Send();
-            }
-        ));
+            },
+            () => !NowImporting
+        ).ObservesProperty(() => NowImporting));
 
         public ICommand ImportCommand => GetOrCreateCommand(() => new DelegateCommand(
             async () => {
@@ -57,11 +71,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
                     ["TotalCount"] = Model.ProgramItems.Count.ToString(),
                     ["ImportCount"] = Model.ProgramItems.Count(i => i.IsImport).ToString(),
                 });
-                //TODO: 入力制限が必要
-                await Model.ImportAsync();
-                CloseRequest.Send();
-            }
-        ));
+                try {
+                    NowImporting = true;
+                    await Model.ImportAsync();
+                    CloseRequest.Send();
+                } finally {
+                    NowImporting = false;
+                }
+            },
+            () => !NowImporting
+        ).ObservesProperty(() => NowImporting));
 
         #endregion
 
@@ -81,5 +100,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         }
 
         #endregion
+
+        #region IViewLifecycleReceiver
+
+        public virtual void ReceiveViewInitialized(Window window)
+        { }
+
+        public virtual void ReceiveViewLoaded(Window window)
+        { }
+
+        public void ReceiveViewUserClosing(CancelEventArgs e)
+        {
+            e.Cancel = NowImporting;
+        }
+
+        public void ReceiveViewClosing(CancelEventArgs e)
+        { }
+
+        /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
+        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        { }
+
+        #endregion
+
     }
 }
