@@ -91,62 +91,15 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.011",
+		"date": "2020/07/09",
+		"version": "0.99.013",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "features",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "c0ea1fe0bc8eb35e9a44751275fc69c799b015f3",
 						"subject": "#671: ノートが自動的に隠れなくなっている "
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -154,16 +107,8 @@ const changelogs = [
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "71368427c5f8fc92af3e058deacbb618260e371a",
 						"subject": "#667: Visual Studio 2019 Image Library の使用を明記する"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
