@@ -205,7 +205,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         /// <inheritdoc cref="INoteTheme.GetBlindEffect(ColorPair{Color})"/>
         public Effect GetBlindEffect(ColorPair<Color> baseColor)
         {
-            var content = GetResourceValue<Effect>(nameof(INoteTheme), nameof(GetBlindEffect));
+            var content = GetResourceValue<Effect>(nameof(DefaultNoteTheme), nameof(GetBlindEffect));
             return content;
         }
 
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1075:URIs should not be hardcoded")]
         public DependencyObject GetBlindContent(ColorPair<Color> baseColor)
         {
-            var srcContent = GetResourceValue<DependencyObject>(nameof(INoteTheme), nameof(GetBlindContent));
+            var srcContent = GetResourceValue<DependencyObject>(nameof(DefaultNoteTheme), nameof(GetBlindContent));
 
             using var srcContentStream = new IO.MemoryStream();
             using(var keepStream = new KeepStream(srcContentStream)) {

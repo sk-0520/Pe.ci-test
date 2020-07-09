@@ -134,7 +134,7 @@ const changelogs = [
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#671: ノートが自動的に隠れなくなっている "
 					},
 					{
 						"revision": "",
