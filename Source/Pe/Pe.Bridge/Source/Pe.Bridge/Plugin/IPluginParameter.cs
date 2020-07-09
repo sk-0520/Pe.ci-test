@@ -15,6 +15,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         #region property
 
         IPlatformTheme PlatformTheme { get; }
+        IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         ILoggerFactory LoggerFactory { get; }
 

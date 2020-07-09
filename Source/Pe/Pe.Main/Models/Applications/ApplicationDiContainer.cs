@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<TModel, TModel>(DiLifecycle.Singleton)
                 .Register<TViewModel, TViewModel>(DiLifecycle.Transient)
                 .Register<ILogger, ILogger>(@this.Build<ILoggerFactory>().CreateLogger(typeof(TView)))
-                .DirtyRegister<TView, TViewModel>(nameof(FrameworkElement.DataContext))
+                .RegisterMember<TView, TViewModel>(nameof(FrameworkElement.DataContext))
             ;
         }
 

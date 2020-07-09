@@ -100,6 +100,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         /// <inheritdoc cref="IHitValuesCreator.CalcScore(ReadOnlySpan{char}, ReadOnlySpan{char}, IReadOnlyList{HitValue})"/>
         public int CalcScore(ReadOnlySpan<char> source, IReadOnlyList<HitValue> hitValues)
         {
+            if(hitValues.Count == 0) {
+                return GetScore(ScoreKind.Initial, NoBonus);
+            }
+
             if(hitValues.Count == 1 && hitValues.All(i => i.IsHit)) {
                 // 完全一致
                 return GetScore(ScoreKind.Perfect, NoBonus);

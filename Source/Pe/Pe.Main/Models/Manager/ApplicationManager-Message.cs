@@ -636,10 +636,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void MouseHooker_MouseDown(object? sender, MouseHookEventArgs e)
         {
-            Logger.LogTrace("キー入力待ちリセット");
             if(NotifyManager.ExistsLog(KeyboardNotifyLogId)) {
                 NotifyManager.ClearLog(KeyboardNotifyLogId);
                 KeyboardNotifyLogId = Guid.Empty;
+                Logger.LogTrace("キー入力待ちリセット");
             }
             KeyActionChecker.Reset();
 

@@ -157,6 +157,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Accessor = accessor;
             Locker = locker;
         }
+
         #region property
 
         protected IDatabaseAccessor Accessor { get; }

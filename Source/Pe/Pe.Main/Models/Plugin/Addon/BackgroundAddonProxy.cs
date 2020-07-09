@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal class BackgroundAddonProxy: AddonsProxyBase<IBackground>, IBackground
     {
-        public BackgroundAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(addons, pluginContextFactory, userAgentFactory, platformTheme, dispatcherWrapper, loggerFactory)
+        public BackgroundAddonProxy(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(addons, pluginContextFactory, userAgentFactory, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         {
             BackgroundAddonContextFactory = backgroundAddonContextFactory;
         }

@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region property
 
+        public bool IsLazyLoad => Editor.IsLazyLoad;
+
         [IgnoreValidation]
         LauncherItemSettingEditorElement Editor { get; }
         [IgnoreValidation]
@@ -42,7 +44,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             return new LauncherItemSettingEditorViewModel(Editor, Icon, DispatcherWrapper, LoggerFactory);
         }
 
+        internal void LazyLoad()
+        {
+            if(!IsLazyLoad) {
+                throw new InvalidOperationException(nameof(IsLazyLoad));
+            }
+
+            Editor.LazyLoad();
+        }
+
         #endregion
+
+        #region LauncherItemCustomizeEditorViewModel
+
+        protected override bool SkipValidation => IsLazyLoad;
 
         protected override void Dispose(bool disposing)
         {
@@ -55,5 +70,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             base.Dispose(disposing);
         }
 
+        #endregion
     }
 }

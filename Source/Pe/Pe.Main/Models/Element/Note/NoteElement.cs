@@ -268,8 +268,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
                 noteContentDao.InsertNewContent(noteContent, DatabaseCommonStatus.CreateCurrentAccount());
                 */
 
-                var screenOperator = new ScreenOperator(LoggerFactory);
-                screenOperator.RegisterDatabase(DockScreen, commander, DatabaseStatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
+                ScreenUtility.RegisterDatabase(DockScreen, commander, DatabaseStatementLoader, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount(), LoggerFactory);
 
                 noteData = notesEntityDao.SelectNote(NoteId)!;
 

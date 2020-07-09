@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,14 +14,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <see cref="Dispatcher"/>の使用をラップ。
     /// <para><see cref="Dispatcher"/>自体は大公開しているがなんかそれっぽく楽に使いたい。</para>
     /// </summary>
-    public class DispatcherWrapper : IDispatcherWrapper
+    public class DispatcherWrapper: IDispatcherWrapper
     {
         /// <summary>
         /// <paramref name="dispatcher"/>をラップする。
         /// </summary>
         /// <param name="dispatcher">ラップする対象。</param>
         public DispatcherWrapper(Dispatcher dispatcher)
-            :this(dispatcher, TimeSpan.FromMinutes(1))
+            : this(dispatcher, TimeSpan.FromMinutes(1))
         { }
 
         public DispatcherWrapper(Dispatcher dispatcher, TimeSpan waitTime)
@@ -77,20 +78,41 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return InvokeAsync(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
+        public TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
+        {
+            if(CheckAccess()) {
+                return func(argument);
+            } else {
+                using var waitBag = new Toybag<TArgument, TResult>(func, new ManualResetEventSlim(), argument, cancellationToken);
+                Dispatcher.BeginInvoke(dispatcherPriority, new Action<Toybag<TArgument, TResult>>(bag => {
+                    bag.CancellationToken.ThrowIfCancellationRequested();
+                    bag.Result = bag.Method(bag.Parameter);
+                    bag.Event.Set();
+                }), waitBag);
+                if(waitBag.Event.Wait(WaitTime, cancellationToken)) {
+                    return waitBag.Result!;
+                }
+                throw new TimeoutException(WaitTime.ToString());
+            }
+        }
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        public TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument, DispatcherPriority dispatcherPriority) => Get(func, argument, dispatcherPriority, CancellationToken.None);
+        /// <inheritdoc cref="Get{TResult}(Func{TResult}, DispatcherPriority, CancellationToken)"/>
+        public TResult Get<TArgument, TResult>(Func<TArgument, TResult> func, TArgument argument) => Get(func, argument, DispatcherPriority.Send, CancellationToken.None);
+
         public T Get<T>(Func<T> func, DispatcherPriority dispatcherPriority, CancellationToken cancellationToken)
         {
             if(CheckAccess()) {
                 return func();
             } else {
-                T result = default!;
-                using var resultWait = new ManualResetEventSlim();
-                Dispatcher.BeginInvoke(new Action(() => {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = func();
-                    resultWait.Set();
-                }), dispatcherPriority);
-                if(resultWait.Wait(WaitTime, cancellationToken)) {
-                    return result;
+                using var waitBag = new Toybag<T>(func, new ManualResetEventSlim(), cancellationToken);
+                Dispatcher.BeginInvoke(dispatcherPriority, new Action<Toybag<T>>(bag => {
+                    bag.CancellationToken.ThrowIfCancellationRequested();
+                    bag.Result = bag.Method();
+                    bag.Event.Set();
+                }), waitBag);
+                if(waitBag.Event.Wait(WaitTime, cancellationToken)) {
+                    return waitBag.Result!;
                 }
                 throw new TimeoutException(WaitTime.ToString());
             }
@@ -104,22 +126,32 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return Get(func, DispatcherPriority.Send, CancellationToken.None);
         }
 
-        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
+        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument, DispatcherPriority dispatcherPriority)
         {
-            return Dispatcher.BeginInvoke(action, dispatcherPriority, argument);
+            if(CheckAccess()) {
+                action(argument);
+                return Task.CompletedTask;
+            } else {
+                return Dispatcher.BeginInvoke(dispatcherPriority, action, argument).Task;
+            }
         }
-        public DispatcherOperation Begin<TArgument>(Action<TArgument> action, TArgument argument)
+        public Task Begin<TArgument>(Action<TArgument> action, TArgument argument)
         {
-            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send, argument);
+            return Begin(action, argument, DispatcherPriority.Send);
         }
 
-        public DispatcherOperation Begin(Action action, DispatcherPriority dispatcherPriority)
+        public Task Begin(Action action, DispatcherPriority dispatcherPriority)
         {
-            return Dispatcher.BeginInvoke(action, dispatcherPriority);
+            if(CheckAccess()) {
+                action();
+                return Task.CompletedTask;
+            } else {
+                return Dispatcher.BeginInvoke(dispatcherPriority, action).Task;
+            }
         }
-        public DispatcherOperation Begin(Action action)
+        public Task Begin(Action action)
         {
-            return Dispatcher.BeginInvoke(action, DispatcherPriority.Send);
+            return Begin(action, DispatcherPriority.Send);
         }
 
 
@@ -129,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <summary>
     /// 生成元の<see cref="Dispatcher"/>を用いて<see cref="DispatcherWrapper"/>を生成する。
     /// </summary>
-    public sealed class CurrentDispatcherWrapper : DispatcherWrapper
+    public sealed class CurrentDispatcherWrapper: DispatcherWrapper
     {
         public CurrentDispatcherWrapper()
             : base(Dispatcher.CurrentDispatcher)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -26,24 +27,38 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #endregion
 
-        public SettingContainerViewModel(SettingContainerElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public SettingContainerViewModel(SettingContainerElement model, CustomConfiguration configuration, IGeneralTheme generalTheme, IUserTracker userTracker, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
+            //TODO: #634, クッソ重い
+#if DEBUG
+            var sw = Stopwatch.StartNew();
+#endif
+
             GeneralTheme = generalTheme;
 
             AllLauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel>(Model.AllLauncherItems) {
                 ToViewModel = m => new LauncherItemSettingEditorViewModel(m, DispatcherWrapper, LoggerFactory),
             };
+#if DEBUG
+            Logger.LogTrace("#634: {0}", sw.Elapsed);
+#endif
             AllLauncherGroupCollection = new ActionModelViewModelObservableCollectionManager<LauncherGroupSettingEditorElement, LauncherGroupSettingEditorViewModel>(Model.AllLauncherGroups) {
                 ToViewModel = m => new LauncherGroupSettingEditorViewModel(m, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory),
             };
+#if DEBUG
+            Logger.LogTrace("#634: {0}", sw.Elapsed);
+#endif
 
-            GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, configuration, generalTheme, DispatcherWrapper, LoggerFactory);
+            GeneralSettingEditor = new GeneralsSettingEditorViewModel(Model.GeneralsSettingEditor, configuration, generalTheme, imageLoader, DispatcherWrapper, LoggerFactory);
             LauncherItemsSettingEditor = new LauncherItemsSettingEditorViewModel(Model.LauncherItemsSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
             LauncherGroupsSettingEditor = new LauncherGroupsSettingEditorViewModel(Model.LauncherGroupsSettingEditor, AllLauncherItemCollection, AllLauncherGroupCollection, DispatcherWrapper, LoggerFactory);
             LauncherToobarsSettingEditor = new LauncherToobarsSettingEditorViewModel(Model.LauncherToobarsSettingEditor, AllLauncherGroupCollection, generalTheme, DispatcherWrapper, LoggerFactory);
             KeyboardSettingEditor = new KeyboardSettingEditorViewModel(Model.KeyboardSettingEditor, AllLauncherItemCollection, DispatcherWrapper, LoggerFactory);
-            PluginsSettingEditor = new PluginsSettingEditorViewModel(Model.PluginsSettingEditor, DispatcherWrapper, LoggerFactory);
+            PluginsSettingEditor = new PluginsSettingEditorViewModel(Model.PluginsSettingEditor, imageLoader, DispatcherWrapper, LoggerFactory);
+#if DEBUG
+            Logger.LogTrace("#634: {0}", sw.Elapsed);
+#endif
 
             EditorItems = new List<ISettingEditorViewModel>() {
                 GeneralSettingEditor,
@@ -53,12 +68,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 KeyboardSettingEditor,
                 PluginsSettingEditor,
             };
-//#if DEBUG
-//            this._selectedEditor = PluginsSettingEditor;
-//#else
-//            this._selectedEditor = GeneralSettingEditor;
-//#endif
+            //#if DEBUG
+            //            this._selectedEditor = PluginsSettingEditor;
+            //#else
+            //            this._selectedEditor = GeneralSettingEditor;
+            //#endif
             this._selectedEditor = GeneralSettingEditor;
+#if DEBUG
+            Logger.LogTrace("#634: {0}", sw.Elapsed);
+#endif
         }
 
         #region property

@@ -105,11 +105,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public ActionDisposer(Action<bool> action)
         {
-            if(action == null) {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            Action = action;
+            Action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         #region property
@@ -139,11 +135,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         public ActionDisposer(Action<bool, TArgument> action, TArgument argument)
         {
-            if(action == null) {
-                throw new ArgumentNullException(nameof(action));
-            }
-
-            Action = action;
+            Action = action ?? throw new ArgumentNullException(nameof(action));
             Argument = argument;
         }
 
@@ -168,6 +160,19 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             base.Dispose(disposing);
         }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// <see cref="ActionDisposer"/>, <see cref="ActionDisposer{TArgument}"/> の生成ヘルパー。
+    /// </summary>
+    public static class ActionDisposerHelper
+    {
+        #region function
+
+        public static ActionDisposer Create(Action<bool> action) => new ActionDisposer(action);
+        public static ActionDisposer<TArgument> Create<TArgument>(Action<bool, TArgument> action, TArgument argument) => new ActionDisposer<TArgument>(action, argument);
 
         #endregion
     }

@@ -118,25 +118,25 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
             if(hGroup == IntPtr.Zero) {
-                Debug.WriteLine($"return {nameof(NativeMethods.FindResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.FindResource)}");
                 return null;
             }
 
             var hLoadGroup = NativeMethods.LoadResource(hModule, hGroup);
             if(hLoadGroup == IntPtr.Zero) {
-                Debug.WriteLine($"return {nameof(NativeMethods.LoadResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.LoadResource)}");
                 return null;
             }
 
             var resData = NativeMethods.LockResource(hLoadGroup);
             if(resData == IntPtr.Zero) {
-                Debug.WriteLine($"return {nameof(NativeMethods.LockResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.LockResource)}");
                 return null;
             }
 
             var resSize = NativeMethods.SizeofResource(hModule, hGroup);
             if(resSize == 0) {
-                Debug.WriteLine($"return {nameof(NativeMethods.SizeofResource)}");
+                Logger.LogTrace($"return {nameof(NativeMethods.SizeofResource)}");
                 return null;
             }
 
@@ -157,51 +157,50 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var binaryList = new List<byte[]>();
             EnumResNameProc proc = (hMod, type, name, lp) => {
                 var binaryGroupIconData = GetResourceBinaryData(hMod, name, ResType.GROUP_ICON);
-                if(binaryGroupIconData != null) {
-                    var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
-                    //Debug.WriteLine("iconCount = {0}", iconCount);
+                if(binaryGroupIconData == null) {
+                    return true;
+                }
 
-                    var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
+                var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
+
+                var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
+                for(var i = 0; i < iconCount; i++) {
+                    var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
+                    if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
+                        break;
+                    }
+                    var length = BitConverter.ToInt32(
+                        binaryGroupIconData,
+                        readOffset
+                    );
+                    totalSize += length;
+                }
+
+                // TODO:BinaryChunkedStreamがまともに動くなら切り替える
+                using(var stream = new BinaryWriter(new MemoryStream(totalSize))) {
+                    stream.Write(binaryGroupIconData, 0, sizeofICONDIR);
+
+                    var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
                     foreach(var i in Enumerable.Range(0, iconCount)) {
-                        var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
-                        if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
-                            break;
+                        stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
+                        var offsetWrite = sizeofICONDIR + sizeofGRPICONDIRENTRY * i;
+                        if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
+                            continue;
                         }
-                        var length = BitConverter.ToInt32(
-                            binaryGroupIconData,
-                            readOffset
-                        );
-                        //Debug.WriteLine("[{0}] = {1} byte", i, length);
-                        totalSize += length;
-                    }
-                    //Debug.WriteLine("totalSize = {0}", totalSize);
+                        stream.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
+                        stream.Write(picOffset);
 
-                    // TODO:BinaryChunkedStreamがまともに動くなら切り替える
-                    using(var stream = new BinaryWriter(new MemoryStream(totalSize))) {
-                        stream.Write(binaryGroupIconData, 0, sizeofICONDIR);
+                        stream.Seek(picOffset, SeekOrigin.Begin);
 
-                        var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
-                        foreach(var i in Enumerable.Range(0, iconCount)) {
-                            stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
-                            var offsetWrite = sizeofICONDIR + sizeofGRPICONDIRENTRY * i;
-                            if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
-                                continue;
-                            }
-                            stream.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
-                            stream.Write(picOffset);
-
-                            stream.Seek(picOffset, SeekOrigin.Begin);
-
-                            ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
-                            var pic = GetResourceBinaryData(hModule, new IntPtr(id), ResType.ICON);
-                            if(pic != null) {
-                                stream.Write(pic, 0, pic.Length);
-                                picOffset += pic.Length;
-                            }
+                        ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
+                        var pic = GetResourceBinaryData(hMod, new IntPtr(id), ResType.ICON);
+                        if(pic != null) {
+                            stream.Write(pic, 0, pic.Length);
+                            picOffset += pic.Length;
                         }
-
-                        binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());
                     }
+
+                    binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());
                 }
 
                 return true;
@@ -222,9 +221,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="hasIcon"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        BitmapSource? LoadNormalIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
+        BitmapSource? LoadNormalIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
-            Debug.Assert(new[] { IconBox.Small, IconBox.Normal }.Any(i => (int)i == iconSize.Width), iconSize.ToString());
+            Debug.Assert(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal);
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             // 16, 32 px
@@ -285,10 +284,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="hasIcon"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        BitmapSource? LoadLargeIcon(string iconPath, IconSize iconSize, int iconIndex, bool hasIcon)
+        BitmapSource? LoadLargeIcon(string iconPath, int iconIndex, bool hasIcon, IconSize iconSize)
         {
-            //Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-            Debug.Assert(new[] { (int)IconBox.Big, (int)IconBox.Large }.Any(i => i == iconSize.Width), iconSize.ToString());
             Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
             if(hasIcon) {
@@ -350,9 +347,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="iconPath">対象ファイルパス。</param>
         /// <param name="iconSize">アイコンサイズ。</param>
         /// <param name="iconIndex">アイコンインデックス。</param>
-        /// <param name="logger"></param>
         /// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-        public BitmapSource? Load(string iconPath, IconSize iconSize, int iconIndex)
+        public BitmapSource? Load(string iconPath, int iconIndex, IconSize iconSize)
         {
             // 実行形式
             var hasIcon = PathUtility.HasIconPath(iconPath);
@@ -360,9 +356,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             BitmapSource result;
             if(iconSize.Width == (int)IconBox.Small || iconSize.Width == (int)IconBox.Normal) {
-                result = LoadNormalIcon(iconPath, iconSize, useIconIndex, hasIcon)!;
+                result = LoadNormalIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
             } else {
-                result = LoadLargeIcon(iconPath, iconSize, useIconIndex, hasIcon)!;
+                result = LoadLargeIcon(iconPath, useIconIndex, hasIcon, iconSize)!;
             }
 
             return result;

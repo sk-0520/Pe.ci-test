@@ -140,6 +140,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return data;
         }
 
+        public IEnumerable<LauncherItemData> SelectApplicationLauncherItems()
+        {
+            var statement = LoadStatement();
+            return Commander.Query<LauncherItemsRowDto>(statement)
+                .Select(i => ConvertFromDto(i))
+            ;
+        }
+
         public bool SelectExistsLauncherItem(Guid launcherItemId)
         {
             var statement = LoadStatement();

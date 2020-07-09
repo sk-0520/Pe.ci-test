@@ -147,8 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     return string.Empty;
                 }
 
-                var screenOperator = new ScreenOperator(LoggerFactory);
-                return screenOperator.GetName(Model.Screen);
+                return ScreenUtility.GetName(Model.Screen, LoggerFactory);
             }
         }
         public string ScreenDeviceName => Model.Screen?.DeviceName ?? string.Empty;

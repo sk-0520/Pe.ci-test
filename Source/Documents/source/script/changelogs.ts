@@ -91,6 +91,95 @@ const changelogs = [
 	*/
 	/*--------RELEASE HEAD--------*/
 	{
+		"date": "2020/07/09",
+		"version": "0.99.013",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "c0ea1fe0bc8eb35e9a44751275fc69c799b015f3",
+						"subject": "#671: ノートが自動的に隠れなくなっている "
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "71368427c5f8fc92af3e058deacbb618260e371a",
+						"subject": "#667: Visual Studio 2019 Image Library の使用を明記する"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2020/07/07",
+		"version": "0.99.010",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "2905eecdf7571684c20a7f3d02c987a7a98e7718",
+						"subject": "#655: ランチャーアイテム自動登録にてアンインストールファイルと思しきファイル名は登録対象外とする"
+					},
+					{
+						"revision": "f7bef111cad2bad7aa64e118b86f95b10402b9b0",
+						"subject": "#662: ランチャーアイテム自動登録で登録時ではなくプレビュー時にショートカットを展開する"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "db840540ea24cc00404149cc3d68c0dfbc5bf23e",
+						"subject": "#659: CI 処理時のコミットリビジョン埋め込み処理をスキップしている"
+					},
+					{
+						"revision": "846999268fa3e8a6e774768e3bdf62c9e6ad035c",
+						"subject": "#663: ランチャーアイテム自動登録でサブディレクトリが読み込めていない"
+					},
+					{
+						"revision": "8527b589cb5e9d58e372ed2ab4b11d0452568230",
+						"subject": "#661: アイコン取得時に基本サイズ以外にDPIスケールも考慮する",
+						"comments": [
+							"DPI が取れたり取れなかったりのヤケクソ DPI スケール反映",
+							"環境によるけど 20px とか 24px とか 40px とかのアイコンをとってくるので対象が該当アイコンサイズを持っていなければ結局ぼけるっていうね"
+						]
+					},
+					{
+						"revision": "6bce56ab96d2c491ab4a3eebb3eb6152bec87366",
+						"subject": "#634: 設定画面を開く際にやたらめったら時間がかかる",
+						"comments": [
+							"かなり手を入れたのでバグってたらめんご"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "27afe5cd24dfb4879f9559890ce8cbd2048b8a08",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 81.3.100 -> 83.4.20",
+						"comments": [
+							"WebView処理周りで透過効かなくなってるっぽいなー"
+						]
+					},
+					{
+						"revision": "034b6f79c849e418f75685a5757426cc7faaad02",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.8.0.18411 -> 8.9.0.19135"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/07/03",
 		"version": "0.99.001",
 		"contents": [
@@ -98,27 +187,14 @@ const changelogs = [
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
-						"subject": "#658: ランチャーアイテム更新間隔にて分が毎分になっている "
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"revision": "60ed1438fab4d615d1f5ac25978eaf74ad3f2c51",
+						"subject": "#658: ランチャーアイテム更新間隔にて分が毎分になっている"
 					}
 				]
 			}
 		]
 	},
-	{
-		"date": "2020/07/02",
+	{		"date": "2020/07/02",
 		"version": "0.99.000",
 		"contents": [
 			{

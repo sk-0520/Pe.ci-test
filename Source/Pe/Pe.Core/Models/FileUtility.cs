@@ -91,41 +91,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
-        /// 指定条件で不要ファイルを削除。
-        /// </summary>
-        /// <param name="baseDirectoryPath">対象ファイル群のディレクトリ。</param>
-        /// <param name="targetWildcard">対象ファイル群をワイルドカードで指定。</param>
-        /// <param name="enableCount">リストアップしたファイル群の上位から残すファイル数。</param>
-        /// <param name="catchException">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
-        /// <returns>削除ファイル数。baseDirPathが存在しない場合は -1。</returns>
-        [Obsolete]
-        public static int RotateFiles(string baseDirectoryPath, string targetWildcard, int enableCount, Func<Exception, bool> catchException)
-        {
-            if(Directory.Exists(baseDirectoryPath)) {
-                var archiveList = Directory.EnumerateFiles(baseDirectoryPath, targetWildcard)
-                    .Where(File.Exists)
-                    .OrderBy(p => Path.GetFileName(p))
-                    .Skip(enableCount - 1)
-                ;
-
-                var removeCount = 0;
-                foreach(var path in archiveList) {
-                    try {
-                        File.Delete(path);
-                        removeCount += 1;
-                    } catch(Exception ex) {
-                        if(!catchException(ex)) {
-                            break;
-                        }
-                    }
-                }
-                return removeCount;
-            } else {
-                return -1;
-            }
-        }
-
-        /// <summary>
         /// パスから名前取得。
         /// </summary>
         /// <param name="path"></param>

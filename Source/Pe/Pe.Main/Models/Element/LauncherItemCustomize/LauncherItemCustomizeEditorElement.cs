@@ -18,6 +18,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
     public class LauncherItemCustomizeEditorElement: ElementBase, ILauncherItemId
     {
+        #region variable
+
+        bool _isLazyLoad;
+
+        #endregion
         public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -34,9 +39,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IClipboardManager ClipboardManager { get; }
 
+        /// <summary>
+        /// 一括用遅延読み込みモードか。
+        /// <para>設定画面が遅い(#634)対応。</para>
+        /// </summary>
+        internal bool IsLazyLoad {
+            get => this._isLazyLoad;
+            protected private set => SetProperty(ref this._isLazyLoad, value);
+        }
+
         public string Name { get; set; } = string.Empty;
-        public string Code { get; protected set; } = string.Empty;
-        public LauncherItemKind Kind { get; private set; }
+        public string Code { get; protected private set; } = string.Empty;
+        public LauncherItemKind Kind { get; protected private set; }
         public bool IsEnabledCommandLauncher { get; set; }
 
         public IconData IconData { get; set; } = new IconData();
@@ -62,6 +76,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region function
 
+        void LoadFileCore(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+            Debug.Assert(Kind == LauncherItemKind.File);
+
+            var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            File = launcherFilesEntityDao.SelectFile(LauncherItemId);
+
+            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
+            EnvironmentVariableItems = new ObservableCollection<LauncherEnvironmentVariableData>(environmentVariableItems);
+
+            var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            if(launcherRedoItemsEntityDao.SelectExistsLauncherRedoItem(LauncherItemId)) {
+                var redoData = launcherRedoItemsEntityDao.SelectLauncherRedoItem(LauncherItemId);
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+                var exitCodes = launcherRedoSuccessExitCodesEntityDao.SelectRedoSuccessExitCodes(LauncherItemId);
+                redoData.SuccessExitCodes.SetRange(exitCodes);
+                Redo = redoData;
+            } else {
+                Redo = LauncherRedoData.GetDisable();
+            }
+        }
+
+        protected void LoadFile()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                LoadFileCore(commander, commander.Implementation);
+            }
+        }
+
         void LoadLauncherItem()
         {
             ThrowIfDisposed();
@@ -83,23 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
                 switch(Kind) {
                     case LauncherItemKind.File: {
-                            var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                            File = launcherFilesEntityDao.SelectFile(LauncherItemId);
-
-                            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                            var environmentVariableItems = launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
-                            EnvironmentVariableItems = new ObservableCollection<LauncherEnvironmentVariableData>(environmentVariableItems);
-
-                            var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                            if(launcherRedoItemsEntityDao.SelectExistsLauncherRedoItem(LauncherItemId)) {
-                                var redoData = launcherRedoItemsEntityDao.SelectLauncherRedoItem(LauncherItemId);
-                                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                                var exitCodes = launcherRedoSuccessExitCodesEntityDao.SelectRedoSuccessExitCodes(LauncherItemId);
-                                redoData.SuccessExitCodes.SetRange(exitCodes);
-                                Redo = redoData;
-                            } else {
-                                Redo = LauncherRedoData.GetDisable();
-                            }
+                            LoadFileCore(commander, commander.Implementation);
                         }
                         break;
 
@@ -317,6 +345,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
+            if(IsLazyLoad) {
+                return;
+            }
+
             LoadLauncherItem();
         }
 

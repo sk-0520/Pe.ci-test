@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 var extraInfo = kbdll.dwExtraInfo.ToUInt32();
                 if(extraInfo == SelfJobInputId) {
                     Logger.LogTrace("ignore input");
-                    return new KeyActionJobBase[0];
+                    return Array.Empty<KeyActionJobBase>();
                 }
             }
             Logger.LogTrace("{0}, {1}", key, modifierKeyStatus);

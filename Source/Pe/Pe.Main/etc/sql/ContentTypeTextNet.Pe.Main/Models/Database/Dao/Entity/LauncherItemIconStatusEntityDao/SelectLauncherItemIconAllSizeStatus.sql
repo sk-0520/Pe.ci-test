@@ -1,5 +1,6 @@
 select
 	LauncherItemIconStatus.IconBox,
+	LauncherItemIconStatus.IconScale,
 	LauncherItemIconStatus.LastUpdatedTimestamp
 from
 	LauncherItemIconStatus

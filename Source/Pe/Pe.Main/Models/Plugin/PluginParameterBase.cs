@@ -10,10 +10,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
     /// <inheritdoc cref="IPluginParameter"/>
     public abstract class PluginParameterBase: IPluginParameter
     {
-        protected PluginParameterBase(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected PluginParameterBase(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             PluginInformations = pluginInformations;
             PlatformTheme = platformTheme;
+            ImageLoader = imageLoader;
             DispatcherWrapper = dispatcherWrapper;
             LoggerFactory = loggerFactory;
         }
@@ -28,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         /// <inheritdoc cref="IPluginParameter.PlatformTheme"/>
         public IPlatformTheme PlatformTheme { get; }
+        /// <inheritdoc cref="IPluginParameter.ImageLoader"/>
+        public IImageLoader ImageLoader { get; }
         /// <inheritdoc cref="IPluginParameter.DispatcherWrapper"/>
         public IDispatcherWrapper DispatcherWrapper { get; }
         /// <inheritdoc cref="IPluginParameter.LoggerFactory"/>

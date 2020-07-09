@@ -3,6 +3,7 @@ insert into
 	(
 		[LauncherItemId],
 		[IconBox],
+		[IconScale],
 		[Sequence],
 		[Image],
 
@@ -15,6 +16,7 @@ insert into
 	(
 /* LauncherItemId           */ @LauncherItemId,
 /* IconBox                  */ @IconBox,
+/* IconScale                */ @IconScale,
 /* Sequence                 */ @Sequence,
 /* Image                    */ @Image,
 

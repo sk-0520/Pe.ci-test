@@ -41,11 +41,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
                         : matchFiles.OrderBy(i => i.Name)
                 )
                 .Skip(leaveCount)
-                .ToList()
+                .ToArray()
             ;
 
             var removedCount = 0;
-            for(var i = 0; i < targetFiles.Count; i++) {
+            for(var i = 0; i < targetFiles.Length; i++) {
                 try {
                     File.Delete(targetFiles[i].FullName);
                     removedCount += 1;

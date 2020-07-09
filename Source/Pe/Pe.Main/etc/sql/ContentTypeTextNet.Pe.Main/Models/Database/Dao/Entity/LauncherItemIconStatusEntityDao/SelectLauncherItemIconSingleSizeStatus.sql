@@ -7,3 +7,5 @@ where
 	LauncherItemIconStatus.LauncherItemId = @LauncherItemId
 	and
 	LauncherItemIconStatus.IconBox = @IconBox
+	and
+	LauncherItemIconStatus.IconScale = @IconScale

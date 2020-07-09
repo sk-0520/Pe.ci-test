@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 
@@ -56,12 +57,20 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
             Width = Height = boxSize;
         }
 
-        public IconSize(IconBox iconBox)
+        public IconSize(IconBox iconBox, Point iconScale)
         {
-            Width = Height = (int)iconBox;
+            // ここだけ X/Y 見るのもどうなんやろね
+            Width = (int)((int)iconBox * iconScale.X);
+            Height = (int)((int)iconBox * iconScale.Y);
         }
 
+
         #region property
+
+        /// <summary>
+        /// DPI が取得できないところで使用するしゃあなしDPIスケール。
+        /// </summary>
+        public static Point DefaultScale => new Point(1, 1);
 
         /// <summary>
         /// 横幅。
@@ -77,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// 正方形か。
         /// </summary>
-        readonly bool IsSquare => Width == Height;
+        public readonly bool IsSquare => Width == Height;
         #endregion
 
         #region function
@@ -88,29 +97,63 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <returns></returns>
         public readonly Size ToSize() => new Size(Width, Height);
 
-        /// <summary>
-        /// <see cref="IconBox"/> への変換。
-        /// <para>可能な限り合わせるけどわっけ分からんくなったら<see cref="IconBox.Large"/>になる。</para>
-        /// </summary>
-        /// <returns></returns>
-        public readonly IconBox ToIconBox()
-        {
-            var size = IsSquare ? Width: Math.Max(Width, Height);
-            var kinds = new[] { IconBox.Small, IconBox.Normal, IconBox.Big, IconBox.Large };
-            foreach(var kind in kinds) {
-                if(size <= (int)kind) {
-                    return kind;
-                }
-            }
-
-            return IconBox.Large;
-        }
-
         #endregion
 
         #region object
 
         public readonly override string? ToString() => $"{Width} x {Height}";
+
+        #endregion
+    }
+
+    /// <summary>
+    /// アイコンの大きさとDPIを持ち歩く。
+    /// </summary>
+    public readonly struct IconScale
+    {
+        public IconScale(IconBox box, Point scale)
+        {
+            if(double.IsNaN(scale.X) || double.IsInfinity(scale.X) || scale.X < 1) {
+                throw new ArgumentException(nameof(scale) + "." + nameof(scale.X));
+            }
+            if(double.IsNaN(scale.Y) || double.IsInfinity(scale.Y) || scale.Y < 1) {
+                throw new ArgumentException(nameof(scale) + "." + nameof(scale.Y));
+            }
+
+            Box = box;
+            Scale = scale;
+        }
+
+        #region property
+
+        /// <summary>
+        /// アイコン基本サイズ。
+        /// </summary>
+        public IconBox Box { get; }
+
+        /// <summary>
+        /// DPIスケール。
+        /// </summary>
+        public Point Scale { get; }
+
+        #endregion
+
+        #region function
+
+        /// <summary>
+        /// 現在の設定値から<see cref="IconSize"/>を算出。
+        /// </summary>
+        /// <returns></returns>
+        public readonly IconSize ToIconSize() => new IconSize(Box, Scale);
+
+        #endregion
+
+        #region funcrion
+
+        public override string ToString()
+        {
+            return $"{nameof(IconScale)}: {Box}, {Scale.X}x{Scale.Y} -> {((int)Box) * Scale.X}x{((int)Box) * Scale.Y}";
+        }
 
         #endregion
     }

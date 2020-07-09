@@ -35,8 +35,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup
 
         LauncherGroupIconMaker IconMaker { get; } = new LauncherGroupIconMaker();
 
-        public DependencyObject NormalGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, false);
-        public DependencyObject StrongGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, true);
+        public DependencyObject NormalGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, IconSize.DefaultScale, false);
+        public DependencyObject StrongGroupIcon => IconMaker.GetGroupImage(ImageName, ImageColor, IconBox.Small, IconSize.DefaultScale, true);
 
         #endregion
 

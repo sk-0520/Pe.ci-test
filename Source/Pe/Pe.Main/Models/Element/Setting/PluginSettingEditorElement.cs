@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPluginId
     {
-        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginState = pluginState;
@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             DatabaseStatementLoader = databaseStatementLoader;
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
+            ImageLoader = imageLoader;
             DispatcherWrapper = dispatcherWrapper;
 
             if(Plugin is IPreferences preferences) {
@@ -44,12 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public PluginStateData PluginState { get; }
         public IPlugin? Plugin { get; }
-
         PreferencesContextFactory PreferencesContextFactory { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
+        IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public bool SupportedPreferences { get; }
@@ -76,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             using(var reader = PreferencesContextFactory.BarrierRead()) {
                 using var context = PreferencesContextFactory.CreateLoadContext(Plugin.PluginInformations, reader);
                 var skeleton = new SkeletonImplements();
-                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                var parameter = new PreferencesParameter(skeleton, Plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
                 result = Preferences.BeginPreferences(context, parameter);
             }
             StartedPreferences = true;

@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
 
         #endregion
 
-        #region DirtyRegister
+        #region MemberRegister
 
         /// <summary>
         /// <see cref="IDiContainer.Inject{TObject}(TObject)"/> を行う際に <see cref="InjectAttribute"/> を設定できないプロパティに無理やり設定する。
@@ -190,14 +190,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.DependencyInjection
         /// <param name="baseType"></param>
         /// <param name="memberName"></param>
         /// <param name="objectType"></param>
-        IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType);
-        /// <inheritdoc cref="DirtyRegister(Type, string, Type)"/>
-        IDiRegisterContainer DirtyRegister(Type baseType, string memberName, Type objectType, string name);
+        IDiRegisterContainer RegisterMember(Type baseType, string memberName, Type objectType);
+        /// <inheritdoc cref="RegisterMember(Type, string, Type)"/>
+        IDiRegisterContainer RegisterMember(Type baseType, string memberName, Type objectType, string name);
 
-        /// <inheritdoc cref="DirtyRegister(Type, string, Type)"/>
-        IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName);
-        /// <inheritdoc cref="DirtyRegister(Type, string, Type)"/>
-        IDiRegisterContainer DirtyRegister<TBase, TObject>(string memberName, string name);
+        /// <inheritdoc cref="RegisterMember(Type, string, Type)"/>
+        IDiRegisterContainer RegisterMember<TBase, TObject>(string memberName);
+        /// <inheritdoc cref="RegisterMember(Type, string, Type)"/>
+        IDiRegisterContainer RegisterMember<TBase, TObject>(string memberName, string name);
 
         #endregion
 
