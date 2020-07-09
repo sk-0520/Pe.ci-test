@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="stream"></param>
         /// <returns>returns>
-        private BitmapSource LoadFromStream(Stream stream)
+        private static BitmapSource LoadFromStream(Stream stream)
         {
             var bitmapImage = new BitmapImage();
             using(Initializer.Begin(bitmapImage)) {
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     FreezableUtility.SafeFreeze(image);
                     return image;
                 }
-                var iconImage = DispatcherWrapper?.Get(() => LoadImage(LoadFromStream, stream)) ?? LoadImage(LoadFromStream, stream);
+                var iconImage = DispatcherWrapper?.Get(s => LoadImage(LoadFromStream, s), stream) ?? LoadImage(LoadFromStream, stream);
 
                 return iconImage;
             }
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                     return FreezableUtility.GetSafeFreeze(new WriteableBitmap(transformedBitmap));
                 }
 
-                return DispatcherWrapper?.Get(() => ResizeCore(bitmapSource, scaleX, scaleY)) ?? ResizeCore(bitmapSource, scaleX, scaleY);
+                return DispatcherWrapper?.Get(args => ResizeCore(args.bitmapSource, args.scaleX, args.scaleY), (bitmapSource, scaleX, scaleY)) ?? ResizeCore(bitmapSource, scaleX, scaleY);
             }
 
             return bitmapSource;
