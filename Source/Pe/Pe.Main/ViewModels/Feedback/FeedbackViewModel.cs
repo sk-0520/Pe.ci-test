@@ -199,7 +199,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
             DelayUpdatePreview.DelayAction(() => {
                 DispatcherWrapper.Begin(() => {
                     var text = ContentDocument.Text;
-                    // TODO: エスケープ
                     WebView.EvaluateScriptAsync("updatePreview(" + Model.ToJavascriptString(text) + ")");
                 }, System.Windows.Threading.DispatcherPriority.Render);
             });
