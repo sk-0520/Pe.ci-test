@@ -76,7 +76,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private IntPtr MessageWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+#if DEBUG
             Logger.LogTrace("[MSG WND] hwnd = {0}, msg = {1}({2}), wParam = {3}, lParam = {4}", hwnd, msg, (WM)msg, wParam, lParam);
+#endif
 
             switch(msg) {
                 case (int)WM.WM_DEVICECHANGE: {
