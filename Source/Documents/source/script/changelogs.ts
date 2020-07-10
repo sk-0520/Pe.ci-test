@@ -121,7 +121,7 @@ const changelogs = [
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#674: 設定画面のフォント用コントロールのバインド問題に対応する "
 					},
 					{
 						"revision": "",
