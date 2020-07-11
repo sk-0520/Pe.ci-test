@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                             throw new InvalidOperationException(nameof(IsLoadedTheme));
                         }
                         Theme.Unload(pluginUnloadContext);
-                        IsLoadedAddon = false;
+                        IsLoadedTheme = false;
                     } else {
                         throw new NotSupportedException();
                     }
