@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
-        struct IconPathData
+        readonly struct IconPathData
         {
             public IconPathData(string path)
                 :this(path, 0)
@@ -63,8 +63,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
+        /// <summary>
+        /// 各種パスプロパティのバッファサイズ。
+        /// </summary>
         public int PathLength { get; set; } = (int)MAX.MAX_PATH;
+        /// <summary>
+        /// 引数のバッファサイズ。
+        /// </summary>
         public int ArgumentLength { get; set; } = 1024;
+        /// <summary>
+        /// コメントのバッファサイズ。
+        /// </summary>
         public int DescriptionLength { get; set; } = 1024 * 5;
 
         protected ComWrapper<IShellLink> ShellLink { get; }
@@ -209,7 +218,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// アイコン設定。
         /// </summary>
         /// <param name="iconPath"></param>
-        void SetIcon(IconPathData iconPath)
+        void SetIcon(in IconPathData iconPath)
         {
             ShellLink.Com.SetIconLocation(iconPath.Path, iconPath.Index);
         }
