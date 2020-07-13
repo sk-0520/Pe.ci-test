@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         public void WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            Logger.LogInformation("WM_DWMCOLORIZATIONCOLORCHANGED");
+            Logger.LogTrace("WM_DWMCOLORIZATIONCOLORCHANGED");
             var rawColor = (uint)wParam.ToInt64();
             SetAccentColor(MediaUtility.ConvertColorFromRawColor(rawColor));
             LazyChanger.DelayAction(OnThemeChanged);
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             var lParamMessage = Marshal.PtrToStringAuto(lParam);
             if(lParamMessage == "ImmersiveColorSet") {
-            Logger.LogInformation("WM_SETTINGCHANGE");
+                Logger.LogTrace("WM_SETTINGCHANGE");
                 ApplyFromRegistry();
                 LazyChanger.DelayAction(OnThemeChanged);
             }
