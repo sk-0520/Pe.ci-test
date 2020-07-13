@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 var resultBuffer = CreateStringBuffer(PathLength);
 
-                ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out var findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
+                ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out _, SLGP_FLAGS.SLGP_UNCPRIORITY);
 
                 return resultBuffer.ToString();
             }
@@ -174,10 +174,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             get
             {
-                int rawShowCommand;
-
-                ShellLink.Com.GetShowCmd(out rawShowCommand);
-
+                ShellLink.Com.GetShowCmd(out var rawShowCommand);
                 return (SW)rawShowCommand;
             }
             set
@@ -207,9 +204,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IconPathData GetIcon()
         {
             var resultBuffer = CreateStringBuffer(PathLength);
-            int iconIndex;
-
-            ShellLink.Com.GetIconLocation(resultBuffer, resultBuffer.Capacity, out iconIndex);
+            ShellLink.Com.GetIconLocation(resultBuffer, resultBuffer.Capacity, out var iconIndex);
 
             return new IconPathData(resultBuffer.ToString(), iconIndex);
         }
