@@ -36,6 +36,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
+        #region variable
+
+        ComWrapper<IPersistFile>? _persistFile;
+
+        #endregion
+
         /// <summary>
         /// ショートカットを作成するためにオブジェクト生成。
         /// </summary>
@@ -43,12 +49,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             : base()
         {
             ShellLink = CreateShellLink();
-
-            LazyPersistFile = new Lazy<ComWrapper<IPersistFile>>(() => {
-                //var result = (IPersistFile)ShellLink.Raw;
-                //return new ComWrapper<IPersistFile>(result);
-                return ShellLink.Cast<IPersistFile>();
-            });
         }
 
         /// <summary>
@@ -69,8 +69,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         protected ComWrapper<IShellLink> ShellLink { get; }
 
-        Lazy<ComWrapper<IPersistFile>> LazyPersistFile { get; }
-        protected ComWrapper<IPersistFile> PersistFile => LazyPersistFile.Value;
+        protected ComWrapper<IPersistFile> PersistFile => this._persistFile ??= ShellLink.Cast<IPersistFile>();
 
         /// <summary>
         /// ショートカット先パス。
@@ -232,8 +231,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    if(LazyPersistFile.IsValueCreated) {
-                        PersistFile.Dispose();
+                    if(this._persistFile != null) {
+                        this._persistFile.Dispose();
                     }
 
                     ShellLink.Dispose();
