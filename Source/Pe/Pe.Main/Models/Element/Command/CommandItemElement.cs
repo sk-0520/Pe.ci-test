@@ -17,6 +17,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public abstract class CommandItemElementBase: ElementBase, ICommandItem
     {
+        #region variable
+
+        object? _icon;
+
+        #endregion
         protected CommandItemElementBase(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -90,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         {
             DispatcherWrapper.VerifyAccess();
 
-            return GetIconImpl(iconScale);
+            return this._icon ??= GetIconImpl(iconScale);
         }
         public void Execute(ICommandExecuteParameter parameter) => ExecuteImpl(parameter);
 
@@ -137,7 +142,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         protected override object GetIconImpl(in IconScale iconScale)
         {
             var factory = LauncherItemElement.CreateLauncherIconFactory();
-            return factory.CreateView(DispatcherWrapper);
+            switch(LauncherItemElement.Kind) {
+                case Data.LauncherItemKind.File:
+                    return factory.CreateIconSource(DispatcherWrapper);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         protected override void ExecuteImpl(ICommandExecuteParameter parameter)

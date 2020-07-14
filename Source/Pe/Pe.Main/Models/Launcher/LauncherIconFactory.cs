@@ -36,17 +36,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        public IconImageLoaderBase CreateFileIconLoader(IDispatcherWrapper dispatcherWrapper)
+        private IconImageLoaderBase CreateFileIconLoader(IDispatcherWrapper dispatcherWrapper)
         {
             return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
         }
 
-        public object CreateView(IDispatcherWrapper dispatcherWrapper)
+        public object CreateIconSource(IDispatcherWrapper dispatcherWrapper)
+        {
+            switch(LauncherItemKind) {
+                case LauncherItemKind.File: {
+                        return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public object CreateView(IDispatcherWrapper dispatcherWrapper, bool useCache)
         {
             switch(LauncherItemKind) {
                 case LauncherItemKind.File: {
                         var loader = new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
-                        return new IconViewerViewModel(loader, dispatcherWrapper, LoggerFactory);
+                        return new IconViewerViewModel(loader, dispatcherWrapper, LoggerFactory) {
+                            UseCache = useCache,
+                        };
                     }
 
                 default:

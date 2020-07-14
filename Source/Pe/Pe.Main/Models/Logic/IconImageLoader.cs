@@ -195,10 +195,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        public void ClearCache()
-        {
-            CachedImage = null;
-        }
+        //public void ClearCache()
+        //{
+        //    CachedImage = null;
+        //}
 
         #endregion
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    ClearCache();
+                    //ClearCache();
                 }
             }
 

@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected override object GetIcon(IconKind iconKind)
         {
             var factory = Model.CreateLauncherIconFactory();
-            return factory.CreateView(DispatcherWrapper);
+            return factory.CreateView(DispatcherWrapper, false);
         }
 
         #endregion
