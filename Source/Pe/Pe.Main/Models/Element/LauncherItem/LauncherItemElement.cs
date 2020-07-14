@@ -413,6 +413,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             LoadLauncherItem();
         }
 
+        public object GetIcon(IconScale iconScale)
+        {
+            //TODO: このメソッドに方向転換する!!
+            return default!;
+        }
+
         #endregion
 
         #region ElementBase

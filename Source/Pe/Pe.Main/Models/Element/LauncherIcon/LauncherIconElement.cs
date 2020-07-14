@@ -29,12 +29,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #region function
 
-        public object GetIcon(IconScale iconScale)
-        {
-            //TODO: このメソッドに方向転換する!!
-            return default!;
-        }
-
         #endregion
 
         #region ElementBase
