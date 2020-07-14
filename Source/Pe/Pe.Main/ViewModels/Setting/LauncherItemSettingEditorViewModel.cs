@@ -34,7 +34,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             get
             {
                 var factory = Editor.CreateLauncherIconFactory();
-                return factory.CreateView(DispatcherWrapper, false);
+                var iconSource = factory.CreateIconSource(DispatcherWrapper);
+                return factory.CreateView(iconSource, false, DispatcherWrapper);
             }
         }
 

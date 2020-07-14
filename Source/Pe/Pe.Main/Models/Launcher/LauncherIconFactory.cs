@@ -53,21 +53,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        public object CreateView(IDispatcherWrapper dispatcherWrapper, bool useCache)
+        public object CreateView(object iconSource, bool useCache, IDispatcherWrapper dispatcherWrapper)
         {
-            switch(LauncherItemKind) {
-                case LauncherItemKind.File: {
-                        var loader = new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, dispatcherWrapper, LoggerFactory);
-                        return new IconViewerViewModel(loader, dispatcherWrapper, LoggerFactory) {
-                            UseCache = useCache,
-                        };
-                    }
+            switch(iconSource) {
+                case IconImageLoaderBase iconImageLoader:
+                    return new IconViewerViewModel(iconImageLoader, dispatcherWrapper, LoggerFactory) {
+                        UseCache = useCache,
+                    };
 
                 default:
                     throw new NotImplementedException();
             }
         }
-
 
         #endregion
     }
