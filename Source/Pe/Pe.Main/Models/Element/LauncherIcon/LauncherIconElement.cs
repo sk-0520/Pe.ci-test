@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -27,6 +28,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         #endregion
 
         #region function
+
+        public object GetIcon(IconScale iconScale)
+        {
+            //TODO: このメソッドに方向転換する!!
+            return default!;
+        }
+
         #endregion
 
         #region ElementBase
