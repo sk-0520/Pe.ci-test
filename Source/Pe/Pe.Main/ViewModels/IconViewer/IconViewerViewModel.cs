@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         ImageSource? _imageSource = null;
         bool _useCache = false;
-        IconBox _iconBox;
+        //IconBox _iconBox;
 
         #endregion
 
@@ -53,14 +53,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
             }
         }
 
-        public IconBox IconBox
-        {
-            get => this._iconBox;
-            set
-            {
-                SetProperty(ref this._iconBox, value);
-            }
-        }
+        //public IconBox IconBox
+        //{
+        //    get => this._iconBox;
+        //    set
+        //    {
+        //        SetProperty(ref this._iconBox, value);
+        //    }
+        //}
 
         /// <summary>
         /// すでに読み込んだアイコンはキャッシュを使用する。

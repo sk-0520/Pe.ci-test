@@ -45,7 +45,7 @@
 
     <!--#region アイコン表示部分-->
     <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconViewerViewModel}">
-      <app_main_views:ImageViewerControl IconViewer="{Binding }" />
+      <app_main_views:ImageViewerControl IconViewer="{Binding }" IconBox="{Binding DataContext.IconBox, RelativeSource={RelativeSource AncestorType=Window}}" />
     </DataTemplate>
 
     <!--#endregion-->

@@ -60,9 +60,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         public void ClearIcon()
         {
-            foreach(var element in LauncherItemElements) {
-                element.Icon!.IconImageLoaderPack.ClearCache();
-            }
+            //foreach(var element in LauncherItemElements) {
+            //    element.Icon!.IconImageLoaderPack.ClearCache();
+            //}
         }
 
         private ICommandItem? GetHitItem(CommandItemKind kind, LauncherItemElement element, string targetValue, string targetLogName, string input, Regex inputRegex, IHitValuesCreator hitValuesCreator, CancellationToken cancellationToken)
