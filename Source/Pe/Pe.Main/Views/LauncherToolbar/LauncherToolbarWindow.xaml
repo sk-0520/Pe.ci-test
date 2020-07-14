@@ -82,7 +82,7 @@
       </Style.Triggers>
       -->
       <EventSetter Event="PreviewMouseDoubleClick" Handler="LauncherContentControl_PreviewMouseDoubleClick" />
-      <Setter Property="Icon" Value="{Binding Icon.Icon}" />
+      <Setter Property="Icon" Value="{Binding MainIcon.Icon}" />
       <Setter Property="IconBox" Value="{Binding DataContext.IconBox, ElementName=root}" />
       <Setter Property="Foreground" Value="{Binding DataContext.ToolbarForeground, ElementName=root}" />
       <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root}" />
@@ -185,7 +185,7 @@
           <ToolTip Style="{StaticResource LauncherItemTooltip}">
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <app_main_views:ImageViewerControl IconBox="Big" IconViewer="{Binding Icon.Icon}" />
+                <app_main_views:ImageViewerControl IconBox="Big" IconViewer="{Binding TooltipIcon.Icon}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />

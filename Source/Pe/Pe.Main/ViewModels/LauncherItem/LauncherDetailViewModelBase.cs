@@ -62,14 +62,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             Screen = screen;
             LauncherToolbarTheme = launcherToolbarTheme;
-            Icon = new LauncherIconViewModel(model.Icon!, dispatcherWrapper, LoggerFactory);
+            MainIcon = new LauncherIconViewModel(model.Icon!, dispatcherWrapper, LoggerFactory);
+            TooltipIcon = new LauncherIconViewModel(model.Icon!, dispatcherWrapper, LoggerFactory);
         }
 
         #region property
 
         protected IScreen Screen { get; }
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        public LauncherIconViewModel Icon { get; }
+        public LauncherIconViewModel MainIcon { get; }
+        public LauncherIconViewModel TooltipIcon { get; }
+
 
         public string? Name => Model.Name;
         public string? Comment => Model.Comment;
@@ -150,7 +153,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Icon.Dispose();
+                    MainIcon.Dispose();
                 }
             }
 
