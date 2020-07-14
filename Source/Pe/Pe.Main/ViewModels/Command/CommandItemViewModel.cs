@@ -20,9 +20,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4035:Classes implementing \"IEquatable<T>\" should be sealed", Justification = "<保留中>")]
     public class CommandItemViewModel : ViewModelBase
     {
-        #region variable
-        #endregion
-
         public CommandItemViewModel(ICommandItem item, IconScale iconScale, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
@@ -68,13 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             get
             {
-                var icon = DispatcherWrapper.Get(i => i.item.GetIcon(i.iconScale), (item: Item, iconScale: IconScale)) ;
-                if(icon is IconImageLoaderBase iconLoader) {
-                    return new IconViewerViewModel(iconLoader, DispatcherWrapper, LoggerFactory) {
-                        UseCache = true,
-                    };
-                }
-                return icon;
+                return DispatcherWrapper.Get(i => i.item.GetIcon(i.iconScale), (item: Item, iconScale: IconScale)) ;
             }
         }
 

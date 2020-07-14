@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 
@@ -53,6 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
         {
             if(d is ImageViewerControl control) {
                 if(e.NewValue is IconViewerViewModel iconViewer) {
+                    /*
                     var rootVisual = UIUtility.GetClosest<Window>(control);
                     if(rootVisual == null) {
                         var popup = UIUtility.GetClosest<Popup>(control);
@@ -66,7 +68,61 @@ namespace ContentTypeTextNet.Pe.Main.Views
                     if(control.IsLoaded) {
                         iconViewer.LoadAsync(iconScale, CancellationToken.None).ConfigureAwait(false);
                     }
+                    */
+                    control.ApplyIcon();
                 }
+            }
+        }
+
+        #endregion
+
+        #region IconBox
+
+        public static readonly DependencyProperty IconBoxProperty = DependencyProperty.Register(
+            nameof(IconBox),
+            typeof(IconBox),
+            typeof(ImageViewerControl),
+            new FrameworkPropertyMetadata(
+                IconBox.Small,
+                new PropertyChangedCallback(OnIconBoxChanged)
+            )
+        );
+
+        public IconBox IconBox
+        {
+            get { return (IconBox)GetValue(IconBoxProperty); }
+            set { SetValue(IconBoxProperty, value); }
+        }
+
+        private static void OnIconBoxChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if(d is ImageViewerControl control) {
+                control.ApplyIcon();
+            }
+        }
+
+        #endregion
+
+        #region function
+
+        void ApplyIcon()
+        {
+            if(IconViewer == null) {
+                return;
+            }
+
+            var rootVisual = UIUtility.GetClosest<Window>(this);
+            if(rootVisual == null) {
+                var popup = UIUtility.GetClosest<Popup>(this);
+                if(popup != null && popup.PlacementTarget != null) {
+                    rootVisual = UIUtility.GetClosest<Window>(popup.PlacementTarget);
+                }
+            }
+            var iconScale = new IconScale(IconBox, UIUtility.GetDpiScale(rootVisual ?? (Visual)this));
+            this.parent.Width = (int)IconBox;
+            this.parent.Height = (int)IconBox;
+            if(IsLoaded) {
+                IconViewer.LoadAsync(iconScale, CancellationToken.None).ConfigureAwait(false);
             }
         }
 
@@ -78,8 +134,8 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
             var iconViewer = IconViewer;
             if(iconViewer != null) {
-                var iconScale = UIUtility.GetDpiScale(this);
-                iconViewer.LoadAsync(iconScale, CancellationToken.None).ConfigureAwait(false);
+                //var iconScale = UIUtility.GetDpiScale(this);
+                iconViewer.LoadAsync(new IconScale(IconBox, UIUtility.GetDpiScale(this)), CancellationToken.None).ConfigureAwait(false);
             }
         }
     }

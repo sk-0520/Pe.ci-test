@@ -14,6 +14,8 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -38,7 +40,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         public LauncherFileViewModel(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory)
-        { }
+        {
+
+        }
 
         #region property
 
@@ -226,6 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         /// </summary>
         protected override bool CanExecuteMain => true;
 
+
         protected override Task InitializeImplAsync()
         {
             return Task.Run(() => {
@@ -248,6 +253,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 CanOpenParentDirectory = ExistsParentDirectory;
                 CanCopyParentDirectory = !PathUtility.IsRootName(Detail.FullPath);
             });
+        }
+
+        protected override object GetIcon(IconKind iconKind)
+        {
+            var factory = Model.CreateLauncherIconFactory();
+            var iconSource = factory.CreateIconSource(DispatcherWrapper);
+            return factory.CreateView(iconSource, false, DispatcherWrapper);
         }
 
         #endregion

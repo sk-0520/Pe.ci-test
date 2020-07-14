@@ -414,7 +414,7 @@
       <Control>
         <Control.Template>
           <ControlTemplate>
-            <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Small}" />
+            <app_main_views:ImageViewerControl IconBox="Small" IconViewer="{Binding Icon}" />
           </ControlTemplate>
         </Control.Template>
       </Control>

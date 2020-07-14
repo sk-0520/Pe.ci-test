@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 {
     public class LauncherIconElement : ElementBase, ILauncherItemId
     {
-        public LauncherIconElement(Guid launcherItemId, IconImageLoaderPack iconImageLoaderPack, ILoggerFactory loggerFactory)
+        public LauncherIconElement(Guid launcherItemId, IconImageLoaderBase iconImageLoaderPack, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
 
         #region property
 
-        public IconImageLoaderPack IconImageLoaderPack { get; }
+        public IconImageLoaderBase IconImageLoaderPack { get; }
         //IDatabaseStatementLoader StatementLoader { get; }
 
         //public IReadOnlyDictionary<IconScale, LauncherIconLoader> IconImageLoaders { get; }
@@ -28,12 +28,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon
         #endregion
 
         #region function
-
-        public object GetIcon(IconScale iconScale)
-        {
-            //TODO: このメソッドに方向転換する!!
-            return default!;
-        }
 
         #endregion
 

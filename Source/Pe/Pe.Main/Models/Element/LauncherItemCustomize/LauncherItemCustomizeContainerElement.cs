@@ -22,13 +22,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeContainerElement(IScreen screen, LauncherItemCustomizeEditorElement editorElement, LauncherIconElement launcherIconElement, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeContainerElement(IScreen screen, LauncherItemCustomizeEditorElement editorElement, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = editorElement.LauncherItemId;
             Screen = screen;
             Editor = editorElement;
-            Icon = launcherIconElement;
             OrderManager = orderManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -40,7 +39,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public IScreen Screen { get; }
         public LauncherItemCustomizeEditorElement Editor { get; }
-        public LauncherIconElement Icon { get; }
 
         IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
@@ -68,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             OrderManager.RefreshLauncherItemElement(LauncherItemId);
             NotifyManager.SendLauncherItemChanged(LauncherItemId);
         }
+
 
         #endregion
 

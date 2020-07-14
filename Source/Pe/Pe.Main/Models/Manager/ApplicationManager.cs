@@ -1921,9 +1921,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
         public void RefreshLauncherItemElement(Guid launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
 
-        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen)
         {
-            return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen, iconElement);
+            return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen);
         }
 
         public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)

@@ -50,10 +50,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
     public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>, ILauncherItemId
     {
+        #region define
+
+        protected enum IconKind
+        {
+            Main,
+            Tooltip,
+        }
+
+        #endregion
+
         #region variable
 
         bool _nowLoading;
         bool _nowMainExecuting;
+
+        object? _mainIcon;
+        object? _tooltipIcon;
 
         #endregion
 
@@ -61,15 +74,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             : base(model, loggerFactory)
         {
             Screen = screen;
+            DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
-            Icon = new LauncherIconViewModel(model.Icon!, dispatcherWrapper, LoggerFactory);
         }
 
         #region property
 
         protected IScreen Screen { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        public LauncherIconViewModel Icon { get; }
+        public object MainIcon => this._mainIcon ??= GetIcon(IconKind.Main);
+        public object TooltipIcon => this._tooltipIcon ??= GetIcon(IconKind.Tooltip);
+
 
         public string? Name => Model.Name;
         public string? Comment => Model.Comment;
@@ -142,6 +158,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return Task.CompletedTask;
         }
 
+        protected abstract object GetIcon(IconKind iconKind);
+
         #endregion
 
         #region SingleModelViewModelBase
@@ -150,7 +168,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Icon.Dispose();
                 }
             }
 
@@ -176,14 +193,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 case LauncherItemKind.File:
                     return new LauncherFileViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
-                case LauncherItemKind.StoreApp:
-                    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //case LauncherItemKind.StoreApp:
+                //    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Addon:
                     throw new NotImplementedException();
 
-                case LauncherItemKind.Separator:
-                    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //case LauncherItemKind.Separator:
+                //    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 default:
                     throw new NotImplementedException();

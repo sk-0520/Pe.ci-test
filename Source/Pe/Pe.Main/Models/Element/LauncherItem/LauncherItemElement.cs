@@ -67,8 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         public bool IsEnabledCommandLauncher { get; private set; }
         public string? Comment { get; private set; }
 
-        public LauncherIconElement? Icon { get; protected set; }
-
         public virtual bool NowCustomizing
         {
             get => this._nowCustomize;
@@ -78,13 +76,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         #endregion
 
         #region function
-
-        LauncherIconElement GetFileLauncherIcon()
-        {
-            var iconPack = LauncherIconLoaderPackFactory.CreatePack(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
-            var iconElemenet = new LauncherIconElement(LauncherItemId, iconPack, LoggerFactory);
-            return iconElemenet;
-        }
 
         void LoadLauncherItem()
         {
@@ -99,10 +90,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 Kind = launcherItemData.Kind;
                 IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
                 Comment = launcherItemData.Comment;
-
-                if(Kind == LauncherItemKind.File) {
-                    Icon = GetFileLauncherIcon();
-                }
             }
         }
 
@@ -389,7 +376,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             //TODO: 確定時の処理
             NowCustomizing = true;
             NotifyManager.CustomizeLauncherItemExited += NotifyManager_CustomizeLauncherItemExited;
-            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen, Icon!);
+            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen);
             element.StartView();
         }
 
@@ -411,6 +398,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         internal void Refresh()
         {
             LoadLauncherItem();
+        }
+
+
+        public LauncherIconFactory CreateLauncherIconFactory()
+        {
+            return new LauncherIconFactory(LauncherItemId, Kind, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
         }
 
         #endregion

@@ -19,17 +19,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public abstract class IconImageLoaderBase : BindModelBase
     {
-        protected IconImageLoaderBase(IconBox iconBox, IDispatcherWrapper? dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected IconImageLoaderBase(IDispatcherWrapper? dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            IconBox = iconBox;
+            //IconBox = iconBox;
             DispatcherWrapper = dispatcherWrapper;
             RunningStatusImpl = new RunningStatus(LoggerFactory);
         }
 
         #region property
 
-        public IconBox IconBox { get; }
+        //public IconBox IconBox { get; }
 
         /// <summary>
         /// 非 null の場合に、<see cref="DependencyObject"/>操作時に指定の<see cref="IDispatcherWrapper"/>で処理する。
@@ -97,11 +97,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
-        protected BitmapSource ResizeImage(BitmapSource bitmapSource, Point dpiScale)
+        protected BitmapSource ResizeImage(BitmapSource bitmapSource, in IconScale iconScale)
         {
             ThrowIfDisposed();
 
-            var iconSize = new IconSize(IconBox, dpiScale);
+            var iconSize = iconScale.ToIconSize();
 
             if(iconSize.Width < bitmapSource.PixelWidth || iconSize.Height < bitmapSource.PixelHeight) {
                 Logger.LogDebug("アイコンサイズを縮小: アイコン({0}x{1}), 指定({2}x{3})", bitmapSource.PixelWidth, bitmapSource.PixelHeight, iconSize.Width, iconSize.Height);
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return bitmapSource;
         }
 
-        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, Point dpiScale, CancellationToken cancellationToken)
+        protected Task<BitmapSource?> GetIconImageAsync(IReadOnlyIconData iconData, IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -151,22 +151,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 } else {
                     Logger.LogDebug("アイコンファイルとして読み込み {0}", path);
                     var iconLoader = new IconLoader(LoggerFactory);
-                    static BitmapSource LoadCore(string path, int index, IconBox iconBox, Point dpiScale, IconLoader iconLoader)
+                    static BitmapSource LoadCore(string path, int index, in IconScale iconScale, IconLoader iconLoader)
                     {
-                        var iconSize = new IconSize(iconBox, dpiScale);
+                        var iconSize = iconScale.ToIconSize();
                         var image = iconLoader.Load(path, index, iconSize);
                         return FreezableUtility.GetSafeFreeze(image!);
                     }
-                    iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, IconBox, dpiScale, iconLoader)) ?? LoadCore(path, iconData.Index, IconBox, dpiScale, iconLoader);
+                    iconImage = DispatcherWrapper?.Get(() => LoadCore(path, iconData.Index, iconScale, iconLoader)) ?? LoadCore(path, iconData.Index, iconScale, iconLoader);
                 }
 
                 return iconImage;
             });
         }
 
-        protected abstract Task<BitmapSource?> LoadImplAsync(Point dpiScale, CancellationToken cancellationToken);
+        protected abstract Task<BitmapSource?> LoadImplAsync(IconScale iconScale, CancellationToken cancellationToken);
 
-        public async Task<BitmapSource?> LoadAsync(bool useCache, Point dpiScale, CancellationToken cancellationToken)
+        public async Task<BitmapSource?> LoadAsync(bool useCache, IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -178,7 +178,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             RunningStatusImpl.State = RunningState.Running;
             try {
-                var iconImage = await LoadImplAsync(dpiScale, cancellationToken);
+                var iconImage = await LoadImplAsync(iconScale, cancellationToken);
                 RunningStatusImpl.State = RunningState.End;
                 if(useCache) {
                     CachedImage = iconImage;
@@ -195,10 +195,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
         }
 
-        public void ClearCache()
-        {
-            CachedImage = null;
-        }
+        //public void ClearCache()
+        //{
+        //    CachedImage = null;
+        //}
 
         #endregion
 
@@ -208,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    ClearCache();
+                    //ClearCache();
                 }
             }
 
@@ -220,7 +220,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
     public class IconImageLoader : IconImageLoaderBase
     {
-        public IconImageLoader(IReadOnlyIconData iconData, IconBox iconBox, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(iconBox, dispatcherWrapper, loggerFactory)
+        public IconImageLoader(IReadOnlyIconData iconData, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         {
             IconData = iconData;
         }
@@ -233,49 +234,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region IconImageLoaderBase
 
-        protected override Task<BitmapSource?> LoadImplAsync(Point dpiScale, CancellationToken cancellationToken)
+        protected override Task<BitmapSource?> LoadImplAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
-            return GetIconImageAsync(IconData, dpiScale, cancellationToken);
+            return GetIconImageAsync(IconData, iconScale, cancellationToken);
         }
-
-        #endregion
-    }
-
-    public class IconImageLoaderPack : IIconPack<IconImageLoaderBase>
-    {
-        #region variable
-
-        IReadOnlyDictionary<IconBox, IconImageLoaderBase>? _iconItems;
-
-        #endregion
-
-        public IconImageLoaderPack(IReadOnlyDictionary<IconBox, IconImageLoaderBase> iconImageLoaders)
-        {
-            Small = iconImageLoaders[IconBox.Small];
-            Normal = iconImageLoaders[IconBox.Normal];
-            Big = iconImageLoaders[IconBox.Big];
-            Large = iconImageLoaders[IconBox.Large];
-        }
-
-        #region IIconPack
-
-        /// <inheritdoc cref="IIconPack.Small"/>
-        public IconImageLoaderBase Small { get; }
-        /// <inheritdoc cref="IIconPack.Normal"/>
-        public IconImageLoaderBase Normal { get; }
-        /// <inheritdoc cref="IIconPack.Big"/>
-        public IconImageLoaderBase Big { get; }
-        /// <inheritdoc cref="IIconPack.Large"/>
-        public IconImageLoaderBase Large { get; }
-
-        /// <inheritdoc cref="IIconPack.IconItems"/>
-        public IReadOnlyDictionary<IconBox, IconImageLoaderBase> IconItems => this._iconItems ??= new Dictionary<IconBox, IconImageLoaderBase>() {
-            [IconBox.Small] = Small,
-            [IconBox.Normal] = Normal,
-            [IconBox.Big] = Big,
-            [IconBox.Large] = Large,
-        };
-
 
         #endregion
     }

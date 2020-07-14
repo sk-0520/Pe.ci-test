@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 if(prev != null && !prev.IsDisposed && prev.IsChanged) {
                     if(prev.Validate()) {
                         //prev.Item.Save();
-                        prev.Icon.Reload();
+                        //prev.Icon.Reload();
                     }
                 }
 
