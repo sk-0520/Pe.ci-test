@@ -249,16 +249,4 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #endregion
 
     }
-
-    public static class LauncherIconLoaderPackFactory
-    {
-        #region funtion
-
-        public static LauncherIconLoader CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-        {
-            return new LauncherIconLoader(launcherItemId, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, dispatcherWrapper, loggerFactory);
-        }
-
-        #endregion
-    }
 }

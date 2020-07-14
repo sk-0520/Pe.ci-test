@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;

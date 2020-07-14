@@ -166,6 +166,15 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#672: ランチャーアイコンの処理周りを整理する",
+						"comments": [
+							"#660 作業時に対応",
+							"整理するどころかさらに混乱を生み出した"
+						]
+
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]

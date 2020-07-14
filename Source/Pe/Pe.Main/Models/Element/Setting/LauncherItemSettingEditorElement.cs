@@ -6,7 +6,6 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -22,25 +21,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         LauncherItemKind Kind { get; }
         string Comment { get; }
 
-        LauncherIconElement Icon { get; }
-
         #endregion
     }
 
     public class LauncherItemSettingEditorElement: LauncherItemCustomizeEditorElement, ILauncherItemSettingEditor
     {
-        public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherIconElement iconElement, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemSettingEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(launcherItemId, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
-        {
-            if(!iconElement.IsInitialized) {
-                throw new ArgumentException(nameof(iconElement));
-            }
+        {}
 
-            Icon = iconElement;
-        }
-
-        public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherIconElement iconElement, LauncherSettingCommonData setting, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : this(launcherItemId, iconElement, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherSettingCommonData setting, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : this(launcherItemId, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             IsLazyLoad = true;
 
@@ -74,7 +65,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Icon.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -84,7 +74,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region ILauncherItemSettingEditor
 
-        public LauncherIconElement Icon { get; }
 
         #endregion
     }

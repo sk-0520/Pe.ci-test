@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using System.Windows.Input;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Core.ViewModels;

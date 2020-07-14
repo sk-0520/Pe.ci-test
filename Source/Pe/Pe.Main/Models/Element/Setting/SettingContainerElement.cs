@@ -13,7 +13,6 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -164,12 +163,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var launcherItemElements = new List<LauncherItemSettingEditorElement>(launcherItemIds.Count);
             foreach(var launcherItemId in launcherItemIds) {
-                var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, ServiceLocator.Get<IMainDatabaseBarrier>(), ServiceLocator.Get<IFileDatabaseBarrier>(), ServiceLocator.Get<IDatabaseStatementLoader>(), ServiceLocator.Get<IDispatcherWrapper>(), LoggerFactory);
-                var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
-                launcherIconElement.Initialize();
                 var element = appLauncherItemsMap.TryGetValue(launcherItemId, out var setting)
-                    ? ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement, setting)
-                    : ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement)
+                    ? ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, setting)
+                    : ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId)
                 ;
                 launcherItemElements.Add(element);
             }
