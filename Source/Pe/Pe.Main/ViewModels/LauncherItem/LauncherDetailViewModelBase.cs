@@ -50,10 +50,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
     public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>, ILauncherItemId
     {
+        #region define
+
+        protected enum IconKind
+        {
+            Main,
+            Tooltip,
+        }
+
+        #endregion
+
         #region variable
 
         bool _nowLoading;
         bool _nowMainExecuting;
+
+        object? _mainIcon;
+        object? _tooltipIcon;
 
         #endregion
 
@@ -70,8 +83,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected IScreen Screen { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        public abstract object MainIcon { get; }
-        public abstract object TooltipIcon { get; }
+        public object MainIcon => this._mainIcon ??= GetIcon(IconKind.Main);
+        public object TooltipIcon => this._tooltipIcon ??= GetIcon(IconKind.Tooltip);
 
 
         public string? Name => Model.Name;
@@ -144,6 +157,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             }
             return Task.CompletedTask;
         }
+
+        protected abstract object GetIcon(IconKind iconKind);
 
         #endregion
 

@@ -21,6 +21,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
     public class CommandItemViewModel : ViewModelBase
     {
         #region variable
+
+        object? _icon;
+
         #endregion
 
         public CommandItemViewModel(ICommandItem item, IconScale iconScale, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -68,13 +71,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         {
             get
             {
-                var icon = DispatcherWrapper.Get(i => i.item.GetIcon(i.iconScale), (item: Item, iconScale: IconScale)) ;
-                if(icon is IconImageLoaderBase iconLoader) {
-                    return new IconViewerViewModel(iconLoader, DispatcherWrapper, LoggerFactory) {
-                        UseCache = true,
-                    };
+                if(this._icon != null) {
+                    return this._icon;
                 }
-                return icon;
+                this._icon = DispatcherWrapper.Get(i => i.item.GetIcon(i.iconScale), (item: Item, iconScale: IconScale)) ;
+                return this._icon;
             }
         }
 

@@ -203,28 +203,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region LauncherItemViewModelBase
 
-        public override object MainIcon
-        {
-            get
-            {
-                Debug.Assert(Model.Kind == LauncherItemKind.File);
-
-                var factory = Model.CreateLauncherIconFactory();
-                return factory.CreateView(DispatcherWrapper);
-            }
-        }
-
-        public override object TooltipIcon
-        {
-            get
-            {
-                Debug.Assert(Model.Kind == LauncherItemKind.File);
-
-                var factory = Model.CreateLauncherIconFactory();
-                return factory.CreateView(DispatcherWrapper);
-            }
-        }
-
         protected override void DetachModelEventsImpl()
         {
             base.DetachModelEventsImpl();
@@ -252,6 +230,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         /// </summary>
         protected override bool CanExecuteMain => true;
 
+
         protected override Task InitializeImplAsync()
         {
             return Task.Run(() => {
@@ -274,6 +253,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 CanOpenParentDirectory = ExistsParentDirectory;
                 CanCopyParentDirectory = !PathUtility.IsRootName(Detail.FullPath);
             });
+        }
+
+        protected override object GetIcon(IconKind iconKind)
+        {
+            var factory = Model.CreateLauncherIconFactory();
+            return factory.CreateView(DispatcherWrapper);
         }
 
         #endregion
