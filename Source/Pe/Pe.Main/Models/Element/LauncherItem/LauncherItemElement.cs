@@ -79,13 +79,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #region function
 
-        LauncherIconElement GetFileLauncherIcon()
-        {
-            var iconPack = LauncherIconLoaderPackFactory.CreatePack(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
-            var iconElemenet = new LauncherIconElement(LauncherItemId, iconPack, LoggerFactory);
-            return iconElemenet;
-        }
-
         void LoadLauncherItem()
         {
             ThrowIfDisposed();
@@ -99,10 +92,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 Kind = launcherItemData.Kind;
                 IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
                 Comment = launcherItemData.Comment;
-
-                if(Kind == LauncherItemKind.File) {
-                    Icon = GetFileLauncherIcon();
-                }
             }
         }
 
@@ -413,10 +402,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             LoadLauncherItem();
         }
 
-        public object GetIcon(IconScale iconScale)
+
+
+        public IconImageLoaderBase CreateFileIconLoader()
         {
-            //TODO: このメソッドに方向転換する!!
-            return default!;
+            if(Kind != LauncherItemKind.File) {
+                throw new InvalidOperationException(nameof(Kind));
+            }
+
+            return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
         }
 
         #endregion

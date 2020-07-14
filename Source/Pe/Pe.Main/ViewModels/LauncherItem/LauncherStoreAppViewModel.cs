@@ -11,9 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
-    public class LauncherStoreAppViewModel : LauncherDetailViewModelBase
+    public abstract class LauncherStoreAppViewModel : LauncherDetailViewModelBase
     {
-        public LauncherStoreAppViewModel(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        protected LauncherStoreAppViewModel(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory)
         {
         }

@@ -61,17 +61,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             : base(model, loggerFactory)
         {
             Screen = screen;
+            DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
-            MainIcon = new LauncherIconViewModel(model.Icon!, dispatcherWrapper, LoggerFactory);
-            TooltipIcon = new LauncherIconViewModel(model.Icon!, dispatcherWrapper, LoggerFactory);
         }
 
         #region property
 
         protected IScreen Screen { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        public LauncherIconViewModel MainIcon { get; }
-        public LauncherIconViewModel TooltipIcon { get; }
+        public abstract object MainIcon { get; }
+        public abstract object TooltipIcon { get; }
 
 
         public string? Name => Model.Name;
@@ -153,7 +153,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    MainIcon.Dispose();
                 }
             }
 
@@ -179,14 +178,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 case LauncherItemKind.File:
                     return new LauncherFileViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
-                case LauncherItemKind.StoreApp:
-                    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //case LauncherItemKind.StoreApp:
+                //    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Addon:
                     throw new NotImplementedException();
 
-                case LauncherItemKind.Separator:
-                    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //case LauncherItemKind.Separator:
+                //    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 default:
                     throw new NotImplementedException();
