@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManagerImpl);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
-            ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+            ApplicationDiContainer.Register<IHttpUserAgentFactory, IHttpUserAgentFactory>(UserAgentManager);
 
             var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();

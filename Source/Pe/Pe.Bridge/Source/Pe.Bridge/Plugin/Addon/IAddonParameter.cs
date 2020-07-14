@@ -13,9 +13,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     public interface IAddonParameter: IPluginParameter
     {
         /// <summary>
-        /// <see cref="IUserAgent"/> 生成器。
+        /// <see cref="IHttpUserAgent"/> 生成器。
         /// </summary>
-        IUserAgentFactory UserAgentFactory { get; }
+        IHttpUserAgentFactory HttpUserAgentFactory { get; }
         /// <summary>
         /// 実行処理。
         /// </summary>

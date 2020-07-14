@@ -11,16 +11,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
 {
     public class PreferencesParameter: PluginParameterBase, IPreferencesParameter
     {
-        public PreferencesParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public PreferencesParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(pluginInformations, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         {
             SkeletonImplements = skeletonImplements;
-            UserAgentFactory = userAgentFactory;
+            HttpUserAgentFactory = userAgentFactory;
         }
 
         #region IPreferencesParameter
 
-        public IUserAgentFactory UserAgentFactory { get; }
+        public IHttpUserAgentFactory HttpUserAgentFactory { get; }
         public ISkeletonImplements SkeletonImplements { get; }
         #endregion
     }

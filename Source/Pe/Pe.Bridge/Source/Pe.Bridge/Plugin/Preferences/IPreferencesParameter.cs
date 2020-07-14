@@ -15,9 +15,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         #region property
 
         /// <summary>
-        /// <see cref="IUserAgent"/> 生成器。
+        /// <see cref="IHttpUserAgent"/> 生成器。
         /// </summary>
-        IUserAgentFactory UserAgentFactory { get; }
+        IHttpUserAgentFactory HttpUserAgentFactory { get; }
 
         /// <summary>
         /// ViewModelの面倒実装部分。

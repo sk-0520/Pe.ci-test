@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginsSettingEditorElement: SettingEditorElementBase
     {
-        internal PluginsSettingEditorElement(PluginContainer pluginContainer, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginsSettingEditorElement(PluginContainer pluginContainer, PreferencesContextFactory preferencesContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, EnvironmentParameters environmentParameters, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, statementLoader, idFactory, imageLoader, dispatcherWrapper, loggerFactory)
         {
             PluginContainer = pluginContainer;
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         #region property
 
         PreferencesContextFactory PreferencesContextFactory { get; }
-        IUserAgentFactory UserAgentFactory { get; }
+        IHttpUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
 
         PluginContainer PluginContainer { get; }

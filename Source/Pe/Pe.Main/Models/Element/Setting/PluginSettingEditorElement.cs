@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class PluginSettingEditorElement: ElementBase, IPluginId
     {
-        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal PluginSettingEditorElement(PluginStateData pluginState, IPlugin? plugin, PreferencesContextFactory preferencesContextFactory, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             PluginState = pluginState;
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         PreferencesContextFactory PreferencesContextFactory { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        IUserAgentFactory UserAgentFactory { get; }
+        IHttpUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
         IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }

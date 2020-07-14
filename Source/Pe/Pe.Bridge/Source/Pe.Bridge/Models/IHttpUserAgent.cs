@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// <see cref="HttpClient"/>を意識せずに(寿命とか)に <see cref="IDisposable.Dispose"/> できる子。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IUserAgent : IDisposable
+    public interface IHttpUserAgent : IDisposable
     {
         #region function
 
@@ -34,12 +34,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
         #endregion
     }
 
-    public static class IUserAgentExtensions
+    public static class IHttpUserAgentExtensions
     {
         #region function
 
-        public static Task<string> GetStringAsync(this IUserAgent @this, Uri requestUri) => GetStringAsync(@this, requestUri, CancellationToken.None);
-        public static Task<string> GetStringAsync(this IUserAgent @this, Uri requestUri, CancellationToken cancellationToken)
+        public static Task<string> GetStringAsync(this IHttpUserAgent @this, Uri requestUri) => GetStringAsync(@this, requestUri, CancellationToken.None);
+        public static Task<string> GetStringAsync(this IHttpUserAgent @this, Uri requestUri, CancellationToken cancellationToken)
         {
             return @this.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -47,8 +47,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
             }, cancellationToken).Unwrap();
         }
 
-        public static Task<Stream> GetStreamAsync(this IUserAgent @this, Uri requestUri) => GetStreamAsync(@this, requestUri, CancellationToken.None);
-        public static Task<Stream> GetStreamAsync(this IUserAgent @this, Uri requestUri, CancellationToken cancellationToken)
+        public static Task<Stream> GetStreamAsync(this IHttpUserAgent @this, Uri requestUri) => GetStreamAsync(@this, requestUri, CancellationToken.None);
+        public static Task<Stream> GetStreamAsync(this IHttpUserAgent @this, Uri requestUri, CancellationToken cancellationToken)
         {
             return @this.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -56,8 +56,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
             }, cancellationToken).Unwrap();
         }
 
-        public static Task<byte[]> GetByteArrayAsync(this IUserAgent @this, Uri requestUri) => GetByteArrayAsync(@this, requestUri, CancellationToken.None);
-        public static Task<byte[]> GetByteArrayAsync(this IUserAgent @this, Uri requestUri, CancellationToken cancellationToken)
+        public static Task<byte[]> GetByteArrayAsync(this IHttpUserAgent @this, Uri requestUri) => GetByteArrayAsync(@this, requestUri, CancellationToken.None);
+        public static Task<byte[]> GetByteArrayAsync(this IHttpUserAgent @this, Uri requestUri, CancellationToken cancellationToken)
         {
             return @this.GetAsync(requestUri, cancellationToken).ContinueWith(t => {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     /// <summary>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IUserAgentName
+    public interface IHttpUserAgentName
     {
         #region property
 
@@ -99,23 +99,23 @@ namespace ContentTypeTextNet.Pe.Bridge.Models
     }
 
     /// <summary>
-    /// <see cref="IUserAgent"/>生成処理。
+    /// <see cref="IHttpUserAgent"/>生成処理。
     /// <para>生成したやつは <see cref="IDisposable.Dispose"/> すること。</para>
     /// HttpClientFactoryを使いたかったけど今の仕組みに乗せるのは難しそうな気がした(裏で使うかも)。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IUserAgentFactory
+    public interface IHttpUserAgentFactory
     {
         #region property
 
-        IUserAgentName UserAgentName { get; }
+        IHttpUserAgentName UserAgentName { get; }
 
         #endregion
 
         #region function
 
-        public IUserAgent CreateUserAgent();
-        public IUserAgent CreateUserAgent(string name);
+        public IHttpUserAgent CreateUserAgent();
+        public IHttpUserAgent CreateUserAgent(string name);
 
         #endregion
     }

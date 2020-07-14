@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
 
         #endregion
-        public AddonContainer(PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonContainer(PluginContextFactory pluginContextFactory, BackgroundAddonContextFactory backgroundAddonContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         PluginContextFactory PluginContextFactory { get; }
         BackgroundAddonContextFactory BackgroundAddonContextFactory { get; }
 
-        IUserAgentFactory UserAgentFactory { get; }
+        IHttpUserAgentFactory UserAgentFactory { get; }
         IPlatformTheme PlatformTheme { get; }
         IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }

@@ -13,18 +13,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// <inheritdoc cref="IAddonParameter"/>
     internal class AddonParameter: PluginParameterBase, IAddonParameter
     {
-        public AddonParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public AddonParameter(ISkeletonImplements skeletonImplements, IPluginInformations pluginInformations, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(pluginInformations, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         {
-            UserAgentFactory = userAgentFactory;
+            HttpUserAgentFactory = userAgentFactory;
             AddonExecutor = new AddonExecutor(PluginInformations, LoggerFactory);
             SkeletonImplements = skeletonImplements;
         }
 
         #region IAddonParameter
 
-        /// <inheritdoc cref="IAddonParameter.UserAgentFactory"/>
-        public IUserAgentFactory UserAgentFactory { get; }
+        /// <inheritdoc cref="IAddonParameter.HttpUserAgentFactory"/>
+        public IHttpUserAgentFactory HttpUserAgentFactory { get; }
         /// <inheritdoc cref="IAddonParameter.AddonExecutor"/>
         public IAddonExecutor AddonExecutor { get; }
         /// <inheritdoc cref="IAddonParameter.SkeletonImplements"/>
