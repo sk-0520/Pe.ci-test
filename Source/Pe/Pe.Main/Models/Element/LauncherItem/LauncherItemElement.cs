@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
@@ -32,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #endregion
 
-        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, LauncherIconElement launcherIconElement, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -42,10 +44,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ClipboardManager = clipboardManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
+            FileDatabaseBarrier = fileDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             DispatcherWrapper = dispatcherWrapper;
-
-            Icon = launcherIconElement;
         }
 
         #region property
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         IClipboardManager ClipboardManager { get; }
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
-        IFileDatabaseBarrier? FileDatabaseBarrier { get; }
+        IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
@@ -66,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         public bool IsEnabledCommandLauncher { get; private set; }
         public string? Comment { get; private set; }
 
-        public LauncherIconElement Icon { get; }
+        public LauncherIconElement? Icon { get; protected set; }
 
         public virtual bool NowCustomizing
         {
@@ -77,6 +78,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         #endregion
 
         #region function
+
+        LauncherIconElement GetFileLauncherIcon()
+        {
+            var iconPack = LauncherIconLoaderPackFactory.CreatePack(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
+            var iconElemenet = new LauncherIconElement(LauncherItemId, iconPack, LoggerFactory);
+            return iconElemenet;
+        }
 
         void LoadLauncherItem()
         {
@@ -91,6 +99,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 Kind = launcherItemData.Kind;
                 IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
                 Comment = launcherItemData.Comment;
+
+                if(Kind == LauncherItemKind.File) {
+                    Icon = GetFileLauncherIcon();
+                }
             }
         }
 
@@ -377,7 +389,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             //TODO: 確定時の処理
             NowCustomizing = true;
             NotifyManager.CustomizeLauncherItemExited += NotifyManager_CustomizeLauncherItemExited;
-            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen, Icon);
+            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen, Icon!);
             element.StartView();
         }
 

@@ -136,7 +136,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         protected override object GetIconImpl(in IconScale iconScale)
         {
-            return LauncherItemElement.Icon.IconImageLoaderPack.IconItems[iconScale.Box];
+            return LauncherItemElement.Icon!.IconImageLoaderPack.IconItems[iconScale.Box];
         }
 
         protected override void ExecuteImpl(ICommandExecuteParameter parameter)

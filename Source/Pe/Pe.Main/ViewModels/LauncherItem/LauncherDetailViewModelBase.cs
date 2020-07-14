@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             Screen = screen;
             LauncherToolbarTheme = launcherToolbarTheme;
-            Icon = new LauncherIconViewModel(model.Icon, dispatcherWrapper, LoggerFactory);
+            Icon = new LauncherIconViewModel(model.Icon!, dispatcherWrapper, LoggerFactory);
         }
 
         #region property

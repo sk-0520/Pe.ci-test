@@ -166,15 +166,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
             {
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
-
-                    var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                        .Select(i => DiContainer.Build<LauncherIconLoader>(launcherItemId, i))
-                    ;
-                    var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
-
-                    var launcherIconElement = DiContainer.Build<LauncherIconElement>(launcherItemId, iconImageLoaderPack);
-
-                    var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey, launcherIconElement);
+                    var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey);
                     launcherItemElement.Initialize();
                     return launcherItemElement;
                 });
