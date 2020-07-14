@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
 {
+    [Obsolete]
     public class LauncherIconViewModel: SingleModelViewModelBase<LauncherIconElement>
     {
         #region variable

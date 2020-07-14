@@ -5,12 +5,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
@@ -43,7 +46,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         /// 一括用遅延読み込みモードか。
         /// <para>設定画面が遅い(#634)対応。</para>
         /// </summary>
-        internal bool IsLazyLoad {
+        internal bool IsLazyLoad
+        {
             get => this._isLazyLoad;
             protected private set => SetProperty(ref this._isLazyLoad, value);
         }
@@ -338,6 +342,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 commander.Commit();
             }
         }
+
+        public LauncherIconFactory CreateLauncherIconFactory()
+        {
+            return new LauncherIconFactory(LauncherItemId, Kind, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+        }
+
 
         #endregion
 

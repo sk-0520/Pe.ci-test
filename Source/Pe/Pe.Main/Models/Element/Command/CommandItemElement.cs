@@ -136,13 +136,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 
         protected override object GetIconImpl(in IconScale iconScale)
         {
-            switch(LauncherItemElement.Kind) {
-                case Data.LauncherItemKind.File:
-                    return LauncherItemElement.CreateFileIconLoader();
-
-                default:
-                    throw new NotImplementedException();
-            }
+            var factory = LauncherItemElement.CreateLauncherIconFactory();
+            return factory.CreateView(DispatcherWrapper);
         }
 
         protected override void ExecuteImpl(ICommandExecuteParameter parameter)

@@ -67,8 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         public bool IsEnabledCommandLauncher { get; private set; }
         public string? Comment { get; private set; }
 
-        public LauncherIconElement? Icon { get; protected set; }
-
         public virtual bool NowCustomizing
         {
             get => this._nowCustomize;
@@ -378,7 +376,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             //TODO: 確定時の処理
             NowCustomizing = true;
             NotifyManager.CustomizeLauncherItemExited += NotifyManager_CustomizeLauncherItemExited;
-            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen, Icon!);
+            var element = OrderManager.CreateCustomizeLauncherItemContainerElement(LauncherItemId, screen);
             element.StartView();
         }
 
@@ -403,14 +401,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         }
 
 
-
-        public IconImageLoaderBase CreateFileIconLoader()
+        public LauncherIconFactory CreateLauncherIconFactory()
         {
-            if(Kind != LauncherItemKind.File) {
-                throw new InvalidOperationException(nameof(Kind));
-            }
-
-            return new LauncherIconLoader(LauncherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, DispatcherWrapper, LoggerFactory);
+            return new LauncherIconFactory(LauncherItemId, Kind, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
         }
 
         #endregion

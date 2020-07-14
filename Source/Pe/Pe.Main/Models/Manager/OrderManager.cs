@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         void RefreshLauncherItemElement(Guid launcherItemId);
 
-        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement);
+        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen);
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen);
 
@@ -180,11 +180,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
+            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen)
             {
                 var customizeLauncherEditorElement = DiContainer.Build<LauncherItemCustomizeEditorElement>(launcherItemId);
                 customizeLauncherEditorElement.Initialize();
-                var customizeLauncherItemContainerElement = DiContainer.Build<LauncherItemCustomizeContainerElement>(screen, customizeLauncherEditorElement, iconElement);
+                var customizeLauncherItemContainerElement = DiContainer.Build<LauncherItemCustomizeContainerElement>(screen, customizeLauncherEditorElement);
                 customizeLauncherItemContainerElement.Initialize();
                 return customizeLauncherItemContainerElement;
             }

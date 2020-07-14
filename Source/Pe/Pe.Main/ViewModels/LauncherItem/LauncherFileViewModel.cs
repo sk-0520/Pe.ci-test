@@ -209,8 +209,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             {
                 Debug.Assert(Model.Kind == LauncherItemKind.File);
 
-                var loader = Model.CreateFileIconLoader();
-                return new IconViewerViewModel(loader, DispatcherWrapper, LoggerFactory);
+                var factory = Model.CreateLauncherIconFactory();
+                return factory.CreateView(DispatcherWrapper);
             }
         }
 
@@ -220,8 +220,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             {
                 Debug.Assert(Model.Kind == LauncherItemKind.File);
 
-                var loader = Model.CreateFileIconLoader();
-                return new IconViewerViewModel(loader, DispatcherWrapper, LoggerFactory);
+                var factory = Model.CreateLauncherIconFactory();
+                return factory.CreateView(DispatcherWrapper);
             }
         }
 
