@@ -27,6 +27,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
+        /// <summary>
+        /// 装飾キー位置と入力されている装飾キーをチェック。
+        /// </summary>
+        /// <param name="modifierKey">装飾キー位置。</param>
+        /// <param name="state">装飾キー状態。</param>
+        /// <returns>入力されているか否かの真偽値。</returns>
         bool TestModifierKey(ModifierKey modifierKey, in ModifierKeyState state)
         {
             return modifierKey switch
@@ -40,6 +46,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             };
         }
 
+        /// <summary>
+        /// キー入力チェック。
+        /// </summary>
+        /// <param name="mapping">キー・装飾キー位置</param>
+        /// <param name="isDown">押下されているか。</param>
+        /// <param name="key">入力キー。</param>
+        /// <param name="modifierKeyStatus">入力装飾キー。</param>
+        /// <returns></returns>
         protected bool TestMapping(IReadOnlyKeyMappingData mapping, bool isDown, Key key, in ModifierKeyStatus modifierKeyStatus)
         {
             if(mapping.Key != key) {
