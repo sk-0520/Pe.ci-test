@@ -20,7 +20,7 @@ using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
-    public class ImportProgramsViewModel : ElementViewModelBase<ImportProgramsElement>, IViewLifecycleReceiver
+    public class ImportProgramsViewModel: ElementViewModelBase<ImportProgramsElement>, IViewLifecycleReceiver
     {
         #region variable
 

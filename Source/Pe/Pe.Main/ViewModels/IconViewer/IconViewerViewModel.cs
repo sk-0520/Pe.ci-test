@@ -22,6 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         ImageSource? _imageSource = null;
         bool _useCache = false;
+        IconBox _iconBox;
 
         #endregion
 
@@ -52,7 +53,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
             }
         }
 
-        public IconBox IconBox => Model.IconBox;
+        public IconBox IconBox
+        {
+            get => this._iconBox;
+            set
+            {
+                SetProperty(ref this._iconBox, value);
+            }
+        }
 
         /// <summary>
         /// すでに読み込んだアイコンはキャッシュを使用する。
@@ -70,9 +78,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         #region function
 
-        public async Task LoadAsync(Point dpiScale, CancellationToken cancellationToken)
+        public async Task LoadAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
-            this._imageSource = await Model.LoadAsync(UseCache, dpiScale, cancellationToken);
+            this._imageSource = await Model.LoadAsync(UseCache, iconScale, cancellationToken);
             RaisePropertyChanged(nameof(ImageSource));
         }
 

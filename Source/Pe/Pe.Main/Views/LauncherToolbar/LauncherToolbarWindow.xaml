@@ -65,6 +65,7 @@
     </Style>
 
     <Style TargetType="app_main_views_lt:LauncherContentControl">
+      <!--
       <Style.Triggers>
         <DataTrigger Binding="{Binding DataContext.IconBox, ElementName=root}" Value="Small">
           <Setter Property="Icon" Value="{Binding Icon.Small}" />
@@ -79,7 +80,10 @@
           <Setter Property="Icon" Value="{Binding Icon.Large}" />
         </DataTrigger>
       </Style.Triggers>
+      -->
       <EventSetter Event="PreviewMouseDoubleClick" Handler="LauncherContentControl_PreviewMouseDoubleClick" />
+      <Setter Property="Icon" Value="{Binding Icon.Icon}" />
+      <Setter Property="IconBox" Value="{Binding DataContext.IconBox, ElementName=root}" />
       <Setter Property="Foreground" Value="{Binding DataContext.ToolbarForeground, ElementName=root}" />
       <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root}" />
       <Setter Property="IsIconOnly" Value="{Binding DataContext.IsIconOnly, ElementName=root}" />
@@ -181,7 +185,7 @@
           <ToolTip Style="{StaticResource LauncherItemTooltip}">
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Big}" />
+                <app_main_views:ImageViewerControl IconBox="Big" IconViewer="{Binding Icon.Icon}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -241,7 +245,7 @@
           <ToolTip Style="{StaticResource LauncherItemTooltip}">
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <app_main_views:ImageViewerControl IconViewer="{Binding Icon.Big}" />
+                <app_main_views:ImageViewerControl IconBox="Big" IconViewer="{Binding Icon.Icon}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />

@@ -465,15 +465,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
     {
         public LauncherIconStatus(IconBox iconBox, Point dpiScale, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp)
         {
-            IconBox = iconBox;
-            DpiScale = dpiScale;
+            IconScale = new IconScale(iconBox, dpiScale);
             LastUpdatedTimestamp = lastUpdatedTimestamp;
         }
 
         #region proeprty
 
-        public IconBox IconBox { get; }
-        public Point DpiScale { get; }
+        public IconScale IconScale { get; }
 
         [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastUpdatedTimestamp { get; }

@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         public void ClearIcon()
         {
             foreach(var element in LauncherItemElements) {
-                element.Icon!.IconImageLoaderPack.IconItems[IconBox].ClearCache();
+                element.Icon!.IconImageLoaderPack.ClearCache();
             }
         }
 
@@ -246,7 +246,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
             var element = LauncherItemElements.FirstOrDefault(i => i.LauncherItemId == e.LauncherItemId);
             if(element != null) {
-                element.Icon!.IconImageLoaderPack.IconItems[IconBox].ClearCache();
+                element.Icon!.IconImageLoaderPack.ClearCache();
                 if(!element.IsEnabledCommandLauncher) {
                     Logger.LogInformation("コマンドランチャーから既存ランチャーアイテムの除外: {0}", element.LauncherItemId);
                     LauncherItemElements.Remove(element);

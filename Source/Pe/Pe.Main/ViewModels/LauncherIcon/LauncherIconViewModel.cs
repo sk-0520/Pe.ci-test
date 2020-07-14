@@ -14,24 +14,22 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
 {
-    public class LauncherIconViewModel : SingleModelViewModelBase<LauncherIconElement>, IIconPack<IconViewerViewModel>
+    public class LauncherIconViewModel: SingleModelViewModelBase<LauncherIconElement>
     {
         #region variable
-
-        IReadOnlyDictionary<IconBox, IconViewerViewModel>? _iconItems;
 
         #endregion
 
         public LauncherIconViewModel(LauncherIconElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            Small = new IconViewerViewModel(Model.IconImageLoaderPack.Small, dispatcherWrapper, LoggerFactory);
-            Normal = new IconViewerViewModel(Model.IconImageLoaderPack.Normal, dispatcherWrapper, LoggerFactory);
-            Big = new IconViewerViewModel(Model.IconImageLoaderPack.Big, dispatcherWrapper, LoggerFactory);
-            Large = new IconViewerViewModel(Model.IconImageLoaderPack.Large, dispatcherWrapper, LoggerFactory);
+            Icon = new IconViewerViewModel(Model.IconImageLoaderPack, dispatcherWrapper, LoggerFactory);
         }
 
         #region property
+
+        public IconViewerViewModel Icon { get; }
+
         #endregion
 
         #region command
@@ -48,26 +46,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
 
         #endregion
 
-        #region IIconPack
-
-        /// <inheritdoc cref="IIconPack.Small"/>
-        public IconViewerViewModel Small { get; }
-        /// <inheritdoc cref="IIconPack.Normal"/>
-        public IconViewerViewModel Normal { get; }
-        /// <inheritdoc cref="IIconPack.Big"/>
-        public IconViewerViewModel Big { get; }
-        /// <inheritdoc cref="IIconPack.Large"/>
-        public IconViewerViewModel Large { get; }
-
-        /// <inheritdoc cref="IIconPack.IconItems"/>
-        public IReadOnlyDictionary<IconBox, IconViewerViewModel> IconItems => this._iconItems ??= new Dictionary<IconBox, IconViewerViewModel>() {
-            [IconBox.Small] = Small,
-            [IconBox.Normal] = Normal,
-            [IconBox.Big] = Big,
-            [IconBox.Large] = Large,
-        };
-
-        #endregion
 
         #region SingleModelViewModelBase
 
@@ -75,9 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    foreach(var vm in IconItems.Values) {
-                        vm.Dispose();
-                    }
+                    Icon.Dispose();
                 }
             }
             base.Dispose(disposing);
