@@ -256,9 +256,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         public static IconImageLoaderPack CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
-            var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, dispatcherWrapper, loggerFactory))
-            ;
+            var launcherIconImageLoaders = new Dictionary<IconBox, IconImageLoaderBase>(4);
+            foreach(var iconBox in EnumUtility.GetMembers<IconBox>()) {
+                var loader = new LauncherIconLoader(launcherItemId, iconBox, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, dispatcherWrapper, loggerFactory);
+                launcherIconImageLoaders.Add(iconBox, loader);
+            }
             var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
             return iconImageLoaderPack;
         }

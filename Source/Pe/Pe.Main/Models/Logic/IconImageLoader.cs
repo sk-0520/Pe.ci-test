@@ -249,13 +249,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #endregion
 
-        public IconImageLoaderPack(IEnumerable<IconImageLoaderBase> iconImageLoaders)
+        public IconImageLoaderPack(IReadOnlyDictionary<IconBox, IconImageLoaderBase> iconImageLoaders)
         {
-            var map = iconImageLoaders.ToDictionary(i => i.IconBox, i => i);
-            Small = map[IconBox.Small];
-            Normal = map[IconBox.Normal];
-            Big = map[IconBox.Big];
-            Large = map[IconBox.Large];
+            Small = iconImageLoaders[IconBox.Small];
+            Normal = iconImageLoaders[IconBox.Normal];
+            Big = iconImageLoaders[IconBox.Big];
+            Large = iconImageLoaders[IconBox.Large];
         }
 
         #region IIconPack
