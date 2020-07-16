@@ -29,8 +29,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// 初期化処理。
+        /// <para>ランチャーアイテムが使用される際に呼び出される。</para>
         /// </summary>
-        /// <param name="launcherItemId"></param>
+        /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="launcherItemAddonContext"></param>
         void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext);
 
@@ -44,10 +45,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// アイテムの実行。
+        /// <para>ウィンドウを表示する場合はこの処理で行うこと(ユーザー操作を起点にする必要がある)。</para>
         /// </summary>
-        /// <param name="executeParameter">実行パラメータ。</param>
-        /// <param name="launcherItemExtensionParameter">ランチャーアイテムパラメータ。</param>
-        void Execute(ICommandExecuteParameter executeParameter, IAddonParameter addonParameter, ILauncherItemAddonContext launcherItemAddonContext);
+        /// <param name="commandExecuteParameter">実行パラメータ。</param>
+        /// <param name="launcherItemExtensionExecuteParameter">ランチャーアイテムパラメータ。</param>
+        /// <param name="launcherItemAddonContext"></param>
+        void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
 
         #endregion
     }
