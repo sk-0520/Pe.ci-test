@@ -28,18 +28,26 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #region function
 
         /// <summary>
+        /// 初期化処理。
+        /// </summary>
+        /// <param name="launcherItemId"></param>
+        /// <param name="launcherItemAddonContext"></param>
+        void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext);
+
+        /// <summary>
         /// アイコン取得。
         /// <para>UIスレッド上で実行を保証。</para>
         /// </summary>
         /// <param name="iconBox"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(IconBox iconBox, Point dpiScale);
+        object GetIcon(IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext);
 
         /// <summary>
         /// アイテムの実行。
         /// </summary>
-        /// <param name="parameter">実行パラメータ。</param>
-        void Execute(ICommandExecuteParameter parameter);
+        /// <param name="executeParameter">実行パラメータ。</param>
+        /// <param name="launcherItemExtensionParameter">ランチャーアイテムパラメータ。</param>
+        void Execute(ICommandExecuteParameter executeParameter, IAddonParameter addonParameter, ILauncherItemAddonContext launcherItemAddonContext);
 
         #endregion
     }

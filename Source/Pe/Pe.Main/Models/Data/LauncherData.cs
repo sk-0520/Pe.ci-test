@@ -78,15 +78,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         DirectExecute,
     }
 
-    public interface ILauncherItemId
-    {
-        #region property
-
-        Guid LauncherItemId { get; }
-
-        #endregion
-    }
-
     public interface ILauncherExecutePathParameter
     {
         #region property
