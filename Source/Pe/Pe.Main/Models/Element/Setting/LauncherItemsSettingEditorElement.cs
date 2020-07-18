@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
-        public Guid AddNewItem(LauncherItemKind kind)
+        public Guid AddNewItem(LauncherItemKind kind, Guid launcherItemId)
         {
             ThrowIfDisposed();
 

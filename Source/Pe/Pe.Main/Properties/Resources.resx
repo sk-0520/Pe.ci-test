@@ -2019,4 +2019,7 @@
   <data name="String_Setting_Plugins_Item_Setting_NotLoaded" xml:space="preserve">
     <value>プラグイン非読み込みのため詳細不明。</value>
   </data>
+  <data name="String_Setting_LauncherItems_Add_File_A" xml:space="preserve">
+    <value>ファイルを追加</value>
+  </data>
 </root>

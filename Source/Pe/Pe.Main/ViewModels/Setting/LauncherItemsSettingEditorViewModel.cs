@@ -108,18 +108,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 AllLauncherItemItems.Refresh();
             }
         }
+
+        public ObservableCollection<object> LauncherItemAddonItems { get; } = new ObservableCollection<object>() {
+            new object()
+        };
+
         #endregion
 
         #region command
 
         public ICommand AddNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.File);
+            AddNewItem(LauncherItemKind.File, Guid.Empty);
         }));
         public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.StoreApp);
+            AddNewItem(LauncherItemKind.StoreApp, Guid.Empty);
         }));
         public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.Addon);
+            AddNewItem(LauncherItemKind.Addon, Guid.Empty);
         }));
 
         public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(
@@ -134,10 +139,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void AddNewItem(LauncherItemKind kind)
+        void AddNewItem(LauncherItemKind kind, Guid launcherItemId)
         {
             IsPopupAddItemMenu = false;
-            var newLauncherItemId = Model.AddNewItem(kind);
+            var newLauncherItemId = Model.AddNewItem(kind, launcherItemId);
             var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();
