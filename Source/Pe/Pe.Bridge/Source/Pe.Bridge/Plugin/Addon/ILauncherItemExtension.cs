@@ -7,6 +7,29 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
     /// <summary>
+    /// ランチャーアイテムアイコンの表示方法。
+    /// </summary>
+    public enum LauncherItemIconMode
+    {
+        /// <summary>
+        /// ツールバー表示。
+        /// </summary>
+        Toolbar,
+        /// <summary>
+        /// ツールチップ表示。
+        /// </summary>
+        Tooltip,
+        /// <summary>
+        /// コマンド型ランチャー表示。
+        /// </summary>
+        Command,
+        /// <summary>
+        /// 設定画面。
+        /// </summary>
+        Setting,
+    }
+
+    /// <summary>
     /// ランチャーアイテム拡張。
     /// </summary>
     public interface ILauncherItemExtension
@@ -23,6 +46,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         string DisplayText { get; }
 
+        /// <summary>
+        /// ランチャーアイテム専用アイコンを使用するか。
+        /// </summary>
+        bool CustomLauncherIcon { get; }
+
         #endregion
 
         #region function
@@ -37,11 +65,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// アイコン取得。
+        /// <para>(TODO: 考え中)<see cref="CustomLauncherIcon"/>が有効な場合に使用される。</para>
         /// <para>UIスレッド上で実行を保証。</para>
         /// </summary>
-        /// <param name="iconBox"></param>
+        /// <param name="iconMode"></param>
+        /// <param name="iconScale"></param>
+        /// <param name="launcherItemAddonContext"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext);
+        object GetIcon(LauncherItemIconMode iconMode,  IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext);
 
         /// <summary>
         /// アイテムの実行。
