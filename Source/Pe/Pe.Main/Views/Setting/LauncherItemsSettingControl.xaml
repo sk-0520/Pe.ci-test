@@ -61,53 +61,56 @@
           </Grid.ColumnDefinitions>
 
 
-          <Grid x:Name="multiMenu" Grid.Column="0">
-            <Grid.Style>
-              <Style TargetType="Grid">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding Editor.LauncherItemAddonItems.Count, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                  </DataTrigger>
-                </Style.Triggers>
-              </Style>
-            </Grid.Style>
-            <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
-              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
-            </ToggleButton>
-            <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
-              <Border Style="{StaticResource PopupMenuBorder}">
-                <StackPanel>
-                  <MenuItem Header="{Binding Resources.String_Setting_LauncherItems_Add_File_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                  <ItemsControl IsTabStop="False" ItemsSource="{Binding Editor.LauncherItemAddonItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                    <ItemsControl.ItemsPanel>
-                      <ItemsPanelTemplate>
-                        <StackPanel />
-                      </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                      <DataTemplate>
-                        <MenuItem Header="{Binding Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding Editor.AddNewAddonItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
-                      </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                  </ItemsControl>
-                </StackPanel>
-              </Border>
-            </Popup>
-          </Grid>
+          <Grid Grid.Column="0">
+            <Grid x:Name="multiMenu" >
+              <Grid.Style>
+                <Style TargetType="Grid">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Editor.LauncherItemAddonItems.Count, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0">
+                      <Setter Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Grid.Style>
+              <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
+              </ToggleButton>
+              <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
+                <Border Style="{StaticResource PopupMenuBorder}">
+                  <StackPanel>
+                    <MenuItem Header="{Binding Resources.String_Setting_LauncherItems_Add_File_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                    <ItemsControl IsTabStop="False" ItemsSource="{Binding Editor.LauncherItemAddonItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <StackPanel />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <MenuItem Header="{Binding AddonName, Converter={StaticResource EscapeAccessKeyConverter}}" Command="{Binding Editor.AddNewAddonItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </Border>
+              </Popup>
+            </Grid>
 
-          <Button Grid.Column="0" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
-            <Button.Style>
-              <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding Visibility ,ElementName=multiMenu}" Value="Collapsed">
-                    <Setter Property="Visibility" Value="Visible" />
-                  </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="Visibility" Value="Collapsed" />
-              </Style>
-            </Button.Style>
-            <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
-          </Button>
+            <Button ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.AddNewFileItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">
+              <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Visibility ,ElementName=multiMenu}" Value="Collapsed">
+                      <Setter Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                  <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+              </Button.Style>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
+            </Button>
+
+          </Grid>
 
           <Button Grid.Column="1" ToolTip="{Binding Resources.String_Setting_LauncherItems_Remove, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Editor.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -27,12 +28,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             AllLauncherItems = allLauncherItems;
             PluginContainer = pluginContainer;
+
+            Addons = PluginContainer.Addon.Plugins.Cast<IAddon>().ToList();
         }
 
         #region property
 
         public ObservableCollection<LauncherItemSettingEditorElement> AllLauncherItems { get; }
         PluginContainer PluginContainer { get; }
+
+        public IReadOnlyList<IAddon> Addons { get; }
+
         #endregion
 
         #region function

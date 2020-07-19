@@ -1837,9 +1837,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         internal void StartupEnd()
         {
-            StartHook();
-            StartScheduler();
-            StartBackground();
+#if DEBUG
+            if(!IsDevDebug) {
+#endif
+                StartHook();
+                StartScheduler();
+                StartBackground();
+#if DEBUG
+            }
+#endif
 
             DelayCheckUpdateAsync().ConfigureAwait(false);
 #if DEBUG

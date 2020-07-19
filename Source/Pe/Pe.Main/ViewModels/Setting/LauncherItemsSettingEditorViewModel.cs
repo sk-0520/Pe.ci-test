@@ -52,6 +52,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             SimpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             NameFilterQueryRegex = SimpleRegexFactory.AllMatchRegex;
+
+            LauncherItemAddonItems = Model.Addons.Select(i => new LauncherItemAddonViewModel(i, LoggerFactory)).ToList();
         }
 
         #region property
@@ -109,9 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             }
         }
 
-        public ObservableCollection<object> LauncherItemAddonItems { get; } = new ObservableCollection<object>() {
-            new object()
-        };
+        public IReadOnlyList<LauncherItemAddonViewModel> LauncherItemAddonItems { get; }
 
         #endregion
 
@@ -123,9 +123,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
             AddNewItem(LauncherItemKind.StoreApp, Guid.Empty);
         }));
-        public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.Addon, Guid.Empty);
-        }));
+        public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherItemAddonViewModel>(
+            o => {
+                AddNewItem(LauncherItemKind.Addon, o.PluginId);
+            }
+        ));
 
         public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
