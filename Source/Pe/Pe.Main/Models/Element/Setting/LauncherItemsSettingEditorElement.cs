@@ -29,7 +29,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             AllLauncherItems = allLauncherItems;
             PluginContainer = pluginContainer;
 
-            Addons = PluginContainer.Addon.Plugins.Cast<IAddon>().ToList();
+            Addons = PluginContainer.Addon.Plugins
+                .Cast<IAddon>()
+                .Where(i => i.IsSupported(AddonKind.LauncherItem))
+                .ToList()
+            ;
         }
 
         #region property
