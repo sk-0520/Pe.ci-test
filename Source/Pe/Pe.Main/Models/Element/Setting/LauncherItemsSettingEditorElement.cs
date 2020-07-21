@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,19 +22,22 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class LauncherItemsSettingEditorElement : SettingEditorElementBase
+    public class LauncherItemsSettingEditorElement: SettingEditorElementBase
     {
-        internal LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, PluginContainer pluginContainer, ISettingNotifyManager settingNotifyManager,IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, PluginContainer pluginContainer, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, dispatcherWrapper, loggerFactory)
         {
             AllLauncherItems = allLauncherItems;
             PluginContainer = pluginContainer;
 
-            Addons = PluginContainer.Addon.Plugins
-                .Cast<IAddon>()
-                .Where(i => i.IsSupported(AddonKind.LauncherItem))
-                .ToList()
-            ;
+            var addons = new List<IAddon>();
+            var addonIds = pluginContainer.Addon.GetLauncherItemAddonIds();
+            var addonPlugins = pluginContainer.Plugins.OfType<IAddon>().ToList();
+            foreach(var addonId in addonIds) {
+                var addon = addonPlugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == addonId);
+                addons.Add(addon);
+            }
+            Addons = addons;
         }
 
         #region property
