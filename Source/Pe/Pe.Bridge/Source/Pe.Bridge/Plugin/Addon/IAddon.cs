@@ -40,6 +40,14 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         bool IsSupported(AddonKind addonKind);
 
         /// <summary>
+        /// ランチャーアイテムアドオンの生成。
+        /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        ILauncherItemExtension BuildLauncherItemExtension(IAddonParameter parameter);
+
+        /// <summary>
         /// コマンド型アドオンの生成。
         /// <para>キャッシュ・都度生成はプラグイン側で制御する。</para>
         /// </summary>
