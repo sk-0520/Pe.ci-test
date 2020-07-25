@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
@@ -54,6 +55,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         bool CustomLauncherIcon { get; }
 
+        /// <summary>
+        /// 独自のランチャーアイテム設定をサポートするか。
+        /// </summary>
+        bool SupportedPreferences { get; }
+
         #endregion
 
         #region function
@@ -85,6 +91,13 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="launcherItemExtensionExecuteParameter">ランチャーアイテムパラメータ。</param>
         /// <param name="launcherItemAddonContext"></param>
         void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
+
+        /// <summary>
+        /// 設定処理。
+        /// <para><see cref="SupportedPreferences"/>が有効な場合に使用される。</para>
+        /// </summary>
+        /// <returns></returns>
+        ILauncherItemPreferences CreatePreferences();
 
         #endregion
     }

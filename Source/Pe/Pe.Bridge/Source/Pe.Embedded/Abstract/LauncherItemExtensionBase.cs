@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -58,9 +59,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public abstract string DisplayText { get; }
         public abstract bool CustomLauncherIcon { get; }
 
+        public abstract bool SupportedPreferences { get; }
+
         public abstract void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract object GetIcon(LauncherItemIconMode iconMode, IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
+        public abstract ILauncherItemPreferences CreatePreferences();
 
         #endregion
     }
