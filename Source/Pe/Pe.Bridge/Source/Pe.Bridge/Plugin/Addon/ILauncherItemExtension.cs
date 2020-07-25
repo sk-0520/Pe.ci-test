@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
@@ -32,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <summary>
     /// ランチャーアイテム拡張。
     /// </summary>
-    public interface ILauncherItemExtension
+    public interface ILauncherItemExtension: INotifyPropertyChanged
     {
         #region property
 
@@ -43,6 +44,8 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// ランチャーアイテム専用文言。
+        /// <para><see cref="CustomDisplayText"/>が有効な場合に使用される。</para>
+        /// <para>変更を通知するには<see cref="INotifyPropertyChanged.PropertyChanged"/>を使用する。</para>
         /// </summary>
         string DisplayText { get; }
 

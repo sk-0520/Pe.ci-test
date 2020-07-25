@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         #region AddonBase
 
         protected override IReadOnlyCollection<AddonKind> SupportedKinds { get; } = new[] {
+            AddonKind.LauncherItem,
             AddonKind.Widget,
         };
 
@@ -25,6 +26,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         protected internal override void Unload(IPluginUnloadContext pluginUnloadContext)
         {
+        }
+
+        public override ILauncherItemExtension BuildLauncherItemExtension(IAddonParameter parameter)
+        {
+            return new ClockLauncherItem(parameter, PluginInformations);
         }
 
         public override IWidget BuildWidget(IAddonParameter parameter)
