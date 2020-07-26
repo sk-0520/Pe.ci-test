@@ -7,8 +7,11 @@ using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
@@ -16,6 +19,8 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
@@ -27,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         bool _isLazyLoad;
 
         #endregion
-        public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeEditorElement(Guid launcherItemId, AddonContainer addonContainer, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -76,6 +81,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
+        #region addon
+
+        ILauncherItemExtension? LauncherItemExtension { get; set; }
+        public ILauncherItemPreferences? LauncherItemPreferences { get; private set; }
+
+        #endregion
+
         #endregion
 
 
@@ -111,6 +123,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
+        void LoadAddonCore(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        {
+
+        }
+
         void LoadLauncherItem()
         {
             ThrowIfDisposed();
@@ -139,6 +156,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                     case LauncherItemKind.StoreApp: {
                             var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                             StoreApp = launcherStoreAppsEntityDao.SelectStoreApp(LauncherItemId);
+                        }
+                        break;
+
+                    case LauncherItemKind.Addon: {
+                            LoadAddonCore(commander, commander.Implementation);
                         }
                         break;
 

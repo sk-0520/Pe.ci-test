@@ -140,6 +140,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                         }
                         break;
 
+                    case LauncherItemKind.Addon: {
+                            launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
+                        }
+                        break;
+
                     default:
                         throw new NotImplementedException();
                 }

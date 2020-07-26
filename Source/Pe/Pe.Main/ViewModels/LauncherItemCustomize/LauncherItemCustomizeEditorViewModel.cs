@@ -48,6 +48,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     }
                     break;
 
+                case LauncherItemKind.Addon: {
+                        Logger.LogWarning("not impl");
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
