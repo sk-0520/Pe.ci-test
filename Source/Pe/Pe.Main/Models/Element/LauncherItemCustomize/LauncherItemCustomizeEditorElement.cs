@@ -20,7 +20,6 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
-using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
@@ -32,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         bool _isLazyLoad;
 
         #endregion
-        public LauncherItemCustomizeEditorElement(Guid launcherItemId, AddonContainer addonContainer, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
