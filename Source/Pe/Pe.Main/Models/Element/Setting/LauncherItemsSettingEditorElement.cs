@@ -18,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -97,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             SettingNotifyManager.SendLauncherItemRemove(launcherItemId);
         }
 
-        public Guid AddNewItem(LauncherItemKind kind, Guid launcherItemId)
+        public Guid AddNewItem(LauncherItemKind kind, Guid pluginId)
         {
             ThrowIfDisposed();
 
@@ -119,29 +120,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 item.Code = launcherFactory.GetUniqueCode(newCode, codes);
                 item.IsEnabledCommandLauncher = true;
 
+                launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
+
                 switch(kind) {
                     case LauncherItemKind.File: {
+                            Debug.Assert(pluginId == Guid.Empty);
+
                             var launcherFilesDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
                             var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
 
                             var file = new LauncherFileData();
-                            launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
                             launcherFilesDao.InsertFile(item.LauncherItemId, file, DatabaseCommonStatus.CreateCurrentAccount());
                             launcherRedoItemsEntityDao.InsertRedoItem(item.LauncherItemId, LauncherRedoData.GetDisable(), DatabaseCommonStatus.CreateCurrentAccount());
                         }
                         break;
 
                     case LauncherItemKind.StoreApp: {
+                            Debug.Assert(pluginId == Guid.Empty);
+
                             var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
 
                             var store = new LauncherStoreAppData();
-                            launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
                             launcherStoreAppsEntityDao.InsertStoreApp(item.LauncherItemId, store, DatabaseCommonStatus.CreateCurrentAccount());
                         }
                         break;
 
                     case LauncherItemKind.Addon: {
-                            launcherItemsDao.InsertLauncherItem(item, DatabaseCommonStatus.CreateCurrentAccount());
+                            Debug.Assert(pluginId != Guid.Empty);
+
+                            var launcherAddonsEntityDao = new LauncherAddonsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+
+                            launcherAddonsEntityDao.InsertAddonPluginId(item.LauncherItemId, pluginId, DatabaseCommonStatus.CreateCurrentAccount());
                         }
                         break;
 
@@ -152,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, PluginContainer.Addon.GetLauncherItemAddonFinder(), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             customizeEditor.Initialize();
 
             AllLauncherItems.Add(customizeEditor);
@@ -193,7 +202,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, PluginContainer.Addon.GetLauncherItemAddonFinder(), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             customizeEditor.Initialize();
 
             AllLauncherItems.Add(customizeEditor);

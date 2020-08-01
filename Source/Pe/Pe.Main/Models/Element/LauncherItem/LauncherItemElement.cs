@@ -20,6 +20,7 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
 
@@ -33,11 +34,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #endregion
 
-        public LauncherItemElement(Guid launcherItemId, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
 
+            LauncherItemAddonFinder = launcherItemAddonFinder;
             WindowManager = windowManager;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
@@ -50,6 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #region property
 
+        ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
         IWindowManager WindowManager { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
@@ -402,7 +405,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         public LauncherIconFactory CreateLauncherIconFactory()
         {
-            return new LauncherIconFactory(LauncherItemId, Kind, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            return new LauncherIconFactory(LauncherItemId, Kind, LauncherItemAddonFinder, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
         }
 
         #endregion

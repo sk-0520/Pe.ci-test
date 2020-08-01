@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public LauncherItemAddonProxy? Find(Guid pluginId)
         {
-            throw new NotImplementedException();
+            var addon = AddonContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+            if(addon == null) {
+                Logger.LogWarning("プラグイン見つからず: {0}", pluginId);
+                return null;
+            }
+
+            return AddonContainer.GetLauncherItemAddon(pluginId);
         }
 
         ILauncherItemExtension? ILauncherItemAddonFinder.Find(Guid pluginId) => Find(pluginId);

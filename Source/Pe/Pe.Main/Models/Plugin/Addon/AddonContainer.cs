@@ -119,9 +119,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             ;
         }
 
-        public LauncherItemAddonFinder GetLauncherItemAddonFinder()
+        public LauncherItemAddonProxy GetLauncherItemAddon(Guid pluginId)
         {
-            return new LauncherItemAddonFinder(this, LoggerFactory);
+            var addon = LauncherItemSupportAddons.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+            var proxy = new LauncherItemAddonProxy(addon, PluginContextFactory, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
+            return proxy;
         }
 
         #endregion

@@ -70,6 +70,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="launcherItemAddonContext"></param>
+        [Obsolete("これタイミングつかめんことないかなぁ、きついから無視する方針で進める")]
         void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext);
 
         /// <summary>

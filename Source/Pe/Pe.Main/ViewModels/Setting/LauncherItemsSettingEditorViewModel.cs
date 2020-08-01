@@ -141,10 +141,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void AddNewItem(LauncherItemKind kind, Guid launcherItemId)
+        void AddNewItem(LauncherItemKind kind, Guid pluginId)
         {
             IsPopupAddItemMenu = false;
-            var newLauncherItemId = Model.AddNewItem(kind, launcherItemId);
+            var newLauncherItemId = Model.AddNewItem(kind, pluginId);
             var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();

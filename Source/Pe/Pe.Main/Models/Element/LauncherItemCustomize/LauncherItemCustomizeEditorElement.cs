@@ -132,7 +132,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         void LoadAddonCore(IDatabaseCommander commander, IDatabaseImplementation implementation)
         {
+            Debug.Assert(Kind == LauncherItemKind.Addon);
 
+            var launcherAddonsEntityDao = new LauncherAddonsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var pluginId = launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
+
+        }
+
+        protected void LoadAddon()
+        {
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                LoadAddonCore(commander, commander.Implementation);
+            }
         }
 
         void LoadLauncherItem()
@@ -375,7 +386,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public LauncherIconFactory CreateLauncherIconFactory()
         {
-            return new LauncherIconFactory(LauncherItemId, Kind, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            return new LauncherIconFactory(LauncherItemId, Kind, LauncherItemAddonFinder, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
         }
 
 

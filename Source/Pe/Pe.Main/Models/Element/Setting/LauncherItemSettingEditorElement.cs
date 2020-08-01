@@ -54,7 +54,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         internal void LazyLoad()
         {
-            LoadFile();
+            switch(Kind) {
+                case LauncherItemKind.File:
+                    LoadFile();
+                    break;
+
+                case LauncherItemKind.Addon:
+                    LoadAddon();
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
 
             IsLazyLoad = false;
         }
