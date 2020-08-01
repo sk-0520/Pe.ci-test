@@ -119,6 +119,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             ;
         }
 
+        public LauncherItemAddonFinder GetLauncherItemAddonFinder()
+        {
+            return new LauncherItemAddonFinder(this, LoggerFactory);
+        }
+
         #endregion
 
         #region PluginContainerBase

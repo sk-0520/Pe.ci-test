@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
@@ -27,12 +28,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     public class LauncherItemSettingEditorElement: LauncherItemCustomizeEditorElement, ILauncherItemSettingEditor
     {
-        public LauncherItemSettingEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(launcherItemId, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public LauncherItemSettingEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(launcherItemId, launcherItemAddonFinder, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {}
 
-        public LauncherItemSettingEditorElement(Guid launcherItemId, LauncherSettingCommonData setting, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : this(launcherItemId, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
+        public LauncherItemSettingEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, LauncherSettingCommonData setting, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : this(launcherItemId, launcherItemAddonFinder, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, loggerFactory)
         {
             IsLazyLoad = true;
 

@@ -20,10 +20,14 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
+    /// <summary>
+    /// ランチャーアイテム編集処理。
+    /// </summary>
     public class LauncherItemCustomizeEditorElement: ElementBase, ILauncherItemId
     {
         #region variable
@@ -31,10 +35,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         bool _isLazyLoad;
 
         #endregion
-        public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+
+        public LauncherItemCustomizeEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
+            LauncherItemAddonFinder = launcherItemAddonFinder;
             ClipboardManager = clipboardManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
@@ -42,6 +48,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         }
 
         #region property
+
+        ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }

@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, PluginContainer.Addon.GetLauncherItemAddonFinder(), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             customizeEditor.Initialize();
 
             AllLauncherItems.Add(customizeEditor);
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, PluginContainer.Addon.GetLauncherItemAddonFinder(), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             customizeEditor.Initialize();
 
             AllLauncherItems.Add(customizeEditor);

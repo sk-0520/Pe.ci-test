@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
             PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
+            ApplicationDiContainer.Register<ILauncherItemAddonFinder, ILauncherItemAddonFinder>(DiLifecycle.Transient, () => PluginContainer.Addon.GetLauncherItemAddonFinder());
 
             // プラグインコンテナ自体を登録
             ApplicationDiContainer.Register<PluginContainer, PluginContainer>(PluginContainer);
