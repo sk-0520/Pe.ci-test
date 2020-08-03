@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region AddonProxyBase
 
-        protected override AddonKind AddonKind => throw new NotImplementedException();
+        protected override AddonKind AddonKind => AddonKind.LauncherItem;
 
         protected override AddonParameter CreateParameter(IPlugin plugin)
         {
@@ -57,27 +57,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public bool CustomDisplayText => throw new NotImplementedException();
+        public bool CustomDisplayText => FunctionUnit.CustomDisplayText;
 
-        public string DisplayText => throw new NotImplementedException();
+        public string DisplayText => FunctionUnit.DisplayText;
 
-        public bool CustomLauncherIcon => throw new NotImplementedException();
+        public bool CustomLauncherIcon => FunctionUnit.CustomLauncherIcon;
 
-        public bool SupportedPreferences => throw new NotImplementedException();
+        public bool SupportedPreferences => FunctionUnit.SupportedPreferences;
 
         public ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
         {
-            throw new NotImplementedException();
+            return FunctionUnit.CreatePreferences(launcherItemAddonContext);
         }
 
         public void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)
         {
-            throw new NotImplementedException();
+            FunctionUnit.Execute(commandExecuteParameter, launcherItemExtensionExecuteParameter, launcherItemAddonContext);
         }
 
         public object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale)
         {
-            throw new NotImplementedException();
+            return FunctionUnit.GetIcon(iconMode, iconScale);
         }
 
         #endregion

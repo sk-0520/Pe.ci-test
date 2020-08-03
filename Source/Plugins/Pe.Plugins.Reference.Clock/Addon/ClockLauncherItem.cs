@@ -12,13 +12,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 {
     internal class ClockLauncherItem: LauncherItemExtensionBase
     {
-        public ClockLauncherItem(IAddonParameter parameter, IPluginInformations pluginInformations)
+        public ClockLauncherItem(ILauncherItemExtensionCreateParameter parameter, IPluginInformations pluginInformations, PluginBase plugin)
             : base(parameter, pluginInformations)
         {
+            Plugin = plugin;
         }
 
         #region function
 
+        PluginBase Plugin { get; }
 
         #endregion
 
@@ -36,7 +38,16 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale)
         {
-            throw new NotImplementedException();
+            switch(iconMode) {
+                case LauncherItemIconMode.Toolbar:
+                case LauncherItemIconMode.Tooltip:
+                case LauncherItemIconMode.Command:
+                case LauncherItemIconMode.Setting:
+                    return Plugin.GetIcon(ImageLoader, iconScale);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public override void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)

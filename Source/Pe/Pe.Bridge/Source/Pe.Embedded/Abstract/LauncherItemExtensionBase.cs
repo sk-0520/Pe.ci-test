@@ -13,17 +13,20 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
-    internal abstract class LauncherItemExtensionBase: ILauncherItemExtension
+    internal abstract class LauncherItemExtensionBase: ILauncherItemExtension, ILauncherItemId
     {
-        protected LauncherItemExtensionBase(IAddonParameter parameter, IPluginInformations pluginInformations)
+        protected LauncherItemExtensionBase(ILauncherItemExtensionCreateParameter parameter, IPluginInformations pluginInformations)
         {
             LoggerFactory = parameter.LoggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
+            LauncherItemId = parameter.LauncherItemId;
             AddonExecutor = parameter.AddonExecutor;
             DispatcherWrapper = parameter.DispatcherWrapper;
             SkeletonImplements = parameter.SkeletonImplements;
+            ImageLoader = parameter.ImageLoader;
+            HttpUserAgentFactory = parameter.HttpUserAgentFactory;
+            ContextWorker = parameter.ContextWorker;
             PluginInformations = pluginInformations;
-
         }
 
         #region property
@@ -33,6 +36,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected IAddonExecutor AddonExecutor { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ISkeletonImplements SkeletonImplements { get; }
+        protected IImageLoader ImageLoader { get; }
+        protected IHttpUserAgentFactory HttpUserAgentFactory { get; }
+        protected ILauncherItemAddonContextWorker ContextWorker { get; }
         protected IPluginInformations PluginInformations { get; }
 
         #endregion
@@ -51,6 +57,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #endregion
 
+        #region ILauncherItemId
+
+        public Guid LauncherItemId { get; }
+
+        #endregion
         #region ILauncherItemExtension
 
         public event PropertyChangedEventHandler? PropertyChanged;

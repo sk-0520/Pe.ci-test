@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 {
     internal class ClockAddonImpl: AddonBase
     {
-        public ClockAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public ClockAddonImpl(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             : base(pluginConstructorContext, plugin)
         { }
 
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
         {
-            return new ClockLauncherItem(parameter, PluginInformations);
+            return new ClockLauncherItem(parameter, PluginInformations, Plugin);
         }
 
         public override IWidget BuildWidget(IAddonParameter parameter)

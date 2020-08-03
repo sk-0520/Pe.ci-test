@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class AddonBase: ExtensionBase, IAddon
     {
-        public AddonBase(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public AddonBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             :base(pluginConstructorContext, plugin)
         { }
 
