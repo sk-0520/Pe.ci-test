@@ -65,14 +65,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #region function
 
         /// <summary>
-        /// 初期化処理。
-        /// <para>ランチャーアイテムが使用される際に呼び出される。</para>
-        /// </summary>
-        /// <param name="launcherItemId">ランチャーアイテムID。</param>
-        /// <param name="launcherItemAddonContext"></param>
-        void Initialize(ILauncherItemAddonContext launcherItemAddonContext);
-
-        /// <summary>
         /// アイコン取得。
         /// <para>(TODO: 考え中)<see cref="CustomLauncherIcon"/>が有効な場合に使用される。</para>
         /// <para>UIスレッド上で実行を保証。</para>
@@ -81,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="iconScale"></param>
         /// <param name="launcherItemAddonContext"></param>
         /// <returns>アイコンとなるデータ。</returns>
-        object GetIcon(LauncherItemIconMode iconMode,  IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext);
+        object GetIcon(LauncherItemIconMode iconMode,  in IconScale iconScale);
 
         /// <summary>
         /// アイテムの実行。

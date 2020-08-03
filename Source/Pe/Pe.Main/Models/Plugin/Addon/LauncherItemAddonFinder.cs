@@ -11,7 +11,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     {
         #region function
 
-        ILauncherItemExtension? Find(Guid pluginId);
+        bool Exists(Guid pluginId);
+
+        ILauncherItemExtension Find(Guid launcherItemId, Guid pluginId);
 
         #endregion
     }
@@ -33,18 +35,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemAddonFinder
 
-        public LauncherItemAddonProxy? Find(Guid pluginId)
+        public bool Exists(Guid pluginId)
         {
-            var addon = AddonContainer.Plugins.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
-            if(addon == null) {
-                Logger.LogWarning("プラグイン見つからず: {0}", pluginId);
-                return null;
-            }
-
-            return AddonContainer.GetLauncherItemAddon(pluginId);
+            return AddonContainer.Plugins.Any(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
         }
 
-        ILauncherItemExtension? ILauncherItemAddonFinder.Find(Guid pluginId) => Find(pluginId);
+        public LauncherItemAddonProxy Find(Guid launcherItemId, Guid pluginId)
+        {
+            var addon = AddonContainer.Plugins.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+            return AddonContainer.GetLauncherItemAddon(launcherItemId, pluginId);
+        }
+
+        ILauncherItemExtension ILauncherItemAddonFinder.Find(Guid launcherItemId, Guid pluginId) => Find(launcherItemId, pluginId);
 
         #endregion
     }

@@ -58,11 +58,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public abstract bool CustomDisplayText { get; }
         public abstract string DisplayText { get; }
         public abstract bool CustomLauncherIcon { get; }
-
         public abstract bool SupportedPreferences { get; }
 
-        public abstract void Initialize(ILauncherItemAddonContext launcherItemAddonContext);
-        public abstract object GetIcon(LauncherItemIconMode iconMode, IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext);
+        public abstract object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale);
         public abstract void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);
 

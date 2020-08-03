@@ -34,12 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override bool SupportedPreferences => throw new NotImplementedException();
 
-        public override void Initialize(ILauncherItemAddonContext launcherItemAddonContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override object GetIcon(LauncherItemIconMode iconMode, IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext)
+        public override object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale)
         {
             throw new NotImplementedException();
         }

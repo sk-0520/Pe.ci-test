@@ -324,10 +324,10 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             return Addon.IsSupported(addonKind);
         }
 
-        /// <inheritdoc cref="IAddon.BuildLauncherItemExtension(IAddonParameter)"/>
-        public ILauncherItemExtension BuildLauncherItemExtension(IAddonParameter parameter)
+        /// <inheritdoc cref="IAddon.CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter)"/>
+        public ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
         {
-            return BuildSupporttedAddon(AddonKind.LauncherItem, nameof(BuildLauncherItemExtension), parameter, p => Addon.BuildLauncherItemExtension(p));
+            return BuildSupporttedAddon(AddonKind.LauncherItem, nameof(CreateLauncherItemExtension), parameter, p => Addon.CreateLauncherItemExtension(p));
         }
 
         /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>

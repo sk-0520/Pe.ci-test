@@ -61,11 +61,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                             var launcherAddonsEntityDao = new LauncherAddonsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                             return launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
                         });
-                        var addon = LauncherItemAddonFinder.Find(pluginId);
-                        if(addon == null) {
+                        if(LauncherItemAddonFinder.Exists(pluginId)) {
                             Logger.LogError("プラグイン取得失敗: ランチャーアイテム = {0}, プラグインID = {1}", LauncherItemId, pluginId);
+                            return default!; // null は上流で何とかしてちょ
                         }
-                        return addon!; // null は上流で何とかしてちょ
+                        var addon = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
+                        return addon;
                     }
 
                 default:

@@ -8,7 +8,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// プラグインコンテキストが必要な処理を実施する。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface IContextTask
+    public interface IContextWorker
     {
         #region function
 
@@ -21,7 +21,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// ランチャーアイテムアドオンコンテキストが必要な処理を実施する。
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface ILauncherItemAddonContextTask
+    public interface ILauncherItemAddonContextWorker
     {
         #region function
 

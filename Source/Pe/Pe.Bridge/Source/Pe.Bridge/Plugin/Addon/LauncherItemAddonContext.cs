@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 {
@@ -10,14 +11,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     /// <para>ランチャーアイテムアドオン内で持ち歩くのは一応OKだけど持ち歩かない方針(なんのこっちゃ)。</para>
     /// <para>Pe から提供される。</para>
     /// </summary>
-    public interface ILauncherItemAddonContext
+    public interface ILauncherItemAddonContext: ILauncherItemId
     {
         #region property
-
-        /// <summary>
-        /// 対象のランチャーアイテムID。
-        /// </summary>
-        Guid LauncherItemId { get; }
 
         /// <summary>
         /// ストレージ操作。

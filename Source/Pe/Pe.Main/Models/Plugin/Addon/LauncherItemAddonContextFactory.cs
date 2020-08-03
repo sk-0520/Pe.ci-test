@@ -22,6 +22,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
+        public LauncherItemAddonContextWorker CreateWorker(Guid launcherItemId)
+        {
+            return new LauncherItemAddonContextWorker(this, LoggerFactory);
+        }
+
+
         LauncherItemAddonFiles CreateLauncherItemAddonFile(IPluginIdentifiers pluginId)
         {
             var dirName = ConvertDirectoryName(pluginId);

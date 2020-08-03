@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         {
         }
 
-        public override ILauncherItemExtension BuildLauncherItemExtension(IAddonParameter parameter)
+        public override ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
         {
             return new ClockLauncherItem(parameter, PluginInformations);
         }

@@ -35,8 +35,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         /// <inheritdoc cref="IAddon.IsSupported(AddonKind)"/>
         public bool IsSupported(AddonKind addonKind) => SupportedKinds.Contains(addonKind);
 
-        /// <inheritdoc cref="IAddon.BuildLauncherItemExtension(IAddonParameter)"/>
-        public virtual ILauncherItemExtension BuildLauncherItemExtension(IAddonParameter parameter) => throw new NotImplementedException();
+        /// <inheritdoc cref="IAddon.CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter)"/>
+        public virtual ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter) => throw new NotImplementedException();
 
         /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>
         public virtual ICommandFinder BuildCommandFinder(IAddonParameter parameter) => throw new NotImplementedException();
