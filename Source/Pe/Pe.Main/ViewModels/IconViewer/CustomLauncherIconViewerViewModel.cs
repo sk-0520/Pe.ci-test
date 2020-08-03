@@ -12,23 +12,27 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 {
-    public class CustomLauncherIconViewerViewModel: ViewModelBase
+    public class CustomLauncherIconViewerViewModel: ViewModelBase, ILauncherItemId
     {
         #region variable
 
         object? _icon;
 
         #endregion
-        public CustomLauncherIconViewerViewModel(ILauncherItemExtension launcherItemExtension, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+
+        internal CustomLauncherIconViewerViewModel(Guid launcherItemId, ILauncherItemExtension launcherItemExtension, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            LauncherItemId = launcherItemId;
             LauncherItemExtension = launcherItemExtension;
+            LauncherItemAddonContextFactory = launcherItemAddonContextFactory;
             DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
 
         ILauncherItemExtension LauncherItemExtension { get; }
+        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
         public object? Icon
@@ -46,6 +50,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         //    var context = new LauncherItemAddonContextFactory()
         //    Icon = LauncherItemExtension.GetIcon(launcherItemIconMode, iconScale, )
         //}
+
+        #endregion
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId { get; }
 
         #endregion
     }
