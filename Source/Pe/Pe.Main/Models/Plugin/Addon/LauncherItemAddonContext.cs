@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext, ILauncherItemId
+    internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext
     {
         #region variable
 
@@ -25,12 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemAddonContext
 
-        #region ILauncherItemId
-
         /// <inheritdoc cref="ILauncherItemAddonContext.LauncherItemId"/>
         public Guid LauncherItemId { get; }
-
-        #endregion
 
         /// <inheritdoc cref="ILauncherItemAddonContext.Storage"/>
         public LauncherItemAddonStorage Storage => GetValue(this._storage);

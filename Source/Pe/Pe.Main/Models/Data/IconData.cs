@@ -29,12 +29,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public IconData()
         { }
 
-        public IconData(IReadOnlyIconData? source)
-        {
-            Path = source?.Path ?? string.Empty;
-            Index = source?.Index ?? 0;
-        }
-
         #region property
         #endregion
 
