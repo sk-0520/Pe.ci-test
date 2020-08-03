@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 
@@ -103,6 +104,33 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #endregion
 
+        #region LauncherItemIconMode
+
+        public static readonly DependencyProperty LauncherItemIconModeProperty = DependencyProperty.Register(
+            nameof(LauncherItemIconMode),
+            typeof(LauncherItemIconMode),
+            typeof(ImageViewerControl),
+            new FrameworkPropertyMetadata(
+                LauncherItemIconMode.Toolbar,
+                new PropertyChangedCallback(OnLauncherItemIconModeChanged)
+            )
+        );
+
+        public LauncherItemIconMode LauncherItemIconMode
+        {
+            get { return (LauncherItemIconMode)GetValue(LauncherItemIconModeProperty); }
+            set { SetValue(LauncherItemIconModeProperty, value); }
+        }
+
+        private static void OnLauncherItemIconModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if(d is ImageViewerControl control) {
+                //control.ApplyIcon();
+            }
+        }
+
+        #endregion
+
         #region function
 
         void ApplyIcon()
@@ -122,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
             this.parent.Width = (int)IconBox;
             this.parent.Height = (int)IconBox;
             if(IsLoaded) {
-                IconViewer.LoadAsync(iconScale, CancellationToken.None).ConfigureAwait(false);
+                IconViewer.LoadAsync(iconScale, LauncherItemIconMode, CancellationToken.None).ConfigureAwait(false);
             }
         }
 
@@ -135,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
             var iconViewer = IconViewer;
             if(iconViewer != null) {
                 //var iconScale = UIUtility.GetDpiScale(this);
-                iconViewer.LoadAsync(new IconScale(IconBox, UIUtility.GetDpiScale(this)), CancellationToken.None).ConfigureAwait(false);
+                iconViewer.LoadAsync(new IconScale(IconBox, UIUtility.GetDpiScale(this)), LauncherItemIconMode, CancellationToken.None).ConfigureAwait(false);
             }
         }
     }

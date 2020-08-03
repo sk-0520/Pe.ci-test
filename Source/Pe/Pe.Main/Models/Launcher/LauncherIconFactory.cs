@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                             var launcherAddonsEntityDao = new LauncherAddonsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                             return launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
                         });
-                        if(LauncherItemAddonFinder.Exists(pluginId)) {
+                        if(!LauncherItemAddonFinder.Exists(pluginId)) {
                             Logger.LogError("プラグイン取得失敗: ランチャーアイテム = {0}, プラグインID = {1}", LauncherItemId, pluginId);
                             return default!; // null は上流で何とかしてちょ
                         }
@@ -83,7 +83,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                     };
 
                 case ILauncherItemExtension launcherItemExtension:
-                    return launcherItemExtension;
+                    return new IconViewerViewModel(LauncherItemId, launcherItemExtension, dispatcherWrapper, LoggerFactory) {
+                        UseCache = useCache,
+                    };
 
                 default:
                     throw new NotImplementedException();
