@@ -15,6 +15,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #region property
 
         /// <summary>
+        /// 対象のランチャーアイテムID。
+        /// </summary>
+        Guid LauncherItemId { get; }
+
+        /// <summary>
         /// ストレージ操作。
         /// </summary>
         ILauncherItemAddonStorage Storage { get; }

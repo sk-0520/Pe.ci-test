@@ -61,10 +61,10 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         public abstract bool SupportedPreferences { get; }
 
-        public abstract void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext);
+        public abstract void Initialize(ILauncherItemAddonContext launcherItemAddonContext);
         public abstract object GetIcon(LauncherItemIconMode iconMode, IconScale iconScale, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
-        public abstract ILauncherItemPreferences CreatePreferences();
+        public abstract ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);
 
         #endregion
     }

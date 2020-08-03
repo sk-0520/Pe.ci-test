@@ -57,10 +57,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return pluginStorage;
         }
 
-        public LauncherItemAddonContext CreateContext(IPluginIdentifiers pluginIdentifiers)
+        public LauncherItemAddonContext CreateContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId)
         {
             var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginIdentifiers);
-            return new LauncherItemAddonContext(pluginIdentifiers, launcherItemAddonStorage);
+            return new LauncherItemAddonContext(pluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 
         #endregion

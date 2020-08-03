@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override bool SupportedPreferences => throw new NotImplementedException();
 
-        public override void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext)
+        public override void Initialize(ILauncherItemAddonContext launcherItemAddonContext)
         {
             throw new NotImplementedException();
         }
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             throw new NotImplementedException();
         }
 
-        public override ILauncherItemPreferences CreatePreferences()
+        public override ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
         {
             throw new NotImplementedException();
         }

@@ -48,7 +48,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool SupportedPreferences => throw new NotImplementedException();
 
-        public ILauncherItemPreferences CreatePreferences()
+        public void Initialize(ILauncherItemAddonContext launcherItemAddonContext)
+        {
+            FunctionUnit.Initialize(launcherItemAddonContext);
+        }
+
+        public ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
         {
             throw new NotImplementedException();
         }
@@ -62,12 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             throw new NotImplementedException();
         }
-
-        public void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext)
-        {
-            throw new NotImplementedException();
-        }
-
 
         #endregion
     }

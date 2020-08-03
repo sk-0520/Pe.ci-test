@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// </summary>
         /// <param name="launcherItemId">ランチャーアイテムID。</param>
         /// <param name="launcherItemAddonContext"></param>
-        void Initialize(ILauncherItemId launcherItemId, ILauncherItemAddonContext launcherItemAddonContext);
+        void Initialize(ILauncherItemAddonContext launcherItemAddonContext);
 
         /// <summary>
         /// アイコン取得。
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <para><see cref="SupportedPreferences"/>が有効な場合に使用される。</para>
         /// </summary>
         /// <returns></returns>
-        ILauncherItemPreferences CreatePreferences();
+        ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);
 
         #endregion
     }

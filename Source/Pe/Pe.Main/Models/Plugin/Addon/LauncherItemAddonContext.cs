@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext
+    internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext, ILauncherItemId
     {
         #region variable
 
@@ -15,13 +16,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, LauncherItemAddonStorage storage)
-            :base(pluginIdentifiers)
+        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, LauncherItemAddonStorage storage)
+            : base(pluginIdentifiers)
         {
+            LauncherItemId = launcherItemId;
             this._storage = storage;
         }
 
         #region ILauncherItemAddonContext
+
+        #region ILauncherItemId
+
+        /// <inheritdoc cref="ILauncherItemAddonContext.LauncherItemId"/>
+        public Guid LauncherItemId { get; }
+
+        #endregion
 
         /// <inheritdoc cref="ILauncherItemAddonContext.Storage"/>
         public LauncherItemAddonStorage Storage => GetValue(this._storage);
