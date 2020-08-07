@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal abstract class ContextWorkerBase<TPluginContextFactory>
+    public abstract class ContextWorkerBase<TPluginContextFactory>
         where TPluginContextFactory: PluginContextFactoryBase
     {
         protected ContextWorkerBase(TPluginContextFactory pluginContextFactory, ILoggerFactory loggerFactory)
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class ContextWorker: ContextWorkerBase<PluginContextFactory>, IContextWorker
+    public class ContextWorker: ContextWorkerBase<PluginContextFactory>, IContextWorker
     {
         public ContextWorker(PluginContextFactory pluginContextFactory, ILoggerFactory loggerFactory)
             : base(pluginContextFactory, loggerFactory)
@@ -44,7 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #endregion
     }
 
-    internal class LauncherItemAddonContextWorker: ContextWorkerBase<LauncherItemAddonContextFactory>, ILauncherItemAddonContextWorker
+    public class LauncherItemAddonContextWorker: ContextWorkerBase<LauncherItemAddonContextFactory>, ILauncherItemAddonContextWorker
     {
         public LauncherItemAddonContextWorker(LauncherItemAddonContextFactory launcherItemAddonContextFactory, ILoggerFactory loggerFactory)
             : base(launcherItemAddonContextFactory, loggerFactory)

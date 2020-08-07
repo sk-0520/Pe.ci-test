@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     /// <inheritdoc cref="ILauncherItemAddonFileStorage"/>
-    internal class LauncherItemAddonFileStorage: PluginFileStorageBase, ILauncherItemAddonFileStorage
+    public class LauncherItemAddonFileStorage: PluginFileStorageBase, ILauncherItemAddonFileStorage
     {
         public LauncherItemAddonFileStorage(DirectoryInfo directoryInfo)
             : base(directoryInfo)
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="ILauncherItemAddonPersistentStorage"/>
-    internal class LauncherItemAddonPersistentStorage: ILauncherItemAddonPersistentStorage
+    public class LauncherItemAddonPersistentStorage: ILauncherItemAddonPersistentStorage
     {
         #region ILauncherItemAddonPersistentStorage
 
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="ILauncherItemAddonFiles"/>
-    internal class LauncherItemAddonFiles: ILauncherItemAddonFiles
+    public class LauncherItemAddonFiles: ILauncherItemAddonFiles
     {
         public LauncherItemAddonFiles(LauncherItemAddonFileStorage user, LauncherItemAddonFileStorage machine, LauncherItemAddonFileStorage temporary)
         {
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="ILauncherItemAddonPersistents"/>
-    internal class LauncherItemAddonPersistents: ILauncherItemAddonPersistents
+    public class LauncherItemAddonPersistents: ILauncherItemAddonPersistents
     {
         public LauncherItemAddonPersistents(LauncherItemAddonPersistentStorage normal, LauncherItemAddonPersistentStorage large, LauncherItemAddonPersistentStorage temporary)
         {
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="ILauncherItemAddonStorage"/>
-    internal class LauncherItemAddonStorage: ILauncherItemAddonStorage
+    public class LauncherItemAddonStorage: ILauncherItemAddonStorage
     {
         public LauncherItemAddonStorage(LauncherItemAddonFiles file, LauncherItemAddonPersistents persistent)
         {

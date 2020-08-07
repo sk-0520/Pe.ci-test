@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext
+    public class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext
     {
         #region variable
 
