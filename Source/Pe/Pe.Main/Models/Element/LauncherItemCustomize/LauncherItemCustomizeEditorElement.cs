@@ -36,11 +36,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
             LauncherItemAddonFinder = launcherItemAddonFinder;
+            LauncherItemAddonContextFactory = launcherItemAddonContextFactory;
             ClipboardManager = clipboardManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
@@ -53,6 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
         IClipboardManager ClipboardManager { get; }
 
         /// <summary>

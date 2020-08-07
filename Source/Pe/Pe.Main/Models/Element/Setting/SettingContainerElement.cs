@@ -19,6 +19,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
 using Microsoft.Extensions.Logging;
@@ -37,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(diContainer, loggerFactory)
         {
             GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>(ServiceLocator.Build<PluginContainer>().Theme.Plugins.ToList());
-            LauncherItemsSettingEditor = new LauncherItemsSettingEditorElement(AllLauncherItems, ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<IFileDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
+            LauncherItemsSettingEditor = new LauncherItemsSettingEditorElement(AllLauncherItems, ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<LauncherItemAddonContextFactory>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<IFileDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
             LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();

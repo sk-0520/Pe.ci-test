@@ -25,11 +25,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class LauncherItemsSettingEditorElement: SettingEditorElementBase
     {
-        internal LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, PluginContainer pluginContainer, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal LauncherItemsSettingEditorElement(ObservableCollection<LauncherItemSettingEditorElement> allLauncherItems, PluginContainer pluginContainer, LauncherItemAddonContextFactory launcherItemAddonContextFactory, ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, dispatcherWrapper, loggerFactory)
         {
             AllLauncherItems = allLauncherItems;
             PluginContainer = pluginContainer;
+
+            LauncherItemAddonContextFactory = launcherItemAddonContextFactory;
 
             var addons = new List<IAddon>();
             var addonIds = pluginContainer.Addon.GetLauncherItemAddonIds();
@@ -47,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         PluginContainer PluginContainer { get; }
 
         public IReadOnlyList<IAddon> Addons { get; }
-
+        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
         #endregion
 
         #region function
@@ -161,7 +163,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var customizeEditor = new LauncherItemSettingEditorElement(newLauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), LauncherItemAddonContextFactory, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             customizeEditor.Initialize();
 
             AllLauncherItems.Add(customizeEditor);
@@ -202,7 +204,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 commander.Commit();
             }
 
-            var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var customizeEditor = new LauncherItemSettingEditorElement(data.Item.LauncherItemId, new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory), LauncherItemAddonContextFactory, ClipboardManager, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             customizeEditor.Initialize();
 
             AllLauncherItems.Add(customizeEditor);
