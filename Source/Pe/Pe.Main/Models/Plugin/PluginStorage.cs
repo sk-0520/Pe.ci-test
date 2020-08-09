@@ -191,6 +191,96 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         LazyWriter,
     }
 
+    public abstract class PluginPersistentStorageBase
+    {
+        /// <summary>
+        /// プラグイン用DB操作処理構築。
+        /// <para>読み込み専用・書き込み可能に分かれる。書き込み専用は基本的に設定画面くらい。</para>
+        /// </summary>
+        /// <param name="pluginIdentifiers"></param>
+        /// <param name="pluginVersions"></param>
+        /// <param name="databaseCommands"></param>
+        /// <param name="databaseStatementLoader"></param>
+        /// <param name="isReadOnly">読み込み専用か。</param>
+        /// <param name="loggerFactory"></param>
+        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        {
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
+            PluginIdentifiers = pluginIdentifiers;
+            PluginVersions = pluginVersions;
+            DatabaseCommander = databaseCommands.Commander;
+            DatabaseImplementation = databaseCommands.Implementation;
+            IsReadOnly = isReadOnly;
+            DatabaseStatementLoader = databaseStatementLoader;
+            Mode = PluginPersistentMode.Commander;
+        }
+
+        /// <summary>
+        /// プラグイン用DB操作処理構築。
+        /// <para>読み込み専用・書き込み可能に分かれる。逐次処理される。</para>
+        /// </summary>
+        /// <param name="pluginIdentifiers"></param>
+        /// <param name="pluginVersions"></param>
+        /// <param name="databaseBarrier"></param>
+        /// <param name="databaseStatementLoader"></param>
+        /// <param name="isReadOnly">読み込み専用か。</param>
+        /// <param name="loggerFactory"></param>
+        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+        {
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
+            PluginIdentifiers = pluginIdentifiers;
+            PluginVersions = pluginVersions;
+            DatabaseBarrier = databaseBarrier;
+            IsReadOnly = isReadOnly;
+            DatabaseStatementLoader = databaseStatementLoader;
+            Mode = PluginPersistentMode.Barrier;
+        }
+
+        /// <summary>
+        /// プラグイン用DB操作処理構築。
+        /// <para>通常実行時の書き込み処理で、遅延処理される。</para>
+        /// </summary>
+        /// <param name="pluginIdentifiers"></param>
+        /// <param name="pluginVersions"></param>
+        /// <param name="databaseBarrier"></param>
+        /// <param name="databaseLazyWriter"></param>
+        /// <param name="databaseStatementLoader"></param>
+        /// <param name="loggerFactory"></param>
+        protected PluginPersistentStorageBase(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        {
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
+            PluginIdentifiers = pluginIdentifiers;
+            PluginVersions = pluginVersions;
+            DatabaseBarrier = databaseBarrier;
+            DatabaseLazyWriter = databaseLazyWriter;
+            DatabaseStatementLoader = databaseStatementLoader;
+            IsReadOnly = false;
+            Mode = PluginPersistentMode.LazyWriter;
+        }
+
+        #region property
+
+        protected ILoggerFactory LoggerFactory { get; }
+        protected ILogger Logger { get; }
+
+        IPluginIdentifiers PluginIdentifiers { get; }
+        public string PluginName => PluginIdentifiers.PluginName;
+        protected IPluginVersions PluginVersions { get; }
+
+        protected PluginPersistentMode Mode { get; }
+        protected IDatabaseImplementation? DatabaseImplementation { get; }
+        protected IDatabaseCommander? DatabaseCommander { get; }
+        protected IDatabaseBarrier? DatabaseBarrier { get; }
+        protected IDatabaseLazyWriter? DatabaseLazyWriter { get; }
+        protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
+
+        public bool IsReadOnly { get; }
+        #endregion
+    }
+
     /// <inheritdoc cref="IPluginPersistentStorage"/>
     public class PluginPersistentStorage: IPluginPersistentStorage, IPluginId
     {

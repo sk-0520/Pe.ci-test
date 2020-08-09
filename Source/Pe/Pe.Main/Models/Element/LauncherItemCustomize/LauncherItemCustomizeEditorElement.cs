@@ -139,6 +139,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             var launcherAddonsEntityDao = new LauncherAddonsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
             var pluginId = launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
 
+            if(LauncherItemAddonFinder.Exists(pluginId)) {
+                Logger.LogError("ランチャーアイテムアドオンが存在しない: {0}", pluginId);
+                return;
+            }
+            var plugin = LauncherItemAddonFinder.GetPlugin(pluginId);
+
+            LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations.PluginIdentifiers, LauncherItemId);
         }
 
         protected void LoadAddon()

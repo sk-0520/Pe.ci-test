@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return pluginFile;
         }
 
-        LauncherItemAddonPersistents CreateLauncherItemAddonPersistent(IPluginIdentifiers pluginId)
+        LauncherItemAddonPersistents CreateLauncherItemAddonPersistentCommander(IPluginIdentifiers pluginId, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             // DB渡す？ バリア渡す？ 遅延渡す？
             var pluginPersistent = new LauncherItemAddonPersistents(
@@ -63,9 +63,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return pluginStorage;
         }
 
-        public LauncherItemAddonContext CreateContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId)
+        public LauncherItemAddonContext CreateContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginIdentifiers);
+            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginIdentifiers, databaseCommandsPack);
             return new LauncherItemAddonContext(pluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
@@ -12,6 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region function
 
         bool Exists(Guid pluginId);
+
+        IPlugin GetPlugin(Guid pluginId);
 
         ILauncherItemExtension Find(Guid launcherItemId, Guid pluginId);
 
@@ -40,9 +43,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return AddonContainer.Plugins.Any(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
         }
 
+        public IPlugin GetPlugin(Guid pluginId)
+        {
+            return AddonContainer.Plugins.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+        }
+
         public LauncherItemAddonProxy Find(Guid launcherItemId, Guid pluginId)
         {
-            var addon = AddonContainer.Plugins.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
             return AddonContainer.GetLauncherItemAddon(launcherItemId, pluginId);
         }
 
