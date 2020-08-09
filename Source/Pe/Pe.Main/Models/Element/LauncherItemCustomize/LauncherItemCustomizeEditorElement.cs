@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             ClipboardManager = clipboardManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
+            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
@@ -53,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
         IClipboardManager ClipboardManager { get; }
@@ -262,11 +265,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         /// <summary>
         /// アイテム保存。
         /// </summary>
-        /// <param name="commander"></param>
-        /// <param name="implementation"></param>
-        /// <param name="databaseCommonStatus"></param>
+        /// <param name="commandsPack"></param>
         /// <returns>アイコンの削除が必要か。</returns>
-        public bool SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
+        public bool SaveItem(IDatabaseCommandsPack commandsPack)
         {
             ThrowIfDisposed();
 
@@ -285,13 +286,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
             var iconChangedResult = false;
 
-            var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-            var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var launcherItemsEntityDao = new LauncherItemsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+            var launcherTagsEntityDao = new LauncherTagsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
 
-            var launcherItemDomainDao = new LauncherItemDomainDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var launcherItemDomainDao = new LauncherItemDomainDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
             var currentFileIcon = launcherItemDomainDao.SelectFileIcon(LauncherItemId);
 
-            launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, databaseCommonStatus);
+            launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, commandsPack.CommonStatus);
             switch(Kind) {
                 case LauncherItemKind.File: {
                         Debug.Assert(File != null);
@@ -300,27 +301,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
                         iconChangedResult = CheckIconChanged(currentFileIcon, itemData.Icon, File.Path);
 
-                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
 
-                        launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, databaseCommonStatus);
-                        launcherRedoItemsEntityDao.UpdateRedoItem(itemData.LauncherItemId, Redo, databaseCommonStatus);
+                        launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, commandsPack.CommonStatus);
+                        launcherRedoItemsEntityDao.UpdateRedoItem(itemData.LauncherItemId, Redo, commandsPack.CommonStatus);
 
                         launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(itemData.LauncherItemId);
-                        launcherRedoSuccessExitCodesEntityDao.InsertSuccessExitCodes(itemData.LauncherItemId, Redo.SuccessExitCodes, databaseCommonStatus);
+                        launcherRedoSuccessExitCodesEntityDao.InsertSuccessExitCodes(itemData.LauncherItemId, Redo.SuccessExitCodes, commandsPack.CommonStatus);
 
                         launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(itemData.LauncherItemId);
-                        launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, databaseCommonStatus);
+                        launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, commandsPack.CommonStatus);
                     }
                     break;
 
                 case LauncherItemKind.StoreApp: {
                         Debug.Assert(StoreApp != null);
 
-                        var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        launcherStoreAppsEntityDao.UpdateStoreApp(itemData.LauncherItemId, StoreApp, databaseCommonStatus);
+                        var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        launcherStoreAppsEntityDao.UpdateStoreApp(itemData.LauncherItemId, StoreApp, commandsPack.CommonStatus);
                     }
                     break;
 
@@ -329,7 +330,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
 
             launcherTagsEntityDao.DeleteTagByLauncherItemId(itemData.LauncherItemId);
-            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, databaseCommonStatus);
+            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, commandsPack.CommonStatus);
 
             return iconChangedResult;
         }
@@ -350,9 +351,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             ThrowIfDisposed();
 
             bool needToIconClear;
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                needToIconClear = SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
-                commander.Commit();
+
+            //            var pack = new ApplicationDatabaseCommandsPack(
+            //    new DatabaseCommands(mainDatabaseCommander, mainDatabaseCommander.Implementation),
+            //    new DatabaseCommands(fileDatabaseCommander, fileDatabaseCommander.Implementation),
+            //    new DatabaseCommands(tempDatabaseCommander, tempDatabaseCommander.Implementation),
+            //    DatabaseCommonStatus.CreateCurrentAccount()
+            //);
+            using(var pack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount())) {
+                needToIconClear = SaveItem(pack);
+                pack.Commit();
             }
             if(needToIconClear) {
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
