@@ -28,45 +28,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
 
-        LauncherItemAddonFiles CreateLauncherItemAddonFile(IPluginIdentifiers pluginId)
+        LauncherItemAddonFiles CreateLauncherItemAddonFile(IPluginInformations  pluginInformations)
         {
-            var dirName = ConvertDirectoryName(pluginId);
+            var dirName = ConvertDirectoryName(pluginInformations.PluginIdentifiers);
 
             var pluginFile = new LauncherItemAddonFiles(
-                new LauncherItemAddonFileStorage(GetUserDirectory(pluginId)),
-                new LauncherItemAddonFileStorage(GetMachineDirectory(pluginId)),
-                new LauncherItemAddonFileStorage(GetTemporaryDirectory(pluginId))
+                new LauncherItemAddonFileStorage(GetUserDirectory(pluginInformations.PluginIdentifiers)),
+                new LauncherItemAddonFileStorage(GetMachineDirectory(pluginInformations.PluginIdentifiers)),
+                new LauncherItemAddonFileStorage(GetTemporaryDirectory(pluginInformations.PluginIdentifiers))
             );
 
             return pluginFile;
         }
 
-        LauncherItemAddonPersistents CreateLauncherItemAddonPersistentCommander(IPluginIdentifiers pluginId, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
+        LauncherItemAddonPersistents CreateLauncherItemAddonPersistentCommander(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
-            // DB渡す？ バリア渡す？ 遅延渡す？
             var pluginPersistent = new LauncherItemAddonPersistents(
-                new LauncherItemAddonPersistentStorage(),
-                new LauncherItemAddonPersistentStorage(),
-                new LauncherItemAddonPersistentStorage()
+                new LauncherItemAddonPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Main, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new LauncherItemAddonPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.File, DatabaseStatementLoader, isReadOnly, LoggerFactory),
+                new LauncherItemAddonPersistentStorage(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions, databaseCommandsPack.Temporary, DatabaseStatementLoader, isReadOnly, LoggerFactory)
             );
 
             return pluginPersistent;
         }
 
-        LauncherItemAddonStorage CreateLauncherItemAddonStorage(IPluginIdentifiers pluginId)
+        LauncherItemAddonStorage CreateLauncherItemAddonStorage(IPluginInformations pluginInformations, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
             var pluginStorage = new LauncherItemAddonStorage(
-                CreateLauncherItemAddonFile(pluginId),
-                CreateLauncherItemAddonPersistent(pluginId)
+                CreateLauncherItemAddonFile(pluginInformations),
+                CreateLauncherItemAddonPersistentCommander(pluginInformations, databaseCommandsPack, isReadOnly)
             );
 
             return pluginStorage;
         }
 
-        public LauncherItemAddonContext CreateContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, IDatabaseCommandsPack databaseCommandsPack)
+        public LauncherItemAddonContext CreateContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseCommandsPack databaseCommandsPack, bool isReadOnly)
         {
-            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginIdentifiers, databaseCommandsPack);
-            return new LauncherItemAddonContext(pluginIdentifiers, launcherItemId, launcherItemAddonStorage);
+            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseCommandsPack, isReadOnly);
+            return new LauncherItemAddonContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 
         #endregion

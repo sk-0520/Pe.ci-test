@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
             var plugin = LauncherItemAddonFinder.GetPlugin(pluginId);
 
-            LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations.PluginIdentifiers, LauncherItemId);
+            //LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, , true);
         }
 
         protected void LoadAddon()
