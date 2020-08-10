@@ -11,6 +11,7 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
@@ -89,34 +90,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void Save()
         {
-            var mainDatabaseBarrier = ServiceLocator.Get<IMainDatabaseBarrier>();
-            var mainDatabaseCommander = mainDatabaseBarrier.WaitWrite();
-
-            var fileDatabaseBarrier = ServiceLocator.Get<IFileDatabaseBarrier>();
-            var fileDatabaseCommander = fileDatabaseBarrier.WaitWrite();
-
-            var tempDatabaseBarrier = ServiceLocator.Get<ITemporaryDatabaseBarrier>();
-            var tempDatabaseCommander = tempDatabaseBarrier.WaitWrite();
-
-            var pack = new ApplicationDatabaseCommandsPack(
-                new DatabaseCommands(mainDatabaseCommander, mainDatabaseCommander.Implementation),
-                new DatabaseCommands(fileDatabaseCommander, fileDatabaseCommander.Implementation),
-                new DatabaseCommands(tempDatabaseCommander, tempDatabaseCommander.Implementation),
+            var pack = PersistentHelper.WaitWritePack(
+                ServiceLocator.Get<IMainDatabaseBarrier>(),
+                ServiceLocator.Get<IFileDatabaseBarrier>(),
+                ServiceLocator.Get<ITemporaryDatabaseBarrier>(),
                 DatabaseCommonStatus.CreateCurrentAccount()
             );
-
-            using(mainDatabaseCommander)
-            using(fileDatabaseCommander)
-            using(tempDatabaseCommander) {
+            using(pack) {
                 foreach(var editor in Editors) {
                     if(editor.IsLoaded) {
                         editor.Save(pack);
                     }
                 }
 
-                tempDatabaseCommander.Commit();
-                fileDatabaseCommander.Commit();
-                mainDatabaseCommander.Commit();
+                pack.Commit();
             }
 
             IsSubmit = true;
