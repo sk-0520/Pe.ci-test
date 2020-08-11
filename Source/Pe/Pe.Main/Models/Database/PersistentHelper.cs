@@ -74,15 +74,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region function
 
-        public static PersistentCommandsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        static PersistentCommandsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
         {
-            var mainDatabaseCommander = mainDatabaseBarrier.WaitWrite();
-            var fileDatabaseCommander = fileDatabaseBarrier.WaitWrite();
-            var tempDatabaseCommander = temporaryDatabaseBarrier.WaitWrite();
+            static IDatabaseTransaction Do(IDatabaseBarrier databaseBarrier, bool isReadOnly)
+            {
+                if(isReadOnly) {
+                    return databaseBarrier.WaitRead();
+                }
+                return databaseBarrier.WaitWrite();
+            }
 
-            var result = new PersistentCommandsPack(mainDatabaseCommander, fileDatabaseCommander, tempDatabaseCommander, databaseCommonStatus);
+            var main = Do(mainDatabaseBarrier, isReadOnly);
+            var file = Do(fileDatabaseBarrier, isReadOnly);
+            var temp = Do(temporaryDatabaseBarrier, isReadOnly);
+
+            var result = new PersistentCommandsPack(main, file, temp, databaseCommonStatus);
 
             return result;
+        }
+
+        public static PersistentCommandsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            return WaitPack(mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, false);
+        }
+
+        public static PersistentCommandsPack WaitReadPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            return WaitPack(mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, true);
         }
 
         #endregion

@@ -135,11 +135,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        void LoadAddonCore(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        void LoadAddonCore(IDatabaseCommandsPack databaseCommandsPack)
         {
             Debug.Assert(Kind == LauncherItemKind.Addon);
 
-            var launcherAddonsEntityDao = new LauncherAddonsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var launcherAddonsEntityDao = new LauncherAddonsEntityDao(databaseCommandsPack.Main.Commander, DatabaseStatementLoader, databaseCommandsPack.Main.Implementation, LoggerFactory);
             var pluginId = launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
 
             if(LauncherItemAddonFinder.Exists(pluginId)) {
@@ -153,50 +153,49 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         protected void LoadAddon()
         {
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                LoadAddonCore(commander, commander.Implementation);
-            }
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            LoadAddonCore(pack);
         }
 
         void LoadLauncherItem()
         {
             ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
 
-                Name = launcherItemData.Name;
-                Code = launcherItemData.Code;
-                Kind = launcherItemData.Kind;
-                IconData = launcherItemData.Icon;
-                IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
-                Comment = launcherItemData.Comment;
+            var launcherItemsDao = new LauncherItemsEntityDao(pack.Main.Commander, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
+            var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
-                var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var tagItems = launcherTagsEntityDao.SelectTags(LauncherItemId);
-                TagItems.SetRange(tagItems);
+            Name = launcherItemData.Name;
+            Code = launcherItemData.Code;
+            Kind = launcherItemData.Kind;
+            IconData = launcherItemData.Icon;
+            IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
+            Comment = launcherItemData.Comment;
 
-                switch(Kind) {
-                    case LauncherItemKind.File: {
-                            LoadFileCore(commander, commander.Implementation);
-                        }
-                        break;
+            var launcherTagsEntityDao = new LauncherTagsEntityDao(pack.Main.Commander, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
+            var tagItems = launcherTagsEntityDao.SelectTags(LauncherItemId);
+            TagItems.SetRange(tagItems);
 
-                    case LauncherItemKind.StoreApp: {
-                            var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                            StoreApp = launcherStoreAppsEntityDao.SelectStoreApp(LauncherItemId);
-                        }
-                        break;
+            switch(Kind) {
+                case LauncherItemKind.File: {
+                        LoadFileCore(pack.Main.Commander, pack.Main.Implementation);
+                    }
+                    break;
 
-                    case LauncherItemKind.Addon: {
-                            LoadAddonCore(commander, commander.Implementation);
-                        }
-                        break;
+                case LauncherItemKind.StoreApp: {
+                        var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(pack.Main.Commander, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
+                        StoreApp = launcherStoreAppsEntityDao.SelectStoreApp(LauncherItemId);
+                    }
+                    break;
 
-                    default:
-                        throw new NotImplementedException();
-                }
+                case LauncherItemKind.Addon: {
+                        LoadAddonCore(pack);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
         }
 
