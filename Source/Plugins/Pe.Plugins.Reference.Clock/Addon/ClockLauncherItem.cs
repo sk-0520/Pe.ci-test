@@ -7,6 +7,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
+using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences;
 
 namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 {
@@ -57,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
         {
-            throw new NotImplementedException();
+            return new ClockLauncherItemPreferences(Plugin, AddonExecutor, DispatcherWrapper, SkeletonImplements, ImageLoader, HttpUserAgentFactory, LoggerFactory);
         }
     }
 }
