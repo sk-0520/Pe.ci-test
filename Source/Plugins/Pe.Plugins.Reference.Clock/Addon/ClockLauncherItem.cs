@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override bool CustomLauncherIcon => throw new NotImplementedException();
 
-        public override bool SupportedPreferences => throw new NotImplementedException();
+        public override bool SupportedPreferences => true;
 
         public override object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale)
         {

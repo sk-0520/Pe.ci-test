@@ -45,6 +45,22 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
         public string PluginName { get; }
 
         #endregion
+
+        #region object
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder(PluginName.Length + "()".Length + " xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".Length);
+
+            sb.Append(PluginName);
+            sb.Append('(');
+            sb.Append(PluginId.ToString("D")); // P でええやんと思う今日この頃
+            sb.Append(')');
+
+            return sb.ToString();
+        }
+
+        #endregion
     }
 
     /// <summary>

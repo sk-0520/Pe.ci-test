@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// <summary>
         /// ストレージ操作。
         /// </summary>
-        IPluginStorage Storage { get; }
+        ILauncherItemAddonStorage Storage { get; }
 
 
         #endregion
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// <summary>
         /// ストレージ操作。
         /// </summary>
-        IPluginStorage Storage { get; }
+        ILauncherItemAddonStorage Storage { get; }
 
         /// <summary>
         /// チェック結果。
@@ -58,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// <summary>
         /// ストレージ操作。
         /// </summary>
-        IPluginStorage Storage { get; }
+        ILauncherItemAddonStorage Storage { get; }
 
         #endregion
     }
@@ -75,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         /// <summary>
         /// ストレージ操作。
         /// </summary>
-        IPluginStorage Storage { get; }
+        ILauncherItemAddonStorage Storage { get; }
 
         /// <summary>
         /// 保存されたか。

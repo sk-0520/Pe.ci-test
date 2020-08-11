@@ -6,6 +6,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
@@ -67,6 +68,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseCommandsPack, isReadOnly);
             return new LauncherItemAddonContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
+
+        public LauncherItemPreferencesLoadContext CreatePreferencesLoadContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseCommandsPack databaseCommandsPack)
+        {
+            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseCommandsPack, true);
+            return new LauncherItemPreferencesLoadContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
+        }
+
+
 
         #endregion
 

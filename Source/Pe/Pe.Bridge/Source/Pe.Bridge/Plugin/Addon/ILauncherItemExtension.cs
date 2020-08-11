@@ -87,6 +87,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// 設定処理。
         /// <para><see cref="SupportedPreferences"/>が有効な場合に使用される。</para>
+        /// <para>混乱中: データを読み込むには<see cref="ILauncherItemPreferences.BeginPreferences(ILauncherItemPreferencesLoadContext)"/>で行うこと。</para>
         /// </summary>
         /// <returns></returns>
         ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);

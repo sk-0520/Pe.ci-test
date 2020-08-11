@@ -138,17 +138,32 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         void LoadAddonCore(IDatabaseCommandsPack databaseCommandsPack)
         {
             Debug.Assert(Kind == LauncherItemKind.Addon);
+            Debug.Assert(LauncherItemExtension == null);
+            Debug.Assert(LauncherItemPreferences == null);
 
             var launcherAddonsEntityDao = new LauncherAddonsEntityDao(databaseCommandsPack.Main.Commander, DatabaseStatementLoader, databaseCommandsPack.Main.Implementation, LoggerFactory);
             var pluginId = launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
 
-            if(LauncherItemAddonFinder.Exists(pluginId)) {
+            if(!LauncherItemAddonFinder.Exists(pluginId)) {
                 Logger.LogError("ランチャーアイテムアドオンが存在しない: {0}", pluginId);
                 return;
             }
             var plugin = LauncherItemAddonFinder.GetPlugin(pluginId);
 
+            LauncherItemExtension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
+            if(!LauncherItemExtension.SupportedPreferences) {
+                Logger.LogInformation("{0} はアドオン設定をサポートしていない", plugin.PluginInformations.PluginIdentifiers);
+                return;
+            }
+
             //LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, , true);
+            using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseCommandsPack, true)) {
+                LauncherItemPreferences = LauncherItemExtension.CreatePreferences(context);
+            }
+
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesLoadContext(plugin.PluginInformations, LauncherItemId, databaseCommandsPack)) {
+                LauncherItemPreferences.BeginPreferences(context);
+            }
         }
 
         protected void LoadAddon()
