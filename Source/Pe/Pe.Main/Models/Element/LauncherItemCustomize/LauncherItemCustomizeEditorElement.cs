@@ -5,8 +5,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -95,8 +97,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region addon
 
+        public bool SupportedPreferences { get; private set; }
+        IPlugin? LauncherItemPlugin { get; set; }
         ILauncherItemExtension? LauncherItemExtension { get; set; }
-        public ILauncherItemPreferences? LauncherItemPreferences { get; private set; }
+        ILauncherItemPreferences? LauncherItemPreferences { get; set; }
 
         #endregion
 
@@ -138,6 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         void LoadAddonCore(IDatabaseCommandsPack databaseCommandsPack)
         {
             Debug.Assert(Kind == LauncherItemKind.Addon);
+            Debug.Assert(LauncherItemPlugin == null);
             Debug.Assert(LauncherItemExtension == null);
             Debug.Assert(LauncherItemPreferences == null);
 
@@ -148,21 +153,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 Logger.LogError("ランチャーアイテムアドオンが存在しない: {0}", pluginId);
                 return;
             }
-            var plugin = LauncherItemAddonFinder.GetPlugin(pluginId);
+            LauncherItemPlugin = LauncherItemAddonFinder.GetPlugin(pluginId);
 
             LauncherItemExtension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
-            if(!LauncherItemExtension.SupportedPreferences) {
-                Logger.LogInformation("{0} はアドオン設定をサポートしていない", plugin.PluginInformations.PluginIdentifiers);
+            SupportedPreferences = LauncherItemExtension.SupportedPreferences;
+            if(!SupportedPreferences) {
+                Logger.LogInformation("{0} はアドオン設定をサポートしていない", LauncherItemPlugin.PluginInformations.PluginIdentifiers);
                 return;
             }
 
-            //LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, , true);
-            using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseCommandsPack, true)) {
+            using(var context = LauncherItemAddonContextFactory.CreateContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseCommandsPack, true)) {
                 LauncherItemPreferences = LauncherItemExtension.CreatePreferences(context);
-            }
-
-            using(var context = LauncherItemAddonContextFactory.CreatePreferencesLoadContext(plugin.PluginInformations, LauncherItemId, databaseCommandsPack)) {
-                LauncherItemPreferences.BeginPreferences(context);
             }
         }
 
@@ -170,6 +171,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         {
             using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
             LoadAddonCore(pack);
+        }
+
+        internal UserControl BeginPreferences()
+        {
+            Debug.Assert(SupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesLoadContext(LauncherItemPlugin.PluginInformations, LauncherItemId, pack)) {
+                return LauncherItemPreferences.BeginPreferences(context);
+            }
         }
 
         void LoadLauncherItem()

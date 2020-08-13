@@ -49,7 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                     break;
 
                 case LauncherItemKind.Addon: {
-                        Logger.LogWarning("not impl");
+                        var addon = new LauncherItemCustomizeAddonViewModel(Model, DispatcherWrapper, LoggerFactory);
+                        items.Add(addon);
                     }
                     break;
 
