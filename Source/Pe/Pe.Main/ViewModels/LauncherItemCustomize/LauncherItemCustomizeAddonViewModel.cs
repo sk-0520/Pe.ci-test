@@ -13,11 +13,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public LauncherItemCustomizeAddonViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
+            if(!Model.LauncherItemSupportedPreferences) {
+                throw new InvalidOperationException(nameof(Model.LauncherItemSupportedPreferences));
+            }
         }
 
         #region property
 
         public UserControl? PreferencesControl { get; set; }
+
+        public string LauncherItemHeader => Model.GetLauncherItemPluginHeader();
 
         #endregion
 
@@ -33,8 +38,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
-            if(Model.SupportedPreferences) {
-                PreferencesControl = Model.BeginPreferences();
+            if(Model.LauncherItemSupportedPreferences) {
+                PreferencesControl = Model.BeginLauncherItemPreferences();
             }
         }
 

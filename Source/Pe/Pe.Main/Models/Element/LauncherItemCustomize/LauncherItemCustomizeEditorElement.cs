@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -97,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #region addon
 
-        public bool SupportedPreferences { get; private set; }
+        public bool LauncherItemSupportedPreferences { get; private set; }
         IPlugin? LauncherItemPlugin { get; set; }
         ILauncherItemExtension? LauncherItemExtension { get; set; }
         ILauncherItemPreferences? LauncherItemPreferences { get; set; }
@@ -156,8 +157,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             LauncherItemPlugin = LauncherItemAddonFinder.GetPlugin(pluginId);
 
             LauncherItemExtension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
-            SupportedPreferences = LauncherItemExtension.SupportedPreferences;
-            if(!SupportedPreferences) {
+            LauncherItemSupportedPreferences = LauncherItemExtension.SupportedPreferences;
+            if(!LauncherItemSupportedPreferences) {
                 Logger.LogInformation("{0} はアドオン設定をサポートしていない", LauncherItemPlugin.PluginInformations.PluginIdentifiers);
                 return;
             }
@@ -173,9 +174,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             LoadAddonCore(pack);
         }
 
-        internal UserControl BeginPreferences()
+        internal UserControl BeginLauncherItemPreferences()
         {
-            Debug.Assert(SupportedPreferences);
+            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPlugin != null);
             Debug.Assert(LauncherItemPreferences != null);
 
@@ -183,6 +184,51 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             using(var context = LauncherItemAddonContextFactory.CreatePreferencesLoadContext(LauncherItemPlugin.PluginInformations, LauncherItemId, pack)) {
                 return LauncherItemPreferences.BeginPreferences(context);
             }
+        }
+
+        internal bool CheckLauncherItemPreferences()
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesCheckContext(LauncherItemPlugin.PluginInformations, LauncherItemId, pack)) {
+                LauncherItemPreferences.CheckPreferences(context);
+                return context.HasError;
+            }
+        }
+
+        internal void SaveLauncherPreferences(IDatabaseCommandsPack databaseCommandsPack)
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesSaveContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseCommandsPack)) {
+                LauncherItemPreferences.SavePreferences(context);
+            }
+        }
+
+        internal void EndLauncherPreferences(IDatabaseCommandsPack databaseCommandsPack)
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesEndContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseCommandsPack)) {
+                LauncherItemPreferences.EndPreferences(context);
+            }
+        }
+
+        internal string GetLauncherItemPluginHeader()
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            //TODO: なんかこう、ヘッダ名のために仰々しいなぁ XAML でプラグインID薄くしたいし。。。
+            return LauncherItemPlugin.PluginInformations.PluginIdentifiers.ToString()!;
         }
 
         void LoadLauncherItem()
