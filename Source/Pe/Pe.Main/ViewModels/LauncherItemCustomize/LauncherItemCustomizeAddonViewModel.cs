@@ -43,6 +43,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             }
         }
 
+        protected override void ValidateDomain()
+        {
+            base.ValidateDomain();
+        }
+
         #endregion
     }
 }

@@ -67,7 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         public IDragAndDrop DragAndDrop { get; }
 
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
-        [IgnoreValidation]
         public ICollectionView AllLauncherItemItems { get; }
 
         public bool IsPopupAddItemMenu
