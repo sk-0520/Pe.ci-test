@@ -66,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public IDragAndDrop DragAndDrop { get; }
 
+        // このViewModelが有効な際に検証が必要なため IgnoreValidation は付与しない
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
         public ICollectionView AllLauncherItemItems { get; }
 
