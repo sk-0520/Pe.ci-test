@@ -61,6 +61,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         protected override void ValidateDomain()
         {
             base.ValidateDomain();
+
+            if(PreferencesControl != null) {
+                Model.CheckLauncherItemPreferences();
+            }
         }
 
         #endregion

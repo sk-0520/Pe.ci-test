@@ -18,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
 
         /// <summary>
         /// ランチャーアイテム設定の検証段階に入った時点で呼び出される。
+        /// <para>単純な検証処理じゃなくて重めの処理OK。</para>
         /// </summary>
         /// <param name="preferencesCheckContext"></param>
         void CheckPreferences(ILauncherItemPreferencesCheckContext preferencesCheckContext);
