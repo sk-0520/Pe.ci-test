@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -36,10 +37,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region LauncherItemCustomizeDetailViewModelBase
 
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(PreferencesControl != null && PreferencesControl.DataContext is INotifyPropertyChanged notifyPropertyChanged) {
+                    notifyPropertyChanged.PropertyChanged -= NotifyPropertyChanged_PropertyChanged;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
         protected override void InitializeImpl()
         {
             if(Model.LauncherItemSupportedPreferences) {
                 PreferencesControl = Model.BeginLauncherItemPreferences();
+                if(PreferencesControl.DataContext is INotifyPropertyChanged notifyPropertyChanged) {
+                    notifyPropertyChanged.PropertyChanged += NotifyPropertyChanged_PropertyChanged;
+                }
             }
         }
 
@@ -49,5 +64,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         }
 
         #endregion
+
+        private void NotifyPropertyChanged_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChanged(e.PropertyName);
+        }
+
+
     }
 }
