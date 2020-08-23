@@ -74,11 +74,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Preferences
         #region function
 
         /// <summary>
-        /// ストレージ操作。
-        /// </summary>
-        ILauncherItemAddonStorage Storage { get; }
-
-        /// <summary>
         /// 保存されたか。
         /// <para>本体設定でOKしたかキャンセルしたか、てきな。</para>
         /// </summary>

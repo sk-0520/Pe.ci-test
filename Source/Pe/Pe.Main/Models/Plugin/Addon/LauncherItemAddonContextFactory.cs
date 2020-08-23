@@ -87,10 +87,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return new LauncherItemPreferencesSaveContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 
-        public LauncherItemPreferencesEndContext CreatePreferencesEndContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseCommandsPack databaseCommandsPack)
+        public LauncherItemPreferencesEndContext CreatePreferencesEndContext(IPluginInformations pluginInformations, Guid launcherItemId)
         {
-            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseCommandsPack, true);
-            return new LauncherItemPreferencesEndContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
+            return new LauncherItemPreferencesEndContext(pluginInformations.PluginIdentifiers, launcherItemId);
         }
 
         #endregion

@@ -83,6 +83,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public ObservableCollection<string> TagItems { get; } = new ObservableCollection<string>();
 
+        private bool IsSaved { get; set; }
+
         #region file
 
         public LauncherFileData? File { get; private set; }
@@ -207,16 +209,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
             using(var context = LauncherItemAddonContextFactory.CreatePreferencesSaveContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseCommandsPack)) {
                 LauncherItemPreferences.SavePreferences(context);
+                IsSaved = true;
             }
         }
 
-        internal void EndLauncherPreferences(IDatabaseCommandsPack databaseCommandsPack)
+        internal void EndLauncherPreferences()
         {
             Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPlugin != null);
             Debug.Assert(LauncherItemPreferences != null);
 
-            using(var context = LauncherItemAddonContextFactory.CreatePreferencesEndContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseCommandsPack)) {
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesEndContext(LauncherItemPlugin.PluginInformations, LauncherItemId)) {
+                context.IsSaved = IsSaved;
                 LauncherItemPreferences.EndPreferences(context);
             }
         }
@@ -398,6 +402,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                     }
                     break;
 
+                case LauncherItemKind.Addon: {
+                        Debug.Assert(LauncherItemSupportedPreferences);
+                        Debug.Assert(LauncherItemPlugin != null);
+                        Debug.Assert(LauncherItemExtension != null);
+                        Debug.Assert(LauncherItemPreferences != null);
+
+                        SaveLauncherPreferences(commandsPack);
+                    }
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
@@ -498,6 +512,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             if(!IsDisposed) {
                 if(disposing) {
                     TagItems.Clear();
+
+                    if(LauncherItemSupportedPreferences && LauncherItemPreferences != null) {
+                        EndLauncherPreferences();
+                    }
                 }
             }
 

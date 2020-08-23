@@ -1,10 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
@@ -77,7 +83,295 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemAddonPersistentStorage
 
-        #endregion
+        public bool Exists(Guid launcherItemId, string key)
+        {
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
+                        return pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, launcherItemId, NormalizeKey(key));
+                    }
+
+                case PluginPersistentMode.Barrier:
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        if(Mode == PluginPersistentMode.LazyWriter) {
+                            Debug.Assert(DatabaseLazyWriter != null);
+                            DatabaseLazyWriter.Flush();
+                        }
+
+                        return DatabaseBarrier.ReadData(c => {
+                            var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                            return pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, launcherItemId, NormalizeKey(key));
+                        });
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+        }
+
+        public bool TryGet<TValue>(Guid launcherItemId, string key, [MaybeNullWhen(returnValue: false)] out TValue value)
+        {
+            if(Mode == PluginPersistentMode.LazyWriter) {
+                // 遅延書き込み待機を終了
+                Debug.Assert(DatabaseLazyWriter != null);
+                DatabaseLazyWriter.Flush();
+            }
+
+            PluginSettingRawValue? data;
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
+                        data = pluginLauncherItemSettingsEntityDao.SelectPluginLauncherItemValue(PluginId, launcherItemId, NormalizeKey(key));
+                    }
+                    break;
+
+                case PluginPersistentMode.Barrier:
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        if(Mode == PluginPersistentMode.LazyWriter) {
+                            Debug.Assert(DatabaseLazyWriter != null);
+                            DatabaseLazyWriter.Flush();
+                        }
+
+                        data = DatabaseBarrier.ReadData(c => {
+                            var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                            return pluginLauncherItemSettingsEntityDao.SelectPluginLauncherItemValue(PluginId, launcherItemId, NormalizeKey(key));
+                        });
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            if(data == null) {
+                value = default;
+                return false;
+            }
+
+            switch(data.Format) {
+                case PluginPersistentFormat.SimpleXml:
+                case PluginPersistentFormat.DataXml: {
+                        SerializerBase serializer = data.Format switch
+                        {
+                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            _ => throw new NotImplementedException(),
+                        };
+                        try {
+                            var binary = Encoding.UTF8.GetBytes(data.Value);
+                            using(var stream = new MemoryStream(binary)) {
+                                value = serializer.Load<TValue>(stream);
+                                return true;
+                            }
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            value = default;
+                            return false;
+                        }
+                    }
+
+                case PluginPersistentFormat.Json: {
+                        try {
+                            value = JsonSerializer.Deserialize<TValue>(data.Value);
+                            return true;
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            value = default;
+                            return false;
+                        }
+                    }
+
+                case PluginPersistentFormat.Text: {
+                        if(typeof(TValue) != typeof(string)) {
+                            Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
+                            value = default;
+                            return false;
+                        }
+
+                        value = (TValue)(object)data.Value;
+                        return true;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public bool Set<TValue>(Guid launcherItemId, string key, TValue value, PluginPersistentFormat format)
+        {
+            if(IsReadOnly) {
+                throw new InvalidOperationException(nameof(IsReadOnly));
+            }
+
+            if(value == null) {
+                Logger.LogWarning("value は null のため処理終了");
+                return false;
+            }
+
+            string textValue;
+
+            switch(format) {
+                case PluginPersistentFormat.SimpleXml:
+                case PluginPersistentFormat.DataXml: {
+                        SerializerBase serializer = format switch
+                        {
+                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            _ => throw new NotImplementedException(),
+                        };
+                        try {
+                            using(var stream = new MemoryStream()) {
+                                serializer.Save(value, stream);
+                                textValue = serializer.Encoding.GetString(stream.GetBuffer(), 0, (int)stream.Length);
+                            }
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            return false;
+                        }
+                    }
+                    break;
+
+                case PluginPersistentFormat.Json: {
+                        try {
+                            textValue = JsonSerializer.Serialize(value);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            return false;
+                        }
+                    }
+                    break;
+
+                case PluginPersistentFormat.Text: {
+                        if(typeof(TValue) != typeof(string)) {
+                            Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
+                            textValue = value.ToString()! ?? string.Empty;
+                        } else {
+                            textValue = (string)(object)value;
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var data = new PluginSettingRawValue(format, textValue);
+
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
+
+                        var normalizedKey = NormalizeKey(key);
+                        if(pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey)) {
+                            pluginLauncherItemSettingsEntityDao.UpdatePluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                        } else {
+                            pluginLauncherItemSettingsEntityDao.InsertPluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                        }
+                    }
+                    break;
+
+                case PluginPersistentMode.Barrier: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        using(var commander = DatabaseBarrier.WaitWrite()) {
+                            var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                            var normalizedKey = NormalizeKey(key);
+                            if(pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey)) {
+                                pluginLauncherItemSettingsEntityDao.UpdatePluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                            } else {
+                                pluginLauncherItemSettingsEntityDao.InsertPluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                            }
+                            commander.Commit();
+                        }
+                    }
+                    break;
+
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseLazyWriter != null);
+
+                        DatabaseLazyWriter.Stock(c => {
+                            var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                            var normalizedKey = NormalizeKey(key);
+                            if(pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey)) {
+                                pluginLauncherItemSettingsEntityDao.UpdatePluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                            } else {
+                                pluginLauncherItemSettingsEntityDao.InsertPluginLauncherItemSetting(PluginId, launcherItemId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                            }
+                        });
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return true;
+        }
+        public bool Set<TValue>(Guid launcherItemId, string key, TValue value) => Set(launcherItemId, key, value, PluginPersistentFormat.Json);
+
+        public bool Delete(Guid launcherItemId, string key)
+        {
+            if(IsReadOnly) {
+                throw new InvalidOperationException(nameof(IsReadOnly));
+            }
+
+            if(Mode == PluginPersistentMode.LazyWriter) {
+                // 遅延書き込み待機を終了
+                Debug.Assert(DatabaseLazyWriter != null);
+                DatabaseLazyWriter.Flush();
+            }
+
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
+                        return pluginLauncherItemSettingsEntityDao.DeletePluginLauncherItemSetting(PluginId, launcherItemId, NormalizeKey(key));
+                    }
+
+                case PluginPersistentMode.Barrier: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        using(var commander = DatabaseBarrier.WaitWrite()) {
+                            var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                            var result = pluginLauncherItemSettingsEntityDao.DeletePluginLauncherItemSetting(PluginId, launcherItemId, NormalizeKey(key));
+                            commander.Commit();
+                            return result;
+                        }
+                    }
+
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseLazyWriter != null);
+
+                        DatabaseLazyWriter.Stock(c => {
+                            var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                            pluginLauncherItemSettingsEntityDao.DeletePluginLauncherItemSetting(PluginId, launcherItemId, NormalizeKey(key));
+                        });
+                        // 成功したかどうか不明
+                        return false;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            #endregion
+        }
     }
 
     /// <inheritdoc cref="ILauncherItemAddonFiles"/>

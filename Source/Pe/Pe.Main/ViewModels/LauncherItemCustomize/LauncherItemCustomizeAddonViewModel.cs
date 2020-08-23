@@ -63,7 +63,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             base.ValidateDomain();
 
             if(PreferencesControl != null) {
-                Model.CheckLauncherItemPreferences();
+                var hasError = Model.CheckLauncherItemPreferences();
+                if(hasError) {
+                    //TODO: エラーがあった際にどうすべきか
+                    Logger.LogError("[TODO] エラーあり: {0}", LauncherItemId);
+                    AddError("error", string.Empty);
+                }
             }
         }
 

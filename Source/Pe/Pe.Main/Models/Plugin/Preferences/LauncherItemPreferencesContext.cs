@@ -85,22 +85,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences
     {
         #region variable
 
-        readonly LauncherItemAddonStorage _storage;
-
         #endregion
 
-        public LauncherItemPreferencesEndContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, LauncherItemAddonStorage storage)
+        public LauncherItemPreferencesEndContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId)
             : base(pluginIdentifiers, launcherItemId)
-        {
-            this._storage = storage;
-        }
+        { }
 
 
         #region ILauncherItemPreferencesCheckContext
 
-        /// <inheritdoc cref="ILauncherItemPreferencesCheckContext.Storage" />
-        public LauncherItemAddonStorage Storage => GetValue(this._storage);
-        ILauncherItemAddonStorage ILauncherItemPreferencesEndContext.Storage => Storage;
         public bool IsSaved { get; set; }
 
         #endregion

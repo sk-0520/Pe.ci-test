@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -19,6 +20,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
             : base(plugin, addonExecutor, dispatcherWrapper, skeletonImplements, imageLoader, httpUserAgentFactory, loggerFactory)
         { }
 
+        #region property
+
+        ClockLauncherItemSetting? Setting { get; set; }
+
+        #endregion
+
         #region LauncherItemPreferencesBase
 
         public override UserControl BeginPreferences(ILauncherItemPreferencesLoadContext preferencesLoadContext)
@@ -26,10 +33,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
             //preferencesLoadContext.Storage.Persistent.Normal
 
             // 暫定
-            var setting = new ClockLauncherItemSetting();
+            Setting = new ClockLauncherItemSetting();
 
             var view = new ClockLauncherItemPreferencesControl() {
-                DataContext = new ClockLauncherItemPreferencesViewModel(setting, SkeletonImplements, DispatcherWrapper, LoggerFactory),
+                DataContext = new ClockLauncherItemPreferencesViewModel(Setting, SkeletonImplements, DispatcherWrapper, LoggerFactory),
             };
 
             return view;
@@ -37,16 +44,24 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
 
         public override void CheckPreferences(ILauncherItemPreferencesCheckContext preferencesCheckContext)
         {
-            throw new NotImplementedException();
+            Debug.Assert(Setting != null);
+
+            try {
+                DateTime.Now.ToString(Setting.Format);
+            } catch {
+                preferencesCheckContext.HasError = true;
+            }
         }
 
         public override void SavePreferences(ILauncherItemPreferencesSaveContext preferencesSaveContext)
         {
+            Debug.Assert(Setting != null);
             throw new NotImplementedException();
         }
 
         public override void EndPreferences(ILauncherItemPreferencesEndContext preferencesEndContext)
         {
+            Debug.Assert(Setting != null);
             throw new NotImplementedException();
         }
 

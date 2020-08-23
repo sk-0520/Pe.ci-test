@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         LazyWriter,
     }
 
-    public abstract class PluginPersistentStorageBase
+    public abstract class PluginPersistentStorageBase: IPluginId
     {
         /// <summary>
         /// プラグイン用DB操作処理構築。
@@ -266,7 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
 
-        IPluginIdentifiers PluginIdentifiers { get; }
+        protected IPluginIdentifiers PluginIdentifiers { get; }
         public string PluginName => PluginIdentifiers.PluginName;
         protected IPluginVersions PluginVersions { get; }
 
@@ -278,100 +278,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         public bool IsReadOnly { get; }
-        #endregion
-    }
 
-    /// <inheritdoc cref="IPluginPersistentStorage"/>
-    public sealed class PluginPersistentStorage: IPluginPersistentStorage, IPluginId
-    {
-        /// <summary>
-        /// プラグイン用DB操作処理構築。
-        /// <para>読み込み専用・書き込み可能に分かれる。書き込み専用は基本的に設定画面くらい。</para>
-        /// </summary>
-        /// <param name="pluginIdentifiers"></param>
-        /// <param name="pluginVersions"></param>
-        /// <param name="databaseCommands"></param>
-        /// <param name="databaseStatementLoader"></param>
-        /// <param name="isReadOnly">読み込み専用か。</param>
-        /// <param name="loggerFactory"></param>
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
-        {
-            LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger(GetType());
-            PluginIdentifiers = pluginIdentifiers;
-            PluginVersions = pluginVersions;
-            DatabaseCommander = databaseCommands.Commander;
-            DatabaseImplementation = databaseCommands.Implementation;
-            IsReadOnly = isReadOnly;
-            DatabaseStatementLoader = databaseStatementLoader;
-            Mode = PluginPersistentMode.Commander;
-        }
-
-        /// <summary>
-        /// プラグイン用DB操作処理構築。
-        /// <para>読み込み専用・書き込み可能に分かれる。逐次処理される。</para>
-        /// </summary>
-        /// <param name="pluginIdentifiers"></param>
-        /// <param name="pluginVersions"></param>
-        /// <param name="databaseBarrier"></param>
-        /// <param name="databaseStatementLoader"></param>
-        /// <param name="isReadOnly">読み込み専用か。</param>
-        /// <param name="loggerFactory"></param>
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
-        {
-            LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger(GetType());
-            PluginIdentifiers = pluginIdentifiers;
-            PluginVersions = pluginVersions;
-            DatabaseBarrier = databaseBarrier;
-            IsReadOnly = isReadOnly;
-            DatabaseStatementLoader = databaseStatementLoader;
-            Mode = PluginPersistentMode.Barrier;
-        }
-
-        /// <summary>
-        /// プラグイン用DB操作処理構築。
-        /// <para>通常実行時の書き込み処理で、遅延処理される。</para>
-        /// </summary>
-        /// <param name="pluginIdentifiers"></param>
-        /// <param name="pluginVersions"></param>
-        /// <param name="databaseBarrier"></param>
-        /// <param name="databaseLazyWriter"></param>
-        /// <param name="databaseStatementLoader"></param>
-        /// <param name="loggerFactory"></param>
-        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-        {
-            LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger(GetType());
-            PluginIdentifiers = pluginIdentifiers;
-            PluginVersions = pluginVersions;
-            DatabaseBarrier = databaseBarrier;
-            DatabaseLazyWriter = databaseLazyWriter;
-            DatabaseStatementLoader = databaseStatementLoader;
-            IsReadOnly = false;
-            Mode = PluginPersistentMode.LazyWriter;
-        }
-
-        #region property
-
-        ILoggerFactory LoggerFactory { get; }
-        ILogger Logger { get; }
-
-        IPluginIdentifiers PluginIdentifiers { get; }
-        public string PluginName => PluginIdentifiers.PluginName;
-        IPluginVersions PluginVersions { get; }
-
-        PluginPersistentMode Mode { get; }
-        IDatabaseImplementation? DatabaseImplementation { get; }
-        IDatabaseCommander? DatabaseCommander { get; }
-        IDatabaseBarrier? DatabaseBarrier { get; }
-        IDatabaseLazyWriter? DatabaseLazyWriter { get; }
-        IDatabaseStatementLoader DatabaseStatementLoader { get; }
         #endregion
 
         #region function
 
-        string NormalizeKey(string key)
+        protected string NormalizeKey(string key)
         {
             return string.IsNullOrWhiteSpace(key)
                 ? string.Empty
@@ -381,10 +293,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #endregion
 
-        #region IPluginPersistentStorage
+        #region IPluginId
 
-        /// <inheritdoc cref="IPluginPersistentStorage.IsReadOnly"/>
-        public bool IsReadOnly { get; }
+        public Guid PluginId => PluginIdentifiers.PluginId;
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IPluginPersistentStorage"/>
+    public sealed class PluginPersistentStorage: PluginPersistentStorageBase, IPluginPersistentStorage
+    {
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseCommands, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+                   : base(pluginIdentifiers, pluginVersions, databaseCommands, databaseStatementLoader, isReadOnly, loggerFactory)
+        { }
+
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseStatementLoader, isReadOnly, loggerFactory)
+        { }
+
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseLazyWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
+        public PluginPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseLazyWriter, databaseStatementLoader, loggerFactory)
+        { }
+
+        #region property
+
+
+        #endregion
+
+        #region function
+
+        #endregion
+
+        #region IPluginPersistentStorage
 
         /// <inheritdoc cref="IPluginPersistentStorage.Exists(string)"/>
         public bool Exists(string key)
@@ -678,12 +621,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                     throw new NotImplementedException();
             }
         }
-
-        #endregion
-
-        #region IPluginId
-
-        public Guid PluginId => PluginIdentifiers.PluginId;
 
         #endregion
     }
