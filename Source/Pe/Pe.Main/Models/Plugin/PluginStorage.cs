@@ -193,6 +193,28 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
     public abstract class PluginPersistentStorageBase: IPluginId
     {
+        #region define
+
+        protected class DatabaseParameter
+        {
+            public DatabaseParameter(IDatabaseStatementLoader databaseStatementLoader, IDatabaseCommands databaseCommands, ILoggerFactory loggerFactory)
+            {
+                DatabaseStatementLoader = databaseStatementLoader;
+                DatabaseCommands = databaseCommands;
+                LoggerFactory = loggerFactory;
+            }
+
+            #region property
+
+            public ILoggerFactory LoggerFactory { get; }
+            public IDatabaseStatementLoader DatabaseStatementLoader { get; }
+            public IDatabaseCommands DatabaseCommands { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         /// <summary>
         /// プラグイン用DB操作処理構築。
         /// <para>読み込み専用・書き込み可能に分かれる。書き込み専用は基本的に設定画面くらい。</para>
@@ -289,6 +311,267 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
                 ? string.Empty
                 : key.Trim()
             ;
+        }
+
+        protected bool ExistsImpl<TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, bool> func)
+        {
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory));
+                    }
+
+                case PluginPersistentMode.Barrier:
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        if(Mode == PluginPersistentMode.LazyWriter) {
+                            Debug.Assert(DatabaseLazyWriter != null);
+                            DatabaseLazyWriter.Flush();
+                        }
+
+                        return DatabaseBarrier.ReadData(c => {
+                            return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory));
+                        });
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        protected bool TryGetImpl<TValue, TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, PluginSettingRawValue?> func, [MaybeNullWhen(returnValue: false)] out TValue value)
+        {
+            if(Mode == PluginPersistentMode.LazyWriter) {
+                // 遅延書き込み待機を終了
+                Debug.Assert(DatabaseLazyWriter != null);
+                DatabaseLazyWriter.Flush();
+            }
+
+            PluginSettingRawValue? data;
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        data = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory));
+                    }
+                    break;
+
+                case PluginPersistentMode.Barrier:
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        if(Mode == PluginPersistentMode.LazyWriter) {
+                            Debug.Assert(DatabaseLazyWriter != null);
+                            DatabaseLazyWriter.Flush();
+                        }
+
+                        data = DatabaseBarrier.ReadData(c => {
+                            return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory));
+                        });
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            if(data == null) {
+                value = default;
+                return false;
+            }
+
+            switch(data.Format) {
+                case PluginPersistentFormat.SimpleXml:
+                case PluginPersistentFormat.DataXml: {
+                        SerializerBase serializer = data.Format switch
+                        {
+                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            _ => throw new NotImplementedException(),
+                        };
+                        try {
+                            var binary = Encoding.UTF8.GetBytes(data.Value);
+                            using(var stream = new MemoryStream(binary)) {
+                                value = serializer.Load<TValue>(stream);
+                                return true;
+                            }
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            value = default;
+                            return false;
+                        }
+                    }
+
+                case PluginPersistentFormat.Json: {
+                        try {
+                            value = JsonSerializer.Deserialize<TValue>(data.Value);
+                            return true;
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            value = default;
+                            return false;
+                        }
+                    }
+
+                case PluginPersistentFormat.Text: {
+                        if(typeof(TValue) != typeof(string)) {
+                            Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
+                            value = default;
+                            return false;
+                        }
+
+                        value = (TValue)(object)data.Value;
+                        return true;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        protected bool SetImpl<TValue, TParameter>(TValue value, PluginPersistentFormat format, TParameter parameter, Action<TParameter, DatabaseParameter, PluginSettingRawValue> action)
+        {
+            if(IsReadOnly) {
+                throw new InvalidOperationException(nameof(IsReadOnly));
+            }
+
+            if(value == null) {
+                Logger.LogWarning($"{nameof(value)} は null のため処理終了");
+                return false;
+            }
+
+            string textValue;
+
+            switch(format) {
+                case PluginPersistentFormat.SimpleXml:
+                case PluginPersistentFormat.DataXml: {
+                        SerializerBase serializer = format switch
+                        {
+                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
+                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
+                            _ => throw new NotImplementedException(),
+                        };
+                        try {
+                            using(var stream = new MemoryStream()) {
+                                serializer.Save(value, stream);
+                                textValue = serializer.Encoding.GetString(stream.GetBuffer(), 0, (int)stream.Length);
+                            }
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            return false;
+                        }
+                    }
+                    break;
+
+                case PluginPersistentFormat.Json: {
+                        try {
+                            textValue = JsonSerializer.Serialize(value);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                            return false;
+                        }
+                    }
+                    break;
+
+                case PluginPersistentFormat.Text: {
+                        if(typeof(TValue) != typeof(string)) {
+                            Logger.LogWarning($"文字列であるべきデータ: {nameof(value)} -> {typeof(TValue)}");
+                            textValue = value.ToString()! ?? string.Empty;
+                        } else {
+                            textValue = (string)(object)value;
+                        }
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var data = new PluginSettingRawValue(format, textValue);
+
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory), data);
+                    }
+                    break;
+
+                case PluginPersistentMode.Barrier: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        using(var commander = DatabaseBarrier.WaitWrite()) {
+                            action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(commander, commander.Implementation), LoggerFactory), data);
+                            commander.Commit();
+                        }
+                    }
+                    break;
+
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseLazyWriter != null);
+
+                        DatabaseLazyWriter.Stock(c => {
+                            action(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory), data);
+                        });
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return true;
+        }
+
+        protected bool DeleteImpl<TParameter>(TParameter parameter, Func<TParameter, DatabaseParameter, bool> func)
+        {
+            if(IsReadOnly) {
+                throw new InvalidOperationException(nameof(IsReadOnly));
+            }
+
+            if(Mode == PluginPersistentMode.LazyWriter) {
+                // 遅延書き込み待機を終了
+                Debug.Assert(DatabaseLazyWriter != null);
+                DatabaseLazyWriter.Flush();
+            }
+
+            switch(Mode) {
+                case PluginPersistentMode.Commander: {
+                        Debug.Assert(DatabaseCommander != null);
+                        Debug.Assert(DatabaseImplementation != null);
+
+                        return func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(DatabaseCommander, DatabaseImplementation), LoggerFactory));
+                    }
+
+                case PluginPersistentMode.Barrier: {
+                        Debug.Assert(DatabaseBarrier != null);
+
+                        using(var commander = DatabaseBarrier.WaitWrite()) {
+                            var result = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(commander, commander.Implementation), LoggerFactory));
+                            commander.Commit();
+                            return result;
+                        }
+                    }
+
+                case PluginPersistentMode.LazyWriter: {
+                        Debug.Assert(DatabaseLazyWriter != null);
+
+                        DatabaseLazyWriter.Stock(c => {
+                            var result = func(parameter, new DatabaseParameter(DatabaseStatementLoader, new DatabaseCommands(c, c.Implementation), LoggerFactory));
+                            Logger.LogWarning("result = {0}", result);
+                        });
+                        // 成功したかどうか不明
+                        return false;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         #endregion

@@ -369,9 +369,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
                 default:
                     throw new NotImplementedException();
             }
-
-            #endregion
         }
+
+        #endregion
     }
 
     /// <inheritdoc cref="ILauncherItemAddonFiles"/>
