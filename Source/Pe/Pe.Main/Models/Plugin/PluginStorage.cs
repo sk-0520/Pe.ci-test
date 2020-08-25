@@ -615,243 +615,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginPersistentStorage.Exists(string)"/>
         public bool Exists(string key)
         {
-            switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
-                        Debug.Assert(DatabaseImplementation != null);
-
-                        var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
-                        return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, NormalizeKey(key));
-                    }
-
-                case PluginPersistentMode.Barrier:
-                case PluginPersistentMode.LazyWriter: {
-                        Debug.Assert(DatabaseBarrier != null);
-
-                        if(Mode == PluginPersistentMode.LazyWriter) {
-                            Debug.Assert(DatabaseLazyWriter != null);
-                            DatabaseLazyWriter.Flush();
-                        }
-
-                        return DatabaseBarrier.ReadData(c => {
-                            var pluginSettingsEntityDao = new PluginSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                            return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, NormalizeKey(key));
-                        });
-                    }
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return ExistsImpl(key, (p, d) => {
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                return pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, NormalizeKey(key));
+            });
         }
 
         /// <inheritdoc cref="IPluginPersistentStorage.TryGet{TValue}(string, out TValue)"/>
         public bool TryGet<TValue>(string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
-            if(Mode == PluginPersistentMode.LazyWriter) {
-                // 遅延書き込み待機を終了
-                Debug.Assert(DatabaseLazyWriter != null);
-                DatabaseLazyWriter.Flush();
-            }
-
-            PluginSettingRawValue? data;
-            switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
-                        Debug.Assert(DatabaseImplementation != null);
-
-                        var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
-                        data = pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, NormalizeKey(key));
-                    }
-                    break;
-
-                case PluginPersistentMode.Barrier:
-                case PluginPersistentMode.LazyWriter: {
-                        Debug.Assert(DatabaseBarrier != null);
-
-                        if(Mode == PluginPersistentMode.LazyWriter) {
-                            Debug.Assert(DatabaseLazyWriter != null);
-                            DatabaseLazyWriter.Flush();
-                        }
-
-                        data = DatabaseBarrier.ReadData(c => {
-                            var pluginSettingsEntityDao = new PluginSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                            return pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, NormalizeKey(key));
-                        });
-                    }
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
-
-            if(data == null) {
-                value = default;
-                return false;
-            }
-
-            switch(data.Format) {
-                case PluginPersistentFormat.SimpleXml:
-                case PluginPersistentFormat.DataXml: {
-                        SerializerBase serializer = data.Format switch
-                        {
-                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
-                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
-                            _ => throw new NotImplementedException(),
-                        };
-                        try {
-                            var binary = Encoding.UTF8.GetBytes(data.Value);
-                            using(var stream = new MemoryStream(binary)) {
-                                value = serializer.Load<TValue>(stream);
-                                return true;
-                            }
-                        } catch(Exception ex) {
-                            Logger.LogError(ex, ex.Message);
-                            value = default;
-                            return false;
-                        }
-                    }
-
-                case PluginPersistentFormat.Json: {
-                        try {
-                            value = JsonSerializer.Deserialize<TValue>(data.Value);
-                            return true;
-                        } catch(Exception ex) {
-                            Logger.LogError(ex, ex.Message);
-                            value = default;
-                            return false;
-                        }
-                    }
-
-                case PluginPersistentFormat.Text: {
-                        if(typeof(TValue) != typeof(string)) {
-                            Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
-                            value = default;
-                            return false;
-                        }
-
-                        value = (TValue)(object)data.Value;
-                        return true;
-                    }
-
-                default:
-                    throw new NotImplementedException();
-            }
-
+            return TryGetImpl(key, (p, d) => {
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                return pluginSettingsEntityDao.SelectPluginSettingValue(PluginId, NormalizeKey(key));
+            }, out value);
         }
 
         /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue, PluginPersistentFormat)"/>
         public bool Set<TValue>(string key, TValue value, PluginPersistentFormat format)
         {
-            if(IsReadOnly) {
-                throw new InvalidOperationException(nameof(IsReadOnly));
-            }
-
-            if(value == null) {
-                Logger.LogWarning("value は null のため処理終了");
-                return false;
-            }
-
-            string textValue;
-
-            switch(format) {
-                case PluginPersistentFormat.SimpleXml:
-                case PluginPersistentFormat.DataXml: {
-                        SerializerBase serializer = format switch
-                        {
-                            PluginPersistentFormat.SimpleXml => new XmlSerializer(),
-                            PluginPersistentFormat.DataXml => new XmlDataContractSerializer(),
-                            _ => throw new NotImplementedException(),
-                        };
-                        try {
-                            using(var stream = new MemoryStream()) {
-                                serializer.Save(value, stream);
-                                textValue = serializer.Encoding.GetString(stream.GetBuffer(), 0, (int)stream.Length);
-                            }
-                        } catch(Exception ex) {
-                            Logger.LogError(ex, ex.Message);
-                            return false;
-                        }
-                    }
-                    break;
-
-                case PluginPersistentFormat.Json: {
-                        try {
-                            textValue = JsonSerializer.Serialize(value);
-                        } catch(Exception ex) {
-                            Logger.LogError(ex, ex.Message);
-                            return false;
-                        }
-                    }
-                    break;
-
-                case PluginPersistentFormat.Text: {
-                        if(typeof(TValue) != typeof(string)) {
-                            Logger.LogWarning("文字列であるべきデータ: {0} -> {1}", nameof(value), typeof(TValue));
-                            textValue = value.ToString()! ?? string.Empty;
-                        } else {
-                            textValue = (string)(object)value;
-                        }
-                    }
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
-
-            var data = new PluginSettingRawValue(format, textValue);
-
-            switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
-                        Debug.Assert(DatabaseImplementation != null);
-
-                        var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
-
-                        var normalizedKey = NormalizeKey(key);
-                        if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
-                            pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
-                        } else {
-                            pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
-                        }
-                    }
-                    break;
-
-                case PluginPersistentMode.Barrier: {
-                        Debug.Assert(DatabaseBarrier != null);
-
-                        using(var commander = DatabaseBarrier.WaitWrite()) {
-                            var pluginSettingsEntityDao = new PluginSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                            var normalizedKey = NormalizeKey(key);
-                            if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
-                                pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
-                            } else {
-                                pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
-                            }
-                            commander.Commit();
-                        }
-                    }
-                    break;
-
-                case PluginPersistentMode.LazyWriter: {
-                        Debug.Assert(DatabaseLazyWriter != null);
-
-                        DatabaseLazyWriter.Stock(c => {
-                            var pluginSettingsEntityDao = new PluginSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                            var normalizedKey = NormalizeKey(key);
-                            if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
-                                pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
-                            } else {
-                                pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, data, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
-                            }
-                        });
-                    }
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
-
-            return true;
+            return SetImpl(value, format, key, (p, d, v) => {
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var normalizedKey = NormalizeKey(p);
+                if(pluginSettingsEntityDao.SelecteExistsPluginSetting(PluginId, normalizedKey)) {
+                    pluginSettingsEntityDao.UpdatePluginSetting(PluginId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                } else {
+                    pluginSettingsEntityDao.InsertPluginSetting(PluginId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                }
+            });
         }
         /// <inheritdoc cref="IPluginPersistentStorage.Set{TValue}(string, TValue)"/>
         public bool Set<TValue>(string key, TValue value) => Set(key, value, PluginPersistentFormat.Json);
@@ -859,50 +649,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         /// <inheritdoc cref="IPluginPersistentStorage.Delete(string)"/>
         public bool Delete(string key)
         {
-            if(IsReadOnly) {
-                throw new InvalidOperationException(nameof(IsReadOnly));
-            }
-
-            if(Mode == PluginPersistentMode.LazyWriter) {
-                // 遅延書き込み待機を終了
-                Debug.Assert(DatabaseLazyWriter != null);
-                DatabaseLazyWriter.Flush();
-            }
-
-            switch(Mode) {
-                case PluginPersistentMode.Commander: {
-                        Debug.Assert(DatabaseCommander != null);
-                        Debug.Assert(DatabaseImplementation != null);
-
-                        var pluginSettingsEntityDao = new PluginSettingsEntityDao(DatabaseCommander, DatabaseStatementLoader, DatabaseImplementation, LoggerFactory);
-                        return pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
-                    }
-
-                case PluginPersistentMode.Barrier: {
-                        Debug.Assert(DatabaseBarrier != null);
-
-                        using(var commander = DatabaseBarrier.WaitWrite()) {
-                            var pluginSettingsEntityDao = new PluginSettingsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                            var result = pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
-                            commander.Commit();
-                            return result;
-                        }
-                    }
-
-                case PluginPersistentMode.LazyWriter: {
-                        Debug.Assert(DatabaseLazyWriter != null);
-
-                        DatabaseLazyWriter.Stock(c => {
-                            var pluginSettingsEntityDao = new PluginSettingsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
-                            pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
-                        });
-                        // 成功したかどうか不明
-                        return false;
-                    }
-
-                default:
-                    throw new NotImplementedException();
-            }
+            return DeleteImpl(key, (p, d) => {
+                var pluginSettingsEntityDao = new PluginSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                return pluginSettingsEntityDao.DeletePluginSetting(PluginId, NormalizeKey(key));
+            });
         }
 
         #endregion
