@@ -16,8 +16,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
 {
     internal class ClockLauncherItemPreferences: LauncherItemPreferencesBase
     {
-        public ClockLauncherItemPreferences(PluginBase plugin, IAddonExecutor addonExecutor, IDispatcherWrapper dispatcherWrapper, ISkeletonImplements skeletonImplements, IImageLoader imageLoader, IHttpUserAgentFactory httpUserAgentFactory, ILoggerFactory loggerFactory)
-            : base(plugin, addonExecutor, dispatcherWrapper, skeletonImplements, imageLoader, httpUserAgentFactory, loggerFactory)
+        public ClockLauncherItemPreferences(PluginBase plugin, Guid launcherItemId, IAddonExecutor addonExecutor, IDispatcherWrapper dispatcherWrapper, ISkeletonImplements skeletonImplements, IImageLoader imageLoader, IHttpUserAgentFactory httpUserAgentFactory, ILoggerFactory loggerFactory)
+            : base(plugin, launcherItemId, addonExecutor, dispatcherWrapper, skeletonImplements, imageLoader, httpUserAgentFactory, loggerFactory)
         { }
 
         #region property
@@ -30,10 +30,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
 
         public override UserControl BeginPreferences(ILauncherItemPreferencesLoadContext preferencesLoadContext)
         {
-            //preferencesLoadContext.Storage.Persistent.Normal
+            if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out var value)) {
+                value = new ClockLauncherItemSetting();
+            }
 
-            // 暫定
-            Setting = new ClockLauncherItemSetting();
+            Setting = value;
 
             var view = new ClockLauncherItemPreferencesControl() {
                 DataContext = new ClockLauncherItemPreferencesViewModel(Setting, SkeletonImplements, DispatcherWrapper, LoggerFactory),
@@ -56,14 +57,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
         public override void SavePreferences(ILauncherItemPreferencesSaveContext preferencesSaveContext)
         {
             Debug.Assert(Setting != null);
-            throw new NotImplementedException();
+            preferencesSaveContext.Storage.Persistent.Normal.Set(LauncherItemId, string.Empty, Setting);
         }
 
         public override void EndPreferences(ILauncherItemPreferencesEndContext preferencesEndContext)
-        {
-            Debug.Assert(Setting != null);
-            throw new NotImplementedException();
-        }
+        { }
 
         #endregion
     }

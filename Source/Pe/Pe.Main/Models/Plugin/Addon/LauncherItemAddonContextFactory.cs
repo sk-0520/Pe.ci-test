@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public LauncherItemPreferencesSaveContext CreatePreferencesSaveContext(IPluginInformations pluginInformations, Guid launcherItemId, IDatabaseCommandsPack databaseCommandsPack)
         {
-            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseCommandsPack, true);
+            var launcherItemAddonStorage = CreateLauncherItemAddonStorage(pluginInformations, databaseCommandsPack, false);
             return new LauncherItemPreferencesSaveContext(pluginInformations.PluginIdentifiers, launcherItemId, launcherItemAddonStorage);
         }
 

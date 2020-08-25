@@ -13,11 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
     {
         public LauncherItemCustomizeAddonViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
-        {
-            if(!Model.LauncherItemSupportedPreferences) {
-                throw new InvalidOperationException(nameof(Model.LauncherItemSupportedPreferences));
-            }
-        }
+        { }
 
         #region property
 
@@ -50,6 +46,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         protected override void InitializeImpl()
         {
+            if(Model.IsLazyLoad) {
+                return;
+            }
+
             if(Model.LauncherItemSupportedPreferences) {
                 PreferencesControl = Model.BeginLauncherItemPreferences();
                 if(PreferencesControl.DataContext is INotifyPropertyChanged notifyPropertyChanged) {

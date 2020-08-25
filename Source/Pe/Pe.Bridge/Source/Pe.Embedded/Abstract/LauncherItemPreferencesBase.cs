@@ -13,12 +13,13 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class LauncherItemPreferencesBase: ILauncherItemPreferences
     {
-        protected LauncherItemPreferencesBase(PluginBase plugin, IAddonExecutor addonExecutor, IDispatcherWrapper dispatcherWrapper, ISkeletonImplements skeletonImplements, IImageLoader imageLoader, IHttpUserAgentFactory httpUserAgentFactory, ILoggerFactory loggerFactory)
+        protected LauncherItemPreferencesBase(PluginBase plugin, Guid launcherItemId, IAddonExecutor addonExecutor, IDispatcherWrapper dispatcherWrapper, ISkeletonImplements skeletonImplements, IImageLoader imageLoader, IHttpUserAgentFactory httpUserAgentFactory, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
 
             Plugin = plugin;
+            LauncherItemId = launcherItemId;
             AddonExecutor = addonExecutor;
             DispatcherWrapper = dispatcherWrapper;
             SkeletonImplements = skeletonImplements;
@@ -32,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected ILogger Logger { get; }
 
         protected PluginBase Plugin { get; }
+        protected Guid LauncherItemId { get; }
         protected IAddonExecutor AddonExecutor { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ISkeletonImplements SkeletonImplements { get; }

@@ -513,7 +513,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                 if(disposing) {
                     TagItems.Clear();
 
-                    if(LauncherItemSupportedPreferences && LauncherItemPreferences != null) {
+                    if(LauncherItemPreferences != null) {
                         EndLauncherPreferences();
                     }
                 }
