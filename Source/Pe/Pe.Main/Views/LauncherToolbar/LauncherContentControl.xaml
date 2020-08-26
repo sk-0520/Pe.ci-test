@@ -32,7 +32,7 @@
             <DataTrigger Binding="{Binding IsIconOnly, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
               <Setter Property="Visibility" Value="Visible" />
               <Setter Property="Width" Value="{Binding TextWidth, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-              <Setter Property="Text" Value="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+              <Setter Property="Text" Value="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}" />
             </DataTrigger>
           </Style.Triggers>
           <Setter Property="Visibility" Value="Collapsed" />

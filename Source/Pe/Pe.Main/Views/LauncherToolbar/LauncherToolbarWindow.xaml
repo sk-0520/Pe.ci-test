@@ -88,7 +88,7 @@
       <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root}" />
       <Setter Property="IsIconOnly" Value="{Binding DataContext.IsIconOnly, ElementName=root}" />
       <Setter Property="TextWidth" Value="{Binding DataContext.TextWidth, ElementName=root}" />
-      <Setter Property="Title" Value="{Binding Name, Mode=OneTime}" />
+      <Setter Property="Title" Value="{Binding Name, Mode=OneWay}" />
     </Style>
 
     <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -210,7 +210,7 @@
             <StackPanel>
               <StackPanel Orientation="Horizontal">
                 <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" />
-                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </StackPanel>

@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         protected override AddonParameter CreateParameter(IPlugin plugin)
         {
-            var worker = LauncherItemAddonContextFactory.CreateWorker(LauncherItemId);
+            var worker = LauncherItemAddonContextFactory.CreateWorker(plugin.PluginInformations, LauncherItemId);
             return new LauncherItemExtensionCreateParameter(LauncherItemId, worker, new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
         }
 
@@ -65,6 +65,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool SupportedPreferences => FunctionUnit.SupportedPreferences;
 
+        public void Start()
+        {
+            FunctionUnit.Start();
+            FunctionUnit.PropertyChanged += FunctionUnit_PropertyChanged;
+        }
+
+        public void End()
+        {
+            FunctionUnit.End();
+            FunctionUnit.PropertyChanged -= FunctionUnit_PropertyChanged;
+        }
+
         public ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
         {
             return FunctionUnit.CreatePreferences(launcherItemAddonContext);
@@ -85,6 +97,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region ILauncherItemId
 
         public Guid LauncherItemId { get; }
+
         #endregion
+
+        private void FunctionUnit_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(e.PropertyName);
+        }
     }
 }

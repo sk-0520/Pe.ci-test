@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     public abstract class ContextWorkerBase<TPluginContextFactory>
-        where TPluginContextFactory: PluginContextFactoryBase
+        where TPluginContextFactory : PluginContextFactoryBase
     {
         protected ContextWorkerBase(TPluginContextFactory pluginContextFactory, ILoggerFactory loggerFactory)
         {
@@ -46,15 +46,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
     public class LauncherItemAddonContextWorker: ContextWorkerBase<LauncherItemAddonContextFactory>, ILauncherItemAddonContextWorker
     {
-        public LauncherItemAddonContextWorker(LauncherItemAddonContextFactory launcherItemAddonContextFactory, ILoggerFactory loggerFactory)
+        public LauncherItemAddonContextWorker(LauncherItemAddonContextFactory launcherItemAddonContextFactory, IPluginInformations pluginInformations, Guid launcherItemId, ILoggerFactory loggerFactory)
             : base(launcherItemAddonContextFactory, loggerFactory)
-        { }
+        {
+            PluginInformations = pluginInformations;
+            LauncherItemId = launcherItemId;
+        }
+
+        #region property
+        public IPluginInformations PluginInformations { get; }
+        public Guid LauncherItemId { get; }
+        #endregion
 
         #region ILauncherItemAddonContextWorker
 
         public void RunLauncherItemAddon(Action<ILauncherItemAddonContext> callback)
         {
-            throw new NotImplementedException();
+            using var databaseCommandsPack = PluginContextFactory.BarrierWrite();
+            using var context = PluginContextFactory.CreateContext(PluginInformations, LauncherItemId, databaseCommandsPack, false);
+            callback(context);
         }
 
         #endregion

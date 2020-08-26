@@ -120,6 +120,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             var result = new LauncherAddonDetailData();
+
+            var pluginId = MainDatabaseBarrier.ReadData(c => {
+                var launcherAddonsEntityDao = new LauncherAddonsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                return launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
+            });
+
+            result.IsEnabled = LauncherItemAddonFinder.Exists(pluginId);
+            if(result.IsEnabled) {
+                result.Extension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
+                result.Extension.Start();
+            }
+
             return result;
         }
 

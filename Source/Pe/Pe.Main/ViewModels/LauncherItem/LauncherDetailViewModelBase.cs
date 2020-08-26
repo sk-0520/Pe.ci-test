@@ -87,8 +87,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
 
         public virtual string? Name => Model.Name;
-        public virtual string? Comment => Model.Comment;
-        public virtual bool HasComment => !string.IsNullOrWhiteSpace(Comment);
+        public string? Comment => Model.Comment;
+        public bool HasComment => !string.IsNullOrWhiteSpace(Comment);
 
         public bool NowLoading
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region property
         LauncherAddonDetailData? Detail { get; set; }
+        PropertyChangedHooker? ExtensionPropertyChangedHooker { get; set; }
 
         #endregion
 
@@ -28,9 +30,47 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region LauncherDetailViewModelBase
 
+        public override string? Name
+        {
+            get
+            {
+                if(Detail != null && Detail.IsEnabled && Detail.Extension != null) {
+                    if(Detail.Extension.CustomDisplayText) {
+                        return Detail.Extension.DisplayText;
+                    }
+                }
+
+                return base.Name;
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(!IsDisposed) {
+                if(Detail?.Extension != null) {
+                    Detail.Extension.PropertyChanged -= Extension_PropertyChanged;
+                }
+                ExtensionPropertyChangedHooker?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         protected override Task InitializeImplAsync()
         {
             Detail = Model.LoadAddonDetail();
+            if(Detail.IsEnabled) {
+                if(Detail.Extension == null) {
+                    throw new InvalidOperationException(nameof(Detail.Extension));
+                }
+
+                ExtensionPropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+                Detail.Extension.PropertyChanged += Extension_PropertyChanged;
+
+                if(Detail.Extension.CustomDisplayText) {
+                    ExtensionPropertyChangedHooker.AddHook(nameof(Detail.Extension.DisplayText), nameof(Name));
+                }
+
+            }
             return Task.CompletedTask;
         }
 
@@ -49,5 +89,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         }
 
         #endregion
+
+        private void Extension_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ExtensionPropertyChangedHooker!.Execute(e, RaisePropertyChanged);
+        }
+
+
     }
 }

@@ -62,6 +62,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public Guid LauncherItemId { get; }
 
         #endregion
+
         #region ILauncherItemExtension
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -71,6 +72,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public abstract bool CustomLauncherIcon { get; }
         public abstract bool SupportedPreferences { get; }
 
+        public abstract void Start();
+        public abstract void End();
         public abstract object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale);
         public abstract void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);

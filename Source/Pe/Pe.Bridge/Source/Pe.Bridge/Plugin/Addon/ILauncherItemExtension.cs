@@ -65,6 +65,15 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #region function
 
         /// <summary>
+        /// ランチャーアイテムとして表示された的な。
+        /// </summary>
+        void Start();
+        /// <summary>
+        /// ランチャーアイテムとして表示が終わった的な。
+        /// </summary>
+        void End();
+
+        /// <summary>
         /// アイコン取得。
         /// <para>(TODO: 考え中)<see cref="CustomLauncherIcon"/>が有効な場合に使用される。</para>
         /// <para>UIスレッド上で実行を保証。</para>

@@ -23,9 +23,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public LauncherItemAddonContextWorker CreateWorker(Guid launcherItemId)
+        public LauncherItemAddonContextWorker CreateWorker(IPluginInformations pluginInformations, Guid launcherItemId)
         {
-            return new LauncherItemAddonContextWorker(this, LoggerFactory);
+            return new LauncherItemAddonContextWorker(this, pluginInformations, launcherItemId, LoggerFactory);
         }
 
 
