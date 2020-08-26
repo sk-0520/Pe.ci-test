@@ -86,9 +86,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         public object TooltipIcon => this._tooltipIcon ??= GetIcon(IconKind.Tooltip);
 
 
-        public string? Name => Model.Name;
-        public string? Comment => Model.Comment;
-        public bool HasComment => !string.IsNullOrWhiteSpace(Comment);
+        public virtual string? Name => Model.Name;
+        public virtual string? Comment => Model.Comment;
+        public virtual bool HasComment => !string.IsNullOrWhiteSpace(Comment);
 
         public bool NowLoading
         {
