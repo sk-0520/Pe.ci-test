@@ -88,7 +88,7 @@
       <Setter Property="IconMargin" Value="{Binding DataContext.IconMargin, ElementName=root}" />
       <Setter Property="IsIconOnly" Value="{Binding DataContext.IsIconOnly, ElementName=root}" />
       <Setter Property="TextWidth" Value="{Binding DataContext.TextWidth, ElementName=root}" />
-      <Setter Property="Title" Value="{Binding Name, Mode=OneWay}" />
+      <Setter Property="Title" Value="{Binding Name, Mode=OneTime}" />
     </Style>
 
     <Style x:Key="GroupMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
@@ -204,6 +204,11 @@
 
     <!--#region ランチャーアドオン -->
     <DataTemplate DataType="{x:Type app_main_viewmodels_item:LauncherAddonViewModel}">
+      <DataTemplate.Resources>
+        <Style TargetType="app_main_views_lt:LauncherContentControl" BasedOn="{StaticResource {x:Type app_main_views_lt:LauncherContentControl}}">
+          <Setter Property="Title" Value="{Binding Name, Mode=OneWay}" />
+        </Style>
+      </DataTemplate.Resources>
       <Button Command="{Binding ExecuteMainCommand}"  ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemNormalButtonControlTemplate, ElementName=root}">
         <Button.ToolTip>
           <ToolTip Style="{StaticResource LauncherItemTooltip}">

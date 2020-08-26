@@ -18,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region property
 
         public UserControl? PreferencesControl { get; set; }
-
+        INotifyPropertyChanged? PreferencesNotifyPropertyChanged { get; set; }
         public string LauncherItemHeader => Model.GetLauncherItemPluginHeader();
 
         #endregion
@@ -36,9 +36,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         protected override void Dispose(bool disposing)
         {
             if(!IsDisposed) {
-                if(PreferencesControl != null && PreferencesControl.DataContext is INotifyPropertyChanged notifyPropertyChanged) {
-                    notifyPropertyChanged.PropertyChanged -= NotifyPropertyChanged_PropertyChanged;
+                if(PreferencesNotifyPropertyChanged != null) {
+                    PreferencesNotifyPropertyChanged.PropertyChanged -= NotifyPropertyChanged_PropertyChanged;
                 }
+                PreferencesControl = null;
             }
 
             base.Dispose(disposing);
@@ -50,10 +51,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 return;
             }
 
-            if(Model.LauncherItemSupportedPreferences) {
+            if(Model.LauncherItemSupportedPreferences && PreferencesControl  == null) {
                 PreferencesControl = Model.BeginLauncherItemPreferences();
                 if(PreferencesControl.DataContext is INotifyPropertyChanged notifyPropertyChanged) {
-                    notifyPropertyChanged.PropertyChanged += NotifyPropertyChanged_PropertyChanged;
+                    PreferencesNotifyPropertyChanged = notifyPropertyChanged;
+                    PreferencesNotifyPropertyChanged.PropertyChanged += NotifyPropertyChanged_PropertyChanged;
                 }
             }
         }
