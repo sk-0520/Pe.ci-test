@@ -310,6 +310,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class LauncherAddonDetailData: LauncherDetailDataBase
+    {
+        #region property
+
+        #endregion
+    }
+
     #endregion
 
     public interface ILauncherToolbarId

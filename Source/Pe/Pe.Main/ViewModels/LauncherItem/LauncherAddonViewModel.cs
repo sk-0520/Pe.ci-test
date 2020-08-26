@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using Microsoft.Extensions.Logging;
 
@@ -17,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         { }
 
         #region property
+        LauncherAddonDetailData? Detail { get; set; }
 
         #endregion
 
@@ -28,13 +30,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected override Task InitializeImplAsync()
         {
-            Model.LoadAddonDetail();
+            Detail = Model.LoadAddonDetail();
             return Task.CompletedTask;
         }
 
         protected override Task ExecuteMainImplAsync()
         {
-            throw new NotImplementedException();
+            return Task.Run(() => {
+                Model.Execute(Screen);
+            });
         }
 
         protected override object GetIcon(IconKind iconKind)

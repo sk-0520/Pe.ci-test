@@ -115,9 +115,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        internal void LoadAddonDetail()
+        internal LauncherAddonDetailData LoadAddonDetail()
         {
+            ThrowIfDisposed();
 
+            var result = new LauncherAddonDetailData();
+            return result;
         }
 
         List<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
