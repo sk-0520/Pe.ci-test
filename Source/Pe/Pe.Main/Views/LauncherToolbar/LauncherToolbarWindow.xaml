@@ -202,6 +202,30 @@
     </DataTemplate>
     <!--#endregion -->
 
+    <!--#region ランチャーアドオン -->
+    <DataTemplate DataType="{x:Type app_main_viewmodels_item:LauncherAddonViewModel}">
+      <Button Command="{Binding ExecuteMainCommand}"  ContentTemplate="{StaticResource LauncherItemContentTemplate}" Template="{Binding DataContext.LauncherItemNormalButtonControlTemplate, ElementName=root}">
+        <Button.ToolTip>
+          <ToolTip Style="{StaticResource LauncherItemTooltip}">
+            <StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" />
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
+              </StackPanel>
+              <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </StackPanel>
+          </ToolTip>
+        </Button.ToolTip>
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <app_main_views_lt:LauncherContentControl />
+      </Button>
+    </DataTemplate>
+    <!--#endregion-->
+
     <!--#endregion-->
 
   </Window.Resources>

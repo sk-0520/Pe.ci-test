@@ -23,6 +23,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
         #region property
 
         ClockLauncherItemSetting? Setting { get; set; }
+        ClockLauncherItemPreferencesViewModel? ViewModel { get; set; }
+        UserControl? View { get; set; }
 
         #endregion
 
@@ -35,12 +37,13 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
             }
 
             Setting = value;
+            ViewModel = new ClockLauncherItemPreferencesViewModel(Setting, SkeletonImplements, DispatcherWrapper, LoggerFactory);
 
-            var view = new ClockLauncherItemPreferencesControl() {
-                DataContext = new ClockLauncherItemPreferencesViewModel(Setting, SkeletonImplements, DispatcherWrapper, LoggerFactory),
+            View = new ClockLauncherItemPreferencesControl() {
+                DataContext = ViewModel,
             };
 
-            return view;
+            return View;
         }
 
         public override void CheckPreferences(ILauncherItemPreferencesCheckContext preferencesCheckContext)
@@ -61,7 +64,19 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
         }
 
         public override void EndPreferences(ILauncherItemPreferencesEndContext preferencesEndContext)
-        { }
+        {
+            Debug.Assert(Setting != null);
+            Debug.Assert(ViewModel != null);
+            Debug.Assert(View != null);
+
+            View.DataContext = null;
+            View = null;
+
+            ViewModel.Dispose();
+            ViewModel = null;
+
+            Setting = null;
+        }
 
         #endregion
     }

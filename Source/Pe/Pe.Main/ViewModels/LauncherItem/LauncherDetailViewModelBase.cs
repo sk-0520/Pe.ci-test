@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 //    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Addon:
-                    throw new NotImplementedException();
+                    return new LauncherAddonViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 //case LauncherItemKind.Separator:
                 //    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
