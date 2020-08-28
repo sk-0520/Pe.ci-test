@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -51,7 +52,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 return;
             }
 
-            if(Model.LauncherItemSupportedPreferences && PreferencesControl  == null) {
+            if(Model.LauncherItemSupportedPreferences) {
+                Debug.Assert(PreferencesControl == null);
+
                 PreferencesControl = Model.BeginLauncherItemPreferences();
                 if(PreferencesControl.DataContext is INotifyPropertyChanged notifyPropertyChanged) {
                     PreferencesNotifyPropertyChanged = notifyPropertyChanged;

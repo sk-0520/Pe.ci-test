@@ -67,7 +67,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             CustomizeItems = items;
 
             foreach(var item in CustomizeItems) {
+                if(!Model.IsLazyLoad) {
                 item.Initialize();
+                }
                 item.PropertyChanged += Item_PropertyChanged;
             }
         }

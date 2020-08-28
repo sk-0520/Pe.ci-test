@@ -46,6 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherItemSettingEditorViewModel Clone()
         {
+            //BUGS: これで二重処理が走ってる！
             return new LauncherItemSettingEditorViewModel(Editor, DispatcherWrapper, LoggerFactory);
         }
 
