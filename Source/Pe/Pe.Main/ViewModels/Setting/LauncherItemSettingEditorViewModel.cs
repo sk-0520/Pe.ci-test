@@ -22,6 +22,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Editor = model;
         }
 
+        internal LauncherItemSettingEditorViewModel(LauncherItemSettingEditorElement model, bool IsCloned, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, IsCloned, dispatcherWrapper, loggerFactory)
+        {
+            Editor = model;
+        }
+
         #region property
 
         public bool IsLazyLoad => Editor.IsLazyLoad;
@@ -46,8 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherItemSettingEditorViewModel Clone()
         {
-            //BUGS: これで二重処理が走ってる！
-            return new LauncherItemSettingEditorViewModel(Editor, DispatcherWrapper, LoggerFactory);
+            return new LauncherItemSettingEditorViewModel(Editor, true, DispatcherWrapper, LoggerFactory);
         }
 
         internal void LazyLoad()

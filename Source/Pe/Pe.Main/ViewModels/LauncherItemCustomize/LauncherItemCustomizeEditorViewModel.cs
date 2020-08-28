@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -13,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeEditorViewModel : SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId, IFlushable
+    public class LauncherItemCustomizeEditorViewModel: SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId, IFlushable
     {
         #region variable
 
@@ -21,8 +22,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         bool _isChanged;
         #endregion
 
-        public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory) : base(model, loggerFactory)
+        public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : this(model, false, dispatcherWrapper, loggerFactory)
         {
+            Debug.Assert(!IsCloned);
+        }
+
+        internal LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, bool isCloned, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(model, loggerFactory)
+        {
+            IsCloned = isCloned;
+
             DispatcherWrapper = dispatcherWrapper;
 
             Common = new LauncherItemCustomizeCommonViewModel(Model, IconSelectRequest, ImageSelectRequest, DispatcherWrapper, LoggerFactory);
@@ -67,8 +77,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
             CustomizeItems = items;
 
             foreach(var item in CustomizeItems) {
-                if(!Model.IsLazyLoad) {
-                item.Initialize();
+                if(!IsCloned) {
+                    item.Initialize();
                 }
                 item.PropertyChanged += Item_PropertyChanged;
             }
@@ -77,6 +87,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #region property
 
         protected IDispatcherWrapper DispatcherWrapper { get; }
+
+        public bool IsCloned { get; }
 
         public RequestSender IconSelectRequest { get; } = new RequestSender();
         public RequestSender ImageSelectRequest { get; } = new RequestSender();

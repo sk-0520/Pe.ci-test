@@ -32,14 +32,13 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences
 
         public override UserControl BeginPreferences(ILauncherItemPreferencesLoadContext preferencesLoadContext)
         {
-            //TODO: 二重に呼ばれてる・・・
-            if(Setting == null) {
-                if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out var value)) {
-                    value = new ClockLauncherItemSetting();
-                }
+            Debug.Assert(Setting == null);
 
-                Setting = value;
+            if(!preferencesLoadContext.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out var value)) {
+                value = new ClockLauncherItemSetting();
             }
+
+            Setting = value;
 
             ViewModel = new ClockLauncherItemPreferencesViewModel(Setting, SkeletonImplements, DispatcherWrapper, LoggerFactory);
 
