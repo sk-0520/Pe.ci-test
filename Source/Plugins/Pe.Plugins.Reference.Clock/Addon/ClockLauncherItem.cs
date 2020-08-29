@@ -27,6 +27,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         {
             Plugin = plugin;
 
+            ClockTimer = new DispatcherTimer(DispatcherPriority.Normal);
+            ClockTimer.Tick += ClockTimer_Tick;
+            ClockTimer.Interval = TimeSpan.FromMilliseconds(500);
         }
 
         #region property
@@ -48,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                 return this._setting;
             }
         }
-        DispatcherTimer ClockTimer { get; } = new DispatcherTimer(DispatcherPriority.Normal);
+        DispatcherTimer ClockTimer { get; }
 
         #endregion
 
@@ -67,17 +70,20 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override bool SupportedPreferences => true;
 
-        public override void Start()
+        public override void Display(LauncherItemDisplayMode mode)
         {
-            ClockTimer.Tick += ClockTimer_Tick;
-            ClockTimer.Interval = TimeSpan.FromMilliseconds(500);
-            ClockTimer.Start();
-        }
+            switch(mode) {
+                case LauncherItemDisplayMode.LauncherItem:
+                    ClockTimer.Start();
+                    break;
 
-        public override void End()
-        {
-            ClockTimer.Stop();
-            ClockTimer.Tick -= ClockTimer_Tick;
+                case LauncherItemDisplayMode.Hidden:
+                    ClockTimer.Stop();
+                    break;
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public override object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale)

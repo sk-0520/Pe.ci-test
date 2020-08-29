@@ -31,6 +31,12 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         Setting,
     }
 
+    public enum LauncherItemDisplayMode
+    {
+        Hidden,
+        LauncherItem,
+    }
+
     /// <summary>
     /// ランチャーアイテム拡張。
     /// </summary>
@@ -65,13 +71,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         #region function
 
         /// <summary>
-        /// ランチャーアイテムとして表示された的な。
+        /// ランチャーアイテムとして表示(or 非表示)された的な。
         /// </summary>
-        void Start();
-        /// <summary>
-        /// ランチャーアイテムとして表示が終わった的な。
-        /// </summary>
-        void End();
+        void Display(LauncherItemDisplayMode mode);
 
         /// <summary>
         /// アイコン取得。

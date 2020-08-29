@@ -65,16 +65,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool SupportedPreferences => FunctionUnit.SupportedPreferences;
 
-        public void Start()
+        public void Display(LauncherItemDisplayMode mode)
         {
-            FunctionUnit.Start();
+            FunctionUnit.Display(mode);
             FunctionUnit.PropertyChanged += FunctionUnit_PropertyChanged;
-        }
-
-        public void End()
-        {
-            FunctionUnit.End();
-            FunctionUnit.PropertyChanged -= FunctionUnit_PropertyChanged;
         }
 
         public ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
