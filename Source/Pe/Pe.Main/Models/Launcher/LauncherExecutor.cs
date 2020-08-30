@@ -23,18 +23,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         LauncherItemKind Kind { get; }
 
-        Process? Process { get; }
+        object? Data { get; }
 
         #endregion
     }
 
-    public class LauncherExecuteResult: ILauncherExecuteResult
+    public class LauncherFileExecuteResult: ILauncherExecuteResult
     {
         #region function
 
-        public static LauncherExecuteResult Error(Exception ex)
+        public static LauncherFileExecuteResult Error(Exception ex)
         {
-            return new LauncherExecuteResult() {
+            return new LauncherFileExecuteResult() {
                 Success = false,
                 FailureType = ex.GetType(),
                 FailureValue = ex,
@@ -45,9 +45,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region ILauncherExecuteResult
 
+        public object? Data { get; set; }
+
         public LauncherItemKind Kind { get; set; }
 
-        public Process? Process { get; set; }
+        public Process? Process => (Process?)Data;
 
         public bool Success { get; set; }
 
@@ -140,9 +142,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 startInfo.StandardInputEncoding = customParameter.StandardInputOutputEncoding;
             }
 
-            var result = new LauncherExecuteResult() {
+            var result = new LauncherFileExecuteResult() {
                 Kind = kind,
-                Process = process,
+                Data = process,
             };
             RedoExecutor? redoExecutor = null;
             if(redoData.RedoMode != RedoMode.None) {
@@ -220,15 +222,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             try {
                 var systemExecutor = new SystemExecutor();
                 var process = systemExecutor.OpenDirectoryWithFileSelect(fullPath);
-                var result = new LauncherExecuteResult() {
+                var result = new LauncherFileExecuteResult() {
                     Kind = kind,
-                    Process = process,
+                    Data = process,
                 };
 
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                return LauncherExecuteResult.Error(ex);
+                return LauncherFileExecuteResult.Error(ex);
             }
         }
 
@@ -243,15 +245,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             try {
                 var systemExecutor = new SystemExecutor();
                 var process = systemExecutor.ExecuteFile(fullPath);
-                var result = new LauncherExecuteResult() {
+                var result = new LauncherFileExecuteResult() {
                     Kind = kind,
-                    Process = process,
+                    Data = process,
                 };
 
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                return LauncherExecuteResult.Error(ex);
+                return LauncherFileExecuteResult.Error(ex);
             }
         }
 
