@@ -5,6 +5,7 @@ using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon;
+using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
@@ -25,11 +26,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         #endregion
 
-        internal ClockLauncherItemViewModel(ClockLauncherItem item, ISkeletonImplements skeletonImplements, IPlatformTheme platformTheme, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        internal ClockLauncherItemViewModel(ClockLauncherItem item, ISkeletonImplements skeletonImplements, IPlatformTheme platformTheme, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(skeletonImplements, dispatcherWrapper, loggerFactory)
         {
             Item = item;
             PlatformTheme = platformTheme;
+            MediaConverter = mediaConverter;
 
             Item.PropertyChanged += Item_PropertyChanged;
 
@@ -41,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         ClockLauncherItem Item { get; }
         IPlatformTheme PlatformTheme { get; }
-
+        IMediaConverter MediaConverter { get; }
         public DateTime CurrentTime
         {
             get => this._currentTime;
@@ -95,26 +97,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
         void ApplyTheme()
         {
             DispatcherWrapper.Begin(() => {
-                static double GetBrightness(Color color)
-                {
-                    return (((color.R * 299) + (color.G * 587) + (color.B * 114)) / 1000.0);
-                }
-
-                static Color GetAutoColor(Color color)
-                {
-                    var brightness = GetBrightness(color);
-                    if(brightness > 160) {
-                        return Colors.Black;
-                    } else {
-                        return Colors.White;
-                    }
-                }
-
                 var color = PlatformTheme.GetTaskbarColor();
-                HourForeground = new SolidColorBrush(GetAutoColor(color));
-                MinutesForeground = new SolidColorBrush(GetAutoColor(color));
-                SecondsForeground = new SolidColorBrush(GetAutoColor(color));
-                BaseForeground = new SolidColorBrush(GetAutoColor(color));
+                HourForeground = new SolidColorBrush(MediaConverter.GetAutoColor(color));
+                MinutesForeground = new SolidColorBrush(MediaConverter.GetAutoColor(color));
+                SecondsForeground = new SolidColorBrush(MediaConverter.GetAutoColor(color));
+                BaseForeground = new SolidColorBrush(MediaConverter.GetAutoColor(color));
             }, System.Windows.Threading.DispatcherPriority.Render);
         }
 
@@ -137,9 +124,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
         {
             if(e.PropertyName == nameof(Item.CurrentTime)) {
                 CurrentTime = Item.CurrentTime;
-                SecondsAngle = Item.CurrentTime.Second * 6.0;
-                MinutesAngle = Item.CurrentTime.Minute * 6.0;
-                HourAngle = (Item.CurrentTime.Hour * 30.0) + (Item.CurrentTime.Minute * 0.5);
+                SecondsAngle = ClockUtility.GetSecondsAngle(CurrentTime);
+                MinutesAngle = ClockUtility.GetMinuteAngle(CurrentTime);
+                HourAngle = ClockUtility.GetHourAngle(CurrentTime);
             }
         }
 

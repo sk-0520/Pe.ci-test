@@ -4,12 +4,15 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
+using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Models;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Models.Data;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels;
@@ -120,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                         if(ClockLauncherItemViewModel == null) {
                             Debug.Assert(ClockLauncherItemControl == null);
 
-                            ClockLauncherItemViewModel = new ClockLauncherItemViewModel(this, SkeletonImplements, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                            ClockLauncherItemViewModel = new ClockLauncherItemViewModel(this, SkeletonImplements, PlatformTheme, MediaConverter, DispatcherWrapper, LoggerFactory);
                             ClockLauncherItemControl = new ClockLauncherItemControl() {
                                 DataContext = ClockLauncherItemViewModel,
                             };
@@ -129,7 +132,16 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                         return ClockLauncherItemControl;
                     }
 
-                case LauncherItemIconMode.Tooltip:
+                case LauncherItemIconMode.Tooltip: {
+                        return new Viewbox() {
+                            Stretch = System.Windows.Media.Stretch.Fill,
+                            StretchDirection = StretchDirection.Both,
+                            Child = new TextBlock() {
+                                Text = ClockUtility.GetClockEmoji(CurrentTime),
+                            }
+                        };
+                    };
+
                 case LauncherItemIconMode.Command:
                 case LauncherItemIconMode.Setting:
                     return Plugin.GetIcon(ImageLoader, iconScale);

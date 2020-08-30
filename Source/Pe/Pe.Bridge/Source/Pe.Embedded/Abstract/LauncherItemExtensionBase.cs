@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             DispatcherWrapper = parameter.DispatcherWrapper;
             SkeletonImplements = parameter.SkeletonImplements;
             ImageLoader = parameter.ImageLoader;
+            MediaConverter = parameter.MediaConverter;
             HttpUserAgentFactory = parameter.HttpUserAgentFactory;
             ContextWorker = parameter.ContextWorker;
             PluginInformations = pluginInformations;
@@ -39,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ISkeletonImplements SkeletonImplements { get; }
         protected IImageLoader ImageLoader { get; }
+        protected IMediaConverter MediaConverter { get; }
         protected IHttpUserAgentFactory HttpUserAgentFactory { get; }
         protected ILauncherItemAddonContextWorker ContextWorker { get; }
         protected IPluginInformations PluginInformations { get; }

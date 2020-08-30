@@ -75,7 +75,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region variable
 
         TFunctionUnit? _functionUnit;
-        readonly object _functionUnitLocker = new object();
 
         #endregion
 
@@ -96,19 +95,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             get
             {
-                lock(this._functionUnitLocker)
-                    if(this._functionUnit == null) {
-                        Debug.Assert(Addon.IsSupported(AddonKind));
+                if(this._functionUnit == null) {
+                    Debug.Assert(Addon.IsSupported(AddonKind));
 
-                        if(!Addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                            using(var reader = PluginContextFactory.BarrierRead()) {
-                                using var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
-                                Addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
-                            }
+                    if(!Addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
+                        using(var reader = PluginContextFactory.BarrierRead()) {
+                            using var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
+                            Addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
                         }
-
-                        this._functionUnit = BuildFunctionUnit(Addon);
                     }
+
+                    this._functionUnit = BuildFunctionUnit(Addon);
+                }
 
                 return this._functionUnit;
             }

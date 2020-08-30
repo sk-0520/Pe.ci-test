@@ -8,6 +8,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
+using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Models;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Models.Data;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Views;
@@ -51,22 +52,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                 Stretch = System.Windows.Media.Stretch.Fill,
                 StretchDirection = StretchDirection.Both,
                 Child = new TextBlock() {
-                    Text = (DateTime.Now.Hour < 12 ? DateTime.Now.Hour : DateTime.Now.Hour - 12) switch
-                    {
-                        0 => "🕛",
-                        1 => "🕐",
-                        2 => "🕑",
-                        3 => "🕒",
-                        4 => "🕓",
-                        5 => "🕔",
-                        6 => "🕕",
-                        7 => "🕖",
-                        8 => "🕗",
-                        9 => "🕘",
-                        10 => "🕙",
-                        11 => "🕚",
-                        _ => "⏰",
-                    }
+                    Text = ClockUtility.GetClockEmoji(DateTime.Now)
                 }
             };
         }
