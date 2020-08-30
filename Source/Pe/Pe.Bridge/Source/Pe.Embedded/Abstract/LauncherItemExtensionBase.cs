@@ -21,6 +21,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             Logger = LoggerFactory.CreateLogger(GetType());
             LauncherItemId = parameter.LauncherItemId;
             AddonExecutor = parameter.AddonExecutor;
+            PlatformTheme = parameter.PlatformTheme;
             DispatcherWrapper = parameter.DispatcherWrapper;
             SkeletonImplements = parameter.SkeletonImplements;
             ImageLoader = parameter.ImageLoader;
@@ -33,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
+        protected IPlatformTheme PlatformTheme { get; }
         protected IAddonExecutor AddonExecutor { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ISkeletonImplements SkeletonImplements { get; }
@@ -72,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public abstract bool CustomLauncherIcon { get; }
         public abstract bool SupportedPreferences { get; }
 
-        public abstract void Display(LauncherItemDisplayMode mode);
+        public abstract void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible);
         public abstract object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale);
         public abstract void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);

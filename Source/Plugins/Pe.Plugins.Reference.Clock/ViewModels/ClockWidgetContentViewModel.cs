@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 {
     public abstract class ClockWidgetContentBaseViewModel: ViewModelSkeleton
     {
-        #region property
+        #region variable
 
         DateTime _currentTime;
         double _hourAngle;

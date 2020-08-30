@@ -73,8 +73,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         #region variable
 
         TFunctionUnit? _functionUnit;
+        readonly object _functionUnitLocker = new object();
 
         #endregion
+
         protected AddonProxyBase(IAddon addon, PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(pluginContextFactory, userAgentFactory, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
         {
@@ -92,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         {
             get
             {
+                lock(this._functionUnitLocker)
                 if(this._functionUnit == null) {
                     Debug.Assert(Addon.IsSupported(AddonKind));
 

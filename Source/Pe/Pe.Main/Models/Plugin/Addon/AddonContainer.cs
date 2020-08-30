@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -66,6 +67,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         List<IAddon> WidgetSupportAddons => this._widgetSupportAddons ??= GetSupportAddons(AddonKind.Widget);
         List<IAddon> BackgroundSupportAddons => this._backgroundSupportAddons ??= GetSupportAddons(AddonKind.Background);
 
+        ConcurrentDictionary<Guid, LauncherItemAddonProxy> LauncherItemAddonProxies { get; } = new System.Collections.Concurrent.ConcurrentDictionary<Guid, LauncherItemAddonProxy>();
+
         #endregion
 
         #region function
@@ -123,10 +126,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public LauncherItemAddonProxy GetLauncherItemAddon(Guid launcherItemId, Guid pluginId)
         {
-            var addon = LauncherItemSupportAddons.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
-
-            var proxy = new LauncherItemAddonProxy(launcherItemId, addon, PluginContextFactory, LauncherItemAddonContextFactory, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
-            return proxy;
+            return LauncherItemAddonProxies.GetOrAdd(launcherItemId, (launcherItemId, pluginId) => {
+                var addon = LauncherItemSupportAddons.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+                var proxy = new LauncherItemAddonProxy(launcherItemId, addon, PluginContextFactory, LauncherItemAddonContextFactory, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
+                return proxy;
+            }, pluginId);
         }
 
         #endregion

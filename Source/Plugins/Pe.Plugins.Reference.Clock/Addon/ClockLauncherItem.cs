@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Threading;
@@ -11,6 +12,8 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Embedded.Abstract;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Models.Data;
 using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Preferences;
+using ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels;
+using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Views;
 
 namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 {
@@ -19,6 +22,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         #region variable
 
         ClockLauncherItemSetting? _setting;
+        DateTime _currentTime = DateTime.Now;
+
+        internal void Test()
+        {
+            CurrentTime = DateTime.Now;
+        }
 
         #endregion
 
@@ -53,6 +62,19 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         }
         DispatcherTimer ClockTimer { get; }
 
+        public DateTime CurrentTime
+        {
+            get => this._currentTime;
+            private set
+            {
+                this._currentTime = value;
+                OnPropertyChanged(nameof(CurrentTime));
+            }
+        }
+
+        ClockLauncherItemViewModel? ClockLauncherItemViewModel { get; set; }
+        ClockLauncherItemControl? ClockLauncherItemControl { get; set; }
+
         #endregion
 
         #region function
@@ -70,15 +92,20 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override bool SupportedPreferences => true;
 
-        public override void Display(LauncherItemDisplayMode mode)
+        public override void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible)
         {
-            switch(mode) {
-                case LauncherItemDisplayMode.LauncherItem:
-                    ClockTimer.Start();
+            switch(iconMode) {
+                case LauncherItemIconMode.Toolbar:
+                    if(isVisible) {
+                        ClockTimer.Start();
+                    } else {
+                        ClockTimer.Stop();
+                    }
                     break;
 
-                case LauncherItemDisplayMode.Hidden:
-                    ClockTimer.Stop();
+                case LauncherItemIconMode.Tooltip:
+                case LauncherItemIconMode.Command:
+                case LauncherItemIconMode.Setting:
                     break;
 
                 default:
@@ -89,7 +116,19 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         public override object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale)
         {
             switch(iconMode) {
-                case LauncherItemIconMode.Toolbar:
+                case LauncherItemIconMode.Toolbar: {
+                        if(ClockLauncherItemViewModel == null) {
+                            Debug.Assert(ClockLauncherItemControl == null);
+
+                            ClockLauncherItemViewModel = new ClockLauncherItemViewModel(this, SkeletonImplements, PlatformTheme, DispatcherWrapper, LoggerFactory);
+                            ClockLauncherItemControl = new ClockLauncherItemControl() {
+                                DataContext = ClockLauncherItemViewModel,
+                            };
+                        }
+                        Debug.Assert(ClockLauncherItemControl != null);
+                        return ClockLauncherItemControl;
+                    }
+
                 case LauncherItemIconMode.Tooltip:
                 case LauncherItemIconMode.Command:
                 case LauncherItemIconMode.Setting:
@@ -117,11 +156,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         {
             ClockTimer.Stop();
 
-            var currentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+            CurrentTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
 
             RaisePropertyChanged(nameof(DisplayText));
 
-            ClockTimer.Interval = TimeSpan.FromMilliseconds(TimeSpan.FromSeconds(1).TotalMilliseconds - currentTime.Millisecond);
+            ClockTimer.Interval = TimeSpan.FromMilliseconds(TimeSpan.FromSeconds(1).TotalMilliseconds - CurrentTime.Millisecond);
             ClockTimer.Start();
         }
 

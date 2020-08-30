@@ -28,10 +28,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        //void OnPropertyChanged(string propertyName)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
 
         #endregion
 
@@ -55,7 +55,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region ILauncherItemExtension
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged
+        {
+            add => FunctionUnit.PropertyChanged += value;
+            remove => FunctionUnit.PropertyChanged -= value;
+        }
 
         public bool CustomDisplayText => FunctionUnit.CustomDisplayText;
 
@@ -65,10 +69,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool SupportedPreferences => FunctionUnit.SupportedPreferences;
 
-        public void Display(LauncherItemDisplayMode mode)
+        public void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible)
         {
-            FunctionUnit.Display(mode);
-            FunctionUnit.PropertyChanged += FunctionUnit_PropertyChanged;
+            FunctionUnit.ChangeDisplay(iconMode, isVisible);
+            //if(isVisible) {
+            //    FunctionUnit.PropertyChanged += FunctionUnit_PropertyChanged;
+            //} else {
+            //    FunctionUnit.PropertyChanged -= FunctionUnit_PropertyChanged;
+            //}
         }
 
         public ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
@@ -94,9 +102,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        private void FunctionUnit_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(e.PropertyName);
-        }
+        //private void FunctionUnit_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    OnPropertyChanged(e.PropertyName);
+        //}
     }
 }

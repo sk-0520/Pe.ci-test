@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             result.IsEnabled = LauncherItemAddonFinder.Exists(pluginId);
             if(result.IsEnabled) {
                 result.Extension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
-                result.Extension.Display(Bridge.Plugin.Addon.LauncherItemDisplayMode.LauncherItem);
+                result.Extension.ChangeDisplay(Bridge.Plugin.Addon.LauncherItemIconMode.Toolbar, true);
             }
 
             return result;
