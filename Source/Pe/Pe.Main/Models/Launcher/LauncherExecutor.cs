@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        ILauncherExecuteResult ExecuteFilePath(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
 
             var result = new LauncherFileExecuteResult() {
-                Kind = kind,
+                Kind = LauncherItemKind.File,
                 Data = process,
             };
             RedoExecutor? redoExecutor = null;
@@ -208,11 +208,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 throw new ArgumentNullException(nameof(environmentVariableItems));
             }
 
-            return ExecuteFilePath(kind, pathParameter, customParameter, environmentVariableItems, redoData, screen);
+            switch(kind) {
+                case LauncherItemKind.File:
+                    return ExecuteFilePath(pathParameter, customParameter, environmentVariableItems, redoData, screen);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public ILauncherExecuteResult OpenParentDirectory(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter)
         {
+            Debug.Assert(kind == LauncherItemKind.File);
+
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
             }
@@ -236,6 +244,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         public ILauncherExecuteResult OpenWorkingDirectory(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter)
         {
+            Debug.Assert(kind == LauncherItemKind.File);
+
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
             }
