@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     internal abstract class CommonAddonProxyBase<TFunctionUnit>: DisposerBase
         where TFunctionUnit : notnull
     {
-        protected CommonAddonProxyBase( PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected CommonAddonProxyBase(PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             UserAgentFactory = userAgentFactory;
             PlatformTheme = platformTheme;
             ImageLoader = imageLoader;
+            MediaConverter = mediaConverter;
             DispatcherWrapper = dispatcherWrapper;
         }
 
@@ -40,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected IHttpUserAgentFactory UserAgentFactory { get; }
         protected IPlatformTheme PlatformTheme { get; }
         protected IImageLoader ImageLoader { get; }
+        protected IMediaConverter MediaConverter { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         /// <see cref="AddonParameter"/> を普通に作成する。
         /// </summary>
         /// <returns></returns>
-        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
+        protected virtual AddonParameter CreateParameter(IPlugin plugin) => new AddonParameter(new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, MediaConverter, DispatcherWrapper, LoggerFactory);
 
         protected abstract TFunctionUnit BuildFunctionUnit(IAddon loadedAddon);
 
@@ -77,8 +79,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        protected AddonProxyBase(IAddon addon, PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginContextFactory, userAgentFactory, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
+        protected AddonProxyBase(IAddon addon, PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginContextFactory, userAgentFactory, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         {
             Addon = addon;
         }
@@ -95,18 +97,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             get
             {
                 lock(this._functionUnitLocker)
-                if(this._functionUnit == null) {
-                    Debug.Assert(Addon.IsSupported(AddonKind));
+                    if(this._functionUnit == null) {
+                        Debug.Assert(Addon.IsSupported(AddonKind));
 
-                    if(!Addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
-                        using(var reader = PluginContextFactory.BarrierRead()) {
-                            using var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
-                            Addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
+                        if(!Addon.IsLoaded(Bridge.Plugin.PluginKind.Addon)) {
+                            using(var reader = PluginContextFactory.BarrierRead()) {
+                                using var loadContext = PluginContextFactory.CreateLoadContex(Addon.PluginInformations, reader);
+                                Addon.Load(Bridge.Plugin.PluginKind.Addon, loadContext);
+                            }
                         }
-                    }
 
-                    this._functionUnit = BuildFunctionUnit(Addon);
-                }
+                        this._functionUnit = BuildFunctionUnit(Addon);
+                    }
 
                 return this._functionUnit;
             }
@@ -132,8 +134,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        protected AddonsProxyBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginContextFactory, userAgentFactory, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
+        protected AddonsProxyBase(IReadOnlyList<IAddon> addons, PluginContextFactory pluginContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginContextFactory, userAgentFactory, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         {
             Addons = addons;
         }

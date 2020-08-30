@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     internal class LauncherItemAddonProxy: AddonProxyBase<ILauncherItemExtension>, ILauncherItemExtension, ILauncherItemId
     {
-        public LauncherItemAddonProxy(Guid launcherItemId, IAddon addon, PluginContextFactory pluginContextFactory, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(addon, pluginContextFactory, userAgentFactory, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
+        public LauncherItemAddonProxy(Guid launcherItemId, IAddon addon, PluginContextFactory pluginContextFactory, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IHttpUserAgentFactory userAgentFactory, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(addon, pluginContextFactory, userAgentFactory, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             LauncherItemAddonContextFactory = launcherItemAddonContextFactory;
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         protected override AddonParameter CreateParameter(IPlugin plugin)
         {
             var worker = LauncherItemAddonContextFactory.CreateWorker(plugin.PluginInformations, LauncherItemId);
-            return new LauncherItemExtensionCreateParameter(LauncherItemId, worker, new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
+            return new LauncherItemExtensionCreateParameter(LauncherItemId, worker, new SkeletonImplements(), plugin.PluginInformations, UserAgentFactory, PlatformTheme, ImageLoader, MediaConverter, DispatcherWrapper, LoggerFactory);
         }
 
         protected override ILauncherItemExtension BuildFunctionUnit(IAddon loadedAddon)

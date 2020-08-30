@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin
 
         IPlatformTheme PlatformTheme { get; }
         IImageLoader ImageLoader { get; }
+        IMediaConverter MediaConverter { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         ILoggerFactory LoggerFactory { get; }
 
