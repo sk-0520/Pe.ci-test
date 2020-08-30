@@ -14,19 +14,6 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
     {
         #region property
 
-        /// <summary>
-        /// ユーザー操作により閉じられようとしている。
-        /// </summary>
-        event EventHandler<CancelEventHandler> UserClosing;
-        /// <summary>
-        /// ウィンドウが閉じた。
-        /// </summary>
-        event EventHandler ClosedWindow;
-
-        #endregion
-
-        #region property
-
         #endregion
 
         #region function
@@ -36,24 +23,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <para>登録されたウィンドウは Pe 管理下でそれっぽく制御される。</para>
         /// </summary>
         /// <param name="window"></param>
+        /// <param name="userClosing">ユーザー操作により閉じられようとしている。真: 閉じてOK, 偽: 閉じない。</param>
+        /// <param name="closedWindow">ウィンドウが閉じた。</param>
         /// <returns>真: 登録成功。</returns>
-        bool RegisterWindow(Window window);
-
-        /// <summary>
-        /// ランチャーアイテムアドオンのウィンドウを Pe 管理下から外す。
-        /// <para>よほどのことがない限り使用する必要なし。</para>
-        /// <para>※多分これの実装は後回し。</para>
-        /// </summary>
-        /// <param name="window"></param>
-        /// <returns>真: 解除成功。</returns>
-        void UnregisterWindow(Window window);
-
-        /// <summary>
-        /// ランチャーアイテムアドオンのウィンドウが登録されているか。
-        /// </summary>
-        /// <param name="window"></param>
-        /// <returns>真: 登録済み。</returns>
-        bool IsRegisteredWindow(Window window);
+        bool RegisterWindow(Window window, Func<bool> userClosing, Action closedWindow);
 
         #endregion
     }

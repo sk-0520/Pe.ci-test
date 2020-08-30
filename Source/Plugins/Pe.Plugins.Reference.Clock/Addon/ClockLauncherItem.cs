@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -152,7 +153,15 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)
         {
-            throw new NotImplementedException();
+            var view = new Window() {
+
+            };
+
+            launcherItemExtensionExecuteParameter.ViewSupporter.RegisterWindow(
+                view,
+                () => true,
+                () => { }
+            );
         }
 
         public override ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)
