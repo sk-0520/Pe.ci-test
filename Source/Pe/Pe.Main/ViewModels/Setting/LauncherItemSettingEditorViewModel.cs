@@ -22,10 +22,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             Editor = model;
         }
 
-        internal LauncherItemSettingEditorViewModel(LauncherItemSettingEditorElement model, bool IsCloned, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, IsCloned, dispatcherWrapper, loggerFactory)
+        internal LauncherItemSettingEditorViewModel(LauncherItemSettingEditorViewModel source)
+            : base(source)
         {
-            Editor = model;
+            Editor = source.Editor;
         }
 
         #region property
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public LauncherItemSettingEditorViewModel Clone()
         {
-            return new LauncherItemSettingEditorViewModel(Editor, true, DispatcherWrapper, LoggerFactory);
+            return new LauncherItemSettingEditorViewModel(this);
         }
 
         internal void LazyLoad()

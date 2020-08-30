@@ -23,15 +23,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         #endregion
 
         public LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : this(model, false, dispatcherWrapper, loggerFactory)
-        {
-            Debug.Assert(!IsCloned);
-        }
-
-        internal LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorElement model, bool isCloned, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
-            IsCloned = isCloned;
+            IsCloned = false;
 
             DispatcherWrapper = dispatcherWrapper;
 
@@ -82,6 +76,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
                 }
                 item.PropertyChanged += Item_PropertyChanged;
             }
+        }
+
+        internal LauncherItemCustomizeEditorViewModel(LauncherItemCustomizeEditorViewModel source)
+            : base(source.Model, source.LoggerFactory)
+        {
+            IsCloned = true;
+
+            DispatcherWrapper = source.DispatcherWrapper;
+            Common = source.Common;
+            Tag = source.Tag;
+            Comment = source.Comment;
+            CustomizeItems = source.CustomizeItems;
         }
 
         #region property
