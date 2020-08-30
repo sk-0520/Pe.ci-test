@@ -2022,4 +2022,7 @@
   <data name="String_Setting_LauncherItems_Add_File_A" xml:space="preserve">
     <value>ファイルを追加</value>
   </data>
+  <data name="String_LauncherItemCustomizeControl_UnloadedPlugin_Header" xml:space="preserve">
+    <value>読み込めないプラグイン</value>
+  </data>
 </root>

@@ -227,8 +227,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         internal string GetLauncherItemPluginHeader()
         {
-            Debug.Assert(LauncherItemSupportedPreferences);
+            if(LauncherItemPlugin == null) {
+                return Properties.Resources.String_LauncherItemCustomizeControl_UnloadedPlugin_Header;
+            }
+
             Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemSupportedPreferences);
             Debug.Assert(LauncherItemPreferences != null);
 
             //TODO: なんかこう、ヘッダ名のために仰々しいなぁ XAML でプラグインID薄くしたいし。。。
@@ -403,8 +407,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
                     break;
 
                 case LauncherItemKind.Addon: {
-                        Debug.Assert(LauncherItemSupportedPreferences);
+                        if(LauncherItemPlugin == null) {
+                            Logger.LogWarning("読み込めてないプラグインはプラグイン設定箇所スキップ");
+                            break;
+                        }
                         Debug.Assert(LauncherItemPlugin != null);
+                        Debug.Assert(LauncherItemSupportedPreferences);
                         Debug.Assert(LauncherItemExtension != null);
                         Debug.Assert(LauncherItemPreferences != null);
 
