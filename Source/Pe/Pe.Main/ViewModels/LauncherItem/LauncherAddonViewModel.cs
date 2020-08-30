@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
@@ -9,6 +10,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using Microsoft.Extensions.Logging;
+using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -25,6 +27,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #endregion
 
         #region command
+
+        public ICommand ExecuteSimpleCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                ExecuteMainAsync().ConfigureAwait(false);
+            },
+            () => !NowLoading
+        ));
 
         #endregion
 

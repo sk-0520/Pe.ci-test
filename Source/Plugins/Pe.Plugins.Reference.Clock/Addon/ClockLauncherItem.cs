@@ -75,8 +75,6 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             }
         }
 
-        ClockLauncherItemViewModel? ClockLauncherItemViewModel { get; set; }
-        ClockLauncherItemControl? ClockLauncherItemControl { get; set; }
 
         #endregion
 
@@ -127,16 +125,10 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         {
             switch(iconMode) {
                 case LauncherItemIconMode.Toolbar: {
-                        if(ClockLauncherItemViewModel == null) {
-                            Debug.Assert(ClockLauncherItemControl == null);
-
-                            ClockLauncherItemViewModel = new ClockLauncherItemViewModel(this, SkeletonImplements, PlatformTheme, MediaConverter, DispatcherWrapper, LoggerFactory);
-                            ClockLauncherItemControl = new ClockLauncherItemControl() {
-                                DataContext = ClockLauncherItemViewModel,
-                            };
-                        }
-                        Debug.Assert(ClockLauncherItemControl != null);
-                        return ClockLauncherItemControl;
+                        var viewModel = new ClockLauncherItemViewModel(this, SkeletonImplements, PlatformTheme, MediaConverter, DispatcherWrapper, LoggerFactory);
+                        return new ClockLauncherItemControl() {
+                            DataContext = viewModel,
+                        };
                     }
 
                 case LauncherItemIconMode.Tooltip: {

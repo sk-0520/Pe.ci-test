@@ -74,8 +74,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        public object CreateView(object iconSource, bool useCache, IDispatcherWrapper dispatcherWrapper)
+        public object CreateView(object? iconSource, bool useCache, IDispatcherWrapper dispatcherWrapper)
         {
+            if(iconSource == null) {
+                // アイコンがないパターン
+                // 読み込み失敗(要調査: IconImageLoaderBase は多分出来上がってる)・アドオンがない
+                return null!;
+            }
+
             switch(iconSource) {
                 case IconImageLoaderBase iconImageLoader:
                     return new IconViewerViewModel(iconImageLoader, dispatcherWrapper, LoggerFactory) {
