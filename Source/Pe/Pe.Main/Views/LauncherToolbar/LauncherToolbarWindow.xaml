@@ -196,6 +196,9 @@
           <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
           </i:EventTrigger>
+          <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UninitializeCommand}" />
+          </i:EventTrigger>
         </i:Interaction.Triggers>
         <app_main_views_lt:LauncherContentControl />
       </Button>
@@ -224,6 +227,9 @@
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+          </i:EventTrigger>
+          <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UninitializeCommand}" />
           </i:EventTrigger>
         </i:Interaction.Triggers>
         <app_main_views_lt:LauncherContentControl />

@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected override Task InitializeImplAsync()
         {
-            Detail = Model.LoadAddonDetail();
+            Detail = Model.LoadAddonDetail(this);
             if(Detail.IsEnabled) {
                 if(Detail.Extension == null) {
                     throw new InvalidOperationException(nameof(Detail.Extension));
@@ -71,6 +71,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 }
 
             }
+            return Task.CompletedTask;
+        }
+
+        protected override Task UninitializeImplAsync()
+        {
+            if(Detail?.Extension != null) {
+                Detail.Extension.ChangeDisplay(Bridge.Plugin.Addon.LauncherItemIconMode.Toolbar, false, this);
+            }
+
             return Task.CompletedTask;
         }
 

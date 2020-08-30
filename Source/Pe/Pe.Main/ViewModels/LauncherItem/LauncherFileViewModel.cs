@@ -255,6 +255,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             });
         }
 
+        protected override Task UninitializeImplAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         protected override object GetIcon(IconKind iconKind)
         {
             var factory = Model.CreateLauncherIconFactory();

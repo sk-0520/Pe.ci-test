@@ -95,12 +95,19 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override bool SupportedPreferences => true;
 
-        public override void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible)
+        public override void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible, object callerObject)
         {
             switch(iconMode) {
                 case LauncherItemIconMode.Toolbar:
                     if(isVisible) {
-                        ClockTimer.Start();
+                        CallerObjects.Add(callerObject);
+                    } else {
+                        CallerObjects.Remove(callerObject);
+                    }
+                    if(CallerObjects.Count != 0) {
+                        if(!ClockTimer.IsEnabled) {
+                            ClockTimer.Start();
+                        }
                     } else {
                         ClockTimer.Stop();
                     }

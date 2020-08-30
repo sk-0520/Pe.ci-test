@@ -117,6 +117,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             }
         ));
 
+        public ICommand UninitializeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                UninitializeAsync();
+            }
+        ));
+
         public ICommand ExecuteMainCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ExecuteMainAsync();
@@ -135,6 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #region function
 
         protected abstract Task InitializeImplAsync();
+        protected abstract Task UninitializeImplAsync();
 
         Task InitializeAsync()
         {
@@ -142,6 +149,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return InitializeImplAsync().ContinueWith(_ => {
                 NowLoading = false;
             });
+        }
+
+        Task UninitializeAsync()
+        {
+            return UninitializeImplAsync();
         }
 
         protected abstract Task ExecuteMainImplAsync();

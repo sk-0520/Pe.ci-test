@@ -69,14 +69,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool SupportedPreferences => FunctionUnit.SupportedPreferences;
 
-        public void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible)
+        public void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible, object callerObject)
         {
-            FunctionUnit.ChangeDisplay(iconMode, isVisible);
-            //if(isVisible) {
-            //    FunctionUnit.PropertyChanged += FunctionUnit_PropertyChanged;
-            //} else {
-            //    FunctionUnit.PropertyChanged -= FunctionUnit_PropertyChanged;
-            //}
+            FunctionUnit.ChangeDisplay(iconMode, isVisible, callerObject);
         }
 
         public ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext)

@@ -115,7 +115,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        internal LauncherAddonDetailData LoadAddonDetail()
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="callerObject">このアイテムを生成するにあたり呼び出し元となったViewModelオブジェクト。これで何とか一意制約をををををを。</param>
+        /// <returns></returns>
+        internal LauncherAddonDetailData LoadAddonDetail(object callerObject)
         {
             ThrowIfDisposed();
 
@@ -129,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             result.IsEnabled = LauncherItemAddonFinder.Exists(pluginId);
             if(result.IsEnabled) {
                 result.Extension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
-                result.Extension.ChangeDisplay(Bridge.Plugin.Addon.LauncherItemIconMode.Toolbar, true);
+                result.Extension.ChangeDisplay(Bridge.Plugin.Addon.LauncherItemIconMode.Toolbar, true, callerObject);
             }
 
             return result;

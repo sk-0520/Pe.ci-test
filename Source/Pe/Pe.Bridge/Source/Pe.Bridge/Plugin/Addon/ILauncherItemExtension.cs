@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <summary>
         /// ランチャーアイテムとして表示(or 非表示)された的な。
         /// </summary>
-        void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible);
+        void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible, object callerObject);
 
         /// <summary>
         /// アイコン取得。

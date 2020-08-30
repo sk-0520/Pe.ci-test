@@ -45,6 +45,8 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         protected ILauncherItemAddonContextWorker ContextWorker { get; }
         protected IPluginInformations PluginInformations { get; }
 
+        protected ISet<object> CallerObjects { get; } = new HashSet<object>();
+
         #endregion
 
         #region function
@@ -76,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         public abstract bool CustomLauncherIcon { get; }
         public abstract bool SupportedPreferences { get; }
 
-        public abstract void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible);
+        public abstract void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible, object callerObject);
         public abstract object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale);
         public abstract void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);
