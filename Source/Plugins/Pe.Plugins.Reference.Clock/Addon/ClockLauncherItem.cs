@@ -53,11 +53,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             get
             {
                 if(this._setting == null) {
-                    ContextWorker.RunLauncherItemAddon(c => {
-                        if(!c.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out this._setting)) {
-                            this._setting = new ClockLauncherItemSetting();
-                        }
-                    });
+                    ReloadSetting();
                     Debug.Assert(this._setting != null);
                 }
 
@@ -81,6 +77,16 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         #region function
 
+        void ReloadSetting()
+        {
+            ContextWorker.RunLauncherItemAddon(c => {
+                if(!c.Storage.Persistent.Normal.TryGet<ClockLauncherItemSetting>(LauncherItemId, string.Empty, out this._setting)) {
+                    this._setting = new ClockLauncherItemSetting();
+                }
+            });
+
+            RaisePropertyChanged(nameof(Setting));
+        }
 
         #endregion
 
@@ -105,6 +111,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
                     }
                     if(CallerObjects.Count != 0) {
                         if(!ClockTimer.IsEnabled) {
+                            ReloadSetting();
                             ClockTimer.Start();
                         }
                     } else {
