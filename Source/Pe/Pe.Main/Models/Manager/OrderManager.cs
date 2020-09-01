@@ -47,6 +47,8 @@ using ContentTypeTextNet.Pe.Main.Views.NotifyLog;
 using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -103,6 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen);
 
+        LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId);
+
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
         WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element);
@@ -111,6 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
         WindowItem CreateNotifyLogWindow(NotifyLogElement element);
         WindowItem CreateSettingWindow(SettingContainerElement element);
+
 
         #endregion
     }
@@ -237,6 +242,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
+            public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId)
+            {
+                var element = DiContainer.Build<LauncherItemExtensionElement>(pluginInformations, launcherItemId);
+                element.Initialize();
+                return element;
+            }
 
             public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {

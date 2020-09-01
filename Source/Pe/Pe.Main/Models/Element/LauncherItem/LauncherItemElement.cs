@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             var addon = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
             var plugin = LauncherItemAddonFinder.GetPlugin(pluginId);
             var commandExecuteParameter = new CommandExecuteParameter(screen, false);
-            var launcherItemAddonViewSupporter = LauncherItemAddonViewSupporterCollection.Create(LauncherItemId);
+            var launcherItemAddonViewSupporter = LauncherItemAddonViewSupporterCollection.Create(plugin.PluginInformations, LauncherItemId);
             var launcherItemExtensionExecuteParameter = LauncherItemAddonContextFactory.CreateExtensionExecuteParameter(plugin.PluginInformations, LauncherItemId, launcherItemAddonViewSupporter);
             DispatcherWrapper.Begin(() => {
                 using var databaseCommandsPack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformations));

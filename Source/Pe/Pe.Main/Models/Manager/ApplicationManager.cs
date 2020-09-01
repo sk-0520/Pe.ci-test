@@ -67,6 +67,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -171,6 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
+        ObservableCollection<LauncherItemExtensionElement> LauncherItemExtensions { get; } = new ObservableCollection<LauncherItemExtensionElement>();
         CommandElement? CommandElement { get; set; }
         NotifyLogElement NotifyLogElement { get; }
         //FeedbackElement? FeedbackElement { get; set; }
@@ -1991,6 +1993,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var element = OrderManager.CreateStandardInputOutputElement(caption, process, screen);
             StandardInputOutputs.Add(element);
+            return element;
+        }
+
+        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformations, Guid)"/>
+        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId)
+        {
+            var element = OrderManager.CreateLauncherItemExtensionElement(pluginInformations, launcherItemId);
+            LauncherItemExtensions.Add(element);
             return element;
         }
 

@@ -90,6 +90,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// プラグイン ウィジェット。
         /// </summary>
         Widget,
+        /// <summary>
+        /// プラグイン ランチャーアイテム拡張。
+        /// </summary>
+        LauncherItemExtension
     }
 
     public class WindowItem
