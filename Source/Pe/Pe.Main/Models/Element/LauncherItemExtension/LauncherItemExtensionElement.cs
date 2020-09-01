@@ -28,6 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IPluginInformations PluginInformations { get; }
         ISet<LauncherItemAddonViewInformation> Informations { get; } = new HashSet<LauncherItemAddonViewInformation>();
 
+
         #endregion
 
         #region function
@@ -36,6 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         {
             Informations.Add(launcherItemAddonViewInformation);
         }
+
+        public IEnumerable<LauncherItemAddonViewInformation> GetInformations() => Informations;
 
         public bool ReceiveViewUserClosing(Window window)
         {

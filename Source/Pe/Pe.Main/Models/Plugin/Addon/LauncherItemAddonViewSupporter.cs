@@ -44,7 +44,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public bool Exists(Guid launcherItemId)
         {
-            return LauncherItemAddonViewSupporters.Any(i => i.LauncherItemId == launcherItemId);
+            var target = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+            if(target == null) {
+                return false;
+            }
+
+            if(target.Element == null) {
+                return false;
+            }
+
+            return target.Element.GetInformations().Any();
         }
 
         /// <summary>
@@ -66,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             LauncherItemAddonViewSupporters.Add(result);
             return result;
         }
+
 
         #endregion
     }
@@ -119,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         IUserTracker UserTracker { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
-        LauncherItemExtensionElement? Element { get; set; }
+        public LauncherItemExtensionElement? Element { get; private set; }
 
         #endregion
 
