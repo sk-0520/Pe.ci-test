@@ -84,10 +84,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// アイテムの実行。
         /// <para>ウィンドウを表示する場合はこの処理で行うこと(ユーザー操作を起点にする必要がある)。</para>
         /// </summary>
+        /// <param name="argument">外部から渡された引数。null の場合は渡されていない。使用有無はアドオン側に任される。</param>
         /// <param name="commandExecuteParameter">実行パラメータ。</param>
         /// <param name="launcherItemExtensionExecuteParameter">ランチャーアイテムパラメータ。</param>
         /// <param name="launcherItemAddonContext"></param>
-        void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
+        void Execute(string? argument, ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
 
         /// <summary>
         /// 設定処理。

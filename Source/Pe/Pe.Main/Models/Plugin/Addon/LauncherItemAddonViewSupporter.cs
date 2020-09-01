@@ -47,6 +47,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return LauncherItemAddonViewSupporters.Any(i => i.LauncherItemId == launcherItemId);
         }
 
+        /// <summary>
+        /// 対象のランチャーアイテムアドオンを活性化。
+        /// </summary>
+        /// <param name="launcherItemId"></param>
+        public void Foreground(Guid launcherItemId)
+        {
+            // TODO: ウィンドウ位置移動
+        }
+
         public ILauncherItemAddonViewSupporter Create(IPluginInformations pluginInformations, Guid launcherItemId)
         {
             if(Exists(launcherItemId)) {

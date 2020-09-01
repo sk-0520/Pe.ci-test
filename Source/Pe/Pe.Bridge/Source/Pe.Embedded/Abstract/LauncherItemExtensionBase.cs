@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         public abstract void ChangeDisplay(LauncherItemIconMode iconMode, bool isVisible, object callerObject);
         public abstract object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale);
-        public abstract void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
+        public abstract void Execute(string? argument, ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext);
         public abstract ILauncherItemPreferences CreatePreferences(ILauncherItemAddonContext launcherItemAddonContext);
 
         #endregion

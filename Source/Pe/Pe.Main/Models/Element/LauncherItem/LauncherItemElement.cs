@@ -197,11 +197,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        LauncherAddonExecuteResult ExecuteAddon(IScreen screen)
+        LauncherAddonExecuteResult ExecuteAddon(string? customArgument, IScreen screen)
         {
             if(LauncherItemAddonViewSupporterCollection.Exists(LauncherItemId)) {
                 Logger.LogInformation("ランチャーアイテムはすでに起動している: {0}", LauncherItemId);
-                // TODO: ウィンドウ位置移動
+                LauncherItemAddonViewSupporterCollection.Foreground(LauncherItemId);
                 return new LauncherAddonExecuteResult() {
                     Kind = LauncherItemKind.Addon,
                     Data = LauncherAddonExecuteKind.Duplicate,
@@ -222,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             DispatcherWrapper.Begin(() => {
                 using var databaseCommandsPack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformations));
                 using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseCommandsPack, false)) {
-                    addon.Execute(commandExecuteParameter, launcherItemExtensionExecuteParameter, context);
+                    addon.Execute(customArgument, commandExecuteParameter, launcherItemExtensionExecuteParameter, context);
                 }
             });
 
@@ -233,51 +233,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             };
         }
 
-        public ILauncherExecuteResult Execute(IScreen screen)
-        {
-            ThrowIfDisposed();
-
-            //#if DEBUG
-            //            var id = NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Topmost, "@テスト", new NotifyLogContent(Name)));
-            //            Task.Run(() => {
-            //                Thread.Sleep(TimeSpan.FromSeconds(5));
-            //                NotifyManager.ReplaceLog(id, "@うんこー");
-            //                Thread.Sleep(TimeSpan.FromSeconds(5));
-            //                NotifyManager.ClearLog (id);
-            //            });
-            //            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Normal, "@ランチャーアイテム起動", new NotifyLogContent(Name)));
-            //            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Command, "@Command", new NotifyLogContent(Name), () => { Logger.LogInformation("command"); }));
-            //            NotifyManager.AppendLog(new NotifyMessage(NotifyLogKind.Undo, "@Undo", new NotifyLogContent(Name), () => { Logger.LogInformation("undo"); }));
-            //#endif
-
-            try {
-                ILauncherExecuteResult result;
-                switch(Kind) {
-                    case LauncherItemKind.File:
-                        result = ExecuteFile(null, screen);
-                        break;
-
-                    case LauncherItemKind.Addon:
-                        result = ExecuteAddon(screen);
-                        break;
-
-                    default:
-                        throw new NotImplementedException();
-                }
-
-                Debug.Assert(result != null);
-
-                IncrementExecuteCount();
-
-                return result;
-
-            } catch(Exception ex) {
-                Logger.LogError(ex, ex.Message);
-                return LauncherFileExecuteResult.Error(ex);
-            }
-        }
-
-        public ILauncherExecuteResult DirectExecute(string argument, IScreen screen)
+        private ILauncherExecuteResult ExecuteCore(string? argument, IScreen screen)
         {
             ThrowIfDisposed();
 
@@ -288,6 +244,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                         result = ExecuteFile(argument, screen);
                         break;
 
+                    case LauncherItemKind.Addon:
+                        result = ExecuteAddon(argument, screen);
+                        break;
+
                     default:
                         throw new NotImplementedException();
                 }
@@ -300,8 +260,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                return LauncherFileExecuteResult.Error(ex);
+                return new LauncherExecuteErrorResult(Kind, ex);
             }
+        }
+
+        public ILauncherExecuteResult Execute(IScreen screen)
+        {
+            ThrowIfDisposed();
+
+            return ExecuteCore(null, screen);
+        }
+
+        public ILauncherExecuteResult DirectExecute(string argument, IScreen screen)
+        {
+            ThrowIfDisposed();
+
+            if(argument == null) {
+                return new LauncherExecuteErrorResult(Kind, new ArgumentNullException(nameof(argument)));
+            }
+
+            return ExecuteCore(argument, screen);
         }
 
         private void IncrementExecuteCount()

@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             }
         }
 
-        public override void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)
+        public override void Execute(string? argument, ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)
         {
             var view = new Window() {
 
@@ -167,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
             launcherItemExtensionExecuteParameter.ViewSupporter.RegisterWindow(
                 view,
                 () => true,
-                () => { }
+                null
             );
         }
 

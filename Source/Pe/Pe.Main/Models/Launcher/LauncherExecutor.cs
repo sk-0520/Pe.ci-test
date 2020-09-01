@@ -28,6 +28,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #endregion
     }
 
+    internal sealed class LauncherExecuteErrorResult: ILauncherExecuteResult
+    {
+        public LauncherExecuteErrorResult(LauncherItemKind launcherItemKind, Exception exception)
+        {
+            Kind = launcherItemKind;
+            FailureType = exception.GetType();
+            FailureValue = exception;
+        }
+
+        #region ILauncherExecuteResult
+
+        public object? Data { get; set; }
+
+        public LauncherItemKind Kind { get; }
+
+        public bool Success => false;
+
+        public Type FailureType { get; }
+
+        public Exception FailureValue { get; }
+
+        #endregion
+    }
+
     public sealed class LauncherFileExecuteResult: ILauncherExecuteResult
     {
         #region function

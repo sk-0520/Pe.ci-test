@@ -79,9 +79,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
             return FunctionUnit.CreatePreferences(launcherItemAddonContext);
         }
 
-        public void Execute(ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)
+        public void Execute(string? argument, ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)
         {
-            FunctionUnit.Execute(commandExecuteParameter, launcherItemExtensionExecuteParameter, launcherItemAddonContext);
+            FunctionUnit.Execute(argument, commandExecuteParameter, launcherItemExtensionExecuteParameter, launcherItemAddonContext);
         }
 
         public object GetIcon(LauncherItemIconMode iconMode, in IconScale iconScale)
