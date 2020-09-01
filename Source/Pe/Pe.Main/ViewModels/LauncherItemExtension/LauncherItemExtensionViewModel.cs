@@ -25,13 +25,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension
         { }
 
         public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
-        { }
+        {
+            e.Cancel = !Model.ReceiveViewUserClosing(window);
+        }
 
         public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
         public void ReceiveViewClosed(Window window, bool isUserOperation)
-        { }
+        {
+            Model.ReceiveViewClosed(window, isUserOperation);
+        }
 
         #endregion
 

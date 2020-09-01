@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
@@ -32,6 +35,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         public void Add(LauncherItemAddonViewInformation launcherItemAddonViewInformation)
         {
             Informations.Add(launcherItemAddonViewInformation);
+        }
+
+        public bool ReceiveViewUserClosing(Window window)
+        {
+            var information = Informations.FirstOrDefault(i => i.WindowItem.Window == window);
+            if(information == null) {
+                Logger.LogWarning("対象ウィンドウは未登録: {0}", HandleUtility.GetWindowHandle(window));
+                return true;
+            }
+
+            return information.UserClosing();
+        }
+
+        public void ReceiveViewClosed(Window window, bool isUserOperation)
+        {
+            var information = Informations.FirstOrDefault(i => i.WindowItem.Window == window);
+            if(information == null) {
+                Logger.LogWarning("対象ウィンドウは未登録: {0}", HandleUtility.GetWindowHandle(window));
+                return;
+            }
+
+            information.ClosedWindow();
+            Informations.Remove(information);
         }
 
 
