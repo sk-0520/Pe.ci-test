@@ -109,12 +109,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public virtual void ReceiveViewLoaded(Window window)
         { }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = NowImporting;
         }
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
         /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>

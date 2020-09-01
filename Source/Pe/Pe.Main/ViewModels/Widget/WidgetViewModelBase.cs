@@ -42,12 +42,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Widget
         public virtual void ReceiveViewLoaded(Window window)
         { }
 
-        public virtual void ReceiveViewUserClosing(CancelEventArgs e)
+        public virtual void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
         }
 
-        public virtual void ReceiveViewClosing(CancelEventArgs e)
+        public virtual void ReceiveViewClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();
         }

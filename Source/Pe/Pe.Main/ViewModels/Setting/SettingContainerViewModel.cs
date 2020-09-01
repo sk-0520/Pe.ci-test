@@ -144,10 +144,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             SelectedEditor.Load();
         }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         { }
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
         public void ReceiveViewClosed(Window window, bool isUserOperation)

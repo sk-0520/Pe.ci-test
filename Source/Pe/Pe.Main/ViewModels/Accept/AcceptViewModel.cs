@@ -118,11 +118,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         public void ReceiveViewLoaded(Window window)
         { }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         { }
 
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
         public void ReceiveViewClosed(Window window, bool isUserOperation)
