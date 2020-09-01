@@ -10,16 +10,20 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using Microsoft.Extensions.Logging;
@@ -34,31 +38,38 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         #endregion
 
-        public LauncherItemElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherItemElement(Guid launcherItemId, LauncherItemAddonContextFactory launcherItemAddonContextFactory, ILauncherItemAddonFinder launcherItemAddonFinder, LauncherItemAddonViewSupporterCollection launcherItemAddonViewSupporterCollection, IWindowManager windowManager, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
 
+            LauncherItemAddonContextFactory = launcherItemAddonContextFactory;
             LauncherItemAddonFinder = launcherItemAddonFinder;
+            LauncherItemAddonViewSupporterCollection = launcherItemAddonViewSupporterCollection;
+
             WindowManager = windowManager;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
+            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
             DispatcherWrapper = dispatcherWrapper;
         }
 
         #region property
 
+        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
         ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
+        LauncherItemAddonViewSupporterCollection LauncherItemAddonViewSupporterCollection { get; }
         IWindowManager WindowManager { get; }
         IOrderManager OrderManager { get; }
         IClipboardManager ClipboardManager { get; }
         INotifyManager NotifyManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
         EnvironmentPathExecuteFileCache EnvironmentPathExecuteFileCache { get; } = EnvironmentPathExecuteFileCache.Instance;
@@ -186,6 +197,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
+        LauncherAddonExecuteResult ExecuteAddon(IScreen screen)
+        {
+            if(LauncherItemAddonViewSupporterCollection.Exists(LauncherItemId)) {
+                Logger.LogInformation("ランチャーアイテムはすでに起動している: {0}", LauncherItemId);
+                // TODO: ウィンドウ位置移動
+                return new LauncherAddonExecuteResult() {
+                    Kind = LauncherItemKind.Addon,
+                    Data = LauncherAddonExecuteKind.Duplicate,
+                    Success = false,
+                };
+            }
+
+            var pluginId = MainDatabaseBarrier.ReadData(c => {
+                var launcherAddonsEntityDao = new LauncherAddonsEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                return launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
+            });
+
+            var addon = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
+            var plugin = LauncherItemAddonFinder.GetPlugin(pluginId);
+            var commandExecuteParameter = new CommandExecuteParameter(screen, false);
+            var launcherItemAddonViewSupporter = LauncherItemAddonViewSupporterCollection.Create(LauncherItemId);
+            var launcherItemExtensionExecuteParameter = LauncherItemAddonContextFactory.CreateExtensionExecuteParameter(plugin.PluginInformations, LauncherItemId, launcherItemAddonViewSupporter);
+            DispatcherWrapper.Begin(() => {
+                using var databaseCommandsPack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformations));
+                using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseCommandsPack, false)) {
+                    addon.Execute(commandExecuteParameter, launcherItemExtensionExecuteParameter, context);
+                }
+            });
+
+            return new LauncherAddonExecuteResult() {
+                Kind = LauncherItemKind.Addon,
+                Data = LauncherAddonExecuteKind.Execute,
+                Success = true,
+            };
+        }
+
         public ILauncherExecuteResult Execute(IScreen screen)
         {
             ThrowIfDisposed();
@@ -208,6 +255,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                 switch(Kind) {
                     case LauncherItemKind.File:
                         result = ExecuteFile(null, screen);
+                        break;
+
+                    case LauncherItemKind.Addon:
+                        result = ExecuteAddon(screen);
                         break;
 
                     default:

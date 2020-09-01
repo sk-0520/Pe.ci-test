@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return ConvertFromDto(dto);
         }
 
-        public bool InsertRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, DatabaseCommonStatus databaseCommonStatus)
+        public bool InsertRedoItem(Guid launcherItemId, IReadOnlyLauncherRedoData data, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);

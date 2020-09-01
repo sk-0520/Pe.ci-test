@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #endregion
     }
 
-    public class LauncherFileExecuteResult: ILauncherExecuteResult
+    public sealed class LauncherFileExecuteResult: ILauncherExecuteResult
     {
         #region function
 
@@ -60,6 +60,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #endregion
     }
 
+    public enum LauncherAddonExecuteKind
+    {
+        None,
+        /// <summary>
+        /// 実行。
+        /// </summary>
+        Execute,
+        /// <summary>
+        /// すでに実行中。
+        /// </summary>
+        Duplicate,
+    }
+    public sealed class LauncherAddonExecuteResult: ILauncherExecuteResult
+    {
+        #region function
+
+        public static LauncherFileExecuteResult Error(Exception ex)
+        {
+            return new LauncherFileExecuteResult() {
+                Success = false,
+                FailureType = ex.GetType(),
+                FailureValue = ex,
+            };
+        }
+
+        #endregion
+
+        #region ILauncherExecuteResult
+
+        public object? Data { get; set; }
+        public LauncherAddonExecuteKind ExecuteKind => Data != null ? (LauncherAddonExecuteKind)Data : LauncherAddonExecuteKind.None;
+
+        public LauncherItemKind Kind { get; set; }
+
+        public bool Success { get; set; }
+
+        public Type? FailureType { get; set; }
+
+        public Exception? FailureValue { get; set; }
+
+        #endregion
+    }
 
     public class LauncherExecutor
     {

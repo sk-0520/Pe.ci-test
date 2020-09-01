@@ -129,7 +129,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public LauncherItemAddonProxy GetLauncherItemAddon(Guid launcherItemId, Guid pluginId)
         {
             return LauncherItemAddonProxies.GetOrAdd(launcherItemId, (launcherItemId, pluginId) => {
-                var addon = LauncherItemSupportAddons.First(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+                var addon = LauncherItemSupportAddons.FirstOrDefault(i => i.PluginInformations.PluginIdentifiers.PluginId == pluginId);
+                if(addon == null) {
+                    throw new PluginNotFoundException($"{nameof(pluginId)}: {pluginId}");
+                }
                 var proxy = new LauncherItemAddonProxy(launcherItemId, addon, PluginContextFactory, LauncherItemAddonContextFactory, UserAgentFactory, PlatformTheme, ImageLoader, MediaConverter, DispatcherWrapper, LoggerFactory);
                 return proxy;
             }, pluginId);

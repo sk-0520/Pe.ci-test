@@ -103,6 +103,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
             ApplicationDiContainer.Register<IHttpUserAgentFactory, IHttpUserAgentFactory>(UserAgentManager);
 
+            ApplicationDiContainer.Register<LauncherItemAddonViewSupporterCollection, LauncherItemAddonViewSupporterCollection>(DiLifecycle.Singleton);
+
             var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
             PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);

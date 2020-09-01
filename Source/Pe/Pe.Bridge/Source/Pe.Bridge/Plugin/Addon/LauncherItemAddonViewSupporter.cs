@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
         /// <param name="userClosing">ユーザー操作により閉じられようとしている。真: 閉じてOK, 偽: 閉じない。</param>
         /// <param name="closedWindow">ウィンドウが閉じた。</param>
         /// <returns>真: 登録成功。</returns>
-        bool RegisterWindow(Window window, Func<bool> userClosing, Action closedWindow);
+        bool RegisterWindow(Window window, Func<bool>? userClosing, Action? closedWindow);
 
         #endregion
     }

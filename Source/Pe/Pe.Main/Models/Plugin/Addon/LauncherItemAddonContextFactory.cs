@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -13,11 +15,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     public class LauncherItemAddonContextFactory: PluginContextFactoryBase
     {
-        public LauncherItemAddonContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public LauncherItemAddonContextFactory(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(databaseBarrierPack, databaseLazyWriterPack, databaseStatementLoader, environmentParameters, userAgentManager, loggerFactory)
-        { }
+        {
+            PlatformTheme = platformTheme;
+            ImageLoader = imageLoader;
+            MediaConverter = mediaConverter;
+            DispatcherWrapper = dispatcherWrapper;
+        }
 
         #region property
+
+        IPlatformTheme PlatformTheme { get; }
+        IImageLoader ImageLoader { get; }
+        IMediaConverter MediaConverter { get; }
+        IDispatcherWrapper DispatcherWrapper { get; }
 
         #endregion
 
@@ -29,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         }
 
 
-        LauncherItemAddonFiles CreateLauncherItemAddonFile(IPluginInformations  pluginInformations)
+        LauncherItemAddonFiles CreateLauncherItemAddonFile(IPluginInformations pluginInformations)
         {
             var dirName = ConvertDirectoryName(pluginInformations.PluginIdentifiers);
 
@@ -90,6 +102,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public LauncherItemPreferencesEndContext CreatePreferencesEndContext(IPluginInformations pluginInformations, Guid launcherItemId)
         {
             return new LauncherItemPreferencesEndContext(pluginInformations.PluginIdentifiers, launcherItemId);
+        }
+
+        /// <summary>
+        /// ここにあるのは設計ミス！
+        /// </summary>
+        /// <param name="pluginInformations"></param>
+        /// <param name="launcherItemId"></param>
+        /// <returns></returns>
+        internal LauncherItemExtensionExecuteParameter CreateExtensionExecuteParameter(IPluginInformations pluginInformations, Guid launcherItemId, ILauncherItemAddonViewSupporter launcherItemAddonViewSupporter)
+        {
+            var launcherItemExtensionExecuteParameter = new LauncherItemExtensionExecuteParameter(
+                launcherItemId,
+                launcherItemAddonViewSupporter,
+                new SkeletonImplements(),
+                pluginInformations,
+                UserAgentManager,
+                PlatformTheme,
+                ImageLoader,
+                MediaConverter,
+                DispatcherWrapper,
+                LoggerFactory
+            );
+            return launcherItemExtensionExecuteParameter;
         }
 
         #endregion
