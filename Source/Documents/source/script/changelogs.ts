@@ -149,7 +149,7 @@ const changelogs = [
 					{
 						"revision": "7a082894e17571bea00c1dcb820704562d55cf7d",
 						"class": "nuget",
-						"subject": "CefSharp.Wpf 83.4.20 -> 84.4.10",
+						"subject": "CefSharp.Wpf 83.4.20 -> 84.4.10"
 					},
 					{
 						"revision": "31fc05c2136ef84ee128267dd85c31fd8623c75c",
