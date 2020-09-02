@@ -28,10 +28,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IPluginInformations PluginInformations { get; }
         ISet<LauncherItemAddonViewInformation> Informations { get; } = new HashSet<LauncherItemAddonViewInformation>();
 
+        public bool HasView => Informations.Any(i => i.WindowItem.Window.IsVisible);
 
         #endregion
 
         #region function
+
+        public void CloseView()
+        {
+            foreach(var information in Informations.ToArray()) {
+                information.WindowItem.Window.Close();
+            }
+        }
 
         public void Add(LauncherItemAddonViewInformation launcherItemAddonViewInformation)
         {

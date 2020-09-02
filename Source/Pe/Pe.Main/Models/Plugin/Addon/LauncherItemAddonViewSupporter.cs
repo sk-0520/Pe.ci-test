@@ -133,6 +133,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
+        #region function
+
+        #endregion
+
         #region ILauncherItemId
 
         public Guid LauncherItemId { get; }

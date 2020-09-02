@@ -1267,6 +1267,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        void CloseLauncherItemExtensions()
+        {
+            foreach(var launcherItemExtension in LauncherItemExtensions.Where(i => i.HasView)) {
+                launcherItemExtension.CloseView();
+            }
+        }
+
         public void Execute()
         {
             Logger.LogInformation("がんばる！");
@@ -1328,6 +1335,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 SaveWidgets();
             }
             CloseWidgets();
+            CloseLauncherItemExtensions();
         }
 
         void DisposeElementsCore<TElement>(ICollection<TElement> elements)
@@ -1540,6 +1548,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CloseNoteViews();
             SaveWidgets();
             CloseWidgets();
+            //CloseLauncherItemExtensions(); // とりあえずこれは消さない
 
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();
