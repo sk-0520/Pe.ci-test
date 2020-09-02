@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.FileFinder.Addon
 {
     internal class FileFinderAddonImpl: AddonBase
     {
-        public FileFinderAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public FileFinderAddonImpl(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             : base(pluginConstructorContext, plugin)
         { }
 

@@ -324,6 +324,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             return Addon.IsSupported(addonKind);
         }
 
+        /// <inheritdoc cref="IAddon.CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter)"/>
+        public ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
+        {
+            return BuildSupporttedAddon(AddonKind.LauncherItem, nameof(CreateLauncherItemExtension), parameter, p => Addon.CreateLauncherItemExtension(p));
+        }
+
         /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>
         public ICommandFinder BuildCommandFinder(IAddonParameter parameter)
         {

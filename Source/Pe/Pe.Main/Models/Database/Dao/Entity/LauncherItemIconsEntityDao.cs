@@ -47,15 +47,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #region function
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
-        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconBox iconBox, Point dpiScale)
+        public IReadOnlyList<byte[]>? SelectImageBinary(Guid launcherItemId, IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconBox = iconBoxTransfer.ToString(iconBox),
-                IconScale = dpiScale.X,
+                IconBox = iconBoxTransfer.ToString(iconScale.Box),
+                IconScale = iconScale.Dpi.X,
             };
             var rows = Commander.Query<byte[]>(statement, param);
             if(rows != null) {
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return null;
         }
 
-        public int InsertImageBinary(Guid launcherItemId, IconBox iconBox, Point dpiScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
+        public int InsertImageBinary(Guid launcherItemId, in IconScale iconScale, IEnumerable<byte> imageBinary, IDatabaseCommonStatus commonStatus)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
@@ -73,8 +73,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var binaryImageItems = imageBinary.GroupSplit(80 * 1024).ToArray();
             var dto = new LauncherItemIconsDto() {
                 LauncherItemId = launcherItemId,
-                IconBox = iconBoxTransfer.ToString(iconBox),
-                IconScale = dpiScale.X,
+                IconBox = iconBoxTransfer.ToString(iconScale.Box),
+                IconScale = iconScale.Dpi.X,
             };
             var resultCount = 0;
             for(var i = 0; i < binaryImageItems.Length; i++) {
@@ -96,15 +96,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param);
         }
 
-        public int DeleteImageBinary(Guid launcherItemId, IconBox iconBox, Point dpiScale)
+        public int DeleteImageBinary(Guid launcherItemId, in IconScale iconScale)
         {
             var iconBoxTransfer = new EnumTransfer<IconBox>();
 
             var statement = LoadStatement();
             var param = new {
                 LauncherItemId = launcherItemId,
-                IconBox = iconBoxTransfer.ToString(iconBox),
-                IconScale = dpiScale.X,
+                IconBox = iconBoxTransfer.ToString(iconScale.Box),
+                IconScale = iconScale.Dpi.X,
             };
             return Commander.Execute(statement, param);
         }

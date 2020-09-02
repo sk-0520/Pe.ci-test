@@ -20,7 +20,7 @@ using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {
-    public class ImportProgramsViewModel : ElementViewModelBase<ImportProgramsElement>, IViewLifecycleReceiver
+    public class ImportProgramsViewModel: ElementViewModelBase<ImportProgramsElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -109,12 +109,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
         public virtual void ReceiveViewLoaded(Window window)
         { }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = NowImporting;
         }
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
         /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>

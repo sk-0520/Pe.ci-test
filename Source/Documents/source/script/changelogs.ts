@@ -125,6 +125,14 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#660: ランチャーアイテムアドオンの実装",
+						"comments": [
+							"かなり処理が甘いけどこれ以上労力はかけられんのでいったんOKとする",
+							"参照実装としては Pe.Plugins.Reference.Clock が対象"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
@@ -163,6 +171,15 @@ const changelogs = [
 						"comments": [
 							"正確には Pe のバグでなくプラグイン側のバグなんだけど参照実装の基底処理なんでなんとも"
 						]
+					},
+					{
+						"revision": "",
+						"subject": "#672: ランチャーアイコンの処理周りを整理する",
+						"comments": [
+							"#660 作業時に対応",
+							"整理するどころかさらに混乱を生み出した"
+						]
+
 					},
 					{
 						"revision": "",

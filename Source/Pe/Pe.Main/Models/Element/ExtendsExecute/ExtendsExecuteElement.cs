@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.ExtendsExecute
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                return LauncherExecuteResult.Error(ex);
+                return LauncherFileExecuteResult.Error(ex);
             }
         }
 

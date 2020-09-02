@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models;
@@ -14,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public abstract class LauncherItemCustomizeDetailViewModelBase : SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId
+    public abstract class LauncherItemCustomizeDetailViewModelBase: SingleModelViewModelBase<LauncherItemCustomizeEditorElement>, ILauncherItemId
     {
         protected LauncherItemCustomizeDetailViewModelBase(LauncherItemCustomizeEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -32,6 +34,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         public LauncherItemKind Kind { get; }
+
+        public bool IsInitialize { get; private set; }
+
         #endregion
 
         #region command
@@ -43,7 +48,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         public void Initialize()
         {
+            if(IsInitialize) {
+                return;
+            }
             InitializeImpl();
+            if(!Model.IsLazyLoad) {
+                IsInitialize = true;
+            }
         }
 
         #endregion
@@ -71,6 +82,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
             Model.PropertyChanged -= Model_PropertyChanged;
         }
+
+#if DEBUG
+
+        public override string ToString()
+        {
+            return GetType().Name!.Replace("LauncherItemCustomize", string.Empty).Replace("ViewModel", string.Empty);
+        }
+
+#endif
 
         #endregion
 

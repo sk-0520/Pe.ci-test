@@ -7,6 +7,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 {
     internal class CommandExecuteParameter: ICommandExecuteParameter
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="screen">コマンド実行スクリーン。</param>
+        /// <param name="isExtend">拡張機能を用いるか。</param>
         public CommandExecuteParameter(IScreen screen, bool isExtend)
         {
             Screen = screen ?? throw new ArgumentNullException(nameof(screen));

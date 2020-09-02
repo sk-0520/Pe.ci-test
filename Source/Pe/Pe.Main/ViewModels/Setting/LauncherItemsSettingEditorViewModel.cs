@@ -14,7 +14,6 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using Microsoft.Extensions.Logging;
@@ -53,6 +52,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
             SimpleRegexFactory = new SimpleRegexFactory(LoggerFactory);
             NameFilterQueryRegex = SimpleRegexFactory.AllMatchRegex;
+
+            LauncherItemAddonItems = Model.Addons.Select(i => new LauncherItemAddonViewModel(i, LoggerFactory)).ToList();
         }
 
         #region property
@@ -65,8 +66,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         public IDragAndDrop DragAndDrop { get; }
 
+        // このViewModelが有効な際に検証が必要なため IgnoreValidation は付与しない
         ModelViewModelObservableCollectionManagerBase<LauncherItemSettingEditorElement, LauncherItemSettingEditorViewModel> AllLauncherItemCollection { get; }
-        [IgnoreValidation]
         public ICollectionView AllLauncherItemItems { get; }
 
         public bool IsPopupAddItemMenu
@@ -85,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 if(prev != null && !prev.IsDisposed && prev.IsChanged) {
                     if(prev.Validate()) {
                         //prev.Item.Save();
-                        prev.Icon.Reload();
+                        //prev.Icon.Reload();
                     }
                 }
 
@@ -109,19 +110,24 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                 AllLauncherItemItems.Refresh();
             }
         }
+
+        public IReadOnlyList<LauncherItemAddonViewModel> LauncherItemAddonItems { get; }
+
         #endregion
 
         #region command
 
         public ICommand AddNewFileItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.File);
+            AddNewItem(LauncherItemKind.File, Guid.Empty);
         }));
         public ICommand AddNewStoreAppItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.StoreApp);
+            AddNewItem(LauncherItemKind.StoreApp, Guid.Empty);
         }));
-        public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand(() => {
-            AddNewItem(LauncherItemKind.Addon);
-        }));
+        public ICommand AddNewAddonItemCommand => GetOrCreateCommand(() => new DelegateCommand<LauncherItemAddonViewModel>(
+            o => {
+                AddNewItem(LauncherItemKind.Addon, o.PluginId);
+            }
+        ));
 
         public ICommand RemoveItemCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
@@ -135,10 +141,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         #region function
 
-        void AddNewItem(LauncherItemKind kind)
+        void AddNewItem(LauncherItemKind kind, Guid pluginId)
         {
             IsPopupAddItemMenu = false;
-            var newLauncherItemId = Model.AddNewItem(kind);
+            var newLauncherItemId = Model.AddNewItem(kind, pluginId);
             var newItem = AllLauncherItemCollection.ViewModels.First(i => i.LauncherItemId == newLauncherItemId);
             SelectedItem = newItem;
             ScrollSelectedItemRequest.Send();

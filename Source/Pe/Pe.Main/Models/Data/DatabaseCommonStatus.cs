@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class DatabaseCommonStatus: IDatabaseCommonStatus
+    internal class DatabaseCommonStatus: IDatabaseCommonStatus
     {
         #region define
 
@@ -59,6 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
                 ProgramVersion = pluginVersions.PluginVersion,
             };
         }
+        public static DatabaseCommonStatus CreatePluginAccount(IPluginInformations pluginInformations) => CreatePluginAccount(pluginInformations.PluginIdentifiers, pluginInformations.PluginVersions);
 
         void WriteCreateCore(IWritableCreateDto dto, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp)
         {

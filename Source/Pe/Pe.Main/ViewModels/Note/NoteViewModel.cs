@@ -1048,12 +1048,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
         }
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();
         }

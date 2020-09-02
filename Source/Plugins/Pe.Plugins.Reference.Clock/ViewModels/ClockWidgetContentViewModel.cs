@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.ViewModels;
+using ContentTypeTextNet.Pe.Plugins.Reference.Clock.Models;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 {
     public abstract class ClockWidgetContentBaseViewModel: ViewModelSkeleton
     {
-        #region property
+        #region variable
 
         DateTime _currentTime;
         double _hourAngle;
@@ -83,9 +84,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
         {
 
             CurrentTime = dateTime;
-            SecondsAngle = dateTime.Second * 6.0;
-            MinutesAngle = dateTime.Minute * 6.0;
-            HourAngle = (dateTime.Hour * 30.0) + (dateTime.Minute * 0.5);
+            SecondsAngle = ClockUtility.GetSecondsAngle(CurrentTime);
+            MinutesAngle = ClockUtility.GetMinuteAngle(CurrentTime);
+            HourAngle = ClockUtility.GetHourAngle(CurrentTime);
 
             SecondsOppositeAngle = 180.0 + SecondsAngle;
             MinutesOppositeAngle = 180.0 + MinutesAngle;

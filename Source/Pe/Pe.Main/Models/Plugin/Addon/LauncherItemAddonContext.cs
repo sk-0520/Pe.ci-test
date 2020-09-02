@@ -2,12 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
-    internal class LauncherItemAddonContext: PluginIdentifiersContextBase, ILauncherItemAddonContext
+    public abstract class PluginIdentifiersLauncherItemAddonContextBase: PluginIdentifiersContextBase, ILauncherItemId
+    {
+        protected PluginIdentifiersLauncherItemAddonContextBase(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId)
+            : base(pluginIdentifiers)
+        {
+            LauncherItemId = launcherItemId;
+        }
+
+        #region ILauncherItemId
+
+        public Guid LauncherItemId { get; }
+
+        #endregion
+    }
+
+    public class LauncherItemAddonContext: PluginIdentifiersLauncherItemAddonContextBase, ILauncherItemAddonContext
     {
         #region variable
 
@@ -15,8 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #endregion
 
-        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, LauncherItemAddonStorage storage)
-            :base(pluginIdentifiers)
+        public LauncherItemAddonContext(IPluginIdentifiers pluginIdentifiers, Guid launcherItemId, LauncherItemAddonStorage storage)
+            : base(pluginIdentifiers, launcherItemId)
         {
             this._storage = storage;
         }

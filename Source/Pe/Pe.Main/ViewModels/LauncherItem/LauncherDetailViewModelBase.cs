@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using System.Windows.Input;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Core.ViewModels;
@@ -50,10 +49,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
     public abstract class LauncherDetailViewModelBase : SingleModelViewModelBase<LauncherItemElement>, ILauncherItemId
     {
+        #region define
+
+        protected enum IconKind
+        {
+            Main,
+            Tooltip,
+        }
+
+        #endregion
+
         #region variable
 
         bool _nowLoading;
         bool _nowMainExecuting;
+
+        object? _mainIcon;
+        object? _tooltipIcon;
 
         #endregion
 
@@ -61,17 +73,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             : base(model, loggerFactory)
         {
             Screen = screen;
+            DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
-            Icon = new LauncherIconViewModel(model.Icon, dispatcherWrapper, LoggerFactory);
         }
 
         #region property
 
         protected IScreen Screen { get; }
+        protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
-        public LauncherIconViewModel Icon { get; }
+        public object MainIcon => this._mainIcon ??= GetIcon(IconKind.Main);
+        public object TooltipIcon => this._tooltipIcon ??= GetIcon(IconKind.Tooltip);
 
-        public string? Name => Model.Name;
+
+        public virtual string? Name => Model.Name;
         public string? Comment => Model.Comment;
         public bool HasComment => !string.IsNullOrWhiteSpace(Comment);
 
@@ -102,6 +117,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             }
         ));
 
+        public ICommand UninitializeCommand => GetOrCreateCommand(() => new DelegateCommand(
+            () => {
+                UninitializeAsync();
+            }
+        ));
+
         public ICommand ExecuteMainCommand => GetOrCreateCommand(() => new DelegateCommand(
             () => {
                 ExecuteMainAsync();
@@ -120,6 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #region function
 
         protected abstract Task InitializeImplAsync();
+        protected abstract Task UninitializeImplAsync();
 
         Task InitializeAsync()
         {
@@ -127,6 +149,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return InitializeImplAsync().ContinueWith(_ => {
                 NowLoading = false;
             });
+        }
+
+        Task UninitializeAsync()
+        {
+            return UninitializeImplAsync();
         }
 
         protected abstract Task ExecuteMainImplAsync();
@@ -142,6 +169,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
             return Task.CompletedTask;
         }
 
+        protected abstract object GetIcon(IconKind iconKind);
+
         #endregion
 
         #region SingleModelViewModelBase
@@ -150,7 +179,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Icon.Dispose();
                 }
             }
 
@@ -176,14 +204,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 case LauncherItemKind.File:
                     return new LauncherFileViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
-                case LauncherItemKind.StoreApp:
-                    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //case LauncherItemKind.StoreApp:
+                //    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Addon:
-                    throw new NotImplementedException();
+                    return new LauncherAddonViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
-                case LauncherItemKind.Separator:
-                    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //case LauncherItemKind.Separator:
+                //    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 default:
                     throw new NotImplementedException();

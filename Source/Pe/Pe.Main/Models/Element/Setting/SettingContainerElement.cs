@@ -11,15 +11,16 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Main.Views.Setting;
 using Microsoft.Extensions.Logging;
@@ -38,11 +39,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             : base(diContainer, loggerFactory)
         {
             GeneralsSettingEditor = ServiceLocator.Build<GeneralsSettingEditorElement>(ServiceLocator.Build<PluginContainer>().Theme.Plugins.ToList());
-            LauncherItemsSettingEditor = new LauncherItemsSettingEditorElement(AllLauncherItems, ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<IFileDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
+            LauncherItemsSettingEditor = new LauncherItemsSettingEditorElement(AllLauncherItems, ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<LauncherItemAddonContextFactory>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<IFileDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
             LauncherGroupsSettingEditor = ServiceLocator.Build<LauncherGroupsSettingEditorElement>(AllLauncherGroups);
             LauncherToobarsSettingEditor = ServiceLocator.Build<LauncherToobarsSettingEditorElement>(AllLauncherGroups);
             KeyboardSettingEditor = ServiceLocator.Build<KeyboardSettingEditorElement>();
-            PluginsSettingEditor = new PluginsSettingEditorElement(ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<PreferencesContextFactory>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<IFileDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<EnvironmentParameters>(), ServiceLocator.Build<IUserAgentManager>(), ServiceLocator.Build<IPlatformTheme>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
+            PluginsSettingEditor = new PluginsSettingEditorElement(ServiceLocator.Build<PluginContainer>(), ServiceLocator.Build<PreferencesContextFactory>(), ServiceLocator.Build<ISettingNotifyManager>(), ServiceLocator.Build<IClipboardManager>(), ServiceLocator.Build<IMainDatabaseBarrier>(), ServiceLocator.Build<IFileDatabaseBarrier>(), ServiceLocator.Build<ITemporaryDatabaseBarrier>(), ServiceLocator.Build<IDatabaseStatementLoader>(), ServiceLocator.Build<IIdFactory>(), ServiceLocator.Build<EnvironmentParameters>(), ServiceLocator.Build<IUserAgentManager>(), ServiceLocator.Build<IPlatformTheme>(), ServiceLocator.Build<IImageLoader>(), ServiceLocator.Build<IMediaConverter>(), ServiceLocator.Build<IDispatcherWrapper>(), ServiceLocator.Build<ILoggerFactory>());
 
             PluginContainer = ServiceLocator.Build<PluginContainer>();
 
@@ -89,34 +90,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         public void Save()
         {
-            var mainDatabaseBarrier = ServiceLocator.Get<IMainDatabaseBarrier>();
-            var mainDatabaseCommander = mainDatabaseBarrier.WaitWrite();
-
-            var fileDatabaseBarrier = ServiceLocator.Get<IFileDatabaseBarrier>();
-            var fileDatabaseCommander = fileDatabaseBarrier.WaitWrite();
-
-            var tempDatabaseBarrier = ServiceLocator.Get<ITemporaryDatabaseBarrier>();
-            var tempDatabaseCommander = tempDatabaseBarrier.WaitWrite();
-
-            var pack = new ApplicationDatabaseCommandsPack(
-                new DatabaseCommands(mainDatabaseCommander, mainDatabaseCommander.Implementation),
-                new DatabaseCommands(fileDatabaseCommander, fileDatabaseCommander.Implementation),
-                new DatabaseCommands(tempDatabaseCommander, tempDatabaseCommander.Implementation),
+            var pack = PersistentHelper.WaitWritePack(
+                ServiceLocator.Get<IMainDatabaseBarrier>(),
+                ServiceLocator.Get<IFileDatabaseBarrier>(),
+                ServiceLocator.Get<ITemporaryDatabaseBarrier>(),
                 DatabaseCommonStatus.CreateCurrentAccount()
             );
-
-            using(mainDatabaseCommander)
-            using(fileDatabaseCommander)
-            using(tempDatabaseCommander) {
+            using(pack) {
                 foreach(var editor in Editors) {
                     if(editor.IsLoaded) {
                         editor.Save(pack);
                     }
                 }
 
-                tempDatabaseCommander.Commit();
-                fileDatabaseCommander.Commit();
-                mainDatabaseCommander.Commit();
+                pack.Commit();
             }
 
             IsSubmit = true;
@@ -164,12 +151,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var launcherItemElements = new List<LauncherItemSettingEditorElement>(launcherItemIds.Count);
             foreach(var launcherItemId in launcherItemIds) {
-                var iconPack = LauncherIconLoaderPackFactory.CreatePack(launcherItemId, ServiceLocator.Get<IMainDatabaseBarrier>(), ServiceLocator.Get<IFileDatabaseBarrier>(), ServiceLocator.Get<IDatabaseStatementLoader>(), ServiceLocator.Get<IDispatcherWrapper>(), LoggerFactory);
-                var launcherIconElement = new LauncherIconElement(launcherItemId, iconPack, LoggerFactory);
-                launcherIconElement.Initialize();
                 var element = appLauncherItemsMap.TryGetValue(launcherItemId, out var setting)
-                    ? ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement, setting)
-                    : ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, launcherIconElement)
+                    ? ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId, setting)
+                    : ServiceLocator.Build<LauncherItemSettingEditorElement>(launcherItemId)
                 ;
                 launcherItemElements.Add(element);
             }

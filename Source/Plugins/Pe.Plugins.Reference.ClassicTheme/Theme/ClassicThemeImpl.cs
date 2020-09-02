@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.ClassicTheme.Theme
 {
     internal class ClassicThemeImpl: ThemeBase
     {
-        public ClassicThemeImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public ClassicThemeImpl(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             : base(pluginConstructorContext, plugin)
         { }
 
