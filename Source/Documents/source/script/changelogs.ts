@@ -186,14 +186,19 @@ const changelogs = [
 						"subject": "CefSharp.Wpf 83.4.20 -> 84.4.10",
 					},
 					{
-						"class": "nuget",
 						"revision": "",
+						"class": "nuget",
 						"subject": "MS関係パッケージ更新",
 						"comments": [
 							"Microsoft.Extensions.Logging 3.1.5 -> 3.1.7",
 							"Microsoft.Extensions.Configuration.Json 3.1.5 -> 3.1.7",
 							"Microsoft.NET.Test.Sdk 16.6.1 -> 16.7.1"
 						]
+					},
+					{
+						"revision": "",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.6.4 -> 1.6.5"
 					},
 					{
 						"revision": "",
