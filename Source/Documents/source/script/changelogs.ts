@@ -179,7 +179,10 @@ const changelogs = [
 							"#660 作業時に対応",
 							"整理するどころかさらに混乱を生み出した"
 						]
-
+					},
+					{
+						"revision": "",
+						"subject": "CefSharp.Wpf 83.4.20 -> 84.4.10",
 					},
 					{
 						"revision": "",
