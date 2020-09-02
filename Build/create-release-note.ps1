@@ -104,9 +104,9 @@ $tailIndex = $prevHeaderContent.IndexOf($tailMark);
 $prevContent = $prevHeaderContent.Substring(0, $tailIndex)
 $prevContent = $prevContent.Substring(0, $prevContent.LastIndexOf(';'))
 
-Write-Output ('[' + $prevContent.Substring($prevContent.IndexOf('{'))) | clip
-
-$json = ('[' + $prevContent.Substring($prevContent.IndexOf('{'))) | ConvertFrom-Json
+$jsonValue = ('[' + $prevContent.Substring($prevContent.IndexOf('{')))
+Write-Output $jsonValue
+$json = $jsonValue | ConvertFrom-Json
 
 $currentVersion = $json[0]
 
