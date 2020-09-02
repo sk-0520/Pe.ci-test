@@ -287,7 +287,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
                             throw new InvalidOperationException(nameof(IsLoadedTheme));
                         }
                         Theme.Unload(pluginUnloadContext);
-                        IsLoadedAddon = false;
+                        IsLoadedTheme = false;
                     } else {
                         throw new NotSupportedException();
                     }
@@ -322,6 +322,12 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
             LoggingNotSupportAddon();
 
             return Addon.IsSupported(addonKind);
+        }
+
+        /// <inheritdoc cref="IAddon.CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter)"/>
+        public ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
+        {
+            return BuildSupporttedAddon(AddonKind.LauncherItem, nameof(CreateLauncherItemExtension), parameter, p => Addon.CreateLauncherItemExtension(p));
         }
 
         /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>

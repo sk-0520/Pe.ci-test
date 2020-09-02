@@ -28,8 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     public class LauncherIconLoader : IconImageLoaderBase, ILauncherItemId
     {
-        public LauncherIconLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper? dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(iconBox, dispatcherWrapper, loggerFactory)
+        public LauncherIconLoader(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper? dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(dispatcherWrapper, loggerFactory)
         {
             LauncherItemId = launcherItemId;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(Point iconScale)
+        Task<ResultSuccessValue<BitmapSource>> LoadExistsImageAsync(IconScale iconScale)
         {
             ThrowIfDisposed();
 
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 IReadOnlyList<byte[]>? imageBinary;
                 using(var commander = FileDatabaseBarrier.WaitRead()) {
                     var dao = new LauncherItemIconsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                    imageBinary = dao.SelectImageBinary(LauncherItemId, IconBox, iconScale);
+                    imageBinary = dao.SelectImageBinary(LauncherItemId, iconScale);
                 }
 
                 if(imageBinary != null && imageBinary.Count == 0) {
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             }
         }
 
-        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IReadOnlyIconData iconData, Point iconScale, CancellationToken cancellationToken)
+        protected virtual Task<BitmapSource?> GetImageCoreAsync(LauncherItemKind kind, IReadOnlyIconData iconData, IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             return GetIconImageAsync(editIconData, iconScale, cancellationToken);
         }
 
-        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, Point iconScale, bool tuneSize, CancellationToken cancellationToken)
+        protected async Task<BitmapSource?> GetImageAsync(LauncherIconData launcherIconData, IconScale iconScale, bool tuneSize, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -157,7 +157,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             });
         }
 
-        protected async Task SaveImageAsync(BitmapSource iconImage, Point iconScale)
+        protected async Task SaveImageAsync(BitmapSource iconImage, IconScale iconScale)
         {
             ThrowIfDisposed();
 
@@ -172,16 +172,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 DateTime iconUpdatedTimestamp = DateTime.UtcNow;
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
                     var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                    var existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, IconBox, iconScale);
+                    var existIconState = launcherItemIconStatusEntityDao.SelecteExistLauncherItemIconState(LauncherItemId, iconScale);
                     if(existIconState) {
-                        launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                        launcherItemIconStatusEntityDao.UpdateLastUpdatedIconTimestamp(LauncherItemId, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     } else {
-                        launcherItemIconStatusEntityDao.InsertLastUpdatedIconTimestamp(LauncherItemId, IconBox, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
+                        launcherItemIconStatusEntityDao.InsertLastUpdatedIconTimestamp(LauncherItemId, iconScale, iconUpdatedTimestamp, DatabaseCommonStatus.CreateCurrentAccount());
                     }
 
                     var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                    launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, IconBox, iconScale);
-                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, IconBox, iconScale, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
+                    launcherItemIconsEntityDao.DeleteImageBinary(LauncherItemId, iconScale);
+                    launcherItemIconsEntityDao.InsertImageBinary(LauncherItemId, iconScale, stream.BinaryChunkedList, DatabaseCommonStatus.CreateCurrentAccount());
                     commander.Commit();
                 }
 
@@ -190,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         }
 
-        async Task<BitmapSource?> MakeImageAsync(Point iconScale, CancellationToken cancellationToken)
+        async Task<BitmapSource?> MakeImageAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region IconImageLoaderBase
 
-        protected override async Task<BitmapSource?> LoadImplAsync(Point iconScale, CancellationToken cancellationToken)
+        protected override async Task<BitmapSource?> LoadImplAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             var counter = new Counter(RetryMaxCount);
             foreach(var count in counter) {
@@ -248,21 +248,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #endregion
 
-    }
-
-    public static class LauncherIconLoaderPackFactory
-    {
-        #region funtion
-
-        public static IconImageLoaderPack CreatePack(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-        {
-            var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                .Select(i => new LauncherIconLoader(launcherItemId, i, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, dispatcherWrapper, loggerFactory))
-            ;
-            var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
-            return iconImageLoaderPack;
-        }
-
-        #endregion
     }
 }

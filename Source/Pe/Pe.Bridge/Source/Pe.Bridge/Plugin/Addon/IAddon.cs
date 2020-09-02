@@ -33,10 +33,18 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Addon
 
         /// <summary>
         /// 対象のアドオン種別がサポートされているか。
+        /// <para>このプロパティ以下は<see cref="IPlugin.IsInitialized"/>の状態、<see cref="IPlugin.IsLoaded(PluginKind)"/>にかかわらず読み込み可能であること。</para>
         /// </summary>
         /// <param name="addonKind"></param>
         /// <returns></returns>
         bool IsSupported(AddonKind addonKind);
+
+        /// <summary>
+        /// ランチャーアイテムアドオンの生成。
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter);
 
         /// <summary>
         /// コマンド型アドオンの生成。

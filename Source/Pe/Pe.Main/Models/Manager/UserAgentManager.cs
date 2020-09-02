@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public interface IUserAgentManager : IUserAgentFactory, IApplicationUserAgentFactory
+    public interface IUserAgentManager : IHttpUserAgentFactory, IApplicationHttpUserAgentFactory
     {
         #region function
 
@@ -21,12 +21,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public UserAgentManager(IDiContainer diContainer, ILoggerFactory loggerFactory)
             : base(diContainer, loggerFactory)
         {
-            UserAgentFactory = DiContainer.Build<UserAgentFactory>();
+            UserAgentFactory = DiContainer.Build<HttpUserAgentFactory>();
         }
 
         #region property
 
-        UserAgentFactory UserAgentFactory { get; }
+        HttpUserAgentFactory UserAgentFactory { get; }
 
         string AppName { get; } = BuildStatus.Name;
 
@@ -42,8 +42,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region IApplicationUserAgentFactory
 
-        internal UserAgent CreateAppUserAgent() => UserAgentFactory.CreateUserAgent(AppName);
-        IUserAgent IApplicationUserAgentFactory.CreateAppUserAgent() => CreateAppUserAgent();
+        internal HttpUserAgent CreateAppUserAgent() => UserAgentFactory.CreateUserAgent(AppName);
+        IHttpUserAgent IApplicationHttpUserAgentFactory.CreateAppHttpUserAgent() => CreateAppUserAgent();
 
         #endregion
 
@@ -51,12 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region IUserAgentFactory
 
-        public IUserAgentName UserAgentName => UserAgentFactory.UserAgentName;
+        public IHttpUserAgentName UserAgentName => UserAgentFactory.UserAgentName;
 
-        internal UserAgent CreateUserAgent() => UserAgentFactory.CreateUserAgent();
-        IUserAgent IUserAgentFactory.CreateUserAgent() => CreateUserAgent();
+        internal HttpUserAgent CreateUserAgent() => UserAgentFactory.CreateUserAgent();
+        IHttpUserAgent IHttpUserAgentFactory.CreateUserAgent() => CreateUserAgent();
 
-        internal UserAgent CreateUserAgent(string name)
+        internal HttpUserAgent CreateUserAgent(string name)
         {
             if(name == AppName) {
                 throw new ArgumentException(nameof(name));
@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             return UserAgentFactory.CreateUserAgent(name);
         }
-        IUserAgent IUserAgentFactory.CreateUserAgent(string name) => CreateUserAgent(name);
+        IHttpUserAgent IHttpUserAgentFactory.CreateUserAgent(string name) => CreateUserAgent(name);
 
         #endregion
 

@@ -9,13 +9,14 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 {
     internal class ClockAddonImpl: AddonBase
     {
-        public ClockAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public ClockAddonImpl(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             : base(pluginConstructorContext, plugin)
         { }
 
         #region AddonBase
 
         protected override IReadOnlyCollection<AddonKind> SupportedKinds { get; } = new[] {
+            AddonKind.LauncherItem,
             AddonKind.Widget,
         };
 
@@ -25,6 +26,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         protected internal override void Unload(IPluginUnloadContext pluginUnloadContext)
         {
+        }
+
+        public override ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter)
+        {
+            return new ClockLauncherItem(parameter, PluginInformations, Plugin);
         }
 
         public override IWidget BuildWidget(IAddonParameter parameter)

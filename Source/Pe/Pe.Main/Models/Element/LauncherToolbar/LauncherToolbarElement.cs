@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         bool _isOpendAppMenu;
         bool _isOpendFileItemMenu;
         bool _isOpendStoreAppItemMenu;
+        bool _isOpendAddonItemMenu;
 
         bool _isHiding;
 
@@ -162,6 +163,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             {
                 SetProperty(ref this._isOpendStoreAppItemMenu, value);
                 PausingAutoHide = IsOpendFileItemMenu;
+            }
+        }
+        public bool IsOpendAddonItemMenu
+        {
+            get => this._isOpendAddonItemMenu;
+            set
+            {
+                SetProperty(ref this._isOpendAddonItemMenu, value);
+                PausingAutoHide = IsOpendAddonItemMenu;
             }
         }
 

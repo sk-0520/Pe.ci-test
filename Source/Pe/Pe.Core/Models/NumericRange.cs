@@ -111,6 +111,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return builder.ToString();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         bool ParseCore(string? s, out List<int> result, out Exception? ex)
         {
             ex = null;

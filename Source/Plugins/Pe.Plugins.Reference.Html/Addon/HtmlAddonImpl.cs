@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Html.Addon
 {
     internal class HtmlAddonImpl: AddonBase
     {
-        public HtmlAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public HtmlAddonImpl(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             : base(pluginConstructorContext, plugin)
         { }
 

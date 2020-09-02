@@ -19,6 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region function
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public TCommand GetOrCreate<TCommand>(Func<TCommand> creator, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string callerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
             where TCommand : ICommand
         {

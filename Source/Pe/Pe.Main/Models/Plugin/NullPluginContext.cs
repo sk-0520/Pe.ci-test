@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         IPluginStorage IPluginContext.Storage => Storage;
 
         /// <inheritdoc cref="IPluginContext.UserAgentFactory"/>
-        public IUserAgentFactory UserAgentFactory => throw new NotSupportedException();
+        public IHttpUserAgentFactory UserAgentFactory => throw new NotSupportedException();
 
         /// <inheritdoc cref="IPluginCommonContext.IsAvailable"/>
         public bool IsAvailable => true;

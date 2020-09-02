@@ -49,10 +49,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #endregion
 
-        public RedoExecutor(LauncherExecutor executor, ILauncherExecuteResult firstResult, RedoParameter parameter, INotifyManager notifyManager, ILoggerFactory loggerFactory)
+        public RedoExecutor(LauncherExecutor executor, LauncherFileExecuteResult firstResult, RedoParameter parameter, INotifyManager notifyManager, ILoggerFactory loggerFactory)
         {
-            if(firstResult.Process == null) {
-                throw new ArgumentException($"{nameof(firstResult)}.{nameof(firstResult.Process)}");
+            if(firstResult.Data == null) {
+                throw new ArgumentException($"{nameof(firstResult)}.{nameof(firstResult.Data)}");
             }
             if(parameter.RedoData.RedoMode == RedoMode.None) {
                 throw new ArgumentException($"{nameof(parameter)}.{nameof(parameter.RedoData)}.{nameof(parameter.RedoData.RedoMode)}");
@@ -74,8 +74,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 WaitEndTimer.Elapsed += WaitEndTimer_Elapsed;
                 WaitEndTimer.Start();
             }
-
-            Watching(FirstResult.Process, false);
+            if(FirstResult.Process != null) {
+                Watching(FirstResult.Process, false);
+            }
         }
 
 
@@ -85,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         Guid NotifyLogId { get; set; }
 
-        ILauncherExecuteResult FirstResult { get; }
+        LauncherFileExecuteResult FirstResult { get; }
         LauncherExecutor Executor { get; }
         RedoParameter Parameter { get; }
 
@@ -273,7 +274,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             PutNotifyLog(false, CreateRedoNotifyLogMessage());
 
-            var result = Executor.Execute(FirstResult.Kind, Parameter.Path, Parameter.Custom, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
+            var result = (LauncherFileExecuteResult)Executor.Execute(FirstResult.Kind, Parameter.Path, Parameter.Custom, Parameter.EnvironmentVariableItems, LauncherRedoData.GetDisable(), Parameter.Screen);
             RetryCount += 1;
             Watching(result.Process!, true);
         }

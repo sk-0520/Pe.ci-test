@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region define
 
-        struct IconPathData
+        readonly struct IconPathData
         {
             public IconPathData(string path)
                 :this(path, 0)
@@ -36,6 +36,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
+        #region variable
+
+        ComWrapper<IPersistFile>? _persistFile;
+
+        #endregion
+
         /// <summary>
         /// ショートカットを作成するためにオブジェクト生成。
         /// </summary>
@@ -43,12 +49,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
             : base()
         {
             ShellLink = CreateShellLink();
-
-            LazyPersistFile = new Lazy<ComWrapper<IPersistFile>>(() => {
-                //var result = (IPersistFile)ShellLink.Raw;
-                //return new ComWrapper<IPersistFile>(result);
-                return ShellLink.Cast<IPersistFile>();
-            });
         }
 
         /// <summary>
@@ -63,14 +63,22 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
+        /// <summary>
+        /// 各種パスプロパティのバッファサイズ。
+        /// </summary>
         public int PathLength { get; set; } = (int)MAX.MAX_PATH;
+        /// <summary>
+        /// 引数のバッファサイズ。
+        /// </summary>
         public int ArgumentLength { get; set; } = 1024;
+        /// <summary>
+        /// コメントのバッファサイズ。
+        /// </summary>
         public int DescriptionLength { get; set; } = 1024 * 5;
 
         protected ComWrapper<IShellLink> ShellLink { get; }
 
-        Lazy<ComWrapper<IPersistFile>> LazyPersistFile { get; }
-        protected ComWrapper<IPersistFile> PersistFile => LazyPersistFile.Value;
+        protected ComWrapper<IPersistFile> PersistFile => this._persistFile ??= ShellLink.Cast<IPersistFile>();
 
         /// <summary>
         /// ショートカット先パス。
@@ -81,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             {
                 var resultBuffer = CreateStringBuffer(PathLength);
 
-                ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out var findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
+                ShellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out _, SLGP_FLAGS.SLGP_UNCPRIORITY);
 
                 return resultBuffer.ToString();
             }
@@ -166,10 +174,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             get
             {
-                int rawShowCommand;
-
-                ShellLink.Com.GetShowCmd(out rawShowCommand);
-
+                ShellLink.Com.GetShowCmd(out var rawShowCommand);
                 return (SW)rawShowCommand;
             }
             set
@@ -199,9 +204,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IconPathData GetIcon()
         {
             var resultBuffer = CreateStringBuffer(PathLength);
-            int iconIndex;
-
-            ShellLink.Com.GetIconLocation(resultBuffer, resultBuffer.Capacity, out iconIndex);
+            ShellLink.Com.GetIconLocation(resultBuffer, resultBuffer.Capacity, out var iconIndex);
 
             return new IconPathData(resultBuffer.ToString(), iconIndex);
         }
@@ -210,7 +213,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// アイコン設定。
         /// </summary>
         /// <param name="iconPath"></param>
-        void SetIcon(IconPathData iconPath)
+        void SetIcon(in IconPathData iconPath)
         {
             ShellLink.Com.SetIconLocation(iconPath.Path, iconPath.Index);
         }
@@ -232,8 +235,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    if(LazyPersistFile.IsValueCreated) {
-                        PersistFile.Dispose();
+                    if(this._persistFile != null) {
+                        this._persistFile.Dispose();
                     }
 
                     ShellLink.Dispose();

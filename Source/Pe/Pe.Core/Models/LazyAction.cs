@@ -18,6 +18,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="lazyName">遅延処理名。</param>
+        /// <param name="lazyTime">遅延時間。</param>
+        /// <param name="loggerFactory"></param>
         public LazyAction(string lazyName, TimeSpan lazyTime, ILoggerFactory loggerFactory)
         {
             LazyName = lazyName;
@@ -54,22 +60,25 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// 遅延処理を破棄。
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         public void Clear()
         {
             lock(this._timerLocker) {
                 if(Timer.Enabled) {
                     Timer.Stop();
-                    Logger.LogDebug("[{0}] タイマー終了", LazyName);
+                    Logger.LogTrace("[{0}] タイマー終了", LazyName);
                 }
                 Action = null;
             }
         }
+
 
         /// <summary>
         /// 遅延処理。
         /// <para>複数回呼び出した場合、最後に渡された処理が遅延処理対象となる。</para>
         /// </summary>
         /// <param name="action">実際に行われる処理。</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         public void DelayAction(Action action)
         {
             ThrowIfDisposed();
@@ -77,14 +86,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
             lock(this._timerLocker) {
                 if(Timer.Enabled) {
                     Timer.Stop();
-                    Logger.LogDebug("[{0}] タイマー停止, 抑制", LazyName);
+                    Logger.LogTrace("[{0}] タイマー停止, 抑制", LazyName);
                 }
                 Action = action;
-                Logger.LogDebug("[{0}] タイマー開始", LazyName);
+                Logger.LogTrace("[{0}] タイマー開始", LazyName);
                 Timer.Start();
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
         void DoAction(bool disposing)
         {
             ThrowIfDisposed();
@@ -94,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     Timer.Stop();
                 }
                 if(Action != null) {
-                    Logger.LogDebug("[{0}] 実行", LazyName);
+                    Logger.LogTrace("[{0}] 実行", LazyName);
                     Action();
                 }
                 Action = null;

@@ -69,8 +69,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 for(int i = 0; i < childCount; i++) {
                     var child = VisualTreeHelper.GetChild(dependencyObject, i);
                     if(child != null) {
-                        var childObj = child as T;
-                        if(childObj != null) {
+                        if(child is T childObj) {
                             yield return childObj;
                         }
                     }
@@ -95,8 +94,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             if(dependencyObject != null) {
                 foreach(var child in LogicalTreeHelper.GetChildren(dependencyObject).OfType<DependencyObject>()) {
                     if(child != null) {
-                        var childObj = child as T;
-                        if(childObj != null) {
+                        if(child is T childObj) {
                             yield return childObj;
                         }
                         foreach(var childOfChild in FindLogicalChildren<T>(child)) {
@@ -158,8 +156,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             var parent = GetVisualParent(dependencyObject);
-            var element = parent as T;
-            if(element != null) {
+            if(parent is T element) {
                 return element;
             } else if(parent != null) {
                 return GetVisualClosest<T>(parent);
@@ -181,8 +178,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             var parent = GetLogicalParent(dependencyObject);
-            var element = parent as T;
-            if(element != null) {
+            if(parent is T element) {
                 return element;
             } else if(parent != null) {
                 return GetLogicalClosest<T>(parent);
@@ -204,8 +200,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
 
             var parent = GetLogicalParent(dependencyObject) ?? GetVisualParent(dependencyObject);
-            var element = parent as T;
-            if(element != null) {
+            if(parent is T element) {
                 return element;
             } else if(parent != null) {
                 return GetLogicalClosest<T>(parent) ?? GetVisualClosest<T>(parent);
@@ -407,6 +402,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
         }
 
+        [Obsolete("これなんだっけか")]
         public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes, Type[] disableElementTypes)
         {
             if(enableElementTypes == null) {
@@ -434,6 +430,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return false;
         }
+        [Obsolete("これなんだっけか")]
         public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes)
         {
             return IsEnabledEventArea(dependencyObject, enableElementTypes, Array.Empty<Type>());

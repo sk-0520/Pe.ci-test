@@ -24,11 +24,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             DefaultExtension = defaultExtension;
         }
 
+
         /// <summary>
         /// 初期化。
         /// </summary>
         /// <param name="display">表示文字列。</param>
         /// <param name="wildcard">ワイルドカード一覧。</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0504:Implicit new array creation allocation")]
         public DialogFilterItem(string display, string defaultExtension, string wildcard, params string[] wildcards)
             : this(display, defaultExtension, new[] { wildcard }.Concat(wildcards))
         { }

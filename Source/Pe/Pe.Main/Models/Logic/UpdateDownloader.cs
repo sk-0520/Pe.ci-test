@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             Logger.LogInformation("アップデートファイルダウンロード: {0}, {1}", updateItem.ArchiveUri, donwloadFile);
             userNotifyProgress.Start();
 
-            using(var userAgent = UserAgentManager.CreateAppUserAgent()) {
+            using(var userAgent = UserAgentManager.CreateAppHttpUserAgent()) {
                 var content = await userAgent.GetAsync(updateItem.ArchiveUri);
 
                 //NOTE: long が使えない！

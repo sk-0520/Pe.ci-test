@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
@@ -76,15 +77,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// </summary>
         [EnumResource]
         DirectExecute,
-    }
-
-    public interface ILauncherItemId
-    {
-        #region property
-
-        Guid LauncherItemId { get; }
-
-        #endregion
     }
 
     public interface ILauncherExecutePathParameter
@@ -319,6 +311,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
+    public class LauncherAddonDetailData: LauncherDetailDataBase
+    {
+        #region property
+
+        public bool IsEnabled { get; set; }
+
+        /// <summary>
+        /// <see cref="IsEnabled"/> が有効な場合は非nullとなる。
+        /// </summary>
+        public ILauncherItemExtension? Extension { get; set; }
+
+        #endregion
+    }
+
     #endregion
 
     public interface ILauncherToolbarId
@@ -463,17 +469,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
     public class LauncherIconStatus
     {
-        public LauncherIconStatus(IconBox iconBox, Point iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp)
+        public LauncherIconStatus(IconBox iconBox, Point dpiScale, [DateTimeKind(DateTimeKind.Utc)] DateTime lastUpdatedTimestamp)
         {
-            IconBox = iconBox;
-            IconScale = iconScale;
+            IconScale = new IconScale(iconBox, dpiScale);
             LastUpdatedTimestamp = lastUpdatedTimestamp;
         }
 
         #region proeprty
 
-        public IconBox IconBox { get; }
-        public Point IconScale { get; }
+        public IconScale IconScale { get; }
 
         [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastUpdatedTimestamp { get; }

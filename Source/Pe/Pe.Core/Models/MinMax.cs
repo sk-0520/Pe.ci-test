@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 result = Parse<T>(value);
                 return true;
             } catch {
-                result = default(MinMax<T>);
+                result = default;
                 return false;
             }
         }
@@ -162,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 result = Parse<T>(value);
                 return true;
             } catch {
-                result = default(MinMaxDefault<T>);
+                result = default;
                 return false;
             }
         }

@@ -18,7 +18,6 @@ using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
@@ -68,6 +67,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element._Debug_;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -102,11 +102,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             ApplicationDiContainer.Register<IStatusManager, StatusManager>(StatusManagerImpl);
             ApplicationDiContainer.Register<IClipboardManager, ClipboardManager>(ClipboardManager);
             ApplicationDiContainer.Register<IUserAgentManager, UserAgentManager>(UserAgentManager);
-            ApplicationDiContainer.Register<IUserAgentFactory, IUserAgentFactory>(UserAgentManager);
+            ApplicationDiContainer.Register<IHttpUserAgentFactory, IHttpUserAgentFactory>(UserAgentManager);
+
+            ApplicationDiContainer.Register<LauncherItemAddonViewSupporterCollection, LauncherItemAddonViewSupporterCollection>(DiLifecycle.Singleton);
 
             var addonContainer = ApplicationDiContainer.Build<AddonContainer>();
             var themeContainer = ApplicationDiContainer.Build<ThemeContainer>();
             PluginContainer = ApplicationDiContainer.Build<PluginContainer>(addonContainer, themeContainer);
+            ApplicationDiContainer.Register<ILauncherItemAddonFinder, ILauncherItemAddonFinder>(DiLifecycle.Transient, () => new LauncherItemAddonFinder(PluginContainer.Addon, LoggerFactory));
 
             // プラグインコンテナ自体を登録
             ApplicationDiContainer.Register<PluginContainer, PluginContainer>(PluginContainer);
@@ -169,6 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         ObservableCollection<LauncherToolbarElement> LauncherToolbarElements { get; } = new ObservableCollection<LauncherToolbarElement>();
         ObservableCollection<NoteElement> NoteElements { get; } = new ObservableCollection<NoteElement>();
         ObservableCollection<StandardInputOutputElement> StandardInputOutputs { get; } = new ObservableCollection<StandardInputOutputElement>();
+        ObservableCollection<LauncherItemExtensionElement> LauncherItemExtensions { get; } = new ObservableCollection<LauncherItemExtensionElement>();
         CommandElement? CommandElement { get; set; }
         NotifyLogElement NotifyLogElement { get; }
         //FeedbackElement? FeedbackElement { get; set; }
@@ -1263,6 +1267,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        void CloseLauncherItemExtensions()
+        {
+            foreach(var launcherItemExtension in LauncherItemExtensions.Where(i => i.HasView)) {
+                launcherItemExtension.CloseView();
+            }
+        }
+
         public void Execute()
         {
             Logger.LogInformation("がんばる！");
@@ -1324,6 +1335,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 SaveWidgets();
             }
             CloseWidgets();
+            CloseLauncherItemExtensions();
         }
 
         void DisposeElementsCore<TElement>(ICollection<TElement> elements)
@@ -1536,6 +1548,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CloseNoteViews();
             SaveWidgets();
             CloseWidgets();
+            //CloseLauncherItemExtensions(); // とりあえずこれは消さない
 
             DisposeLauncherToolbarElements();
             DisposeLauncherGroupElements();
@@ -1838,9 +1851,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         internal void StartupEnd()
         {
-            StartHook();
-            StartScheduler();
-            StartBackground();
+#if DEBUG
+            if(!IsDevDebug) {
+#endif
+                StartHook();
+                StartScheduler();
+                StartBackground();
+#if DEBUG
+            }
+#endif
 
             DelayCheckUpdateAsync().ConfigureAwait(false);
 #if DEBUG
@@ -1921,9 +1940,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         }
         public void RefreshLauncherItemElement(Guid launcherItemId) => OrderManager.RefreshLauncherItemElement(launcherItemId);
 
-        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
+        public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen)
         {
-            return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen, iconElement);
+            return OrderManager.CreateCustomizeLauncherItemContainerElement(launcherItemId, screen);
         }
 
         public ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen)
@@ -1983,6 +2002,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var element = OrderManager.CreateStandardInputOutputElement(caption, process, screen);
             StandardInputOutputs.Add(element);
+            return element;
+        }
+
+        /// <inheritdoc cref="IOrderManager.CreateLauncherItemExtensionElement(IPluginInformations, Guid)"/>
+        public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId)
+        {
+            var element = OrderManager.CreateLauncherItemExtensionElement(pluginInformations, launcherItemId);
+            LauncherItemExtensions.Add(element);
             return element;
         }
 

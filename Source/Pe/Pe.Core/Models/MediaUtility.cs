@@ -63,9 +63,8 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <returns></returns>
         public static Color GetComplementaryColor(Color color)
         {
-            var colorValue = (new[] { color.R, color.G, color.B }).Distinct();
-            var max = colorValue.Max();
-            var min = colorValue.Min();
+            var max = Math.Max(color.R, Math.Max(color.G, color.B));
+            var min = Math.Min(color.R, Math.Min(color.G, color.B));
             var v = max + min;
 
             return Color.FromArgb(
@@ -113,6 +112,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return value;
         }
 
+        /// <summary>
+        /// 色を加算する。
+        /// </summary>
+        /// <param name="baseColor">基本色。</param>
+        /// <param name="plusColor">加算する色。</param>
+        /// <returns></returns>
         public static Color AddColor(Color baseColor, Color plusColor)
         {
             return Color.FromArgb(
@@ -123,6 +128,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
             );
         }
 
+        /// <summary>
+        /// 明るさを加算する。
+        /// </summary>
+        /// <param name="baseColor"></param>
+        /// <param name="brightness"></param>
+        /// <returns></returns>
         public static Color AddBrightness(Color baseColor, double brightness)
         {
             return Color.FromArgb(
@@ -138,6 +149,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="bitmapSource"></param>
         /// <returns></returns>
+        [Obsolete]
         public static byte[] GetPixels(BitmapSource bitmapSource)
         {
             var usingNewImage = bitmapSource.Format != PixelFormats.Bgra32;
@@ -168,6 +180,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// </summary>
         /// <param name="pixels">[B][G][R][A]... となっていることを期待。</param>
         /// <returns></returns>
+        [Obsolete]
         public static IEnumerable<Color> GetColors(byte[] pixels)
         {
             Debug.Assert(pixels.Length % 4 == 0);
@@ -201,6 +214,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="bitmapSource"></param>
         /// <param name="baseAlpha">指定した透明度以上のピクセル情報を算出に使用する。</param>
         /// <returns></returns>
+        [Obsolete]
         public static Color GetPredominantColorFromBitmapSource(BitmapSource bitmapSource, byte baseAlpha)
         {
             var pixels = GetPixels(bitmapSource);
@@ -215,6 +229,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="colors"></param>
         /// <param name="baseAlpha">指定した透明度以上のピクセル情報を算出に使用する。</param>
         /// <returns></returns>
+        [Obsolete]
         public static Color GetPredominantColor(IEnumerable<Color> colors, byte baseAlpha)
         {
             var map = new Dictionary<Color, int>();
@@ -240,6 +255,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <param name="targetBitmap"></param>
         /// <param name="color"></param>
         /// <returns></returns>
+        [Obsolete]
         public static BitmapSource ColoringImage(BitmapSource targetBitmap, Color color)
         {
             var pixels = MediaUtility.GetPixels(targetBitmap);
@@ -272,10 +288,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// 指定要素をビットマップに落とし込む。
         /// </summary>
         /// <param name="element"></param>
-        /// <param name="dpi"></param>
+        /// <param name="dpiScale"></param>
         /// <param name="useActual"></param>
         /// <returns></returns>
-        public static BitmapSource MakeBitmapSource(FrameworkElement element, Point dpi, bool useActual)
+        public static BitmapSource MakeBitmapSource(FrameworkElement element, Point dpiScale, bool useActual)
         {
             var size = useActual
                 ? new Size(element.ActualWidth, element.ActualHeight)
@@ -285,7 +301,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             element.Measure(size);
             element.Arrange(new Rect(size));
 
-            var render = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpi.X, dpi.Y, PixelFormats.Pbgra32);
+            var render = new RenderTargetBitmap((int)size.Width, (int)size.Height, dpiScale.X, dpiScale.Y, PixelFormats.Pbgra32);
             render.Render(element);
 
             return render;

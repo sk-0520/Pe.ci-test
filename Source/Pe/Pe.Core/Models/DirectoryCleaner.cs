@@ -19,8 +19,17 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region property
 
+        /// <summary>
+        /// 対象ディレクトリ。
+        /// </summary>
         DirectoryInfo Directory { get; }
+        /// <summary>
+        /// 待機回数。
+        /// </summary>
         int WaitCount { get; }
+        /// <summary>
+        /// 一回の待機に対する待ち時間。
+        /// </summary>
         TimeSpan WaitTime { get; }
         ILogger Logger { get; }
         #endregion

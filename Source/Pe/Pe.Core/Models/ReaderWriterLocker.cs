@@ -142,6 +142,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
     }
 
     /// <inheritdoc cref="IReaderWriterLocker"/>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0603:Delegate allocation from a method group")]
     public class ReaderWriterLocker: DisposerBase, IReaderWriterLocker
     {
         /// <summary>
@@ -262,6 +263,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return BeginCore(Locker.EnterReadLock, Locker.ExitReadLock);
         }
+
 
         /// <inheritdoc cref="IReaderWriterLocker.BeginUpdate"/>
         public IDisposable BeginUpdate()

@@ -23,18 +23,42 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         LauncherItemKind Kind { get; }
 
-        Process? Process { get; }
+        object? Data { get; }
 
         #endregion
     }
 
-    public class LauncherExecuteResult: ILauncherExecuteResult
+    internal sealed class LauncherExecuteErrorResult: ILauncherExecuteResult
+    {
+        public LauncherExecuteErrorResult(LauncherItemKind launcherItemKind, Exception exception)
+        {
+            Kind = launcherItemKind;
+            FailureType = exception.GetType();
+            FailureValue = exception;
+        }
+
+        #region ILauncherExecuteResult
+
+        public object? Data { get; set; }
+
+        public LauncherItemKind Kind { get; }
+
+        public bool Success => false;
+
+        public Type FailureType { get; }
+
+        public Exception FailureValue { get; }
+
+        #endregion
+    }
+
+    public sealed class LauncherFileExecuteResult: ILauncherExecuteResult
     {
         #region function
 
-        public static LauncherExecuteResult Error(Exception ex)
+        public static LauncherFileExecuteResult Error(Exception ex)
         {
-            return new LauncherExecuteResult() {
+            return new LauncherFileExecuteResult() {
                 Success = false,
                 FailureType = ex.GetType(),
                 FailureValue = ex,
@@ -45,9 +69,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region ILauncherExecuteResult
 
+        public object? Data { get; set; }
+
         public LauncherItemKind Kind { get; set; }
 
-        public Process? Process { get; set; }
+        public Process? Process => (Process?)Data;
 
         public bool Success { get; set; }
 
@@ -58,6 +84,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         #endregion
     }
 
+    public enum LauncherAddonExecuteKind
+    {
+        None,
+        /// <summary>
+        /// 実行。
+        /// </summary>
+        Execute,
+        /// <summary>
+        /// すでに実行中。
+        /// </summary>
+        Duplicate,
+    }
+    public sealed class LauncherAddonExecuteResult: ILauncherExecuteResult
+    {
+        #region function
+
+        public static LauncherFileExecuteResult Error(Exception ex)
+        {
+            return new LauncherFileExecuteResult() {
+                Success = false,
+                FailureType = ex.GetType(),
+                FailureValue = ex,
+            };
+        }
+
+        #endregion
+
+        #region ILauncherExecuteResult
+
+        public object? Data { get; set; }
+        public LauncherAddonExecuteKind ExecuteKind => Data != null ? (LauncherAddonExecuteKind)Data : LauncherAddonExecuteKind.None;
+
+        public LauncherItemKind Kind { get; set; }
+
+        public bool Success { get; set; }
+
+        public Type? FailureType { get; set; }
+
+        public Exception? FailureValue { get; set; }
+
+        #endregion
+    }
 
     public class LauncherExecutor
     {
@@ -84,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        ILauncherExecuteResult ExecuteFilePath(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
+        ILauncherExecuteResult ExecuteFilePath(ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IEnumerable<LauncherEnvironmentVariableData> environmentVariableItems, IReadOnlyLauncherRedoData redoData, IScreen screen)
         {
             var process = new Process();
             var startInfo = process.StartInfo;
@@ -140,9 +208,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 startInfo.StandardInputEncoding = customParameter.StandardInputOutputEncoding;
             }
 
-            var result = new LauncherExecuteResult() {
-                Kind = kind,
-                Process = process,
+            var result = new LauncherFileExecuteResult() {
+                Kind = LauncherItemKind.File,
+                Data = process,
             };
             RedoExecutor? redoExecutor = null;
             if(redoData.RedoMode != RedoMode.None) {
@@ -206,11 +274,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 throw new ArgumentNullException(nameof(environmentVariableItems));
             }
 
-            return ExecuteFilePath(kind, pathParameter, customParameter, environmentVariableItems, redoData, screen);
+            switch(kind) {
+                case LauncherItemKind.File:
+                    return ExecuteFilePath(pathParameter, customParameter, environmentVariableItems, redoData, screen);
+
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public ILauncherExecuteResult OpenParentDirectory(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter)
         {
+            Debug.Assert(kind == LauncherItemKind.File);
+
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
             }
@@ -220,20 +296,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             try {
                 var systemExecutor = new SystemExecutor();
                 var process = systemExecutor.OpenDirectoryWithFileSelect(fullPath);
-                var result = new LauncherExecuteResult() {
+                var result = new LauncherFileExecuteResult() {
                     Kind = kind,
-                    Process = process,
+                    Data = process,
                 };
 
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                return LauncherExecuteResult.Error(ex);
+                return LauncherFileExecuteResult.Error(ex);
             }
         }
 
         public ILauncherExecuteResult OpenWorkingDirectory(LauncherItemKind kind, ILauncherExecutePathParameter pathParameter)
         {
+            Debug.Assert(kind == LauncherItemKind.File);
+
             if(pathParameter == null) {
                 throw new ArgumentNullException(nameof(pathParameter));
             }
@@ -243,15 +321,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
             try {
                 var systemExecutor = new SystemExecutor();
                 var process = systemExecutor.ExecuteFile(fullPath);
-                var result = new LauncherExecuteResult() {
+                var result = new LauncherFileExecuteResult() {
                     Kind = kind,
-                    Process = process,
+                    Data = process,
                 };
 
                 return result;
             } catch(Exception ex) {
                 Logger.LogError(ex, ex.Message);
-                return LauncherExecuteResult.Error(ex);
+                return LauncherFileExecuteResult.Error(ex);
             }
         }
 

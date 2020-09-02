@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
                 } else {
                     if(workMatches.Count != 0) {
                         var minIndex = workMatches.Keys.Min();
-                        var value = source.Slice(i, minIndex - i);
+                        var value = source[i..minIndex];
                         var item = new HitValue(value.ToString(), false);
                         result.Add(item);
                         i = minIndex;

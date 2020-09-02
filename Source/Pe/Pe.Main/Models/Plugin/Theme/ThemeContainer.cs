@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
         DefaultTheme? _defaultTheme;
 
         #endregion
-        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public ThemeContainer(IDatabaseBarrierPack databaseBarrierPack, IDatabaseLazyWriterPack databaseLazyWriterPack, IDatabaseStatementLoader databaseStatementLoader, EnvironmentParameters environmentParameters, IUserAgentManager userAgentManager, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -40,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
             PlatformTheme = platformTheme;
             ImageLoader = imageLoader;
+            MediaConverter = mediaConverter;
             DispatcherWrapper = dispatcherWrapper;
         }
 
@@ -55,6 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         IPlatformTheme PlatformTheme { get; }
         IImageLoader ImageLoader { get; }
+        IMediaConverter MediaConverter { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
         /// <summary>
@@ -75,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
 
         #region function
 
-        private ThemeParameter CreateParameter(IPlugin addon) => new ThemeParameter(addon.PluginInformations, PlatformTheme, ImageLoader, DispatcherWrapper, LoggerFactory);
+        private ThemeParameter CreateParameter(IPlugin addon) => new ThemeParameter(addon.PluginInformations, PlatformTheme, ImageLoader, MediaConverter, DispatcherWrapper, LoggerFactory);
 
         public void Add(ITheme theme)
         {

@@ -100,10 +100,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ReleaseNote
             });
         }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         { }
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
 

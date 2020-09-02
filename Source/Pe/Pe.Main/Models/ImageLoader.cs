@@ -37,8 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return ScreenUtility.GetDpiScale(screen);
         }
 
-
-        public BitmapSource GetImageFromFrames(IReadOnlyCollection<BitmapSource> frames, IconScale iconScale)
+        /// <inheritdoc cref="IImageLoader.GetImageFromFrames(IReadOnlyCollection{BitmapSource}, in IconScale)"/>
+        public BitmapSource GetImageFromFrames(IReadOnlyCollection<BitmapSource> frames, in IconScale iconScale)
         {
             var size = iconScale.ToIconSize().Width;
             var result = frames.FirstOrDefault(f => f.Width == size);
@@ -52,7 +52,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
             return result;
         }
 
-        public BitmapSource? LoadIconFromFile(string iconPath, int iconIndex, IconScale iconScale)
+        /// <inheritdoc cref="IImageLoader.LoadIconFromFile(string, int, in IconScale)"/>
+        public BitmapSource? LoadIconFromFile(string iconPath, int iconIndex, in IconScale iconScale)
         {
             var iconLoader = new IconLoader(Logger);
             var result = iconLoader.Load(iconPath, iconIndex, iconScale.ToIconSize());

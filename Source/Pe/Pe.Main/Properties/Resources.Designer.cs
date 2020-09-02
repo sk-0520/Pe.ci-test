@@ -3710,6 +3710,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   読み込めないプラグイン に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_LauncherItemCustomizeControl_UnloadedPlugin_Header {
+            get {
+                return ResourceManager.GetString("String_LauncherItemCustomizeControl_UnloadedPlugin_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ${ITEM} を編集 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_LauncherItemCustomizeWindow_Caption {
@@ -5310,6 +5319,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_LauncherItems_Add {
             get {
                 return ResourceManager.GetString("String_Setting_LauncherItems_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルを追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_LauncherItems_Add_File_A {
+            get {
+                return ResourceManager.GetString("String_Setting_LauncherItems_Add_File_A", resourceCulture);
             }
         }
         

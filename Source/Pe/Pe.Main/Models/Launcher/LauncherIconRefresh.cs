@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 {
     internal sealed class LauncherIconRefreshLoader: LauncherIconLoader
     {
-        public LauncherIconRefreshLoader(Guid launcherItemId, IconBox iconBox, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
-            : base(launcherItemId, iconBox, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, null, loggerFactory)
+        public LauncherIconRefreshLoader(Guid launcherItemId, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(launcherItemId, mainDatabaseBarrier, fileDatabaseBarrier, databaseStatementLoader, null, loggerFactory)
         { }
 
         #region property
@@ -32,13 +32,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         #region function
 
-        public Task LoadAndSaveAsync(Point iconScale, CancellationToken cancellationToken)
+        public Task LoadAndSaveAsync(IconScale iconScale, CancellationToken cancellationToken)
         {
             // アイコンパス取得
             var launcherIconData = GetIconData();
 
             // アイコン取得
-            Logger.LogDebug("ランチャーアイテムのアイコン取得開始: {0}, [{1}], [{2}], {3}", IconBox, launcherIconData.Path, launcherIconData.Icon, LauncherItemId);
+            Logger.LogDebug("ランチャーアイテムのアイコン取得開始: {0}, [{1}], [{2}], {3}", iconScale, launcherIconData.Path, launcherIconData.Icon, LauncherItemId);
 
             GetImageAsync(launcherIconData, iconScale, true, cancellationToken).ContinueWith(t => {
                 try {
@@ -46,13 +46,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                         var image = t.Result;
                         if(image != null) {
                             // 内部でシャットダウン
-                            Logger.LogDebug("ランチャーアイテムのアイコン更新開始: {0}, {1}", IconBox, LauncherItemId);
+                            Logger.LogDebug("ランチャーアイテムのアイコン更新開始: {0}, {1}", iconScale, LauncherItemId);
                             return SaveImageAsync(image, iconScale);
                         } else {
-                            Logger.LogDebug("ランチャーアイテムのアイコン更新失敗: {0}, {1}", IconBox, LauncherItemId);
+                            Logger.LogDebug("ランチャーアイテムのアイコン更新失敗: {0}, {1}", iconScale, LauncherItemId);
                         }
                     } else {
-                        Logger.LogDebug("ランチャーアイテムのアイコン取得停止: {0}, {1}", IconBox, LauncherItemId);
+                        Logger.LogDebug("ランチャーアイテムのアイコン取得停止: {0}, {1}", iconScale, LauncherItemId);
                     }
                     return Task.CompletedTask;
                 } finally {
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
         {
             using(var commander = FileDatabaseBarrier.WaitRead()) {
                 var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconBox, target.IconScale);
+                var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconScale);
                 if(nowStatus == null) {
                     // 対象アイテムは破棄された
                     return Task.CompletedTask;
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
                 }
             }
 
-            var loader = new LauncherIconRefreshLoader(launcherItemId, target.IconBox, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            var loader = new LauncherIconRefreshLoader(launcherItemId, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
             return loader.LoadAndSaveAsync(target.IconScale, cancellationToken);
         }
 

@@ -14,8 +14,6 @@ using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Element.StandardInputOutput;
@@ -48,6 +46,9 @@ using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Views.NotifyLog;
 using ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
+using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -93,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId);
         void RefreshLauncherItemElement(Guid launcherItemId);
 
-        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement);
+        LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen);
         ExtendsExecuteElement CreateExtendsExecuteElement(string captionName, LauncherFileData launcherFileData, IReadOnlyList<LauncherEnvironmentVariableData> launcherEnvironmentVariables, IScreen screen);
         LauncherExtendsExecuteElement CreateLauncherExtendsExecuteElement(Guid launcherItemId, IScreen screen);
 
@@ -104,6 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         StandardInputOutputElement CreateStandardInputOutputElement(string caption, Process process, IScreen screen);
 
+        LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId);
+
         WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element);
         WindowItem CreateCustomizeLauncherItemWindow(LauncherItemCustomizeContainerElement element);
         WindowItem CreateExtendsExecuteWindow(ExtendsExecuteElement element);
@@ -112,6 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         WindowItem CreateStandardInputOutputWindow(StandardInputOutputElement element);
         WindowItem CreateNotifyLogWindow(NotifyLogElement element);
         WindowItem CreateSettingWindow(SettingContainerElement element);
+
 
         #endregion
     }
@@ -166,15 +170,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             public LauncherItemElement GetOrCreateLauncherItemElement(Guid launcherItemId)
             {
                 return LauncherItems.GetOrAdd(launcherItemId, launcherItemIdKey => {
-
-                    var launcherIconImageLoaders = EnumUtility.GetMembers<IconBox>()
-                        .Select(i => DiContainer.Build<LauncherIconLoader>(launcherItemId, i))
-                    ;
-                    var iconImageLoaderPack = new IconImageLoaderPack(launcherIconImageLoaders);
-
-                    var launcherIconElement = DiContainer.Build<LauncherIconElement>(launcherItemId, iconImageLoaderPack);
-
-                    var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey, launcherIconElement);
+                    var launcherItemElement = DiContainer.Build<LauncherItemElement>(launcherItemIdKey);
                     launcherItemElement.Initialize();
                     return launcherItemElement;
                 });
@@ -188,11 +184,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
             }
 
-            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen, LauncherIconElement iconElement)
+            public LauncherItemCustomizeContainerElement CreateCustomizeLauncherItemContainerElement(Guid launcherItemId, IScreen screen)
             {
                 var customizeLauncherEditorElement = DiContainer.Build<LauncherItemCustomizeEditorElement>(launcherItemId);
                 customizeLauncherEditorElement.Initialize();
-                var customizeLauncherItemContainerElement = DiContainer.Build<LauncherItemCustomizeContainerElement>(screen, customizeLauncherEditorElement, iconElement);
+                var customizeLauncherItemContainerElement = DiContainer.Build<LauncherItemCustomizeContainerElement>(screen, customizeLauncherEditorElement);
                 customizeLauncherItemContainerElement.Initialize();
                 return customizeLauncherItemContainerElement;
             }
@@ -246,6 +242,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return element;
             }
 
+            public LauncherItemExtensionElement CreateLauncherItemExtensionElement(IPluginInformations pluginInformations, Guid launcherItemId)
+            {
+                var element = DiContainer.Build<LauncherItemExtensionElement>(pluginInformations, launcherItemId);
+                element.Initialize();
+                return element;
+            }
 
             public WindowItem CreateLauncherToolbarWindow(LauncherToolbarElement element)
             {

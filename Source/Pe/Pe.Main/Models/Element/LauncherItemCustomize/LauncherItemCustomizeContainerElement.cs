@@ -8,13 +8,16 @@ using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Main.Models.Element.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeContainerElement : ElementBase, IViewShowStarter, IViewCloseReceiver
+    /// <summary>
+    /// 独立したランチャーアイテム編集処理。
+    /// <para>アイテムを単体編集する要素。</para>
+    /// </summary>
+    sealed public class LauncherItemCustomizeContainerElement : ElementBase, IViewShowStarter, IViewCloseReceiver
     {
         #region variable
 
@@ -22,13 +25,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         #endregion
 
-        public LauncherItemCustomizeContainerElement(IScreen screen, LauncherItemCustomizeEditorElement editorElement, LauncherIconElement launcherIconElement, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+        public LauncherItemCustomizeContainerElement(IScreen screen, LauncherItemCustomizeEditorElement editorElement, IOrderManager orderManager, IClipboardManager clipboardManager, INotifyManager notifyManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = editorElement.LauncherItemId;
             Screen = screen;
             Editor = editorElement;
-            Icon = launcherIconElement;
             OrderManager = orderManager;
             NotifyManager = notifyManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -40,7 +42,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public IScreen Screen { get; }
         public LauncherItemCustomizeEditorElement Editor { get; }
-        public LauncherIconElement Icon { get; }
 
         IOrderManager OrderManager { get; }
         INotifyManager NotifyManager { get; }
@@ -48,12 +49,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
-        protected bool ViewCreated { get; set; }
+        private bool ViewCreated { get; set; }
 
         public bool IsVisible
         {
             get => this._isVisible;
-            protected set => SetProperty(ref this._isVisible, value);
+            private set => SetProperty(ref this._isVisible, value);
         }
 
         public string CaptionName => Editor.Name;
@@ -68,6 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             OrderManager.RefreshLauncherItemElement(LauncherItemId);
             NotifyManager.SendLauncherItemChanged(LauncherItemId);
         }
+
 
         #endregion
 
@@ -108,7 +110,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
-        public virtual void StartView()
+        public void StartView()
         {
             var windowItem = OrderManager.CreateCustomizeLauncherItemWindow(this);
             windowItem.Window.Show();
@@ -131,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         }
 
         /// <inheritdoc cref="IViewCloseReceiver.ReceiveViewClosed(bool)"/>
-        public virtual void ReceiveViewClosed(bool isUserOperation)
+        public void ReceiveViewClosed(bool isUserOperation)
         {
             NotifyManager.SendCustomizeLauncherItemExited(LauncherItemId);
 

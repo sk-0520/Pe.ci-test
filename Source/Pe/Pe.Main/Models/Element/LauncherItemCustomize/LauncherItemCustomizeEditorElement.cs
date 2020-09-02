@@ -2,20 +2,36 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
+using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Bridge.Plugin.Preferences;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Launcher;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
+using ContentTypeTextNet.Pe.Main.Models.Plugin;
+using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 {
+    /// <summary>
+    /// ランチャーアイテム編集処理。
+    /// </summary>
     public class LauncherItemCustomizeEditorElement: ElementBase, ILauncherItemId
     {
         #region variable
@@ -23,27 +39,36 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         bool _isLazyLoad;
 
         #endregion
-        public LauncherItemCustomizeEditorElement(Guid launcherItemId, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+
+        public LauncherItemCustomizeEditorElement(Guid launcherItemId, ILauncherItemAddonFinder launcherItemAddonFinder, LauncherItemAddonContextFactory launcherItemAddonContextFactory, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             LauncherItemId = launcherItemId;
+            LauncherItemAddonFinder = launcherItemAddonFinder;
+            LauncherItemAddonContextFactory = launcherItemAddonContextFactory;
             ClipboardManager = clipboardManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
+            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
+
+        ILauncherItemAddonFinder LauncherItemAddonFinder { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
+        LauncherItemAddonContextFactory LauncherItemAddonContextFactory { get; }
         IClipboardManager ClipboardManager { get; }
 
         /// <summary>
         /// 一括用遅延読み込みモードか。
         /// <para>設定画面が遅い(#634)対応。</para>
         /// </summary>
-        internal bool IsLazyLoad {
+        internal bool IsLazyLoad
+        {
             get => this._isLazyLoad;
             protected private set => SetProperty(ref this._isLazyLoad, value);
         }
@@ -58,6 +83,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
         public ObservableCollection<string> TagItems { get; } = new ObservableCollection<string>();
 
+        private bool IsSaved { get; set; }
+
         #region file
 
         public LauncherFileData? File { get; private set; }
@@ -68,6 +95,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         #region storeapp
 
         public LauncherStoreAppData? StoreApp { get; private set; }
+
+        #endregion
+
+        #region addon
+
+        public bool LauncherItemSupportedPreferences { get; private set; }
+        IPlugin? LauncherItemPlugin { get; set; }
+        ILauncherItemExtension? LauncherItemExtension { get; set; }
+        ILauncherItemPreferences? LauncherItemPreferences { get; set; }
 
         #endregion
 
@@ -106,40 +142,142 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
+        void LoadAddonCore(IDatabaseCommandsPack databaseCommandsPack)
+        {
+            Debug.Assert(Kind == LauncherItemKind.Addon);
+            Debug.Assert(LauncherItemPlugin == null);
+            Debug.Assert(LauncherItemExtension == null);
+            Debug.Assert(LauncherItemPreferences == null);
+
+            var launcherAddonsEntityDao = new LauncherAddonsEntityDao(databaseCommandsPack.Main.Commander, DatabaseStatementLoader, databaseCommandsPack.Main.Implementation, LoggerFactory);
+            var pluginId = launcherAddonsEntityDao.SelectAddonPluginId(LauncherItemId);
+
+            if(!LauncherItemAddonFinder.Exists(pluginId)) {
+                Logger.LogError("ランチャーアイテムアドオンが存在しない: {0}", pluginId);
+                return;
+            }
+            LauncherItemPlugin = LauncherItemAddonFinder.GetPlugin(pluginId);
+
+            LauncherItemExtension = LauncherItemAddonFinder.Find(LauncherItemId, pluginId);
+            LauncherItemSupportedPreferences = LauncherItemExtension.SupportedPreferences;
+            if(!LauncherItemSupportedPreferences) {
+                Logger.LogInformation("{0} はアドオン設定をサポートしていない", LauncherItemPlugin.PluginInformations.PluginIdentifiers);
+                return;
+            }
+
+            using(var context = LauncherItemAddonContextFactory.CreateContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseCommandsPack, true)) {
+                LauncherItemPreferences = LauncherItemExtension.CreatePreferences(context);
+            }
+        }
+
+        protected void LoadAddon()
+        {
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            LoadAddonCore(pack);
+        }
+
+        internal UserControl BeginLauncherItemPreferences()
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesLoadContext(LauncherItemPlugin.PluginInformations, LauncherItemId, pack)) {
+                return LauncherItemPreferences.BeginPreferences(context);
+            }
+        }
+
+        internal bool CheckLauncherItemPreferences()
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesCheckContext(LauncherItemPlugin.PluginInformations, LauncherItemId, pack)) {
+                LauncherItemPreferences.CheckPreferences(context);
+                return context.HasError;
+            }
+        }
+
+        internal void SaveLauncherPreferences(IDatabaseCommandsPack databaseCommandsPack)
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesSaveContext(LauncherItemPlugin.PluginInformations, LauncherItemId, databaseCommandsPack)) {
+                LauncherItemPreferences.SavePreferences(context);
+                IsSaved = true;
+            }
+        }
+
+        internal void EndLauncherPreferences()
+        {
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            using(var context = LauncherItemAddonContextFactory.CreatePreferencesEndContext(LauncherItemPlugin.PluginInformations, LauncherItemId)) {
+                context.IsSaved = IsSaved;
+                LauncherItemPreferences.EndPreferences(context);
+            }
+        }
+
+        internal string GetLauncherItemPluginHeader()
+        {
+            if(LauncherItemPlugin == null) {
+                return Properties.Resources.String_LauncherItemCustomizeControl_UnloadedPlugin_Header;
+            }
+
+            Debug.Assert(LauncherItemPlugin != null);
+            Debug.Assert(LauncherItemSupportedPreferences);
+            Debug.Assert(LauncherItemPreferences != null);
+
+            //TODO: なんかこう、ヘッダ名のために仰々しいなぁ XAML でプラグインID薄くしたいし。。。
+            return LauncherItemPlugin.PluginInformations.PluginIdentifiers.ToString()!;
+        }
+
         void LoadLauncherItem()
         {
             ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
+            using var pack = PersistentHelper.WaitReadPack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount());
 
-                Name = launcherItemData.Name;
-                Code = launcherItemData.Code;
-                Kind = launcherItemData.Kind;
-                IconData = launcherItemData.Icon;
-                IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
-                Comment = launcherItemData.Comment;
+            var launcherItemsDao = new LauncherItemsEntityDao(pack.Main.Commander, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
+            var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
-                var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var tagItems = launcherTagsEntityDao.SelectTags(LauncherItemId);
-                TagItems.SetRange(tagItems);
+            Name = launcherItemData.Name;
+            Code = launcherItemData.Code;
+            Kind = launcherItemData.Kind;
+            IconData = launcherItemData.Icon;
+            IsEnabledCommandLauncher = launcherItemData.IsEnabledCommandLauncher;
+            Comment = launcherItemData.Comment;
 
-                switch(Kind) {
-                    case LauncherItemKind.File: {
-                            LoadFileCore(commander, commander.Implementation);
-                        }
-                        break;
+            var launcherTagsEntityDao = new LauncherTagsEntityDao(pack.Main.Commander, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
+            var tagItems = launcherTagsEntityDao.SelectTags(LauncherItemId);
+            TagItems.SetRange(tagItems);
 
-                    case LauncherItemKind.StoreApp: {
-                            var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                            StoreApp = launcherStoreAppsEntityDao.SelectStoreApp(LauncherItemId);
-                        }
-                        break;
+            switch(Kind) {
+                case LauncherItemKind.File: {
+                        LoadFileCore(pack.Main.Commander, pack.Main.Implementation);
+                    }
+                    break;
 
-                    default:
-                        throw new NotImplementedException();
-                }
+                case LauncherItemKind.StoreApp: {
+                        var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(pack.Main.Commander, DatabaseStatementLoader, pack.Main.Implementation, LoggerFactory);
+                        StoreApp = launcherStoreAppsEntityDao.SelectStoreApp(LauncherItemId);
+                    }
+                    break;
+
+                case LauncherItemKind.Addon: {
+                        LoadAddonCore(pack);
+                    }
+                    break;
+
+                default:
+                    throw new NotImplementedException();
             }
         }
 
@@ -208,11 +346,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
         /// <summary>
         /// アイテム保存。
         /// </summary>
-        /// <param name="commander"></param>
-        /// <param name="implementation"></param>
-        /// <param name="databaseCommonStatus"></param>
+        /// <param name="commandsPack"></param>
         /// <returns>アイコンの削除が必要か。</returns>
-        public bool SaveItem(IDatabaseCommander commander, IDatabaseImplementation implementation, IDatabaseCommonStatus databaseCommonStatus)
+        public bool SaveItem(IDatabaseCommandsPack commandsPack)
         {
             ThrowIfDisposed();
 
@@ -231,13 +367,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
             var iconChangedResult = false;
 
-            var launcherItemsEntityDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-            var launcherTagsEntityDao = new LauncherTagsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var launcherItemsEntityDao = new LauncherItemsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+            var launcherTagsEntityDao = new LauncherTagsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
 
-            var launcherItemDomainDao = new LauncherItemDomainDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var launcherItemDomainDao = new LauncherItemDomainDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
             var currentFileIcon = launcherItemDomainDao.SelectFileIcon(LauncherItemId);
 
-            launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, databaseCommonStatus);
+            launcherItemsEntityDao.UpdateCustomizeLauncherItem(itemData, commandsPack.CommonStatus);
             switch(Kind) {
                 case LauncherItemKind.File: {
                         Debug.Assert(File != null);
@@ -246,27 +382,41 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
 
                         iconChangedResult = CheckIconChanged(currentFileIcon, itemData.Icon, File.Path);
 
-                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+                        var launcherFilesEntityDao = new LauncherFilesEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        var launcherMergeEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
 
-                        launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, databaseCommonStatus);
-                        launcherRedoItemsEntityDao.UpdateRedoItem(itemData.LauncherItemId, Redo, databaseCommonStatus);
+                        launcherFilesEntityDao.UpdateCustomizeLauncherFile(itemData.LauncherItemId, File, File, commandsPack.CommonStatus);
+                        launcherRedoItemsEntityDao.UpdateRedoItem(itemData.LauncherItemId, Redo, commandsPack.CommonStatus);
 
                         launcherRedoSuccessExitCodesEntityDao.DeleteSuccessExitCodes(itemData.LauncherItemId);
-                        launcherRedoSuccessExitCodesEntityDao.InsertSuccessExitCodes(itemData.LauncherItemId, Redo.SuccessExitCodes, databaseCommonStatus);
+                        launcherRedoSuccessExitCodesEntityDao.InsertSuccessExitCodes(itemData.LauncherItemId, Redo.SuccessExitCodes, commandsPack.CommonStatus);
 
                         launcherMergeEnvVarsEntityDao.DeleteEnvVarItemsByLauncherItemId(itemData.LauncherItemId);
-                        launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, databaseCommonStatus);
+                        launcherMergeEnvVarsEntityDao.InsertEnvVarItems(itemData.LauncherItemId, EnvironmentVariableItems, commandsPack.CommonStatus);
                     }
                     break;
 
                 case LauncherItemKind.StoreApp: {
                         Debug.Assert(StoreApp != null);
 
-                        var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
-                        launcherStoreAppsEntityDao.UpdateStoreApp(itemData.LauncherItemId, StoreApp, databaseCommonStatus);
+                        var launcherStoreAppsEntityDao = new LauncherStoreAppsEntityDao(commandsPack.Main.Commander, DatabaseStatementLoader, commandsPack.Main.Implementation, LoggerFactory);
+                        launcherStoreAppsEntityDao.UpdateStoreApp(itemData.LauncherItemId, StoreApp, commandsPack.CommonStatus);
+                    }
+                    break;
+
+                case LauncherItemKind.Addon: {
+                        if(LauncherItemPlugin == null) {
+                            Logger.LogWarning("読み込めてないプラグインはプラグイン設定箇所スキップ");
+                            break;
+                        }
+                        Debug.Assert(LauncherItemPlugin != null);
+                        Debug.Assert(LauncherItemSupportedPreferences);
+                        Debug.Assert(LauncherItemExtension != null);
+                        Debug.Assert(LauncherItemPreferences != null);
+
+                        SaveLauncherPreferences(commandsPack);
                     }
                     break;
 
@@ -275,7 +425,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
 
             launcherTagsEntityDao.DeleteTagByLauncherItemId(itemData.LauncherItemId);
-            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, databaseCommonStatus);
+            launcherTagsEntityDao.InsertTags(itemData.LauncherItemId, TagItems, commandsPack.CommonStatus);
 
             return iconChangedResult;
         }
@@ -296,9 +446,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             ThrowIfDisposed();
 
             bool needToIconClear;
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                needToIconClear = SaveItem(commander, commander.Implementation, DatabaseCommonStatus.CreateCurrentAccount());
-                commander.Commit();
+
+            //            var pack = new ApplicationDatabaseCommandsPack(
+            //    new DatabaseCommands(mainDatabaseCommander, mainDatabaseCommander.Implementation),
+            //    new DatabaseCommands(fileDatabaseCommander, fileDatabaseCommander.Implementation),
+            //    new DatabaseCommands(tempDatabaseCommander, tempDatabaseCommander.Implementation),
+            //    DatabaseCommonStatus.CreateCurrentAccount()
+            //);
+            using(var pack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreateCurrentAccount())) {
+                needToIconClear = SaveItem(pack);
+                pack.Commit();
             }
             if(needToIconClear) {
                 using(var commander = FileDatabaseBarrier.WaitWrite()) {
@@ -339,6 +496,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             }
         }
 
+        public LauncherIconFactory CreateLauncherIconFactory()
+        {
+            return new LauncherIconFactory(LauncherItemId, Kind, LauncherItemAddonFinder, MainDatabaseBarrier, FileDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+        }
+
+
         #endregion
 
         #region ElementBase
@@ -357,6 +520,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize
             if(!IsDisposed) {
                 if(disposing) {
                     TagItems.Clear();
+
+                    if(LauncherItemPreferences != null) {
+                        EndLauncherPreferences();
+                    }
                 }
             }
 

@@ -26,9 +26,9 @@
   <ItemGroup>
     <PackageReference Include="ClrHeapAllocationAnalyzer" Version="3.0.0" />
     <PackageReference Include="Dapper" Version="2.0.35" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.7" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.9.0.19135">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.12.0.21095">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

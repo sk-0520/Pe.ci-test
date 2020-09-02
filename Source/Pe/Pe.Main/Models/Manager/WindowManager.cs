@@ -90,6 +90,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// プラグイン ウィジェット。
         /// </summary>
         Widget,
+        /// <summary>
+        /// プラグイン ランチャーアイテム拡張。
+        /// </summary>
+        LauncherItemExtension
     }
 
     public class WindowItem
@@ -261,7 +265,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                             Logger.LogDebug("ウィンドウ破棄前(ユーザー操作): {0}, {1:x16}", item.Window, hwnd.ToInt64());
                             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                                viewLifecycleReceiver.ReceiveViewUserClosing(e);
+                                viewLifecycleReceiver.ReceiveViewUserClosing(item.Window, e);
                             }
 
                             item.IsUserClosed = !e.Cancel;
@@ -365,7 +369,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var item = Items.First(i => i.Window == window);
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                viewLifecycleReceiver.ReceiveViewClosing(e);
+                viewLifecycleReceiver.ReceiveViewClosing(item.Window, e);
             }
         }
 

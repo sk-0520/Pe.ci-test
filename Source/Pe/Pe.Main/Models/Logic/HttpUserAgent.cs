@@ -13,26 +13,26 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
-    public interface IApplicationUserAgentFactory
+    public interface IApplicationHttpUserAgentFactory
     {
         #region function
 
-        IUserAgent CreateAppUserAgent();
+        IHttpUserAgent CreateAppHttpUserAgent();
 
         #endregion
     }
 
     /// <summary>
-    /// <inheritdoc cref="IUserAgent"/>
+    /// <inheritdoc cref="IHttpUserAgent"/>
     /// </summary>
-    internal class UserAgent : DisposerBase, IUserAgent
+    internal class HttpUserAgent : DisposerBase, IHttpUserAgent
     {
         #region variable
 
         int _referenceCount;
 
         #endregion
-        public UserAgent(string name, HttpClient httpClient, ILoggerFactory loggerFactory)
+        public HttpUserAgent(string name, HttpClient httpClient, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
 
@@ -171,9 +171,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
     }
 
     /// <summary>
-    /// <inheritdoc cref="IUserAgent"/>
+    /// <inheritdoc cref="IHttpUserAgent"/>
     /// </summary>
-    internal class UserAgentName : IUserAgentName
+    internal class UserAgentName : IHttpUserAgentName
     {
         #region function
 
@@ -208,15 +208,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #region IUserAgentName
 
         /// <summary>
-        /// <inheritdoc cref="IUserAgentName.Separator"/>
+        /// <inheritdoc cref="IHttpUserAgentName.Separator"/>
         /// </summary>
         public string Separator { get; } = ";";
         /// <summary>
-        /// <inheritdoc cref="IUserAgentName.Session"/>
+        /// <inheritdoc cref="IHttpUserAgentName.Session"/>
         /// </summary>
         public string Session { get; } = "session";
         /// <summary>
-        /// <inheritdoc cref="IUserAgentName.Cache"/>
+        /// <inheritdoc cref="IHttpUserAgentName.Cache"/>
         /// </summary>
         public string Cache { get; } = "cache";
 
@@ -237,12 +237,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
     }
 
-    /// <summary>
-    /// <inheritdoc cref="IUserAgentFactory"/>
-    /// </summary>
-    internal class UserAgentFactory : IUserAgentFactory
+    /// <inheritdoc cref="IHttpUserAgentFactory"/>
+    internal class HttpUserAgentFactory : IHttpUserAgentFactory
     {
-        public UserAgentFactory(ILoggerFactory loggerFactory)
+        public HttpUserAgentFactory(ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
@@ -252,7 +250,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
-        IDictionary<string, UserAgent> Pool { get; } = new Dictionary<string, UserAgent>();
+        IDictionary<string, HttpUserAgent> Pool { get; } = new Dictionary<string, HttpUserAgent>();
 
         TimeSpan ClearTime { get; } = TimeSpan.FromSeconds(30);
 
@@ -260,11 +258,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         #region function
 
-        UserAgent CreateUserAgentCore(string name)
+        HttpUserAgent CreateUserAgentCore(string name)
         {
             Debug.Assert(name != null);
 
-            UserAgent Create(string name)
+            HttpUserAgent Create(string name)
             {
                 var param = name.Split(UserAgentName.Separator, StringSplitOptions.RemoveEmptyEntries);
 
@@ -280,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
                 var httpClient = new HttpClient(handler);
                 httpClient.DefaultRequestHeaders.CacheControl = cacheControl;
 
-                var newUserAgent = new UserAgent(name, httpClient, LoggerFactory);
+                var newUserAgent = new HttpUserAgent(name, httpClient, LoggerFactory);
                 return newUserAgent;
             }
 
@@ -312,15 +310,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         #endregion
 
 
-        #region IUserAgentFactory
+        #region IHttpUserAgentFactory
 
-        public IUserAgentName UserAgentName { get; } = new UserAgentName();
+        public IHttpUserAgentName UserAgentName { get; } = new UserAgentName();
 
-        public UserAgent CreateUserAgent() => CreateUserAgentCore(string.Empty);
-        IUserAgent IUserAgentFactory.CreateUserAgent() => CreateUserAgent();
+        public HttpUserAgent CreateUserAgent() => CreateUserAgentCore(string.Empty);
+        IHttpUserAgent IHttpUserAgentFactory.CreateUserAgent() => CreateUserAgent();
 
-        public UserAgent CreateUserAgent(string name) => CreateUserAgentCore(name);
-        IUserAgent IUserAgentFactory.CreateUserAgent(string name) => CreateUserAgent(name);
+        public HttpUserAgent CreateUserAgent(string name) => CreateUserAgentCore(name);
+        IHttpUserAgent IHttpUserAgentFactory.CreateUserAgent(string name) => CreateUserAgent(name);
 
         #endregion
     }

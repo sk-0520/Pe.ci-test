@@ -182,7 +182,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
-        public bool UpdatIsAutoHide(Guid launcherToolbarId, bool isAutoHide, DatabaseCommonStatus commonStatus)
+        public bool UpdatIsAutoHide(Guid launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 
@@ -193,7 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
-        public bool UpdatIsVisible(Guid launcherToolbarId, bool isVisible, DatabaseCommonStatus commonStatus)
+        public bool UpdatIsVisible(Guid launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
 

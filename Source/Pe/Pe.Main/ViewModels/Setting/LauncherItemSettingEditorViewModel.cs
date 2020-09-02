@@ -1,30 +1,31 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
+using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 {
-    public sealed class LauncherItemSettingEditorViewModel : LauncherItemCustomizeEditorViewModel
+    public sealed class LauncherItemSettingEditorViewModel: LauncherItemCustomizeEditorViewModel
     {
-        private LauncherItemSettingEditorViewModel(LauncherItemSettingEditorElement model, LauncherIconViewModel icon, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(model, dispatcherWrapper, loggerFactory)
-        {
-            Editor = model;
-            Icon = icon;
-        }
-
         public LauncherItemSettingEditorViewModel(LauncherItemSettingEditorElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, dispatcherWrapper, loggerFactory)
         {
             Editor = model;
-            Icon = new LauncherIconViewModel(Editor.Icon, dispatcherWrapper, LoggerFactory);
+        }
+
+        internal LauncherItemSettingEditorViewModel(LauncherItemSettingEditorViewModel source)
+            : base(source)
+        {
+            Editor = source.Editor;
         }
 
         #region property
@@ -33,15 +34,25 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         [IgnoreValidation]
         LauncherItemSettingEditorElement Editor { get; }
+
         [IgnoreValidation]
-        public LauncherIconViewModel Icon { get; }
+        public object Icon
+        {
+            get
+            {
+                var factory = Editor.CreateLauncherIconFactory();
+                var iconSource = factory.CreateIconSource(DispatcherWrapper);
+                return factory.CreateView(iconSource, false, DispatcherWrapper);
+            }
+        }
+
         #endregion
 
         #region function
 
         public LauncherItemSettingEditorViewModel Clone()
         {
-            return new LauncherItemSettingEditorViewModel(Editor, Icon, DispatcherWrapper, LoggerFactory);
+            return new LauncherItemSettingEditorViewModel(this);
         }
 
         internal void LazyLoad()
@@ -63,7 +74,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    Icon.Dispose();
                 }
             }
 
