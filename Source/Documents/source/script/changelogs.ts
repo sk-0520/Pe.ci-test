@@ -125,6 +125,14 @@ const changelogs = [
 					},
 					{
 						"revision": "",
+						"subject": "#660: ランチャーアイテムアドオンの実装",
+						"comments": [
+							"かなり処理が甘いけどこれ以上労力はかけられんのでいったんOKとする",
+							"参照実装としては Pe.Plugins.Reference.Clock が対象"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
