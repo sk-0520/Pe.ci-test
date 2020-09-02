@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
         {
             switch(iconMode) {
                 case LauncherItemIconMode.Toolbar: {
-                        var viewModel = new ClockLauncherItemViewModel(this, SkeletonImplements, PlatformTheme, MediaConverter, DispatcherWrapper, LoggerFactory);
+                        var viewModel = new ClockLauncherItemControlViewModel(this, SkeletonImplements, PlatformTheme, MediaConverter, DispatcherWrapper, LoggerFactory);
                         return new ClockLauncherItemControl() {
                             DataContext = viewModel,
                         };
@@ -160,8 +160,9 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
         public override void Execute(string? argument, ICommandExecuteParameter commandExecuteParameter, ILauncherItemExtensionExecuteParameter launcherItemExtensionExecuteParameter, ILauncherItemAddonContext launcherItemAddonContext)
         {
-            var view = new Window() {
-
+            var viewModel = new ClockLauncherItemWindowViewModel(this, SkeletonImplements, DispatcherWrapper, LoggerFactory);
+            var view = new ClockLauncherItemWindow() {
+                DataContext = viewModel,
             };
 
             launcherItemExtensionExecuteParameter.ViewSupporter.RegisterWindow(
