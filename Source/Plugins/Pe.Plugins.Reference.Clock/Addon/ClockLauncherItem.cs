@@ -167,8 +167,11 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.Addon
 
             launcherItemExtensionExecuteParameter.ViewSupporter.RegisterWindow(
                 view,
-                () => true,
-                null
+                () => !viewModel.CanStop,
+                () => {
+                    view.DataContext = null;
+                    viewModel.Dispose();
+                }
             );
         }
 
