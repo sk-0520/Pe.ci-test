@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         LauncherAddonExecuteResult ExecuteAddon(string? customArgument, IScreen screen)
         {
-            if(LauncherItemAddonViewSupporterCollection.Exists(LauncherItemId)) {
+            if(LauncherItemAddonViewSupporterCollection.ExistsInformations(LauncherItemId)) {
                 Logger.LogInformation("ランチャーアイテムはすでに起動している: {0}", LauncherItemId);
                 LauncherItemAddonViewSupporterCollection.Foreground(LauncherItemId);
                 return new LauncherAddonExecuteResult() {

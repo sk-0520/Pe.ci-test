@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
         #region variable
 
         double _progressValue;
+        TimeSpan _currentTime;
 
         TimeSpan _selectedTime;
         bool _canStart = true;
@@ -45,6 +46,12 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         [DateTimeKind(DateTimeKind.Utc)]
         DateTime StartTimestamp { get; set; }
+
+        public TimeSpan CurrentTime
+        {
+            get => this._currentTime;
+            private set => SetProperty(ref this._currentTime, value);
+        }
 
         public double ProgressValue
         {
@@ -113,7 +120,8 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Clock.ViewModels
 
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            ProgressValue = (DateTime.UtcNow - StartTimestamp).TotalMilliseconds / SelectedTime.TotalMilliseconds;
+            CurrentTime = DateTime.UtcNow - StartTimestamp;
+            ProgressValue = CurrentTime.TotalMilliseconds / SelectedTime.TotalMilliseconds;
             if(1 <= ProgressValue) {
                 StopTimer();
             }

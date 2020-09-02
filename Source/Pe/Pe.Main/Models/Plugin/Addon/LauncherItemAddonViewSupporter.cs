@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         #region function
 
-        public bool Exists(Guid launcherItemId)
+        public bool ExistsInformations(Guid launcherItemId)
         {
             var target = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
             if(target == null) {
@@ -67,7 +67,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public ILauncherItemAddonViewSupporter Create(IPluginInformations pluginInformations, Guid launcherItemId)
         {
-            if(Exists(launcherItemId)) {
+            var createdViewSupporter = LauncherItemAddonViewSupporters.FirstOrDefault(i => i.LauncherItemId == launcherItemId);
+            if(createdViewSupporter != null) {
+                return createdViewSupporter;
+            }
+
+            if(ExistsInformations(launcherItemId)) {
                 throw new InvalidOperationException($"{nameof(launcherItemId)}: {launcherItemId}");
             }
 

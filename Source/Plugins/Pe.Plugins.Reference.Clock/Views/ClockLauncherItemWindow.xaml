@@ -17,6 +17,7 @@
   <Grid Margin="10">
     <Grid.Resources>
       <Thickness x:Key="Margin">4</Thickness>
+      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Grid.Resources>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -29,11 +30,12 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
-    <ToggleButton Grid.Row="0" Grid.Column="0" IsChecked="{Binding Topmost, RelativeSource={RelativeSource AncestorType=Window}}" Content="📌" />
-    <ComboBox Grid.Row="0" Grid.Column="1" Margin="{StaticResource Margin}" IsEnabled="{Binding CanStart}" ItemsSource="{Binding Times}" SelectedItem="{Binding SelectedTime}" Width="180" />
-    <Button Grid.Row="0" Grid.Column="2" Margin="{StaticResource Margin}" Command="{Binding StartCommand}" IsEnabled="{Binding CanStart}" Content="START" />
-    <Button Grid.Row="0" Grid.Column="3" Margin="{StaticResource Margin}" Command="{Binding StopCommand}" IsEnabled="{Binding CanStop}" Content="STOP" />
+    <ToggleButton Grid.Row="0" Grid.Column="0" Content="📌" IsChecked="{Binding Topmost, RelativeSource={RelativeSource AncestorType=Window}}" />
+    <ComboBox Grid.Row="0" Grid.Column="1" Width="180" Margin="{StaticResource Margin}" IsEnabled="{Binding CanStart}" ItemsSource="{Binding Times}" SelectedItem="{Binding SelectedTime}" />
+    <Button Grid.Row="0" Grid.Column="2"  Content="START" Margin="{StaticResource Margin}" Command="{Binding StartCommand}" IsEnabled="{Binding CanStart}" />
+    <Button Grid.Row="0" Grid.Column="3" Content="STOP" Margin="{StaticResource Margin}" Command="{Binding StopCommand}" IsEnabled="{Binding CanStop}" />
 
     <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="{StaticResource Margin}" Minimum="0" Maximum="1" Height="16" Value="{Binding ProgressValue, Mode=OneWay}" />
+    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding CurrentTime}" Visibility="{Binding CanStop, Converter={StaticResource BooleanToVisibilityConverter}}" />
   </Grid>
 </Window>
