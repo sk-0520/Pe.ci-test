@@ -830,6 +830,14 @@ const changelogs = [
 ];/*--------RELEASE TAIL--------*/
 
 /*--------BUILD-EMBEDDED-JSON--------*/
+import { data as foo } from './changelogs-archive.json';
+import { url as bar } from './changelogs-archive.json';
+const asset = require('./changelogs-archive.json');
+//const jsonPath = require('./changelogs-archive.json');
+Array.prototype.push.apply(changelogs, foo);
+Array.prototype.push.apply(changelogs, bar);
+Array.prototype.push.apply(changelogs, asset.data);
+Array.prototype.push.apply(changelogs, asset.url);
 
 window.addEventListener('load', () => {
 	const changelogTypeMap: { [key: string]: string } = {
