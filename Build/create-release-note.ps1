@@ -13,7 +13,7 @@ foreach ($scriptFileName in $scriptFileNames) {
 $rootDirPath = Split-Path -Parent $currentDirPath
 $outputDirectory = Join-Path $rootDirPath 'Output'
 
-$rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/source/script/changelogs.ts"
+$rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/define/changelogs.json"
 $rawChangelogLinkFile = Join-Path $rootDirPath "Source/Documents/source/script/changelog-link.js"
 $rawChangelogStyleFile = Join-Path $rootDirPath "Source/Documents/source/style/changelog.css"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
@@ -95,20 +95,10 @@ $contentMap = @{
 
 # 無理やりjsonにする
 $rawChangelogsContent = Get-Content $rawChangelogsFile -Raw -Encoding UTF8
-$headMark = '/*--------RELEASE HEAD--------*/'
-$tailMark = '/*--------RELEASE TAIL--------*/'
-$prevHeaderIndex = $rawChangelogsContent.IndexOf($headMark)
-$prevHeaderContent = $rawChangelogsContent.Substring($prevHeaderIndex + $headMark.Length)
 
-$tailIndex = $prevHeaderContent.IndexOf($tailMark);
-$prevContent = $prevHeaderContent.Substring(0, $tailIndex)
-$prevContent = $prevContent.Substring(0, $prevContent.LastIndexOf(';'))
-
-$jsonValue = ('[' + $prevContent.Substring($prevContent.IndexOf('{')))
-Write-Output $jsonValue
-$json = $jsonValue | ConvertFrom-Json
-
-$currentVersion = $json[0]
+$json = $rawChangelogsContent | ConvertFrom-Json
+Write-Output $json
+$currentVersion = $json.changelogs[0]
 
 # 速度とかどうでもいい
 $root = New-Object Element 'div'
