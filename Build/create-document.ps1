@@ -1,6 +1,5 @@
 Param(
-	[switch] $NoInstall,
-	[parameter(mandatory = $true)][string[]] $Platforms
+	[switch] $NoInstall
 )
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
@@ -26,10 +25,9 @@ try {
 	Write-Output build
 	npm run build
 
-	foreach ($platform in $Platforms) {
-		$outputDirectoryPath = Join-Path $rootDirectoryPath "Output\Release\$platform\Pe\doc\help"
-		robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
-	}
+	# ビルド工程にドキュメントをのせる
+	$outputDirectoryPath = Join-Path $rootDirectoryPath "Source\Pe\Pe.Main\doc\help"
+	robocopy /MIR /PURGE /R:3 /S "$buildOutputDirectoryPath" "$outputDirectoryPath"
 }
 finally {
 	Pop-Location

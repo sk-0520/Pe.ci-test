@@ -110,10 +110,6 @@ try {
 		$xml.Save($projectFile)
 	}
 
-	# 事前工程で作成済みの Pe.Main のヘルプドキュメント周りを破棄
-	Remove-Item -Path 'Source\Pe\Pe.Main\doc\help.html' -Force 
-	Remove-Item -Path 'Source\Pe\Pe.Main\doc\help' -Recurse -Force 
-
 	# アイコンファイルの差し替え
 	$appIconName = switch ($BuildType) {
 		'BETA' { 'App-beta.ico' }
