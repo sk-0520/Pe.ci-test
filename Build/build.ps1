@@ -29,8 +29,14 @@ Write-Output ("dotnet: " + (dotnet --version))
 
 if (!$IgnoreChanged) {
 	# SCM 的に現行状態に未コミットがあれば死ぬ
-	if ((git status -s | Measure-Object).Count -ne 0) {
-		throw "変更あり"
+	try {
+		git update-index --assume-unchanged Source/Pe/Pe.Main/doc/help/index.html
+		if ((git status -s | Measure-Object).Count -ne 0) {
+			git status -s
+			throw "変更あり"
+		}
+	} finally {
+		git update-index --no-assume-unchanged Source/Pe/Pe.Main/doc/help/index.html
 	}
 }
 
