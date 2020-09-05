@@ -25,7 +25,7 @@
     ]
   },
   "include": [
-    "**/*.ts"
+    "**/*.ts", "define/changelogsjson"
   ],
   "exclude": [
     "node_modules"
