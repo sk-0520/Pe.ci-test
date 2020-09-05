@@ -98,7 +98,7 @@ $rawChangelogsContent = Get-Content $rawChangelogsFile -Raw -Encoding UTF8
 
 $json = $rawChangelogsContent | ConvertFrom-Json
 Write-Output $json
-$currentVersion = $json.changelogs[0]
+$currentVersion = $json[0]
 
 # 速度とかどうでもいい
 $root = New-Object Element 'div'
