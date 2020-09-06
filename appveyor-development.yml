@@ -13,9 +13,8 @@ install:
   - cmd: dotnet --version
   - cmd: choco install dotnetcore-sdk
   - cmd: dotnet --version
-  - ps: Install-Product node 12.14.1
-  - cmd: npm --version
-  #- cmd: npm -g install npm@6.13.4
+  - ps: Install-Product node 12.18.3
+  - cmd: npm -g install npm@6.14.8
 before_build:
   - cmd: git submodule init
   - cmd: git submodule update
