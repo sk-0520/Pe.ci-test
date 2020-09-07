@@ -279,7 +279,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 // 設定用DBを永続用DBと切り替え
                 var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
                 var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
-                    .Select(i => i.StopConnection())
+                    .Select(i => i.PauseConnection())
                     .ToList()
                 ;
 
