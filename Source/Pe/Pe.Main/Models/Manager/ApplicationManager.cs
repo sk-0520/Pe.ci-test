@@ -254,6 +254,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
             ;
 
+            var workingDatabasePack = ApplicationDiContainer.Build<IDatabaseAccessorPack>();
+            var settingDatabasePack = container.Build<IDatabaseAccessorPack>();
+            PersistentHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
             var settingElement = new SettingContainerElement(container, container.Build<ILoggerFactory>());
             settingElement.Initialize();
@@ -316,6 +319,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
                 var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Instance);
                 cultureServiceChanger.ChangeCulture();
+
+                PersistentHelper.Copy(workingDatabasePack.Temporary, accessorPack.Temporary);
+
 
                 Logger.LogInformation("設定適用のため各要素生成");
 

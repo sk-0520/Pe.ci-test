@@ -103,6 +103,33 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             return WaitPack(mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, true);
         }
 
+        /// <summary>
+        /// データベース内データを複製。
+        /// <para>DB実装依存。Sqliteべったり。</para>
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        public static void Copy(IDatabaseAccessor source, IDatabaseAccessor destination)
+        {
+            if(source == null) {
+                throw new ArgumentNullException(nameof(source));
+            }
+            if(destination == null) {
+                throw new ArgumentNullException(nameof(destination));
+            }
+            if(source == destination) {
+                throw new ArgumentException($"{nameof(source)} == {nameof(destination)}");
+            }
+
+            var src = (ApplicationDatabaseAccessor)source;
+            var dst = (ApplicationDatabaseAccessor)destination;
+
+            var dbNames = new[] { "main", "temp" };
+            foreach(var dbName in dbNames) {
+                src.CopyTo(dbName, dst, dbName);
+            }
+        }
+
         #endregion
     }
 }
