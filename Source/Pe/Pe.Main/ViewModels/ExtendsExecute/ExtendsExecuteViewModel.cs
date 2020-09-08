@@ -319,22 +319,33 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         private void OptionDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else if(e.Data.IsTextPresent()) {
+                e.Effects = DragDropEffects.Copy;
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
         }
 
         private void OptionDragLeave(UIElement sender, DragEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         private void OptionDrop(UIElement sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Option = string.Join(" ", filePaths.Select(i => CommandLine.Escape(i)));
+                e.Handled = true;
+            } else if(e.Data.IsTextPresent()) {
+                Option = TextUtility.JoinLines(e.Data.GetText());
+                e.Handled = true;
+            }
         }
 
         private IResultSuccessValue<DragParameter> OptionGetDragParameter(UIElement sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            return ResultSuccessValue.Failure<DragParameter>();
         }
 
         #endregion
@@ -343,27 +354,39 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         private bool WorkDirectoryCanDragStart(UIElement sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            var dd = new WorkDirectoryDragAndDropGuideline(DispatcherWrapper, LoggerFactory);
+            return dd.CanDragStart(sender, e);
         }
 
         private void WorkDirectoryDragOrverOrEnter(UIElement sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else if(e.Data.IsTextPresent()) {
+                e.Effects = DragDropEffects.Copy;
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
         }
 
         private void WorkDirectoryDragLeave(UIElement sender, DragEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         private void WorkDirectoryDrop(UIElement sender, DragEventArgs e)
         {
-            throw new NotImplementedException();
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                WorkDirectoryPath = string.Join(" ", filePaths.Select(i => CommandLine.Escape(i)));
+                e.Handled = true;
+            } else if(e.Data.IsTextPresent()) {
+                WorkDirectoryPath = TextUtility.JoinLines(e.Data.GetText());
+                e.Handled = true;
+            }
         }
 
         private IResultSuccessValue<DragParameter> WorkDirectoryGetDragParameter(UIElement sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            return ResultSuccessValue.Failure<DragParameter>();
         }
 
         #endregion
