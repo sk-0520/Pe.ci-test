@@ -396,7 +396,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effects = DragDropEffects.Move;
-            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
+            } else if(e.Data.IsTextPresent()) {
                 e.Effects = DragDropEffects.Move;
             }
 
@@ -422,8 +422,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
                 DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
-            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
-                var argument = (string)e.Data.GetData(DataFormats.UnicodeText);
+            } else if(e.Data.IsTextPresent()) {
+                var argument = TextUtility.JoinLines(e.Data.GetText());
                 DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
             }
 

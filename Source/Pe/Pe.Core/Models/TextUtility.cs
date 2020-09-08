@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -196,6 +197,20 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
             return s.Trim();
         }
+
+        /// <summary>
+        /// 複数行を指定文字列で結合。
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static string JoinLines(string lines, string separator) => string.Join(separator, ReadLines(lines));
+        /// <summary>
+        /// 複数行データを半角スペースで結合。
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <returns></returns>
+        public static string JoinLines(string lines) => JoinLines(lines, " ");
 
         #endregion
     }
