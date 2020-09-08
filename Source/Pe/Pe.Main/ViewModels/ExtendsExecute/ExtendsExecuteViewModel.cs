@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -362,8 +363,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effects = DragDropEffects.Copy;
-            } else if(e.Data.IsTextPresent()) {
-                e.Effects = DragDropEffects.Copy;
             } else {
                 e.Effects = DragDropEffects.None;
             }
@@ -376,11 +375,23 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                WorkDirectoryPath = string.Join(" ", filePaths.Select(i => CommandLine.Escape(i)));
-                e.Handled = true;
-            } else if(e.Data.IsTextPresent()) {
-                WorkDirectoryPath = TextUtility.JoinLines(e.Data.GetText());
-                e.Handled = true;
+                foreach(var filePath in filePaths) {
+                    try {
+                        if(Directory.Exists(filePath)) {
+                            WorkDirectoryPath = filePath;
+                            e.Handled = true;
+                            break;
+                        } else {
+                            Logger.LogInformation("非ディレクトリ: {0}", filePath);
+                        }
+                    } catch(Exception ex) {
+                        Logger.LogInformation(ex, "非ディレクトリ: {0}", filePath);
+                    }
+                }
+
+                if(!e.Handled) {
+                    Logger.LogInformation("D&Dデータはディレクトリではない");
+                }
             }
         }
 
