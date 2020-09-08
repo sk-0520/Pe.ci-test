@@ -83,13 +83,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             } else {
                 SuccessExitCodes = "0";
             }
+
+            OptionDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = OptionCanDragStart,
+                DragEnterAction = OptionDragOrverOrEnter,
+                DragOverAction = OptionDragOrverOrEnter,
+                DragLeaveAction = OptionDragLeave,
+                DropAction = OptionDrop,
+                GetDragParameter = OptionGetDragParameter,
+            };
+            WorkDirectoryDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = WorkDirectoryCanDragStart,
+                DragEnterAction = WorkDirectoryDragOrverOrEnter,
+                DragOverAction = WorkDirectoryDragOrverOrEnter,
+                DragLeaveAction = WorkDirectoryDragLeave,
+                DropAction = WorkDirectoryDrop,
+                GetDragParameter = WorkDirectoryGetDragParameter,
+            };
         }
 
         #region property
+
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+
+        public IDragAndDrop OptionDragAndDrop { get; }
+        public IDragAndDrop WorkDirectoryDragAndDrop { get; }
+
 
         public string Title
         {
@@ -287,6 +309,65 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         #endregion
 
+        #region OptionDragAndDrop
+
+        private bool OptionCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new OptionDragAndDropGuideline(DispatcherWrapper, LoggerFactory);
+            return dd.CanDragStart(sender, e);
+        }
+
+        private void OptionDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OptionDragLeave(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OptionDrop(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IResultSuccessValue<DragParameter> OptionGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region WorkDirectoryDragAndDrop
+
+        private bool WorkDirectoryCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void WorkDirectoryDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void WorkDirectoryDragLeave(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void WorkDirectoryDrop(UIElement sender, DragEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IResultSuccessValue<DragParameter> WorkDirectoryGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region SingleModelViewModelBase
 
         protected override void ValidateDomain()
@@ -307,7 +388,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         }
 
         #endregion
-
 
         #region IViewLifecycleReceiver
 

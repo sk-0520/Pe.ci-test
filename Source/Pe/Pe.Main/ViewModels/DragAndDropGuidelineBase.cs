@@ -22,6 +22,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILogger Logger { get; }
 
-        #endregion;
+        #endregion
     }
 }

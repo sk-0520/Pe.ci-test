@@ -10,6 +10,7 @@
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_core_views_selector="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Selector;assembly=Pe.Core"
+  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
@@ -20,6 +21,7 @@
   WindowStartupLocation="CenterScreen"
   Height="450"
   Width="800"
+  AllowDrop="True"
 
   Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
@@ -75,6 +77,10 @@
       <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
     </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
+  <i:Interaction.Behaviors>
+    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding OptionDragAndDrop}" />
+  </i:Interaction.Behaviors>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
@@ -128,6 +134,10 @@
         </Grid>
 
         <Grid>
+          <i:Interaction.Behaviors>
+            <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding WorkDirectoryDragAndDrop}" />
+          </i:Interaction.Behaviors>
+
           <Grid.ColumnDefinitions>
             <ColumnDefinition Style="{StaticResource LabelDefinition}" />
             <ColumnDefinition Style="{StaticResource ContentDefinition}" />
