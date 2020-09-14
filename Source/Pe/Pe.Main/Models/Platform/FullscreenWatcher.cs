@@ -17,9 +17,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     /// TODO: 外部から設定を渡せるようにしないとまずい気がする。
     /// <para>こいつ自身は呼ばれた際にフルスクリーンの確認を行うだけで定周期処理されるわけではない。</para>
     /// </summary>
-    public class FullScreenWatcher
+    public class FullscreenWatcher
     {
-        public FullScreenWatcher(ILoggerFactory loggerFactory)
+        public FullscreenWatcher(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
         }
@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <param name="hWnd"></param>
         /// <param name="targetScreen"></param>
         /// <returns></returns>
-        public bool IsFullScreen(IntPtr hWnd, IScreen targetScreen)
+        public bool IsFullscreen(IntPtr hWnd, IScreen targetScreen)
         {
             if(!NativeMethods.IsWindowVisible(hWnd)) {
                 return false;
@@ -181,12 +181,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// </summary>
         /// <param name="targetScreen"></param>
         /// <returns>フルスクリーンのウィンドウハンドル。フルスクリーンのウィンドウハンドルが取得できなかった場合は<see cref="IntPtr.Zero"/></returns>
-        public IntPtr GetFullScreenWindowHandle(IScreen targetScreen)
+        public IntPtr GetFullscreenWindowHandle(IScreen targetScreen)
         {
             IntPtr hResultWnd = IntPtr.Zero;
 
             NativeMethods.EnumWindows((hWnd, lParam) => {
-                if(!IsFullScreen(hWnd, targetScreen)) {
+                if(!IsFullscreen(hWnd, targetScreen)) {
                     return true;
                 }
 

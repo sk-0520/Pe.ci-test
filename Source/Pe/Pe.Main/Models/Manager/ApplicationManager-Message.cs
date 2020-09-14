@@ -587,14 +587,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void CheckFullScreenState()
         {
-            var fullScreenWatcher = ApplicationDiContainer.Build<FullScreenWatcher>();
+            var fullScreenWatcher = ApplicationDiContainer.Build<FullscreenWatcher>();
 
             foreach(var screen in Screen.AllScreens) {
-                var hWnd = fullScreenWatcher.GetFullScreenWindowHandle(screen);
+                var hWnd = fullScreenWatcher.GetFullscreenWindowHandle(screen);
                 if(hWnd != IntPtr.Zero) {
-                    NotifyManager.SendFullScreenChanged(screen, true, hWnd);
+                    NotifyManager.SendFullscreenChanged(screen, true, hWnd);
                 } else {
-                    NotifyManager.SendFullScreenChanged(screen, false, IntPtr.Zero);
+                    NotifyManager.SendFullscreenChanged(screen, false, IntPtr.Zero);
                 }
             }
         }

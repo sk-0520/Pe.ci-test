@@ -200,12 +200,12 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
     [Obsolete("[#679] 独自検知した方が安全そう")]
     public class AppDesktopToolbarFullScreenEventArgs: AppDesktopToolbarEventArgs
     {
-        public AppDesktopToolbarFullScreenEventArgs(bool fullScreen)
+        public AppDesktopToolbarFullScreenEventArgs(bool isFullScreen)
         {
-            FullScreen = fullScreen;
+            IsFullscreen = isFullScreen;
         }
 
-        public bool FullScreen { get; private set; }
+        public bool IsFullscreen { get; private set; }
         public bool Handled { get; set; }
     }
 
@@ -274,9 +274,9 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 var hForegroundWnd = NativeMethods.GetForegroundWindow();
 
                 if(hForegroundWnd != IntPtr.Zero && fullScreen) {
-                    var fullScreenWatcher = new FullScreenWatcher(LoggerFactory);
+                    var fullScreenWatcher = new FullscreenWatcher(LoggerFactory);
 
-                    if(!fullScreenWatcher.IsFullScreen(hForegroundWnd, ExtendData.DockScreen)) {
+                    if(!fullScreenWatcher.IsFullscreen(hForegroundWnd, ExtendData.DockScreen)) {
                         return;
                     }
 
