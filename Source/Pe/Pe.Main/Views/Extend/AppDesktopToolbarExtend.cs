@@ -234,9 +234,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         #endregion
 
-        public AppDesktopToolbarExtend(Window view, IAppDesktopToolbarExtendData extendData, ILoggerFactory loggerFactory)
+        public AppDesktopToolbarExtend(Window view, IAppDesktopToolbarExtendData extendData, IFullscreenWatcher fullscreenWatcher, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)
         {
+            FullscreenWatcher = fullscreenWatcher;
+
             View.MouseEnter += View_MouseEnter;
             View.MouseLeave += View_MouseLeave;
 
@@ -247,6 +249,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         }
 
         #region property
+
+        IFullscreenWatcher FullscreenWatcher { get; }
 
         string MessageString { get { return "appbar"; } }
         uint CallbackMessage { get; set; }
@@ -274,9 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 var hForegroundWnd = NativeMethods.GetForegroundWindow();
 
                 if(hForegroundWnd != IntPtr.Zero && fullScreen) {
-                    var fullScreenWatcher = new FullscreenWatcher(LoggerFactory);
-
-                    if(!fullScreenWatcher.IsFullscreen(hForegroundWnd, ExtendData.DockScreen)) {
+                    if(!FullscreenWatcher.IsFullscreen(hForegroundWnd, ExtendData.DockScreen)) {
                         return;
                     }
 

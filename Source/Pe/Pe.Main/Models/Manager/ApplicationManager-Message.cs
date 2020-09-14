@@ -587,7 +587,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void CheckFullScreenState()
         {
-            var fullScreenWatcher = ApplicationDiContainer.Build<FullscreenWatcher>();
+            var fullScreenWatcher = ApplicationDiContainer.Build<IFullscreenWatcher>();
 
             foreach(var screen in Screen.AllScreens) {
                 var hWnd = fullScreenWatcher.GetFullscreenWindowHandle(screen);

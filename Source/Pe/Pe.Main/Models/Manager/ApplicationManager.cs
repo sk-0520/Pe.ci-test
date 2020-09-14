@@ -123,6 +123,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //// アドオンIFをDI登録
             //ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
 
+            // フルスクリーン検知処理の生成(設定項目が多いので生成後に値設定)
+            var fullscreenWatcher = ApplicationDiContainer.Build<FullscreenWatcher>();
+            var fullscreen = ApplicationDiContainer.Build<PlatformConfiguration>().Fullscreen;
+            foreach(var item in fullscreen.IgnoreWindowClasses) {
+                fullscreenWatcher.IgnoreFullscreenWindowClassNames.Add(item);
+            }
+            foreach(var item in fullscreen.IgnoreClassAndTexts.Select(i => new FullscreenWatcher.ClassAndText(i.WindowClassName, i.WindowText))) {
+                fullscreenWatcher.ClassAndTexts.Add(item);
+            }
+            fullscreenWatcher.TopmostOnly = fullscreen.TopmostOnly;
+            fullscreenWatcher.ExcludeNoActive = fullscreen.ExcludeNoActive;
+            fullscreenWatcher.ExcludeToolWindow = fullscreen.ExcludeToolWindow;
+            ApplicationDiContainer.Register<IFullscreenWatcher, FullscreenWatcher>(fullscreenWatcher);
+
+
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);

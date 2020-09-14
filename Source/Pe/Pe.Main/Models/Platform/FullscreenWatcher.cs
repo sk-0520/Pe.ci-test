@@ -14,11 +14,53 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     /// <summary>
     /// フルスクリーン状態の検知。
-    /// TODO: 外部から設定を渡せるようにしないとまずい気がする。
     /// <para>こいつ自身は呼ばれた際にフルスクリーンの確認を行うだけで定周期処理されるわけではない。</para>
     /// </summary>
-    public class FullscreenWatcher
+    public interface IFullscreenWatcher
     {
+        #region function
+
+        /// <summary>
+        /// ウィンドウハンドルが指定のディスプレイにおいてフルスクリーンか。
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="targetScreen"></param>
+        /// <returns></returns>
+        bool IsFullscreen(IntPtr hWnd, IScreen targetScreen);
+
+        /// <summary>
+        /// 指定ディスプレイにおけるフルスクリーンのウィンドウハンドルを取得する。
+        /// </summary>
+        /// <param name="targetScreen"></param>
+        /// <returns>フルスクリーンのウィンドウハンドル。フルスクリーンのウィンドウハンドルが取得できなかった場合は<see cref="IntPtr.Zero"/></returns>
+        IntPtr GetFullscreenWindowHandle(IScreen targetScreen);
+
+        #endregion
+    }
+
+    /// <inheritdoc cref="IFullscreenWatcher"/>
+    internal class FullscreenWatcher: IFullscreenWatcher
+    {
+        #region define
+
+        public class ClassAndText
+        {
+            public ClassAndText(string windowClassName, string windowText)
+            {
+                WindowClassName = windowClassName;
+                WindowText = windowText;
+            }
+
+            #region property
+
+            public string WindowClassName { get; }
+            public string WindowText { get; }
+
+            #endregion
+        }
+
+        #endregion
+
         public FullscreenWatcher(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
@@ -28,73 +70,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         ILogger Logger { get; }
 
-        private int WindowClassNameLength { get; } = WindowsUtility.classNameLength;
+        public IList<string> IgnoreFullscreenWindowClassNames { get; } = new List<string>();
 
-        private IReadOnlyCollection<string> IgnoreFullScreenWindowClassNames { get; } = new[] {
-            "Shell_TrayWnd",
-            "Progman",
-            "WorkerW",
-        };
+        public IList<ClassAndText> ClassAndTexts { get; } = new List<ClassAndText>();
 
         /// <summary>
         /// フルスクリーン判定を最前面ウィンドウのみにするか。
         /// </summary>
-        private bool TopmostOnly { get; } = false;
+        public bool TopmostOnly { get; set; } = false;
         /// <summary>
         /// フルスクリーン判定から WS_EX_NOACTIVE を除外するか。
         /// </summary>
-        private bool ExcludeNoActive { get; } = true;
+        public bool ExcludeNoActive { get; set; } = true;
         /// <summary>
         /// フルスクリーン判定から WS_EX_TOOLWINDOW を除外するか。
         /// </summary>
-        private bool ExcludeToolWindow { get; } = true;
+        public bool ExcludeToolWindow { get; set; } = true;
 
         #endregion
 
         #region function
 
-        private bool IsNVidiaGeForceOverlay(IntPtr hWnd, string windowClassName, string windowText, in RECT windowRect)
+        private bool MatchClassAndText(IntPtr hWnd, string windowClassName, in RECT windowRect)
         {
-            if(windowClassName != "CEF-OSC-WIDGET") {
+            if(ClassAndTexts.Count == 0) {
                 return false;
             }
 
-            if(windowText != "NVIDIA GeForce Overlay") {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool IsMicrosoftTextInputApplication(IntPtr hWnd, string windowClassName, string windowText, in RECT windowRect)
-        {
-            if(windowClassName != "Windows.UI.Core.CoreWindow") {
-                return false;
-            }
-
-            if(windowText != "Microsoft Text Input Application") {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool IsSpecialIgnore(IntPtr hWnd, string windowClassName, in RECT windowRect)
-        {
             var windowText = WindowsUtility.GetWindowText(hWnd);
-            return
-                IsNVidiaGeForceOverlay(hWnd, windowClassName, windowText, windowRect)
-                ||
-                IsMicrosoftTextInputApplication(hWnd, windowClassName, windowText, windowRect)
-            ;
+            foreach(var item in ClassAndTexts) {
+                if(item.WindowClassName == windowClassName && item.WindowText == windowText) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        /// <summary>
-        /// ウィンドウハンドルが指定のディスプレイにおいてフルスクリーンか。
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="targetScreen"></param>
-        /// <returns></returns>
+        #endregion
+
+        #region IFullscreenWatcher
+
+        /// <inheritdoc cref="IFullscreenWatcher.IsFullscreen(IntPtr, IScreen)"/>
         public bool IsFullscreen(IntPtr hWnd, IScreen targetScreen)
         {
             if(!NativeMethods.IsWindowVisible(hWnd)) {
@@ -106,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             }
 
             var windowClassName = WindowsUtility.GetWindowClassName(hWnd);
-            if(IgnoreFullScreenWindowClassNames.Any(i => i == windowClassName)) {
+            if(IgnoreFullscreenWindowClassNames.Any(i => i == windowClassName)) {
                 // [#679] 環境によるかもだけどこいつが最前面判定されているときがある
 #if LOGGING
                 Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}", windowClassName, hWnd.ToInt64());
@@ -162,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 }
             }
 
-            if(IsSpecialIgnore(hWnd, windowClassName, windowRect)) {
+            if(MatchClassAndText(hWnd, windowClassName, windowRect)) {
 #if LOGGING
                 Logger.LogTrace("[#679] フルスクリーン検知特殊除外 {0}, {1:x}", windowClassName, hWnd.ToInt64());
 #endif
@@ -176,11 +193,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return true;
         }
 
-        /// <summary>
-        /// 指定ディスプレイにおけるフルスクリーンのウィンドウハンドルを取得する。
-        /// </summary>
-        /// <param name="targetScreen"></param>
-        /// <returns>フルスクリーンのウィンドウハンドル。フルスクリーンのウィンドウハンドルが取得できなかった場合は<see cref="IntPtr.Zero"/></returns>
+        /// <inheritdoc cref="IFullscreenWatcher.GetFullscreenWindowHandle(IScreen)"/>
         public IntPtr GetFullscreenWindowHandle(IScreen targetScreen)
         {
             IntPtr hResultWnd = IntPtr.Zero;
@@ -197,6 +210,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return hResultWnd;
         }
 
-#endregion
+        #endregion
     }
 }
