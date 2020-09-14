@@ -12,6 +12,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Views;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
@@ -272,45 +273,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 var hForegroundWnd = NativeMethods.GetForegroundWindow();
 
                 if(hForegroundWnd != IntPtr.Zero && fullScreen) {
-                    if(hForegroundWnd == NativeMethods.GetDesktopWindow() || hForegroundWnd == NativeMethods.GetShellWindow()) {
-                        // [#679] シェル側のものが最大化されている判定なのでスキップ
+                    var fullScreenWatcher = new FullScreenWatcher(LoggerFactory);
+
+                    if(!fullScreenWatcher.IsFullScreen(hForegroundWnd, ExtendData.DockScreen)) {
                         return;
                     }
 
-                    const int WindowClassNameLength = 128;
-                    var buffer = new StringBuilder(WindowClassNameLength);
-                    NativeMethods.GetClassName(hForegroundWnd, buffer, buffer.Capacity);
-                    var className = buffer.ToString();
-                    var ignoreClassNames = new[] {
-                        "Shell_TrayWnd",
-                        "Progman"
-                    };
-                    if(ignoreClassNames.Any(i => i == className)) {
-                        // [#679] 環境によるかもだけどこいつが最前面判定されているときがある
-                        Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}", className, hForegroundWnd.ToInt64());
-                        return;
-                    }
-
-                    if(WindowHandle != IntPtr.Zero) {
-                        NativeMethods.GetWindowRect(hForegroundWnd, out var foregroundRect);
-                        var currentScreen = Screen.FromHandle(WindowHandle);
-
-                        var screenRect = PodStructUtility.Convert(currentScreen.DeviceBounds);
-                        if(
-                            foregroundRect.Left != screenRect.Left
-                            ||
-                            foregroundRect.Top != screenRect.Top
-                            ||
-                            foregroundRect.Right != screenRect.Right
-                            ||
-                            foregroundRect.Bottom != screenRect.Bottom
-                        ) {
-                            Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, (hWnd){2} != {3}(screen)", className, hForegroundWnd.ToInt64(), foregroundRect, screenRect);
-                            return;
-                        }
-                    }
-
-                    Logger.LogDebug("フルスクリーン対象: {0}", className);
+                    Logger.LogDebug("フルスクリーン対象: {0}", hForegroundWnd.ToInt64());
                 }
 
                 ExtendData.ExistsFullScreenWindow = fullScreen;
