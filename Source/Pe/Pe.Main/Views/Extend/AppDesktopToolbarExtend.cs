@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -122,7 +123,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         #endregion
     }
 
-    public interface IAppDesktopToolbarExtendData : IExtendData, IReadOnlyAppDesktopToolbarExtendData
+    public interface IAppDesktopToolbarExtendData: IExtendData, IReadOnlyAppDesktopToolbarExtendData
     {
         #region property
 
@@ -192,10 +193,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         #endregion
     }
 
-    public abstract class AppDesktopToolbarEventArgs : EventArgs
+    public abstract class AppDesktopToolbarEventArgs: EventArgs
     { }
 
-    public class AppDesktopToolbarFullScreenEventArgs : AppDesktopToolbarEventArgs
+    public class AppDesktopToolbarFullScreenEventArgs: AppDesktopToolbarEventArgs
     {
         public AppDesktopToolbarFullScreenEventArgs(bool fullScreen)
         {
@@ -206,13 +207,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         public bool Handled { get; set; }
     }
 
-    public class AppDesktopToolbarPositionChangedEventArgs : AppDesktopToolbarEventArgs
+    public class AppDesktopToolbarPositionChangedEventArgs: AppDesktopToolbarEventArgs
     { }
 
-    public class AppDesktopToolbarStateChangeEventArgs : AppDesktopToolbarEventArgs
+    public class AppDesktopToolbarStateChangeEventArgs: AppDesktopToolbarEventArgs
     { }
 
-    public class AppDesktopToolbarExtend : WndProcExtendBase<Window, IAppDesktopToolbarExtendData>
+    public class AppDesktopToolbarExtend: WndProcExtendBase<Window, IAppDesktopToolbarExtendData>
     {
         #region event
 
@@ -268,6 +269,50 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             Logger.LogTrace($"{nameof(fullScreen)}: {fullScreen}");
 
             if(ExtendData != null) {
+                var hForegroundWnd = NativeMethods.GetForegroundWindow();
+
+                if(hForegroundWnd != IntPtr.Zero && fullScreen) {
+                    if(hForegroundWnd == NativeMethods.GetDesktopWindow() || hForegroundWnd == NativeMethods.GetShellWindow()) {
+                        // [#679] シェル側のものが最大化されている判定なのでスキップ
+                        return;
+                    }
+
+                    const int WindowClassNameLength = 128;
+                    var buffer = new StringBuilder(WindowClassNameLength);
+                    NativeMethods.GetClassName(hForegroundWnd, buffer, buffer.Capacity);
+                    var className = buffer.ToString();
+                    var ignoreClassNames = new[] {
+                        "Shell_TrayWnd",
+                        "Progman"
+                    };
+                    if(ignoreClassNames.Any(i => i == className)) {
+                        // [#679] 環境によるかもだけどこいつが最前面判定されているときがある
+                        Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}", className, hForegroundWnd.ToInt64());
+                        return;
+                    }
+
+                    if(WindowHandle != IntPtr.Zero) {
+                        NativeMethods.GetWindowRect(hForegroundWnd, out var foregroundRect);
+                        var currentScreen = Screen.FromHandle(WindowHandle);
+
+                        var screenRect = PodStructUtility.Convert(currentScreen.DeviceBounds);
+                        if(
+                            foregroundRect.Left != screenRect.Left
+                            ||
+                            foregroundRect.Top != screenRect.Top
+                            ||
+                            foregroundRect.Right != screenRect.Right
+                            ||
+                            foregroundRect.Bottom != screenRect.Bottom
+                        ) {
+                            Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, (hWnd){2} != {3}(screen)", className, hForegroundWnd.ToInt64(), foregroundRect, screenRect);
+                            return;
+                        }
+                    }
+
+                    Logger.LogDebug("フルスクリーン対象: {0}", className);
+                }
+
                 ExtendData.ExistsFullScreenWindow = fullScreen;
             }
 
