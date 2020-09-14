@@ -1,3 +1,5 @@
+//#define LOGGING
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,11 +32,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         private IReadOnlyCollection<string> IgnoreFullScreenWindowClassNames { get; } = new[] {
             "Shell_TrayWnd",
             "Progman",
+            "WorkerW",
         };
 
         #endregion
 
         #region function
+
+        private bool IsNVidiaGeForceOverlay(IntPtr hWnd, string windowClassName, string windowText, in RECT windowRect)
+        {
+            if(windowClassName != "CEF-OSC-WIDGET") {
+                return false;
+            }
+
+            if(windowText != "NVIDIA GeForce Overlay") {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsMicrosoftTextInputApplication(IntPtr hWnd, string windowClassName, string windowText, in RECT windowRect)
+        {
+            if(windowClassName != "Windows.UI.Core.CoreWindow") {
+                return false;
+            }
+
+            if(windowText != "Microsoft Text Input Application") {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsSpecialIgnore(IntPtr hWnd, string windowClassName, in RECT windowRect)
+        {
+            var windowText = WindowsUtility.GetWindowText(hWnd);
+            return
+                IsNVidiaGeForceOverlay(hWnd, windowClassName, windowText, windowRect)
+                ||
+                IsMicrosoftTextInputApplication(hWnd, windowClassName, windowText, windowRect)
+            ;
+        }
 
         /// <summary>
         /// ウィンドウハンドルが指定のディスプレイにおいてフルスクリーンか。
@@ -55,7 +94,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             var windowClassName = WindowsUtility.GetWindowClassName(hWnd);
             if(IgnoreFullScreenWindowClassNames.Any(i => i == windowClassName)) {
                 // [#679] 環境によるかもだけどこいつが最前面判定されているときがある
+#if LOGGING
                 Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}", windowClassName, hWnd.ToInt64());
+#endif
                 return false;
             }
             NativeMethods.GetWindowRect(hWnd, out var windowRect);
@@ -70,17 +111,30 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 ||
                 windowRect.Bottom != screenRect.Bottom
             ) {
+#if LOGGING
                 Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, (hWnd){2} != {3}(screen)", windowClassName, hWnd.ToInt64(), windowRect, screenRect);
+#endif
                 return false;
             }
 
             var exWindowStyle = WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
             if((exWindowStyle.ToInt32() & (int)WS_EX.WS_EX_TOPMOST) == (int)WS_EX.WS_EX_TOPMOST) {
+#if LOGGING
                 Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, !WS_EX_TOPMOST", windowClassName, hWnd.ToInt64());
+#endif
                 return false;
             }
 
+            if(IsSpecialIgnore(hWnd, windowClassName, windowRect)) {
+#if LOGGING
+                Logger.LogTrace("[#679] フルスクリーン検知特殊除外 {0}, {1:x}", windowClassName, hWnd.ToInt64());
+#endif
+                return false;
+            }
+
+#if LOGGING
             Logger.LogTrace("フルスクリーン対象 {0}, {1:x}", windowClassName, hWnd.ToInt64());
+#endif
 
             return true;
         }

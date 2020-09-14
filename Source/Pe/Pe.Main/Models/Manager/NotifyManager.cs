@@ -348,6 +348,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             if(FullScreenStatus.TryGetValue(screen, out var currentValue)) {
                 if(isFullScreen != currentValue) {
+                    Logger.LogTrace("通常: {0}", isFullScreen);
                     FullScreenStatus[screen] = isFullScreen;
                     fire = true;
                 }
@@ -355,12 +356,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 var existsScreen = FullScreenStatus.Keys.FirstOrDefault(i => i.DeviceName == screen.DeviceName);
                 if(existsScreen != null) {
                     if(FullScreenStatus[existsScreen] != isFullScreen) {
-                        FullScreenStatus[screen] = isFullScreen;
+                        Logger.LogTrace("デバイス名: {0}", isFullScreen);
+                        FullScreenStatus[existsScreen] = isFullScreen;
                         fire = true;
                     }
                 } else {
                     // 未登録ディスプレイでフルスクリーンじゃなければ別になんもしない
                     if(isFullScreen) {
+                        Logger.LogTrace("未登録: {0}", isFullScreen);
                         FullScreenStatus.Add(screen, isFullScreen);
                         fire = true;
                     }
