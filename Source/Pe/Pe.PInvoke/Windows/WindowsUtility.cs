@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             return windowClassName;
         }
 
-        public static string GetWindowText(IntPtr hWnd, int windowTextLength = classNameLength)
+        public static string GetWindowText(IntPtr hWnd, int windowTextLength = textLength)
         {
             var buffer = new StringBuilder(NativeMethods.GetWindowTextLength(hWnd) + 1);
             NativeMethods.GetWindowText(hWnd, buffer, buffer.Capacity);

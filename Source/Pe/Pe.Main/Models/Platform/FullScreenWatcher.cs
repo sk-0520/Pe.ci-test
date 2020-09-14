@@ -14,6 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {
     /// <summary>
     /// フルスクリーン状態の検知。
+    /// TODO: 外部から設定を渡せるようにしないとまずい気がする。
     /// <para>こいつ自身は呼ばれた際にフルスクリーンの確認を行うだけで定周期処理されるわけではない。</para>
     /// </summary>
     public class FullScreenWatcher
@@ -34,6 +35,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             "Progman",
             "WorkerW",
         };
+
+        /// <summary>
+        /// フルスクリーン判定を最前面ウィンドウのみにするか。
+        /// </summary>
+        private bool TopmostOnly { get; } = false;
+        /// <summary>
+        /// フルスクリーン判定から WS_EX_NOACTIVE を除外するか。
+        /// </summary>
+        private bool ExcludeNoActive { get; } = true;
+        /// <summary>
+        /// フルスクリーン判定から WS_EX_TOOLWINDOW を除外するか。
+        /// </summary>
+        private bool ExcludeToolWindow { get; } = true;
 
         #endregion
 
@@ -103,13 +117,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             var screenRect = PodStructUtility.Convert(targetScreen.DeviceBounds);
             if(
-                windowRect.Left != screenRect.Left
+                windowRect.Left > screenRect.Left
                 ||
-                windowRect.Top != screenRect.Top
+                windowRect.Top > screenRect.Top
                 ||
-                windowRect.Right != screenRect.Right
+                windowRect.Right < screenRect.Right
                 ||
-                windowRect.Bottom != screenRect.Bottom
+                windowRect.Bottom < screenRect.Bottom
             ) {
 #if LOGGING
                 Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, (hWnd){2} != {3}(screen)", windowClassName, hWnd.ToInt64(), windowRect, screenRect);
@@ -117,12 +131,35 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 return false;
             }
 
-            var exWindowStyle = WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
-            if((exWindowStyle.ToInt32() & (int)WS_EX.WS_EX_TOPMOST) == (int)WS_EX.WS_EX_TOPMOST) {
+            if(TopmostOnly || ExcludeNoActive || ExcludeToolWindow) {
+                var exWindowStyle = WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE).ToInt32();
+
+                if(TopmostOnly) {
+                    if((exWindowStyle & (int)WS_EX.WS_EX_TOPMOST) == (int)WS_EX.WS_EX_TOPMOST) {
 #if LOGGING
-                Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, !WS_EX_TOPMOST", windowClassName, hWnd.ToInt64());
+                        Logger.LogTrace("[#679] フルスクリーン検知除外({0}) {1}, {2:x}, {3}, !WS_EX_TOPMOST", nameof(TopmostOnly), windowClassName, windowRect, hWnd.ToInt64());
 #endif
-                return false;
+                        return false;
+                    }
+                }
+
+                if(ExcludeNoActive) {
+                    if((exWindowStyle & (int)WS_EX.WS_EX_NOACTIVATE) == (int)WS_EX.WS_EX_NOACTIVATE) {
+#if LOGGING
+                        Logger.LogTrace("[#679] フルスクリーン検知除外({0}) {1}, {2:x}, {3}, !WS_EX_NOACTIVATE", nameof(ExcludeNoActive), windowClassName, windowRect, hWnd.ToInt64());
+#endif
+                        return false;
+                    }
+                }
+
+                if(ExcludeToolWindow) {
+                    if((exWindowStyle & (int)WS_EX.WS_EX_TOOLWINDOW) == (int)WS_EX.WS_EX_TOOLWINDOW) {
+#if LOGGING
+                        Logger.LogTrace("[#679] フルスクリーン検知除外({0}) {1}, {2:x}, {3}, !WS_EX_TOOLWINDOW", nameof(ExcludeToolWindow), windowClassName, windowRect, hWnd.ToInt64());
+#endif
+                        return false;
+                    }
+                }
             }
 
             if(IsSpecialIgnore(hWnd, windowClassName, windowRect)) {
@@ -160,6 +197,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
             return hResultWnd;
         }
 
-        #endregion
+#endregion
     }
 }
