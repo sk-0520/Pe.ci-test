@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -43,6 +45,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private BackgroundAddonProxy? BackgroundAddon { get; set; }
 
         private CronScheduler CronScheduler { get; }
+        /// <summary>
+        /// 定周期処理。
+        /// <see cref="CronScheduler"/>の間隔未満(1分より小さい)で優先度を特に考えなくていいスケジュール処理を実施。
+        /// </summary>
+        private System.Timers.Timer LowScheduler { get; }
 
         #endregion
 
@@ -564,14 +571,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void StartScheduler()
         {
             Logger.LogInformation("スケジューラ実行");
+            LowScheduler.Start();
             CronScheduler.Start();
         }
 
         private void StopScheduler()
         {
+            LowScheduler.Stop();
+
             if(CronScheduler.IsRunning) {
                 Logger.LogInformation("スケジューラ停止");
                 CronScheduler.Stop();
+            }
+        }
+
+        private void CheckFullScreenState()
+        {
+            var fullScreenWatcher = ApplicationDiContainer.Build<IFullscreenWatcher>();
+
+            foreach(var screen in Screen.AllScreens) {
+                var hWnd = fullScreenWatcher.GetFullscreenWindowHandle(screen);
+                if(hWnd != IntPtr.Zero) {
+                    NotifyManager.SendFullscreenChanged(screen, true, hWnd);
+                } else {
+                    NotifyManager.SendFullscreenChanged(screen, false, IntPtr.Zero);
+                }
             }
         }
 
@@ -702,6 +726,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DelayResetScreenViewElements();
         }
 
-
+        private void LowScheduler_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            LowScheduler.Stop();
+            if(StatusManager.CanCallNotifyAreaMenu) {
+                CheckFullScreenState();
+            }
+            if(StatusManager.CanCallNotifyAreaMenu) {
+                LowScheduler.Start();
+            }
+        }
     }
 }

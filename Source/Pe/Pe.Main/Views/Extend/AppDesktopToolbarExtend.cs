@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -11,6 +12,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Views;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 
@@ -122,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         #endregion
     }
 
-    public interface IAppDesktopToolbarExtendData : IExtendData, IReadOnlyAppDesktopToolbarExtendData
+    public interface IAppDesktopToolbarExtendData: IExtendData, IReadOnlyAppDesktopToolbarExtendData
     {
         #region property
 
@@ -192,34 +194,35 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         #endregion
     }
 
-    public abstract class AppDesktopToolbarEventArgs : EventArgs
+    public abstract class AppDesktopToolbarEventArgs: EventArgs
     { }
 
-    public class AppDesktopToolbarFullScreenEventArgs : AppDesktopToolbarEventArgs
+    [Obsolete("[#679] 独自検知した方が安全そう")]
+    public class AppDesktopToolbarFullScreenEventArgs: AppDesktopToolbarEventArgs
     {
-        public AppDesktopToolbarFullScreenEventArgs(bool fullScreen)
+        public AppDesktopToolbarFullScreenEventArgs(bool isFullScreen)
         {
-            FullScreen = fullScreen;
+            IsFullscreen = isFullScreen;
         }
 
-        public bool FullScreen { get; private set; }
+        public bool IsFullscreen { get; private set; }
         public bool Handled { get; set; }
     }
 
-    public class AppDesktopToolbarPositionChangedEventArgs : AppDesktopToolbarEventArgs
+    public class AppDesktopToolbarPositionChangedEventArgs: AppDesktopToolbarEventArgs
     { }
 
-    public class AppDesktopToolbarStateChangeEventArgs : AppDesktopToolbarEventArgs
+    public class AppDesktopToolbarStateChangeEventArgs: AppDesktopToolbarEventArgs
     { }
 
-    public class AppDesktopToolbarExtend : WndProcExtendBase<Window, IAppDesktopToolbarExtendData>
+    public class AppDesktopToolbarExtend: WndProcExtendBase<Window, IAppDesktopToolbarExtendData>
     {
         #region event
 
-        /// <summary>
-        /// フルスクリーンイベント。
-        /// </summary>
-        public event EventHandler<AppDesktopToolbarFullScreenEventArgs>? AppDesktopToolbarFullScreen;
+        ///// <summary>
+        ///// フルスクリーンイベント。
+        ///// </summary>
+        //public event EventHandler<AppDesktopToolbarFullScreenEventArgs>? AppDesktopToolbarFullScreen;
         /// <summary>
         /// 位置変更時に発生。
         /// </summary>
@@ -231,9 +234,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
 
         #endregion
 
-        public AppDesktopToolbarExtend(Window view, IAppDesktopToolbarExtendData extendData, ILoggerFactory loggerFactory)
+        public AppDesktopToolbarExtend(Window view, IAppDesktopToolbarExtendData extendData, IFullscreenWatcher fullscreenWatcher, ILoggerFactory loggerFactory)
             : base(view, extendData, loggerFactory)
         {
+            FullscreenWatcher = fullscreenWatcher;
+
             View.MouseEnter += View_MouseEnter;
             View.MouseLeave += View_MouseLeave;
 
@@ -244,6 +249,8 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
         }
 
         #region property
+
+        IFullscreenWatcher FullscreenWatcher { get; }
 
         string MessageString { get { return "appbar"; } }
         uint CallbackMessage { get; set; }
@@ -268,13 +275,23 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
             Logger.LogTrace($"{nameof(fullScreen)}: {fullScreen}");
 
             if(ExtendData != null) {
+                var hForegroundWnd = NativeMethods.GetForegroundWindow();
+
+                if(hForegroundWnd != IntPtr.Zero && fullScreen) {
+                    if(!FullscreenWatcher.IsFullscreen(hForegroundWnd, ExtendData.DockScreen)) {
+                        return;
+                    }
+
+                    Logger.LogDebug("フルスクリーン対象: {0}", hForegroundWnd.ToInt64());
+                }
+
                 ExtendData.ExistsFullScreenWindow = fullScreen;
             }
 
-            if(AppDesktopToolbarFullScreen != null) {
-                var e = new AppDesktopToolbarFullScreenEventArgs(fullScreen);
-                AppDesktopToolbarFullScreen(View, e);
-            }
+            //if(AppDesktopToolbarFullScreen != null) {
+            //    var e = new AppDesktopToolbarFullScreenEventArgs(fullScreen);
+            //    AppDesktopToolbarFullScreen(View, e);
+            //}
         }
 
         protected virtual void OnAppDesktopToolbarPositionChanged()

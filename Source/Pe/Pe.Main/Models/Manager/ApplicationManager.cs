@@ -79,11 +79,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger = Logging.Factory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
 
+
 #if DEBUG
             IsDebugDevelopMode = initializer.IsDebugDevelopMode;
 #endif
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
+            var customConfiguration = ApplicationDiContainer.Get<CustomConfiguration>();
+
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
             ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
@@ -123,6 +126,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //// アドオンIFをDI登録
             //ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
 
+            // フルスクリーン検知処理の生成(設定項目が多いので生成後に値設定)
+
+            var fullscreenWatcher = ApplicationDiContainer.Build<FullscreenWatcher>();
+            var fullscreen = customConfiguration.Platform.Fullscreen;
+            foreach(var item in fullscreen.IgnoreWindowClasses) {
+                fullscreenWatcher.IgnoreFullscreenWindowClassNames.Add(item);
+            }
+            foreach(var item in fullscreen.IgnoreClassAndTexts.Select(i => new FullscreenWatcher.ClassAndText(i.WindowClassName, i.WindowText))) {
+                fullscreenWatcher.ClassAndTexts.Add(item);
+            }
+            fullscreenWatcher.TopmostOnly = fullscreen.TopmostOnly;
+            fullscreenWatcher.ExcludeNoActive = fullscreen.ExcludeNoActive;
+            fullscreenWatcher.ExcludeToolWindow = fullscreen.ExcludeToolWindow;
+            ApplicationDiContainer.Register<IFullscreenWatcher, FullscreenWatcher>(fullscreenWatcher);
+
+
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
@@ -135,8 +154,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
 
-            var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
-            LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
+            LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), customConfiguration.Platform.ScreenElementsResetWaitTime);
+
+            LowScheduler = new System.Timers.Timer(customConfiguration.Schedule.LowSchedulerTime.TotalMilliseconds);
+            LowScheduler.Elapsed += LowScheduler_Elapsed;
 
             if(!string.IsNullOrWhiteSpace(initializer.TestPluginDirectoryPath)) {
                 TestPluginDirectory = new DirectoryInfo(initializer.TestPluginDirectoryPath);
