@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public class NotifyEventArgs : EventArgs
+    public class NotifyEventArgs: EventArgs
     { }
 
-    public class LauncherItemChangedEventArgs : NotifyEventArgs
+    public class LauncherItemChangedEventArgs: NotifyEventArgs
     {
         public LauncherItemChangedEventArgs(Guid launcherItemId)
         {
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class LauncherItemRemoveInLauncherGroupEventArgs : NotifyEventArgs
+    public class LauncherItemRemoveInLauncherGroupEventArgs: NotifyEventArgs
     {
         public LauncherItemRemoveInLauncherGroupEventArgs(Guid launcherGroupId, Guid launcherItemId, int index)
         {
@@ -52,7 +53,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class LauncherItemRegisteredEventArgs : NotifyEventArgs
+    public class LauncherItemRegisteredEventArgs: NotifyEventArgs
     {
         public LauncherItemRegisteredEventArgs(Guid launcherGroupId, Guid launcherItemId)
         {
@@ -68,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class CustomizeLauncherItemExitedEventArgs : NotifyEventArgs
+    public class CustomizeLauncherItemExitedEventArgs: NotifyEventArgs
     {
         public CustomizeLauncherItemExitedEventArgs(Guid launcherItemId)
         {
@@ -84,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     /// <summary>
     /// フルスクリーン状態。
     /// </summary>
-    public class FullScreenEventArgs : NotifyEventArgs
+    public class FullScreenEventArgs: NotifyEventArgs
     {
         public FullScreenEventArgs(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
@@ -113,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class NotifyLogEventArgs : NotifyEventArgs
+    public class NotifyLogEventArgs: NotifyEventArgs
     {
         public NotifyLogEventArgs(NotifyEventKind kind, IReadOnlyNotifyMessage message)
         {
@@ -172,6 +173,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int index);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
 
+        void SendFullScreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd);
+
         /// <summary>
         /// 通知ログは存在するか。
         /// </summary>
@@ -205,7 +208,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    internal class NotifyManager : ManagerBase, INotifyManager
+    internal class NotifyManager: ManagerBase, INotifyManager
     {
         #region event
         #endregion
@@ -244,6 +247,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
         private ObservableCollection<NotifyLogItemElement> StreamNotifyLogsImpl { get; }
         private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
+
+        private IDictionary<IScreen, bool> FullScreenStatus { get; } = new Dictionary<IScreen, bool>();
 
         #endregion
 
@@ -336,6 +341,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             OnCustomizeLauncherItemExited(launcherItemId);
         }
+
+        public void SendFullScreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
+        {
+            var fire = false;
+
+            if(FullScreenStatus.TryGetValue(screen, out var currentValue)) {
+                if(isFullScreen != currentValue) {
+                    FullScreenStatus[screen] = isFullScreen;
+                    fire = true;
+                }
+            } else {
+                var existsScreen = FullScreenStatus.Keys.FirstOrDefault(i => i.DeviceName == screen.DeviceName);
+                if(existsScreen != null) {
+                    if(FullScreenStatus[existsScreen] != isFullScreen) {
+                        FullScreenStatus[screen] = isFullScreen;
+                        fire = true;
+                    }
+                } else {
+                    // 未登録ディスプレイでフルスクリーンじゃなければ別になんもしない
+                    if(isFullScreen) {
+                        FullScreenStatus.Add(screen, isFullScreen);
+                        fire = true;
+                    }
+                }
+            }
+            if(fire) {
+                Logger.LogDebug("フルスクリーン状態発火: {0}, {1}", screen, isFullScreen);
+                OnFullScreenChanged(screen, isFullScreen, hWnd);
+            }
+        }
+
 
 
         /// <inheritdoc cref="INotifyManager.ExistsLog(Guid)" />

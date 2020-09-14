@@ -138,6 +138,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
             LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
 
+            LowScheduler = new System.Timers.Timer(TimeSpan.FromMilliseconds(500).TotalMilliseconds);
+            LowScheduler.Elapsed += LowScheduler_Elapsed;
+
             if(!string.IsNullOrWhiteSpace(initializer.TestPluginDirectoryPath)) {
                 TestPluginDirectory = new DirectoryInfo(initializer.TestPluginDirectoryPath);
                 TestPluginName = initializer.TestPluginName;

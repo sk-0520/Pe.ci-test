@@ -197,6 +197,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
     public abstract class AppDesktopToolbarEventArgs: EventArgs
     { }
 
+    [Obsolete("[#679] 独自検知した方が安全そう")]
     public class AppDesktopToolbarFullScreenEventArgs: AppDesktopToolbarEventArgs
     {
         public AppDesktopToolbarFullScreenEventArgs(bool fullScreen)
@@ -218,10 +219,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
     {
         #region event
 
-        /// <summary>
-        /// フルスクリーンイベント。
-        /// </summary>
-        public event EventHandler<AppDesktopToolbarFullScreenEventArgs>? AppDesktopToolbarFullScreen;
+        ///// <summary>
+        ///// フルスクリーンイベント。
+        ///// </summary>
+        //public event EventHandler<AppDesktopToolbarFullScreenEventArgs>? AppDesktopToolbarFullScreen;
         /// <summary>
         /// 位置変更時に発生。
         /// </summary>
@@ -285,10 +286,10 @@ namespace ContentTypeTextNet.Pe.Main.Views.Extend
                 ExtendData.ExistsFullScreenWindow = fullScreen;
             }
 
-            if(AppDesktopToolbarFullScreen != null) {
-                var e = new AppDesktopToolbarFullScreenEventArgs(fullScreen);
-                AppDesktopToolbarFullScreen(View, e);
-            }
+            //if(AppDesktopToolbarFullScreen != null) {
+            //    var e = new AppDesktopToolbarFullScreenEventArgs(fullScreen);
+            //    AppDesktopToolbarFullScreen(View, e);
+            //}
         }
 
         protected virtual void OnAppDesktopToolbarPositionChanged()

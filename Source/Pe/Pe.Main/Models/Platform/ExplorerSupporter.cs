@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         public TimeSpan CheckSpan { get; }
 
-        int WindowClassNameLength { get; } = 128;
+        int WindowClassNameLength { get; } = WindowsUtility.classNameLength;
 
         IReadOnlyList<string> ExplorerClassNames { get; } = new string[] {
             "CabinetWClass", // win10だけならこれでいいはず(他は知らん)

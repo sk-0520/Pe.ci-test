@@ -25,9 +25,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         ILogger Logger { get; }
 
-        public int WindowClassNameLength { get; set; } = 128;
+        private int WindowClassNameLength { get; } = WindowsUtility.classNameLength;
 
-        public IReadOnlyCollection<string> IgnoreFullScreenWindowClassNames { get; } = new[] {
+        private IReadOnlyCollection<string> IgnoreFullScreenWindowClassNames { get; } = new[] {
             "Shell_TrayWnd",
             "Progman",
         };
@@ -45,20 +45,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         public bool IsFullScreen(IntPtr hWnd, IScreen targetScreen)
         {
             if(!NativeMethods.IsWindowVisible(hWnd)) {
-                return true;
+                return false;
             }
 
             if(hWnd == NativeMethods.GetDesktopWindow() || hWnd == NativeMethods.GetShellWindow()) {
-                return true;
+                return false;
             }
 
-            var buffer = new StringBuilder(WindowClassNameLength);
-            NativeMethods.GetClassName(hWnd, buffer, buffer.Capacity);
-            var className = buffer.ToString();
-
-            if(IgnoreFullScreenWindowClassNames.Any(i => i == className)) {
+            var windowClassName = WindowsUtility.GetWindowClassName(hWnd);
+            if(IgnoreFullScreenWindowClassNames.Any(i => i == windowClassName)) {
                 // [#679] 環境によるかもだけどこいつが最前面判定されているときがある
-                Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}", className, hWnd.ToInt64());
+                Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}", windowClassName, hWnd.ToInt64());
                 return false;
             }
             NativeMethods.GetWindowRect(hWnd, out var windowRect);
@@ -73,9 +70,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
                 ||
                 windowRect.Bottom != screenRect.Bottom
             ) {
-                Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, (hWnd){2} != {3}(screen)", className, hWnd.ToInt64(), windowRect, screenRect);
+                Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, (hWnd){2} != {3}(screen)", windowClassName, hWnd.ToInt64(), windowRect, screenRect);
                 return false;
             }
+
+            var exWindowStyle = WindowsUtility.GetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE);
+            if((exWindowStyle.ToInt32() & (int)WS_EX.WS_EX_TOPMOST) == (int)WS_EX.WS_EX_TOPMOST) {
+                Logger.LogTrace("[#679] フルスクリーン検知除外 {0}, {1:x}, !WS_EX_TOPMOST", windowClassName, hWnd.ToInt64());
+                return false;
+            }
+
+            Logger.LogTrace("フルスクリーン対象 {0}, {1:x}", windowClassName, hWnd.ToInt64());
 
             return true;
         }
@@ -87,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         /// <returns>フルスクリーンのウィンドウハンドル。フルスクリーンのウィンドウハンドルが取得できなかった場合は<see cref="IntPtr.Zero"/></returns>
         public IntPtr GetFullScreenWindowHandle(IScreen targetScreen)
         {
-            var hResultWnd = IntPtr.Zero;
+            IntPtr hResultWnd = IntPtr.Zero;
 
             NativeMethods.EnumWindows((hWnd, lParam) => {
                 if(!IsFullScreen(hWnd, targetScreen)) {

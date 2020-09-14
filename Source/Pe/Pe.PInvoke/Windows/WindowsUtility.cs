@@ -249,6 +249,14 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
             return new IntPtr((int)hWnd);
         }
 
+        public static string GetWindowClassName(IntPtr hWnd, int windowClassNameLength = classNameLength)
+        {
+            var buffer = new StringBuilder(windowClassNameLength);
+            NativeMethods.GetClassName(hWnd, buffer, buffer.Capacity);
+            var windowClassName = buffer.ToString();
+            return windowClassName;
+        }
+
         #endregion
     }
 }
