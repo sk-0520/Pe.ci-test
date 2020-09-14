@@ -442,11 +442,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
             : base(section)
         {
 
+            LowSchedulerTime = section.GetValue<TimeSpan>("low_scheduler_time");
             LauncherItemIconRefresh = section.GetValue<string>("launcher_item_icon_refresh");
         }
 
         #region function
 
+        public TimeSpan LowSchedulerTime { get; }
         public string LauncherItemIconRefresh { get; }
 
         #endregion
