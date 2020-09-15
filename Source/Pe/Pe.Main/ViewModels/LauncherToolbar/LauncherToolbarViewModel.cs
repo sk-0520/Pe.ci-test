@@ -36,6 +36,7 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {

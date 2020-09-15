@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -13,10 +14,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 {
     public class UpdateChecker
     {
-        public UpdateChecker(CustomConfiguration configuration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
+        public UpdateChecker(ApplicationConfiguration applicationConfiguration, IUserAgentManager userAgentManager, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
-            Configuration = configuration;
+            ApplicationConfiguration = applicationConfiguration;
             UserAgentManager = userAgentManager;
         }
 
@@ -24,7 +25,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
         ILogger Logger { get; }
 
-        CustomConfiguration Configuration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
         IUserAgentManager UserAgentManager { get; }
 
         #endregion
@@ -36,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             var uri = new Uri(
                 TextUtility.ReplaceFromDictionary(
-                    Configuration.General.UpdateCheckUri.OriginalString,
+                    ApplicationConfiguration.General.UpdateCheckUri.OriginalString,
                     new Dictionary<string, string>() {
                         ["CACHE-CLEAR"] = DateTime.UtcNow.ToBinary().ToString()
                     }

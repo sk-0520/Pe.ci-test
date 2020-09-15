@@ -34,6 +34,7 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -58,14 +59,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, CustomConfiguration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             NoteConfiguration = noteConfiguration;
             NoteTheme = noteTheme;
             GeneralTheme = generalTheme;
             PlatformTheme = platformTheme;
-            Configuration = configuration;
+            ApplicationConfiguration = applicationConfiguration;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
 
@@ -123,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
         IDisposable? WindowHandleSource { get; set; }
 
-        CustomConfiguration Configuration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
 
         public Guid NoteId => Model.NoteId;
         public bool IsLink
@@ -696,14 +697,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             if(startupPosition == NoteStartupPosition.CenterScreen) {
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
-                    layout.Width = Configuration.Note.LayoutAbsoluteSize.Width;
-                    layout.Height = Configuration.Note.LayoutAbsoluteSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutAbsoluteSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutAbsoluteSize.Height;
                     layout.X = (logicalScreenSize.Width / 2) - (layout.Width / 2);
                     layout.Y = (logicalScreenSize.Height / 2) - (layout.Height / 2);
                 } else {
                     Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
-                    layout.Width = Configuration.Note.LayoutRelativeSize.Width;
-                    layout.Height = Configuration.Note.LayoutRelativeSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutRelativeSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutRelativeSize.Height;
                     layout.X = 0;
                     layout.Y = 0;
                 }
@@ -722,8 +723,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutputor);
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
-                    layout.Width = Configuration.Note.LayoutAbsoluteSize.Width;
-                    layout.Height = Configuration.Note.LayoutAbsoluteSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutAbsoluteSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutAbsoluteSize.Height;
                     layout.X = logicalScreenCursorLocation.X;
                     layout.Y = logicalScreenCursorLocation.Y;
                 } else {
@@ -737,8 +738,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         deviceScreenBounds.Height / 2
                     );
 
-                    layout.Width = Configuration.Note.LayoutRelativeSize.Width;
-                    layout.Height = Configuration.Note.LayoutRelativeSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutRelativeSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutRelativeSize.Height;
 
                     var width = area.Width * layout.Width;
                     var height = area.Height * layout.Height;

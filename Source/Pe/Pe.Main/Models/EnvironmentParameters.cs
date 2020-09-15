@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Configuration;
 
@@ -48,9 +49,9 @@ namespace ContentTypeTextNet.Pe.Main.Models
                 .AddJsonFile(versionAppSettingFileName, true)
             ;
             var configurationRoot = configurationBuilder.Build();
-            Configuration = new CustomConfiguration(configurationRoot);
+            ApplicationConfiguration = new ApplicationConfiguration(configurationRoot);
 
-            var projectName = Configuration.General.ProjectName;
+            var projectName = ApplicationConfiguration.General.ProjectName;
             UserRoamingDirectory = GetDirectory(commandLine, CommandLineKeyUserDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), projectName));
             MachineDirectory = GetDirectory(commandLine, CommandLineKeyMachineDirectory, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), projectName));
             TemporaryDirectory = GetDirectory(commandLine, CommandLineKeyTemporaryDirectory, Path.Combine(Path.GetTempPath(), projectName));
@@ -291,7 +292,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         /// </summary>
         public FileInfo FileFile => CombineFile(UserSettingDirectory, "file.sqlite3");
 
-        public CustomConfiguration Configuration { get; }
+        public ApplicationConfiguration ApplicationConfiguration { get; }
 
         #endregion
 

@@ -6,6 +6,7 @@ using System.Windows.Markup;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
@@ -14,13 +15,13 @@ namespace ContentTypeTextNet.Pe.Main.Models
 {
     public class CultureServiceChanger
     {
-        public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, CustomConfiguration configuration, ILoggerFactory loggerFactory)
+        public CultureServiceChanger(CultureService cultureService, IWindowManager windowManager, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ApplicationConfiguration applicationConfiguration, ILoggerFactory loggerFactory)
         {
             CultureService = cultureService;
             WindowManager = windowManager;
             MainDatabaseBarrier = mainDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
-            Configuration = configuration;
+            ApplicationConfiguration = applicationConfiguration;
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
         }
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
         IWindowManager WindowManager { get; }
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
-        CustomConfiguration Configuration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
         ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Main.Models
             }
 
             // もうちょっと柔軟性あってもいいと思うよ
-            return Configuration.General.SupportCultures
+            return ApplicationConfiguration.General.SupportCultures
                 .FirstOrDefault(i => i.Equals(lang, StringComparison.OrdinalIgnoreCase))
                 ?? string.Empty
             ;
