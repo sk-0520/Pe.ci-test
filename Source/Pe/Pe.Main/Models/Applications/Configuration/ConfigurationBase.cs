@@ -7,6 +7,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    /// <summary>
+    /// アプリケーション構成ファイルの読み込み基底処理。
+    /// <para>すべてをコンストラクタで処理し、失敗時は例外を投げて先に進ませないようにする。</para>
+    /// </summary>
     public abstract class ConfigurationBase
     {
         protected ConfigurationBase(IConfigurationSection section)
