@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -8,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
@@ -65,14 +67,44 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 } else if(item.field.FieldType == typeof(string)) {
                     var result = section.GetValue(item.field.FieldType, memberKey);
                     item.field.SetValue(this, result);
-                } else if(typeof(IReadOnlyList<>).IsAssignableFrom(item.field.FieldType)) {
-                    var type2 = item.field.FieldType.GenericTypeArguments;
-                } else  {
+                } else if(item.field.FieldType.IsGenericType) {
+                    var child = section.GetSection(memberKey);
+
+                    if(0 < item.field.FieldType.GenericTypeArguments.Length) {
+                        switch(item.field.FieldType.GenericTypeArguments.Length) {
+                            case 1:
+                                if(typeof(string) == item.field.FieldType.GenericTypeArguments[0] || typeof(double) == item.field.FieldType.GenericTypeArguments[0]) {
+                                    var values = child.Get(typeof(List<>).MakeGenericType(item.field.FieldType.GenericTypeArguments[0]));
+                                    item.field.SetValue(this, values);
+                                } else {
+                                    throw new Exception();
+                                }
+                                //switch(genericTypes[0]) {
+                                //    case typeof(string): {
+                                //            var values = child.Get(typeof(List<>).MakeGenericType(genericTypes[0]));
+                                //            item.field.SetValue(this, values);
+                                //        }
+                                //        break;
+
+                                //    default:
+                                //        throw new NotImplementedException();
+                                //}
+                                break;
+
+                            default:
+                                throw new Exception();
+                        }
+                    }
+                } else {
                     var result = section.GetValue(item.field.FieldType, memberKey);
                     if(result == null) {
-
+                        var child = section.GetSection(memberKey);
+                        if(child == null) {
+                            throw new Exception();
+                        }
+                    } else {
+                        item.field.SetValue(this, result);
                     }
-                    item.field.SetValue(this, result);
                 }
             }
         }
