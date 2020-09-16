@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -25,41 +26,53 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         protected ConfigurationBase(IConfigurationSection section)
         {
             var type = GetType();
-            var items = type
-                .GetMembers(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetField)
+            var properties = type.GetProperties()
+                .ToDictionary(i => i.Name, i => i)
+            ;
+            var items =
+                type.GetMembers(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetField)
                 .Where(i => i.MemberType == MemberTypes.Field)
                 .Cast<FieldInfo>()
                 .Select(i => (field: i, attribute: i.GetCustomAttribute<CompilerGeneratedAttribute>()))
                 .Where(i => i.attribute != null)
-                .Select(i => (i.field, i.attribute!, proeprtyName: i.field.Name.Substring(1, i.field.Name.IndexOf('>') - 1)))
+                .Select(i => (i.field, attribute: i.attribute!, propertyName: i.field.Name.Substring(1, i.field.Name.IndexOf('>') - 1)))
+                .Select(i => (i.field, i.attribute, property: properties[i.propertyName]))
             ;
 
             var nameConverter = new NameConveter();
 
             foreach(var item in items) {
-                string propertyName = item.field.Name.Substring(1, item.field.Name.IndexOf('>') - 1);
-                var conf = item.field.GetCustomAttribute<ConfigurationAttribute>();
+                var conf = item.property.GetCustomAttribute<ConfigurationAttribute>();
                 if(conf == null) {
                     //throw new Exception($"{item}: attr {nameof(ConfigurationAttribute)}");
                 }
 
-                var confMemberName = conf?.MemberName.Length == 0
-                    ? nameConverter.PascalToSnake(propertyName)
+                var memberKey = conf?.MemberName.Length == 0
+                    ? nameConverter.PascalToSnake(item.property.Name)
                     : conf?.MemberName
                 ;
-                if(confMemberName == null) {
-                    confMemberName = nameConverter.PascalToSnake(propertyName);
+                if(memberKey == null) {
+                    memberKey = nameConverter.PascalToSnake(item.property.Name);
                 }
 
-                Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.field.Name, propertyName, item.field.FieldType, conf?.MemberName, confMemberName);
+                Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.field.Name, item.property.Name, item.field.FieldType, conf?.MemberName, memberKey);
                 if(item.field.FieldType.IsArray) {
                     Debug.Assert(false, "–¢ŽÀ‘•");
                 } else if(item.field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
-                    var childSection = section.GetSection(confMemberName);
+                    var childSection = section.GetSection(memberKey);
                     var result = Activator.CreateInstance(item.field.FieldType, new[] { childSection });
                     item.field.SetValue(this, result);
-                } else {
-                    Debug.WriteLine(item.field.FieldType);
+                } else if(item.field.FieldType == typeof(string)) {
+                    var result = section.GetValue(item.field.FieldType, memberKey);
+                    item.field.SetValue(this, result);
+                } else if(typeof(IReadOnlyList<>).IsAssignableFrom(item.field.FieldType)) {
+                    var type2 = item.field.FieldType.GenericTypeArguments;
+                } else  {
+                    var result = section.GetValue(item.field.FieldType, memberKey);
+                    if(result == null) {
+
+                    }
+                    item.field.SetValue(this, result);
                 }
             }
         }

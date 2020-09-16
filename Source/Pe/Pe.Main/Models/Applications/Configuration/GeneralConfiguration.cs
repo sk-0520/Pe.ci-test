@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration]
         public string ProjectName { get; }
         public string MutexName { get; }
+        [Configuration("log_conf_file_name")]
         public string LoggingConfigFileName { get; }
 
         public IReadOnlyList<string> SupportCultures { get; }
