@@ -30,6 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
+        [Configuration]
         public string ProjectName { get; }
         public string MutexName { get; }
         public string LoggingConfigFileName { get; }
