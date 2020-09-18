@@ -15,14 +15,14 @@ using Microsoft.Extensions.Configuration;
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
     /// <summary>
-    /// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“\¬ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İŠî’êˆ—B
-    /// <para>‚·‚×‚Ä‚ğƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Åˆ—‚µA¸”s‚Í—áŠO‚ğ“Š‚°‚Äæ‚Éi‚Ü‚¹‚È‚¢‚æ‚¤‚É‚·‚éB</para>
-    /// <para>ƒoƒbƒLƒ“ƒOƒtƒB[ƒ‹ƒh–¼‚ğM‚¶‚Ä‚¦‚ñ‚â‚±‚ç‚³‚Á‚³B</para>
+    /// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³æ§‹æˆãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿åŸºåº•å‡¦ç†ã€‚
+    /// <para>ã™ã¹ã¦ã‚’ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§å‡¦ç†ã—ã€å¤±æ•—æ™‚ã¯ä¾‹å¤–ã‚’æŠ•ã’ã¦å…ˆã«é€²ã¾ã›ãªã„ã‚ˆã†ã«ã™ã‚‹ã€‚</para>
+    /// <para>ãƒãƒƒã‚­ãƒ³ã‚°ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’ä¿¡ã˜ã¦ãˆã‚“ã‚„ã“ã‚‰ã•ã£ã•ã€‚</para>
     /// </summary>
     public abstract class ConfigurationBase
     {
         /// <summary>
-        /// ‹K–ñ‚Æ‚µ‚Ä get-only ƒvƒƒpƒeƒB ‚ğ‘ÎÛ‚Æ‚·‚éB
+        /// è¦ç´„ã¨ã—ã¦ get-only ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ ã‚’å¯¾è±¡ã¨ã™ã‚‹ã€‚
         /// </summary>
         /// <param name="section"></param>
         protected ConfigurationBase(IConfigurationSection section)
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
                 Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.field.Name, item.property.Name, item.field.FieldType, conf?.MemberName, memberKey);
                 if(item.field.FieldType.IsArray) {
-                    Debug.Assert(false, "–¢À‘•");
+                    Debug.Assert(false, "æœªå®Ÿè£…");
                 } else if(item.field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
                     var childSection = section.GetSection(memberKey);
                     var result = Activator.CreateInstance(item.field.FieldType, new[] { childSection });
@@ -67,34 +67,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 } else if(item.field.FieldType == typeof(string)) {
                     var result = section.GetValue(item.field.FieldType, memberKey);
                     item.field.SetValue(this, result);
-                } else if(item.field.FieldType.IsGenericType) {
-                    var child = section.GetSection(memberKey);
-
-                    if(0 < item.field.FieldType.GenericTypeArguments.Length) {
-                        switch(item.field.FieldType.GenericTypeArguments.Length) {
-                            case 1:
-                                if(typeof(string) == item.field.FieldType.GenericTypeArguments[0] || typeof(double) == item.field.FieldType.GenericTypeArguments[0]) {
-                                    var values = child.Get(typeof(List<>).MakeGenericType(item.field.FieldType.GenericTypeArguments[0]));
-                                    item.field.SetValue(this, values);
-                                } else {
-                                    throw new Exception();
-                                }
-                                //switch(genericTypes[0]) {
-                                //    case typeof(string): {
-                                //            var values = child.Get(typeof(List<>).MakeGenericType(genericTypes[0]));
-                                //            item.field.SetValue(this, values);
-                                //        }
-                                //        break;
-
-                                //    default:
-                                //        throw new NotImplementedException();
-                                //}
-                                break;
-
-                            default:
-                                throw new Exception();
-                        }
-                    }
                 } else {
                     var result = section.GetValue(item.field.FieldType, memberKey);
                     if(result == null) {
