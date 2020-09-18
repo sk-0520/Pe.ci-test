@@ -24,8 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         /// <summary>
         /// 規約として get-only プロパティ を対象とする。
         /// </summary>
-        /// <param name="section"></param>
-        protected ConfigurationBase(IConfigurationSection section)
+        /// <param name="conf"></param>
+        protected ConfigurationBase(IConfiguration conf)
         {
             var type = GetType();
             var properties = type.GetProperties()
@@ -38,39 +38,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 .Select(i => (field: i, attribute: i.GetCustomAttribute<CompilerGeneratedAttribute>()))
                 .Where(i => i.attribute != null)
                 .Select(i => (i.field, attribute: i.attribute!, propertyName: i.field.Name.Substring(1, i.field.Name.IndexOf('>') - 1)))
+                .Where(i => properties.ContainsKey(i.propertyName))
                 .Select(i => (i.field, i.attribute, property: properties[i.propertyName]))
+                .Where(i => i.property.GetCustomAttribute<ConfigurationAttribute>() != null)
+                .Select(i => (i.field, i.attribute, i.property, config: i.property.GetCustomAttribute<ConfigurationAttribute>()!))
             ;
 
             var nameConverter = new NameConveter();
 
             foreach(var item in items) {
-                var conf = item.property.GetCustomAttribute<ConfigurationAttribute>();
-                if(conf == null) {
-                    //throw new Exception($"{item}: attr {nameof(ConfigurationAttribute)}");
-                }
-
-                var memberKey = conf?.MemberName.Length == 0
+                var memberKey = item.config.MemberName.Length == 0
                     ? nameConverter.PascalToSnake(item.property.Name)
-                    : conf?.MemberName
+                    : item.config.MemberName
                 ;
                 if(memberKey == null) {
                     memberKey = nameConverter.PascalToSnake(item.property.Name);
                 }
 
-                Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.field.Name, item.property.Name, item.field.FieldType, conf?.MemberName, memberKey);
+                Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.field.Name, item.property.Name, item.field.FieldType, item.config.MemberName, memberKey);
                 if(item.field.FieldType.IsArray) {
                     Debug.Assert(false, "未実装");
                 } else if(item.field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
-                    var childSection = section.GetSection(memberKey);
+                    var childSection = conf.GetSection(memberKey);
                     var result = Activator.CreateInstance(item.field.FieldType, new[] { childSection });
                     item.field.SetValue(this, result);
                 } else if(item.field.FieldType == typeof(string)) {
-                    var result = section.GetValue(item.field.FieldType, memberKey);
+                    var result = conf.GetValue(item.field.FieldType, memberKey);
                     item.field.SetValue(this, result);
                 } else {
-                    var result = section.GetValue(item.field.FieldType, memberKey);
+                    var result = conf.GetValue(item.field.FieldType, memberKey);
                     if(result == null) {
-                        var child = section.GetSection(memberKey);
+                        var child = conf.GetSection(memberKey);
                         if(child == null) {
                             throw new Exception();
                         }

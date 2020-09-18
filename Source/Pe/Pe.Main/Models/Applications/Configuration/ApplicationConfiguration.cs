@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
-    public class ApplicationConfiguration
+    public class ApplicationConfiguration: ConfigurationBase
     {
         public ApplicationConfiguration(IConfigurationRoot configurationRoot)
+            : base(configurationRoot)
         {
-            General = new GeneralConfiguration(configurationRoot.GetSection("general"));
+            //General = new GeneralConfiguration(configurationRoot.GetSection("general"));
             Web = new WebConfiguration(configurationRoot.GetSection("web"));
             Api = new ApiConfiguration(configurationRoot.GetSection("api"));
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
@@ -29,7 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
-        public GeneralConfiguration General { get; }
+        [Configuration]
+        public GeneralConfiguration General { get; } = default!;
         public WebConfiguration Web { get; }
         public ApiConfiguration Api { get; }
         public BackupConfiguration Backup { get; }
