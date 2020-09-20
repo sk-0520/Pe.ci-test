@@ -474,7 +474,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 appLogLimit = AppLogLimit;
             }
 
-            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.ApplicationConfiguration.General.LoggingConfigFileName);
+            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.ApplicationConfiguration.General.LogConfigFileName);
             Logging = new ApplicationLogging(
                 appLogLimit,
                 logginConfigFilePath,

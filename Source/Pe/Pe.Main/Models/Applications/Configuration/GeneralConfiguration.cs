@@ -9,9 +9,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public GeneralConfiguration(IConfigurationSection section) : base(section)
         {
-            ProjectName = section.GetValue<string>("project_name");
-            MutexName = section.GetValue<string>("mutex_name");
-            LoggingConfigFileName = section.GetValue<string>("log_conf_file_name");
+            //ProjectName = section.GetValue<string>("project_name");
+            //MutexName = section.GetValue<string>("mutex_name");
+            //LoggingConfigFileName = section.GetValue<string>("log_conf_file_name");
             SupportCultures = section.GetSection("support_cultures").Get<string[]>();
 
             LicenseName = section.GetValue<string>("license_name");
@@ -31,10 +31,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         #region property
 
         [Configuration]
-        public string ProjectName { get; }
-        public string MutexName { get; }
+        public string ProjectName { get; } = default!;
+        [Configuration]
+        public string MutexName { get; } = default!;
         [Configuration("log_conf_file_name")]
-        public string LoggingConfigFileName { get; }
+        public string LogConfigFileName { get; } = default!;
 
         public IReadOnlyList<string> SupportCultures { get; }
 

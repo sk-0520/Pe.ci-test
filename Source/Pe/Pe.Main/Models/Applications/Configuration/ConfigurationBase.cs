@@ -70,13 +70,27 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                     if(result == null) {
                         var child = conf.GetSection(memberKey);
                         if(child == null) {
-                            throw new Exception();
+                            throw new Exception(memberKey);
                         }
                     } else {
                         item.field.SetValue(this, result);
                     }
                 }
             }
+
+#if DEBUG
+            var checkHasConfiguration = false;
+            foreach(var debugProperty in type.GetProperties().Where(i => i.GetCustomAttribute<ConfigurationAttribute>() != null)) {
+                if(debugProperty.GetValue(this) == null) {
+                    checkHasConfiguration = true;
+                    Debug.WriteLine("default -> {0}", debugProperty);
+                }
+            }
+
+            if(checkHasConfiguration) {
+                throw new Exception();
+            }
+#endif
         }
 
         #region function
