@@ -11,14 +11,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             : base(section)
         {
 
-            LowSchedulerTime = section.GetValue<TimeSpan>("low_scheduler_time");
-            LauncherItemIconRefresh = section.GetValue<string>("launcher_item_icon_refresh");
+            //LowSchedulerTime = section.GetValue<TimeSpan>("low_scheduler_time");
+            //LauncherItemIconRefresh = section.GetValue<string>("launcher_item_icon_refresh");
         }
 
         #region function
 
+        [Configuration]
         public TimeSpan LowSchedulerTime { get; }
-        public string LauncherItemIconRefresh { get; }
+        [Configuration]
+        public string LauncherItemIconRefresh { get; } = default!;
 
         #endregion
     }
