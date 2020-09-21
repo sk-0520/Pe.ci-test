@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             //File = new FileConfiguration(configurationRoot.GetSection("file"));
             //Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
-            Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
+            //Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
             LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
             LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
@@ -43,7 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public FileConfiguration File { get; } = default!;
         [Configuration]
         public DisplayConfiguration Display { get; } = default!;
-        public HookConfiguration Hook { get; }
+        [Configuration]
+        public HookConfiguration Hook { get; } = default!;
         public NotifyLogConfiguration NotifyLog { get; }
         public LauncherItemConfiguration LauncherItem { get; }
         public LauncherToolbarConfiguration LauncherToobar { get; }

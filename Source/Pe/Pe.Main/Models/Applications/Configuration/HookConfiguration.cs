@@ -10,8 +10,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public HookConfiguration(IConfigurationSection section)
             : base(section)
         {
-            Keyboard = section.GetValue<bool>("keyboard");
-            Mouse = section.GetValue<bool>("mouse");
+            //Keyboard = section.GetValue<bool>("keyboard");
+            //Mouse = section.GetValue<bool>("mouse");
         }
 
         #region property
@@ -19,10 +19,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         /// <summary>
         /// キーボードを有効にするか。
         /// </summary>
+        [Configuration]
         public bool Keyboard { get; }
         /// <summary>
         /// マウスフックを有効にするか。
         /// </summary>
+        [Configuration]
         public bool Mouse { get; }
 
         #endregion
