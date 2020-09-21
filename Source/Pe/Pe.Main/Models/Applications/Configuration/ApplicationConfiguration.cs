@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
             //LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             //LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
-            Note = new NoteConfiguration(configurationRoot.GetSection("note"));
+            //Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
             Schedule = new ScheduleConfiguration(configurationRoot.GetSection("schedule"));
@@ -53,7 +53,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public LauncherToolbarConfiguration LauncherToolbar { get; } = default!;
         [Configuration]
         public LauncherGroupConfiguration LauncherGroup { get; } = default!;
-        public NoteConfiguration Note { get; }
+        [Configuration]
+        public NoteConfiguration Note { get; } = default!;
         public CommandConfiguration Command { get; }
         public PlatformConfiguration Platform { get; }
         public ScheduleConfiguration Schedule { get; }
