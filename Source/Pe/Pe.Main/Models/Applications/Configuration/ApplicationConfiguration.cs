@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //Command = new CommandConfiguration(configurationRoot.GetSection("command"));
             //Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
             //Schedule = new ScheduleConfiguration(configurationRoot.GetSection("schedule"));
-            Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
+            //Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
         }
 
         #region property
@@ -61,7 +61,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public PlatformConfiguration Platform { get; } = default!;
         [Configuration]
         public ScheduleConfiguration Schedule { get; } = default!;
-        public PluginConfiguration Plugin { get; }
+        [Configuration]
+        public PluginConfiguration Plugin { get; } = default!;
         #endregion
     }
 }
