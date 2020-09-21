@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //Web = new WebConfiguration(configurationRoot.GetSection("web"));
             //Api = new ApiConfiguration(configurationRoot.GetSection("api"));
             //Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
-            File = new FileConfiguration(configurationRoot.GetSection("file"));
+            //File = new FileConfiguration(configurationRoot.GetSection("file"));
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
             Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
@@ -39,7 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public ApiConfiguration Api { get; } = default!;
         [Configuration]
         public BackupConfiguration Backup { get; } = default!;
-        public FileConfiguration File { get; }
+        [Configuration]
+        public FileConfiguration File { get; } = default!;
         public DisplayConfiguration Display { get; }
         public HookConfiguration Hook { get; }
         public NotifyLogConfiguration NotifyLog { get; }
