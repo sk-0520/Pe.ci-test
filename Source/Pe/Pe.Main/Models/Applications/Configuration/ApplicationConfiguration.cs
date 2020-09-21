@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             : base(configurationRoot)
         {
             //General = new GeneralConfiguration(configurationRoot.GetSection("general"));
-            Web = new WebConfiguration(configurationRoot.GetSection("web"));
+            //Web = new WebConfiguration(configurationRoot.GetSection("web"));
             Api = new ApiConfiguration(configurationRoot.GetSection("api"));
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
@@ -33,7 +33,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         [Configuration]
         public GeneralConfiguration General { get; } = default!;
-        public WebConfiguration Web { get; }
+        [Configuration]
+        public WebConfiguration Web { get; } = default!;
         public ApiConfiguration Api { get; }
         public BackupConfiguration Backup { get; }
         public FileConfiguration File { get; }
