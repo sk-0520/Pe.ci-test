@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //General = new GeneralConfiguration(configurationRoot.GetSection("general"));
             //Web = new WebConfiguration(configurationRoot.GetSection("web"));
             //Api = new ApiConfiguration(configurationRoot.GetSection("api"));
-            Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
+            //Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
             Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
@@ -35,8 +35,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public GeneralConfiguration General { get; } = default!;
         [Configuration]
         public WebConfiguration Web { get; } = default!;
-        public ApiConfiguration Api { get; }
-        public BackupConfiguration Backup { get; }
+        [Configuration]
+        public ApiConfiguration Api { get; } = default!;
+        [Configuration]
+        public BackupConfiguration Backup { get; } = default!;
         public FileConfiguration File { get; }
         public DisplayConfiguration Display { get; }
         public HookConfiguration Hook { get; }
