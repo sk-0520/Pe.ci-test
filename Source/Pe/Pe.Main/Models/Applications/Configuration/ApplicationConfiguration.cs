@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             //Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             //Command = new CommandConfiguration(configurationRoot.GetSection("command"));
-            Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
+            //Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
             Schedule = new ScheduleConfiguration(configurationRoot.GetSection("schedule"));
             Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
         }
@@ -57,7 +57,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public NoteConfiguration Note { get; } = default!;
         [Configuration]
         public CommandConfiguration Command { get; } = default!;
-        public PlatformConfiguration Platform { get; }
+        [Configuration]
+        public PlatformConfiguration Platform { get; } = default!;
         public ScheduleConfiguration Schedule { get; }
         public PluginConfiguration Plugin { get; }
         #endregion
