@@ -10,20 +10,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public ApiConfiguration(IConfigurationSection section)
             : base(section)
         {
-            CrashReportUri = section.GetValue<Uri>("crash_report_uri");
-            CrashReportSourceUri = section.GetValue<Uri>("crash_report_src_uri");
+            //CrashReportUri = section.GetValue<Uri>("crash_report_uri");
+            //CrashReportSourceUri = section.GetValue<Uri>("crash_report_src_uri");
 
-            FeedbackUri = section.GetValue<Uri>("feedback_uri");
-            FeedbackSourceUri = section.GetValue<Uri>("feedback_src_uri");
+            //FeedbackUri = section.GetValue<Uri>("feedback_uri");
+            //FeedbackSourceUri = section.GetValue<Uri>("feedback_src_uri");
         }
 
         #region property
 
-        public Uri CrashReportUri { get; }
-        public Uri CrashReportSourceUri { get; }
+        [Configuration]
+        public Uri CrashReportUri { get; } = default!;
+        [Configuration]
+        public Uri CrashReportSourceUri { get; } = default!;
 
-        public Uri FeedbackUri { get; }
-        public Uri FeedbackSourceUri { get; }
+        [Configuration]
+        public Uri FeedbackUri { get; } = default!;
+        [Configuration]
+        public Uri FeedbackSourceUri { get; } = default!;
 
         #endregion
     }

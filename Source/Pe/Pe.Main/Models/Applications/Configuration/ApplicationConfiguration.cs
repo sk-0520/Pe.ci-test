@@ -13,7 +13,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         {
             //General = new GeneralConfiguration(configurationRoot.GetSection("general"));
             //Web = new WebConfiguration(configurationRoot.GetSection("web"));
-            Api = new ApiConfiguration(configurationRoot.GetSection("api"));
+            //Api = new ApiConfiguration(configurationRoot.GetSection("api"));
             Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             File = new FileConfiguration(configurationRoot.GetSection("file"));
             Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
