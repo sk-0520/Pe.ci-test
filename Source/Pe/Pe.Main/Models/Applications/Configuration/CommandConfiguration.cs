@@ -13,8 +13,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public CommandConfiguration(IConfigurationSection section)
             : base(section)
         {
-            IconClearWaitTime = section.GetValue<TimeSpan>("icon_clear_wait_time");
-            ViewCloseWaitTime = section.GetValue<TimeSpan>("view_close_wait_time");
+            //IconClearWaitTime = section.GetValue<TimeSpan>("icon_clear_wait_time");
+            //ViewCloseWaitTime = section.GetValue<TimeSpan>("view_close_wait_time");
 
             var applicationCommand = section.GetSection("application_command");
             ApplicationPrefix = applicationCommand.GetValue<string>("prefix");
@@ -26,7 +26,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region property
 
+        [Configuration]
         public TimeSpan IconClearWaitTime { get; }
+        [Configuration]
         public TimeSpan ViewCloseWaitTime { get; }
 
         public string ApplicationPrefix { get; }
