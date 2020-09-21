@@ -10,12 +10,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public LauncherItemConfiguration(IConfigurationSection section)
             : base(section)
         {
-            IconRefreshTime = section.GetValue<TimeSpan>("icon_refresh_time");
+            //IconRefreshTime = section.GetValue<TimeSpan>("icon_refresh_time");
             AutoImportUntargetPatterns = GetList<string>(section, "auto_import_untarget_patterns");
         }
 
         #region property
 
+        [Configuration]
         public TimeSpan IconRefreshTime { get; }
         /// <summary>
         /// 自動登録対象外ファイルパターン。
