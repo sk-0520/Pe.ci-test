@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //Api = new ApiConfiguration(configurationRoot.GetSection("api"));
             //Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
             //File = new FileConfiguration(configurationRoot.GetSection("file"));
-            Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
+            //Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
             Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
             LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
@@ -41,7 +41,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public BackupConfiguration Backup { get; } = default!;
         [Configuration]
         public FileConfiguration File { get; } = default!;
-        public DisplayConfiguration Display { get; }
+        [Configuration]
+        public DisplayConfiguration Display { get; } = default!;
         public HookConfiguration Hook { get; }
         public NotifyLogConfiguration NotifyLog { get; }
         public LauncherItemConfiguration LauncherItem { get; }

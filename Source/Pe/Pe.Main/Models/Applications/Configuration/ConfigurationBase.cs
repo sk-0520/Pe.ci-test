@@ -69,9 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                     var result = conf.GetValue(item.field.FieldType, memberKey);
                     if(result == null) {
                         var child = conf.GetSection(memberKey);
-                        if(child == null) {
-                            throw new Exception(memberKey);
-                        }
+                        throw new Exception(child.Path);
                     } else {
                         item.field.SetValue(this, result);
                     }
