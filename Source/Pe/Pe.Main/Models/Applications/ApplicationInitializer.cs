@@ -372,7 +372,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<HookConfiguration, HookConfiguration>(environmentParameters.ApplicationConfiguration.Hook)
                 .Register<NotifyLogConfiguration, NotifyLogConfiguration>(environmentParameters.ApplicationConfiguration.NotifyLog)
                 .Register<LauncherItemConfiguration, LauncherItemConfiguration>(environmentParameters.ApplicationConfiguration.LauncherItem)
-                .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.ApplicationConfiguration.LauncherToobar)
+                .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.ApplicationConfiguration.LauncherToolbar)
                 .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.ApplicationConfiguration.LauncherGroup)
                 .Register<NoteConfiguration, NoteConfiguration>(environmentParameters.ApplicationConfiguration.Note)
                 .Register<CommandConfiguration, CommandConfiguration>(environmentParameters.ApplicationConfiguration.Command)

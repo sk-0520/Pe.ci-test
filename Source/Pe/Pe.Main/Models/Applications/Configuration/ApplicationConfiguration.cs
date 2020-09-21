@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
             //NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
             //LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
-            LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
+            //LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
             LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
             Note = new NoteConfiguration(configurationRoot.GetSection("note"));
             Command = new CommandConfiguration(configurationRoot.GetSection("command"));
@@ -49,7 +49,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public NotifyLogConfiguration NotifyLog { get; } = default!;
         [Configuration]
         public LauncherItemConfiguration LauncherItem { get; } = default!;
-        public LauncherToolbarConfiguration LauncherToobar { get; }
+        [Configuration]
+        public LauncherToolbarConfiguration LauncherToolbar { get; } = default!;
         public LauncherGroupConfiguration LauncherGroup { get; }
         public NoteConfiguration Note { get; }
         public CommandConfiguration Command { get; }
