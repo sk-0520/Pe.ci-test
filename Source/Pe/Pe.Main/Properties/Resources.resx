@@ -1574,12 +1574,6 @@
   <data name="String_Feedback_Comment_A" xml:space="preserve">
     <value>コメント(_C)</value>
   </data>
-  <data name="String_Feedback_CommentContent" xml:space="preserve">
-    <value>内容</value>
-  </data>
-  <data name="String_Feedback_CommentPreview" xml:space="preserve">
-    <value>プレビュー</value>
-  </data>
   <data name="String_Feedback_Comment_Format" xml:space="preserve">
     <value>Markdown にてにて記述</value>
   </data>

@@ -2726,6 +2726,9 @@ namespace ContentTypeTextNet.Pe.PInvoke.Windows
 
         [DllImport("user32.dll", SetLastError = false)]
         public static extern IntPtr GetDesktopWindow();
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetShellWindow();
     }
 
 

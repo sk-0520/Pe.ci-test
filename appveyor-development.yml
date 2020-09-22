@@ -13,16 +13,15 @@ install:
   - cmd: dotnet --version
   - cmd: choco install dotnetcore-sdk
   - cmd: dotnet --version
-  - ps: Install-Product node 12.14.1
-  - cmd: npm --version
-  #- cmd: npm -g install npm@6.13.4
+  - ps: Install-Product node 12.18.3
+  - cmd: npm -g install npm@6.14.8
 before_build:
   - cmd: git submodule init
   - cmd: git submodule update
   - ps: .\Build\make-buildtools.ps1
 build_script:
+  - ps: .\Build\create-document.ps1
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms x64,x86
-  - ps: .\Build\create-document.ps1 -Platforms x64,x86
   - ps: .\Build\compress.ps1 -Diet -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-release-note.ps1

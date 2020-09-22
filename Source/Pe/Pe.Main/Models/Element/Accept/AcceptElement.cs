@@ -10,19 +10,20 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 using System.Security;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
 {
     public class AcceptElement : ElementBase
     {
-        public AcceptElement(CustomConfiguration configuration, ILoggerFactory loggerFactory)
+        public AcceptElement(ApplicationConfiguration applicationConfiguration, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
-            Configuration = configuration;
+            ApplicationConfiguration = applicationConfiguration;
         }
 
         #region property
-        CustomConfiguration Configuration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
         public bool Accepted { get; set; }
         public UpdateKind UpdateKind { get; set; } = UpdateKind.Auto;
         public bool IsEnabledTelemetry { get; set; } = true;
@@ -38,11 +39,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Accept
                 ["APP"] = BuildStatus.Name,
                 ["ACCEPT-AFFIRMATIVE"] = Properties.Resources.String_Accept_Affirmative,
                 ["ACCEPT-NEGATIVE"] = Properties.Resources.String_Accept_Negative,
-                ["LICENSE-NAME"] = Configuration.General.LicenseName,
+                ["LICENSE-NAME"] = ApplicationConfiguration.General.LicenseName,
                 ["COPYRIGHT"] = BuildStatus.Copyright,
-                ["PROJECT-URI"] = Configuration.General.ProjectRepositoryUri.ToString(),
-                ["FORUM-URI"] = Configuration.General.ProjectForumUri.ToString(),
-                ["WEBSITE-URI"] = Configuration.General.ProjectWebSiteUri.ToString(),
+                ["PROJECT-URI"] = ApplicationConfiguration.General.ProjectRepositoryUri.ToString(),
+                ["FORUM-URI"] = ApplicationConfiguration.General.ProjectForumUri.ToString(),
+                ["WEBSITE-URI"] = ApplicationConfiguration.General.ProjectWebSiteUri.ToString(),
             }.ToDictionary(i => i.Key, i => SecurityElement.Escape(i.Value)!)
             ;
             var rawXml = TextUtility.ReplaceFromDictionary(Properties.Resources.File_Accept_AcceptDocument, map);

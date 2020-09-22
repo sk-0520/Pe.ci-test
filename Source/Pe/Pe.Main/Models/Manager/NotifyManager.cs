@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,16 +12,17 @@ using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Element.NotifyLog;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
-    public class NotifyEventArgs : EventArgs
+    public class NotifyEventArgs: EventArgs
     { }
 
-    public class LauncherItemChangedEventArgs : NotifyEventArgs
+    public class LauncherItemChangedEventArgs: NotifyEventArgs
     {
         public LauncherItemChangedEventArgs(Guid launcherItemId)
         {
@@ -34,7 +36,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class LauncherItemRemoveInLauncherGroupEventArgs : NotifyEventArgs
+    public class LauncherItemRemoveInLauncherGroupEventArgs: NotifyEventArgs
     {
         public LauncherItemRemoveInLauncherGroupEventArgs(Guid launcherGroupId, Guid launcherItemId, int index)
         {
@@ -52,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class LauncherItemRegisteredEventArgs : NotifyEventArgs
+    public class LauncherItemRegisteredEventArgs: NotifyEventArgs
     {
         public LauncherItemRegisteredEventArgs(Guid launcherGroupId, Guid launcherItemId)
         {
@@ -68,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    public class CustomizeLauncherItemExitedEventArgs : NotifyEventArgs
+    public class CustomizeLauncherItemExitedEventArgs: NotifyEventArgs
     {
         public CustomizeLauncherItemExitedEventArgs(Guid launcherItemId)
         {
@@ -84,13 +86,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     /// <summary>
     /// フルスクリーン状態。
     /// </summary>
-    public class FullScreenEventArgs : NotifyEventArgs
+    public class FullscreenEventArgs: NotifyEventArgs
     {
-        public FullScreenEventArgs(IScreen screen, bool isFullScreen, IntPtr hWnd)
+        public FullscreenEventArgs(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
             Screen = screen;
-            IsFullScreen = isFullScreen;
-            FullScreenWindowHandle = hWnd;
+            IsFullscreen = isFullScreen;
+            FullscreenWindowHandle = hWnd;
         }
 
         #region property
@@ -102,18 +104,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <summary>
         /// フルスクリーン状態。
         /// </summary>
-        public bool IsFullScreen { get; }
+        public bool IsFullscreen { get; }
         /// <summary>
         /// フルスクリーン化した対象ウィンドウハンドル。
-        /// <para><see cref="IsFullScreen"/>が真の場合に有効値が設定される。</para>
+        /// <para><see cref="IsFullscreen"/>が真の場合に有効値が設定される。</para>
         /// </summary>
-        public IntPtr FullScreenWindowHandle { get; }
+        public IntPtr FullscreenWindowHandle { get; }
 
 
         #endregion
     }
 
-    public class NotifyLogEventArgs : NotifyEventArgs
+    public class NotifyLogEventArgs: NotifyEventArgs
     {
         public NotifyLogEventArgs(NotifyEventKind kind, IReadOnlyNotifyMessage message)
         {
@@ -141,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
-        event EventHandler<FullScreenEventArgs>? FullScreenChanged;
+        event EventHandler<FullscreenEventArgs>? FullscreenChanged;
 
         event EventHandler<NotifyLogEventArgs>? NotifyLogChanged;
 
@@ -171,6 +173,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <param name="index">同一の<see cref="launcherItemId"/>に該当するもののうち何番目のアイテムかを示す。</param>
         void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int index);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
+
+        void SendFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd);
 
         /// <summary>
         /// 通知ログは存在するか。
@@ -205,7 +209,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         #endregion
     }
 
-    internal class NotifyManager : ManagerBase, INotifyManager
+    internal class NotifyManager: ManagerBase, INotifyManager
     {
         #region event
         #endregion
@@ -244,6 +248,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private ObservableCollection<NotifyLogItemElement> TopmostNotifyLogsImpl { get; }
         private ObservableCollection<NotifyLogItemElement> StreamNotifyLogsImpl { get; }
         private KeyedCollection<Guid, NotifyLogItemElement> NotifyLogs { get; } = new SimpleKeyedCollection<Guid, NotifyLogItemElement>(v => v.NotifyLogId);
+
+        private IDictionary<IScreen, bool> FullscreenStatus { get; } = new Dictionary<IScreen, bool>();
 
         #endregion
 
@@ -290,10 +296,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CustomizeLauncherItemExited?.Invoke(this, e);
         }
 
-        void OnFullScreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
+        void OnFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
-            var e = new FullScreenEventArgs(screen, isFullScreen, hWnd);
-            FullScreenChanged?.Invoke(this, e);
+            var e = new FullscreenEventArgs(screen, isFullScreen, hWnd);
+            FullscreenChanged?.Invoke(this, e);
         }
 
         void OnNotifyEventChanged(NotifyEventKind kind, IReadOnlyNotifyMessage message)
@@ -311,7 +317,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
 
-        public event EventHandler<FullScreenEventArgs>? FullScreenChanged;
+        public event EventHandler<FullscreenEventArgs>? FullscreenChanged;
 
         public event EventHandler<NotifyLogEventArgs>? NotifyLogChanged;
 
@@ -336,6 +342,40 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             OnCustomizeLauncherItemExited(launcherItemId);
         }
+
+        public void SendFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
+        {
+            var fire = false;
+
+            if(FullscreenStatus.TryGetValue(screen, out var currentValue)) {
+                if(isFullScreen != currentValue) {
+                    Logger.LogTrace("通常: {0}", isFullScreen);
+                    FullscreenStatus[screen] = isFullScreen;
+                    fire = true;
+                }
+            } else {
+                var existsScreen = FullscreenStatus.Keys.FirstOrDefault(i => i.DeviceName == screen.DeviceName);
+                if(existsScreen != null) {
+                    if(FullscreenStatus[existsScreen] != isFullScreen) {
+                        Logger.LogTrace("デバイス名: {0}", isFullScreen);
+                        FullscreenStatus[existsScreen] = isFullScreen;
+                        fire = true;
+                    }
+                } else {
+                    // 未登録ディスプレイでフルスクリーンじゃなければ別になんもしない
+                    if(isFullScreen) {
+                        Logger.LogTrace("未登録: {0}", isFullScreen);
+                        FullscreenStatus.Add(screen, isFullScreen);
+                        fire = true;
+                    }
+                }
+            }
+            if(fire) {
+                Logger.LogDebug("フルスクリーン状態発火: {0}, {1}", screen, isFullScreen);
+                OnFullscreenChanged(screen, isFullScreen, hWnd);
+            }
+        }
+
 
 
         /// <inheritdoc cref="INotifyManager.ExistsLog(Guid)" />

@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -21,14 +22,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             : base(loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
-            CustomConfiguration = EnvironmentParameters.Configuration;
+            ApplicationConfiguration = EnvironmentParameters.ApplicationConfiguration;
             ClipboardManager = clipboardManager;
         }
 
         #region property
 
         EnvironmentParameters EnvironmentParameters { get; }
-        CustomConfiguration CustomConfiguration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
         IClipboardManager ClipboardManager { get; }
 
         private List<AboutComponentItem> ComponentsImpl { get; } = new List<AboutComponentItem>();
@@ -61,10 +62,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
             var data = new[] {
                 new AboutComponentData() {
                     Name = BuildStatus.Name,
-                    Uri = CustomConfiguration.General.ProjectWebSiteUri.ToString(),
+                    Uri = ApplicationConfiguration.General.ProjectWebSiteUri.ToString(),
                     License = new AboutLicenseData() {
-                        Name = CustomConfiguration.General.LicenseName,
-                        Uri = CustomConfiguration.General.LicenseUri.ToString(),
+                        Name = ApplicationConfiguration.General.LicenseName,
+                        Uri = ApplicationConfiguration.General.LicenseUri.ToString(),
                     },
                     Comment = $"{BuildStatus.BuildType}: {versionConverter.ConvertNormalVersion(BuildStatus.Version)} - {BuildStatus.Revision}"
                 },
@@ -85,11 +86,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         public void OpenForumUri()
         {
-            OpenUri(CustomConfiguration.General.ProjectForumUri);
+            OpenUri(ApplicationConfiguration.General.ProjectForumUri);
         }
         public void OpenProjectUri()
         {
-            OpenUri(CustomConfiguration.General.ProjectRepositoryUri);
+            OpenUri(ApplicationConfiguration.General.ProjectRepositoryUri);
         }
 
         public void CopyShortInformation()

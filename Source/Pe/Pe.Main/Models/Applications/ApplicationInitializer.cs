@@ -13,6 +13,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -221,7 +222,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 diContainer
                     .Register<IDispatcherWrapper, ApplicationDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(TimeSpan.FromSeconds(10)))
                     .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
-                    .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
+                    .Register<ApplicationConfiguration, ApplicationConfiguration>(environmentParameters.ApplicationConfiguration)
                     .RegisterMvvm<Element.Accept.AcceptElement, ViewModels.Accept.AcceptViewModel, Views.Accept.AcceptWindow>()
                 ;
                 using(var windowManager = new WindowManager(diContainer, CultureService.Instance, diContainer.Get<ILoggerFactory>())) {
@@ -277,7 +278,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 statementAccessor = new ApplicationDatabaseAccessor(new ApplicationDatabaseFactory(environmentParameters.SqlStatementAccessorFile, true, true), loggerFactory);
             }
 
-            return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory);
+            return new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.Zero, statementAccessor, environmentParameters.ApplicationConfiguration.File.GivePriorityToFile, loggerFactory);
         }
 
         void FirstSetup(EnvironmentParameters environmentParameters, ILoggerFactory loggerFactory, ILogger logger)
@@ -361,24 +362,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IDiContainer, ApplicationDiContainer>(container)
 
                 .Register<EnvironmentParameters, EnvironmentParameters>(environmentParameters)
-                .Register<CustomConfiguration, CustomConfiguration>(environmentParameters.Configuration)
-                .Register<GeneralConfiguration, GeneralConfiguration>(environmentParameters.Configuration.General)
-                .Register<WebConfiguration, WebConfiguration>(environmentParameters.Configuration.Web)
-                .Register<ApiConfiguration, ApiConfiguration>(environmentParameters.Configuration.Api)
-                .Register<BackupConfiguration, BackupConfiguration>(environmentParameters.Configuration.Backup)
-                .Register<FileConfiguration, FileConfiguration>(environmentParameters.Configuration.File)
-                .Register<DisplayConfiguration, DisplayConfiguration>(environmentParameters.Configuration.Display)
-                .Register<HookConfiguration, HookConfiguration>(environmentParameters.Configuration.Hook)
-                .Register<NotifyLogConfiguration, NotifyLogConfiguration>(environmentParameters.Configuration.NotifyLog)
-                .Register<LauncherItemConfiguration, LauncherItemConfiguration>(environmentParameters.Configuration.LauncherItem)
-                .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.Configuration.LauncherToobar)
-                .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.Configuration.LauncherGroup)
-                .Register<NoteConfiguration, NoteConfiguration>(environmentParameters.Configuration.Note)
-                .Register<CommandConfiguration, CommandConfiguration>(environmentParameters.Configuration.Command)
-                .Register<PlatformConfiguration, PlatformConfiguration>(environmentParameters.Configuration.Platform)
-                .Register<ScheduleConfiguration, ScheduleConfiguration>(environmentParameters.Configuration.Schedule)
+                .Register<ApplicationConfiguration, ApplicationConfiguration>(environmentParameters.ApplicationConfiguration)
+                .Register<GeneralConfiguration, GeneralConfiguration>(environmentParameters.ApplicationConfiguration.General)
+                .Register<WebConfiguration, WebConfiguration>(environmentParameters.ApplicationConfiguration.Web)
+                .Register<ApiConfiguration, ApiConfiguration>(environmentParameters.ApplicationConfiguration.Api)
+                .Register<BackupConfiguration, BackupConfiguration>(environmentParameters.ApplicationConfiguration.Backup)
+                .Register<FileConfiguration, FileConfiguration>(environmentParameters.ApplicationConfiguration.File)
+                .Register<DisplayConfiguration, DisplayConfiguration>(environmentParameters.ApplicationConfiguration.Display)
+                .Register<HookConfiguration, HookConfiguration>(environmentParameters.ApplicationConfiguration.Hook)
+                .Register<NotifyLogConfiguration, NotifyLogConfiguration>(environmentParameters.ApplicationConfiguration.NotifyLog)
+                .Register<LauncherItemConfiguration, LauncherItemConfiguration>(environmentParameters.ApplicationConfiguration.LauncherItem)
+                .Register<LauncherToolbarConfiguration, LauncherToolbarConfiguration>(environmentParameters.ApplicationConfiguration.LauncherToolbar)
+                .Register<LauncherGroupConfiguration, LauncherGroupConfiguration>(environmentParameters.ApplicationConfiguration.LauncherGroup)
+                .Register<NoteConfiguration, NoteConfiguration>(environmentParameters.ApplicationConfiguration.Note)
+                .Register<CommandConfiguration, CommandConfiguration>(environmentParameters.ApplicationConfiguration.Command)
+                .Register<PlatformConfiguration, PlatformConfiguration>(environmentParameters.ApplicationConfiguration.Platform)
+                .Register<ScheduleConfiguration, ScheduleConfiguration>(environmentParameters.ApplicationConfiguration.Schedule)
 
-                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.Configuration.File.GivePriorityToFile, loggerFactory))
+                .Register<IDatabaseStatementLoader, ApplicationDatabaseStatementLoader>(new ApplicationDatabaseStatementLoader(environmentParameters.MainSqlDirectory, TimeSpan.FromMinutes(6), statementAccessor, environmentParameters.ApplicationConfiguration.File.GivePriorityToFile, loggerFactory))
 
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, loggerFactory)
 
@@ -388,7 +389,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<WidgetAddonContextFactory, WidgetAddonContextFactory>(DiLifecycle.Transient)
                 .Register<BackgroundAddonContextFactory, BackgroundAddonContextFactory>(DiLifecycle.Transient)
 
-                .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.Configuration.General.DispatcherWait))
+                .Register<IDispatcherWrapper, IDispatcherWrapper>(DiLifecycle.Transient, () => new ApplicationDispatcherWrapper(environmentParameters.ApplicationConfiguration.General.DispatcherWait))
                 .Register<CultureService, CultureService>(cultureService)
                 .Register<IImageLoader, ImageLoader>(DiLifecycle.Transient)
                 .Register<IMediaConverter, MediaConverter>(DiLifecycle.Transient)
@@ -473,7 +474,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 appLogLimit = AppLogLimit;
             }
 
-            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.Configuration.General.LoggingConfigFileName);
+            var logginConfigFilePath = Path.Combine(environmentParameters.EtcDirectory.FullName, environmentParameters.ApplicationConfiguration.General.LogConfigFileName);
             Logging = new ApplicationLogging(
                 appLogLimit,
                 logginConfigFilePath,
@@ -486,7 +487,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var logger = Logging.Factory.CreateLogger(GetType());
 
             if(RunMode == RunMode.Normal) {
-                var mutexName = environmentParameters.Configuration.General.MutexName;
+                var mutexName = environmentParameters.ApplicationConfiguration.General.MutexName;
                 logger.LogInformation("mutext: {0}", mutexName);
                 var mutex = new Mutex(true, mutexName, out var createdNew);
                 if(!createdNew) {

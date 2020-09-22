@@ -9,7 +9,6 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItemCustomize;
 using ContentTypeTextNet.Pe.Main.Models.Element.Setting;
 using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize;
-using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting

@@ -137,6 +137,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
+        internal void CopyTo(string sourceName, ApplicationDatabaseAccessor destination, string destinationName)
+        {
+            Connection.BackupDatabase(destination.Connection, destinationName, sourceName, -1, null, -1);
+        }
+
         #endregion
 
         #region DatabaseAccessor

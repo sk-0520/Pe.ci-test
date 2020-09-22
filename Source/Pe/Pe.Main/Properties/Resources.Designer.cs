@@ -3210,24 +3210,6 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   内容 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Feedback_CommentContent {
-            get {
-                return ResourceManager.GetString("String_Feedback_CommentContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   プレビュー に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string String_Feedback_CommentPreview {
-            get {
-                return ResourceManager.GetString("String_Feedback_CommentPreview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   再入力 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Feedback_Correct {

@@ -39,9 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    /// <summary>
-    /// foreach でくるくる回るよ！
-    /// </summary>
+    /// <inheritdoc cref="ICounter"/>
     public class Counter : ICounter, IEnumerable<ICounter>
     {
         public Counter(int maxCount)
@@ -70,23 +68,31 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #region ICounter
 
+        /// <inheritdoc cref="ICounter.MaxCount" />
         public int MaxCount { get; }
 
+        /// <inheritdoc cref="ICounter.CurrentCount" />
         public int CurrentCount { get; private set; } = 1;
 
+        /// <inheritdoc cref="ICounter" />
         public bool IsFirst => CurrentCount == 1;
+        /// <inheritdoc cref="ICounter.IsLast" />
         public bool IsLast => CurrentCount == MaxCount;
 
+        /// <inheritdoc cref="ICounter.Complete" />
         public bool Complete { get; set; }
 
         #endregion
 
         #region IEnumerable
+
+        /// <inheritdoc cref="IEnumerable.GetEnumerator()"/>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
+        /// <inheritdoc cref="IEnumerable{ICounter}.GetEnumerator()"/>
         public IEnumerator<ICounter> GetEnumerator()
         {
             Complete = false;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -62,6 +63,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             return @this.Select((v, i) => new CountingItem<int, TElement>(i + baseNumber, v));
         }
+
+        /// <summary>
+        /// 入力シーケンスを結合した文字列を返す。
+        /// <para><see cref="string.Join"/>してるだけだけど、 linq でふわっと使いたい。</para>
+        /// </summary>
+        /// <inheritdoc cref="string.Join"/>
+        public static string JoinString<T>(this IEnumerable<T> values, string? separator) => string.Join(separator, values);
     }
 
     public static class CollectionExtensions

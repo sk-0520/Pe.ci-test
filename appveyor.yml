@@ -19,15 +19,15 @@ install:
   - cmd: dotnet --version
   - cmd: choco install dotnetcore-sdk
   - cmd: dotnet --version
-  - ps: Install-Product node 12.14.1
-  - cmd: npm --version
+  - ps: Install-Product node 12.18.3
+  - cmd: npm -g install npm@6.14.8
 before_build:
   - cmd: git submodule init
   - cmd: git submodule update
   - ps: .\Build\make-buildtools.ps1
 build_script:
+  - ps: .\Build\create-document.ps1
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
-  - ps: .\Build\create-document.ps1 -Platforms $env:PLATFORM
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger & cd ..\..\..\ )

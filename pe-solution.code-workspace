@@ -23,7 +23,6 @@
     ],
     "settings": {
         "files.exclude": {
-            "**/.*": true,
             "**/bin": true,
             "**/obj": true,
             "**/node_modules": true,

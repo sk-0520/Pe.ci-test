@@ -68,6 +68,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Main.ViewModels.Widget;
 using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemExtension;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -79,11 +80,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger = Logging.Factory.CreateLogger(GetType());
             IsFirstStartup = initializer.IsFirstStartup;
 
+
 #if DEBUG
             IsDebugDevelopMode = initializer.IsDebugDevelopMode;
 #endif
 
             ApplicationDiContainer = initializer.DiContainer ?? throw new ArgumentNullException(nameof(initializer) + "." + nameof(initializer.DiContainer));
+            var customConfiguration = ApplicationDiContainer.Get<ApplicationConfiguration>();
+
             PlatformThemeLoader = ApplicationDiContainer.Build<PlatformThemeLoader>();
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
             ApplicationDiContainer.Register<IPlatformTheme, PlatformThemeLoader>(PlatformThemeLoader);
@@ -123,6 +127,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //// アドオンIFをDI登録
             //ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
 
+            // フルスクリーン検知処理の生成(設定項目が多いので生成後に値設定)
+
+            var fullscreenWatcher = ApplicationDiContainer.Build<FullscreenWatcher>();
+            var fullscreen = customConfiguration.Platform.Fullscreen;
+            foreach(var item in fullscreen.IgnoreWindowClasses) {
+                fullscreenWatcher.IgnoreFullscreenWindowClassNames.Add(item);
+            }
+            foreach(var item in fullscreen.IgnoreClassAndTexts) {
+                fullscreenWatcher.ClassAndTexts.Add(item);
+            }
+            fullscreenWatcher.TopmostOnly = fullscreen.TopmostOnly;
+            fullscreenWatcher.ExcludeNoActive = fullscreen.ExcludeNoActive;
+            fullscreenWatcher.ExcludeToolWindow = fullscreen.ExcludeToolWindow;
+            ApplicationDiContainer.Register<IFullscreenWatcher, FullscreenWatcher>(fullscreenWatcher);
+
+
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);
             KeyActionChecker = new KeyActionChecker(LoggerFactory);
@@ -135,8 +155,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             NotifyLogElement = ApplicationDiContainer.Build<NotifyLogElement>();
             NotifyLogElement.Initialize();
 
-            var platformConfiguration = ApplicationDiContainer.Get<PlatformConfiguration>();
-            LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), platformConfiguration.ScreenElementsResetWaitTime);
+            LazyScreenElementReset = ApplicationDiContainer.Build<LazyAction>(nameof(LazyScreenElementReset), customConfiguration.Platform.ScreenElementsResetWaitTime);
+
+            LowScheduler = new System.Timers.Timer(customConfiguration.Schedule.LowSchedulerTime.TotalMilliseconds);
+            LowScheduler.Elapsed += LowScheduler_Elapsed;
 
             if(!string.IsNullOrWhiteSpace(initializer.TestPluginDirectoryPath)) {
                 TestPluginDirectory = new DirectoryInfo(initializer.TestPluginDirectoryPath);
@@ -226,7 +248,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // 現在DBを編集用として再構築
             var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
             var settingDirectory = environmentParameters.TemporarySettingDirectory;
-            var directoryCleaner = new DirectoryCleaner(settingDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
+            var directoryCleaner = new DirectoryCleaner(settingDirectory, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, LoggerFactory);
             directoryCleaner.Clear(false);
 
             var settings = new {
@@ -254,6 +276,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 .RegisterDatabase(factory, lazyWriterWaitTimePack, LoggerFactory)
             ;
 
+            var workingDatabasePack = ApplicationDiContainer.Build<IDatabaseAccessorPack>();
+            var settingDatabasePack = container.Build<IDatabaseAccessorPack>();
+            PersistentHelper.Copy(workingDatabasePack.Temporary, settingDatabasePack.Temporary);
 
             var settingElement = new SettingContainerElement(container, container.Build<ILoggerFactory>());
             settingElement.Initialize();
@@ -279,7 +304,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 // 設定用DBを永続用DBと切り替え
                 var pack = ApplicationDiContainer.Get<IDatabaseAccessorPack>();
                 var stoppings = (new IDatabaseAccessor[] { pack.Main, pack.File })
-                    .Select(i => i.StopConnection())
+                    .Select(i => i.PauseConnection())
                     .ToList()
                 ;
 
@@ -316,6 +341,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
                 var cultureServiceChanger = ApplicationDiContainer.Build<CultureServiceChanger>(CultureService.Instance);
                 cultureServiceChanger.ChangeCulture();
+
+                PersistentHelper.Copy(workingDatabasePack.Temporary, accessorPack.Temporary);
+
 
                 Logger.LogInformation("設定適用のため各要素生成");
 
@@ -588,7 +616,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
 
             // プラグインディレクトリからプラグインDLL列挙
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.Configuration.Plugin.Extentions);
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
 
             // プラグイン情報取得
             var pluginStateItems = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
@@ -599,7 +627,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             FileInfo? testPluginFile = null;
             if(TestPluginDirectory != null) {
                 var pluginName = string.IsNullOrWhiteSpace(TestPluginName) ? TestPluginDirectory.Name : TestPluginName;
-                testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.Configuration.Plugin.Extentions);
+                testPluginFile = PluginContainer.GetPluginFile(TestPluginDirectory, pluginName, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
             }
 
             // プラグインを読み込み、プラグイン情報と突合して使用可能・不可を検証
@@ -1537,7 +1565,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 environmentParameters.UserSettingDirectory,
                 environmentParameters.UserBackupDirectory,
                 DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"),
-                environmentParameters.Configuration.Backup.SettingCount,
+                environmentParameters.ApplicationConfiguration.Backup.SettingCount,
                 userBackupDirectoryPath
             );
         }
@@ -1594,7 +1622,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return;
             }
 
-            var updateWait = ApplicationDiContainer.Build<CustomConfiguration>().General.UpdateWait;
+            var updateWait = ApplicationDiContainer.Build<ApplicationConfiguration>().General.UpdateWait;
             await Task.Delay(updateWait).ConfigureAwait(false);
             var updateCheckKind = updateKind switch
             {
@@ -1702,7 +1730,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             Logger.LogInformation("アップデートファイル展開");
             ApplicationUpdateInfo.State = UpdateState.Extracting;
             try {
-                var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.Configuration.File.DirectoryRemoveWaitCount, environmentParameters.Configuration.File.DirectoryRemoveWaitTime, LoggerFactory);
+                var directoryCleaner = new DirectoryCleaner(environmentParameters.TemporaryApplicationExtractDirectory, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitCount, environmentParameters.ApplicationConfiguration.File.DirectoryRemoveWaitTime, LoggerFactory);
                 directoryCleaner.Clear(false);
 
                 var archiveExtractor = ApplicationDiContainer.Build<ArchiveExtractor>();
@@ -1718,7 +1746,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 fileRotation.ExecuteExtensions(
                     environmentParameters.MachineUpdateArchiveDirectory,
                     new[] { "zip", "7z" },
-                    environmentParameters.Configuration.Backup.ArchiveCount,
+                    environmentParameters.ApplicationConfiguration.Backup.ArchiveCount,
                     ex => {
                         Logger.LogWarning(ex, ex.Message);
                         return true;
@@ -1828,8 +1856,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var args = new List<string> {
                 "--run-mode", "crash-report",
                 "--language", System.Globalization.CultureInfo.CurrentCulture.Name,
-                "--post-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportUri.OriginalString),
-                "--src-uri", CommandLine.Escape(environmentParameters.Configuration.Api.CrashReportSourceUri.OriginalString),
+                "--post-uri", CommandLine.Escape(environmentParameters.ApplicationConfiguration.Api.CrashReportUri.OriginalString),
+                "--src-uri", CommandLine.Escape(environmentParameters.ApplicationConfiguration.Api.CrashReportSourceUri.OriginalString),
                 "--report-raw-file", CommandLine.Escape(rawReport.FullName),
                 "--report-save-file", CommandLine.Escape(saveReportFilePath),
                 "--execute-command", CommandLine.Escape(environmentParameters.RootApplication.FullName),

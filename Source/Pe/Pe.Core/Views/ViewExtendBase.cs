@@ -19,7 +19,8 @@ namespace ContentTypeTextNet.Pe.Core.Views
         {
             View = view;
             ExtendData = extendData;
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
 
             ExtendData.Disposing += ExtendData_Disposing!;
             ExtendData.PropertyChanged += ExtendData_PropertyChanged;
@@ -32,6 +33,8 @@ namespace ContentTypeTextNet.Pe.Core.Views
 
         protected TView View { get; private set; }
         protected TExtendData ExtendData { get; private set; }
+
+        protected ILoggerFactory LoggerFactory { get; }
         protected ILogger Logger { get; }
 
         protected PropertyChangedHooker PropertyChangedHooker { get; }

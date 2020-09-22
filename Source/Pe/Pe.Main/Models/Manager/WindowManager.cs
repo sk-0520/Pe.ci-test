@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels;
@@ -191,13 +192,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             : base(diContainer, loggerFactory)
         {
             CultureService = cultureService;
-            CustomConfiguration = DiContainer.Build<CustomConfiguration>();
+            ApplicationConfiguration = DiContainer.Build<ApplicationConfiguration>();
         }
 
         #region property
 
         CultureService CultureService { get; }
-        CustomConfiguration CustomConfiguration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
 
         ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();
         ISet<Window> Windows { get; } = new HashSet<Window>();
@@ -233,7 +234,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            if(CustomConfiguration.Web.DeveloperTools) {
+            if(ApplicationConfiguration.Web.DeveloperTools) {
                 var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>(item.Window).FirstOrDefault();
                 if(cef != null) {
                     item.Window.PreviewKeyDown += Window_DeveloperTools_KeyDown;
