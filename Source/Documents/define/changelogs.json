@@ -86,6 +86,16 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Configuration.Json 3.1.7 -> 3.1.8",
+							"Microsoft.Extensions.Logging 3.1.7 -> 3.1.8",
+							"Microsoft.Extensions.Logging.Abstractions 3.1.7 -> 3.1.8"
+						]
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
