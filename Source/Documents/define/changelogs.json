@@ -96,6 +96,11 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.12.0.21095 -> 8.13.1.21947"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
