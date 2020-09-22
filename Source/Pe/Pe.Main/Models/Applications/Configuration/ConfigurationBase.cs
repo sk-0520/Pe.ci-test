@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                     memberKey = nameConverter.PascalToSnake(item.Property.Name);
                 }
 
-                var result = GetValue(conf, memberKey, item);
+                var result = GetValue(conf, memberKey, item.Field.FieldType);
                 item.Field.SetValue(this, result);
 
                 Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.Field.Name, item.Property.Name, item.Field.FieldType, item.Configuration.MemberName, memberKey);
@@ -96,42 +96,49 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region function
 
-        private static object? GetValue(IConfiguration conf, string memberKey, ConfigurationSetting item)
+        private static object? GetValue(IConfiguration conf, string memberKey, Type valueType)
         {
-            if(item.Field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
+            if(valueType.IsSubclassOf(typeof(ConfigurationBase))) {
                 var childSection = conf.GetSection(memberKey);
-                var result = Activator.CreateInstance(item.Field.FieldType, new[] { childSection });
+                var result = Activator.CreateInstance(valueType, new[] { childSection });
                 return result;
-            } else if(item.Field.FieldType == typeof(string)) {
-                var result = conf.GetValue(item.Field.FieldType, memberKey);
+            } else if(valueType == typeof(string)) {
+                if(string.IsNullOrEmpty(memberKey)) {
+                    var getResult = conf.Get(typeof(string));
+                    return getResult;
+                }
+                var result = conf.GetValue(valueType, memberKey);
                 return result;
             } else {
-                var result = conf.GetValue(item.Field.FieldType, memberKey);
+                var result = conf.GetValue(valueType, memberKey);
                 if(result == null) {
                     var childSection = conf.GetSection(memberKey);
                     if(childSection.Value == null) {
-                        if(item.Field.FieldType.IsGenericType) {
+                        if(valueType.IsGenericType) {
                             // ReadOnlyList のみサポートする
-                            var genArgs = item.Field.FieldType.GetGenericArguments();
-                            var genIndex = item.Field.FieldType.Name.IndexOf('`');
-                            var genName = item.Field.FieldType.Name.Substring(0, genIndex);
+                            var genArgs = valueType.GetGenericArguments();
+                            Debug.Assert(genArgs != null);
+                            var genIndex = valueType.Name.IndexOf('`');
+                            var genName = valueType.Name.Substring(0, genIndex);
                             switch(genName) {
                                 case "IReadOnlyList": {
                                         var childrenRaws = childSection.GetChildren().ToList();
                                         var childrenValues = Array.CreateInstance(genArgs[0], childrenRaws.Count);
                                         foreach(var child in childrenRaws.Counting()) {
+                                            var childValue = GetValue(child.Value, string.Empty, genArgs[0]);
+                                            childrenValues.SetValue(childValue, child.Number);
                                         }
+                                        return childrenValues;
                                     }
-                                    break;
 
                                 default:
                                     break;
                             }
                         }
                     }
-                    throw new Exception($"{childSection.Path}: {item.Field.FieldType}");
+                    throw new Exception($"{childSection.Path}: {valueType}");
                 } else {
-                return result;
+                    return result;
                 }
             }
         }
