@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
@@ -22,6 +24,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         /// アプリケーション構成ファイルでのメンバ名。
         /// </summary>
         public string MemberName { get; }
+
+        #endregion
+    }
+
+    public class ListConfigurationAttribute: ConfigurationAttribute
+    {
+        public ListConfigurationAttribute()
+            : base()
+        { }
+
+        public ListConfigurationAttribute(string memberName, Type type)
+            : base(memberName)
+        { }
+
+        #region proeprty
+
+        //public Type Type { get; }
 
         #endregion
     }

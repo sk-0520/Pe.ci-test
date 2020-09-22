@@ -14,6 +14,24 @@ using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 {
+    internal readonly struct ConfigurationSetting
+    {
+        public ConfigurationSetting(FieldInfo field, PropertyInfo property, ConfigurationAttribute configuration)
+        {
+            Field = field;
+            Property = property;
+            Configuration = configuration;
+        }
+
+        #region property
+
+        public FieldInfo Field { get; }
+        public PropertyInfo Property { get; }
+        public ConfigurationAttribute Configuration { get; }
+
+        #endregion
+    }
+
     /// <summary>
     /// アプリケーション構成ファイルの読み込み基底処理。
     /// <para>すべてをコンストラクタで処理し、失敗時は例外を投げて先に進ませないようにする。</para>
@@ -40,41 +58,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 .Select(i => (i.field, propertyName: i.field.Name.Substring(1, i.field.Name.IndexOf('>') - 1)))
                 .Where(i => properties.ContainsKey(i.propertyName))
                 .Select(i => (i.field, property: properties[i.propertyName]))
-                .Select(i => (i.field, i.property, config: i.property.GetCustomAttribute<ConfigurationAttribute>()!))
-                .Where(i => i.config != null)
+                .Select(i => new ConfigurationSetting(i.field, i.property, i.property.GetCustomAttribute<ConfigurationAttribute>()!))
+                .Where(i => i.Configuration != null)
             ;
 
             var nameConverter = new NameConveter();
 
             foreach(var item in items) {
-                var memberKey = item.config.MemberName.Length == 0
-                    ? nameConverter.PascalToSnake(item.property.Name)
-                    : item.config.MemberName
+                var memberKey = item.Configuration.MemberName.Length == 0
+                    ? nameConverter.PascalToSnake(item.Property.Name)
+                    : item.Configuration.MemberName
                 ;
                 if(memberKey == null) {
-                    memberKey = nameConverter.PascalToSnake(item.property.Name);
+                    memberKey = nameConverter.PascalToSnake(item.Property.Name);
                 }
 
-                Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.field.Name, item.property.Name, item.field.FieldType, item.config.MemberName, memberKey);
+                var result = GetValue(conf, memberKey, item);
+                item.Field.SetValue(this, result);
 
-                if(item.field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
-                    var childSection = conf.GetSection(memberKey);
-                    var result = Activator.CreateInstance(item.field.FieldType, new[] { childSection });
-                    item.field.SetValue(this, result);
-                } else if(item.field.FieldType == typeof(string)) {
-                    var result = conf.GetValue(item.field.FieldType, memberKey);
-                    item.field.SetValue(this, result);
-                } else {
-                    var result = conf.GetValue(item.field.FieldType, memberKey);
-                    if(result == null) {
-                        var child = conf.GetSection(memberKey);
-                        if(child.Value == null) {
-                            throw new Exception(child.Path);
-                        }
-                    } else {
-                        item.field.SetValue(this, result);
-                    }
-                }
+                Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.Field.Name, item.Property.Name, item.Field.FieldType, item.Configuration.MemberName, memberKey);
             }
 
 #if DEBUG
@@ -93,6 +95,46 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         }
 
         #region function
+
+        private static object? GetValue(IConfiguration conf, string memberKey, ConfigurationSetting item)
+        {
+            if(item.Field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
+                var childSection = conf.GetSection(memberKey);
+                var result = Activator.CreateInstance(item.Field.FieldType, new[] { childSection });
+                return result;
+            } else if(item.Field.FieldType == typeof(string)) {
+                var result = conf.GetValue(item.Field.FieldType, memberKey);
+                return result;
+            } else {
+                var result = conf.GetValue(item.Field.FieldType, memberKey);
+                if(result == null) {
+                    var childSection = conf.GetSection(memberKey);
+                    if(childSection.Value == null) {
+                        if(item.Field.FieldType.IsGenericType) {
+                            // ReadOnlyList のみサポートする
+                            var genArgs = item.Field.FieldType.GetGenericArguments();
+                            var genIndex = item.Field.FieldType.Name.IndexOf('`');
+                            var genName = item.Field.FieldType.Name.Substring(0, genIndex);
+                            switch(genName) {
+                                case "IReadOnlyList": {
+                                        var childrenRaws = childSection.GetChildren().ToList();
+                                        var childrenValues = Array.CreateInstance(genArgs[0], childrenRaws.Count);
+                                        foreach(var child in childrenRaws.Counting()) {
+                                        }
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    throw new Exception($"{childSection.Path}: {item.Field.FieldType}");
+                } else {
+                return result;
+                }
+            }
+        }
 
         protected static IReadOnlyList<T> GetList<T>(IConfigurationSection section, string key)
         {
@@ -120,4 +162,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #endregion
     }
+
 }
