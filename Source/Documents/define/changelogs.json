@@ -1,7 +1,7 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.021",
+		"date": "2020/09/22",
+		"version": "0.99.032",
 		"contents": [
 			{
 				"type": "note",
@@ -9,15 +9,11 @@
 					{
 						"revision": "",
 						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "継続中案件 -> #684: [Pe-Feedback] 99-013及び020は機能せず",
+						"comments": [
+							"ログが欲しいです",
+							"フォーラム・課題・メールに連絡もらえると助かります"
+						]
 					}
 				]
 			},
@@ -25,16 +21,8 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "67b467891f0a39ad254e884d21b8d8fff6f5592c",
 						"subject": "#466: 指定して実行ウィンドウへのファイルD&Dを実装"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -42,23 +30,19 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "8d872fbbceb22c1307108fe32844a80ce65c1233",
 						"subject": "#678: 設定画面にて揮発性DBの複製を行う"
 					},
 					{
-						"revision": "",
+						"revision": "d23e4a034dd4f9ad3e51b30c5788580f55e1cf0c",
 						"subject": "#679: フルスクリーン強制終了時のイベント取得に失敗しランチャーツールバーが隠れたままの状態がある",
 						"comments": [
 							"かなり環境依存な問題っぽい"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "ec75bb4a10b4b764a6bfb15c5849090c740c72c2",
 						"subject": "#683 指定して実行の履歴タイムスタンプが☆U☆T☆C☆"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -66,14 +50,14 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "b9400a5a2db55c4e9697005f0fc3ccbdbaf60588",
 						"subject": "#666: CIビルドの短縮化",
 						"comments": [
 							"あんまり変わらんかったのでエラー系をなるはや検知できるようにした"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "29c3954e1e0d9ee6137328e7ad9578fb9bde1bc7",
 						"subject": "#632: 固定値を外部データに置き換える",
 						"comments": [
 							"ちょっと探すのがしんどいので地道にやっていく",
@@ -81,11 +65,11 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "8d29c6ab34ae9a8e0e5369c3c7686bd4e9d35d19",
 						"subject": "#687: フィードバックに WebView いらんでしょ"
 					},
 					{
-						"revision": "",
+						"revision": "b04daa30fc3b81e28e1b4c3003e128c32859fe1e",
 						"class": "nuget",
 						"subject": "MS関係パッケージ更新",
 						"comments": [
@@ -95,12 +79,12 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "d9fddde51700edc9968282e65bc41e676c9d8759",
 						"class": "nuget",
 						"subject": "SonarAnalyzer.CSharp 8.12.0.21095 -> 8.13.1.21947"
 					},
 					{
-						"revision": "",
+						"revision": "ac1e0c3db50a8e2c2c3ddfe24aa3fa14b7e85163",
 						"subject": "Microsoft Visual C++ 再頒布可能パッケージ更新"
 					}
 				]
