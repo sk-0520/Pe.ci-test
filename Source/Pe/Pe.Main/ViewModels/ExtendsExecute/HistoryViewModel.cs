@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
@@ -13,8 +14,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
         public HistoryViewModel(LauncherHistoryData data, CultureInfo cultureInfo, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
+            var timstampConverter = new TimestampConverter(cultureInfo);
+
             Value = data.Value;
-            Timestamp = data.LastExecuteTimestamp.ToLocalTime().ToString(cultureInfo);
+            Timestamp = timstampConverter.ToViewFullString(data.LastExecuteTimestamp);
         }
 
         public HistoryViewModel(string value, ILoggerFactory loggerFactory)
