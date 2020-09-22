@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using ContentTypeTextNet.Pe.Main.Models.Applications;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.WebView
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.WebView
             settings.CachePath = environmentParameters.TemporaryWebViewCacheDirectory.FullName;
             settings.UserDataPath = environmentParameters.MachineWebViewUserDirectory.FullName;
 
-            settings.UserAgent = environmentParameters.Configuration.Web.ViewUserAgent;
+            settings.UserAgent = ApplicationStringFormats.GetHttpUserAgentValue(environmentParameters.ApplicationConfiguration.Web.ViewUserAgentFormat);
 
             settings.PersistSessionCookies = true;
 

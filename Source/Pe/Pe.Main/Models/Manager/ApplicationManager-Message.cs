@@ -23,6 +23,7 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
@@ -426,13 +427,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 if(LauncherToolbarElements.Count != rawScreenCount) {
                     // 数が変わってりゃ待機
                     Logger.LogInformation("ディスプレイ数変更検知: WindowsAPI = {0}, Toolbar = {1}", rawScreenCount, LauncherToolbarElements.Count);
-                    var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+                    var displayConfiguration = ApplicationDiContainer.Get<DisplayConfiguration>();
 
                     DelayResetScreenViewElements();
 
                     Task.Run(() => {
                         // Forms で取得するディスプレイ数の合計値は少し遅れる
-                        int waitMax = environmentParameters.Configuration.Display.ChangedRetryCount;
+                        int waitMax = displayConfiguration.ChangedRetryCount;
                         int waitCount = 0;
 
                         var managedScreenCount = Screen.AllScreens.Length;
@@ -442,7 +443,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 Logger.LogWarning("ディスプレイ数変更検知: タイムアウト");
                                 break;
                             }
-                            Thread.Sleep(environmentParameters.Configuration.Display.ChangedRetryWaitTime);
+                            Thread.Sleep(displayConfiguration.ChangedRetryWaitTime);
                             managedScreenCount = Screen.AllScreens.Length;
                         }
 
@@ -480,7 +481,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void StartDisableSystemIdle()
         {
-            HeartBeatSender = new HeartBeatSender(TimeSpan.FromSeconds(40), LoggerFactory);
+            var platformConfiguration = ApplicationDiContainer.Build<PlatformConfiguration>();
+            HeartBeatSender = new HeartBeatSender(platformConfiguration.IdleDisableCycleTime, platformConfiguration.IdleCheckCycleTime, LoggerFactory);
             HeartBeatSender.Start();
         }
         private void StopDisableSystemIdle()
@@ -513,7 +515,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void StartSupportExplorer()
         {
-            var customConfiguration = ApplicationDiContainer.Build<CustomConfiguration>();
+            var customConfiguration = ApplicationDiContainer.Build<ApplicationConfiguration>();
             var platform = customConfiguration.Platform;
 
             ExplorerSupporter = ApplicationDiContainer.Build<ExplorerSupporter>(platform.ExplorerSupporterRefreshTime, platform.ExplorerSupporterCacheSize);

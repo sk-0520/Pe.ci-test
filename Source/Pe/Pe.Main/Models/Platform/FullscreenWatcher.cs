@@ -38,29 +38,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         #endregion
     }
 
+    public class ClassAndText
+    {
+        public ClassAndText(string windowClassName, string windowText)
+        {
+            WindowClassName = windowClassName ?? throw new ArgumentNullException(nameof(windowClassName));
+            WindowText = windowText ?? throw new ArgumentNullException(nameof(windowText));
+        }
+
+        #region property
+
+        public string WindowClassName { get; }
+        public string WindowText { get; }
+
+        #endregion
+    }
+
     /// <inheritdoc cref="IFullscreenWatcher"/>
     internal class FullscreenWatcher: IFullscreenWatcher
     {
-        #region define
-
-        public class ClassAndText
-        {
-            public ClassAndText(string windowClassName, string windowText)
-            {
-                WindowClassName = windowClassName;
-                WindowText = windowText;
-            }
-
-            #region property
-
-            public string WindowClassName { get; }
-            public string WindowText { get; }
-
-            #endregion
-        }
-
-        #endregion
-
         public FullscreenWatcher(ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());

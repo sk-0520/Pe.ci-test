@@ -15,6 +15,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Command;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
@@ -31,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
 {
     public class CommandElement: ElementBase, IViewShowStarter, IViewCloseReceiver, IFlushable
     {
-        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, CustomConfiguration customConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public CommandElement(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IMainDatabaseLazyWriter mainDatabaseLazyWriter, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IWindowManager windowManager, INotifyManager notifyManager, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             MainDatabaseBarrier = mainDatabaseBarrier;
@@ -44,12 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
             DispatcherWrapper = dispatcherWrapper;
 
             IconClearTimer = new Timer() {
-                Interval = customConfiguration.Command.IconClearWaitTime.TotalMilliseconds,
+                Interval = applicationConfiguration.Command.IconClearWaitTime.TotalMilliseconds,
             };
             IconClearTimer.Elapsed += IconClearTimerr_Elapsed;
 
             ViewCloseTimer = new Timer() {
-                Interval = customConfiguration.Command.ViewCloseWaitTime.TotalMilliseconds,
+                Interval = applicationConfiguration.Command.ViewCloseWaitTime.TotalMilliseconds,
             };
             ViewCloseTimer.Elapsed += ViewCloseTimer_Elapsed;
         }
