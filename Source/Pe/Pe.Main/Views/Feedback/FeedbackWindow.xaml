@@ -114,21 +114,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
           </Grid.RowDefinitions>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
 
-          <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Resources.String_Feedback_CommentContent, Source={x:Static app_main:CultureService.Instance}}" ToolTip="{Binding Resources.String_Feedback_Comment_Format, Source={x:Static app_main:CultureService.Instance}}" />
-          <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Resources.String_Feedback_CommentPreview, Source={x:Static app_main:CultureService.Instance}}" />
-
-          <GridSplitter Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource Verical-GridSplitter}" />
+          <TextBlock Grid.Row="0" Text="{Binding Resources.String_Feedback_CommentContent, Source={x:Static app_main:CultureService.Instance}}" ToolTip="{Binding Resources.String_Feedback_Comment_Format, Source={x:Static app_main:CultureService.Instance}}" />
 
           <sharpdevelop_avalonedit:TextEditor
             x:Name="inputContent"
             Grid.Row="1"
-            Grid.Column="0"
             ShowLineNumbers="True"
             Document="{Binding ContentDocument}"
             SyntaxHighlighting="MarkDown"
@@ -137,30 +128,10 @@
               <sharpdevelop_avalonedit:TextEditorOptions
                 ShowSpaces="True"
                 ShowTabs="True"
-                ShowColumnRuler="True"
                 ShowEndOfLine="True"
               />
             </sharpdevelop_avalonedit:TextEditor.Options>
           </sharpdevelop_avalonedit:TextEditor>
-          <cef_sharp_wpf:ChromiumWebBrowser x:Name="webView" Grid.Row="1" Grid.Column="2">
-            <cef_sharp_wpf:ChromiumWebBrowser.Style>
-              <Style TargetType="cef_sharp_wpf:ChromiumWebBrowser">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding SendStatus.State}" Value="Running">
-                    <Setter Property="IsEnabled" Value="False" />
-                  </DataTrigger>
-                  <DataTrigger Binding="{Binding SendStatus.State}" Value="End">
-                    <Setter Property="IsEnabled" Value="False" />
-                  </DataTrigger>
-                  <DataTrigger Binding="{Binding SendStatus.State}" Value="Error">
-                    <Setter Property="IsEnabled" Value="False" />
-                  </DataTrigger>
-                </Style.Triggers>
-                <Setter Property="IsEnabled" Value="True" />
-                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
-              </Style>
-            </cef_sharp_wpf:ChromiumWebBrowser.Style>
-          </cef_sharp_wpf:ChromiumWebBrowser>
         </Grid>
 
 
