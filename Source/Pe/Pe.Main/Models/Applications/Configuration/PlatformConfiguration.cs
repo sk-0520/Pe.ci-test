@@ -15,16 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         {
             public PlatformFullscreenConfiguration(IConfigurationSection section)
                 : base(section)
-            {
-                //IgnoreWindowClasses = section.GetSection("ignore_window_class").Get<string[]>();
-
-                //var classTextSection = section.GetSection("ignore_window_class_text");
-                //IgnoreClassAndTexts = classTextSection.GetChildren().Select(i => new ClassAndText(i.GetValue<string>("class"), i.GetValue<string>("text"))).ToArray();
-
-                //TopmostOnly = section.GetValue<bool>("topmost_only");
-                //ExcludeNoActive = section.GetValue<bool>("exclude_noactive");
-                //ExcludeToolWindow = section.GetValue<bool>("exclude_toolwindow");
-            }
+            { }
 
             #region proeprty
 

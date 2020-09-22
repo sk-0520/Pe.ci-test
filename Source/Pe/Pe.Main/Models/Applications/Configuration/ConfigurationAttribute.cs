@@ -31,8 +31,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         public string RootConvertMethodName { get; }
         /// <summary>
         /// 配列の中身に適用する処理的な。
-        /// </summary>
         /// <inheritdoc cref="RootConvertMethodName"/>
+        /// <para><see cref="RootConvertMethodName"/>が優先される。</para>
+        /// </summary>
         public string NestConvertMethodName { get; }
 
         #endregion

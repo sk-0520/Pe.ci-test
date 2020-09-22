@@ -11,19 +11,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public WebConfiguration(IConfigurationSection section)
             : base(section)
-        {
-            //var versionConverter = new VersionConverter();
-
-            //var map = new Dictionary<string, string>() {
-            //    ["APP-NAME"] = BuildStatus.Name,
-            //    ["APP-BUILD"] = BuildStatus.BuildType.ToString(),
-            //    ["APP-VER"] = versionConverter.ConvertNormalVersion(BuildStatus.Version),
-            //    ["APP-REVISION"] = BuildStatus.Revision,
-            //};
-            //ViewUserAgentFormat = TextUtility.ReplaceFromDictionary(section.GetValue<string>("view_useragent_format"), map);
-            //ClientUserAgentFormat = TextUtility.ReplaceFromDictionary(section.GetValue<string>("client_useragent_format"), map);
-            //DeveloperTools = section.GetValue<bool>("developer_tools");
-        }
+        { }
 
         #region property
 

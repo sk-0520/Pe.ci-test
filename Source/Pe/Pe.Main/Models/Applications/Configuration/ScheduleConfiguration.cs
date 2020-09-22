@@ -9,11 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public ScheduleConfiguration(IConfigurationSection section)
             : base(section)
-        {
-
-            //LowSchedulerTime = section.GetValue<TimeSpan>("low_scheduler_time");
-            //LauncherItemIconRefresh = section.GetValue<string>("launcher_item_icon_refresh");
-        }
+        { }
 
         #region function
 

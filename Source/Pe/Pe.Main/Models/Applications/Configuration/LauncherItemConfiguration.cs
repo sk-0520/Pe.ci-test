@@ -9,10 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public LauncherItemConfiguration(IConfigurationSection section)
             : base(section)
-        {
-            //IconRefreshTime = section.GetValue<TimeSpan>("icon_refresh_time");
-            //AutoImportUntargetPatterns = GetList<string>(section, "auto_import_untarget_patterns");
-        }
+        { }
 
         #region property
 

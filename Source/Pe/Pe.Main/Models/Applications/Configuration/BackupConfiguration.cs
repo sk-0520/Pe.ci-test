@@ -9,10 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public BackupConfiguration(IConfigurationSection section)
             : base(section)
-        {
-            //SettingCount = section.GetValue<int>("setting_count");
-            //ArchiveCount = section.GetValue<int>("archive_count");
-        }
+        { }
 
         #region property
 

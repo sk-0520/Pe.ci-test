@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             return method;
         }
 
-        private static object? GetValue(object callerObject, IConfiguration conf, string memberKey, Type valueType, MethodInfo? methodInfo)
+        private static object? GetValue(object methodParent, IConfiguration conf, string memberKey, Type valueType, MethodInfo? methodInfo)
         {
             if(valueType.IsSubclassOf(typeof(ConfigurationBase))) {
                 var childSection = conf.GetSection(memberKey);
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                                         var childrenRaws = childSection.GetChildren().ToList();
                                         var array = Array.CreateInstance(genArgs[0], childrenRaws.Count);
                                         foreach(var child in childrenRaws.Counting()) {
-                                            var childValue = GetValue(callerObject, child.Value, string.Empty, genArgs[0], methodInfo);
+                                            var childValue = GetValue(methodParent, child.Value, string.Empty, genArgs[0], methodInfo);
                                             array.SetValue(childValue, child.Number);
                                         }
                                         return array;
@@ -161,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                                         var dictionaryType = typeof(Dictionary<,>).MakeGenericType(genArgs);
                                         var dictionary = (IDictionary)Activator.CreateInstance(dictionaryType)!;
                                         foreach(var raw in childrenRaws) {
-                                            var value = GetValue(callerObject, raw, string.Empty, genArgs[1], methodInfo);
+                                            var value = GetValue(methodParent, raw, string.Empty, genArgs[1], methodInfo);
 
                                             if(genArgs[0] == typeof(string)) {
                                                 dictionary.Add(raw.Key, value);
@@ -181,7 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                         }
                     }
                     if(methodInfo != null) {
-                        var customResult = GetCustomValue(callerObject, conf, memberKey, valueType, methodInfo);
+                        var customResult = GetCustomValue(methodParent, conf, memberKey, valueType, methodInfo);
                         return customResult;
                     }
                     throw new Exception($"{childSection.Path}: {valueType}");
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             }
         }
 
-        private static object? GetCustomValue(object callerObject, IConfiguration conf, string memberKey, Type fieldType, MethodInfo methodInfo)
+        private static object? GetCustomValue(object methodParent, IConfiguration conf, string memberKey, Type fieldType, MethodInfo methodInfo)
         {
             Debug.WriteLine(fieldType);
             Debug.WriteLine(methodInfo);
@@ -200,10 +200,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 var genArgs = fieldType.GetGenericArguments();
                 var genMethod = methodInfo.MakeGenericMethod(genArgs);
 
-                Debug.WriteLine("@ {0}", genMethod);
-                return genMethod.Invoke(callerObject, new object[] { conf, memberKey });
+                //Debug.WriteLine("@ {0}", genMethod);
+                return genMethod.Invoke(methodParent, new object[] { conf, memberKey });
             } else {
-                var result = methodInfo.Invoke(callerObject, new object[] { conf, memberKey });
+                var result = methodInfo.Invoke(methodParent, new object[] { conf, memberKey });
                 return result;
             }
         }
@@ -229,9 +229,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         protected static ClassAndText ConvertClassAndText(IConfigurationSection section, string key)
         {
-            //return section.GetChildren().Select(i => new ClassAndText(i.GetValue<string>("class"), i.GetValue<string>("text"))).ToArray();
-            var c = section.GetValue<string>("class");
-            var t= section.GetValue<string>("text");
             return new ClassAndText(section.GetValue<string>("class"), section.GetValue<string>("text"));
         }
 

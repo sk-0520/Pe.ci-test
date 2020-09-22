@@ -9,8 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public LauncherGroupConfiguration(IConfigurationSection section)
             : base(section)
-        {
-        }
+        { }
 
         #region property
 

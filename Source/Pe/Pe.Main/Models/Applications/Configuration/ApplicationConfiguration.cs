@@ -10,24 +10,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public ApplicationConfiguration(IConfigurationRoot configurationRoot)
             : base(configurationRoot)
-        {
-            //General = new GeneralConfiguration(configurationRoot.GetSection("general"));
-            //Web = new WebConfiguration(configurationRoot.GetSection("web"));
-            //Api = new ApiConfiguration(configurationRoot.GetSection("api"));
-            //Backup = new BackupConfiguration(configurationRoot.GetSection("backup"));
-            //File = new FileConfiguration(configurationRoot.GetSection("file"));
-            //Display = new DisplayConfiguration(configurationRoot.GetSection("display"));
-            //Hook = new HookConfiguration(configurationRoot.GetSection("hook"));
-            //NotifyLog = new NotifyLogConfiguration(configurationRoot.GetSection("notify_log"));
-            //LauncherItem = new LauncherItemConfiguration(configurationRoot.GetSection("launcher_item"));
-            //LauncherToobar = new LauncherToolbarConfiguration(configurationRoot.GetSection("launcher_toolbar"));
-            //LauncherGroup = new LauncherGroupConfiguration(configurationRoot.GetSection("launcher_group"));
-            //Note = new NoteConfiguration(configurationRoot.GetSection("note"));
-            //Command = new CommandConfiguration(configurationRoot.GetSection("command"));
-            //Platform = new PlatformConfiguration(configurationRoot.GetSection("platform"));
-            //Schedule = new ScheduleConfiguration(configurationRoot.GetSection("schedule"));
-            //Plugin = new PluginConfiguration(configurationRoot.GetSection("plugin"));
-        }
+        { }
 
         #region property
 

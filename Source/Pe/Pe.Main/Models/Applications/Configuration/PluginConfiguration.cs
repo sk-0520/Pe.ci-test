@@ -9,9 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public PluginConfiguration(IConfigurationSection section)
             : base(section)
-        {
-            //Extentions = GetList<string>(section, "extentions");
-        }
+        { }
 
         #region property
 

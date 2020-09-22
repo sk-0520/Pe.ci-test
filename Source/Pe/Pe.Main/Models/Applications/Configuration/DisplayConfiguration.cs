@@ -9,10 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public DisplayConfiguration(IConfigurationSection section)
             : base(section)
-        {
-            //ChangedRetryCount = section.GetValue<int>("changed_retry_count");
-            //ChangedRetryWaitTime = section.GetValue<TimeSpan>("changed_retry_wait");
-        }
+        { }
 
         #region property
 

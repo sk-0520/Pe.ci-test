@@ -9,10 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public HookConfiguration(IConfigurationSection section)
             : base(section)
-        {
-            //Keyboard = section.GetValue<bool>("keyboard");
-            //Mouse = section.GetValue<bool>("mouse");
-        }
+        { }
 
         #region property
 

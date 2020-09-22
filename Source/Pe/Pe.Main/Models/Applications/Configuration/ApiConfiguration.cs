@@ -9,13 +9,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
     {
         public ApiConfiguration(IConfigurationSection section)
             : base(section)
-        {
-            //CrashReportUri = section.GetValue<Uri>("crash_report_uri");
-            //CrashReportSourceUri = section.GetValue<Uri>("crash_report_src_uri");
-
-            //FeedbackUri = section.GetValue<Uri>("feedback_uri");
-            //FeedbackSourceUri = section.GetValue<Uri>("feedback_src_uri");
-        }
+        { }
 
         #region property
 
