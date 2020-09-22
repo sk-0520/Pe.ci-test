@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 
@@ -73,8 +74,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                     memberKey = nameConverter.PascalToSnake(item.Property.Name);
                 }
 
-                var result = GetValue(conf, memberKey, item.Field.FieldType);
-                item.Field.SetValue(this, result);
+                if(string.IsNullOrEmpty(item.Configuration.RootConvertMethodName)) {
+                    MethodInfo? method = null;
+                    if(!string.IsNullOrEmpty(item.Configuration.NestConvertMethodName)) {
+                        method = GetMethod(type, item.Configuration.NestConvertMethodName);
+                    }
+                    var result = GetValue(this, conf, memberKey, item.Field.FieldType, method);
+                    item.Field.SetValue(this, result);
+                } else {
+                    var method = GetMethod(type, item.Configuration.RootConvertMethodName);
+                    Debug.Assert(method != null);
+                    var result = GetCustomValue(this, conf, memberKey, item.Field.FieldType, method);
+                    item.Field.SetValue(this, result);
+                }
 
                 Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.Field.Name, item.Property.Name, item.Field.FieldType, item.Configuration.MemberName, memberKey);
             }
@@ -96,7 +108,20 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         #region function
 
-        private static object? GetValue(IConfiguration conf, string memberKey, Type valueType)
+        private MethodInfo? GetMethod(Type type, string methodName)
+        {
+            var method = type.GetMethod(methodName, BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod);
+            if(method == null) {
+                method = typeof(ConfigurationBase).GetMethod(methodName, BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod);
+                if(method == null) {
+                    throw new Exception($"method not found: {methodName}");
+                }
+            }
+
+            return method;
+        }
+
+        private static object? GetValue(object callerObject, IConfiguration conf, string memberKey, Type valueType, MethodInfo? methodInfo)
         {
             if(valueType.IsSubclassOf(typeof(ConfigurationBase))) {
                 var childSection = conf.GetSection(memberKey);
@@ -125,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                                         var childrenRaws = childSection.GetChildren().ToList();
                                         var array = Array.CreateInstance(genArgs[0], childrenRaws.Count);
                                         foreach(var child in childrenRaws.Counting()) {
-                                            var childValue = GetValue(child.Value, string.Empty, genArgs[0]);
+                                            var childValue = GetValue(callerObject, child.Value, string.Empty, genArgs[0], methodInfo);
                                             array.SetValue(childValue, child.Number);
                                         }
                                         return array;
@@ -136,7 +161,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                                         var dictionaryType = typeof(Dictionary<,>).MakeGenericType(genArgs);
                                         var dictionary = (IDictionary)Activator.CreateInstance(dictionaryType)!;
                                         foreach(var raw in childrenRaws) {
-                                            var value = GetValue(raw, string.Empty, genArgs[1]);
+                                            var value = GetValue(callerObject, raw, string.Empty, genArgs[1], methodInfo);
 
                                             if(genArgs[0] == typeof(string)) {
                                                 dictionary.Add(raw.Key, value);
@@ -155,6 +180,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                             }
                         }
                     }
+                    if(methodInfo != null) {
+                        var customResult = GetCustomValue(callerObject, conf, memberKey, valueType, methodInfo);
+                        return customResult;
+                    }
                     throw new Exception($"{childSection.Path}: {valueType}");
                 } else {
                     return result;
@@ -162,28 +191,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             }
         }
 
-        protected static IReadOnlyList<T> GetList<T>(IConfigurationSection section, string key)
+        private static object? GetCustomValue(object callerObject, IConfiguration conf, string memberKey, Type fieldType, MethodInfo methodInfo)
         {
-            return section.GetSection(key).Get<T[]>();
+            Debug.WriteLine(fieldType);
+            Debug.WriteLine(methodInfo);
+            if(methodInfo.IsGenericMethod) {
+                Debug.Assert(fieldType.IsGenericType);
+                var genArgs = fieldType.GetGenericArguments();
+                var genMethod = methodInfo.MakeGenericMethod(genArgs);
+
+                Debug.WriteLine("@ {0}", genMethod);
+                return genMethod.Invoke(callerObject, new object[] { conf, memberKey });
+            } else {
+                var result = methodInfo.Invoke(callerObject, new object[] { conf, memberKey });
+                return result;
+            }
         }
 
-        protected static Size GetSize(IConfigurationSection section, string key)
+        protected static Size ConvertSize(IConfigurationSection section, string key)
         {
             var size = section.GetSection(key);
             return new Size(size.GetValue<double>("width"), size.GetValue<double>("height"));
         }
 
-        protected static MinMax<T> GetMinMax<T>(IConfigurationSection section, string key)
+        protected static MinMax<T> ConvertMinMax<T>(IConfigurationSection section, string key)
             where T : IComparable<T>
         {
             var size = section.GetSection(key);
             return new MinMax<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"));
         }
-        protected static MinMaxDefault<T> GetMinMaxDefault<T>(IConfigurationSection section, string key)
+        protected static MinMaxDefault<T> ConvertMinMaxDefault<T>(IConfigurationSection section, string key)
             where T : IComparable<T>
         {
             var size = section.GetSection(key);
             return new MinMaxDefault<T>(size.GetValue<T>("minimum"), size.GetValue<T>("maximum"), size.GetValue<T>("default"));
+        }
+
+        protected static ClassAndText ConvertClassAndText(IConfigurationSection section, string key)
+        {
+            //return section.GetChildren().Select(i => new ClassAndText(i.GetValue<string>("class"), i.GetValue<string>("text"))).ToArray();
+            var c = section.GetValue<string>("class");
+            var t= section.GetValue<string>("text");
+            return new ClassAndText(section.GetValue<string>("class"), section.GetValue<string>("text"));
         }
 
         #endregion

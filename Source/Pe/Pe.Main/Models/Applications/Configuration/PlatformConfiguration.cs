@@ -18,8 +18,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             {
                 //IgnoreWindowClasses = section.GetSection("ignore_window_class").Get<string[]>();
 
-                var classTextSection = section.GetSection("ignore_window_class_text");
-                IgnoreClassAndTexts = classTextSection.GetChildren().Select(i => new ClassAndText(i.GetValue<string>("class"), i.GetValue<string>("text"))).ToArray();
+                //var classTextSection = section.GetSection("ignore_window_class_text");
+                //IgnoreClassAndTexts = classTextSection.GetChildren().Select(i => new ClassAndText(i.GetValue<string>("class"), i.GetValue<string>("text"))).ToArray();
 
                 //TopmostOnly = section.GetValue<bool>("topmost_only");
                 //ExcludeNoActive = section.GetValue<bool>("exclude_noactive");
@@ -30,7 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
             [Configuration("ignore_window_class")]
             public IReadOnlyList<string> IgnoreWindowClasses { get; } = default!;
-            public IReadOnlyList<ClassAndText> IgnoreClassAndTexts { get; }
+            [Configuration("ignore_window_class_text", nestConvertMethodName: nameof(ConvertClassAndText))]
+            public IReadOnlyList<ClassAndText> IgnoreClassAndTexts { get; } = default!;
 
             [Configuration]
             public bool TopmostOnly { get; }
