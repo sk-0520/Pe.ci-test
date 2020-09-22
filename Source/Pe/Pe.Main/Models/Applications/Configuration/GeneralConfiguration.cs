@@ -12,7 +12,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             //ProjectName = section.GetValue<string>("project_name");
             //MutexName = section.GetValue<string>("mutex_name");
             //LoggingConfigFileName = section.GetValue<string>("log_conf_file_name");
-            SupportCultures = section.GetSection("support_cultures").Get<string[]>();
+            //SupportCultures = section.GetSection("support_cultures").Get<string[]>();
 
             //LicenseName = section.GetValue<string>("license_name");
             //LicenseUri = section.GetValue<Uri>("license_uri");
@@ -37,7 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration("log_conf_file_name")]
         public string LogConfigFileName { get; } = default!;
 
-        public IReadOnlyList<string> SupportCultures { get; }
+        [Configuration]
+        public IReadOnlyList<string> SupportCultures { get; } = default!;
 
         [Configuration]
         public string LicenseName { get; } = default!;

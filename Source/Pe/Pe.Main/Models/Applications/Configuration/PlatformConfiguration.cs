@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             public PlatformFullscreenConfiguration(IConfigurationSection section)
                 : base(section)
             {
-                IgnoreWindowClasses = section.GetSection("ignore_window_class").Get<string[]>();
+                //IgnoreWindowClasses = section.GetSection("ignore_window_class").Get<string[]>();
 
                 var classTextSection = section.GetSection("ignore_window_class_text");
                 IgnoreClassAndTexts = classTextSection.GetChildren().Select(i => new ClassAndText(i.GetValue<string>("class"), i.GetValue<string>("text"))).ToArray();
@@ -28,7 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
             #region proeprty
 
-            public IReadOnlyList<string> IgnoreWindowClasses { get; }
+            [Configuration("ignore_window_class")]
+            public IReadOnlyList<string> IgnoreWindowClasses { get; } = default!;
             public IReadOnlyList<ClassAndText> IgnoreClassAndTexts { get; }
 
             [Configuration]
