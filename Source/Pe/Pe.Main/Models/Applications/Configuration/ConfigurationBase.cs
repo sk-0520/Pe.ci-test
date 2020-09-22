@@ -37,11 +37,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 .Cast<FieldInfo>()
                 .Select(i => (field: i, attribute: i.GetCustomAttribute<CompilerGeneratedAttribute>()))
                 .Where(i => i.attribute != null)
-                .Select(i => (i.field, attribute: i.attribute!, propertyName: i.field.Name.Substring(1, i.field.Name.IndexOf('>') - 1)))
+                .Select(i => (i.field, propertyName: i.field.Name.Substring(1, i.field.Name.IndexOf('>') - 1)))
                 .Where(i => properties.ContainsKey(i.propertyName))
-                .Select(i => (i.field, i.attribute, property: properties[i.propertyName]))
-                .Where(i => i.property.GetCustomAttribute<ConfigurationAttribute>() != null)
-                .Select(i => (i.field, i.attribute, i.property, config: i.property.GetCustomAttribute<ConfigurationAttribute>()!))
+                .Select(i => (i.field, property: properties[i.propertyName]))
+                .Select(i => (i.field, i.property, config: i.property.GetCustomAttribute<ConfigurationAttribute>()!))
+                .Where(i => i.config != null)
             ;
 
             var nameConverter = new NameConveter();
@@ -56,9 +56,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                 }
 
                 Debug.WriteLine("[{2}] {0}:{1} - `{3}' -> `{4}'", item.field.Name, item.property.Name, item.field.FieldType, item.config.MemberName, memberKey);
-                if(item.field.FieldType.IsArray) {
-                    Debug.Assert(false, "未実装");
-                } else if(item.field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
+
+                if(item.field.FieldType.IsSubclassOf(typeof(ConfigurationBase))) {
                     var childSection = conf.GetSection(memberKey);
                     var result = Activator.CreateInstance(item.field.FieldType, new[] { childSection });
                     item.field.SetValue(this, result);
