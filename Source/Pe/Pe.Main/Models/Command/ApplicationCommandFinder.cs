@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
         #endregion
     }
 
-    internal enum ApplicationCommand
+    public enum ApplicationCommand
     {
         /// <summary>
         /// コマンドウィンドウを閉じる。
@@ -100,9 +100,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
 
         string ToHeader(ApplicationCommand applicationCommand)
         {
-            var rawValue = CommandConfiguration.ApplicationMapping[applicationCommand];
-            var joinedValue = string.Join(CommandConfiguration.ApplicationSeparator, rawValue.Split());
-            return CommandConfiguration.ApplicationPrefix + joinedValue;
+            var rawValue = CommandConfiguration.Application.Mapping[applicationCommand];
+            var joinedValue = string.Join(CommandConfiguration.Application.Separator, rawValue.Split());
+            return CommandConfiguration.Application.Prefix + joinedValue;
         }
 
         (string narmal, string extend) ToDescriptions(ApplicationCommand applicationCommand)
@@ -259,7 +259,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Command
             }
 
 
-            if(!inputValue.StartsWith(CommandConfiguration.ApplicationPrefix, StringComparison.Ordinal)) {
+            if(!inputValue.StartsWith(CommandConfiguration.Application.Prefix, StringComparison.Ordinal)) {
                 yield break;
             }
 

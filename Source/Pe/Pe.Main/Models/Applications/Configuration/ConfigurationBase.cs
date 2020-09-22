@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                     var childSection = conf.GetSection(memberKey);
                     if(childSection.Value == null) {
                         if(valueType.IsGenericType) {
-                            // ReadOnlyList のみサポートする
+                            // ReadOnlyList<T>, IReadOnlyDictionary<string|Enum,T> のみサポートする
                             var genArgs = valueType.GetGenericArguments();
                             Debug.Assert(genArgs != null);
                             var genIndex = valueType.Name.IndexOf('`');
@@ -123,12 +123,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
                             switch(genName) {
                                 case "IReadOnlyList": {
                                         var childrenRaws = childSection.GetChildren().ToList();
-                                        var childrenValues = Array.CreateInstance(genArgs[0], childrenRaws.Count);
+                                        var array = Array.CreateInstance(genArgs[0], childrenRaws.Count);
                                         foreach(var child in childrenRaws.Counting()) {
                                             var childValue = GetValue(child.Value, string.Empty, genArgs[0]);
-                                            childrenValues.SetValue(childValue, child.Number);
+                                            array.SetValue(childValue, child.Number);
                                         }
-                                        return childrenValues;
+                                        return array;
+                                    }
+
+                                case "IReadOnlyDictionary": {
+                                        var childrenRaws = childSection.GetChildren().ToList();
+                                        var dictionaryType = typeof(Dictionary<,>).MakeGenericType(genArgs);
+                                        var dictionary = (IDictionary)Activator.CreateInstance(dictionaryType)!;
+                                        foreach(var raw in childrenRaws) {
+                                            var value = GetValue(raw, string.Empty, genArgs[1]);
+
+                                            if(genArgs[0] == typeof(string)) {
+                                                dictionary.Add(raw.Key, value);
+                                            } else if(genArgs[0].IsEnum) {
+                                                var key = Enum.Parse(genArgs[0], raw.Key, true);
+                                                dictionary.Add(key, value);
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                        return dictionary;
                                     }
 
                                 default:
