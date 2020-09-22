@@ -14,7 +14,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             : base(loggerFactory)
         {
             Value = data.Value;
-            Timestamp = data.LastExecuteTimestamp.ToString(cultureInfo);
+            Timestamp = data.LastExecuteTimestamp.ToLocalTime().ToString(cultureInfo);
         }
 
         public HistoryViewModel(string value, ILoggerFactory loggerFactory)
