@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             foreach(var item in fullscreen.IgnoreWindowClasses) {
                 fullscreenWatcher.IgnoreFullscreenWindowClassNames.Add(item);
             }
-            foreach(var item in fullscreen.IgnoreClassAndTexts.Select(i => new FullscreenWatcher.ClassAndText(i.WindowClassName, i.WindowText))) {
+            foreach(var item in fullscreen.IgnoreClassAndTexts) {
                 fullscreenWatcher.ClassAndTexts.Add(item);
             }
             fullscreenWatcher.TopmostOnly = fullscreen.TopmostOnly;

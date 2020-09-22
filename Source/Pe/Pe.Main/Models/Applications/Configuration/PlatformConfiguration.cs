@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ContentTypeTextNet.Pe.Main.Models.Platform;
 using Microsoft.Extensions.Configuration;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
@@ -12,34 +13,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
 
         public class PlatformFullscreenConfiguration: ConfigurationBase
         {
-            #region define
-
-            public class PlatformFullscreenClassAndTextConfiguration: ConfigurationBase
-            {
-                public PlatformFullscreenClassAndTextConfiguration(IConfigurationSection section)
-                    : base(section)
-                {
-                    WindowClassName = section.GetValue<string>("class");
-                    WindowText = section.GetValue<string>("text");
-                }
-
-                #region property
-
-                public string WindowClassName { get; }
-                public string WindowText { get; }
-
-                #endregion
-            }
-
-            #endregion
-
             public PlatformFullscreenConfiguration(IConfigurationSection section)
                 : base(section)
             {
                 IgnoreWindowClasses = section.GetSection("ignore_window_class").Get<string[]>();
 
                 var classTextSection = section.GetSection("ignore_window_class_text");
-                IgnoreClassAndTexts = classTextSection.GetChildren().Select(i => new PlatformFullscreenClassAndTextConfiguration(i)).ToArray();
+                IgnoreClassAndTexts = classTextSection.GetChildren().Select(i => new ClassAndText(i.GetValue<string>("class"), i.GetValue<string>("text"))).ToArray();
 
                 //TopmostOnly = section.GetValue<bool>("topmost_only");
                 //ExcludeNoActive = section.GetValue<bool>("exclude_noactive");
@@ -49,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
             #region proeprty
 
             public IReadOnlyList<string> IgnoreWindowClasses { get; }
-            public IReadOnlyList<PlatformFullscreenClassAndTextConfiguration> IgnoreClassAndTexts { get; }
+            public IReadOnlyList<ClassAndText> IgnoreClassAndTexts { get; }
 
             [Configuration]
             public bool TopmostOnly { get; }
