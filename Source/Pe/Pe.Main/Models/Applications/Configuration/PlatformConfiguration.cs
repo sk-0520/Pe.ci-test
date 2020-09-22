@@ -71,6 +71,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications.Configuration
         [Configuration]
         public TimeSpan ScreenElementsResetWaitTime { get; }
 
+        /// <summary>
+        /// アイドル抑制実施時間間隔。
+        /// <para>前回抑制時間を超過している場合に抑制実施。</para>
+        /// </summary>
+        [Configuration]
+        public TimeSpan IdleDisableCycleTime { get; }
+        /// <summary>
+        /// <see cref="IdleDisableCycleTime"/>の確認周期。
+        /// </summary>
+        /// NOTE: 正直 <see cref="IdleDisableCycleTime"/> 一個だけでよかったと思ってる。
+        [Configuration]
+        public TimeSpan IdleCheckCycleTime { get; }
+
         [Configuration]
         public PlatformFullscreenConfiguration Fullscreen { get; } = default!;
 

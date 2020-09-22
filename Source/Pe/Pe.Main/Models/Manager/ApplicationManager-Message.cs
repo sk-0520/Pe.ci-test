@@ -427,13 +427,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 if(LauncherToolbarElements.Count != rawScreenCount) {
                     // 数が変わってりゃ待機
                     Logger.LogInformation("ディスプレイ数変更検知: WindowsAPI = {0}, Toolbar = {1}", rawScreenCount, LauncherToolbarElements.Count);
-                    var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+                    var displayConfiguration = ApplicationDiContainer.Get<DisplayConfiguration>();
 
                     DelayResetScreenViewElements();
 
                     Task.Run(() => {
                         // Forms で取得するディスプレイ数の合計値は少し遅れる
-                        int waitMax = environmentParameters.ApplicationConfiguration.Display.ChangedRetryCount;
+                        int waitMax = displayConfiguration.ChangedRetryCount;
                         int waitCount = 0;
 
                         var managedScreenCount = Screen.AllScreens.Length;
@@ -443,7 +443,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 Logger.LogWarning("ディスプレイ数変更検知: タイムアウト");
                                 break;
                             }
-                            Thread.Sleep(environmentParameters.ApplicationConfiguration.Display.ChangedRetryWaitTime);
+                            Thread.Sleep(displayConfiguration.ChangedRetryWaitTime);
                             managedScreenCount = Screen.AllScreens.Length;
                         }
 
@@ -481,7 +481,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void StartDisableSystemIdle()
         {
-            HeartBeatSender = new HeartBeatSender(TimeSpan.FromSeconds(40), LoggerFactory);
+            var platformConfiguration = ApplicationDiContainer.Build<PlatformConfiguration>();
+            HeartBeatSender = new HeartBeatSender(platformConfiguration.IdleDisableCycleTime, platformConfiguration.IdleCheckCycleTime, LoggerFactory);
             HeartBeatSender.Start();
         }
         private void StopDisableSystemIdle()
