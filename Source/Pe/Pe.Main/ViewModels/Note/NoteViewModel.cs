@@ -629,17 +629,32 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ToggleCompact()
         {
+            // 未変更情報
             if(!IsCompact) {
                 NormalWindowHeight = WindowHeight;
             }
             Model.ToggleCompactDelaySave();
+
+            // 変更済み情報
             // レイアウト変更(高さ)通知を抑制
             if(!IsCompact) {
                 this._windowHeight = NormalWindowHeight;
+
+                if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                    this._windowTop -= NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                }
             } else {
                 this._windowHeight = 0;
+
+                if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                    this._windowTop += NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                }
             }
+
             RaisePropertyChanged(nameof(WindowHeight));
+            if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                RaisePropertyChanged(nameof(WindowTop));
+            }
         }
 
         void HideCompact()
