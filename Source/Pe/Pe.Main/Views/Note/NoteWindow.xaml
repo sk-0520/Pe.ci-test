@@ -64,11 +64,11 @@
 
       <WindowChrome x:Key="NormalWindowChrome"
         ResizeBorderThickness="{Binding BorderThickness}"
-        CaptionHeight="{Binding CaptionHeight}"
+        CaptionHeight="0"
       />
       <WindowChrome x:Key="CompactWindowChrome"
         ResizeBorderThickness="0"
-        CaptionHeight="{Binding MinHeight}"
+        CaptionHeight="0"
       />
       <WindowChrome x:Key="LockWindowChrome"
         ResizeBorderThickness="0"

@@ -36,6 +36,7 @@ using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Main.Views.Note;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -124,6 +125,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        FrameworkElement? CaptionElement { get; set; }
         IDisposable? WindowHandleSource { get; set; }
 
         ApplicationConfiguration ApplicationConfiguration { get; }
@@ -970,6 +972,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             switch(msg) {
+                case (int)WM.WM_NCHITTEST: {
+                        if(IsLocked) {
+                            break;
+                        }
+                        if(TitleEditMode) {
+                            break;
+                        }
+
+                        Debug.Assert(CaptionElement != null);
+
+                        var deviceScreenPoint = new Point(
+                            WindowsUtility.LOWORD(lParam),
+                            WindowsUtility.HIWORD(lParam)
+                        );
+                        var logicalScreenPoint = UIUtility.ToLogicalPixel(deviceScreenPoint, DpiScaleOutputor);
+                        var logicalPoint = CaptionElement.PointFromScreen(logicalScreenPoint);
+                        if(0 <= logicalPoint.X && 0 <= logicalPoint.Y && logicalPoint.X <= CaptionElement.ActualWidth && logicalPoint.Y <= CaptionElement.ActualHeight) {
+                            handled = true;
+                            return new IntPtr((int)HT.HTCAPTION);
+                        }
+                        break;
+                    }
+
                 case (int)WM.WM_NCLBUTTONDBLCLK:
                     if(WindowsUtility.ConvertHTFromWParam(wParam) == HT.HTCAPTION) {
                         if(!IsLocked) {
@@ -1035,6 +1060,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             var hWndSource = HwndSource.FromHwnd(hWnd);
             hWndSource.AddHook(WndProc);
             WindowHandleSource = hWndSource;
+
+            CaptionElement = ((NoteWindow)window).inputTitle;
 
             DpiScaleOutputor = (IDpiScaleOutputor)window;
 
