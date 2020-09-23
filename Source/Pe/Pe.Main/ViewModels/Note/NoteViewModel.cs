@@ -35,6 +35,7 @@ using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -91,6 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
             PropertyChangedHooker.AddHook(nameof(Model.TextWrap), nameof(TextWrap));
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
+            PropertyChangedHooker.AddHook(nameof(Model.CaptionPosition), nameof(CaptionPosition));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
@@ -268,6 +270,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public string? Title => Model.Title;
 
+        public NoteCaptionPosition CaptionPosition => Model.CaptionPosition;
+
         public NoteContentKind ContentKind
         {
             get => Model.ContentKind;
@@ -358,11 +362,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
         [ThemeProperty]
-        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.None, GetColorPair());
+        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.None, CaptionPosition, GetColorPair());
         [ThemeProperty]
-        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Over, GetColorPair());
+        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Over, CaptionPosition, GetColorPair());
         [ThemeProperty]
-        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Pressed, GetColorPair());
+        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Pressed, CaptionPosition, GetColorPair());
         [ThemeProperty]
         public Brush? CaptionForeground { get; private set; }
         [ThemeProperty]
@@ -373,19 +377,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public Brush? ContentForeground { get; private set; }
 
         [ThemeProperty]
-        public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(GetColorPair());
+        public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(CaptionPosition, GetColorPair());
 
         [ThemeProperty]
-        public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, GetColorPair());
+        public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Compact, CaptionPosition, true, GetColorPair());
         [ThemeProperty]
-        public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, false, GetColorPair());
+        public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Compact, CaptionPosition, false, GetColorPair());
         [ThemeProperty]
-        public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, true, GetColorPair());
+        public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Topmost, CaptionPosition, true, GetColorPair());
         [ThemeProperty]
-        public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, GetColorPair());
+        public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Topmost, CaptionPosition, false, GetColorPair());
 
         [ThemeProperty]
-        public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, GetColorPair());
+        public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Close, CaptionPosition, false, GetColorPair());
         [ThemeProperty]
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
 

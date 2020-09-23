@@ -31,24 +31,24 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         #region function
 
 
-        string GetResourceBaseKey(NoteCaption noteCaption, bool isEnabled)
+        string GetResourceBaseKey(NoteCaptionButtonKind noteCaption, bool isEnabled)
         {
             switch(noteCaption) {
-                case NoteCaption.Compact:
+                case NoteCaptionButtonKind.Compact:
                     if(isEnabled) {
                         return "Path-NoteCaption-Compact-Enabled";
                     } else {
                         return "Path-NoteCaption-Compact-Disabled";
                     }
 
-                case NoteCaption.Topmost:
+                case NoteCaptionButtonKind.Topmost:
                     if(isEnabled) {
                         return "Path-NoteCaption-Topmost-Enabled";
                     } else {
                         return "Path-NoteCaption-Topmost-Disabled";
                     }
 
-                case NoteCaption.Close:
+                case NoteCaptionButtonKind.Close:
                     return "Path-NoteCaption-Close";
 
                 default:
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             }
         }
 
-        DependencyObject GetCaptionImageCore(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
+        DependencyObject GetCaptionImageCore(NoteCaptionButtonKind noteCaption, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
@@ -163,17 +163,17 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             );
         }
 
-        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, ColorPair<Color> baseColor)
+        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             return Brushes.Transparent;
         }
 
-        public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
+        public DependencyObject GetCaptionImage(NoteCaptionButtonKind buttonKind, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor)
         {
-            return GetCaptionImageCore(noteCaption, isEnabled, baseColor);
+            return GetCaptionImageCore(buttonKind, captionPosition, isEnabled, baseColor);
         }
 
-        public DependencyObject GetResizeGripImage(ColorPair<Color> baseColor)
+        public DependencyObject GetResizeGripImage(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {

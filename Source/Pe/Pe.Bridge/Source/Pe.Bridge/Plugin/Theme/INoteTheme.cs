@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
 {
-    public enum NoteCaption
+    public enum NoteCaptionButtonKind
     {
         Compact,
         Topmost,
@@ -41,10 +41,10 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         ColorPair<Brush> GetCaptionBrush(ColorPair<Color> baseColor);
         Brush GetBorderBrush(ColorPair<Color> baseColor);
         ColorPair<Brush> GetContentBrush(ColorPair<Color> baseColor);
-        Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, ColorPair<Color> baseColor);
+        Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, NoteCaptionPosition captionPosition, ColorPair<Color> baseColor);
 
-        DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor);
-        DependencyObject GetResizeGripImage(ColorPair<Color> baseColor);
+        DependencyObject GetCaptionImage(NoteCaptionButtonKind buttonKind, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor);
+        DependencyObject GetResizeGripImage(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor);
 
         Effect GetBlindEffect(ColorPair<Color> baseColor);
         DependencyObject GetBlindContent(ColorPair<Color> baseColor);

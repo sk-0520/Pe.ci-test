@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         string _title = string.Empty;
         IScreen? _dockScreen;
         NoteHiddenMode _hiddenMode;
+        NoteCaptionPosition _captionPosition;
 
         NoteLayoutKind _layoutKind;
         NoteContentKind _contentKind;
@@ -183,6 +184,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             get => this._hiddenMode;
             set => SetProperty(ref this._hiddenMode, value);
+        }
+
+        public NoteCaptionPosition CaptionPosition
+        {
+            get => this._captionPosition;
+            set => SetProperty(ref this._captionPosition, value);
         }
 
         public NoteContentElement? ContentElement
