@@ -196,6 +196,13 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
                     }
                     canvas.Children.Add(path);
                 }
+                if(captionPosition == NoteCaptionPosition.Bottom) {
+                    canvas.RenderTransformOrigin = new Point(0.5, 0.5);
+                    canvas.RenderTransform = new ScaleTransform() {
+                        ScaleY = -1,
+                    };
+                }
+
                 viewBox.Child = canvas;
             }
 
