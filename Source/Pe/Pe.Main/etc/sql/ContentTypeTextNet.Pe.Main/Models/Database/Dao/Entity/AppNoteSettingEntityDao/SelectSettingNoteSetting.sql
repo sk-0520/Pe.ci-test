@@ -4,7 +4,8 @@ select
 	AppNoteSetting.LayoutKind,
 	AppNoteSetting.ForegroundColor,
 	AppNoteSetting.BackgroundColor,
-	AppNoteSetting.IsTopmost
+	AppNoteSetting.IsTopmost,
+	AppNoteSetting.CaptionPosition
 from
 	AppNoteSetting
 where

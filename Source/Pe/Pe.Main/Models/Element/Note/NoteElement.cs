@@ -44,6 +44,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         string _title = string.Empty;
         IScreen? _dockScreen;
         NoteHiddenMode _hiddenMode;
+        NoteCaptionPosition _captionPosition;
 
         NoteLayoutKind _layoutKind;
         NoteContentKind _contentKind;
@@ -183,6 +184,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
         {
             get => this._hiddenMode;
             set => SetProperty(ref this._hiddenMode, value);
+        }
+
+        public NoteCaptionPosition CaptionPosition
+        {
+            get => this._captionPosition;
+            private set => SetProperty(ref this._captionPosition, value);
         }
 
         public NoteContentElement? ContentElement
@@ -327,6 +334,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             ForegroundColor = noteData.ForegroundColor;
             BackgroundColor = noteData.BackgroundColor;
             HiddenMode = noteData.HiddenMode;
+            CaptionPosition = noteData.CaptionPosition;
 
             FontElement = OrderManager.CreateFontElement(DefaultFontKind.Note, noteData.FontId, UpdateFontId);
             var oldContentElement = ContentElement;
@@ -466,6 +474,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Note
             MainDatabaseLazyWriter.Stock(c => {
                 var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
                 notesEntityDao.UpdateBackgroundColor(NoteId, BackgroundColor, DatabaseCommonStatus.CreateCurrentAccount());
+            }, UniqueKeyPool.Get());
+        }
+
+        public void ChangeCaptionPositionDelaySave(NoteCaptionPosition captionPosition)
+        {
+            ThrowIfDisposed();
+
+            CaptionPosition = captionPosition;
+            MainDatabaseLazyWriter.Stock(c => {
+                var notesEntityDao = new NotesEntityDao(c, DatabaseStatementLoader, c.Implementation, LoggerFactory);
+                notesEntityDao.UpdateCaptionPosition(NoteId, CaptionPosition, DatabaseCommonStatus.CreateCurrentAccount());
             }, UniqueKeyPool.Get());
         }
 

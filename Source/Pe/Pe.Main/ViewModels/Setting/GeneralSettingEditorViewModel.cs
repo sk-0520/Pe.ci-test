@@ -488,6 +488,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             set => SetModelValue(value);
         }
 
+        public NoteCaptionPosition CaptionPosition
+        {
+            get => Model.CaptionPosition;
+            set => SetModelValue(value);
+        }
+
 
         #endregion
 

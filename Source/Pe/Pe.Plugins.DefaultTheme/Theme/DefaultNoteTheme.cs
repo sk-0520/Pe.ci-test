@@ -31,24 +31,24 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
         #region function
 
 
-        string GetResourceBaseKey(NoteCaption noteCaption, bool isEnabled)
+        string GetResourceBaseKey(NoteCaptionButtonKind noteCaption, bool isEnabled)
         {
             switch(noteCaption) {
-                case NoteCaption.Compact:
+                case NoteCaptionButtonKind.Compact:
                     if(isEnabled) {
                         return "Path-NoteCaption-Compact-Enabled";
                     } else {
                         return "Path-NoteCaption-Compact-Disabled";
                     }
 
-                case NoteCaption.Topmost:
+                case NoteCaptionButtonKind.Topmost:
                     if(isEnabled) {
                         return "Path-NoteCaption-Topmost-Enabled";
                     } else {
                         return "Path-NoteCaption-Topmost-Disabled";
                     }
 
-                case NoteCaption.Close:
+                case NoteCaptionButtonKind.Close:
                     return "Path-NoteCaption-Close";
 
                 default:
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             }
         }
 
-        DependencyObject GetCaptionImageCore(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
+        DependencyObject GetCaptionImageCore(NoteCaptionButtonKind noteCaption, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             );
         }
 
-        public ColorPair<Brush> GetCaptionBrush(ColorPair<Color> baseColor)
+        public ColorPair<Brush> GetCaptionBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             var pair = new ColorPair<Brush>(new SolidColorBrush(baseColor.Foreground), new SolidColorBrush(baseColor.Background));
 
@@ -134,12 +134,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return pair;
         }
 
-        public Brush GetBorderBrush(ColorPair<Color> baseColor)
+        public Brush GetBorderBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             return FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Background));
         }
 
-        public ColorPair<Brush> GetContentBrush(ColorPair<Color> baseColor)
+        public ColorPair<Brush> GetContentBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             /*
             旧PeではXAML上でこれをかけ合わせてた
@@ -163,17 +163,17 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             );
         }
 
-        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, ColorPair<Color> baseColor)
+        public Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             return Brushes.Transparent;
         }
 
-        public DependencyObject GetCaptionImage(NoteCaption noteCaption, bool isEnabled, ColorPair<Color> baseColor)
+        public DependencyObject GetCaptionImage(NoteCaptionButtonKind buttonKind, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor)
         {
-            return GetCaptionImageCore(noteCaption, isEnabled, baseColor);
+            return GetCaptionImageCore(buttonKind, captionPosition, isEnabled, baseColor);
         }
 
-        public DependencyObject GetResizeGripImage(ColorPair<Color> baseColor)
+        public DependencyObject GetResizeGripImage(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             var viewBox = new Viewbox();
             using(Initializer.Begin(viewBox)) {
@@ -196,6 +196,13 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
                     }
                     canvas.Children.Add(path);
                 }
+                if(captionPosition == NoteCaptionPosition.Bottom) {
+                    canvas.RenderTransformOrigin = new Point(0.5, 0.5);
+                    canvas.RenderTransform = new ScaleTransform() {
+                        ScaleY = -1,
+                    };
+                }
+
                 viewBox.Child = canvas;
             }
 
