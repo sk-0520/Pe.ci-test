@@ -21,8 +21,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
 
         /// <inheritdoc cref="SetupperBase.Version"/>
-        public override Version Version { get; } = new Version(0, 99, 33);
-
+        public override Version Version { get; } =
+#if DEBUG || BETA
+            new Version(0, 99, 34);
+#else
+#   error !!version!!
+#endif
         public override void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto)
         {
             ExecuteStatement(commander, StatementLoader.LoadStatementByCurrent(GetType()), dto);
@@ -43,6 +47,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         public override void ExecuteTemporaryDML(IDatabaseCommander commander, IReadOnlySetupDto dto)
         { }
 
-        #endregion
+#endregion
     }
 }
