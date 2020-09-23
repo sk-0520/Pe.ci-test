@@ -641,20 +641,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 this._windowHeight = NormalWindowHeight;
 
                 if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    this._windowTop -= NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                    WindowTop -= NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
                 }
             } else {
                 this._windowHeight = 0;
 
                 if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                    this._windowTop += NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                    WindowTop += NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
                 }
             }
 
             RaisePropertyChanged(nameof(WindowHeight));
-            if(CaptionPosition == NoteCaptionPosition.Bottom) {
-                RaisePropertyChanged(nameof(WindowTop));
-            }
         }
 
         void HideCompact()
@@ -1083,6 +1080,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             var layoutValue = GetOrCreateLayout(Model.StartupPosition);
             if(layoutValue.isCreated) {
                 Model.SaveLayout(layoutValue.layout);
+            } else if(CaptionPosition == NoteCaptionPosition.Bottom) {
+
             }
 
             SetLayout(layoutValue.layout);
