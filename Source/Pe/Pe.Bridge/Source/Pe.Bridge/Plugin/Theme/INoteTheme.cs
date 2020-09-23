@@ -38,9 +38,9 @@ namespace ContentTypeTextNet.Pe.Bridge.Plugin.Theme
         [return: PixelKind(Px.Logical)]
         Size GetResizeGripSize();
 
-        ColorPair<Brush> GetCaptionBrush(ColorPair<Color> baseColor);
-        Brush GetBorderBrush(ColorPair<Color> baseColor);
-        ColorPair<Brush> GetContentBrush(ColorPair<Color> baseColor);
+        ColorPair<Brush> GetCaptionBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor);
+        Brush GetBorderBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor);
+        ColorPair<Brush> GetContentBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor);
         Brush GetCaptionButtonBackgroundBrush(NoteCaptionButtonState buttonState, NoteCaptionPosition captionPosition, ColorPair<Color> baseColor);
 
         DependencyObject GetCaptionImage(NoteCaptionButtonKind buttonKind, NoteCaptionPosition captionPosition, bool isEnabled, ColorPair<Color> baseColor);

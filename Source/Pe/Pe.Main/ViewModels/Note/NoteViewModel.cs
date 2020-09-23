@@ -364,7 +364,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         [ThemeProperty]
-        public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
+        public Brush BorderBrush => NoteTheme.GetBorderBrush(CaptionPosition, GetColorPair());
         [ThemeProperty]
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
         [ThemeProperty]
@@ -863,11 +863,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             DispatcherWrapper.VerifyAccess();
 
-            var captionPair = NoteTheme.GetCaptionBrush(GetColorPair());
+            var captionPair = NoteTheme.GetCaptionBrush(CaptionPosition, GetColorPair());
             CaptionForeground = captionPair.Foreground;
             CaptionBackground = captionPair.Background;
 
-            var contentPair = NoteTheme.GetContentBrush(GetColorPair());
+            var contentPair = NoteTheme.GetContentBrush(CaptionPosition, GetColorPair());
             ContentForeground = contentPair.Foreground;
             ContentBackground = contentPair.Background;
 

@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             );
         }
 
-        public ColorPair<Brush> GetCaptionBrush(ColorPair<Color> baseColor)
+        public ColorPair<Brush> GetCaptionBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             var pair = new ColorPair<Brush>(new SolidColorBrush(baseColor.Foreground), new SolidColorBrush(baseColor.Background));
 
@@ -134,12 +134,12 @@ namespace ContentTypeTextNet.Pe.Plugins.DefaultTheme.Theme
             return pair;
         }
 
-        public Brush GetBorderBrush(ColorPair<Color> baseColor)
+        public Brush GetBorderBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             return FreezableUtility.GetSafeFreeze(new SolidColorBrush(baseColor.Background));
         }
 
-        public ColorPair<Brush> GetContentBrush(ColorPair<Color> baseColor)
+        public ColorPair<Brush> GetContentBrush(NoteCaptionPosition captionPosition, ColorPair<Color> baseColor)
         {
             /*
             旧PeではXAML上でこれをかけ合わせてた
