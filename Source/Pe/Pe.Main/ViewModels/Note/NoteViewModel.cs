@@ -270,7 +270,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public string? Title => Model.Title;
 
-        public NoteCaptionPosition CaptionPosition => Model.CaptionPosition;
+        public NoteCaptionPosition CaptionPosition
+        {
+            get => Model.CaptionPosition;
+            set => Model.ChangeCaptionPositionDelaySave(value);
+        }
 
         public NoteContentKind ContentKind
         {
