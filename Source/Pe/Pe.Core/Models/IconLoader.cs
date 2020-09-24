@@ -145,6 +145,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
                         break;
                     }
+                    if(binaryGroupIconData.Length < readOffset) {
+                        break;
+                    }
+
                     var length = BitConverter.ToInt32(
                         binaryGroupIconData,
                         readOffset
