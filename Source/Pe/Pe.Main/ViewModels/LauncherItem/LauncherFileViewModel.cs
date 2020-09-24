@@ -234,6 +234,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         protected override Task InitializeImplAsync()
         {
             return Task.Run(() => {
+                if(Model == null) {
+                    return;
+                }
+                if(IsDisposed) {
+                    return;
+                }
+
                 Detail = Model.LoadFileDetail();
 
                 var workingDirectoryPath = Environment.ExpandEnvironmentVariables(Detail.PathData.WorkDirectoryPath);
