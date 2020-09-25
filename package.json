@@ -4,11 +4,11 @@
 	"description": "Pe documents",
 	"main": "index.pug",
 	"scripts": {
-		"lint": "eslint ./source/script",
-		"watch": "parcel watch --no-autoinstall --out-dir ./build/ --public-url . ./source/index.pug",
-		"build:clean": "rimraf ./build/*",
-		"build:output": "parcel build --no-autoinstall  --no-source-maps --out-dir ./build/ --no-content-hash --public-url . ./source/index.pug",
-		"build": "npm run build:clean & npm run build:output",
+		"lint": "eslint Source/Documents/source/script",
+		"document-watch": "parcel watch --no-autoinstall --out-dir Source/Documents/build/ --public-url . Source/Documents/source/index.pug",
+		"document-build:clean": "rimraf Source/Documents/build/*",
+		"document-build:output": "parcel build --no-autoinstall  --no-source-maps --out-dir Source/Documents/build/ --no-content-hash --public-url . Source/Documents/source/index.pug",
+		"document-build": "npm run document-build:clean & npm run document-build:output",
 		"check": "npm outdated"
 	},
 	"author": "sk",
