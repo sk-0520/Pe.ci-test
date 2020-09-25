@@ -21,7 +21,7 @@ before_build:
   - cmd: git submodule update
   - ps: .\Build\make-buildtools.ps1
 build_script:
-  - cmd: npm run document-build && robocopy /MIR /PURGE /R:3 /S "Source/Documents/build" "Source\Pe\Pe.Main\doc\help"
+  - cmd: npm run document-build && (robocopy /MIR /PURGE /R:3 /S "Source/Documents/build" "Source\Pe\Pe.Main\doc\help") ^& if %ERRORLEVEL% leq 1 exit 0
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms x64,x86
   - ps: .\Build\compress.ps1 -Diet -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86
