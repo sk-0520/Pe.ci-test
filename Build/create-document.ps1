@@ -1,6 +1,3 @@
-Param(
-	[switch] $NoInstall
-)
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -16,10 +13,6 @@ $rootDirectoryPath = Split-Path -Parent $currentDirPath
 $documentDirectoryPath = Join-Path $rootDirectoryPath 'Source\Documents'
 $buildOutputDirectoryPath = Join-Path $documentDirectoryPath 'build'
 
-if (! $NoInstall) {
-	Write-Output install
-	npm install --loglevel=error
-}
 npm run document-build
 
 # ビルド工程にドキュメントをのせる

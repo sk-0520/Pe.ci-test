@@ -16,6 +16,7 @@ install:
   - cmd: dotnet --version
   - ps: Install-Product node 12.18.3
   - cmd: npm -g install npm@6.14.8
+  - cmd: npm install
 before_build:
   - cmd: git submodule init
   - cmd: git submodule update
