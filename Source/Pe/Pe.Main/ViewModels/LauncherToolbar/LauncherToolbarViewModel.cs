@@ -37,6 +37,7 @@ using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
+using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -84,6 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 GetDragParameter = ItemGetDragParameter,
             };
 
+            Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
@@ -199,6 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
 
+        public FontViewModel Font { get; }
         public IDragAndDrop ViewDragAndDrop { get; }
         public IDragAndDrop ItemDragAndDrop { get; }
 
@@ -635,6 +638,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     PlatformThemeLoader.Changed -= PlatformThemeLoader_Changed;
                     LauncherItemCollection.Dispose();
                     LauncherGroupCollection.Dispose();
+                    Font.Dispose();
                 }
 
             }
