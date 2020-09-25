@@ -37,6 +37,7 @@ using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Views.Note;
+using System.Collections;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -93,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
             PropertyChangedHooker.AddHook(nameof(Model.TextWrap), nameof(TextWrap));
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
-            PropertyChangedHooker.AddHook(nameof(Model.CaptionPosition), nameof(CaptionPosition));
+            PropertyChangedHooker.AddHook(new HookItem(nameof(Model.CaptionPosition), new[] { nameof(CaptionPosition) }, null, () => ApplyTheme()));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
