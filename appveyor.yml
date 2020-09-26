@@ -30,6 +30,8 @@ build_script:
   - cmd: npm run help-ci
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
+  - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl https://example.com -NoteBaseUrl https://example.net -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86
+  - ps: .\Build\create-release-note.ps1
 before_test:
   - cmd: for /d %%f in (Source\Pe\*.Test) do ( cd %%f & nuget install Appveyor.TestLogger & cd ..\..\..\ )
 test_script:
@@ -37,6 +39,8 @@ test_script:
 artifacts:
   - path: Output\*.zip
   - path: Output\*.7z
+  - path: Output\*.json
+  - path: Output\*.html
   - path: Output\help
     name: document
 cache:
