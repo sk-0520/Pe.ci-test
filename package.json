@@ -4,7 +4,7 @@
 	"description": "Pe documents",
 	"main": "index.pug",
 	"scripts": {
-		"lint": "eslint Source/Documents/source/script",
+		"lint": "eslint Source/Help/script",
 		"help-watch": "parcel watch --no-autoinstall --out-dir Output/help/ --public-url . Source/Help/index.pug",
 		"help-build:clean": "rimraf Output/help/*",
 		"help-build:output": "parcel build --no-autoinstall  --no-source-maps --out-dir Output/help/ --no-content-hash --public-url . Source/Help/index.pug",
