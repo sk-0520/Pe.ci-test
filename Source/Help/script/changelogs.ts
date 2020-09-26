@@ -1,5 +1,5 @@
-declare function makeChangelogLink(): void;
-
+//declare function makeChangelogLink(): void;
+/// <reference path="./changelog-link.ts" />
 
 /*--------BUILD-EMBEDDED-JSON--------*/
 
