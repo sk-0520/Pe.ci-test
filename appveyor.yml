@@ -7,6 +7,7 @@ clone_depth: 1
 environment:
   BUILD_TYPE: BETA
   ARCHIVE: 7z
+  MINIMUM_VERSION: 0.00.0
 platform:
   - x64
   - x86
