@@ -4,7 +4,8 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
-	'version.ps1'
+	'version.ps1',
+	'command.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
@@ -14,8 +15,8 @@ $rootDirPath = Split-Path -Parent $currentDirPath
 $outputDirectory = Join-Path $rootDirPath 'Output'
 
 $rawChangelogsFile = Join-Path $rootDirPath "Define/changelogs.json"
-$rawChangelogLinkFile = Join-Path $rootDirPath "Source/Help/script/changelog-link.js"
-$rawChangelogStyleFile = Join-Path $rootDirPath "Source/Help/style/changelog.css"
+$rawChangelogLinkFile = Join-Path $rootDirPath "Source/Help/script/changelog-link.ts"
+$rawChangelogStyleFile = Join-Path $rootDirPath "Source/Help/style/changelog.scss"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
 
 # ノード作らず適当に
@@ -150,13 +151,18 @@ foreach ($content in $currentVersion.contents) {
 			}
 		}
 	}
-
 }
+
+$compiledChangelogLinkFile = Join-Path $outputDirectory 'changelog-link.js'
+$compiledChangelogStyleFile= Join-Path $outputDirectory 'changelog.css'
+
+npx tsc  "$rawChangelogLinkFile" --outFile "$compiledChangelogLinkFile"
+npx sass "$rawChangelogStyleFile" --style compressed --no-source-map "$compiledChangelogStyleFile"
 
 $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
 $htmlContent = $htmlContent.Replace('<!--CONTENT-->', $root.ToHtml())
-$htmlContent = $htmlContent.Replace('//SCRIPT', (Get-Content $rawChangelogLinkFile -Raw -Encoding UTF8))
-$htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $rawChangelogStyleFile -Raw -Encoding UTF8))
+$htmlContent = $htmlContent.Replace('//SCRIPT', (Get-Content $compiledChangelogLinkFile -Raw -Encoding UTF8))
+$htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelogStyleFile -Raw -Encoding UTF8))
 
 $version = GetAppVersion
 Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)) -Value $htmlContent -Encoding UTF8
