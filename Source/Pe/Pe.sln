@@ -29,8 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.DefaultTheme", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "[doc]", "[doc]", "{C963971D-A95D-4948-B9C2-8549094B62CA}"
 	ProjectSection(SolutionItems) = preProject
-		..\Documents\define\changelog.txt = ..\Documents\define\changelog.txt
-		..\Documents\define\changelogs.json = ..\Documents\define\changelogs.json
+		..\..\Define\changelog.txt = ..\..\Define\changelog.txt
+		..\..\Define\changelogs.json = ..\..\Define\changelogs.json
 		Pe.Main\Pe.Main.csproj = Pe.Main\Pe.Main.csproj
 	EndProjectSection
 EndProject

@@ -3,8 +3,8 @@ declare function makeChangelogLink(): void;
 
 /*--------BUILD-EMBEDDED-JSON--------*/
 
-import changelogs from '../../define/changelogs.json';
-import changelogsArchives from '../../define/changelogs-archive.json';
+import changelogs from '../../../../Define/changelogs.json';
+import changelogsArchives from '../../../../Define/changelogs-archive.json';
 
 Array.prototype.push.apply(changelogs, changelogsArchives);
 
