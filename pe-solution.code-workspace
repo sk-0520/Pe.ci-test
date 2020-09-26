@@ -13,8 +13,8 @@
             "path": "./Resource"
         },
         {
-            "name": "DOCUMENTS",
-            "path": "./Source/Documents"
+            "name": "HELP",
+            "path": "./Source/Help"
         },
         {
             "name": "ROOT",
@@ -27,7 +27,6 @@
             "**/obj": true,
             ".vs": true,
             ".vscode": true,
-            "build/": true,
             "dist/": true,
             "Output": true,
             "*.lnk": true,

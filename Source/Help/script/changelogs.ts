@@ -1,10 +1,10 @@
-declare function makeChangelogLink(): void;
-
+//declare function makeChangelogLink(): void;
+/// <reference path="./changelog-link.ts" />
 
 /*--------BUILD-EMBEDDED-JSON--------*/
 
-import changelogs from '../../define/changelogs.json';
-import changelogsArchives from '../../define/changelogs-archive.json';
+import changelogs from '../../../Define/changelogs.json';
+import changelogsArchives from '../../../Define/changelogs-archive.json';
 
 Array.prototype.push.apply(changelogs, changelogsArchives);
 

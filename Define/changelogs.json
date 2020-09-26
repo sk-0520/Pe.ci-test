@@ -1,0 +1,84 @@
+[
+	{
+		"date": "YYYY/MM/DD",
+		"version": "0.99.033",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#685: ノートのタイトルバー位置を変更可能にする"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#675: 既知の問題: ツールバーフォントの適用"
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "",
+						"subject": "#686: デプロイ処理周りで ps で頑張ってる部分を node に置き換えていきたい",
+						"comments": [
+							"あかんかった！"
+						]
+					},
+					{
+						"revision": "",
+						"subject": ""
+					},
+					{
+						"revision": "",
+						"subject": ""
+					}
+				]
+			}
+		]
+	}
+]
