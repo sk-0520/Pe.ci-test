@@ -13,9 +13,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 $rootDirPath = Split-Path -Parent $currentDirPath
 $outputDirectory = Join-Path $rootDirPath 'Output'
 
-$rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/define/changelogs.json"
-$rawChangelogLinkFile = Join-Path $rootDirPath "Source/Documents/source/script/changelog-link.js"
-$rawChangelogStyleFile = Join-Path $rootDirPath "Source/Documents/source/style/changelog.css"
+$rawChangelogsFile = Join-Path $rootDirPath "Define/changelogs.json"
+$rawChangelogLinkFile = Join-Path $rootDirPath "Source/Help/script/changelog-link.js"
+$rawChangelogStyleFile = Join-Path $rootDirPath "Source/Help/style/changelog.css"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
 
 # ノード作らず適当に
