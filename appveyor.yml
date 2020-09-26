@@ -29,7 +29,7 @@ before_build:
 build_script:
   - cmd: |-
       npm run help-build
-      (robocopy /MIR /PURGE /R:3 /S "Output/help" "Source\Pe\Pe.Main\doc\help") ^& if %ERRORLEVEL% leq 1 exit 0
+      npm run help-app-copy
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
 before_test:
