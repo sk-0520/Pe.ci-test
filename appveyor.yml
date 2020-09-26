@@ -27,7 +27,9 @@ before_build:
   - cmd: git submodule update
   - ps: .\Build\make-buildtools.ps1
 build_script:
-  - cmd: npm run document-build && (robocopy /MIR /PURGE /R:3 /S "Source/Documents/build" "Source\Pe\Pe.Main\doc\help") ^& if %ERRORLEVEL% leq 1 exit 0
+  - cmd: |-
+      npm run help-build
+      (robocopy /MIR /PURGE /R:3 /S "Output/help" "Source\Pe\Pe.Main\doc\help") ^& if %ERRORLEVEL% leq 1 exit 0
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
 before_test:
@@ -37,7 +39,7 @@ test_script:
 artifacts:
   - path: Output\*.zip
   - path: Output\*.7z
-  - path: Source\Documents\build
+  - path: Output\help
     name: document
 cache:
   #- '%USERPROFILE%\.nuget\packages'

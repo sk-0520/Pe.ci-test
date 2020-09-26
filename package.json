@@ -5,10 +5,10 @@
 	"main": "index.pug",
 	"scripts": {
 		"lint": "eslint Source/Documents/source/script",
-		"document-watch": "parcel watch --no-autoinstall --out-dir Source/Documents/build/ --public-url . Source/Documents/source/index.pug",
-		"document-build:clean": "rimraf Source/Documents/build/*",
-		"document-build:output": "parcel build --no-autoinstall  --no-source-maps --out-dir Source/Documents/build/ --no-content-hash --public-url . Source/Documents/source/index.pug",
-		"document-build": "npm run document-build:clean & npm run document-build:output",
+		"help-watch": "parcel watch --no-autoinstall --out-dir Output/help/ --public-url . Source/Help/index.pug",
+		"help-build:clean": "rimraf Output/help/*",
+		"help-build:output": "parcel build --no-autoinstall  --no-source-maps --out-dir Output/help/ --no-content-hash --public-url . Source/Help/index.pug",
+		"help-build": "npm run help-build:clean & npm run help-build:output",
 		"check": "npm outdated"
 	},
 	"author": "sk",
