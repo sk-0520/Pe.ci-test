@@ -1,5 +1,365 @@
 [
 	{
+		"date": "2020/09/22",
+		"version": "0.99.032",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"revision": "",
+						"class": "",
+						"subject": "継続中案件 -> #684: [Pe-Feedback] 99-013及び020は機能せず",
+						"comments": [
+							"ログが欲しいです",
+							"フォーラム・課題・メールに連絡もらえると助かります"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "67b467891f0a39ad254e884d21b8d8fff6f5592c",
+						"subject": "#466: 指定して実行ウィンドウへのファイルD&Dを実装"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "8d872fbbceb22c1307108fe32844a80ce65c1233",
+						"subject": "#678: 設定画面にて揮発性DBの複製を行う"
+					},
+					{
+						"revision": "d23e4a034dd4f9ad3e51b30c5788580f55e1cf0c",
+						"subject": "#679: フルスクリーン強制終了時のイベント取得に失敗しランチャーツールバーが隠れたままの状態がある",
+						"comments": [
+							"かなり環境依存な問題っぽい"
+						]
+					},
+					{
+						"revision": "ec75bb4a10b4b764a6bfb15c5849090c740c72c2",
+						"subject": "#683 指定して実行の履歴タイムスタンプが☆U☆T☆C☆"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "b9400a5a2db55c4e9697005f0fc3ccbdbaf60588",
+						"subject": "#666: CIビルドの短縮化",
+						"comments": [
+							"あんまり変わらんかったのでエラー系をなるはや検知できるようにした"
+						]
+					},
+					{
+						"revision": "29c3954e1e0d9ee6137328e7ad9578fb9bde1bc7",
+						"subject": "#632: 固定値を外部データに置き換える",
+						"comments": [
+							"ちょっと探すのがしんどいので地道にやっていく",
+							"もともと保守の問題で億劫だった原因である内部的処理を保守しやすくしたので一応は目標達成"
+						]
+					},
+					{
+						"revision": "8d29c6ab34ae9a8e0e5369c3c7686bd4e9d35d19",
+						"subject": "#687: フィードバックに WebView いらんでしょ"
+					},
+					{
+						"revision": "b04daa30fc3b81e28e1b4c3003e128c32859fe1e",
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Configuration.Json 3.1.7 -> 3.1.8",
+							"Microsoft.Extensions.Logging 3.1.7 -> 3.1.8",
+							"Microsoft.Extensions.Logging.Abstractions 3.1.7 -> 3.1.8"
+						]
+					},
+					{
+						"revision": "d9fddde51700edc9968282e65bc41e676c9d8759",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.12.0.21095 -> 8.13.1.21947"
+					},
+					{
+						"revision": "ac1e0c3db50a8e2c2c3ddfe24aa3fa14b7e85163",
+						"subject": "Microsoft Visual C++ 再頒布可能パッケージ更新"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2020/09/02",
+		"version": "0.99.020",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "e1b625de9f9b38ab08e667cd5c2d5ef5fe95c683",
+						"subject": "カラーパレット選択時のカーソル・視覚状態を変更"
+					},
+					{
+						"revision": "b0239d91baa24d16c1a9ecd8a20b96ffb7179bbc",
+						"subject": "#674: 設定画面のフォント用コントロールのバインド問題に対応する "
+					},
+					{
+						"revision": "519eb138802d51a9b77caf8359ffc7cfa48ed161",
+						"subject": "#660: ランチャーアイテムアドオンの実装",
+						"comments": [
+							"かなり処理が甘いけどこれ以上労力はかけられんのでいったんOKとする",
+							"参照実装としては Pe.Plugins.Reference.Clock が対象"
+						]
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "a4f5be6596d862596d2746c64defe02b73d1b3af",
+						"subject": "#670: ランチャーアイテム自動登録で取り込みボタン連打すると死ぬ💀"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "18ef510509e590be0fa74eec1defa700fd1b4b29",
+						"subject": "#668: SQLの実行ログにてスペース破棄とか行番号追加とか、いる？"
+					},
+					{
+						"revision": "5d6b58dc5a3b1909fe0c4d7a00b0ffb5cbc2fa6d",
+						"subject": "#673: 同一のテーマプラグインを選択している状態で本体設定を保存すると二重読み込みで死ぬ",
+						"comments": [
+							"正確には Pe のバグでなくプラグイン側のバグなんだけど参照実装の基底処理なんでなんとも"
+						]
+					},
+					{
+						"revision": "70b37f006cf47b16e8b060436ba31681df96cddb",
+						"subject": "#672: ランチャーアイコンの処理周りを整理する",
+						"comments": [
+							"#660 作業時に対応",
+							"整理するどころかさらに混乱を生み出した"
+						]
+					},
+					{
+						"revision": "7a082894e17571bea00c1dcb820704562d55cf7d",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 83.4.20 -> 84.4.10"
+					},
+					{
+						"revision": "31fc05c2136ef84ee128267dd85c31fd8623c75c",
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Logging 3.1.5 -> 3.1.7",
+							"Microsoft.Extensions.Configuration.Json 3.1.5 -> 3.1.7",
+							"Microsoft.NET.Test.Sdk 16.6.1 -> 16.7.1"
+						]
+					},
+					{
+						"revision": "5c9f9cad0799c13df6540e8f26b99070a861bc6f",
+						"class": "nuget",
+						"subject": "NLog.Extensions.Logging 1.6.4 -> 1.6.5"
+					},
+					{
+						"revision": "42c62759fdd8c66e3dacfb5de6ff7c54b9548ddf",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.9.0.19135 -> 8.12.0.21095"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2020/07/09",
+		"version": "0.99.013",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "c0ea1fe0bc8eb35e9a44751275fc69c799b015f3",
+						"subject": "#671: ノートが自動的に隠れなくなっている "
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "71368427c5f8fc92af3e058deacbb618260e371a",
+						"subject": "#667: Visual Studio 2019 Image Library の使用を明記する"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2020/07/07",
+		"version": "0.99.010",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "2905eecdf7571684c20a7f3d02c987a7a98e7718",
+						"subject": "#655: ランチャーアイテム自動登録にてアンインストールファイルと思しきファイル名は登録対象外とする"
+					},
+					{
+						"revision": "f7bef111cad2bad7aa64e118b86f95b10402b9b0",
+						"subject": "#662: ランチャーアイテム自動登録で登録時ではなくプレビュー時にショートカットを展開する"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "db840540ea24cc00404149cc3d68c0dfbc5bf23e",
+						"subject": "#659: CI 処理時のコミットリビジョン埋め込み処理をスキップしている"
+					},
+					{
+						"revision": "846999268fa3e8a6e774768e3bdf62c9e6ad035c",
+						"subject": "#663: ランチャーアイテム自動登録でサブディレクトリが読み込めていない"
+					},
+					{
+						"revision": "8527b589cb5e9d58e372ed2ab4b11d0452568230",
+						"subject": "#661: アイコン取得時に基本サイズ以外にDPIスケールも考慮する",
+						"comments": [
+							"DPI が取れたり取れなかったりのヤケクソ DPI スケール反映",
+							"環境によるけど 20px とか 24px とか 40px とかのアイコンをとってくるので対象が該当アイコンサイズを持っていなければ結局ぼけるっていうね"
+						]
+					},
+					{
+						"revision": "6bce56ab96d2c491ab4a3eebb3eb6152bec87366",
+						"subject": "#634: 設定画面を開く際にやたらめったら時間がかかる",
+						"comments": [
+							"かなり手を入れたのでバグってたらめんご"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "27afe5cd24dfb4879f9559890ce8cbd2048b8a08",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 81.3.100 -> 83.4.20",
+						"comments": [
+							"WebView処理周りで透過効かなくなってるっぽいなー"
+						]
+					},
+					{
+						"revision": "034b6f79c849e418f75685a5757426cc7faaad02",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.8.0.18411 -> 8.9.0.19135"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2020/07/03",
+		"version": "0.99.001",
+		"contents": [
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "60ed1438fab4d615d1f5ac25978eaf74ad3f2c51",
+						"subject": "#658: ランチャーアイテム更新間隔にて分が毎分になっている"
+					}
+				]
+			}
+		]
+	},
+	{
+		"date": "2020/07/02",
+		"version": "0.99.000",
+		"contents": [
+			{
+				"type": "note",
+				"logs": [
+					{
+						"class": "",
+						"subject": "プラグインを実装した",
+						"comments": [
+							"今のところかなり限定的で気楽に試せるようなものではないけど一区切り",
+							"プラグイン共通ライブラリ(Pe.Bridge)バージョンは Pe と連動しない",
+							"将来的にはインストール・アンインストールを Pe 側からできるようにしたりする予定",
+							"参照実装: <Pe.git>/Source/Plugins"
+						]
+					}
+				]
+			},
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "b3e624137a3aadebf85cfb0399d35fe6f0578ab7",
+						"subject": "#509: プラグイン機構の構築",
+						"comments": [
+							"まだまだ甘いし達成できてない目標もあるけど実運用しながら機能拡張できるようにしていきたいのでリリース",
+							"ドキュメントもまだ全然かけてないのでソースが正。んで頻繁に互換性が失われる想定"
+						]
+					},
+					{
+						"revision": "fe77f8d8e95e42df01d492306492506f6b1c04ce",
+						"subject": "#550: 定期的にアイコン情報を更新する"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "84d12a472783693eea5fb863bfb9a7ccef461126",
+						"subject": "#623: アプリケーション内で使用する Pe アイコンをもうちときれいに表示する"
+					},
+					{
+						"revision": "37f6d64b3b62b9a91d3ec762101a0fffb321896b",
+						"subject": "#649: ランチャーアイテム再試行処理のキャンセルが効いていない",
+						"comments": [
+							"色々試したけどアクティブ→非アクティブを連続するとダメっぽいので初っ端から非アクティブにした",
+							"副次的効果として #654 に対応"
+						]
+					},
+					{
+						"revision": "37f6d64b3b62b9a91d3ec762101a0fffb321896b",
+						"subject": "#654: 通知ログがウィンドウアクティブ状態をまだまだ奪う"
+					},
+					{
+						"revision": "410f71ec484e3bcc3a8de783cc1117c5968cd9e5",
+						"subject": "#651: %PATH% から設定されたランチャーアイテムのコンテキストメニューの活性処理で %PATH% を考慮する"
+					},
+					{
+						"revision": "e6ae31d10d40ac86f70f1f584d52c900422eeb08",
+						"subject": "#652: バージョン情報表示中はコマンド表示できないようにする",
+						"comments": [
+							"スタート・設定・バージョン情報を表示した際にフック等の処理を停止するようにした"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "a3503a67c914f7b40e726e2810e29e8144a11022",
+						"subject": "#650: 内蔵ブラウザのリソース取得をC#処理からCefSharpで直接行う"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/06/21",
 		"version": "0.98.001",
 		"contents": [
