@@ -10,6 +10,7 @@
 		"help-build:output": "parcel build --no-autoinstall  --no-source-maps --out-dir Output/help/ --no-content-hash --public-url . Source/Help/index.pug",
 		"help-build": "npm-run-all --sequential help-build:clean help-build:output",
 		"help-app-copy": "cpx Output/help/* Source/Pe/Pe.Main/doc/help",
+		"help-ci": "npm-run-all --sequential help-build help-app-copy",
 		"check": "npm outdated"
 	},
 	"author": "sk",

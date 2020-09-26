@@ -22,7 +22,7 @@ before_build:
   - cmd: git submodule update
   - ps: .\Build\make-buildtools.ps1
 build_script:
-  - cmd: npm run document-build && (robocopy /MIR /PURGE /R:3 /S "Source/Documents/build" "Source\Pe\Pe.Main\doc\help") ^& if %ERRORLEVEL% leq 1 exit 0
+  - cmd: npm run help-ci
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms x64,x86
   - ps: .\Build\compress.ps1 -Diet -Archive $env:ARCHIVE -Platforms x64,x86
   - ps: .\Build\create-updateinfo.ps1 -TargetRepository bitbucket -MinimumVersion $env:MINIMUM_VERSION -ArchiveBaseUrl $env:PE_RELEASE_ARCHIVE_BASE_URL -NoteBaseUrl $env:PE_RELEASE_NOTE_BASE_URL -ReleaseDirectory Output -Archive $env:ARCHIVE -Platforms x64,x86
@@ -35,7 +35,7 @@ test_script:
 artifacts:
   - path: Output\*.json
   - path: Output\*.html
-  - path: Source\Documents\build
+  - path: Output\help
     name: document
 deploy_script:
   - ps: .\Build\deploy.ps1 -TargetDownloader bitbucket -TargetRepository bitbucket -Archive $env:ARCHIVE -DeployApiDownloadUrl $env:PE_API_DOWNLOAD_URL -DeployApiTagUrl $env:PE_API_TAG_URL -DeployAccount $env:PE_RELEASE_ACCOUNT -DeployPassword $env:PE_RELEASE_PASSWORD

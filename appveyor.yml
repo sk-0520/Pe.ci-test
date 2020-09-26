@@ -27,9 +27,7 @@ before_build:
   - cmd: git submodule update
   - ps: .\Build\make-buildtools.ps1
 build_script:
-  - cmd: |-
-      npm run help-build
-      npm run help-app-copy
+  - cmd: npm run help-ci
   - ps: .\Build\build.ps1 -ProductMode -IgnoreChanged -BuildType $env:BUILD_TYPE -Platforms $env:PLATFORM
   - ps: .\Build\compress.ps1 -Archive $env:ARCHIVE -Platforms $env:PLATFORM
 before_test:
