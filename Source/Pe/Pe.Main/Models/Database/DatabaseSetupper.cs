@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
                 new Setupper_V_00_98_000(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_000(IdFactory, StatementLoader, LoggerFactory),
                 new Setupper_V_00_99_010(IdFactory, StatementLoader, LoggerFactory),
-                new Setupper_V_00_99_033(IdFactory, StatementLoader, LoggerFactory),
+                new Setupper_V_00_99_038(IdFactory, StatementLoader, LoggerFactory),
                 // これ最後
                 new Setupper_V_99_99_999(IdFactory, StatementLoader, LoggerFactory),
             };
