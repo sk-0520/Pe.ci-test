@@ -246,12 +246,36 @@
           <Grid Background="{Binding ContentBackground}">
             <Grid.Resources>
               <sys:Double x:Key="Normal-Size">4</sys:Double>
-              <sys:Double x:Key="Active-Size">16</sys:Double>
+              <sys:Double x:Key="Active-Size">12</sys:Double>
               <Duration x:Key="Normal-Time">0.00:00:00.100</Duration>
               <Duration x:Key="Active-Time">0.00:00:00.050</Duration>
 
+              <Style x:Key="RepeatButton" TargetType="RepeatButton">
+                <Style.Triggers>
+                  <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                      <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                        <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=Self}" />
+                        <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                      </MultiBinding>
+                    </DataTrigger.Binding>
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="Transparent"/>
+                <Setter Property="Template">
+                  <Setter.Value>
+                    <ControlTemplate>
+                      <Border Background="Transparent" />
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+
               <ControlTemplate x:Key="Thumb" TargetType="Thumb">
-                <Rectangle RadiusX="2" RadiusY="2" Fill="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Rectangle RadiusX="2" RadiusY="2" Opacity="0.9" Fill="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
               </ControlTemplate>
 
               <Style x:Key="TextBoxBase" TargetType="TextBoxBase">
@@ -287,6 +311,12 @@
                           <Setter.Value>
                             <ControlTemplate>
                               <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.DecreaseRepeatButton>
+                                  <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource RepeatButton}" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                  <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource RepeatButton}" />
+                                </Track.IncreaseRepeatButton>
                                 <Track.Thumb>
                                   <Thumb>
                                     <Thumb.Style>
