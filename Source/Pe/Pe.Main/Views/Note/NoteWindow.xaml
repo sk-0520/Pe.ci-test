@@ -245,6 +245,15 @@
         <Grid>
           <Grid Background="{Binding ContentBackground}">
             <Grid.Resources>
+              <sys:Double x:Key="Normal-Size">4</sys:Double>
+              <sys:Double x:Key="Active-Size">16</sys:Double>
+              <Duration x:Key="Normal-Time">0.00:00:00.100</Duration>
+              <Duration x:Key="Active-Time">0.00:00:00.050</Duration>
+
+              <ControlTemplate x:Key="Thumb" TargetType="Thumb">
+                <Rectangle RadiusX="2" RadiusY="2" Fill="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+              </ControlTemplate>
+
               <Style x:Key="TextBoxBase" TargetType="TextBoxBase">
                 <Style.Resources>
                   <Style TargetType="ScrollBar" BasedOn="{StaticResource {x:Type ScrollBar}}">
@@ -257,16 +266,168 @@
                             <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
                           </MultiBinding>
                         </DataTrigger.Binding>
-                        <Setter Property="Opacity" Value="1" />
+                        <DataTrigger.EnterActions>
+                          <BeginStoryboard>
+                            <Storyboard>
+                              <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.8" Duration="0.00:00:00.250" />
+                            </Storyboard>
+                          </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                          <BeginStoryboard>
+                            <Storyboard>
+                              <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0.00:00:01.0" />
+                            </Storyboard>
+                          </BeginStoryboard>
+                        </DataTrigger.ExitActions>
                       </DataTrigger>
-                      <!--<DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=TextBoxBase}}" Value="True">
-                        <Setter Property="Opacity" Value="1" />
-                      </DataTrigger>-->
-
+                      <!-- 縦 -->
+                      <Trigger Property="Orientation" Value="Vertical">
+                        <Setter Property="Template">
+                          <Setter.Value>
+                            <ControlTemplate>
+                              <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                  <Thumb>
+                                    <Thumb.Style>
+                                      <Style TargetType="Thumb">
+                                        <Style.Triggers>
+                                          <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                              <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                                <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=Self}" />
+                                                <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                              </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <DataTrigger.EnterActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Width" To="{StaticResource Active-Size}" Duration="{StaticResource Active-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Width" To="{StaticResource Normal-Size}" Duration="{StaticResource Normal-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                          </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Width" Value="{StaticResource Normal-Size}" />
+                                        <Setter Property="Template" Value="{StaticResource Thumb}" />
+                                      </Style>
+                                    </Thumb.Style>
+                                  </Thumb>
+                                </Track.Thumb>
+                              </Track>
+                            </ControlTemplate>
+                          </Setter.Value>
+                        </Setter>
+                      </Trigger>
+                      <!-- 横 -->
+                      <Trigger Property="Orientation" Value="Horizontal">
+                        <Setter Property="Template">
+                          <Setter.Value>
+                            <ControlTemplate>
+                              <Track x:Name="PART_Track" IsDirectionReversed="False">
+                                <Track.Thumb>
+                                  <Thumb>
+                                    <Thumb.Style>
+                                      <Style TargetType="Thumb">
+                                        <Style.Triggers>
+                                          <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                              <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                                <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=Self}" />
+                                                <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                              </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <DataTrigger.EnterActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Height" To="{StaticResource Active-Size}" Duration="{StaticResource Active-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Height" To="{StaticResource Normal-Size}" Duration="{StaticResource Normal-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                          </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Height" Value="{StaticResource Normal-Size}" />
+                                        <Setter Property="Template" Value="{StaticResource Thumb}" />
+                                      </Style>
+                                    </Thumb.Style>
+                                  </Thumb>
+                                </Track.Thumb>
+                              </Track>
+                            </ControlTemplate>
+                          </Setter.Value>
+                        </Setter>
+                      </Trigger>
                     </Style.Triggers>
-                    <Setter Property="Background" Value="Red"/>
+                    <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="Opacity" Value="0" />
                   </Style>
+
+                  <Style TargetType="{x:Type ScrollViewer}">
+                    <Setter Property="Template">
+                      <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                          <Grid>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="*" />
+                              <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                              <RowDefinition Height="*" />
+                              <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Margin="{TemplateBinding Padding}"
+                              CanContentScroll="{TemplateBinding CanContentScroll}"
+                              CanHorizontallyScroll="False"
+                              CanVerticallyScroll="False"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                            />
+                            <ScrollBar
+                              x:Name="PART_VerticalScrollBar"
+                              Grid.Row="0"
+                              Grid.Column="1"
+                              AutomationProperties.AutomationId="VerticalScrollBar"
+                              Minimum="0"
+                              Maximum="{TemplateBinding ScrollableHeight}"
+                              ViewportSize="{TemplateBinding ViewportHeight}"
+                              Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                              Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            />
+                            <ScrollBar
+                              x:Name="PART_HorizontalScrollBar"
+                              Grid.Row="1"
+                              Grid.Column="0"
+                              AutomationProperties.AutomationId="HorizontalScrollBar"
+                              Minimum="0"
+                              Maximum="{TemplateBinding ScrollableWidth}"
+                              Orientation="Horizontal"
+                              ViewportSize="{TemplateBinding ViewportWidth}"
+                              Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                              Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            />
+                          </Grid>
+                        </ControlTemplate>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+
                 </Style.Resources>
                 <Style.Triggers>
                   <MultiDataTrigger>
