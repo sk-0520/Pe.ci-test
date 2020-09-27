@@ -60,6 +60,7 @@
       <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
       <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
       <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+      <app_core_views_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
@@ -245,6 +246,28 @@
           <Grid Background="{Binding ContentBackground}">
             <Grid.Resources>
               <Style x:Key="TextBoxBase" TargetType="TextBoxBase">
+                <Style.Resources>
+                  <Style TargetType="ScrollBar" BasedOn="{StaticResource {x:Type ScrollBar}}">
+                    <Style.Triggers>
+                      <DataTrigger Value="True">
+                        <DataTrigger.Binding>
+                          <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                            <Binding Path="IsMouseOver" RelativeSource="{RelativeSource AncestorType=TextBox}" />
+                            <Binding Path="IsMouseOver" RelativeSource="{RelativeSource AncestorType=RichTextBox}" />
+                            <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                          </MultiBinding>
+                        </DataTrigger.Binding>
+                        <Setter Property="Opacity" Value="1" />
+                      </DataTrigger>
+                      <!--<DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=TextBoxBase}}" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                      </DataTrigger>-->
+
+                    </Style.Triggers>
+                    <Setter Property="Background" Value="Red"/>
+                    <Setter Property="Opacity" Value="0" />
+                  </Style>
+                </Style.Resources>
                 <Style.Triggers>
                   <MultiDataTrigger>
                     <MultiDataTrigger.Conditions></MultiDataTrigger.Conditions>
@@ -261,6 +284,8 @@
                 <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
                 <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
                 <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
               </Style>
 
               <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
