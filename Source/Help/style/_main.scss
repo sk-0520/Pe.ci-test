@@ -74,8 +74,12 @@ h3 {
 #content {
 	left: $menuWidth;
 	right: 0;
-	padding-left: 1em;
-	padding-right: 3em;
+
+	#container {
+		padding-left: 1em;
+		padding-right: 3em;
+		padding-bottom: 4em;
+	}
 }
 
 #footer {

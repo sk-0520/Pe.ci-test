@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
-    internal class NotesEntityDto : CommonDtoBase
+    internal class NotesEntityDto: CommonDtoBase
     {
         #region property
 
@@ -28,11 +29,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public bool TextWrap { get; set; }
         public string ContentKind { get; set; } = string.Empty;
         public string HiddenMode { get; set; } = string.Empty;
+        public string CaptionPosition { get; set; } = string.Empty;
 
         #endregion
     }
 
-    public class NotesEntityDao : EntityDaoBase
+    public class NotesEntityDao: EntityDaoBase
     {
         public NotesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
             : base(commander, statementLoader, implementation, loggerFactory)
@@ -58,6 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             public static string LayoutKind { get; } = "LayoutKind";
             public static string ScreenName { get; } = "ScreenName";
             public static string HiddenMode { get; } = "HiddenMode";
+            public static string CaptionPosition { get; } = "CaptionPosition";
 
             #endregion
         }
@@ -71,6 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
             var contentKindTransfer = new EnumTransfer<NoteContentKind>();
             var hiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
+            var captionPositionTransfer = new EnumTransfer<NoteCaptionPosition>();
 
             var data = new NoteData() {
                 NoteId = dto.NoteId,
@@ -87,6 +91,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 TextWrap = dto.TextWrap,
                 ContentKind = contentKindTransfer.ToEnum(dto.ContentKind),
                 HiddenMode = hiddenModeTransfer.ToEnum(dto.HiddenMode),
+                CaptionPosition = captionPositionTransfer.ToEnum(dto.CaptionPosition),
             };
 
             return data;
@@ -97,6 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
             var contentKindTransfer = new EnumTransfer<NoteContentKind>();
             var hiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
+            var captionPositionTransfer = new EnumTransfer<NoteCaptionPosition>();
 
             var result = new NotesEntityDto() {
                 NoteId = data.NoteId,
@@ -113,6 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 TextWrap = data.TextWrap,
                 ContentKind = contentKindTransfer.ToString(data.ContentKind),
                 HiddenMode = hiddenModeTransfer.ToString(data.HiddenMode),
+                CaptionPosition = captionPositionTransfer.ToString(data.CaptionPosition),
             };
 
             commonStatus.WriteCommon(result);
@@ -237,6 +244,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, param) == 1;
         }
 
+        public bool UpdateCaptionPosition(Guid noteId, NoteCaptionPosition captionPosition, IDatabaseCommonStatus databaseCommonStatus)
+        {
+            var noteCaptionPositionTansfer = new EnumTransfer<NoteCaptionPosition>();
+
+            var statement = LoadStatement();
+            var param = databaseCommonStatus.CreateCommonDtoMapping();
+            param[Column.NoteId] = noteId;
+            param[Column.CaptionPosition] = noteCaptionPositionTansfer.ToString(captionPosition);
+            return Commander.Execute(statement, param) == 1;
+        }
+
         public bool UpdateContentKind(Guid noteId, NoteContentKind contentKind, IDatabaseCommonStatus databaseCommonStatus)
         {
             var noteContentKindTansfer = new EnumTransfer<NoteContentKind>();
@@ -288,7 +306,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             return Commander.Execute(statement, parameter);
         }
-
 
         #endregion
     }

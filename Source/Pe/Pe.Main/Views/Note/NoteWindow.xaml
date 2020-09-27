@@ -8,6 +8,7 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
+  xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
@@ -59,15 +60,16 @@
       <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
       <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
       <app_core_views_converter:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+      <app_core_views_converter:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
       <app_main_views_converter:FontFamilyToNameConverter x:Key="FontFamilyToNameConverter" />
 
       <WindowChrome x:Key="NormalWindowChrome"
         ResizeBorderThickness="{Binding BorderThickness}"
-        CaptionHeight="{Binding CaptionHeight}"
+        CaptionHeight="0"
       />
       <WindowChrome x:Key="CompactWindowChrome"
         ResizeBorderThickness="0"
-        CaptionHeight="{Binding MinHeight}"
+        CaptionHeight="0"
       />
       <WindowChrome x:Key="LockWindowChrome"
         ResizeBorderThickness="0"
@@ -133,13 +135,8 @@
   <Grid>
     <!--#region 内容-->
     <Border BorderBrush="{Binding BorderBrush}" BorderThickness="{Binding BorderThickness}">
-      <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="{Binding CaptionHeight}" />
-          <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Background="{Binding CaptionBackground}">
+      <DockPanel LastChildFill="True">
+        <Grid Background="{Binding CaptionBackground}" Height="{Binding CaptionHeight}" >
           <Grid.Resources>
             <Style x:Key="CaptionButton" TargetType="ButtonBase">
               <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
@@ -163,6 +160,16 @@
               </Setter>
             </Style>
           </Grid.Resources>
+          <Grid.Style>
+            <Style TargetType="Grid">
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding CaptionPosition}" Value="Bottom">
+                  <Setter Property="DockPanel.Dock" Value="Bottom" />
+                </DataTrigger>
+              </Style.Triggers>
+              <Setter Property="DockPanel.Dock" Value="Top" />
+            </Style>
+          </Grid.Style>
 
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -235,33 +242,250 @@
           <Button Grid.Column="3" ToolTip="{Binding Resources.String_Note_Caption_Close, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource CaptionButton}" Content="{Binding CaptionCloseImage}" Command="{x:Static SystemCommands.CloseWindowCommand}" CommandParameter="{Binding ElementName=root}" />
         </Grid>
 
-        <Grid Grid.Row="1" Background="{Binding ContentBackground}">
-          <Grid.Resources>
-            <Style x:Key="TextBoxBase" TargetType="TextBoxBase">
-              <Style.Triggers>
-                <MultiDataTrigger>
-                  <MultiDataTrigger.Conditions></MultiDataTrigger.Conditions>
-                </MultiDataTrigger>
-              </Style.Triggers>
-              <Setter Property="Background" Value="Transparent" />
-              <Setter Property="BorderThickness" Value="0" />
-              <Setter Property="AcceptsReturn" Value="True" />
-              <Setter Property="AcceptsTab" Value="True" />
-              <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
-              <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, ElementName=root}" />
-              <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, ElementName=root}" />
-              <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
-              <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
-              <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
-              <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
-            </Style>
-            <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding DataContext.TextWrap, ElementName=root}" Value="True">
-                  <Setter Property="TextWrapping" Value="Wrap" />
-                </DataTrigger>
-              </Style.Triggers>
-              <!--<Setter Property="Background" Value="Transparent" />
+        <Grid>
+          <Grid Background="{Binding ContentBackground}">
+            <Grid.Resources>
+              <sys:Double x:Key="Normal-Size">4</sys:Double>
+              <sys:Double x:Key="Active-Size">12</sys:Double>
+              <Duration x:Key="Normal-Time">0.00:00:00.100</Duration>
+              <Duration x:Key="Active-Time">0.00:00:00.050</Duration>
+
+              <Style x:Key="RepeatButton" TargetType="RepeatButton">
+                <Style.Triggers>
+                  <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                      <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                        <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=Self}" />
+                        <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                      </MultiBinding>
+                    </DataTrigger.Binding>
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="Transparent"/>
+                <Setter Property="Template">
+                  <Setter.Value>
+                    <ControlTemplate>
+                      <Border Background="Transparent" />
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+
+              <ControlTemplate x:Key="Thumb" TargetType="Thumb">
+                <Rectangle RadiusX="2" RadiusY="2" Opacity="0.9" Fill="{Binding DataContext.ContentForeground, RelativeSource={RelativeSource AncestorType=Window}}" />
+              </ControlTemplate>
+
+              <Style x:Key="TextBoxBase" TargetType="TextBoxBase">
+                <Style.Resources>
+                  <Style TargetType="ScrollBar" BasedOn="{StaticResource {x:Type ScrollBar}}">
+                    <Style.Triggers>
+                      <DataTrigger Value="True">
+                        <DataTrigger.Binding>
+                          <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                            <Binding Path="IsMouseOver" RelativeSource="{RelativeSource AncestorType=TextBox}" />
+                            <Binding Path="IsMouseOver" RelativeSource="{RelativeSource AncestorType=RichTextBox}" />
+                            <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                          </MultiBinding>
+                        </DataTrigger.Binding>
+                        <DataTrigger.EnterActions>
+                          <BeginStoryboard>
+                            <Storyboard>
+                              <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.8" Duration="0.00:00:00.250" />
+                            </Storyboard>
+                          </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                          <BeginStoryboard>
+                            <Storyboard>
+                              <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0.00:00:01.0" />
+                            </Storyboard>
+                          </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                      </DataTrigger>
+                      <!-- 縦 -->
+                      <Trigger Property="Orientation" Value="Vertical">
+                        <Setter Property="Template">
+                          <Setter.Value>
+                            <ControlTemplate>
+                              <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                <Track.DecreaseRepeatButton>
+                                  <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource RepeatButton}" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                  <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource RepeatButton}" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                  <Thumb>
+                                    <Thumb.Style>
+                                      <Style TargetType="Thumb">
+                                        <Style.Triggers>
+                                          <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                              <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                                <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=Self}" />
+                                                <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                              </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <DataTrigger.EnterActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Width" To="{StaticResource Active-Size}" Duration="{StaticResource Active-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Width" To="{StaticResource Normal-Size}" Duration="{StaticResource Normal-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                          </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Width" Value="{StaticResource Normal-Size}" />
+                                        <Setter Property="Template" Value="{StaticResource Thumb}" />
+                                      </Style>
+                                    </Thumb.Style>
+                                  </Thumb>
+                                </Track.Thumb>
+                              </Track>
+                            </ControlTemplate>
+                          </Setter.Value>
+                        </Setter>
+                      </Trigger>
+                      <!-- 横 -->
+                      <Trigger Property="Orientation" Value="Horizontal">
+                        <Setter Property="Template">
+                          <Setter.Value>
+                            <ControlTemplate>
+                              <Track x:Name="PART_Track" IsDirectionReversed="False">
+                                <Track.Thumb>
+                                  <Thumb>
+                                    <Thumb.Style>
+                                      <Style TargetType="Thumb">
+                                        <Style.Triggers>
+                                          <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                              <MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
+                                                <Binding Path="IsMouseOver" RelativeSource="{RelativeSource Mode=Self}" />
+                                                <Binding Path="IsActive" RelativeSource="{RelativeSource AncestorType=Window}" />
+                                              </MultiBinding>
+                                            </DataTrigger.Binding>
+                                            <DataTrigger.EnterActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Height" To="{StaticResource Active-Size}" Duration="{StaticResource Active-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                              <BeginStoryboard>
+                                                <Storyboard>
+                                                  <DoubleAnimation Storyboard.TargetProperty="Height" To="{StaticResource Normal-Size}" Duration="{StaticResource Normal-Time}" />
+                                                </Storyboard>
+                                              </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                          </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Height" Value="{StaticResource Normal-Size}" />
+                                        <Setter Property="Template" Value="{StaticResource Thumb}" />
+                                      </Style>
+                                    </Thumb.Style>
+                                  </Thumb>
+                                </Track.Thumb>
+                              </Track>
+                            </ControlTemplate>
+                          </Setter.Value>
+                        </Setter>
+                      </Trigger>
+                    </Style.Triggers>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Opacity" Value="0" />
+                  </Style>
+
+                  <Style TargetType="{x:Type ScrollViewer}">
+                    <Setter Property="Template">
+                      <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                          <Grid>
+                            <Grid.ColumnDefinitions>
+                              <ColumnDefinition Width="*" />
+                              <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                              <RowDefinition Height="*" />
+                              <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter
+                              Grid.Row="0"
+                              Grid.Column="0"
+                              Margin="{TemplateBinding Padding}"
+                              CanContentScroll="{TemplateBinding CanContentScroll}"
+                              CanHorizontallyScroll="False"
+                              CanVerticallyScroll="False"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                            />
+                            <ScrollBar
+                              x:Name="PART_VerticalScrollBar"
+                              Grid.Row="0"
+                              Grid.Column="1"
+                              AutomationProperties.AutomationId="VerticalScrollBar"
+                              Minimum="0"
+                              Maximum="{TemplateBinding ScrollableHeight}"
+                              ViewportSize="{TemplateBinding ViewportHeight}"
+                              Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                              Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            />
+                            <ScrollBar
+                              x:Name="PART_HorizontalScrollBar"
+                              Grid.Row="1"
+                              Grid.Column="0"
+                              AutomationProperties.AutomationId="HorizontalScrollBar"
+                              Minimum="0"
+                              Maximum="{TemplateBinding ScrollableWidth}"
+                              Orientation="Horizontal"
+                              ViewportSize="{TemplateBinding ViewportWidth}"
+                              Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                              Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            />
+                          </Grid>
+                        </ControlTemplate>
+                      </Setter.Value>
+                    </Setter>
+                  </Style>
+
+                </Style.Resources>
+                <Style.Triggers>
+                  <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions></MultiDataTrigger.Conditions>
+                  </MultiDataTrigger>
+                </Style.Triggers>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="AcceptsReturn" Value="True" />
+                <Setter Property="AcceptsTab" Value="True" />
+                <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
+                <Setter Property="FontFamily" Value="{Binding DataContext.Font.FontFamily, ElementName=root}" />
+                <Setter Property="FontSize" Value="{Binding DataContext.Font.FontSize, ElementName=root}" />
+                <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
+                <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
+                <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
+                <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+              </Style>
+
+              <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding DataContext.TextWrap, ElementName=root}" Value="True">
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                  </DataTrigger>
+                </Style.Triggers>
+                <!--<Setter Property="Background" Value="Transparent" />
               <Setter Property="BorderThickness" Value="0" />
               <Setter Property="AcceptsReturn" Value="True" />
               <Setter Property="IsReadOnly" Value="{Binding DataContext.IsLocked, ElementName=root}" />
@@ -270,23 +494,25 @@
               <Setter Property="FontStyle" Value="{Binding DataContext.Font.FontStyle, ElementName=root}" />
               <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
               <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />-->
-            </Style>
+              </Style>
 
-            <!--#region テキスト -->
-            <DataTemplate DataType="{x:Type app_main_viewmodels_note:NotePlainContentViewModel}">
-              <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
-                <i:Interaction.Triggers>
-                  <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                  </i:EventTrigger>
-                </i:Interaction.Triggers>
-              </TextBox>
-            </DataTemplate>
-            <!--#endregion -->
+              <Style x:Key="ContentRichTextBox" TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}" />
 
-            <!--#region リッチテキスト -->
-            <DataTemplate DataType="{x:Type app_main_viewmodels_note:NoteRichTextContentViewModel}">
-              <!--<xctk:RichTextBox x:Name="control" Text="{Binding RtfContent, UpdateSourceTrigger=PropertyChanged, Delay=2000}" >
+              <!--#region テキスト -->
+              <DataTemplate DataType="{x:Type app_main_viewmodels_note:NotePlainContentViewModel}">
+                <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
+                  <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                      <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>
+                </TextBox>
+              </DataTemplate>
+              <!--#endregion -->
+
+              <!--#region リッチテキスト -->
+              <DataTemplate DataType="{x:Type app_main_viewmodels_note:NoteRichTextContentViewModel}">
+                <!--<xctk:RichTextBox x:Name="control" Text="{Binding RtfContent, UpdateSourceTrigger=PropertyChanged, Delay=2000}" >
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
@@ -305,91 +531,103 @@
                 </xctk:RichTextBoxFormatBarManager.FormatBar>
               </xctk:RichTextBox>-->
 
-              <Grid  x:Name="control">
-                <i:Interaction.Triggers>
-                  <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                  </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <Grid  x:Name="control">
+                  <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                      <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>
 
-                <!-- #579 により Popup は消えたがわざわざ戻すのもあれなので Grid の中の一人っ子状態 -->
-                <RichTextBox x:Name="content">
-                  <RichTextBox.Style>
-                    <Style TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}">
-                      <Style.Triggers />
-                    </Style>
-                  </RichTextBox.Style>
-                </RichTextBox>
+                  <!-- #579 により Popup は消えたがわざわざ戻すのもあれなので Grid の中の一人っ子状態 -->
+                  <RichTextBox x:Name="content">
+                    <RichTextBox.Style>
+                      <Style TargetType="RichTextBox" BasedOn="{StaticResource ContentRichTextBox}">
+                        <Style.Triggers />
+                      </Style>
+                    </RichTextBox.Style>
+                  </RichTextBox>
 
-              </Grid>
+                </Grid>
 
-            </DataTemplate>
-            <!--#endregion -->
+              </DataTemplate>
+              <!--#endregion -->
 
-          </Grid.Resources>
-          <!--<ContentControl x:Name="content" Content="{Binding Content}" Visibility="{Binding Content.CanVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
-          <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
+            </Grid.Resources>
+            <!--<ContentControl x:Name="content" Content="{Binding Content}" Visibility="{Binding Content.CanVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
+            <!--<Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
             <TextBlock>busy</TextBlock>
           </Grid>-->
-          <ContentControl x:Name="content" IsTabStop="False">
+            <ContentControl x:Name="content" IsTabStop="False">
+              <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsCompact}" Value="True">
+                      <Setter Property="Content" Value="💩" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsCompact}" Value="False">
+                      <Setter Property="Content" Value="{Binding Content}" />
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
+                      <Setter Property="Effect" Value="{Binding BlindEffect}" />
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding ShowContentKindChangeConfim}" Value="True">
+                      <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ShowLinkChangeConfim}" Value="True">
+                      <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </ContentControl.Style>
+            </ContentControl>
+            <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
+              <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
+            </Grid>
+          </Grid>
+
+          <ContentControl Grid.Row="1" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
             <ContentControl.Style>
               <Style TargetType="ContentControl">
                 <Style.Triggers>
-                  <DataTrigger Binding="{Binding IsCompact}" Value="True">
-                    <Setter Property="Content" Value="💩" />
-                  </DataTrigger>
-                  <DataTrigger Binding="{Binding IsCompact}" Value="False">
-                    <Setter Property="Content" Value="{Binding Content}" />
-                  </DataTrigger>
-
                   <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
-                    <Setter Property="Effect" Value="{Binding BlindEffect}" />
-                  </DataTrigger>
-
-                  <DataTrigger Binding="{Binding ShowContentKindChangeConfim}" Value="True">
-                    <Setter Property="IsEnabled" Value="False" />
-                  </DataTrigger>
-                  <DataTrigger Binding="{Binding ShowLinkChangeConfim}" Value="True">
-                    <Setter Property="IsEnabled" Value="False" />
+                    <DataTrigger.EnterActions>
+                      <BeginStoryboard>
+                        <Storyboard>
+                          <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0.00:00:00.250" />
+                        </Storyboard>
+                      </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Setter Property="Content" Value="{Binding BlindContent}" />
                   </DataTrigger>
                 </Style.Triggers>
+                <Setter Property="Visibility" Value="Collapsed" />
               </Style>
             </ContentControl.Style>
           </ContentControl>
-          <Grid Visibility="{Binding Content.CanVisible, Converter={StaticResource FalseToVisibilityConverter}}">
-            <TextBlock Text="{Binding Resources.String_Note_Busy, Source={x:Static app_main:CultureService.Instance}}" />
-          </Grid>
         </Grid>
-        <ContentControl Grid.Row="1" Focusable="False" IsHitTestVisible="False" IsTabStop="False">
-          <ContentControl.Style>
-            <Style TargetType="ContentControl">
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding IsVisibleBlind}" Value="True">
-                  <DataTrigger.EnterActions>
-                    <BeginStoryboard>
-                      <Storyboard>
-                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0.00:00:00.250" />
-                      </Storyboard>
-                    </BeginStoryboard>
-                  </DataTrigger.EnterActions>
-                  <Setter Property="Visibility" Value="Visible" />
-                  <Setter Property="Content" Value="{Binding BlindContent}" />
-                </DataTrigger>
-              </Style.Triggers>
-              <Setter Property="Visibility" Value="Collapsed" />
-            </Style>
-          </ContentControl.Style>
-        </ContentControl>
 
-      </Grid>
+      </DockPanel>
     </Border>
 
     <Border
-      VerticalAlignment="Bottom"
       HorizontalAlignment="Right"
-      WindowChrome.ResizeGripDirection="BottomRight"
       Background="Transparent"
     >
+      <Border.Style>
+        <Style TargetType="Border">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding CaptionPosition}" Value="Bottom">
+              <Setter Property="WindowChrome.ResizeGripDirection" Value="TopRight" />
+              <Setter Property="VerticalAlignment" Value="Top" />
+            </DataTrigger>
+          </Style.Triggers>
+          <Setter Property="WindowChrome.ResizeGripDirection" Value="BottomRight" />
+          <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+      </Border.Style>
       <ContentControl Focusable="False" Content="{Binding ResizeGripImage}">
         <ContentControl.Style>
           <Style TargetType="ContentControl" BasedOn="{StaticResource {x:Type ContentControl}}">
@@ -771,6 +1009,19 @@
                       </DataTemplate>
                     </ComboBox.ItemTemplate>
                   </ComboBox>
+                </Grid>
+
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="StatusLabel" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <Label Grid.Column="0" Style="{StaticResource HeaderLabel}" Content="{Binding Resources.String_Note_Status_CaptionPosition_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Top}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Top}}" />
+                    <RadioButton Style="{StaticResource Horizontal-RadioButton}" Content="{Binding Source={x:Static app_bridge_models_data:NoteCaptionPosition.Bottom}, Converter={StaticResource EnumToCultureConverter}, ConverterParameter=A}" IsChecked="{Binding CaptionPosition, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static app_bridge_models_data:NoteCaptionPosition.Bottom}}"  />
+                  </StackPanel>
                 </Grid>
 
                 <Button Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding LinkChangeCommand}" />

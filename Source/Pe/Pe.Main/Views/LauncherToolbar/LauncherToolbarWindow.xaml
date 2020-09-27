@@ -311,7 +311,12 @@
   <Window.ContextMenu>
     <ContextMenu ItemsSource="{Binding LauncherGroupItems}" ItemContainerStyle="{StaticResource GroupMenuItem}" />
   </Window.ContextMenu>
-  <Grid>
+  <Grid
+    TextElement.FontFamily="{Binding Font.FontFamily}"
+    TextElement.FontSize="{Binding Font.FontSize}"
+    TextElement.FontStyle="{Binding Font.FontStyle}"
+    TextElement.FontWeight="{Binding Font.FontWeight}"
+  >
     <Grid.Style>
       <Style TargetType="Grid">
         <Style.Triggers>

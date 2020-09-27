@@ -1241,6 +1241,43 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   下 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Bottom {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Bottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   下(_B) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Bottom_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Bottom_A" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Top {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Top", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上(_T) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Enum_ContentTypeTextNet_Pe_Bridge_Models_Data_NoteCaptionPosition_Top_A {
+            get {
+                return ResourceManager.GetString("String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Top_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   アプリケーション に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Enum_ContentTypeTextNet_Pe_Main_Models_Data_AboutComponentKind_Application {
@@ -4160,6 +4197,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   タイトルバー位置(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Note_Status_CaptionPosition_A {
+            get {
+                return ResourceManager.GetString("String_Note_Status_CaptionPosition_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   最小化(_X) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Note_Status_Compact_A {
@@ -4707,6 +4753,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Setting_Generals_LauncherToolbar_Header {
             get {
                 return ResourceManager.GetString("String_Setting_Generals_LauncherToolbar_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトルバー位置(_C) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_Setting_Generals_Note_CaptionPosition_A {
+            get {
+                return ResourceManager.GetString("String_Setting_Generals_Note_CaptionPosition_A", resourceCulture);
             }
         }
         

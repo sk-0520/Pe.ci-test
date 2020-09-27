@@ -1,0 +1,46 @@
+[
+	{
+		"date": "2020/09/27",
+		"version": "0.99.038",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "85c473de5c59e0a8939471c549c67a0a1b4af582",
+						"subject": "#685: ノートのタイトルバー位置を変更可能にする"
+					},
+					{
+						"revision": "5959bd732d63950950ff1113977c335480c2e6a3",
+						"subject": "#676: ノートにスクロールバーを付けたい"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "2146c3bed505e8100e06dc18d1004c6b565c6345",
+						"subject": "#675: 既知の問題: ツールバーフォントの適用"
+					},
+					{
+						"revision": "bcd6ad5badf83f58094d05cdeed06e930659f2a0",
+						"subject": "アイコン取得時のメモリ解放漏れを修正(関連: #305)"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "5c3527dd413cf39b4ade3391e3ad8a2d6bebf170",
+						"subject": "#686: デプロイ処理周りで ps で頑張ってる部分を node に置き換えていきたい",
+						"comments": [
+							"あかんかった！"
+						]
+					}
+				]
+			}
+		]
+	}
+]

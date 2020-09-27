@@ -2019,4 +2019,22 @@
   <data name="String_LauncherItemCustomizeControl_UnloadedPlugin_Header" xml:space="preserve">
     <value>読み込めないプラグイン</value>
   </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Bottom" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Bottom_A" xml:space="preserve">
+    <value>下(_B)</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Top" xml:space="preserve">
+    <value>上</value>
+  </data>
+  <data name="String:Enum-ContentTypeTextNet.Pe.Bridge.Models.Data.NoteCaptionPosition.Top_A" xml:space="preserve">
+    <value>上(_T)</value>
+  </data>
+  <data name="String_Note_Status_CaptionPosition_A" xml:space="preserve">
+    <value>タイトルバー位置(_C)</value>
+  </data>
+  <data name="String_Setting_Generals_Note_CaptionPosition_A" xml:space="preserve">
+    <value>タイトルバー位置(_C)</value>
+  </data>
 </root>

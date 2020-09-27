@@ -141,6 +141,7 @@ ___
 |    | o  |              | 前景色                   | ForegroundColor       | text         | System.String   |              | #AARRGGBB            |
 |    | o  |              | 背景色                   | BackgroundColor       | text         | System.String   |              | #AARRGGBB            |
 |    | o  |              | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                      |
+|    | o  |              | タイトル位置             | CaptionPosition       | text         | System.String   |              |                      |
 
 ### index
 
@@ -686,6 +687,7 @@ ___
 |    | o  |              | 文字列の折り返し         | TextWrap              | boolean      | System.Boolean  |              |                    |
 |    | o  |              | ノート内容種別           | ContentKind           | text         | System.String   |              | プレーン文字列 RTF |
 |    | o  |              | 隠し方                   | HiddenMode            | text         | System.String   |              |                    |
+|    | o  |              | タイトル位置             | CaptionPosition       | text         | System.String   |              |                    |
 
 ### index
 
@@ -956,24 +958,24 @@ ___
 
 ### layout
 
-| PK | NN | FK               | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                       |
-|:--:|:--:|:-----------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:-------------------------------|
-| o  | o  | Plugins.PluginId | プラグインID             | PluginId              | text         | System.Guid     |              |                                |
-|    | o  |                  | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                            |
-|    | o  |                  | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                                |
-|    | o  |                  | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                                |
-|    | o  |                  | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                                |
-|    | o  |                  | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                            |
-|    | o  |                  | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                                |
-|    | o  |                  | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                |
-|    | o  |                  | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                |
-|    | o  |                  | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                        |
+| PK | NN | FK               | 論理カラム名             | 物理カラム名          | 論理データ型 | マッピング型    | チェック制約 | コメント                                    |
+|:--:|:--:|:-----------------|:-------------------------|:----------------------|:-------------|:----------------|:-------------|:--------------------------------------------|
+| o  | o  | Plugins.PluginId | プラグインID             | PluginId              | text         | System.Guid     |              |                                             |
+|    | o  |                  | 作成タイムスタンプ       | CreatedTimestamp      | datetime     | System.DateTime |              | UTC                                         |
+|    | o  |                  | 作成ユーザー名           | CreatedAccount        | text         | System.String   |              |                                             |
+|    | o  |                  | 作成プログラム名         | CreatedProgramName    | text         | System.String   |              |                                             |
+|    | o  |                  | 作成プログラムバージョン | CreatedProgramVersion | text         | System.Version  |              |                                             |
+|    | o  |                  | 更新タイムスタンプ       | UpdatedTimestamp      | datetime     | System.DateTime |              | UTC                                         |
+|    | o  |                  | 更新ユーザー名           | UpdatedAccount        | text         | System.String   |              |                                             |
+|    | o  |                  | 更新プログラム名         | UpdatedProgramName    | text         | System.String   |              |                                             |
+|    | o  |                  | 更新プログラムバージョン | UpdatedProgramVersion | text         | System.Version  |              |                                             |
+|    | o  |                  | 更新回数                 | UpdatedCount          | integer      | System.Int64    |              | 0始まり                                     |
 |    |    |                  | X座標                    | X                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 null時は中央 |
 |    |    |                  | Y座標                    | Y                     | real         | System.Decimal  |              | 原点: プライマリウィンドウ左上 null時は中央 |
-|    |    |                  | 横幅                     | Width                 | real         | System.Decimal  |              | null時はウィジェットの初期サイズ |
-|    |    |                  | 高さ                     | Height                | real         | System.Decimal  |              | null時はウィジェットの初期サイズ |
-|    | o  |                  | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                |
-|    | o  |                  | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                                |
+|    |    |                  | 横幅                     | Width                 | real         | System.Decimal  |              | null時はウィジェットの初期サイズ            |
+|    |    |                  | 高さ                     | Height                | real         | System.Decimal  |              | null時はウィジェットの初期サイズ            |
+|    | o  |                  | 表示                     | IsVisible             | boolean      | System.Boolean  |              |                                             |
+|    | o  |                  | 最前面                   | IsTopmost             | boolean      | System.Boolean  |              |                                             |
 
 ### index
 
