@@ -262,6 +262,7 @@
                 <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />
                 <Setter Property="IsInactiveSelectionHighlightEnabled" Value="{Binding IsActive, ElementName=root, Mode=OneWay}" />
               </Style>
+
               <Style x:Key="ContentTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxBase}">
                 <Style.Triggers>
                   <DataTrigger Binding="{Binding DataContext.TextWrap, ElementName=root}" Value="True">
@@ -278,6 +279,8 @@
               <Setter Property="FontWeight" Value="{Binding DataContext.Font.FontWeight, ElementName=root}" />
               <Setter Property="Foreground" Value="{Binding DataContext.ContentForeground, ElementName=root}" />-->
               </Style>
+
+              <Style x:Key="ContentRichTextBox" TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}" />
 
               <!--#region テキスト -->
               <DataTemplate DataType="{x:Type app_main_viewmodels_note:NotePlainContentViewModel}">
@@ -322,7 +325,7 @@
                   <!-- #579 により Popup は消えたがわざわざ戻すのもあれなので Grid の中の一人っ子状態 -->
                   <RichTextBox x:Name="content">
                     <RichTextBox.Style>
-                      <Style TargetType="RichTextBox" BasedOn="{StaticResource TextBoxBase}">
+                      <Style TargetType="RichTextBox" BasedOn="{StaticResource ContentRichTextBox}">
                         <Style.Triggers />
                       </Style>
                     </RichTextBox.Style>
