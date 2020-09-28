@@ -12,7 +12,8 @@ select
 	Notes.IsCompact,
 	Notes.TextWrap,
 	Notes.ContentKind,
-	Notes.HiddenMode
+	Notes.HiddenMode,
+	Notes.CaptionPosition
 from
 	Notes
 where

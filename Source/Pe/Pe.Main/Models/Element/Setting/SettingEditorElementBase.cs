@@ -17,7 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     /// </summary>
     public abstract class SettingEditorElementBase : ElementBase
     {
-        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        protected SettingEditorElementBase(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             SettingNotifyManager = settingNotifyManager;
@@ -25,10 +25,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             MainDatabaseBarrier = mainDatabaseBarrier;
             FileDatabaseBarrier = fileDatabaseBarrier;
+            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
 
             IdFactory = idFactory;
             ImageLoader = imageLoader;
+            MediaConverter = mediaConverter;
             DispatcherWrapper = dispatcherWrapper;
 
             SettingNotifyManager.LauncherItemRemoved += SettingNotifyManager_LauncherItemRemoved;
@@ -41,9 +43,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         protected IMainDatabaseBarrier MainDatabaseBarrier { get; }
         protected IFileDatabaseBarrier FileDatabaseBarrier { get; }
+        protected ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
         protected IDatabaseStatementLoader DatabaseStatementLoader { get; }
         protected IIdFactory IdFactory { get; }
         protected IImageLoader ImageLoader { get; }
+        protected IMediaConverter MediaConverter { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
 
         public bool IsLoaded { get; private set; }

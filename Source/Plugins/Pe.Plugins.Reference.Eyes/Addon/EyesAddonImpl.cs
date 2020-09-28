@@ -9,7 +9,7 @@ namespace ContentTypeTextNet.Pe.Plugins.Reference.Eyes.Addon
 {
     internal class EyesAddonImpl: AddonBase
     {
-        public EyesAddonImpl(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public EyesAddonImpl(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             : base(pluginConstructorContext, plugin)
         { }
 

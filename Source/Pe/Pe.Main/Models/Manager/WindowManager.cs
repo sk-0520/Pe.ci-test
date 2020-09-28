@@ -14,6 +14,7 @@ using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Core.ViewModels;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Element;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.ViewModels;
@@ -90,6 +91,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// プラグイン ウィジェット。
         /// </summary>
         Widget,
+        /// <summary>
+        /// プラグイン ランチャーアイテム拡張。
+        /// </summary>
+        LauncherItemExtension
     }
 
     public class WindowItem
@@ -187,13 +192,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             : base(diContainer, loggerFactory)
         {
             CultureService = cultureService;
-            CustomConfiguration = DiContainer.Build<CustomConfiguration>();
+            ApplicationConfiguration = DiContainer.Build<ApplicationConfiguration>();
         }
 
         #region property
 
         CultureService CultureService { get; }
-        CustomConfiguration CustomConfiguration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
 
         ISet<WindowItem> Items { get; } = new HashSet<WindowItem>();
         ISet<Window> Windows { get; } = new HashSet<Window>();
@@ -229,7 +234,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 return false;
             }
 
-            if(CustomConfiguration.Web.DeveloperTools) {
+            if(ApplicationConfiguration.Web.DeveloperTools) {
                 var cef = UIUtility.FindChildren<CefSharp.Wpf.ChromiumWebBrowser>(item.Window).FirstOrDefault();
                 if(cef != null) {
                     item.Window.PreviewKeyDown += Window_DeveloperTools_KeyDown;
@@ -261,7 +266,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                             Logger.LogDebug("ウィンドウ破棄前(ユーザー操作): {0}, {1:x16}", item.Window, hwnd.ToInt64());
                             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                                viewLifecycleReceiver.ReceiveViewUserClosing(e);
+                                viewLifecycleReceiver.ReceiveViewUserClosing(item.Window, e);
                             }
 
                             item.IsUserClosed = !e.Cancel;
@@ -365,7 +370,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var item = Items.First(i => i.Window == window);
             if(item.ViewModel is IViewLifecycleReceiver viewLifecycleReceiver) {
-                viewLifecycleReceiver.ReceiveViewClosing(e);
+                viewLifecycleReceiver.ReceiveViewClosing(item.Window, e);
             }
         }
 

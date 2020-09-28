@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Media;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
@@ -83,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
         public void WndProc_WM_DWMCOLORIZATIONCOLORCHANGED(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            Logger.LogInformation("WM_DWMCOLORIZATIONCOLORCHANGED");
+            Logger.LogTrace("WM_DWMCOLORIZATIONCOLORCHANGED");
             var rawColor = (uint)wParam.ToInt64();
             SetAccentColor(MediaUtility.ConvertColorFromRawColor(rawColor));
             LazyChanger.DelayAction(OnThemeChanged);
@@ -94,7 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
         {
             var lParamMessage = Marshal.PtrToStringAuto(lParam);
             if(lParamMessage == "ImmersiveColorSet") {
-            Logger.LogInformation("WM_SETTINGCHANGE");
+                Logger.LogTrace("WM_SETTINGCHANGE");
                 ApplyFromRegistry();
                 LazyChanger.DelayAction(OnThemeChanged);
             }

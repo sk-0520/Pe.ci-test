@@ -15,14 +15,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
     /// </summary>
     public class HeartBeatSender: DisposerBase
     {
-        public HeartBeatSender(TimeSpan sendSpan, ILoggerFactory loggerFactory)
+        public HeartBeatSender(TimeSpan sendSpan, TimeSpan checkSpan, ILoggerFactory loggerFactory)
         {
             Logger = loggerFactory.CreateLogger(GetType());
 
             SendSpan = sendSpan;
 
             Timer = new Timer() {
-                Interval = (sendSpan / 4).TotalMilliseconds,
+                Interval = checkSpan.TotalMilliseconds,
             };
             Timer.Elapsed += Timer_Elapsed;
         }

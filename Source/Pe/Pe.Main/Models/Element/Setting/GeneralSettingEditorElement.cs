@@ -416,6 +416,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         public Color ForegroundColor { get; set; }
         public Color BackgroundColor { get; set; }
         public bool IsTopmost { get; set; }
+        public NoteCaptionPosition CaptionPosition { get; set; }
 
         #endregion
 
@@ -440,6 +441,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             ForegroundColor = setting.ForegroundColor;
             BackgroundColor = setting.BackgroundColor;
             IsTopmost = setting.IsTopmost;
+            CaptionPosition = setting.CaptionPosition;
         }
 
         protected override void SaveImpl(IDatabaseCommandsPack commandPack)
@@ -454,6 +456,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 ForegroundColor = ForegroundColor,
                 BackgroundColor = BackgroundColor,
                 IsTopmost = IsTopmost,
+                CaptionPosition = CaptionPosition,
             };
             appNoteSettingEntityDao.UpdateSettingNoteSetting(data, commandPack.CommonStatus);
 

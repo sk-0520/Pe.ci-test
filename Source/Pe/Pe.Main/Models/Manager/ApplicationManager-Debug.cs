@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
     {
         #region property
 
-        bool IsDevDebug { get; } = false;
+        bool IsDevDebug { get; } = !true;
 
         #endregion
 

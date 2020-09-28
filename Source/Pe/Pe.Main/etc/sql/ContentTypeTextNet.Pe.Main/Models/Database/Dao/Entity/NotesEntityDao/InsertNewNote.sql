@@ -17,6 +17,7 @@ insert into
 		ForegroundColor,
 		BackgroundColor,
 		IsTopmost,
+		CaptionPosition,
 
 		[CreatedTimestamp],
 		[CreatedAccount],
@@ -51,6 +52,7 @@ insert into
 /* ForegroundColor       */ AppNoteSetting.ForegroundColor,
 /* BackgroundColor       */ AppNoteSetting.BackgroundColor,
 /* IsTopmost             */ AppNoteSetting.IsTopmost,
+/* CaptionPosition       */ AppNoteSetting.CaptionPosition,
 /*                       */
 /* CreatedTimestamp      */ @CreatedTimestamp,
 /* CreatedAccount        */ @CreatedAccount,

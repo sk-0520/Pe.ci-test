@@ -1,0 +1,67 @@
+doctype html
+html(lang='ja')
+	head
+		block BLOCK_LAYOUT_VAR
+
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible' content='IE=edge')
+		meta(name='viewport' content='width=device-width, initial-scale=1')
+
+		- var TITLE = 'Pe Help'
+		if(VAR_LAYOUT_TITLE)
+			title #{VAR_LAYOUT_TITLE} - #{TITLE}
+		else
+			title #{TITLE}
+
+		link(rel='stylesheet' type='text/css' href='style/style.scss')
+
+		block BLOCK_LAYOUT_HEAD
+		block BLOCK_LAYOUT_STYLE
+		block BLOCK_LAYOUT_HEAD_SCRIPT
+	body
+		if(VAR_LAYOUT_TITLE)
+			h1 #{VAR_LAYOUT_TITLE}
+		else
+			h1 #{TITLE}
+		div#content
+			#container
+				block BLOCK_LAYOUT_CONTENT
+
+		header#menu
+				nav
+					ul
+						li
+							a(href="./index.pug") はじめに
+							ul
+								li: a(href="./help.install-uninstall-data.pug") インストール・アンインストール・保存データについて
+								li: a(href="./help.x86-x64.pug") 32/64bitについて
+								li: a(href="./help.privacy.pug") プライバシー
+						li: a(href="./help.notifyarea.pug") 通知領域
+						li
+							a(href="./help.launcher.pug") ランチャー
+							ul
+								li: a(href="./help.launcher-toolbar.pug") ツールバー
+								li: a(href="./help.launcher-command.pug") コマンド
+						li: a(href="./help.note.pug") ノート
+						li
+							| その他
+							ul
+								li: a(href="./help.others-appsettings.pug") アプリケーション構成ファイル
+								li: a(href="./help.others-commandline.pug") コマンドライン引数
+								li: a(href="./help.plugin.pug") プラグイン
+						li: a(href="./help.changelogs.pug") 更新履歴
+						li
+							a(href="./dev.index.pug") 開発
+							ul
+								li: a(href="./dev.build.pug") ビルド
+								li: a(href="./dev.branch.pug") ブランチ
+								li: a(href="./dev.ci.pug") CI・リリース
+								li: a(href="./dev.table-main.pug") テーブル:Main
+								li: a(href="./dev.table-file.pug") テーブル:File
+								li
+									a(href="./dev.plugin.pug") プラグイン
+									ul
+										//- li: a(href="./dev.plugin.pug") プラグイン
+		script(src="script/menu.ts")
+		block BLOCK_LAYOUT_TAIL_SCRIPT
+

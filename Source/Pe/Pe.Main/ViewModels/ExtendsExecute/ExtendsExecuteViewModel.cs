@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -83,13 +84,35 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             } else {
                 SuccessExitCodes = "0";
             }
+
+            OptionDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = OptionCanDragStart,
+                DragEnterAction = OptionDragOrverOrEnter,
+                DragOverAction = OptionDragOrverOrEnter,
+                DragLeaveAction = OptionDragLeave,
+                DropAction = OptionDrop,
+                GetDragParameter = OptionGetDragParameter,
+            };
+            WorkDirectoryDragAndDrop = new DelegateDragAndDrop(LoggerFactory) {
+                CanDragStart = WorkDirectoryCanDragStart,
+                DragEnterAction = WorkDirectoryDragOrverOrEnter,
+                DragOverAction = WorkDirectoryDragOrverOrEnter,
+                DragLeaveAction = WorkDirectoryDragLeave,
+                DropAction = WorkDirectoryDrop,
+                GetDragParameter = WorkDirectoryGetDragParameter,
+            };
         }
 
         #region property
+
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+
+        public IDragAndDrop OptionDragAndDrop { get; }
+        public IDragAndDrop WorkDirectoryDragAndDrop { get; }
+
 
         public string Title
         {
@@ -287,6 +310,98 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         #endregion
 
+        #region OptionDragAndDrop
+
+        private bool OptionCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new OptionDragAndDropGuideline(DispatcherWrapper, LoggerFactory);
+            return dd.CanDragStart(sender, e);
+        }
+
+        private void OptionDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else if(e.Data.IsTextPresent()) {
+                e.Effects = DragDropEffects.Copy;
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void OptionDragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+        private void OptionDrop(UIElement sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Option = string.Join(" ", filePaths.Select(i => CommandLine.Escape(i)));
+                e.Handled = true;
+            } else if(e.Data.IsTextPresent()) {
+                Option = TextUtility.JoinLines(e.Data.GetText());
+                e.Handled = true;
+            }
+        }
+
+        private IResultSuccessValue<DragParameter> OptionGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            return ResultSuccessValue.Failure<DragParameter>();
+        }
+
+        #endregion
+
+        #region WorkDirectoryDragAndDrop
+
+        private bool WorkDirectoryCanDragStart(UIElement sender, MouseEventArgs e)
+        {
+            var dd = new WorkDirectoryDragAndDropGuideline(DispatcherWrapper, LoggerFactory);
+            return dd.CanDragStart(sender, e);
+        }
+
+        private void WorkDirectoryDragOrverOrEnter(UIElement sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effects = DragDropEffects.Copy;
+            } else {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void WorkDirectoryDragLeave(UIElement sender, DragEventArgs e)
+        { }
+
+        private void WorkDirectoryDrop(UIElement sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach(var filePath in filePaths) {
+                    try {
+                        if(Directory.Exists(filePath)) {
+                            WorkDirectoryPath = filePath;
+                            e.Handled = true;
+                            break;
+                        } else {
+                            Logger.LogInformation("非ディレクトリ: {0}", filePath);
+                        }
+                    } catch(Exception ex) {
+                        Logger.LogInformation(ex, "非ディレクトリ: {0}", filePath);
+                    }
+                }
+
+                if(!e.Handled) {
+                    Logger.LogInformation("D&Dデータはディレクトリではない");
+                }
+            }
+        }
+
+        private IResultSuccessValue<DragParameter> WorkDirectoryGetDragParameter(UIElement sender, MouseEventArgs e)
+        {
+            return ResultSuccessValue.Failure<DragParameter>();
+        }
+
+        #endregion
+
         #region SingleModelViewModelBase
 
         protected override void ValidateDomain()
@@ -308,7 +423,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
 
         #endregion
 
-
         #region IViewLifecycleReceiver
 
         public void ReceiveViewInitialized(Window window)
@@ -319,13 +433,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute
             DpiScaleOutputor = (IDpiScaleOutputor)window;
         }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
         }
 
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();
         }

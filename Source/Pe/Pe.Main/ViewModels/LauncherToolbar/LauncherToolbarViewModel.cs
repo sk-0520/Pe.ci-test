@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Main.Views.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
@@ -37,6 +36,8 @@ using ContentTypeTextNet.Pe.Main.Models.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using ContentTypeTextNet.Pe.Main.Models;
 using System.Windows.Threading;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
+using ContentTypeTextNet.Pe.Main.ViewModels.Font;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -84,6 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 GetDragParameter = ItemGetDragParameter,
             };
 
+            Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
 
             PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
             PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
@@ -93,6 +95,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAppMenu), nameof(IsOpendAppMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendFileItemMenu), nameof(IsOpendFileItemMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendStoreAppItemMenu), nameof(IsOpendStoreAppItemMenu));
+            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpendAddonItemMenu), nameof(IsOpendAddonItemMenu));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
             PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ExistsFullScreenWindow), nameof(ExistsFullScreenWindow));
@@ -169,6 +172,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             get => Model.IsOpendStoreAppItemMenu;
             set => SetModelValue(value);
         }
+        public bool IsOpendAddonItemMenu
+        {
+            get => Model.IsOpendAddonItemMenu;
+            set => SetModelValue(value);
+        }
+
 
         public LauncherDetailViewModelBase? ContextMenuOpendItem
         {
@@ -192,6 +201,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         public bool IsVerticalLayout => ToolbarPosition == AppDesktopToolbarPosition.Left || ToolbarPosition == AppDesktopToolbarPosition.Right;
 
+        public FontViewModel Font { get; }
         public IDragAndDrop ViewDragAndDrop { get; }
         public IDragAndDrop ItemDragAndDrop { get; }
 
@@ -390,7 +400,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         {
             if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
                 e.Effects = DragDropEffects.Move;
-            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
+            } else if(e.Data.IsTextPresent()) {
                 e.Effects = DragDropEffects.Move;
             }
 
@@ -416,8 +426,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                 var filePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
                 var argument = string.Join(' ', filePaths.Select(i => CommandLine.Escape(i)));
                 DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
-            } else if(e.Data.GetDataPresent(DataFormats.UnicodeText)) {
-                var argument = (string)e.Data.GetData(DataFormats.UnicodeText);
+            } else if(e.Data.IsTextPresent()) {
+                var argument = TextUtility.JoinLines(e.Data.GetText());
                 DispatcherWrapper.Begin(() => ExecuteExtendDropData(launcherItemId, argument));
             }
 
@@ -588,13 +598,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             }
         }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
         }
 
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();
         }
@@ -628,6 +638,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     PlatformThemeLoader.Changed -= PlatformThemeLoader_Changed;
                     LauncherItemCollection.Dispose();
                     LauncherGroupCollection.Dispose();
+                    Font.Dispose();
                 }
 
             }

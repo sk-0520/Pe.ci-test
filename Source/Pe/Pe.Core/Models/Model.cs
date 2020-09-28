@@ -58,9 +58,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return;
             }
 
-            if(Disposing != null) {
-                Disposing(this, EventArgs.Empty);
-            }
+            Disposing?.Invoke(this, EventArgs.Empty);
 
             if(disposing) {
 #pragma warning disable S3971 // "GC.SuppressFinalize" should not be called

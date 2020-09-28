@@ -13,8 +13,8 @@
             "path": "./Resource"
         },
         {
-            "name": "DOCUMENTS",
-            "path": "./Source/Documents"
+            "name": "HELP",
+            "path": "./Source/Help"
         },
         {
             "name": "ROOT",
@@ -23,21 +23,24 @@
     ],
     "settings": {
         "files.exclude": {
-            "**/.*": true,
             "**/bin": true,
             "**/obj": true,
-            "**/node_modules": true,
-            "build/": true,
+            ".vs": true,
+            ".vscode": true,
             "dist/": true,
             "Output": true,
+            "*.lnk": true,
         },
         "files.watcherExclude": {
             "**/.git/objects/**": true,
             "**/.git/subtree-cache/**": true,
             "**/node_modules/*/**": true,
+            ".vs": true,
+            ".vscode": true,
             "**/dist/**": true,
             "**/bin/**": true,
             "**/obj/**": true,
+            "*.lnk": true,
         }
     }
 }

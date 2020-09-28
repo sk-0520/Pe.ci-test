@@ -4,7 +4,8 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $currentDirPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptFileNames = @(
-	'version.ps1'
+	'version.ps1',
+	'command.ps1'
 );
 foreach ($scriptFileName in $scriptFileNames) {
 	$scriptFilePath = Join-Path $currentDirPath $scriptFileName
@@ -13,9 +14,9 @@ foreach ($scriptFileName in $scriptFileNames) {
 $rootDirPath = Split-Path -Parent $currentDirPath
 $outputDirectory = Join-Path $rootDirPath 'Output'
 
-$rawChangelogsFile = Join-Path $rootDirPath "Source/Documents/source/script/changelogs.ts"
-$rawChangelogLinkFile = Join-Path $rootDirPath "Source/Documents/source/script/changelog-link.js"
-$rawChangelogStyleFile = Join-Path $rootDirPath "Source/Documents/source/style/changelog.css"
+$rawChangelogsFile = Join-Path $rootDirPath "Define/changelogs.json"
+$rawChangelogLinkFile = Join-Path $rootDirPath "Source/Help/script/changelog-link.ts"
+$rawChangelogStyleFile = Join-Path $rootDirPath "Source/Help/style/changelog.scss"
 $templateHtmlFile = Join-Path $currentDirPath 'release-note.html'
 
 # ノード作らず適当に
@@ -95,17 +96,9 @@ $contentMap = @{
 
 # 無理やりjsonにする
 $rawChangelogsContent = Get-Content $rawChangelogsFile -Raw -Encoding UTF8
-$headMark = '/*--------RELEASE HEAD--------*/'
-$tailMark = '/*--------RELEASE TAIL--------*/'
-$prevHeaderIndex = $rawChangelogsContent.IndexOf($headMark)
-$prevHeaderContent = $rawChangelogsContent.Substring($prevHeaderIndex + $headMark.Length)
 
-$tailIndex = $prevHeaderContent.IndexOf($tailMark);
-$prevContent = $prevHeaderContent.Substring(0, $tailIndex)
-$prevContent = $prevContent.Substring(0, $prevContent.LastIndexOf(';'))
-
-$json = '[' + $prevContent.Substring($prevContent.IndexOf('{')) | ConvertFrom-Json
-
+$json = $rawChangelogsContent | ConvertFrom-Json
+Write-Output $json
 $currentVersion = $json[0]
 
 # 速度とかどうでもいい
@@ -158,13 +151,18 @@ foreach ($content in $currentVersion.contents) {
 			}
 		}
 	}
-
 }
+
+$compiledChangelogLinkFile = Join-Path $outputDirectory 'changelog-link.js'
+$compiledChangelogStyleFile= Join-Path $outputDirectory 'changelog.css'
+
+npx tsc  "$rawChangelogLinkFile" --outFile "$compiledChangelogLinkFile"
+npx sass "$rawChangelogStyleFile" --style compressed --no-source-map "$compiledChangelogStyleFile"
 
 $htmlContent = (Get-Content $templateHtmlFile -Encoding UTF8 -Raw)
 $htmlContent = $htmlContent.Replace('<!--CONTENT-->', $root.ToHtml())
-$htmlContent = $htmlContent.Replace('//SCRIPT', (Get-Content $rawChangelogLinkFile -Raw -Encoding UTF8))
-$htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $rawChangelogStyleFile -Raw -Encoding UTF8))
+$htmlContent = $htmlContent.Replace('//SCRIPT', (Get-Content $compiledChangelogLinkFile -Raw -Encoding UTF8))
+$htmlContent = $htmlContent.Replace('/*STYLE*/', (Get-Content $compiledChangelogStyleFile -Raw -Encoding UTF8))
 
 $version = GetAppVersion
 Set-Content (Join-Path $outputDirectory (ConvertReleaseNoteFileName $version)) -Value $htmlContent -Encoding UTF8

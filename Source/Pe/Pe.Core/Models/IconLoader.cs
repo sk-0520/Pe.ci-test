@@ -18,35 +18,6 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Core.Models
 {
     /// <summary>
-    /// アイコンのまとまり。
-    /// </summary>
-    /// <typeparam name="TIcon"></typeparam>
-    public interface IIconPack<TIcon>
-    {
-        #region property
-
-        /// <inheritdoc cref="IconBox.Small"/>
-        TIcon Small { get; }
-        /// <inheritdoc cref="IconBox.Normal"/>
-        TIcon Normal { get; }
-        /// <inheritdoc cref="IconBox.Big"/>
-        TIcon Big { get; }
-        /// <inheritdoc cref="IconBox.Large"/>
-        TIcon Large { get; }
-
-        #endregion
-
-        #region function
-
-        /// <summary>
-        /// <see cref="IconBox"/> のマッピング。
-        /// </summary>
-        IReadOnlyDictionary<IconBox, TIcon> IconItems { get; }
-
-        #endregion
-    }
-
-    /// <summary>
     /// アイコンファイルの読み込み処理。
     /// </summary>
     public class IconLoader
@@ -154,6 +125,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
         IList<byte[]> LoadIconResource(string resourcePath)
         {
             var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);
+            if(hModule == IntPtr.Zero) {
+                Logger.LogError("{0}: {1}, {2}", nameof(NativeMethods.LoadLibraryEx), NativeMethods.GetLastError(), resourcePath);
+                return new List<byte[]>();
+            }
+
             var binaryList = new List<byte[]>();
             EnumResNameProc proc = (hMod, type, name, lp) => {
                 var binaryGroupIconData = GetResourceBinaryData(hMod, name, ResType.GROUP_ICON);
@@ -169,6 +145,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                     if(binaryGroupIconData.Length < 0 && readOffset + sizeof(Int32) < binaryGroupIconData.Length) {
                         break;
                     }
+                    if(binaryGroupIconData.Length < readOffset) {
+                        break;
+                    }
+
                     var length = BitConverter.ToInt32(
                         binaryGroupIconData,
                         readOffset
@@ -177,36 +157,39 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
 
                 // TODO:BinaryChunkedStreamがまともに動くなら切り替える
-                using(var stream = new BinaryWriter(new MemoryStream(totalSize))) {
-                    stream.Write(binaryGroupIconData, 0, sizeofICONDIR);
+                using(var stream = new MemoryStream(totalSize))
+                using(var writer = new BinaryWriter(stream)) {
+                    writer.Write(binaryGroupIconData, 0, sizeofICONDIR);
 
                     var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
                     foreach(var i in Enumerable.Range(0, iconCount)) {
-                        stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
+                        writer.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
                         var offsetWrite = sizeofICONDIR + sizeofGRPICONDIRENTRY * i;
                         if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
                             continue;
                         }
-                        stream.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
-                        stream.Write(picOffset);
+                        writer.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
+                        writer.Write(picOffset);
 
-                        stream.Seek(picOffset, SeekOrigin.Begin);
+                        writer.Seek(picOffset, SeekOrigin.Begin);
 
                         ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
                         var pic = GetResourceBinaryData(hMod, new IntPtr(id), ResType.ICON);
                         if(pic != null) {
-                            stream.Write(pic, 0, pic.Length);
+                            writer.Write(pic, 0, pic.Length);
                             picOffset += pic.Length;
                         }
                     }
 
-                    binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());
+                    binaryList.Add(stream.ToArray());
                 }
 
                 return true;
             };
 
             NativeMethods.EnumResourceNames(hModule, (int)ResType.GROUP_ICON, proc, IntPtr.Zero);
+
+            NativeMethods.FreeLibrary(hModule);
 
             return binaryList;
         }

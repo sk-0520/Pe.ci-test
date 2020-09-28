@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.Element.Font;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
@@ -39,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         bool _isOpendAppMenu;
         bool _isOpendFileItemMenu;
         bool _isOpendStoreAppItemMenu;
+        bool _isOpendAddonItemMenu;
 
         bool _isHiding;
 
@@ -73,6 +75,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
         UniqueKeyPool UniqueKeyPool { get; } = new UniqueKeyPool();
 
         public ReadOnlyObservableCollection<LauncherGroupElement> LauncherGroups { get; }
+
+        public FontElement? Font { get; private set; }
 
         public Guid LauncherToolbarId { get; private set; }
 
@@ -162,6 +166,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
             {
                 SetProperty(ref this._isOpendStoreAppItemMenu, value);
                 PausingAutoHide = IsOpendFileItemMenu;
+            }
+        }
+        public bool IsOpendAddonItemMenu
+        {
+            get => this._isOpendAddonItemMenu;
+            set
+            {
+                SetProperty(ref this._isOpendAddonItemMenu, value);
+                PausingAutoHide = IsOpendAddonItemMenu;
             }
         }
 
@@ -301,6 +314,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 .FirstOrDefault(i => i.LauncherGroupId == displayData.LauncherGroupId)
                 ?? LauncherGroups.First()
             ;
+
+            Font = new FontElement(displayData.FontId, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory);
+            Font.Initialize();
         }
 
         IEnumerable<LauncherItemElement> GetLauncherItems()
@@ -472,6 +488,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar
                 NotifyManager.LauncherItemChanged -= NotifyManager_LauncherItemChanged;
                 NotifyManager.LauncherItemRegistered -= NotifyManager_LauncherItemRegistered;
                 NotifyManager.LauncherItemRemovedInLauncherGroup -= NotifyManager_LauncherItemRemovedInLauncherGroup;
+                Font?.Dispose();
                 Flush();
             }
 

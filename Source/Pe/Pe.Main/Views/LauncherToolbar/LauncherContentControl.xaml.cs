@@ -53,6 +53,32 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
 
         #endregion
 
+        #region IconBox
+
+        public static readonly DependencyProperty IconBoxProperty = DependencyProperty.Register(
+            nameof(IconBox),
+            typeof(IconBox),
+            typeof(LauncherContentControl),
+            new FrameworkPropertyMetadata(
+                IconBox.Small,
+                new PropertyChangedCallback(OnIconBoxChanged)
+            )
+        );
+
+        public IconBox IconBox
+        {
+            get { return (IconBox)GetValue(IconBoxProperty); }
+            set { SetValue(IconBoxProperty, value); }
+        }
+
+        private static void OnIconBoxChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if(d is LauncherContentControl control) {
+            }
+        }
+
+        #endregion
+
         #region IconMargin
 
         public static readonly DependencyProperty IconMarginProperty = DependencyProperty.Register(

@@ -25,7 +25,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                 new Data.IconData() {
                     Path = FileInfo.FullName
                 },
-                IconBox,
                 DispatcherWrapper,
                 LoggerFactory
             );
@@ -70,7 +69,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                             Path = expandedIconPath,
                             Index = iconIndex,
                         },
-                        IconBox,
                         DispatcherWrapper,
                         LoggerFactory
                     );
@@ -85,7 +83,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Startup
                     Path = targetPath,
                     Index = 0,
                 },
-                IconBox,
                 DispatcherWrapper,
                 LoggerFactory
             );

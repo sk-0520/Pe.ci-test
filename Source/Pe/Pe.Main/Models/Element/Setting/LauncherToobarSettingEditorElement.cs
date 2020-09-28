@@ -58,7 +58,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         {
             Debug.Assert(Font != null);
 
-            Logger.LogError("TODO: ツールバーフォントは基本設定から読む設定になっているので基本的に死ぬ, 要改善");
             var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 

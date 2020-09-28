@@ -300,6 +300,11 @@
       <!--#endregion -->
 
       <!--#region アドイン -->
+      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeAddonViewModel}">
+        <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding LauncherItemHeader, Converter={StaticResource EscapeAccessKeyConverter}}">
+          <ContentControl Content="{Binding PreferencesControl}" />
+        </GroupBox>
+      </DataTemplate>
       <!--#endregion -->
 
       <!--#region セパレータ(いるか？) -->

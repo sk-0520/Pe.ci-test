@@ -15,27 +15,26 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
-using ContentTypeTextNet.Pe.Main.ViewModels.LauncherIcon;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.ViewModels.IconViewer;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 {
-    public class LauncherItemCustomizeContainerViewModel : ElementViewModelBase<LauncherItemCustomizeContainerElement>, IViewLifecycleReceiver, ILauncherItemId
+    public class LauncherItemCustomizeContainerViewModel: ElementViewModelBase<LauncherItemCustomizeContainerElement>, IViewLifecycleReceiver, ILauncherItemId
     {
         public LauncherItemCustomizeContainerViewModel(LauncherItemCustomizeContainerElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             Editor = new LauncherItemCustomizeEditorViewModel(Model.Editor, DispatcherWrapper, loggerFactory);
-            Icon = new LauncherIconViewModel(model.Icon, DispatcherWrapper, loggerFactory);
         }
 
         #region property
         public RequestSender CloseRequest { get; } = new RequestSender();
 
         public LauncherItemCustomizeEditorViewModel Editor { get; }
-        public LauncherIconViewModel Icon { get; }
 
         public string Title
         {
@@ -97,13 +96,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
         public void ReceiveViewLoaded(Window window)
         { }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
         }
 
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();
         }

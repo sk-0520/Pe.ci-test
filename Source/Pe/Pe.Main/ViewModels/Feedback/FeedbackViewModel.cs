@@ -23,7 +23,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
 {
-    public class FeedbackViewModel : ElementViewModelBase<FeedbackElement>, IViewLifecycleReceiver
+    public class FeedbackViewModel: ElementViewModelBase<FeedbackElement>, IViewLifecycleReceiver
     {
         #region variable
 
@@ -36,22 +36,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         {
             SendStatus = new RunningStatusViewModel(Model.SendStatus, LoggerFactory);
             SendStatus.PropertyChanged += SendStatus_PropertyChanged;
-
-            DelayUpdatePreview = new LazyAction(nameof(DelayUpdatePreview), TimeSpan.FromMilliseconds(500), LoggerFactory);
-
-            ContentDocument.TextChanged += Document_TextChanged;
         }
 
         #region property
-
-        LazyAction DelayUpdatePreview { get; }
 
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RunningStatusViewModel SendStatus { get; }
         public string ErrorMessage => Model.ErrorMessage;
 
         public TextDocument ContentDocument { get; } = new TextDocument();
-        IWebBrowser? WebView { get; set; }
 
         public IReadOnlyList<FeedbackKind> FeedbackKindItems { get; } = EnumUtility.GetMembers<FeedbackKind>().ToList();
 
@@ -91,9 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                     FeedbackKind.Others => Properties.Resources.String_Feedback_Comment_Kind_Others,
                     _ => throw new NotImplementedException(),
                 };
-                DelayUpdatePreview.Clear();
                 ContentDocument.Text = text;
-                DelayUpdatePreview.Flush();
             }
         ));
 
@@ -139,27 +130,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         #region IViewLifecycleReceiver
 
         public void ReceiveViewInitialized(Window window)
-        {
-            var view = (FeedbackWindow)window;
-            WebView = view.webView;
-            WebView.LifeSpanHandler = new PlatformLifeSpanHandler(LoggerFactory);
-            WebView.RequestHandler = new PlatformRequestHandler(LoggerFactory);
-            WebView.MenuHandler = new DisableContextMenuHandler();
-
-            Model.LoadHtmlSourceAsync().ContinueWith(t => {
-                var htmlSource = t.Result;
-                WebView.LoadHtml(htmlSource, "http://localhost/" + nameof(FeedbackViewModel));
-            });
-        }
+        { }
 
         public void ReceiveViewLoaded(Window window)
         { }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         { }
 
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         { }
 
         public void ReceiveViewClosed(Window window, bool isUserOperation)
@@ -173,11 +153,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
         {
             if(!IsDisposed) {
                 SendStatus.PropertyChanged -= SendStatus_PropertyChanged;
-                ContentDocument.TextChanged -= Document_TextChanged;
                 if(disposing) {
                     SendStatus.Dispose();
-                    DelayUpdatePreview.Clear();
-                    DelayUpdatePreview.Dispose();
                 }
             }
 
@@ -193,18 +170,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Feedback
                 RaisePropertyChanged(nameof(ErrorMessage));
             }
         }
-
-        private void Document_TextChanged(object? sender, EventArgs e)
-        {
-            DelayUpdatePreview.DelayAction(() => {
-                DispatcherWrapper.Begin(() => {
-                    var text = ContentDocument.Text;
-                    // TODO: エスケープ
-                    WebView.EvaluateScriptAsync("updatePreview(" + Model.ToJavascriptString(text) + ")");
-                }, System.Windows.Threading.DispatcherPriority.Render);
-            });
-        }
-
-
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Core.Models.Data;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Data
@@ -16,6 +17,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public Color ForegroundColor { get; set; }
         public Color BackgroundColor { get; set; }
         public bool IsTopmost { get; set; }
+        public NoteCaptionPosition CaptionPosition { get; set; }
         #endregion
     }
 }

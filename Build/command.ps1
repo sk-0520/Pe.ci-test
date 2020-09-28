@@ -58,5 +58,6 @@ SetCommand 'msbuild' 'BUILD_MSBUILD_PATH' "%PROGRAMFILES(x86)%\Microsoft Visual 
 SetCommand 'dotnet'  'BUILD_DOTNET_PATH'  "%PROGRAMFILES(x86)%\dotnet"
 SetCommand 'node'    'BUILD_NODE_PATH'    "%PROGRAMFILES%\nodejs"
 SetCommand 'npm'     'BUILD_NPM_PATH'     "%PROGRAMFILES%\nodejs"
+SetCommand 'npx'     'BUILD_NPX_PATH'     "%PROGRAMFILES%\nodejs"
 SetCommand '7z'      'BUILD_7ZIP_PATH'    "%PROGRAMFILES%\7-Zip"
 

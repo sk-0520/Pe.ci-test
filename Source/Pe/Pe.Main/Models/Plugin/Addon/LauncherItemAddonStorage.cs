@@ -1,13 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using System.Text.Json;
+using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
+using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
+using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 {
     /// <inheritdoc cref="ILauncherItemAddonFileStorage"/>
-    internal class LauncherItemAddonFileStorage: PluginFileStorageBase, ILauncherItemAddonFileStorage
+    public class LauncherItemAddonFileStorage: PluginFileStorageBase, ILauncherItemAddonFileStorage
     {
         public LauncherItemAddonFileStorage(DirectoryInfo directoryInfo)
             : base(directoryInfo)
@@ -55,15 +64,68 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="ILauncherItemAddonPersistentStorage"/>
-    internal class LauncherItemAddonPersistentStorage: ILauncherItemAddonPersistentStorage
+    public sealed class LauncherItemAddonPersistentStorage: PluginPersistentStorageBase, ILauncherItemAddonPersistentStorage
     {
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseCommands, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public LauncherItemAddonPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseCommands, databaseStatementLoader, isReadOnly, loggerFactory)
+        { }
+
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public LauncherItemAddonPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseStatementLoader, isReadOnly, loggerFactory)
+        { }
+
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseLazyWriter, IDatabaseStatementLoader, ILoggerFactory)"/>
+        public LauncherItemAddonPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseBarrier databaseBarrier, IDatabaseLazyWriter databaseLazyWriter, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseBarrier, databaseLazyWriter, databaseStatementLoader, loggerFactory)
+        { }
+
         #region ILauncherItemAddonPersistentStorage
+
+        public bool Exists(Guid launcherItemId, string key)
+        {
+            return ExistsImpl((launcherItemId, key), (p, d) => {
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                return pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, launcherItemId, NormalizeKey(key));
+            });
+        }
+
+        public bool TryGet<TValue>(Guid launcherItemId, string key, [MaybeNullWhen(returnValue: false)] out TValue value)
+        {
+            return TryGetImpl((launcherItemId, key), (p, d) => {
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                return pluginLauncherItemSettingsEntityDao.SelectPluginLauncherItemValue(PluginId, p.launcherItemId, NormalizeKey(p.key));
+            }, out value);
+        }
+
+        public bool Set<TValue>(Guid launcherItemId, string key, TValue value, PluginPersistentFormat format)
+        {
+            return SetImpl(value, format, (launcherItemId, key), (p, d, v) => {
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var normalizedKey = NormalizeKey(p.key);
+                if(pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, p.launcherItemId, normalizedKey)) {
+                    pluginLauncherItemSettingsEntityDao.UpdatePluginLauncherItemSetting(PluginId, p.launcherItemId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                } else {
+                    pluginLauncherItemSettingsEntityDao.InsertPluginLauncherItemSetting(PluginId, p.launcherItemId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
+                }
+            });
+        }
+        public bool Set<TValue>(Guid launcherItemId, string key, TValue value) => Set(launcherItemId, key, value, PluginPersistentFormat.Json);
+
+        public bool Delete(Guid launcherItemId, string key)
+        {
+            return DeleteImpl((launcherItemId, key), (p, d) => {
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                return pluginLauncherItemSettingsEntityDao.DeletePluginLauncherItemSetting(PluginId, p.launcherItemId, NormalizeKey(p.key));
+            });
+        }
 
         #endregion
     }
 
     /// <inheritdoc cref="ILauncherItemAddonFiles"/>
-    internal class LauncherItemAddonFiles: ILauncherItemAddonFiles
+    public class LauncherItemAddonFiles: ILauncherItemAddonFiles
     {
         public LauncherItemAddonFiles(LauncherItemAddonFileStorage user, LauncherItemAddonFileStorage machine, LauncherItemAddonFileStorage temporary)
         {
@@ -88,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="ILauncherItemAddonPersistents"/>
-    internal class LauncherItemAddonPersistents: ILauncherItemAddonPersistents
+    public class LauncherItemAddonPersistents: ILauncherItemAddonPersistents
     {
         public LauncherItemAddonPersistents(LauncherItemAddonPersistentStorage normal, LauncherItemAddonPersistentStorage large, LauncherItemAddonPersistentStorage temporary)
         {
@@ -113,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     }
 
     /// <inheritdoc cref="ILauncherItemAddonStorage"/>
-    internal class LauncherItemAddonStorage: ILauncherItemAddonStorage
+    public class LauncherItemAddonStorage: ILauncherItemAddonStorage
     {
         public LauncherItemAddonStorage(LauncherItemAddonFiles file, LauncherItemAddonPersistents persistent)
         {

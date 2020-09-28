@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using ContentTypeTextNet.Pe.Bridge.Models;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Core.Compatibility.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
@@ -21,6 +23,7 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
@@ -43,6 +46,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private BackgroundAddonProxy? BackgroundAddon { get; set; }
 
         private CronScheduler CronScheduler { get; }
+        /// <summary>
+        /// 定周期処理。
+        /// <see cref="CronScheduler"/>の間隔未満(1分より小さい)で優先度を特に考えなくていいスケジュール処理を実施。
+        /// </summary>
+        private System.Timers.Timer LowScheduler { get; }
 
         #endregion
 
@@ -76,7 +84,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private IntPtr MessageWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+#if DEBUG
             Logger.LogTrace("[MSG WND] hwnd = {0}, msg = {1}({2}), wParam = {3}, lParam = {4}", hwnd, msg, (WM)msg, wParam, lParam);
+#endif
 
             switch(msg) {
                 case (int)WM.WM_DEVICECHANGE: {
@@ -417,13 +427,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 if(LauncherToolbarElements.Count != rawScreenCount) {
                     // 数が変わってりゃ待機
                     Logger.LogInformation("ディスプレイ数変更検知: WindowsAPI = {0}, Toolbar = {1}", rawScreenCount, LauncherToolbarElements.Count);
-                    var environmentParameters = ApplicationDiContainer.Get<EnvironmentParameters>();
+                    var displayConfiguration = ApplicationDiContainer.Get<DisplayConfiguration>();
 
                     DelayResetScreenViewElements();
 
                     Task.Run(() => {
                         // Forms で取得するディスプレイ数の合計値は少し遅れる
-                        int waitMax = environmentParameters.Configuration.Display.ChangedRetryCount;
+                        int waitMax = displayConfiguration.ChangedRetryCount;
                         int waitCount = 0;
 
                         var managedScreenCount = Screen.AllScreens.Length;
@@ -433,7 +443,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                                 Logger.LogWarning("ディスプレイ数変更検知: タイムアウト");
                                 break;
                             }
-                            Thread.Sleep(environmentParameters.Configuration.Display.ChangedRetryWaitTime);
+                            Thread.Sleep(displayConfiguration.ChangedRetryWaitTime);
                             managedScreenCount = Screen.AllScreens.Length;
                         }
 
@@ -471,7 +481,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void StartDisableSystemIdle()
         {
-            HeartBeatSender = new HeartBeatSender(TimeSpan.FromSeconds(40), LoggerFactory);
+            var platformConfiguration = ApplicationDiContainer.Build<PlatformConfiguration>();
+            HeartBeatSender = new HeartBeatSender(platformConfiguration.IdleDisableCycleTime, platformConfiguration.IdleCheckCycleTime, LoggerFactory);
             HeartBeatSender.Start();
         }
         private void StopDisableSystemIdle()
@@ -504,7 +515,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         private void StartSupportExplorer()
         {
-            var customConfiguration = ApplicationDiContainer.Build<CustomConfiguration>();
+            var customConfiguration = ApplicationDiContainer.Build<ApplicationConfiguration>();
             var platform = customConfiguration.Platform;
 
             ExplorerSupporter = ApplicationDiContainer.Build<ExplorerSupporter>(platform.ExplorerSupporterRefreshTime, platform.ExplorerSupporterCacheSize);
@@ -562,14 +573,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         private void StartScheduler()
         {
             Logger.LogInformation("スケジューラ実行");
+            LowScheduler.Start();
             CronScheduler.Start();
         }
 
         private void StopScheduler()
         {
+            LowScheduler.Stop();
+
             if(CronScheduler.IsRunning) {
                 Logger.LogInformation("スケジューラ停止");
                 CronScheduler.Stop();
+            }
+        }
+
+        private void CheckFullScreenState()
+        {
+            var fullScreenWatcher = ApplicationDiContainer.Build<IFullscreenWatcher>();
+
+            foreach(var screen in Screen.AllScreens) {
+                var hWnd = fullScreenWatcher.GetFullscreenWindowHandle(screen);
+                if(hWnd != IntPtr.Zero) {
+                    NotifyManager.SendFullscreenChanged(screen, true, hWnd);
+                } else {
+                    NotifyManager.SendFullscreenChanged(screen, false, IntPtr.Zero);
+                }
             }
         }
 
@@ -700,6 +728,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             DelayResetScreenViewElements();
         }
 
-
+        private void LowScheduler_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            LowScheduler.Stop();
+            if(StatusManager.CanCallNotifyAreaMenu) {
+                CheckFullScreenState();
+            }
+            if(StatusManager.CanCallNotifyAreaMenu) {
+                LowScheduler.Start();
+            }
+        }
     }
 }

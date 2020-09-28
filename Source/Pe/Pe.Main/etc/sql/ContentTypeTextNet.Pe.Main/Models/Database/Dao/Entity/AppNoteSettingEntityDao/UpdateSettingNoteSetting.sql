@@ -7,6 +7,7 @@ set
 	ForegroundColor       = @ForegroundColor,
 	BackgroundColor       = @BackgroundColor,
 	IsTopmost             = @IsTopmost,
+	CaptionPosition       = @CaptionPosition,
 
 	UpdatedTimestamp      = @UpdatedTimestamp,
 	UpdatedAccount        = @UpdatedAccount,

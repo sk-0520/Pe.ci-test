@@ -83,11 +83,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <inheritdoc cref="Queue{T}.TryPeek(out T)"/>
         public bool TryPeek(out T result) => Queue.TryPeek(out result!);
 
+
         #endregion
 
         #region IEnumerable
 
         /// <inheritdoc cref="Queue{T}.GetEnumerator"/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         public IEnumerator<T> GetEnumerator() => Queue.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

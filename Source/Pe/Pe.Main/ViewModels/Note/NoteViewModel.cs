@@ -34,6 +34,10 @@ using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
+using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
+using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Main.Views.Note;
+using System.Collections;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 {
@@ -58,14 +62,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         #endregion
 
-        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, CustomConfiguration configuration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public NoteViewModel(NoteElement model, NoteConfiguration noteConfiguration, INoteTheme noteTheme, IGeneralTheme generalTheme, IPlatformTheme platformTheme, ApplicationConfiguration applicationConfiguration, IOrderManager orderManager, IClipboardManager clipboardManager, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
             NoteConfiguration = noteConfiguration;
             NoteTheme = noteTheme;
             GeneralTheme = generalTheme;
             PlatformTheme = platformTheme;
-            Configuration = configuration;
+            ApplicationConfiguration = applicationConfiguration;
             OrderManager = orderManager;
             ClipboardManager = clipboardManager;
 
@@ -90,6 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
             PropertyChangedHooker.AddHook(nameof(Model.TextWrap), nameof(TextWrap));
             PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
+            PropertyChangedHooker.AddHook(new HookItem(nameof(Model.CaptionPosition), new[] { nameof(CaptionPosition) }, null, () => ApplyTheme()));
             PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
             PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
@@ -121,9 +126,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         PropertyChangedHooker PropertyChangedHooker { get; }
 
         IDpiScaleOutputor DpiScaleOutputor { get; set; } = new EmptyDpiScaleOutputor();
+        FrameworkElement? CaptionElement { get; set; }
         IDisposable? WindowHandleSource { get; set; }
 
-        CustomConfiguration Configuration { get; }
+        ApplicationConfiguration ApplicationConfiguration { get; }
 
         public Guid NoteId => Model.NoteId;
         public bool IsLink
@@ -267,6 +273,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public string? Title => Model.Title;
 
+        public NoteCaptionPosition CaptionPosition
+        {
+            get => Model.CaptionPosition;
+            set => Model.ChangeCaptionPositionDelaySave(value);
+        }
+
         public NoteContentKind ContentKind
         {
             get => Model.ContentKind;
@@ -353,15 +365,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         [ThemeProperty]
         public double CaptionHeight => NoteTheme.GetCaptionHeight();
         [ThemeProperty]
-        public Brush BorderBrush => NoteTheme.GetBorderBrush(GetColorPair());
+        public Brush BorderBrush => NoteTheme.GetBorderBrush(CaptionPosition, GetColorPair());
         [ThemeProperty]
         public Thickness BorderThickness => NoteTheme.GetBorderThickness();
         [ThemeProperty]
-        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.None, GetColorPair());
+        public Brush CaptionBackgroundNoneBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.None, CaptionPosition, GetColorPair());
         [ThemeProperty]
-        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Over, GetColorPair());
+        public Brush CaptionBackgroundOverBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Over, CaptionPosition, GetColorPair());
         [ThemeProperty]
-        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Pressed, GetColorPair());
+        public Brush CaptionBackgroundPressedBrush => NoteTheme.GetCaptionButtonBackgroundBrush(NoteCaptionButtonState.Pressed, CaptionPosition, GetColorPair());
         [ThemeProperty]
         public Brush? CaptionForeground { get; private set; }
         [ThemeProperty]
@@ -372,19 +384,19 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public Brush? ContentForeground { get; private set; }
 
         [ThemeProperty]
-        public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(GetColorPair());
+        public DependencyObject ResizeGripImage => NoteTheme.GetResizeGripImage(CaptionPosition, GetColorPair());
 
         [ThemeProperty]
-        public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, true, GetColorPair());
+        public DependencyObject CaptionCompactEnabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Compact, CaptionPosition, true, GetColorPair());
         [ThemeProperty]
-        public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Compact, false, GetColorPair());
+        public DependencyObject CaptionCompactDisabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Compact, CaptionPosition, false, GetColorPair());
         [ThemeProperty]
-        public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, true, GetColorPair());
+        public DependencyObject CaptionTopmostEnabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Topmost, CaptionPosition, true, GetColorPair());
         [ThemeProperty]
-        public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaption.Topmost, false, GetColorPair());
+        public DependencyObject CaptionTopmostDisabledImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Topmost, CaptionPosition, false, GetColorPair());
 
         [ThemeProperty]
-        public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaption.Close, false, GetColorPair());
+        public DependencyObject CaptionCloseImage => NoteTheme.GetCaptionImage(NoteCaptionButtonKind.Close, CaptionPosition, false, GetColorPair());
         [ThemeProperty]
         public double MinHeight => CaptionHeight + BorderThickness.Top + BorderThickness.Bottom;
 
@@ -618,16 +630,28 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         void ToggleCompact()
         {
+            // 未変更情報
             if(!IsCompact) {
                 NormalWindowHeight = WindowHeight;
             }
             Model.ToggleCompactDelaySave();
+
+            // 変更済み情報
             // レイアウト変更(高さ)通知を抑制
             if(!IsCompact) {
                 this._windowHeight = NormalWindowHeight;
+
+                if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                    WindowTop -= NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                }
             } else {
                 this._windowHeight = 0;
+
+                if(CaptionPosition == NoteCaptionPosition.Bottom) {
+                    WindowTop += NormalWindowHeight - CaptionHeight - (BorderThickness.Top + BorderThickness.Bottom);
+                }
             }
+
             RaisePropertyChanged(nameof(WindowHeight));
         }
 
@@ -696,14 +720,14 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
             if(startupPosition == NoteStartupPosition.CenterScreen) {
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
-                    layout.Width = Configuration.Note.LayoutAbsoluteSize.Width;
-                    layout.Height = Configuration.Note.LayoutAbsoluteSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutAbsoluteSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutAbsoluteSize.Height;
                     layout.X = (logicalScreenSize.Width / 2) - (layout.Width / 2);
                     layout.Y = (logicalScreenSize.Height / 2) - (layout.Height / 2);
                 } else {
                     Debug.Assert(layout.LayoutKind == NoteLayoutKind.Relative);
-                    layout.Width = Configuration.Note.LayoutRelativeSize.Width;
-                    layout.Height = Configuration.Note.LayoutRelativeSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutRelativeSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutRelativeSize.Height;
                     layout.X = 0;
                     layout.Y = 0;
                 }
@@ -722,8 +746,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 var logicalScreenCursorLocation = UIUtility.ToLogicalPixel(deviceScreenCursorLocation, DpiScaleOutputor);
 
                 if(layout.LayoutKind == NoteLayoutKind.Absolute) {
-                    layout.Width = Configuration.Note.LayoutAbsoluteSize.Width;
-                    layout.Height = Configuration.Note.LayoutAbsoluteSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutAbsoluteSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutAbsoluteSize.Height;
                     layout.X = logicalScreenCursorLocation.X;
                     layout.Y = logicalScreenCursorLocation.Y;
                 } else {
@@ -737,8 +761,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                         deviceScreenBounds.Height / 2
                     );
 
-                    layout.Width = Configuration.Note.LayoutRelativeSize.Width;
-                    layout.Height = Configuration.Note.LayoutRelativeSize.Height;
+                    layout.Width = ApplicationConfiguration.Note.LayoutRelativeSize.Width;
+                    layout.Height = ApplicationConfiguration.Note.LayoutRelativeSize.Height;
 
                     var width = area.Width * layout.Width;
                     var height = area.Height * layout.Height;
@@ -840,11 +864,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             DispatcherWrapper.VerifyAccess();
 
-            var captionPair = NoteTheme.GetCaptionBrush(GetColorPair());
+            var captionPair = NoteTheme.GetCaptionBrush(CaptionPosition, GetColorPair());
             CaptionForeground = captionPair.Foreground;
             CaptionBackground = captionPair.Background;
 
-            var contentPair = NoteTheme.GetContentBrush(GetColorPair());
+            var contentPair = NoteTheme.GetContentBrush(CaptionPosition, GetColorPair());
             ContentForeground = contentPair.Foreground;
             ContentBackground = contentPair.Background;
 
@@ -961,6 +985,30 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             switch(msg) {
+                case (int)WM.WM_NCHITTEST: {
+                        if(IsLocked) {
+                            break;
+                        }
+                        if(TitleEditMode) {
+                            break;
+                        }
+
+                        Debug.Assert(CaptionElement != null);
+
+                        var deviceScreenPoint = new Point(
+                            WindowsUtility.LOWORD(lParam),
+                            WindowsUtility.HIWORD(lParam)
+                        );
+                        // [#694] スクリーン系は良しなに変換してくれるっぽい？
+                        //var logicalScreenPoint = UIUtility.ToLogicalPixel(deviceScreenPoint, DpiScaleOutputor);
+                        var logicalPoint = CaptionElement.PointFromScreen(deviceScreenPoint);
+                        if(0 <= logicalPoint.X && 0 <= logicalPoint.Y && logicalPoint.X <= CaptionElement.ActualWidth && logicalPoint.Y <= CaptionElement.ActualHeight) {
+                            handled = true;
+                            return new IntPtr((int)HT.HTCAPTION);
+                        }
+                        break;
+                    }
+
                 case (int)WM.WM_NCLBUTTONDBLCLK:
                     if(WindowsUtility.ConvertHTFromWParam(wParam) == HT.HTCAPTION) {
                         if(!IsLocked) {
@@ -1027,11 +1075,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             hWndSource.AddHook(WndProc);
             WindowHandleSource = hWndSource;
 
+            CaptionElement = ((NoteWindow)window).inputTitle;
+
             DpiScaleOutputor = (IDpiScaleOutputor)window;
 
             var layoutValue = GetOrCreateLayout(Model.StartupPosition);
             if(layoutValue.isCreated) {
                 Model.SaveLayout(layoutValue.layout);
+            } else if(CaptionPosition == NoteCaptionPosition.Bottom) {
+
             }
 
             SetLayout(layoutValue.layout);
@@ -1048,12 +1100,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             }
         }
 
-        public void ReceiveViewUserClosing(CancelEventArgs e)
+        public void ReceiveViewUserClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewUserClosing();
         }
 
-        public void ReceiveViewClosing(CancelEventArgs e)
+        public void ReceiveViewClosing(Window window, CancelEventArgs e)
         {
             e.Cancel = !Model.ReceiveViewClosing();
         }

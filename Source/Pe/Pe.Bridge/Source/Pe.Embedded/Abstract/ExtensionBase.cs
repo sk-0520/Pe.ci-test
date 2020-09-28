@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal class ExtensionBase: IPlugin
     {
-        protected ExtensionBase(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        protected ExtensionBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
         {
             Logger = pluginConstructorContext.LoggerFactory.CreateLogger(GetType());
             Plugin = plugin;
@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         #region property
 
         protected ILogger Logger { get; }
-        protected IPlugin Plugin { get; }
+        protected PluginBase Plugin { get; }
 
         #endregion
 

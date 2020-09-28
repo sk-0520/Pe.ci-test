@@ -57,11 +57,11 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
             Width = Height = boxSize;
         }
 
-        public IconSize(IconBox iconBox, Point iconScale)
+        public IconSize(IconBox iconBox, Point dpiScale)
         {
             // ここだけ X/Y 見るのもどうなんやろね
-            Width = (int)((int)iconBox * iconScale.X);
-            Height = (int)((int)iconBox * iconScale.Y);
+            Width = (int)((int)iconBox * dpiScale.X);
+            Height = (int)((int)iconBox * dpiScale.Y);
         }
 
 
@@ -111,17 +111,17 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
     /// </summary>
     public readonly struct IconScale
     {
-        public IconScale(IconBox box, Point scale)
+        public IconScale(IconBox box, Point dpiScale)
         {
-            if(double.IsNaN(scale.X) || double.IsInfinity(scale.X) || scale.X < 1) {
-                throw new ArgumentException(nameof(scale) + "." + nameof(scale.X));
+            if(double.IsNaN(dpiScale.X) || double.IsInfinity(dpiScale.X) || dpiScale.X < 1) {
+                throw new ArgumentException(nameof(dpiScale) + "." + nameof(dpiScale.X));
             }
-            if(double.IsNaN(scale.Y) || double.IsInfinity(scale.Y) || scale.Y < 1) {
-                throw new ArgumentException(nameof(scale) + "." + nameof(scale.Y));
+            if(double.IsNaN(dpiScale.Y) || double.IsInfinity(dpiScale.Y) || dpiScale.Y < 1) {
+                throw new ArgumentException(nameof(dpiScale) + "." + nameof(dpiScale.Y));
             }
 
             Box = box;
-            Scale = scale;
+            Dpi = dpiScale;
         }
 
         #region property
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// <summary>
         /// DPIスケール。
         /// </summary>
-        public Point Scale { get; }
+        public Point Dpi { get; }
 
         #endregion
 
@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
         /// 現在の設定値から<see cref="IconSize"/>を算出。
         /// </summary>
         /// <returns></returns>
-        public readonly IconSize ToIconSize() => new IconSize(Box, Scale);
+        public readonly IconSize ToIconSize() => new IconSize(Box, Dpi);
 
         #endregion
 
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Bridge.Models.Data
 
         public override string ToString()
         {
-            return $"{nameof(IconScale)}: {Box}, {Scale.X}x{Scale.Y} -> {((int)Box) * Scale.X}x{((int)Box) * Scale.Y}";
+            return $"{nameof(IconScale)}: {Box}, {Dpi.X}x{Dpi.Y} -> {((int)Box) * Dpi.X}x{((int)Box) * Dpi.Y}";
         }
 
         #endregion

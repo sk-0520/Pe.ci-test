@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public string ForegroundColor { get; set; } = string.Empty;
         public string BackgroundColor { get; set; } = string.Empty;
         public bool IsTopmost { get; set; }
-
+        public string CaptionPosition { get; set; } = string.Empty;
 
         #endregion
     }
@@ -55,6 +55,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteCreateTitleKindTransfer = new EnumTransfer<NoteCreateTitleKind>();
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+            var noteCaptionPositionTransfer = new EnumTransfer<NoteCaptionPosition>();
 
             var statement = LoadStatement();
             var dto = Commander.QueryFirst<AppNoteSettingEntityDto>(statement);
@@ -65,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ForegroundColor = ToColor(dto.ForegroundColor),
                 BackgroundColor = ToColor(dto.BackgroundColor),
                 IsTopmost = dto.IsTopmost,
+                CaptionPosition = noteCaptionPositionTransfer.ToEnum(dto.CaptionPosition),
             };
             return data;
         }
@@ -73,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var noteCreateTitleKindTransfer = new EnumTransfer<NoteCreateTitleKind>();
             var noteLayoutKindTransfer = new EnumTransfer<NoteLayoutKind>();
+            var noteCaptionPositionTransfer = new EnumTransfer<NoteCaptionPosition>();
 
             var statement = LoadStatement();
             var dto = new AppNoteSettingEntityDto() {
@@ -82,6 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 ForegroundColor = FromColor(data.ForegroundColor),
                 BackgroundColor = FromColor(data.BackgroundColor),
                 IsTopmost = data.IsTopmost,
+                CaptionPosition = noteCaptionPositionTransfer.ToString(data.CaptionPosition),
             };
             commonStatus.WriteCommon(dto);
             return Commander.Execute(statement, dto) == 1;

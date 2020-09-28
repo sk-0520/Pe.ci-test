@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Theme
     /// <inheritdoc cref="IThemeParameter"/>
     internal class ThemeParameter: PluginParameterBase, IThemeParameter
     {
-        public ThemeParameter(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IImageLoader imageLoader, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
-            : base(pluginInformations, platformTheme, imageLoader, dispatcherWrapper, loggerFactory)
+        public ThemeParameter(IPluginInformations pluginInformations, IPlatformTheme platformTheme, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+            : base(pluginInformations, platformTheme, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         { }
 
         #region IThemeParameter

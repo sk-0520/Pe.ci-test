@@ -89,13 +89,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <summary>
     /// データベースとの会話用インターフェイス。
     /// </summary>
-    public interface IDatabaseCommander : IDatabaseReader, IDatabaseWriter
+    public interface IDatabaseCommander: IDatabaseReader, IDatabaseWriter
     { }
 
     /// <summary>
     /// DBアクセス処理。
     /// </summary>
-    public interface IDatabaseAccessor : IDatabaseCommander
+    public interface IDatabaseAccessor: IDatabaseCommander
     {
         #region property
 
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <para><see cref="IDisposable.Dispose()"/>が完了するまでの間接続できない状態になる。</para>
         /// </summary>
         /// <returns></returns>
-        IDisposable StopConnection();
+        IDisposable PauseConnection();
 
         /// <inheritdoc cref="IDatabaseReader.Query{T}(string, object?, bool)"/>
         IEnumerable<T> Query<T>(string statement, object? parameter, IDatabaseTransaction? transaction, bool buffered);
@@ -173,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// DBアクセスに対してラップする。
     /// <para>DBまで行く前にプログラム側で制御する目的。</para>
     /// </summary>
-    public class DatabaseAccessor : DisposerBase, IDatabaseAccessor
+    public class DatabaseAccessor: DisposerBase, IDatabaseAccessor
     {
         public DatabaseAccessor(IDatabaseFactory databaseFactory, ILogger logger)
         {
@@ -200,8 +200,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         protected ILogger Logger { get; }
 
-        public bool IsOpend {get; private set;}
-        public bool StoppingConnection { get; private set;}
+        /// <summary>
+        /// データベース接続が開いているか。
+        /// </summary>
+        public bool IsOpend { get; private set; }
+
+        /// <summary>
+        /// データベース接続が一時的に閉じているか。
+        /// </summary>
+        public bool ConnectionPausing { get; private set; }
 
         #endregion
 
@@ -209,8 +216,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
 
         IDbConnection OpenConnection()
         {
-            if(StoppingConnection) {
-                throw new InvalidOperationException(nameof(StoppingConnection));
+            if(ConnectionPausing) {
+                throw new InvalidOperationException(nameof(ConnectionPausing));
             }
             if(IsOpend) {
                 throw new InvalidOperationException(nameof(IsOpend));
@@ -247,10 +254,15 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             Logger.LogTrace(statement, parameter);
         }
 
+        [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
+        [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
         protected virtual void LoggingExecuteResult(int result, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"result: {result}, {endTime - startTime}", new { startTime, endTime });
         }
+        [SuppressMessage("Performance", "HAA0101:Array allocation for params parameter")]
+        [SuppressMessage("Performance", "HAA0601:Value type to reference type conversion causing boxing allocation")]
+        [SuppressMessage("Performance", "HAA0503:Explicit new anonymous object allocation")]
         protected virtual void LoggingDataTable(DataTable table, [DateTimeKind(DateTimeKind.Local)] DateTime startTime, [DateTimeKind(DateTimeKind.Local)] DateTime endTime)
         {
             Logger.LogTrace($"table: {table.TableName} -> {table.Columns.Count} * {table.Rows.Count}, {endTime - startTime}", new { startTime, endTime });
@@ -266,26 +278,26 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <inheritdoc cref="IDatabaseAccessor.BaseConnection"/>
         public virtual IDbConnection BaseConnection => LazyConnection.Value;
 
-        /// <inheritdoc cref="IDatabaseAccessor.StopConnection"/>
-        public virtual IDisposable StopConnection()
+        /// <inheritdoc cref="IDatabaseAccessor.PauseConnection"/>
+        public virtual IDisposable PauseConnection()
         {
             ThrowIfDisposed();
 
             if(!IsOpend) {
-                return new ActionDisposer(d => { });
+                return ActionDisposerHelper.CreateEmpty();
             }
 
-            if(!StoppingConnection) {
+            if(!ConnectionPausing) {
                 BaseConnection.Close();
                 IsOpend = false;
-                StoppingConnection = true;
+                ConnectionPausing = true;
                 return new ActionDisposer(d => {
-                    StoppingConnection = false;
+                    ConnectionPausing = false;
                     LazyConnection = new Lazy<IDbConnection>(OpenConnection);
                 });
             }
 
-            return new ActionDisposer(d => { });
+            return ActionDisposerHelper.CreateEmpty();
         }
 
         /// <inheritdoc cref="IDatabaseAccessor.Query{T}(string, object?, IDatabaseTransaction?, bool)"/>
@@ -478,7 +490,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
                     }
                 }
                 IsOpend = false;
-                StoppingConnection = false;
+                ConnectionPausing = false;
             }
 
             base.Dispose(disposing);
@@ -487,7 +499,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #endregion
     }
 
-    public class DatabaseAccessor<TDbConnection> : DatabaseAccessor
+    public class DatabaseAccessor<TDbConnection>: DatabaseAccessor
         where TDbConnection : IDbConnection
     {
         public DatabaseAccessor(IDatabaseFactory connectionFactory, ILogger logger)

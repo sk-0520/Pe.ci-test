@@ -119,10 +119,16 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             static ReferenceItem<TValue> GetOrAdd(ConcurrentDictionary<TKey, ReferenceItem<TValue>> map, TKey key, TimeSpan timelimit, bool isManage, Func<TKey, TValue> creator, ILogger logger)
             {
-                return map.GetOrAdd(key, (key, arg) => {
+                return map.GetOrAdd(key, (key, args) => {
+#if DEBUG
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
+#pragma warning disable HAA0101 // Array allocation for params parameter
                     logger.LogTrace("参照アイテム生成: {0}", key);
-                    var value = arg.creator(key);
-                    var item = new ReferenceItem<TValue>(value, arg.timelimit, arg.isManage);
+#pragma warning restore HAA0101 // Array allocation for params parameter
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+#endif
+                    var value = args.creator(key);
+                    var item = new ReferenceItem<TValue>(value, args.timelimit, args.isManage);
                     return item;
                 }, (timelimit, isManage, creator));
             }
@@ -130,7 +136,13 @@ namespace ContentTypeTextNet.Pe.Core.Models
             var result = GetOrAdd(Store, key, timelimit, isManage, creator, Logger);
             lock(result) {
                 if(result.Alive) {
+#if DEBUG
+#pragma warning disable HAA0101 // Array allocation for params parameter
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
                     Logger.LogTrace("参照アイテム生成/再使用: {0}", key);
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+#pragma warning restore HAA0101 // Array allocation for params parameter
+#endif
                     result.Recycle();
                     return result.Value;
                 }
@@ -171,21 +183,33 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return;
             }
 
+#if DEBUG
+#pragma warning disable HAA0101 // Array allocation for params parameter
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
             Logger.LogTrace("参照アイテム削除: {0}", key);
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+#pragma warning restore HAA0101 // Array allocation for params parameter
+#endif
             if(!item.IsManage) {
                 return;
             }
 
             if(item.Value is IDisposable disposer) {
+#if DEBUG
+#pragma warning disable HAA0101 // Array allocation for params parameter
+#pragma warning disable HAA0601 // Value type to reference type conversion causing boxing allocation
                 Logger.LogTrace("参照アイテム破棄: {0}", key);
+#pragma warning restore HAA0601 // Value type to reference type conversion causing boxing allocation
+#pragma warning restore HAA0101 // Array allocation for params parameter
+#endif
                 disposer.Dispose();
             }
         }
 
         public void Refresh()
         {
-            Logger.LogTrace("参照アイテム削除一括削除開始");
-            var pairs = Store.Where(i => !i.Value.Alive).ToList();
+            Logger.LogTrace("参照アイテム削除一括削除開始"); // こいつは一応残しておく
+            var pairs = Store.Where(i => !i.Value.Alive).ToArray();
             foreach(var pair in pairs) {
                 lock(pair.Value) {
                     IncinerateCore(pair.Key, pair.Value);

@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 {
     internal abstract class AddonBase: ExtensionBase, IAddon
     {
-        public AddonBase(IPluginConstructorContext pluginConstructorContext, IPlugin plugin)
+        public AddonBase(IPluginConstructorContext pluginConstructorContext, PluginBase plugin)
             :base(pluginConstructorContext, plugin)
         { }
 
@@ -32,9 +32,11 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
 
         #region IAddon
 
-
         /// <inheritdoc cref="IAddon.IsSupported(AddonKind)"/>
         public bool IsSupported(AddonKind addonKind) => SupportedKinds.Contains(addonKind);
+
+        /// <inheritdoc cref="IAddon.CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter)"/>
+        public virtual ILauncherItemExtension CreateLauncherItemExtension(ILauncherItemExtensionCreateParameter parameter) => throw new NotImplementedException();
 
         /// <inheritdoc cref="IAddon.BuildCommandFinder(IAddonParameter)"/>
         public virtual ICommandFinder BuildCommandFinder(IAddonParameter parameter) => throw new NotImplementedException();
