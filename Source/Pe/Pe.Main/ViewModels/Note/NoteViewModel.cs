@@ -999,8 +999,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                             WindowsUtility.LOWORD(lParam),
                             WindowsUtility.HIWORD(lParam)
                         );
-                        var logicalScreenPoint = UIUtility.ToLogicalPixel(deviceScreenPoint, DpiScaleOutputor);
-                        var logicalPoint = CaptionElement.PointFromScreen(logicalScreenPoint);
+                        // [#694] スクリーン系は良しなに変換してくれるっぽい？
+                        //var logicalScreenPoint = UIUtility.ToLogicalPixel(deviceScreenPoint, DpiScaleOutputor);
+                        var logicalPoint = CaptionElement.PointFromScreen(deviceScreenPoint);
                         if(0 <= logicalPoint.X && 0 <= logicalPoint.Y && logicalPoint.X <= CaptionElement.ActualWidth && logicalPoint.Y <= CaptionElement.ActualHeight) {
                             handled = true;
                             return new IntPtr((int)HT.HTCAPTION);

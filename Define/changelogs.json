@@ -43,7 +43,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#694: 高DPI環境でノートのタイトルバーD&Dによる位置移動ができなくなっている"
 					},
 					{
 						"revision": "",
