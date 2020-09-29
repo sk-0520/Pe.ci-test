@@ -1444,7 +1444,7 @@
   </data>
   <data name="String_BetaVersion_Unknown_Message" xml:space="preserve">
     <value>本バージョンはβ版です。
-不具合修正確確認や動作確認のために使用されます。
+不具合修正・動作確認のために使用します。
 
 このメッセージはβ版 Pe を直接実行した場合に表示されます。
 このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
