@@ -16,7 +16,7 @@
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
-  xmlns:app_main_viewmodel_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
+  xmlns:app_main_viewmodels_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize"
   xmlns:app_main_views_launcher_item_customize="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherItemCustomize"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -45,7 +45,7 @@
       <sys:Double x:Key="MultiLine-Height">50</sys:Double>-->
 
       <!--#region 共通 -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeCommonViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeCommonViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Common_Header, Source={x:Static app_main:CultureService.Instance}}">
           <StackPanel>
             <Grid>
@@ -136,7 +136,7 @@
       <!--#endregion-->
 
       <!--#region ファイル -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeFileViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeFileViewModel}">
         <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_File_Header, Source={x:Static app_main:CultureService.Instance}}">
           <StackPanel>
             <Grid>
@@ -266,7 +266,7 @@
       <!--#endregion-->
 
       <!--#region ストアアプリ -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeStoreAppViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeStoreAppViewModel}">
         <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_StoreApp_Header, Source={x:Static app_main:CultureService.Instance}}">
           <StackPanel>
             <Grid>
@@ -300,7 +300,7 @@
       <!--#endregion -->
 
       <!--#region アドイン -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeAddonViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeAddonViewModel}">
         <GroupBox x:Name="item" Style="{StaticResource HeaderGroupBox}" Header="{Binding LauncherItemHeader, Converter={StaticResource EscapeAccessKeyConverter}}">
           <ContentControl Content="{Binding PreferencesControl}" />
         </GroupBox>
@@ -311,7 +311,7 @@
       <!--#endregion -->
 
       <!--#region 環境変数 -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeEnvironmentVariableViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeEnvironmentVariableViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_EnvironmentVariable_Header, Source={x:Static app_main:CultureService.Instance}}" >
           <Grid>
             <Grid.ColumnDefinitions>
@@ -333,7 +333,7 @@
       <!--#endregion -->
 
       <!--#region 再試行 -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeRedoViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeRedoViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_RedoEditor_Header, Source={x:Static app_main:CultureService.Instance}}" >
           <app_main_views_launcher_item_customize:RedoEditor
 
@@ -354,7 +354,7 @@
       <!--#endregion -->
 
       <!--#region タグ -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeTagViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeTagViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Tag_Header, Source={x:Static app_main:CultureService.Instance}}" >
           <Grid>
             <Grid.ColumnDefinitions>
@@ -370,7 +370,7 @@
       <!--#endregion -->
 
       <!--#region コメント -->
-      <DataTemplate DataType="{x:Type app_main_viewmodel_launcher_item_customize:LauncherItemCustomizeCommentViewModel}">
+      <DataTemplate DataType="{x:Type app_main_viewmodels_launcher_item_customize:LauncherItemCustomizeCommentViewModel}">
         <GroupBox Style="{StaticResource HeaderGroupBox}" Header="{Binding Resources.String_LauncherItemCustomizeControl_Comment_Header, Source={x:Static app_main:CultureService.Instance}}" >
           <Grid>
             <Grid.ColumnDefinitions>

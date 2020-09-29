@@ -7,17 +7,17 @@
   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
   xmlns:prism="http://prismlibrary.com/"
 
-  xmlns:app_bridge_modes_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
+  xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
 
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
   xmlns:app_main_views_lt="clr-namespace:ContentTypeTextNet.Pe.Main.Views.LauncherToolbar"
-  xmlns:app_main_viewmodels_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem"
-  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
   xmlns:app_main_views_converter="clr-namespace:ContentTypeTextNet.Pe.Main.Views.Converter"
+  xmlns:app_main_viewmodels_item="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem"
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+  xmlns:app_main="clr-namespace:ContentTypeTextNet.Pe.Main"
 
   Height="450"
   Width="800"
@@ -442,10 +442,10 @@
                   <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="1" Grid.Column="0" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_modes_data:AppDesktopToolbarPosition.Left}" Content="{Binding ToolbarPositionLeftIcon}"></Button>
-                <Button Grid.Row="0" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_modes_data:AppDesktopToolbarPosition.Top}" Content="{Binding ToolbarPositionTopIcon}"></Button>
-                <Button Grid.Row="1" Grid.Column="2" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_modes_data:AppDesktopToolbarPosition.Right}" Content="{Binding ToolbarPositionRightIcon}"></Button>
-                <Button Grid.Row="2" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_modes_data:AppDesktopToolbarPosition.Bottom}" Content="{Binding ToolbarPositionBottomIcon}"></Button>
+                <Button Grid.Row="1" Grid.Column="0" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_models_data:AppDesktopToolbarPosition.Left}" Content="{Binding ToolbarPositionLeftIcon}"></Button>
+                <Button Grid.Row="0" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_models_data:AppDesktopToolbarPosition.Top}" Content="{Binding ToolbarPositionTopIcon}"></Button>
+                <Button Grid.Row="1" Grid.Column="2" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_models_data:AppDesktopToolbarPosition.Right}" Content="{Binding ToolbarPositionRightIcon}"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Command="{Binding ChangeToolbarPositionCommand}" CommandParameter="{x:Static app_bridge_models_data:AppDesktopToolbarPosition.Bottom}" Content="{Binding ToolbarPositionBottomIcon}"></Button>
 
               </Grid>
 
