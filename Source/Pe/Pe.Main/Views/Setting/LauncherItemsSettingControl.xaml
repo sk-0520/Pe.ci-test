@@ -73,7 +73,10 @@
                 </Style>
               </Grid.Style>
               <ToggleButton x:Name="switchAddItem" IsChecked="{Binding Editor.IsPopupAddItemMenu, RelativeSource={RelativeSource AncestorType=UserControl}}" ToolTip="{Binding Resources.String_Setting_LauncherItems_Add, Source={x:Static app_main:CultureService.Instance}}" Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
-                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
+                <StackPanel Orientation="Horizontal">
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Add}" />
+                  <ContentControl IsTabStop="False" Background="{Binding Foreground, ElementName=switchAddItem}" Template="{StaticResource Path-Small}" Content="{StaticResource App-Path-DropMenu}" />
+                </StackPanel>
               </ToggleButton>
               <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchAddItem}">
                 <Border Style="{StaticResource PopupMenuBorder}">

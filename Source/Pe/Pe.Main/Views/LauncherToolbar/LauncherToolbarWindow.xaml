@@ -154,24 +154,71 @@
       <ContextMenu.ItemsSource>
         <CompositeCollection>
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_Header, Source={x:Static app_main:CultureService.Instance}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ExecuteSimpleCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_ExtendsExecute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ExecuteExtendsCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ExecuteSimpleCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Execute}" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Execute_ExtendsExecute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ExecuteExtendsCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Execute-Extends}" />
+            </MenuItem.Icon>
+          </MenuItem>
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_Header, Source={x:Static app_main:CultureService.Instance}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_ParentDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding OpenParentDirectoryCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_WorkDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding OpenWorkingDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_ParentDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding OpenParentDirectoryCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Open_WorkDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding OpenWorkingDirectoryCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Directory}" />
+            </MenuItem.Icon>
+          </MenuItem>
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Header, Source={x:Static app_main:CultureService.Instance}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Path_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyExecutePathCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Options_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyOptionCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_ParentDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyParentDirectoryCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_WorkDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyWorkingDirectoryCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Path_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyExecutePathCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clipboard-Copy}" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_Options_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyOptionCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clipboard-Copy}" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_ParentDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyParentDirectoryCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clipboard-Copy}" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Copy_WorkDirectory_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CopyWorkingDirectoryCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Clipboard-Copy}" />
+            </MenuItem.Icon>
+          </MenuItem>
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Header, Source={x:Static app_main:CultureService.Instance}}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Customize_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CustomizeCommand}" />
-          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Property_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ShowPropertyCommand}" />
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Customize_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CustomizeCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Edit}" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Property_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ShowPropertyCommand}">
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Property}" />
+            </MenuItem.Icon>
+          </MenuItem>
           <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}">
-            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
+            <MenuItem.Icon>
+              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Warning}" />
+            </MenuItem.Icon>
+            <MenuItem Style="{StaticResource LauncherMenuItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Others_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding DataContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding}">
+              <MenuItem.Icon>
+                <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+              </MenuItem.Icon>
+            </MenuItem>
           </MenuItem>
 
           <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_FileContextMenu_Groups_Header, Source={x:Static app_main:CultureService.Instance}}" />
@@ -185,7 +232,7 @@
           <ToolTip Style="{StaticResource LauncherItemTooltip}">
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" />
+                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" Margin="{StaticResource BasePadding}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -241,7 +288,7 @@
           <ToolTip Style="{StaticResource LauncherItemTooltip}">
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" />
+                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" Margin="{StaticResource BasePadding}" />
                 <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -456,7 +503,11 @@
 
               <Separator />
 
-              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CloseCommand}" />
+              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CloseCommand}">
+                <MenuItem.Icon>
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Hidden}" />
+                </MenuItem.Icon>
+              </MenuItem>
 
               <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_AppMenu_Groups_Header, Source={x:Static app_main:CultureService.Instance}}" />
 

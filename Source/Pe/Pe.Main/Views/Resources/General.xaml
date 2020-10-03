@@ -233,30 +233,33 @@
     </Viewbox>
   </ControlTemplate>
 
-  <Style x:Key="Image-Small" TargetType="Control">
+  <Style x:Key="Image-Base" TargetType="Control">
+    <Style.Triggers>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Opacity" Value="0.6" />
+      </Trigger>
+    </Style.Triggers>
+    <Setter Property="IsTabStop" Value="False" />
+  </Style>
+  <Style x:Key="Image-Small" TargetType="Control" BasedOn="{StaticResource Image-Base}">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Small}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Small}" />
-    <Setter Property="IsTabStop" Value="False" />
   </Style>
-  <Style x:Key="Image-Normal" TargetType="Control">
+  <Style x:Key="Image-Normal" TargetType="Control" BasedOn="{StaticResource Image-Base}">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Normal}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Normal}" />
-    <Setter Property="IsTabStop" Value="False" />
   </Style>
-  <Style x:Key="Image-Big" TargetType="Control">
+  <Style x:Key="Image-Big" TargetType="Control" BasedOn="{StaticResource Image-Base}">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Big}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Big}" />
-    <Setter Property="IsTabStop" Value="False" />
   </Style>
-  <Style x:Key="Image-Jumbo" TargetType="Control">
+  <Style x:Key="Image-Jumbo" TargetType="Control" BasedOn="{StaticResource Image-Base}">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Jumbo}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Jumbo}" />
-    <Setter Property="IsTabStop" Value="False" />
   </Style>
   <Style x:Key="Image-Large" TargetType="Control">
     <Setter Property="Width" Value="{StaticResource Icon-Size-Large}" />
     <Setter Property="Height" Value="{StaticResource Icon-Size-Large}" />
-    <Setter Property="IsTabStop" Value="False" />
   </Style>
 
   <Style TargetType="MenuItem">

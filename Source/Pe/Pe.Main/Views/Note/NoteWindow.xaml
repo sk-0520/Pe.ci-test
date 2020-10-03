@@ -1021,7 +1021,24 @@
                   </StackPanel>
                 </Grid>
 
-                <Button Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding LinkChangeCommand}" />
+                <Button Margin="{StaticResource TopMargin}" Command="{Binding LinkChangeCommand}">
+                  <StackPanel Style="{StaticResource ImageLabel-Small}">
+                    <Control>
+                      <Control.Style>
+                        <Style TargetType="Control" BasedOn="{StaticResource Image-Small}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLink}" Value="True">
+                              <Setter Property="Template" Value="{StaticResource App-Image-Link}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Template" Value="{StaticResource App-Image-Unlink}" />
+                          <Setter Property="Margin" Value="{StaticResource ImageLabel-Small-Margin}" />
+                        </Style>
+                      </Control.Style>
+                    </Control>
+                    <AccessText Text="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  </StackPanel>
+                </Button>
               </StackPanel>
             </GroupBox>
             <!--#endregion-->
@@ -1036,14 +1053,33 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Button Grid.Column="0" Content="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Content.CopyCommand}" />
-                  <Button Grid.Column="1" Content="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding SilentCloseCommand}" />
+                  <Button Grid.Column="0" Command="{Binding Content.CopyCommand}">
+                    <StackPanel Style="{StaticResource ImageLabel-Small}">
+                      <Control Template="{StaticResource App-Image-Clipboard-Copy}" />
+                      <AccessText Text="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    </StackPanel>
+                  </Button>
+                  <Button Grid.Column="1" Command="{Binding SilentCloseCommand}">
+                    <StackPanel Style="{StaticResource ImageLabel-Small}">
+                      <Control Template="{StaticResource App-Image-Hidden}" />
+                      <AccessText Text="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    </StackPanel>
+                  </Button>
                   <Grid Grid.Column="2">
-                    <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}" Content="{Binding Resources.String_Note_Operation_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}">
+                      <StackPanel Style="{StaticResource ImageLabel-Small}">
+                        <Control Template="{StaticResource App-Image-Warning}" />
+                        <AccessText Text="{Binding Resources.String_Note_Operation_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}" />
+                      </StackPanel>
+                    </ToggleButton>
                     <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchRemoveNote}">
                       <Border Style="{StaticResource PopupMenuBorder}">
                         <StackPanel>
-                          <MenuItem Header="{Binding Resources.String_Note_Operation_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding RemoveCommand}" />
+                          <MenuItem Header="{Binding Resources.String_Note_Operation_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding RemoveCommand}">
+                            <MenuItem.Icon>
+                              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                            </MenuItem.Icon>
+                          </MenuItem>
                         </StackPanel>
                       </Border>
                     </Popup>
