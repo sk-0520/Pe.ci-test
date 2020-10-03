@@ -263,12 +263,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override Task LoadContentAsync(FrameworkElement baseElement)
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
-            RichText = (RichTextBox)baseElement.FindName("content");
+            return DispatcherWrapper.InvokeAsync(() => {
+                RichText = (RichTextBox)baseElement.FindName("content");
 
-            RichText.TextChanged += Control_TextChanged;
-            RichText.SelectionChanged += RichTextBox_SelectionChanged;
-
-            return Task.Run(() => {
+                RichText.TextChanged += Control_TextChanged;
+                RichText.SelectionChanged += RichTextBox_SelectionChanged;
+            }).ContinueWith(t => {
                 var content = Model.LoadRichTextContent();
                 //RtfContent = content;
 
