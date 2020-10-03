@@ -232,7 +232,7 @@
           <ToolTip Style="{StaticResource LauncherItemTooltip}">
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" />
+                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" Margin="{StaticResource BasePadding}" />
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -288,7 +288,7 @@
           <ToolTip Style="{StaticResource LauncherItemTooltip}">
             <StackPanel>
               <StackPanel Orientation="Horizontal">
-                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" />
+                <app_main_views:ImageViewerControl IconBox="Big" LauncherItemIconMode="Tooltip" IconViewer="{Binding TooltipIcon}" Margin="{StaticResource BasePadding}" />
                 <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -503,7 +503,11 @@
 
               <Separator />
 
-              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CloseCommand}" />
+              <MenuItem Header="{Binding Resources.String_LauncherToolbar_AppMenu_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding CloseCommand}">
+                <MenuItem.Icon>
+                  <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Hidden}" />
+                </MenuItem.Icon>
+              </MenuItem>
 
               <MenuItem Style="{StaticResource MenuHeaderItem}" Header="{Binding Resources.String_LauncherToolbar_AppMenu_Groups_Header, Source={x:Static app_main:CultureService.Instance}}" />
 
