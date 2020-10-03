@@ -1070,6 +1070,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             var hWnd = HandleUtility.GetWindowHandle(window);
             NativeMethods.SetWindowPos(hWnd, new IntPtr((int)HWND.HWND_TOP), (int)Model.DockScreen.DeviceBounds.X, (int)Model.DockScreen.DeviceBounds.Y, 0, 0, SWP.SWP_NOSIZE);
 
+            window.Deactivated += Window_Deactivated;
+
             // タイトルバーのダブルクリックを拾う必要がある
             var hWndSource = HwndSource.FromHwnd(hWnd);
             hWndSource.AddHook(WndProc);
@@ -1112,6 +1114,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public void ReceiveViewClosed(Window window, bool isUserOperation)
         {
+            window.Deactivated -= Window_Deactivated;
+
             Model.ReceiveViewClosed(isUserOperation);
 
             if(PrepareToRemove) {
@@ -1180,6 +1184,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         {
             ApplyTheme();
         }
+
+        private void Window_Deactivated(object? sender, EventArgs e)
+        {
+            if(ShowContentKindChangeConfim) {
+                ShowContentKindChangeConfim = false;
+            }
+            if(ShowLinkChangeConfim) {
+                ShowLinkChangeConfim = false;
+            }
+        }
+
 
     }
 }
