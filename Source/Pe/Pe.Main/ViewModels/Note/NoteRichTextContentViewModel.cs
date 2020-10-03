@@ -265,6 +265,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
             return DispatcherWrapper.InvokeAsync(() => {
                 RichText = (RichTextBox)baseElement.FindName("content");
+                if(RichText == null) {
+                    return;
+                }
 
                 RichText.TextChanged += Control_TextChanged;
                 RichText.SelectionChanged += RichTextBox_SelectionChanged;
@@ -277,6 +280,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 DispatcherWrapper.Begin(arg => {
                     if(arg.@this.IsDisposed) {
+                        return;
+                    }
+                    if(RichText == null) {
                         return;
                     }
 
