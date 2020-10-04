@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Plugin;
@@ -396,6 +397,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 .Register<IPluginArguments, PluginArguments>(DiLifecycle.Transient)
 
                 .Register<IIdFactory, IdFactory>(DiLifecycle.Transient)
+                .Register<IKeyGestureGuide, KeyGestureGuide>(DiLifecycle.Transient)
             ;
 
             return container;

@@ -128,7 +128,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             //ApplicationDiContainer.Register<ICommandFinder, CommandFinderAddonWrapper>(DiLifecycle.Transient, () => PluginContainer.Addon.GetCommandFinder());
 
             // フルスクリーン検知処理の生成(設定項目が多いので生成後に値設定)
-
             var fullscreenWatcher = ApplicationDiContainer.Build<FullscreenWatcher>();
             var fullscreen = customConfiguration.Platform.Fullscreen;
             foreach(var item in fullscreen.IgnoreWindowClasses) {
@@ -141,7 +140,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             fullscreenWatcher.ExcludeNoActive = fullscreen.ExcludeNoActive;
             fullscreenWatcher.ExcludeToolWindow = fullscreen.ExcludeToolWindow;
             ApplicationDiContainer.Register<IFullscreenWatcher, FullscreenWatcher>(fullscreenWatcher);
-
 
             KeyboradHooker = new KeyboradHooker(LoggerFactory);
             MouseHooker = new MouseHooker(LoggerFactory);

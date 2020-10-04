@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
+using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
@@ -18,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
     }
 
-    public class KeyGestureGuide: IKeyGestureGuide
+    internal class KeyGestureGuide: IKeyGestureGuide
     {
         public KeyGestureGuide(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
@@ -37,6 +38,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #endregion
 
         #region function
+
+        internal string GetKeyMappingSting(KeyActionKind keyActionKind, string parameter)
+        {
+        }
 
         #endregion
     }
