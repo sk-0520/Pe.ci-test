@@ -579,18 +579,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
         }
 
+        void ShowUpdateReleaseNoteCore(UpdateItemData updateItem, bool isCheckOnly)
+        {
+            var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
+            element.Initialize();
+            var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
+            view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
+            WindowManager.Register(new WindowItem(WindowKind.Release, element, view));
+            view.Show();
+        }
+
         private void ShowUpdateReleaseNote(UpdateItemData updateItem, bool isCheckOnly)
         {
-            void Show()
-            {
-                var element = ApplicationDiContainer.Build<Element.ReleaseNote.ReleaseNoteElement>(ApplicationUpdateInfo, updateItem, isCheckOnly);
-                element.Initialize();
-                var view = ApplicationDiContainer.Build<Views.ReleaseNote.ReleaseNoteWindow>();
-                view.DataContext = ApplicationDiContainer.Build<ViewModels.ReleaseNote.ReleaseNoteViewModel>(element);
-                WindowManager.Register(new WindowItem(WindowKind.Release, element, view));
-                view.Show();
-            }
-
             var windowItem = WindowManager.GetWindowItems(WindowKind.Release);
             if(windowItem.Any()) {
                 // 再表示
@@ -599,14 +599,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     if(window != null) {
                         window.Window.Activate();
                     } else {
-                        Show();
+                        ShowUpdateReleaseNoteCore(updateItem, isCheckOnly);
                     }
                 }, DispatcherPriority.ApplicationIdle);
                 return;
             }
 
             ApplicationDiContainer.Build<IDispatcherWrapper>().Begin(() => {
-                Show();
+                ShowUpdateReleaseNoteCore(updateItem, isCheckOnly);
             }, DispatcherPriority.ApplicationIdle);
         }
 
@@ -1645,7 +1645,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     Logger.LogInformation("アップデート排他制御中");
                 }
 
-                ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem!, false);
+                if(ApplicationUpdateInfo.UpdateItem != null) {
+                    ShowUpdateReleaseNote(ApplicationUpdateInfo.UpdateItem, false);
+                } else {
+                    Logger.LogInformation("アップデート情報未取得");
+                }
 
                 return;
             }
