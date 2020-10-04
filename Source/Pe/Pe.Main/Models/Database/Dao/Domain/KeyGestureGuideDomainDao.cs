@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
         {
             #region property
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3459:Unassigned members should be removed")]
             public Guid KeyActionId { get; set; }
             public long Sequence { get; set; }
 
@@ -44,8 +45,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
                 KeyActionContent = keyActionContent,
             };
 
-            var rows = Commander.Query<KeyGestureGuidRowDto>(statement, parameter);
-            rows.GroupBy(i => i.KeyActionId, i => i);
+            var map = new Dictionary<Guid, KeyGestureSetting>();
+            var keyGestureGuidRows = Commander.Query<KeyGestureGuidRowDto>(statement, parameter);
+            var keyGestureGuidGroups = keyGestureGuidRows.GroupBy(i => i.KeyActionId, i => i);
+            foreach(var group in keyGestureGuidGroups) {
+
+            }
         }
 
         #endregion

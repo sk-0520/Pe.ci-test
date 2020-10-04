@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         internal string GetKeyMappingSting(KeyActionKind keyActionKind, string parameter)
         {
+            throw new NotImplementedException();
         }
 
         #endregion

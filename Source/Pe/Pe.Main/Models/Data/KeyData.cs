@@ -351,9 +351,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         public IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
     }
 
-    public class KeyGestureSetting: IKeyActionId
+    public class KeyGestureItem: IKeyActionId
     {
-        public KeyGestureSetting(Guid keyActionId, IReadOnlyList<IReadOnlyKeyMappingData> mappings)
+        public KeyGestureItem(Guid keyActionId, IReadOnlyList<IReadOnlyKeyMappingData> mappings)
         {
             KeyActionId = keyActionId;
             Mappings = mappings;
@@ -370,6 +370,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         /// <inheritdoc cref="IKeyActionId.KeyActionId"/>
         public Guid KeyActionId { get; }
 
+        #endregion
+    }
+
+    public class KeyGestureSetting
+    {
+        public KeyGestureSetting(IReadOnlyList<KeyGestureItem> items)
+        {
+            Items = items;
+        }
+
+        #region proeprty
+
+        public IReadOnlyList<KeyGestureItem> Items { get; }
         #endregion
     }
 }
