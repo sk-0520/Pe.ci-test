@@ -19,13 +19,13 @@ block BLOCK_LAYOUT_CONTENT
 		h2 インストール方法
 		p プラグインを指定ディレクトリに配置することにより(多分)活性化します。
 		p 基本の配置先は
-			em.dir %LOCALAPPDATA%\Pe\plugin\modules
+			em(data-path="dir") %LOCALAPPDATA%\Pe\plugin\modules
 			| で、
-			em.dir プラグインディレクトリ名
+			em(data-path="dir") プラグインディレクトリ名
 			| として配置します。
 		p PLUGIN.dll というプラグインがあれば、
 			samp 
-				em.dir %LOCALAPPDATA%\Pe\plugin\modules\PLUGIN\PLUGIN.dll
+				em(data-path="dir") %LOCALAPPDATA%\Pe\plugin\modules\PLUGIN\PLUGIN.dll
 			| として配置します。
 
 		aside.bugs

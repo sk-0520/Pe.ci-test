@@ -72,16 +72,40 @@ aside.ref {
 	background: #eef;
 }
 
-code, samp, strong.value, em.ui, dfn, em.file, em.dir {
+code, samp, strong.value, em.ui, dfn, em[data-path] {
 	font-family: Consolas, monospace;
 	padding: 2px 4px;
 	margin: 2px 4px;
 	display: inline-block;
 }
 
-em.dir:before, em.file:before {
-	display: inline-block;
-	vertical-align: middle;
+em[data-path] {
+	font-style: normal;
+	
+	&[data-path]::before {
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		vertical-align: middle;
+
+		box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 2px 1px;
+		margin-right: 2px;
+	}
+	&[data-path='dir']::before {
+		content: url('../assets/path-dir.svg');
+	}
+	&[data-path='file']::before {
+		content: url('../assets/path-file.svg');
+	}
+	&[data-path='file-json']::before {
+		content: url('../assets/path-file-json.svg');
+	}
+	&[data-path='file-ps']::before {
+		content: url('../assets/path-file-ps.svg');
+	}
+	&[data-path='file-exe']::before {
+		content: url('../assets/path-file-exe.svg');
+	}
 }
 
 code {
