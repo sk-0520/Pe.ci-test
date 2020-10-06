@@ -29,7 +29,7 @@ img {
 
 figure {
 	text-align: center;
-	
+
 	figcaption {
 		font-size: 0.8em;
 	}
@@ -47,89 +47,89 @@ aside.tips, aside.warning, aside.bugs, aside.ref {
 }
 
 aside.tips aside.title, aside.warning em.title, aside.bugs em.title, aside.ref em.title {
-		display: block;
-		font-style: normal;
-		margin-bottom: 0.7ex;
-	}
+	display: block;
+	font-style: normal;
+	margin-bottom: 0.7ex;
+}
 
-	aside.tips {
-		border-color: #ff8;
-		background: #ffe;
-	}
+aside.tips {
+	border-color: #ff8;
+	background: #ffe;
+}
 
-	aside.warning {
-		border-color: #f8f;
-		background: #fef;
-	}
+aside.warning {
+	border-color: #f8f;
+	background: #fef;
+}
 
-	aside.bugs {
-		border-color: #f88;
-		background: #fee;
-	}
+aside.bugs {
+	border-color: #f88;
+	background: #fee;
+}
 
-	aside.ref {
-		border-color: #88f;
-		background: #eef;
-	}
+aside.ref {
+	border-color: #88f;
+	background: #eef;
+}
 
-	code, samp, strong.value, em.ui, dfn, em.file, em.dir {
-		font-family: Consolas, monospace;
-		padding: 2px 4px;
-		margin: 2px 4px;
-		display: inline-block;
-	}
+code, samp, strong.value, em.ui, dfn, em.file, em.dir {
+	font-family: Consolas, monospace;
+	padding: 2px 4px;
+	margin: 2px 4px;
+	display: inline-block;
+}
 
-		em.dir:before, em.file:before {
-			display: inline-block;
-			vertical-align: middle;
-		}
+em.dir:before, em.file:before {
+	display: inline-block;
+	vertical-align: middle;
+}
 
-	code {
-		border: 1px solid #888;
-		background: #eef;
-	}
+code {
+	border: 1px solid #888;
+	background: #eef;
+}
 
-	samp {
-		border: 1px solid #8bb581;
-		background: #c8f7c4;
-	}
+samp {
+	border: 1px solid #8bb581;
+	background: #c8f7c4;
+}
 
-	dfn {
-		border: 1px solid #707030;
-		background: #fffbcd;
-	}
+dfn {
+	border: 1px solid #707030;
+	background: #fffbcd;
+}
 
-	strong.value {
-		border: 1px solid #f80;
-		background: #fee;
-		border-radius: 2px;
-	}
+strong.value {
+	border: 1px solid #f80;
+	background: #fee;
+	border-radius: 2px;
+}
 
-	em.ui {
-		border: 1px outset #888;
-		background: #eee;
-		font-style: normal;
-		border-radius: 2px;
-	}
+em.ui {
+	border: 1px outset #888;
+	background: #eee;
+	font-style: normal;
+	border-radius: 2px;
+}
 
-	em.dir, em.file {
-		border: 1px dotted #762020;
-		font-style: normal;
-	}
+em.dir, em.file {
+	border: 1px dotted #762020;
+	font-style: normal;
+}
 
 
-	/* https://dl.dropboxusercontent.com/u/921159/Keyboard/page.html */
-	kbd {
-		font-family: Consolas, monospace;
-		min-width: 2ex;
-		padding: 0 0.5em;
-		margin: 0.3em 0.5ex;
-		background: #efeff2;
-		border-radius: 4px;
-		border-top: 1px solid #F5F5F5;
-		box-shadow: 0 0 25px #E8E8E8 inset, 0 1px 0 #C3C3C3, 0 2px 0 #C9C9C9, 0 2px 3px #333333;
-		color: #555;
-		text-shadow: 0 1px 0 #F5F5F5;
-		text-align: center;
-		display: inline-block;
-	}
+/* https://dl.dropboxusercontent.com/u/921159/Keyboard/page.html */
+kbd {
+	font-family: Consolas, monospace;
+	min-width: 2ex;
+	padding: 0 0.5em;
+	margin: 0.3em 0.5ex;
+	background: #efeff2;
+	border-radius: 4px;
+	border-top: 1px solid #F5F5F5;
+	box-shadow: 0 0 25px #E8E8E8 inset, 0 1px 0 #C3C3C3, 0 2px 0 #C9C9C9, 0 2px 3px #333333;
+	color: #555;
+	text-shadow: 0 1px 0 #F5F5F5;
+	text-align: center;
+	display: inline-block;
+}
