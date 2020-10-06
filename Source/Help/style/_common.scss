@@ -81,7 +81,7 @@ code, samp, strong.value, em.ui, dfn, em[data-path] {
 
 em[data-path] {
 	font-style: normal;
-	
+
 	&[data-path]::before {
 		display: inline-block;
 		width: 1em;
@@ -105,6 +105,9 @@ em[data-path] {
 	}
 	&[data-path='file-exe']::before {
 		content: url('../assets/path-file-exe.svg');
+	}
+	&[data-path='file-lib']::before {
+		content: url('../assets/path-file-lib.svg');
 	}
 }
 
