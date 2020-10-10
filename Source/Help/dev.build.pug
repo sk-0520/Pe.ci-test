@@ -1,7 +1,7 @@
 extends template/_layout.pug
 
 block BLOCK_LAYOUT_VAR
-	- var VAR_LAYOUT_TITLE = 'ビルド'
+	- var VAR_LAYOUT_TITLE = pages.dev.build
 
 block BLOCK_LAYOUT_CONTENT
 	p リリースビルドは CI で実施するが各ジョブは環境準備が整えば実施可能。ここでは各ジョブの説明と必要環境の説明を記載する。なお、ビルド処理以外のスクリプトについてはこの限りではない。
@@ -47,17 +47,17 @@ block BLOCK_LAYOUT_CONTENT
 		h2 ビルド
 		p /Build 以下のスクリプトを用いてビルドを行う
 		dl
-			dt: strong make-buildtools.ps1
+			dt: em(data-path='file-ps') make-buildtools.ps1
 			dd ビルド中に実行するツールのビルド
-			dt: strong build.ps1
+			dt: em(data-path='file-ps') build.ps1
 			dd EXE ファイル生成
-			dt: strong compress.ps1
+			dt: em(data-path='file-ps') compress.ps1
 			dd ビルド結果の圧縮
-			dt: strong create-updateinfo.ps1
+			dt: em(data-path='file-ps') create-updateinfo.ps1
 			dd 更新情報生成
-			dt: strong create-release-note.ps1
+			dt: em(data-path='file-ps') create-release-note.ps1
 			dd リリースノート生成
-			dt: strong deploy.ps1
+			dt: em(data-path='file-ps') deploy.ps1
 			dd 成果物のデプロイ
 
 		section

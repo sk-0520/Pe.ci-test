@@ -1,7 +1,7 @@
 extends template/_layout.pug
 
 block BLOCK_LAYOUT_VAR
-	- var VAR_LAYOUT_TITLE = 'ツールバー'
+	- var VAR_LAYOUT_TITLE = pages.help.launcher_toolbar
 
 block BLOCK_LAYOUT_CONTENT
 	p ツールバーによるボタン型のランチャーが Pe の主機能となります。
@@ -34,9 +34,42 @@ block BLOCK_LAYOUT_CONTENT
 			| でコンテキストメニューが表示されます。
 		p ランチャーアイテム上でメニューを表示すると該当ランチャーアイテムのメニュー項目とグループ選択項目が表示されます。
 		p ランチャーアイテム以外でメニューを表示するとグループ選択項目が表示されます。
+		section
+			h3 ファイルランチャー
+			ul
+				li
+					dfn 実行
+					br
+					| ファイルランチャーアイテムを実行します。
+				li
+					dfn ディレクトリ
+					br
+					| 登録情報をもとにディレクトリを開きます。
+				li
+					dfn コピー
+					br
+					| 登録情報をクリップボードにコピーします。
+		section
+			h3 アドオンランチャー
+			p アドオンに依存します。
+		section
+			h3 その他
+			ul
+				li
+					dfn 編集
+					br
+					| 登録情報を編集します。
+				li
+					dfn 表示アイテムを削除
+					br
+					| 該当アイテムを
+					strong ランチャーツールバーグループ
+					| から削除します。
+					aside.tips
+						p ランチャーアイテムそのものは削除されません。
 
 	section
 		h2 収まりきらないアイテム
 		p たくさんのランチャーアイテムを登録している場合マウスホイールによりアイテムをスクロールして表示します。
-		aside.bug
+		aside.bugs
 			p マウスホイールのない端末は未考慮。
