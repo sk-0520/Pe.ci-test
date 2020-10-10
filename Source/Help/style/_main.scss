@@ -46,7 +46,7 @@ section {
 
 	ul {
 		list-style: outside;
-		padding-left: 2em;
+		padding-left: 1em;
 		padding-right: 1ex;
 
 		li {
@@ -54,7 +54,7 @@ section {
 			margin-bottom: 2px;
 			background: #fff;
 			color: #000;
-
+			list-style: none;
 
 			a {
 				display: block;
@@ -71,6 +71,7 @@ section {
 				&.current {
 					font-weight: bold;
 					background: #ffdddd;
+					border-radius: 0.2em;
 				}
 			}
 		}
