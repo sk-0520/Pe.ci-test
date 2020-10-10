@@ -1,10 +1,11 @@
 extends template/_layout.pug
 
 block BLOCK_LAYOUT_VAR
-	- var VAR_LAYOUT_TITLE = 'はじめに'
+	- var VAR_LAYOUT_TITLE = pages.help.index
 
 block BLOCK_LAYOUT_CONTENT
-	p: strong 本ドキュメントは未完成です。
+	aside.bugs
+		p 本ドキュメントは未完成です。
 
 	section
 		h2 概要
@@ -24,7 +25,7 @@ block BLOCK_LAYOUT_CONTENT
 		aside.ref
 			p
 				| 詳細は
-				a(href="./help.install-uninstall-data.pug") インストール・アンインストール・保存データについて
+				a(href="./help.install-uninstall-data.pug")= pages.help.install_uninstall_data
 				| を参照のこと
 
 		h2 連絡先

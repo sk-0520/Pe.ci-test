@@ -1,7 +1,7 @@
 extends template/_layout.pug
 
 block BLOCK_LAYOUT_VAR
-	- var VAR_LAYOUT_TITLE = 'ビルド'
+	- var VAR_LAYOUT_TITLE = pages.dev.build
 
 block BLOCK_LAYOUT_CONTENT
 	p リリースビルドは CI で実施するが各ジョブは環境準備が整えば実施可能。ここでは各ジョブの説明と必要環境の説明を記載する。なお、ビルド処理以外のスクリプトについてはこの限りではない。
