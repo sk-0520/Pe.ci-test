@@ -1,47 +1,64 @@
-section
-{
+section {
 	margin-left: 0.5ex;
+
+	*.compatibility {
+		color: #f00;
+		&::before {
+			content: "[互換性]";
+		}
+	}
+	*.notice:before {
+		content: "[事前通知]";
+		color: #f00;
+	}
+	*.nuget:before {
+		content: "[NuGet]";
+		color: #0a0;
+	}
+	*.myget:before {
+		content: "[myget]";
+		color: #0a0;
+	}
+	*.plugin-compatibility:before {
+		content: "[プラグイン互換性]";
+		color: #f74;
+	}
+	*.comment {
+		font-size: 90%;
+	}
+
+	h2 {
+		padding: 0.3ex 1ex;
+		font-weight: bold;
+	}
+
+	h3 {
+		border: none;
+
+		&.note {
+			background: #ffc;
+		}
+		&.features {
+			background: #cfc;
+		}
+		&.fixes {
+			background: #fcc;
+		}
+		&.developer {
+			background: #ccf;
+		}
+	}
 }
 
-section h2
-{
-	padding: 0.3ex 1ex;
-	font-weight: bold;
-}
-
-section h3
-{
-	border: none;
-}
-
-section h3.note
-{
-	background: #ffc;
-}
-
-section h3.features
-{
-	background: #cfc;
-}
-
-section h3.fixes
-{
-	background: #fcc;
-}
-
-section h3.developer
-{
-	background: #ccf;
-}
-
-a.revision
-{
+a.revision {
 	vertical-align: middle;
 	display: inline-block;
-	margin-right: 2px;
+	margin: 0 1ex;
 	border: 1px solid #888;
+	border-radius: 4px;
 	padding: 1px;
 	font-size: 70%;
+	line-height: 1em;
 	width: 8ex;
 	white-space: nowrap;
 	overflow: hidden;
@@ -51,41 +68,7 @@ a.revision
 	text-decoration: none;
 }
 
-p.uri
-{
+p.uri {
 	margin-top: 0;
 	font-size: 80%;
-}
-
-section *.compatibility:before
-{
-	content: "[互換性]";
-}
-section *.compatibility
-{
-	color: #f00;
-}
-section *.notice:before
-{
-	content: "[事前通知]";
-	color: #f00;
-}
-section *.nuget:before
-{
-	content: "[NuGet]";
-	color: #0a0;
-}
-section *.myget:before
-{
-	content: "[myget]";
-	color: #0a0;
-}
-section *.plugin-compatibility:before
-{
-	content: "[プラグイン互換性]";
-	color: #f74;
-}
-section *.comment
-{
-	font-size: 90%;
 }
