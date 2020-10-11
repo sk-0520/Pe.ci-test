@@ -4,8 +4,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-  xmlns:app_main_view="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
-  xmlns:app_main_viewmode_iv="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.IconViewer"
+  xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
+  xmlns:app_main_viewmodels_iv="clr-namespace:ContentTypeTextNet.Pe.Main.ViewModels.IconViewer"
 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   mc:Ignorable="d"
@@ -20,8 +20,8 @@
 
     <ContentControl Grid.Column="0" IsTabStop="False" Content="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="{Binding IconMargin, RelativeSource={RelativeSource AncestorType=UserControl}}">
       <ContentControl.Resources>
-        <DataTemplate DataType="{x:Type app_main_viewmode_iv:IconViewerViewModel}">
-          <app_main_view:ImageViewerControl LauncherItemIconMode="Toolbar" IconBox="{Binding IconBox, RelativeSource={RelativeSource AncestorType=UserControl}}" IconViewer="{Binding Content, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
+        <DataTemplate DataType="{x:Type app_main_viewmodels_iv:IconViewerViewModel}">
+          <app_main_views:ImageViewerControl LauncherItemIconMode="Toolbar" IconBox="{Binding IconBox, RelativeSource={RelativeSource AncestorType=UserControl}}" IconViewer="{Binding Content, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
         </DataTemplate>
       </ContentControl.Resources>
     </ContentControl>

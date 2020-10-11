@@ -39,11 +39,13 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
 
         #region CommonDialog
 
+        /// <inheritdoc cref="CommonDialog.Reset()"/>
         public override void Reset()
         {
             ResetCore();
         }
 
+        /// <inheritdoc cref="CommonDialog.RunDialog(IntPtr)"/>
         protected override bool RunDialog(IntPtr hwndOwner)
         {
             var iconIndex = IconIndex;

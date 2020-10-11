@@ -263,12 +263,15 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         protected override Task LoadContentAsync(FrameworkElement baseElement)
         {
             //Control = (Xceed.Wpf.Toolkit.RichTextBox)control;
-            RichText = (RichTextBox)baseElement.FindName("content");
+            return DispatcherWrapper.InvokeAsync(() => {
+                RichText = (RichTextBox)baseElement.FindName("content");
+                if(RichText == null) {
+                    return;
+                }
 
-            RichText.TextChanged += Control_TextChanged;
-            RichText.SelectionChanged += RichTextBox_SelectionChanged;
-
-            return Task.Run(() => {
+                RichText.TextChanged += Control_TextChanged;
+                RichText.SelectionChanged += RichTextBox_SelectionChanged;
+            }).ContinueWith(t => {
                 var content = Model.LoadRichTextContent();
                 //RtfContent = content;
 
@@ -277,6 +280,9 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
                 DispatcherWrapper.Begin(arg => {
                     if(arg.@this.IsDisposed) {
+                        return;
+                    }
+                    if(RichText == null) {
                         return;
                     }
 

@@ -1,6 +1,9 @@
 input, select, textarea {
 	font-family: monospace;
 }
+input[name=table-name] {
+	font-size: 0.8rem;
+}
 
 table {
 	border: 1px solid #444444;

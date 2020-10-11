@@ -13,13 +13,13 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
 >
-  <ContentControl x:Name="parent" Content="{Binding IconViewer.Icon, RelativeSource={RelativeSource AncestorType=UserControl}}">
+  <ContentControl x:Name="parent" IsTabStop="False" Content="{Binding IconViewer.Icon, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <ContentControl.Resources>
       <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:ImageViewModel}">
         <Image UseLayoutRounding="True" Source="{Binding ImageSource}" />
       </DataTemplate>
       <DataTemplate DataType="{x:Type app_main_viewmodels_iconviewer:IconObjectViewModel}">
-        <ContentControl Content="{Binding Icon}" />
+        <ContentControl IsTabStop="False" Content="{Binding Icon}" />
       </DataTemplate>
     </ContentControl.Resources>
   </ContentControl>

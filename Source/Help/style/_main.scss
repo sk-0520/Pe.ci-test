@@ -3,29 +3,34 @@ $commonForegroundColor: #333333;
 $menuWidth: 25%;
 
 body {
-    font-family: 'Verdana','Skia-Regular_Condensed','Tahoma','Meiryo UI','メイリオ', Meiryo,'Osaka',YuGothic,'Yu Gothic',sans-serif;
-    font-size: 12.5pt;
-    line-height: 1.3em;
-    color: $commonForegroundColor;
-    background-color: $commonBackgroundColor;
+	font-family: 'Verdana','Skia-Regular_Condensed','Tahoma','Meiryo UI','メイリオ', Meiryo,'Osaka',YuGothic,'Yu Gothic',sans-serif;
+	font-size: 12.5pt;
+	line-height: 1.3em;
+	color: $commonForegroundColor;
+	background-color: $commonBackgroundColor;
 }
 
 h1 {
+	padding: 6px 1em;
 	border-bottom: 3px double #888;
-    line-height: 1em;
+	line-height: 1em;
 }
 
 h2 {
 	padding: 0.2ex 0.5ex;
 	background: #ccc;
-    line-height: 1em;
+	line-height: 1em;
 }
 
 h3 {
 	padding: 0.2ex 0.5ex;
 	border-left: 1ex solid #fff5bc;
 	border-bottom: 3px double #fff5bc;
-    line-height: 1em;
+	line-height: 1em;
+}
+
+section {
+	margin: 0.5ex 1em;
 }
 
 #menu, #content {
@@ -41,7 +46,7 @@ h3 {
 
 	ul {
 		list-style: outside;
-		padding-left: 2em;
+		padding-left: 1em;
 		padding-right: 1ex;
 
 		li {
@@ -49,7 +54,7 @@ h3 {
 			margin-bottom: 2px;
 			background: #fff;
 			color: #000;
-
+			list-style: none;
 
 			a {
 				display: block;
@@ -58,6 +63,7 @@ h3 {
 				&:link, &:visited {
 					color: blue;
 				}
+
 				&:hover {
 					color: red;
 				}
@@ -65,6 +71,7 @@ h3 {
 				&.current {
 					font-weight: bold;
 					background: #ffdddd;
+					border-radius: 0.2em;
 				}
 			}
 		}
@@ -83,18 +90,18 @@ h3 {
 }
 
 #footer {
-	color:lime;
+	color: lime;
 }
 
 dl.ui-help {
 	margin: 1em;
 }
 
-	dl.ui-help dt {
-		border-bottom: 2px dotted #7f9ed7;
-		padding-left: 0.5em;
-	}
+dl.ui-help dt {
+	border-bottom: 2px dotted #7f9ed7;
+	padding-left: 0.5em;
+}
 
-	dl.ui-help dd {
-		margin-bottom: 1em;
-	}
+dl.ui-help dd {
+	margin-bottom: 1em;
+}

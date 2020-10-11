@@ -11,10 +11,7 @@
   xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
   xmlns:app_core_views="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
   xmlns:app_core_views_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-  xmlns:cttn_lib_shared_lib_view_converter="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Converter;assembly=Pe.Core"
-  xmlns:cttn_lib_shared_lib_view_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
-
-  xmlns:app_core_view="clr-namespace:ContentTypeTextNet.Pe.Core.Views;assembly=Pe.Core"
+  xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
 
   xmlns:app_main_views="clr-namespace:ContentTypeTextNet.Pe.Main.Views"
   xmlns:app_main_models_data="clr-namespace:ContentTypeTextNet.Pe.Main.Models.Data"
@@ -49,13 +46,13 @@
 
       <sys:Double x:Key="DisableOpacity">0.4</sys:Double>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <cttn_lib_shared_lib_view_converter:BooleanToVisibilityConverter
+      <app_core_views_converter:BooleanToVisibilityConverter
         x:Key="FalseToVisibilityConverter"
         True="Collapsed"
         False="Visible"
       />
-      <cttn_lib_shared_lib_view_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-      <cttn_lib_shared_lib_view_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
+      <app_core_views_converter:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+      <app_core_views_converter:LogicalNotConverter x:Key="LogicalNotConverter" />
       <app_main_views_converter:TitleConverter x:Key="TitleConverter" />
       <app_main_views_converter:EnumToCultureConverter x:Key="EnumToCultureConverter" />
       <app_core_views_converter:DoubleCompareConverter x:Key="LessEqual-DoubleCompareConverter" Compare="LessEqual" />
@@ -90,24 +87,24 @@
       <i:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
     </i:EventTrigger>
 
-    <app_core_view:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
+    <app_core_views:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
       <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
-    </app_core_view:RequestTrigger>
-    <app_core_view:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
+    </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding SelectLinkFileRequest}">
       <prism:InvokeCommandAction Command="{Binding SelectLinkFileCommand ,ElementName=root}" />
-    </app_core_view:RequestTrigger>
+    </app_core_views:RequestTrigger>
     <!--<app_core_view:RequestTrigger SourceObject="{Binding UnlinkRequest}">
       <prism:InvokeCommandAction Command="{Binding UnlinkCommand ,ElementName=root}" />
     </app_core_view:RequestTrigger>-->
-    <app_core_view:RequestTrigger SourceObject="{Binding LinkChangeRequest}">
+    <app_core_views:RequestTrigger SourceObject="{Binding LinkChangeRequest}">
       <prism:InvokeCommandAction Command="{Binding LinkChangeCommand ,ElementName=root}" />
-    </app_core_view:RequestTrigger>
-    <app_core_view:RequestTrigger SourceObject="{Binding CloseRequest}">
+    </app_core_views:RequestTrigger>
+    <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
-    </app_core_view:RequestTrigger>
+    </app_core_views:RequestTrigger>
   </i:Interaction.Triggers>
   <i:Interaction.Behaviors>
-    <cttn_lib_shared_lib_view_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
+    <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
   </i:Interaction.Behaviors>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
@@ -1024,7 +1021,24 @@
                   </StackPanel>
                 </Grid>
 
-                <Button Margin="{StaticResource TopMargin}" Content="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding LinkChangeCommand}" />
+                <Button Margin="{StaticResource TopMargin}" Command="{Binding LinkChangeCommand}">
+                  <StackPanel Style="{StaticResource ImageLabel-Small}">
+                    <Control>
+                      <Control.Style>
+                        <Style TargetType="Control" BasedOn="{StaticResource Image-Small}">
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLink}" Value="True">
+                              <Setter Property="Template" Value="{StaticResource App-Image-Link}" />
+                            </DataTrigger>
+                          </Style.Triggers>
+                          <Setter Property="Template" Value="{StaticResource App-Image-Unlink}" />
+                          <Setter Property="Margin" Value="{StaticResource ImageLabel-Small-Margin}" />
+                        </Style>
+                      </Control.Style>
+                    </Control>
+                    <AccessText Text="{Binding Resources.String_Note_Status_Link_A, Source={x:Static app_main:CultureService.Instance}}" />
+                  </StackPanel>
+                </Button>
               </StackPanel>
             </GroupBox>
             <!--#endregion-->
@@ -1039,14 +1053,33 @@
                     <ColumnDefinition />
                   </Grid.ColumnDefinitions>
 
-                  <Button Grid.Column="0" Content="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding Content.CopyCommand}" />
-                  <Button Grid.Column="1" Content="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding SilentCloseCommand}" />
+                  <Button Grid.Column="0" Command="{Binding Content.CopyCommand}">
+                    <StackPanel Style="{StaticResource ImageLabel-Small}">
+                      <Control Template="{StaticResource App-Image-Clipboard-Copy}" />
+                      <AccessText Text="{Binding Resources.String_Note_Operation_Copy_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    </StackPanel>
+                  </Button>
+                  <Button Grid.Column="1" Command="{Binding SilentCloseCommand}">
+                    <StackPanel Style="{StaticResource ImageLabel-Small}">
+                      <Control Template="{StaticResource App-Image-Hidden}" />
+                      <AccessText Text="{Binding Resources.String_Note_Operation_Close_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    </StackPanel>
+                  </Button>
                   <Grid Grid.Column="2">
-                    <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}" Content="{Binding Resources.String_Note_Operation_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}" />
+                    <ToggleButton x:Name="switchRemoveNote" IsChecked="{Binding IsPopupRemoveNote}">
+                      <StackPanel Style="{StaticResource ImageLabel-Small}">
+                        <Control Template="{StaticResource App-Image-Warning}" />
+                        <AccessText Text="{Binding Resources.String_Note_Operation_Remove_Confirm_A, Source={x:Static app_main:CultureService.Instance}}" />
+                      </StackPanel>
+                    </ToggleButton>
                     <Popup Style="{StaticResource PopupMenu}" IsOpen="{Binding IsChecked, ElementName=switchRemoveNote}">
                       <Border Style="{StaticResource PopupMenuBorder}">
                         <StackPanel>
-                          <MenuItem Header="{Binding Resources.String_Note_Operation_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding RemoveCommand}" />
+                          <MenuItem Header="{Binding Resources.String_Note_Operation_Remove_Execute_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding RemoveCommand}">
+                            <MenuItem.Icon>
+                              <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Remove}" />
+                            </MenuItem.Icon>
+                          </MenuItem>
                         </StackPanel>
                       </Border>
                     </Popup>

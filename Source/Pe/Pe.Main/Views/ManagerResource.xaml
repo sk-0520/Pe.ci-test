@@ -103,8 +103,16 @@
         </MenuItem.Icon>
       </MenuItem>
       <Separator />
-      <MenuItem Header="{Binding Resources.String_AppManager_Note_Visible_A, Source={x:Static app_main:CultureService.Instance}}" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
-      <MenuItem Header="{Binding Resources.String_AppManager_Note_Hidden_A, Source={x:Static app_main:CultureService.Instance}}" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}" />
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Visible_A, Source={x:Static app_main:CultureService.Instance}}" ItemsSource="{Binding NoteVisibleItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}">
+        <MenuItem.Icon>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Visible}" />
+        </MenuItem.Icon>
+      </MenuItem>
+      <MenuItem Header="{Binding Resources.String_AppManager_Note_Hidden_A, Source={x:Static app_main:CultureService.Instance}}" ItemsSource="{Binding NoteHiddenItems}" ItemContainerStyle="{StaticResource INotifyAreaMenuItem}" Style="{StaticResource NoteItemsMenu}">
+        <MenuItem.Icon>
+          <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Hidden}" />
+        </MenuItem.Icon>
+      </MenuItem>
     </MenuItem>
 
     <MenuItem Header="{Binding Resources.String_AppManager_Command_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ShowCommandViewCommand}">
@@ -170,6 +178,9 @@
     <Separator />
 
     <MenuItem Header="{Binding Resources.String_AppManager_About_A, Source={x:Static app_main:CultureService.Instance}}">
+      <MenuItem.Icon>
+        <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-About}" />
+      </MenuItem.Icon>
       <MenuItem Command="{Binding UpdateCommand}" >
         <MenuItem.Style>
           <Style TargetType="MenuItem">

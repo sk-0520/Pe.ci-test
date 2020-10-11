@@ -6,7 +6,7 @@ using WinForms = System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 {
-    class InputSender
+    public class InputSender
     {
         #region function
 
