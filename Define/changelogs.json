@@ -1,40 +1,18 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.041",
+		"date": "2020/10/11",
+		"version": "0.99.049",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "34010dc25b7207ff356d6f46b19f4ebe643f2879",
 						"subject": "#695: ランチャーツールバーのコンテキストメニューにアイコンを付与する"
 					},
 					{
-						"revision": "",
+						"revision": "00ecdfd0a1f72ab123cf9b6d9487815b4c822248",
 						"subject": "#693: ヘルプファイル再構築"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -42,48 +20,27 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "eac9d0dec92c4d701d9295c12c38ce3d05647fa5",
 						"subject": "#689: β版実行時の警告メッセージが💩"
 					},
 					{
-						"revision": "",
+						"revision": "106c6b8ec57ea87da1785b5b215afa79572c297c",
 						"subject": "#692: ノートの RTF リンク時にエラる"
 					},
 					{
-						"revision": "",
+						"revision": "c7945bb7ad32cb791beaadd4fef183a3cdf3bb16",
 						"subject": "#696: ノートのリンク状態表示中に非アクティブになった際はリンク状態表示を非表示にすべき",
 						"comments": [
 							"リンク状態表示中に加え種別変更も対象とした"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "eed5767ba5e8495876d9eed4fe391c735d1d471b",
 						"subject": "#677: リリース物がないのにリリースノートを出そうとして死ぬ？"
 					},
 					{
-						"revision": "",
+						"revision": "91667923210a5d4df47e5e4cfb166d00b2ae43a5",
 						"subject": "#697: ランチャーツールバーのフォーカスが二重にあたっている"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "developer",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
