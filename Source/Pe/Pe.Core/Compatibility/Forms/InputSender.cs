@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
         /// <param name="keys"></param>
         public void Send(string keys)
         {
-            SendAsync(keys);
+            WinForms.SendKeys.SendWait(keys);
         }
 
         #endregion
