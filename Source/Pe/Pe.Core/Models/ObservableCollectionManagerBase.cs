@@ -192,11 +192,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
         #endregion
 
-        #region ModelBase
+        #region NotifyPropertyBase
 
         protected override void Dispose(bool disposing)
         {
-            if(!IsDisposed) {
+            if(!IsDisposed && Collection != null) {
                 CollectionNotifyCollectionChanged.CollectionChanged -= Collection_CollectionChanged;
                 CollectionNotifyCollectionChanged = null!;
                 Collection = null!;

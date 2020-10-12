@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.Core.Views.Converter
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

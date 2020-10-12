@@ -25,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
             };
             return map
                 .Where(p => mod.HasFlag(p.Key))
-                .Select(p => p.Value).
-                Aggregate(ModifierKeys.None, (a, b) => a | b)
+                .Select(p => p.Value)
+                .Aggregate(ModifierKeys.None, (a, b) => a | b)
             ;
         }
 

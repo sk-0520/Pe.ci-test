@@ -10,21 +10,22 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     {
         #region function
 
+        /// <inheritdoc cref="WinForms.SendKeys.Send"/>
         public Task SendAsync(string keys)
         {
             return Task.Run(() => {
-                WinForms.SendKeys.SendWait(keys);
+                WinForms.SendKeys.Send(keys);
             });
         }
 
-        /// <summary>
-        /// なんだかなぁ。
-        /// </summary>
-        /// <param name="keys"></param>
-        public void Send(string keys)
+        /// <inheritdoc cref="WinForms.SendKeys.SendWait"/>
+        public void SendWait(string keys)
         {
             WinForms.SendKeys.SendWait(keys);
         }
+
+        /// <inheritdoc cref="WinForms.SendKeys.Flush"/>
+        public static void Flush() => WinForms.SendKeys.Flush();
 
         #endregion
     }

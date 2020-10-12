@@ -276,6 +276,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
 
     public static class SerializeUtility
     {
+        #region proeprty
+
+        public static Func<SerializerBase> SerializerCreator { get; set; } = () => new BinaryDataContractSerializer();
+
+        #endregion
+
         #region function
 
         public static TResult Clone<TResult>(object value)
@@ -284,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 throw new ArgumentException($"cast error: {nameof(value)} is not ${typeof(TResult).FullName}");
             }
 
-            var serializer = new BinaryDataContractSerializer();
+            var serializer = SerializerCreator();
             return serializer.Clone<TResult>(value);
         }
 
@@ -296,7 +302,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 throw new ArgumentException($"cast error: {nameof(value)} is not ${typeof(TResult).FullName}");
             }
 
-            var serializer = new BinaryDataContractSerializer();
+            var serializer = SerializerCreator();
             return serializer.Clone<TResult>(value);
         }
 

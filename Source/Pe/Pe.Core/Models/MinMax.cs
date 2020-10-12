@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         public static MinMax<T> Parse<T>(string value)
             where T : IComparable<T>
         {
+            //BUGS: ロケールに合わせる必要あり
             var values = value.Split(',');
 
             if(values.Length != 2) {

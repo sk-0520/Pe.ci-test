@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Views.Converter
         public void ConvertBackTest()
         {
             var converter = new LogicalIsNullConverter();
-            Assert.ThrowsException<NotImplementedException>(() => converter.ConvertBack(default!, default!, default!, System.Globalization.CultureInfo.CurrentCulture));
+            Assert.ThrowsException<NotSupportedException>(() => converter.ConvertBack(default!, default!, default!, System.Globalization.CultureInfo.CurrentCulture));
         }
 
         #endregion
