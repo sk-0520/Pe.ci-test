@@ -43,7 +43,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region IDpiScaleOutputor
 
+        /// <inheritdoc cref="IDpiScaleOutputor.GetDpiScale"/>
         public Point GetDpiScale() => new Point(1, 1);
+        /// <inheritdoc cref="IDpiScaleOutputor.GetOwnerScreen"/>
         public IScreen GetOwnerScreen() => Screen.PrimaryScreen;
 
         #endregion
@@ -137,6 +139,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return LogicalTreeHelper.GetParent(dependencyObject);
         }
 
+        /// <summary>
+        /// 表示要素・論理要素から親要素を取得する。
+        /// </summary>
+        /// <param name="dependencyObject"></param>
+        /// <returns></returns>
         public static DependencyObject? GetParent(DependencyObject dependencyObject)
         {
             return GetLogicalParent(dependencyObject) ?? GetVisualParent(dependencyObject);
@@ -187,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
-        /// 指定要素から指定した祖先要素を取得する。
+        /// 指定要素の表示要素・論理要素から指定した祖先要素を取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="dependencyObject"></param>
