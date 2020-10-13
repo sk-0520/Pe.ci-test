@@ -111,8 +111,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         public RequestSender TitleEditStartRequest { get; } = new RequestSender();
         public RequestSender SelectLinkFileRequest { get; } = new RequestSender();
 
-        [Obsolete]
-        public RequestSender UnlinkRequest { get; } = new RequestSender();
         public RequestSender LinkChangeRequest { get; } = new RequestSender();
 
         bool CanLayoutNotify { get; set; }

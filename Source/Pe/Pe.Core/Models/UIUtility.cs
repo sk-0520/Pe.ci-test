@@ -408,39 +408,5 @@ namespace ContentTypeTextNet.Pe.Core.Models
             }
             WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
         }
-
-        [Obsolete("これなんだっけか")]
-        public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes, Type[] disableElementTypes)
-        {
-            if(enableElementTypes == null) {
-                throw new ArgumentNullException(nameof(enableElementTypes));
-            }
-            if(disableElementTypes == null) {
-                throw new ArgumentNullException(nameof(disableElementTypes));
-            }
-
-            // かなり TextSearchMatchControl に依存してる
-            if(dependencyObject is System.Windows.Documents.Run) {
-                return true;
-            }
-
-            while(dependencyObject != null) {
-                var type = dependencyObject.GetType();
-                if(disableElementTypes.Any(t => t == type)) {
-                    return false;
-                }
-                if(enableElementTypes.Any(t => t == type)) {
-                    return true;
-                }
-                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
-            }
-
-            return false;
-        }
-        [Obsolete("これなんだっけか")]
-        public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes)
-        {
-            return IsEnabledEventArea(dependencyObject, enableElementTypes, Array.Empty<Type>());
-        }
     }
 }

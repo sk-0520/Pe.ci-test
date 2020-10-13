@@ -267,17 +267,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    [Obsolete]
-    internal class LauncherItemOldImportData: LauncherItemData
-    {
-        #region property
-
-        public long ExecuteCount { get; set; }
-        public DateTime LastExecuteTimestamp { get; set; }
-
-        #endregion
-    }
-
     public enum LauncherHistoryKind
     {
         Option,
@@ -383,12 +372,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #endregion
 
-    }
-
-    [Obsolete]
-    internal class LauncherToolbarsOldData: LauncherToolbarsDisplayData
-    {
-        public IScreen? Screen { get; set; }
     }
 
     internal class LauncherFileItemData

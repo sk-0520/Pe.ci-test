@@ -46,17 +46,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItemCustomize
 
         #region function
 
-        [Obsolete]
-        public IReadOnlyCollection<LauncherEnvironmentVariableData> GetEnvironmentVariableItems()
-        {
-            var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
-            var envMergeItems = envConf.GetMergeItems(MergeTextDocument!);
-            var envRemoveItems = envConf.GetRemoveItems(RemoveTextDocument!);
-            var envVarItems = envConf.Join(envMergeItems, envRemoveItems);
-
-            return envVarItems;
-        }
-
         void ChangedEnvironmentVariable()
         {
             var envConf = new EnvironmentVariableConfiguration(LoggerFactory);
