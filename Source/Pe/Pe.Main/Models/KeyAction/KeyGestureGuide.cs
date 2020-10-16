@@ -16,6 +16,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
+        void Clear();
+
         #endregion
     }
 
@@ -45,5 +47,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         }
 
         #endregion
+
+        #region IKeyGestureGuide
+
+        /// <inheritdoc cref="IKeyGestureGuide.Clear"/>
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
     }
 }
