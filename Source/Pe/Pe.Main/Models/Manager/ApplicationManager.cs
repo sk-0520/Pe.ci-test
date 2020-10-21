@@ -363,6 +363,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     }
                 }
                 NotifyLogElement.Refresh();
+                NotifyManager.SendSettingChanged();
             } else {
                 Logger.LogInformation("設定は保存されなかったため現在要素継続");
                 EndPreferences(settingElement, Logger);

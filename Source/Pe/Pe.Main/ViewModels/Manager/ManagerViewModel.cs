@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -62,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             NoteHiddenItems.Filter = o => !((NoteNotifyAreaViewModel)o).IsVisible;
 
             ApplicationManager.StatusManager.StatusChanged += StatusManager_StatusChanged;
-
+            ApplicationManager.NotifyManager.SettingChanged += NotifyManager_SettingChanged;
         }
 
         #region property
@@ -104,6 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #region コマンド
 
+        [SettingChangedTarget]
         public string CommandKey => KeyGestureGuide.GetCommandKey();
 
         #endregion
@@ -295,6 +297,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             if(e.StatusProperty == StatusProperty.CanCallNotifyAreaMenu) {
                 IsEnabledManager = (bool)e.NewValue!;
                 Logger.LogDebug("[#530調査] IsEnabledManager: {0}", IsEnabledManager);
+            }
+        }
+
+        private void NotifyManager_SettingChanged(object? sender, NotifyEventArgs e)
+        {
+            var members = GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.GetProperty)
+                .Where(i => i.GetCustomAttribute<SettingChangedTargetAttribute>() != null)
+            ;
+            foreach(var member in members) {
+                Logger.LogTrace("{0}", member);
+                RaisePropertyChanged(member.Name);
             }
         }
 

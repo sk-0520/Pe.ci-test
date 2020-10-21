@@ -142,6 +142,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         event EventHandler<LauncherItemRemoveInLauncherGroupEventArgs>? LauncherItemRemovedInLauncherGroup;
         event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
+        /// <summary>
+        /// アプリケーションの設定が変更された際に通知される。
+        /// </summary>
+        event EventHandler<NotifyEventArgs>? SettingChanged;
+
 
         event EventHandler<FullscreenEventArgs>? FullscreenChanged;
 
@@ -173,6 +178,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         /// <param name="index">同一の<see cref="launcherItemId"/>に該当するもののうち何番目のアイテムかを示す。</param>
         void SendLauncherItemRemoveInLauncherGroup(Guid launcherGroupId, Guid launcherItemId, int index);
         void SendCustomizeLauncherItemExited(Guid launcherItemId);
+        /// <summary>
+        /// アプリケーション設定の変更を通知。
+        /// </summary>
+        void SendSettingChanged();
 
         void SendFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd);
 
@@ -296,6 +305,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             CustomizeLauncherItemExited?.Invoke(this, e);
         }
 
+        void OnSettingChanged()
+        {
+            var e = new NotifyEventArgs();
+            SettingChanged?.Invoke(this, e);
+        }
+
+
         void OnFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
             var e = new FullscreenEventArgs(screen, isFullScreen, hWnd);
@@ -316,6 +332,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         public event EventHandler<LauncherItemRemoveInLauncherGroupEventArgs>? LauncherItemRemovedInLauncherGroup;
         public event EventHandler<LauncherItemRegisteredEventArgs>? LauncherItemRegistered;
         public event EventHandler<CustomizeLauncherItemExitedEventArgs>? CustomizeLauncherItemExited;
+        public event EventHandler<NotifyEventArgs>? SettingChanged;
 
         public event EventHandler<FullscreenEventArgs>? FullscreenChanged;
 
@@ -342,6 +359,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             OnCustomizeLauncherItemExited(launcherItemId);
         }
+
+        public void SendSettingChanged()
+        {
+            OnSettingChanged();
+        }
+
 
         public void SendFullscreenChanged(IScreen screen, bool isFullScreen, IntPtr hWnd)
         {
