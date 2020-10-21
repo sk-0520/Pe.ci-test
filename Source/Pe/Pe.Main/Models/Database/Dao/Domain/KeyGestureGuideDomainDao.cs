@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
@@ -37,20 +38,37 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         #region function
 
-        public void SelectKeyMappings(KeyActionKind keyActionKind, string keyActionContent)
+        KeyMappingData ConvertFromDto(KeyGestureGuidRowDto dto)
         {
+            var keyConverter = new KeyConverter();
+            var modifierKeyTransfer = new EnumTransfer<ModifierKey>();
+            var result = new KeyMappingData() {
+                Key = (Key)keyConverter.ConvertFromInvariantString(dto.Key),
+                Shift = modifierKeyTransfer.ToEnum(dto.Shift),
+                Control = modifierKeyTransfer.ToEnum(dto.Control),
+                Alt = modifierKeyTransfer.ToEnum(dto.Alt),
+                Super = modifierKeyTransfer.ToEnum(dto.Super),
+            };
+
+            return result;
+        }
+
+        public KeyGestureSetting SelectKeyMappings(KeyActionKind keyActionKind, string keyActionContent)
+        {
+            var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
+
             var statement = LoadStatement();
             var parameter = new {
-                KeyActionKind = keyActionKind,
+                KeyActionKind = keyActionKindTransfer.ToString(keyActionKind),
                 KeyActionContent = keyActionContent,
             };
 
             var map = new Dictionary<Guid, KeyGestureSetting>();
             var keyGestureGuidRows = Commander.Query<KeyGestureGuidRowDto>(statement, parameter);
             var keyGestureGuidGroups = keyGestureGuidRows.GroupBy(i => i.KeyActionId, i => i);
-            foreach(var group in keyGestureGuidGroups) {
 
-            }
+            var items = keyGestureGuidGroups.Select(g => new KeyGestureItem(g.Key, g.Select(i => ConvertFromDto(i)).ToArray())).ToArray();
+            return new KeyGestureSetting(items);
         }
 
         #endregion

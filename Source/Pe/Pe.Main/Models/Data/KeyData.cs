@@ -361,7 +361,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
 
         #region property
 
-        IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
+        public IReadOnlyList<IReadOnlyKeyMappingData> Mappings { get; }
 
         #endregion
 
@@ -383,6 +383,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #region proeprty
 
         public IReadOnlyList<KeyGestureItem> Items { get; }
+
         #endregion
     }
 }

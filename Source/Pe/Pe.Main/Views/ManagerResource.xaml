@@ -115,7 +115,7 @@
       </MenuItem>
     </MenuItem>
 
-    <MenuItem Header="{Binding Resources.String_AppManager_Command_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ShowCommandViewCommand}">
+    <MenuItem Header="{Binding Resources.String_AppManager_Command_A, Source={x:Static app_main:CultureService.Instance}}" Command="{Binding ShowCommandViewCommand}" InputGestureText="{Binding CommandKey}">
       <MenuItem.Icon>
         <Control Style="{StaticResource Image-Small}" Template="{StaticResource App-Image-Command}" />
       </MenuItem.Icon>

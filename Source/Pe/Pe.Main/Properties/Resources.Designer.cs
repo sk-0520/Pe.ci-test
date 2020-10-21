@@ -3428,7 +3428,7 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   → に類似しているローカライズされた文字列を検索します。
+        ///    →  に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_Hook_Keyboard_Separator {
             get {

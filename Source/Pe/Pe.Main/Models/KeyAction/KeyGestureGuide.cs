@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
@@ -18,6 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         void Clear();
 
+        string GetCommandKey();
+
         #endregion
     }
 
@@ -25,25 +29,48 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
     {
         public KeyGestureGuide(IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
         {
-            Logger = loggerFactory.CreateLogger(GetType());
+            LoggerFactory = loggerFactory;
+            Logger = LoggerFactory.CreateLogger(GetType());
             MainDatabaseBarrier = mainDatabaseBarrier;
             DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region proeprty
 
+        ILoggerFactory LoggerFactory { get; }
         ILogger Logger { get; }
 
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
+        IDictionary<string, string> KeyCache { get; } = new Dictionary<string, string>();
+
         #endregion
 
         #region function
 
+        string ConvertKeyText(KeyGestureSetting setting)
+        {
+            if(setting.Items.Count == 0) {
+                return string.Empty;
+            }
+
+            var factory = new KeyMappingFactory();
+            var keyMessages = setting.Items[0].Mappings.Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
+            var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
+
+            return keyMessage;
+        }
+
         internal string GetKeyMappingSting(KeyActionKind keyActionKind, string parameter)
         {
-            throw new NotImplementedException();
+            KeyGestureSetting? setting = null;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new KeyGestureGuideDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                setting = dao.SelectKeyMappings(keyActionKind, parameter);
+            }
+
+            return ConvertKeyText(setting);
         }
 
         #endregion
@@ -53,7 +80,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         /// <inheritdoc cref="IKeyGestureGuide.Clear"/>
         public void Clear()
         {
-            throw new NotImplementedException();
+            KeyCache.Clear();
+        }
+
+        /// <inheritdoc cref="IKeyGestureGuide.GetCommandKey"/>
+        public string GetCommandKey()
+        {
+            return GetKeyMappingSting(KeyActionKind.Command, string.Empty);
         }
 
         #endregion

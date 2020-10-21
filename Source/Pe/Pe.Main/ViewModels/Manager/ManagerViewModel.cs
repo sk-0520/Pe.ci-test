@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -41,10 +42,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #endregion
 
-        public ManagerViewModel(ApplicationManager applicationManager, IUserTracker userTracker, ILoggerFactory loggerFactory)
+        public ManagerViewModel(ApplicationManager applicationManager, IKeyGestureGuide keyGestureGuide, IUserTracker userTracker, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             ApplicationManager = applicationManager;
+            KeyGestureGuide = keyGestureGuide;
             UserTracker = userTracker;
 
             LauncherToolbarCollection = ApplicationManager.GetLauncherNotifyCollection();
@@ -69,6 +71,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public bool ShowPlatformOldVersion => DateTime.Now.Day == 1;
 
         ApplicationManager ApplicationManager { get; }
+        IKeyGestureGuide KeyGestureGuide { get; }
         IUserTracker UserTracker { get; }
 
         ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
@@ -96,6 +99,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
         public ICollectionView WidgetItems { get; }
+
+        #endregion
+
+        #region コマンド
+
+        public string CommandKey => KeyGestureGuide.GetCommandKey();
 
         #endregion
 

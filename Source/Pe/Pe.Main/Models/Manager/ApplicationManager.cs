@@ -1054,7 +1054,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         public ManagerViewModel CreateViewModel()
         {
-            var viewModel = new ManagerViewModel(this, ApplicationDiContainer.Build<IUserTracker>(), LoggerFactory);
+            var viewModel = new ManagerViewModel(this, ApplicationDiContainer.Build<IKeyGestureGuide>(), ApplicationDiContainer.Build<IUserTracker>(), LoggerFactory);
             return viewModel;
         }
 
