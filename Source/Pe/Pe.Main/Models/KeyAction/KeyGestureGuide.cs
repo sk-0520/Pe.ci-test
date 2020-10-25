@@ -18,9 +18,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
+        [Obsolete]
         void Clear();
 
         string GetCommandKey();
+        string GetNoteKey(KeyActionContentNote keyActionContentNote);
 
         #endregion
     }
@@ -43,13 +45,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         IMainDatabaseBarrier MainDatabaseBarrier { get; }
         IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
+        [Obsolete]
         IDictionary<string, string> KeyCache { get; } = new Dictionary<string, string>();
 
         #endregion
 
         #region function
 
-        string ConvertKeyText(KeyGestureSetting setting)
+        private string ConvertKeyText(KeyGestureSetting setting)
         {
             if(setting.Items.Count == 0) {
                 return string.Empty;
@@ -62,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return keyMessage;
         }
 
-        internal string GetKeyMappingSting(KeyActionKind keyActionKind, string parameter)
+        private string GetKeyMappingSting(KeyActionKind keyActionKind, string parameter)
         {
             KeyGestureSetting? setting = null;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
@@ -78,6 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         #region IKeyGestureGuide
 
         /// <inheritdoc cref="IKeyGestureGuide.Clear"/>
+        [Obsolete]
         public void Clear()
         {
             KeyCache.Clear();
@@ -87,6 +91,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
         public string GetCommandKey()
         {
             return GetKeyMappingSting(KeyActionKind.Command, string.Empty);
+        }
+
+        /// <inheritdoc cref="IKeyGestureGuide.GetNoteKey(KeyActionContentNote)"/>
+        public string GetNoteKey(KeyActionContentNote keyActionContentNote)
+        {
+            var converter = new NoteContentConverter();
+            var parameter = converter.ToContent(keyActionContentNote);
+            return GetKeyMappingSting(KeyActionKind.Note, parameter);
         }
 
         #endregion

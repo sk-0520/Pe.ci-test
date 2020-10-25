@@ -81,6 +81,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #region ノート
 
+        [SettingChangedTarget]
+        public string NoteCreateKey => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.Create);
+        [SettingChangedTarget]
+        public string NoteZOrderTopKey => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderTop);
+        [SettingChangedTarget]
+        public string NoteZOrderBottomKey => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderBottom);
+
         public bool IsOpenNoteMenu
         {
             get => this._isOpenNoteMenu;
