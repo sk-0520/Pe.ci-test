@@ -64,7 +64,13 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Configuration.Json 3.1.8 -> 3.1.9",
+							"Microsoft.Extensions.Logging 3.1.8 -> 3.1.9",
+							"Microsoft.Extensions.Logging.Abstractions 3.1.8 -> 3.1.9"
+						]
 					},
 					{
 						"revision": "",
