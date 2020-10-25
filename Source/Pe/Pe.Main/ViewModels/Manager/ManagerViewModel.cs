@@ -82,11 +82,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         #region ノート
 
         [SettingChangedTarget]
-        public string NoteCreateKey => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.Create);
+        public string NoteCreateKeyGesture => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.Create);
         [SettingChangedTarget]
-        public string NoteZOrderTopKey => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderTop);
+        public string NoteZOrderTopKeyGesture => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderTop);
         [SettingChangedTarget]
-        public string NoteZOrderBottomKey => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderBottom);
+        public string NoteZOrderBottomKeyGesture => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderBottom);
 
         public bool IsOpenNoteMenu
         {
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         #region コマンド
 
         [SettingChangedTarget]
-        public string CommandKey => KeyGestureGuide.GetCommandKey();
+        public string CommandKeyGesture => KeyGestureGuide.GetCommandKey();
 
         #endregion
 
