@@ -84,6 +84,11 @@
 					},
 					{
 						"revision": "",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 84.4.10 -> 85.3.130"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
