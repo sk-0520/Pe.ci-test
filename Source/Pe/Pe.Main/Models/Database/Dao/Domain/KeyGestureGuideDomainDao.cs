@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
@@ -61,6 +63,25 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var parameter = new {
                 KeyActionKind = keyActionKindTransfer.ToString(keyActionKind),
                 KeyActionContent = keyActionContent,
+            };
+
+            var map = new Dictionary<Guid, KeyGestureSetting>();
+            var keyGestureGuidRows = Commander.Query<KeyGestureGuidRowDto>(statement, parameter);
+            var keyGestureGuidGroups = keyGestureGuidRows.GroupBy(i => i.KeyActionId, i => i);
+
+            var items = keyGestureGuidGroups.Select(g => new KeyGestureItem(g.Key, g.Select(i => ConvertFromDto(i)).ToArray())).ToArray();
+            return new KeyGestureSetting(items);
+        }
+
+        public KeyGestureSetting SelectLauncherKeyMappings(Guid launcherItemId)
+        {
+            var keyActionKindTransfer = new EnumTransfer<KeyActionKind>();
+
+            var statement = LoadStatement();
+            var parameter = new {
+                KeyActionKind = keyActionKindTransfer.ToString(KeyActionKind.LauncherItem),
+                KeyActionContents = EnumUtility.GetMembers<KeyActionContentLauncherItem>().Select(i => i.ToString()).ToArray(),
+                LauncherItemId = launcherItemId.ToString("D"),
             };
 
             var map = new Dictionary<Guid, KeyGestureSetting>();

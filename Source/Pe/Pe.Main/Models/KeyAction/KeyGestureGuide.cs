@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         string GetCommandKey();
         string GetNoteKey(KeyActionContentNote keyActionContentNote);
+        string GetLauncherItemKey(Guid launcherItemId);
 
         #endregion
     }
@@ -76,6 +77,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return ConvertKeyText(setting);
         }
 
+        private string GetLauncherItemKeyMappingSting(Guid launcherItemId)
+        {
+            KeyGestureSetting? setting = null;
+            using(var commander = MainDatabaseBarrier.WaitRead()) {
+                var dao = new KeyGestureGuideDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                setting = dao.SelectLauncherKeyMappings(launcherItemId);
+            }
+
+            return ConvertKeyText(setting);
+        }
+
         #endregion
 
         #region IKeyGestureGuide
@@ -99,6 +111,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             var converter = new NoteContentConverter();
             var parameter = converter.ToContent(keyActionContentNote);
             return GetKeyMappingSting(KeyActionKind.Note, parameter);
+        }
+
+        /// <inheritdoc cref="IKeyGestureGuide.GetLauncherItemKey(Guid)"/>
+        public string GetLauncherItemKey(Guid launcherItemId)
+        {
+            return GetLauncherItemKeyMappingSting(launcherItemId);
         }
 
         #endregion
