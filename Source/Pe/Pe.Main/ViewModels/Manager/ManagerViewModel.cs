@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -17,6 +18,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
 using ContentTypeTextNet.Pe.Main.Models.Element.Note;
 using ContentTypeTextNet.Pe.Main.Models.Element.ReleaseNote;
 using ContentTypeTextNet.Pe.Main.Models.Element.Widget;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
@@ -41,10 +43,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         #endregion
 
-        public ManagerViewModel(ApplicationManager applicationManager, IUserTracker userTracker, ILoggerFactory loggerFactory)
+        public ManagerViewModel(ApplicationManager applicationManager, IKeyGestureGuide keyGestureGuide, IUserTracker userTracker, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             ApplicationManager = applicationManager;
+            KeyGestureGuide = keyGestureGuide;
             UserTracker = userTracker;
 
             LauncherToolbarCollection = ApplicationManager.GetLauncherNotifyCollection();
@@ -60,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             NoteHiddenItems.Filter = o => !((NoteNotifyAreaViewModel)o).IsVisible;
 
             ApplicationManager.StatusManager.StatusChanged += StatusManager_StatusChanged;
-
+            ApplicationManager.NotifyManager.SettingChanged += NotifyManager_SettingChanged;
         }
 
         #region property
@@ -69,6 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
         public bool ShowPlatformOldVersion => DateTime.Now.Day == 1;
 
         ApplicationManager ApplicationManager { get; }
+        IKeyGestureGuide KeyGestureGuide { get; }
         IUserTracker UserTracker { get; }
 
         ActionModelViewModelObservableCollectionManager<LauncherToolbarElement, LauncherToolbarNotifyAreaViewModel> LauncherToolbarCollection { get; }
@@ -76,6 +80,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
 
         #region ノート
+
+        [SettingChangedTarget]
+        public string NoteCreateKeyGesture => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.Create);
+        [SettingChangedTarget]
+        public string NoteZOrderTopKeyGesture => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderTop);
+        [SettingChangedTarget]
+        public string NoteZOrderBottomKeyGesture => KeyGestureGuide.GetNoteKey(Models.Data.KeyActionContentNote.ZOrderBottom);
 
         public bool IsOpenNoteMenu
         {
@@ -96,6 +107,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
 
         ModelViewModelObservableCollectionManagerBase<WidgetElement, WidgetNotifyAreaViewModel> WidgetCollection { get; }
         public ICollectionView WidgetItems { get; }
+
+        #endregion
+
+        #region コマンド
+
+        [SettingChangedTarget]
+        public string CommandKeyGesture => KeyGestureGuide.GetCommandKey();
 
         #endregion
 
@@ -286,6 +304,17 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Manager
             if(e.StatusProperty == StatusProperty.CanCallNotifyAreaMenu) {
                 IsEnabledManager = (bool)e.NewValue!;
                 Logger.LogDebug("[#530調査] IsEnabledManager: {0}", IsEnabledManager);
+            }
+        }
+
+        private void NotifyManager_SettingChanged(object? sender, NotifyEventArgs e)
+        {
+            var members = GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.GetProperty)
+                .Where(i => i.GetCustomAttribute<SettingChangedTargetAttribute>() != null)
+            ;
+            foreach(var member in members) {
+                Logger.LogTrace("{0}", member);
+                RaisePropertyChanged(member.Name);
             }
         }
 
