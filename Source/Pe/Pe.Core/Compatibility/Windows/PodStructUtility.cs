@@ -11,6 +11,8 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
     /// </summary>
     public static class PodStructUtility
     {
+        #region function
+
         public static RECT Convert(Rect rect)
         {
             var result = new RECT() {
@@ -54,5 +56,7 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Windows
         {
             return new Point(point.X, point.Y);
         }
+
+        #endregion
     }
 }

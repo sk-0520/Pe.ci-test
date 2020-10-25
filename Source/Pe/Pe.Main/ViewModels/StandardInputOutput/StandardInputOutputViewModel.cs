@@ -265,30 +265,6 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
             });
         }
 
-        [Obsolete]
-        private void AppendOutput(StandardOutputMode mode, string value)
-        {
-            Logger.LogTrace(value);
-            if(Terminal == null) {
-                Logger.LogTrace("来ちゃいけない制御フロー");
-                return;
-            }
-
-            DispatcherWrapper.Begin(() => {
-                var selectionIndex = Terminal.SelectionStart;
-                var selectionLength = Terminal.SelectionLength;
-
-                var index = TextDocument.TextLength;
-                var length = value.Length;
-
-                TextDocument.Insert(TextDocument.TextLength, value);
-
-                if(AutoScroll && Terminal != null) {
-                    Terminal.ScrollToEnd();
-                }
-            });
-        }
-
         void SaveLog(string path)
         {
             Logger.LogDebug(path);
@@ -395,12 +371,5 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                 Model.ErrorStreamReceiver!.StreamReceived -= ErrorStreamReceiver_StreamReceived;
             }
         }
-
-        [Obsolete]
-        private void ProcessStandardOutputReceiver_StandardOutputReceived(object? sender, ProcessStandardOutputReceivedEventArgs e)
-        {
-            AppendOutput(e.Mode, e.Value);
-        }
-
     }
 }

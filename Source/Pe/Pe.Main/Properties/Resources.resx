@@ -1853,7 +1853,7 @@
     <value>無効なキーの組み合わせ</value>
   </data>
   <data name="String_Hook_Keyboard_Separator" xml:space="preserve">
-    <value>→</value>
+    <value> → </value>
   </data>
   <data name="String_ApplicationCommand_Description_About" xml:space="preserve">
     <value>バージョン情報</value>

@@ -90,28 +90,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             var converter = new RtfConverter();
             return converter.ToString(rtfText);
         }
-
-        [Obsolete]
-        public string ToLinkSettingString(NoteLinkContentData linkData)
-        {
-            var serializer = new XmlDataContractSerializer();
-            using(var stream = new MemoryStream()) {
-                serializer.Save(linkData, stream);
-                return Encoding.GetString(stream.ToArray());
-            }
-        }
-        [Obsolete]
-        public NoteLinkContentData ToLinkSetting(string rawSetting)
-        {
-            var serializer = new XmlDataContractSerializer();
-            using(var stream = new MemoryStream()) {
-                using(var writer = new StreamWriter(stream, Encoding)) {
-                    writer.Write(rawSetting);
-                    writer.Flush();
-                    stream.Seek(0, SeekOrigin.Begin);
-                    return serializer.Load<NoteLinkContentData>(stream);
-                }
-            }
-        }
     }
 }

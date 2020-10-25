@@ -1,5 +1,50 @@
 [
 	{
+		"date": "2020/10/25",
+		"version": "0.99.056",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "7ba1874aa3eefc1b5bccf5498af19c7555139067",
+						"subject": "#691: ユーザー設定のキー操作をメニュー等々に表示する"
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "eaf580341b867e2cbb5f5ee518337f1f0e399f82",
+						"class": "nuget",
+						"subject": "MS関係パッケージ更新",
+						"comments": [
+							"Microsoft.Extensions.Configuration.Json 3.1.8 -> 3.1.9",
+							"Microsoft.Extensions.Logging 3.1.8 -> 3.1.9",
+							"Microsoft.Extensions.Logging.Abstractions 3.1.8 -> 3.1.9"
+						]
+					},
+					{
+						"revision": "8af11c7f748225c91b608fb7ae0b5f1534a3fbbb",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.113.1 -> 1.0.113.2"
+					},
+					{
+						"revision": "a1e57d528d10b4d37fcbb409e58602fb7d79d21d",
+						"class": "nuget",
+						"subject": "SonarAnalyzer.CSharp 8.13.1.21947 -> 8.14.0.22654"
+					},
+					{
+						"revision": "f4dcdd1ac448b32acc4f658a246be90de5e80874",
+						"class": "nuget",
+						"subject": "CefSharp.Wpf 84.4.10 -> 85.3.130"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/10/11",
 		"version": "0.99.049",
 		"contents": [

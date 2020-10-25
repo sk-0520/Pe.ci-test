@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         /// <summary>
         /// サイズ単位。
         /// </summary>
-        public string[] Terms { get; } = new[] { "byte", "KB", "MB", "GB", "TB" };
+        public string[] Terms { get; } = new[] { "byte", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", }; // YB とか生きている間に見ることあるんだろうか
 
         /// <summary>
         /// 1KB のサイズ。

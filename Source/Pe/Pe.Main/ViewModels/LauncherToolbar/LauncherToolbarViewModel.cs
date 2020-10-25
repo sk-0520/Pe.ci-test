@@ -38,6 +38,7 @@ using ContentTypeTextNet.Pe.Main.Models;
 using System.Windows.Threading;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.ViewModels.Font;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {
@@ -50,9 +51,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         #endregion
 
-        public LauncherToolbarViewModel(LauncherToolbarElement model, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public LauncherToolbarViewModel(LauncherToolbarElement model, IKeyGestureGuide keyGestureGuide, LauncherToolbarConfiguration launcherToolbarConfiguration, IPlatformTheme platformThemeLoader, ILauncherToolbarTheme launcherToolbarTheme, IGeneralTheme generalTheme, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
+            KeyGestureGuide = keyGestureGuide;
             LauncherToolbarConfiguration = launcherToolbarConfiguration;
             PlatformThemeLoader = platformThemeLoader;
             LauncherToolbarTheme = launcherToolbarTheme;
@@ -64,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             LauncherGroupItems = LauncherGroupCollection.ViewModels;
 
             LauncherItemCollection = new ActionModelViewModelObservableCollectionManager<LauncherItemElement, LauncherDetailViewModelBase>(Model.LauncherItems) {
-                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, DispatcherWrapper, LauncherToolbarTheme, LoggerFactory),
+                ToViewModel = (m) => LauncherItemViewModelFactory.Create(m, DockScreen, KeyGestureGuide, DispatcherWrapper, LauncherToolbarTheme, LoggerFactory),
             };
             LauncherItems = LauncherItemCollection.GetDefaultView();
 
@@ -109,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         public RequestSender ExpandShortcutFileRequest { get; } = new RequestSender();
 
         public AppDesktopToolbarExtend? AppDesktopToolbarExtend { get; set; }
-
+        IKeyGestureGuide KeyGestureGuide { get; }
         LauncherToolbarConfiguration LauncherToolbarConfiguration { get; }
         IPlatformTheme PlatformThemeLoader { get; }
         ILauncherToolbarTheme LauncherToolbarTheme { get; }

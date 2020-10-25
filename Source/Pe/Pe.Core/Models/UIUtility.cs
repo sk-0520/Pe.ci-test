@@ -43,7 +43,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region IDpiScaleOutputor
 
+        /// <inheritdoc cref="IDpiScaleOutputor.GetDpiScale"/>
         public Point GetDpiScale() => new Point(1, 1);
+        /// <inheritdoc cref="IDpiScaleOutputor.GetOwnerScreen"/>
         public IScreen GetOwnerScreen() => Screen.PrimaryScreen;
 
         #endregion
@@ -137,6 +139,11 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return LogicalTreeHelper.GetParent(dependencyObject);
         }
 
+        /// <summary>
+        /// 表示要素・論理要素から親要素を取得する。
+        /// </summary>
+        /// <param name="dependencyObject"></param>
+        /// <returns></returns>
         public static DependencyObject? GetParent(DependencyObject dependencyObject)
         {
             return GetLogicalParent(dependencyObject) ?? GetVisualParent(dependencyObject);
@@ -187,7 +194,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         }
 
         /// <summary>
-        /// 指定要素から指定した祖先要素を取得する。
+        /// 指定要素の表示要素・論理要素から指定した祖先要素を取得する。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="dependencyObject"></param>
@@ -400,40 +407,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 exStyle &= ~(int)WS_EX.WS_EX_TRANSPARENT;
             }
             WindowsUtility.SetWindowLong(hWnd, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
-        }
-
-        [Obsolete("これなんだっけか")]
-        public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes, Type[] disableElementTypes)
-        {
-            if(enableElementTypes == null) {
-                throw new ArgumentNullException(nameof(enableElementTypes));
-            }
-            if(disableElementTypes == null) {
-                throw new ArgumentNullException(nameof(disableElementTypes));
-            }
-
-            // かなり TextSearchMatchControl に依存してる
-            if(dependencyObject is System.Windows.Documents.Run) {
-                return true;
-            }
-
-            while(dependencyObject != null) {
-                var type = dependencyObject.GetType();
-                if(disableElementTypes.Any(t => t == type)) {
-                    return false;
-                }
-                if(enableElementTypes.Any(t => t == type)) {
-                    return true;
-                }
-                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
-            }
-
-            return false;
-        }
-        [Obsolete("これなんだっけか")]
-        public static bool IsEnabledEventArea(DependencyObject dependencyObject, Type[] enableElementTypes)
-        {
-            return IsEnabledEventArea(dependencyObject, enableElementTypes, Array.Empty<Type>());
         }
     }
 }

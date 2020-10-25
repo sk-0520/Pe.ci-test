@@ -68,23 +68,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
             }
         }
 
-        [Obsolete]
-        ICommand? _SelectLinkFileCommand;
-        [Obsolete]
-        public ICommand SelectLinkFileCommand
-        {
-            get
-            {
-                return this._SelectLinkFileCommand ?? (this._SelectLinkFileCommand = new DelegateCommand<RequestEventArgs>(
-                    o => {
-                        //var context = (NoteLinkSelectNotification)o.Context;
-                        //SelectLinkFile(context, o.Callback);
-                        throw new NotImplementedException("Obsolete");
-                    }
-                ));
-            }
-        }
-
         ICommand? _CloseCommand;
         public ICommand CloseCommand
         {
@@ -97,13 +80,6 @@ namespace ContentTypeTextNet.Pe.Main.Views.Note
                 ));
             }
         }
-
-        //[Obsolete]
-        //public ICommand UnlinkCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
-        //    o => {
-        //        throw new NotImplementedException("Obsolete");
-        //    }
-        //));
 
         public ICommand LinkChangeCommand => CommandStore.GetOrCreate(() => new DelegateCommand<RequestEventArgs>(
             o => {

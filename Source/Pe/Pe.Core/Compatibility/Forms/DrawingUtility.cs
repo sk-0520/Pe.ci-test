@@ -15,6 +15,13 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
     /// </summary>
     public static class DrawingUtility
     {
+        #region define
+
+        const double Dpi = 96;
+        const double Point = 72;
+
+        #endregion
+
         public static Drawing.Size Convert(Size size)
         {
             return new Drawing.Size((int)size.Width, (int)size.Height);
@@ -44,11 +51,11 @@ namespace ContentTypeTextNet.Pe.Core.Compatibility.Forms
 
         public static double ConvertFontSizeFromDrawing(double drawingFontPoint)
         {
-            return drawingFontPoint * 96 / 72;
+            return drawingFontPoint * Dpi / Point;
         }
         public static float ConvertFontSizeFromWpf(double wpfFontSize)
         {
-            return (float)(wpfFontSize / 96.0 * 72.0);
+            return (float)(wpfFontSize / Dpi * Point);
         }
 
         public static BitmapSource ImageSourceFromIcon(Drawing.Icon icon)

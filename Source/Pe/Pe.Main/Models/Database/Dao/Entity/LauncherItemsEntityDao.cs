@@ -164,16 +164,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Commander.Execute(statement, dto);
         }
 
-        [Obsolete]
-        internal void InsertOldLauncherItem(LauncherItemOldImportData data, IDatabaseCommonStatus commonStatus)
-        {
-            var statement = LoadStatement();
-            var dto = ConvertFromData(data, commonStatus);
-            dto.ExecuteCount = data.ExecuteCount;
-            dto.LastExecuteTimestamp = data.LastExecuteTimestamp;
-            Commander.Execute(statement, dto);
-        }
-
         public bool UpdateExecuteCountIncrement(Guid launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();

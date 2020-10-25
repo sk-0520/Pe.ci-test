@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Data;
 using System.Diagnostics;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
+using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -69,10 +70,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #endregion
 
-        protected LauncherDetailViewModelBase(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        protected LauncherDetailViewModelBase(LauncherItemElement model, IScreen screen, IKeyGestureGuide keyGestureGuide, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
         {
             Screen = screen;
+            KeyGestureGuide = keyGestureGuide;
             DispatcherWrapper = dispatcherWrapper;
             LauncherToolbarTheme = launcherToolbarTheme;
         }
@@ -80,6 +82,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         #region property
 
         protected IScreen Screen { get; }
+        protected IKeyGestureGuide KeyGestureGuide { get; }
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILauncherToolbarTheme LauncherToolbarTheme { get; }
         public object MainIcon => this._mainIcon ??= GetIcon(IconKind.Main);
@@ -105,7 +108,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected virtual bool CanExecuteMain => true;
 
-
+        public string ExecuteKeyGesture => KeyGestureGuide.GetLauncherItemKey(LauncherItemId);
+        public bool HasExecuteKeyGesture => !string.IsNullOrEmpty(ExecuteKeyGesture);
 
         #endregion
 
@@ -198,20 +202,20 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
     {
         #region function
 
-        public static LauncherDetailViewModelBase Create(LauncherItemElement model, IScreen screen, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
+        public static LauncherDetailViewModelBase Create(LauncherItemElement model, IScreen screen, IKeyGestureGuide keyGestureGuide, IDispatcherWrapper dispatcherWrapper, ILauncherToolbarTheme launcherToolbarTheme, ILoggerFactory loggerFactory)
         {
             switch(model.Kind) {
                 case LauncherItemKind.File:
-                    return new LauncherFileViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherFileViewModel(model, screen, keyGestureGuide, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 //case LauncherItemKind.StoreApp:
-                //    return new LauncherStoreAppViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //    return new LauncherStoreAppViewModel(model, screen, keyGestureGuide, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 case LauncherItemKind.Addon:
-                    return new LauncherAddonViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                    return new LauncherAddonViewModel(model, screen, keyGestureGuide, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 //case LauncherItemKind.Separator:
-                //    return new LauncherSeparatorViewModel(model, screen, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
+                //    return new LauncherSeparatorViewModel(model, screen, keyGestureGuide, dispatcherWrapper, launcherToolbarTheme, loggerFactory);
 
                 default:
                     throw new NotImplementedException();
