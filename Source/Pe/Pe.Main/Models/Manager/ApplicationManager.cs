@@ -1324,19 +1324,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var windowItems = WindowManager.GetWindowItems(windowKind).ToList();
             foreach(var windowItem in windowItems) {
-                if(windowItem.IsOpened) {
-                    if(!windowItem.IsClosed) {
-                        if(windowItem.Window.IsVisible) {
-                            Logger.LogTrace("閉じることのできるウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
-                            windowItem.Window.Close();
+                try {
+                    if(windowItem.IsOpened) {
+                        if(!windowItem.IsClosed) {
+                            if(windowItem.Window.IsVisible) {
+                                Logger.LogTrace("閉じることのできるウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                                windowItem.Window.Close();
+                            } else {
+                                Logger.LogTrace("非表示ウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                            }
                         } else {
-                            Logger.LogTrace("非表示ウィンドウ: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                            Logger.LogTrace("既に閉じられたウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
                         }
                     } else {
-                        Logger.LogTrace("既に閉じられたウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                        Logger.LogTrace("まだ開かれていないウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
                     }
-                } else {
-                    Logger.LogTrace("まだ開かれていないウィンドウのためクローズしない: {0}, {1}", windowItem.WindowKind, windowItem.ViewModel);
+                } catch(System.ComponentModel.Win32Exception ex) {
+                    Logger.LogError(ex, ex.Message);
                 }
             }
         }

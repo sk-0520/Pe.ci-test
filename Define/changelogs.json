@@ -43,7 +43,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#702: [Pe-CrashReport] System.ComponentModel.Win32Exception (1461): モニター ハンドルが無効です"
 					},
 					{
 						"revision": "",
