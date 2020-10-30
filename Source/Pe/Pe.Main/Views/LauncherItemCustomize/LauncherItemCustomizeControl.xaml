@@ -5,7 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="http://schemas.microsoft.com/winfx/2009/xaml"
 
-  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"

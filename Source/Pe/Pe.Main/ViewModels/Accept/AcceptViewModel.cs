@@ -23,7 +23,7 @@ using Prism.Services.Dialogs;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 {
-    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, IDialogService, IViewLifecycleReceiver, IBuildStatus
+    public class AcceptViewModel : SingleModelViewModelBase<AcceptElement>, IDialogCommand, /*IDialogService,*/ IViewLifecycleReceiver, IBuildStatus
     {
         public AcceptViewModel(AcceptElement model, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, loggerFactory)
@@ -130,6 +130,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
 
         #endregion
 
+        /*
         #region IDialogService
 
         public void Show(string name, IDialogParameters parameters, Action<IDialogResult> callback)
@@ -143,6 +144,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Accept
         }
 
         #endregion
+        */
 
         #region IBuildStatus
         public BuildType BuildType => BuildStatus.BuildType;
