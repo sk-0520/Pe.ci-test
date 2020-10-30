@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Views;
-using Prism.Interactivity.InteractionRequest;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {

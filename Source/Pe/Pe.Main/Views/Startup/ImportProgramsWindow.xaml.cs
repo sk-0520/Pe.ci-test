@@ -16,7 +16,7 @@ using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Core.Views;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
+using Microsoft.Xaml.Behaviors;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Startup
 {

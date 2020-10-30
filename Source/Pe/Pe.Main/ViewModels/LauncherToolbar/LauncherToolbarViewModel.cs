@@ -11,7 +11,7 @@ using ContentTypeTextNet.Pe.Main.Views.Extend;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
+using Microsoft.Xaml.Behaviors;
 using System.Windows.Controls;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherToolbar;
