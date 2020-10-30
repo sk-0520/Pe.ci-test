@@ -4,7 +4,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
@@ -135,9 +135,9 @@
 
     <DataTemplate x:Key="LauncherItemContentTemplate">
       <Border Background="Transparent" Padding="{Binding DataContext.ButtonPadding, ElementName=root, Mode=OneTime}">
-        <i:Interaction.Behaviors>
+        <behaviors:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DataContext.ItemDragAndDrop, ElementName=root}" />
-        </i:Interaction.Behaviors>
+        </behaviors:Interaction.Behaviors>
         <ContentPresenter Content="{TemplateBinding Content}" />
       </Border>
     </DataTemplate>
@@ -243,14 +243,14 @@
             </StackPanel>
           </ToolTip>
         </Button.ToolTip>
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
-          </i:EventTrigger>
-          <i:EventTrigger EventName="Unloaded">
-            <i:InvokeCommandAction Command="{Binding UninitializeCommand}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
+        <behaviors:Interaction.Triggers>
+          <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding InitializeCommand}" />
+          </behaviors:EventTrigger>
+          <behaviors:EventTrigger EventName="Unloaded">
+            <behaviors:InvokeCommandAction Command="{Binding UninitializeCommand}" />
+          </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
         <app_main_views_lt:LauncherContentControl />
       </Button>
     </DataTemplate>
@@ -299,14 +299,14 @@
             </StackPanel>
           </ToolTip>
         </Button.ToolTip>
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
-          </i:EventTrigger>
-          <i:EventTrigger EventName="Unloaded">
-            <i:InvokeCommandAction Command="{Binding UninitializeCommand}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
+        <behaviors:Interaction.Triggers>
+          <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding InitializeCommand}" />
+          </behaviors:EventTrigger>
+          <behaviors:EventTrigger EventName="Unloaded">
+            <behaviors:InvokeCommandAction Command="{Binding UninitializeCommand}" />
+          </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
         <app_main_views_lt:LauncherContentControl />
       </Button>
     </DataTemplate>
@@ -318,23 +318,23 @@
   <Window.Title>
     <Binding Path="SelectedLauncherGroup.Name" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
-  <i:Interaction.Triggers>
+  <behaviors:Interaction.Triggers>
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
-      <i:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
+      <behaviors:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
     </app_core_views:RequestTrigger>
     <app_core_views:RequestTrigger SourceObject="{Binding ExpandShortcutFileRequest}">
       <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
     </app_core_views:RequestTrigger>
-    <i:EventTrigger EventName="MouseDoubleClick">
-      <i:InvokeCommandAction Command="{Binding AutoHideToHideCommand}" />
-    </i:EventTrigger>
-    <i:EventTrigger EventName="PreviewMouseDown">
+    <behaviors:EventTrigger EventName="MouseDoubleClick">
+      <behaviors:InvokeCommandAction Command="{Binding AutoHideToHideCommand}" />
+    </behaviors:EventTrigger>
+    <behaviors:EventTrigger EventName="PreviewMouseDown">
       <prism:InvokeCommandAction Command="{Binding PreviewMouseDownCommand}" />
-    </i:EventTrigger>
-  </i:Interaction.Triggers>
-  <i:Interaction.Behaviors>
+    </behaviors:EventTrigger>
+  </behaviors:Interaction.Triggers>
+  <behaviors:Interaction.Behaviors>
     <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding ViewDragAndDrop}" />
-  </i:Interaction.Behaviors>
+  </behaviors:Interaction.Behaviors>
 
   <Window.Style>
     <Style TargetType="Window">

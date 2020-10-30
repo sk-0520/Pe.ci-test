@@ -5,7 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 
-  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_bridge_models_data="clr-namespace:ContentTypeTextNet.Pe.Bridge.Models.Data;assembly=Pe.Bridge"
@@ -78,14 +78,14 @@
   <Window.Title>
     <Binding Path="Title" Converter="{StaticResource TitleConverter}" />
   </Window.Title>
-  <i:Interaction.Triggers>
-    <i:EventTrigger EventName="Deactivated">
-      <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
-      <i:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}" CommandParameter="{Binding ElementName=root}" />
-    </i:EventTrigger>
-    <i:EventTrigger EventName="Activated">
-      <i:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
-    </i:EventTrigger>
+  <behaviors:Interaction.Triggers>
+    <behaviors:EventTrigger EventName="Deactivated">
+      <behaviors:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
+      <behaviors:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}" CommandParameter="{Binding ElementName=root}" />
+    </behaviors:EventTrigger>
+    <behaviors:EventTrigger EventName="Activated">
+      <behaviors:InvokeCommandAction Command="{Binding ViewActivatedCommand}" CommandParameter="{Binding ElementName=root}"/>
+    </behaviors:EventTrigger>
 
     <app_core_views:RequestTrigger SourceObject="{Binding TitleEditStartRequest}">
       <prism:InvokeCommandAction Command="{Binding TitleEditStartCommand ,ElementName=root}" />
@@ -102,10 +102,10 @@
     <app_core_views:RequestTrigger SourceObject="{Binding CloseRequest}">
       <prism:InvokeCommandAction Command="{Binding CloseCommand ,ElementName=root}" />
     </app_core_views:RequestTrigger>
-  </i:Interaction.Triggers>
-  <i:Interaction.Behaviors>
+  </behaviors:Interaction.Triggers>
+  <behaviors:Interaction.Behaviors>
     <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding DragAndDrop}" />
-  </i:Interaction.Behaviors>
+  </behaviors:Interaction.Behaviors>
   <Window.Style>
     <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}">
       <Style.Triggers>
@@ -176,11 +176,11 @@
           </Grid.ColumnDefinitions>
 
           <TextBox x:Name="inputTitle" Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Foreground="{Binding CaptionForeground}" >
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="LostFocus">
-                <i:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
+            <behaviors:Interaction.Triggers>
+              <behaviors:EventTrigger EventName="LostFocus">
+                <behaviors:InvokeCommandAction Command="{Binding SaveTitleEditCommand}" CommandParameter="{Binding ElementName=inputTitle}" />
+              </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
             <TextBox.Style>
               <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Style.Triggers>
@@ -498,11 +498,11 @@
               <!--#region テキスト -->
               <DataTemplate DataType="{x:Type app_main_viewmodels_note:NotePlainContentViewModel}">
                 <TextBox x:Name="control" Style="{StaticResource ContentTextBox}" Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=1000}">
-                  <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                      <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                    </i:EventTrigger>
-                  </i:Interaction.Triggers>
+                  <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Loaded">
+                      <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                    </behaviors:EventTrigger>
+                  </behaviors:Interaction.Triggers>
                 </TextBox>
               </DataTemplate>
               <!--#endregion -->
@@ -529,11 +529,11 @@
               </xctk:RichTextBox>-->
 
                 <Grid  x:Name="control">
-                  <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                      <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
-                    </i:EventTrigger>
-                  </i:Interaction.Triggers>
+                  <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Loaded">
+                      <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=control}" />
+                    </behaviors:EventTrigger>
+                  </behaviors:Interaction.Triggers>
 
                   <!-- #579 により Popup は消えたがわざわざ戻すのもあれなので Grid の中の一人っ子状態 -->
                   <RichTextBox x:Name="content">

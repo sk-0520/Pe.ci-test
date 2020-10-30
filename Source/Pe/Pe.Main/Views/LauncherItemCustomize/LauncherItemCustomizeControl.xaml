@@ -5,7 +5,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:sys="http://schemas.microsoft.com/winfx/2009/xaml"
 
-  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+  xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:sharpdevelop_avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
@@ -390,7 +390,7 @@
     <ItemsControl.ItemsPanel>
       <ItemsPanelTemplate>
         <StackPanel>
-          <i:Interaction.Triggers>
+          <behaviors:Interaction.Triggers>
             <app_core_views:RequestTrigger SourceObject="{Binding Editor.IconSelectRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
               <prism:InvokeCommandAction Command="{Binding IconSelectCommand ,ElementName=root}" />
             </app_core_views:RequestTrigger>
@@ -400,7 +400,7 @@
             <app_core_views:RequestTrigger SourceObject="{Binding Editor.FileSelectRequest, RelativeSource={RelativeSource AncestorType=UserControl}}">
               <prism:InvokeCommandAction Command="{Binding FileSelectCommand ,ElementName=root}" />
             </app_core_views:RequestTrigger>
-          </i:Interaction.Triggers>
+          </behaviors:Interaction.Triggers>
         </StackPanel>
       </ItemsPanelTemplate>
     </ItemsControl.ItemsPanel>
