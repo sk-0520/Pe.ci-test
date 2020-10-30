@@ -64,7 +64,11 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "#699: Prism.Wpf を 85.3.130 にバージョンアップする",
+						"comments": [
+							"DI 周りはむりでしたー"
+						]
 					},
 					{
 						"revision": "",
