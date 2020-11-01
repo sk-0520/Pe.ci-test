@@ -343,7 +343,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
                     mainDatabaseLazyWriter.Stock(c => {
                         var dao = ApplicationDiContainer.Build<KeyActionsEntityDao>(c, c.Implementation);
-                        dao.UpdateIncrementUsageCount(keyActionId.KeyActionId, DatabaseCommonStatus.CreateCurrentAccount());
+                        dao.UpdateUsageCountIncrement(keyActionId.KeyActionId, DatabaseCommonStatus.CreateCurrentAccount());
                     });
                 }
 

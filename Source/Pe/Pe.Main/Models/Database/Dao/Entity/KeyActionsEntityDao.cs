@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Commander.Execute(statement, dto) == 1;
         }
 
-        public bool UpdateIncrementUsageCount(Guid keyActionId, IDatabaseCommonStatus databaseCommonStatus)
+        public bool UpdateUsageCountIncrement(Guid keyActionId, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
