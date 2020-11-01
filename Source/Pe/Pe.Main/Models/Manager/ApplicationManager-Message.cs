@@ -338,6 +338,15 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var localModifierKeyStatus = modifierKeyStatus;
             return Task.Run(() => {
+                void UpdateKeyExecuteCount(IKeyActionId keyActionId)
+                {
+                    var mainDatabaseLazyWriter = ApplicationDiContainer.Build<IMainDatabaseLazyWriter>();
+                    mainDatabaseLazyWriter.Stock(c => {
+                        var dao = ApplicationDiContainer.Build<KeyActionsEntityDao>(c, c.Implementation);
+                        dao.UpdateIncrementUsageCount(keyActionId.KeyActionId, DatabaseCommonStatus.CreateCurrentAccount());
+                    });
+                }
+
                 KeyActionPressedJobBase? firstWaitingPressedJob = null;
 
                 foreach(var job in jobs) {
@@ -345,11 +354,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         case KeyActionKind.Replace: {
                                 var replaceJob = (KeyActionReplaceJob)job;
                                 KeyActionAssistant.ExecuteReplaceJob(replaceJob, localModifierKeyStatus);
+                                UpdateKeyExecuteCount(job.CommonData);
                             }
                             break;
 
                         case KeyActionKind.Disable:
                             // なんもしないです。。。
+                            UpdateKeyExecuteCount(job.CommonData);
                             break;
 
                         default:
@@ -362,6 +373,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                                 pressedJob.Reset();
                                 ExecuteKeyPressedJob(pressedJob);
+                                UpdateKeyExecuteCount(job.CommonData);
 
                                 break;
                             } else {
