@@ -33,6 +33,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         /// <para>最終実行バージョンがこのバージョン未満であれば処理実行対象となる。</para>
         /// </summary>
         public abstract Version Version { get; }
+#if DEBUG || BETA
+            //= new Version(0, 99, 60); // そん時のバージョンを設定する
+#else
+#error SQL VERSION
+#endif
 
         const string TitleMark = "--//";
         const string TitleCapture = "TITLE";

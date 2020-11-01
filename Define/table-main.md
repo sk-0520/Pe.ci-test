@@ -809,6 +809,7 @@ ___
 |    | o  |    | アクション種別           | KeyActionKind         | text         | System.String   |              | ランチャー, コマンド |
 |    | o  |    | アクション内容           | KeyActionContent      | text         | System.String   |              | アクション種別で変動 |
 |    | o  |    | コメント                 | Comment               | text         | System.String   |              |                      |
+|    | o  |    | 使用回数                 | UsageCount            | integer      | System.Int64    |              |                      |
 
 ### index
 
