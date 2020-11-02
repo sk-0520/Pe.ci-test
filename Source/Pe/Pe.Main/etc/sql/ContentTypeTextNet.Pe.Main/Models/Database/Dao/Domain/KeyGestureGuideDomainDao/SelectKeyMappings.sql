@@ -17,4 +17,5 @@ where
 	and
 	KeyActions.KeyActionContent = @KeyActionContent
 order by
-	KeyMappings.Sequence
+	KeyActions.UsageCount desc,
+	KeyMappings.Sequence asc
