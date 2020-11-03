@@ -23,12 +23,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
     {
         #region define
 
-        private class ReplaceComparsion: Comparer<KeyboardReplaceJobSettingEditorElement>
+        private abstract class KeyboardJobSettingBaseComparsion: Comparer<KeyboardJobSettingEditorElementBase>
         {
             #region Comparer
 
-            #endregion
-            public override int Compare([AllowNull] KeyboardReplaceJobSettingEditorElement x, [AllowNull] KeyboardReplaceJobSettingEditorElement y)
+            public override int Compare([AllowNull] KeyboardJobSettingEditorElementBase x, [AllowNull] KeyboardJobSettingEditorElementBase y)
             {
                 if(y == null) {
                     return -1;
@@ -49,9 +48,18 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
                 return x.Mappings[0].Data.Key - y.Mappings[0].Data.Key;
             }
+
+            #endregion
         }
 
+        private class ReplaceComparsion: KeyboardJobSettingBaseComparsion
+        { }
+
+        private class DisableComparsion: KeyboardJobSettingBaseComparsion
+        { }
+
         #endregion
+
         public KeyboardSettingEditorElement(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         { }
@@ -173,6 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             }
 
             Array.Sort(replaceJobEditor, new ReplaceComparsion());
+            Array.Sort(disableJobEditor, new DisableComparsion());
 
             ReplaceJobEditors.SetRange(replaceJobEditor);
             DisableJobEditors.SetRange(disableJobEditor);
