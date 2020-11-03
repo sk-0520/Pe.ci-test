@@ -1,4 +1,4 @@
-#define ENABLED_PRISM7
+//#define ENABLED_PRISM7
 
 using System;
 using System.Collections.Concurrent;

@@ -1,5 +1,54 @@
 [
 	{
+		"date": "2020/11/03",
+		"version": "0.99.063",
+		"contents": [
+			{
+				"type": "features",
+				"logs": [
+					{
+						"revision": "7347408315b6a4a44fd0aac1e708fb1d327eb6f2",
+						"subject": "#700: メニュー表示されるユーザー設定のキー操作は使用頻度の高いものを表示させる"
+					}
+				]
+			},
+			{
+				"type": "fixes",
+				"logs": [
+					{
+						"revision": "db16ee6af65fd0e470b325eeeb716c87d2ad2ed7",
+						"subject": "#702: [Pe-CrashReport] System.ComponentModel.Win32Exception (1461): モニター ハンドルが無効です"
+					},
+					{
+						"revision": "b87667dca2380d5deaaf057d308f17ce87fd073a",
+						"subject": "#704: キーボード設定の並び順が不明",
+						"comments": [
+							"押下系はSQL側とアプリ側が混在しているので諦め"
+						]
+					}
+				]
+			},
+			{
+				"type": "developer",
+				"logs": [
+					{
+						"revision": "9fbb3e5f43599da8ce9360e6e7cb8eec79f68925",
+						"class": "nuget",
+						"subject": "#699: Prism.Wpf を 85.3.130 にバージョンアップする",
+						"comments": [
+							"DI 周りはむりでしたー"
+						]
+					},
+					{
+						"revision": "1a51e2990bc819215c3888234389a1b5b69bf860",
+						"class": "nuget",
+						"subject": "System.Data.SQLite.Core 1.0.113.2 -> 1.0.113.5"
+					}
+				]
+			}
+		]
+	},
+	{
 		"date": "2020/10/25",
 		"version": "0.99.056",
 		"contents": [

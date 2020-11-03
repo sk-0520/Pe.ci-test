@@ -25,29 +25,5 @@ where
 	and
 	KeyOptions.KeyOptionValue = @LauncherItemId
 order by
-	KeyMappings.Sequence
-
-
-/*
-select
-	KeyActions.KeyActionId,
-	KeyMappings.Sequence,
-	KeyMappings.Key,
-	KeyMappings.Shift,
-	KeyMappings.Control,
-	KeyMappings.Alt,
-	KeyMappings.Super
-from
-	KeyActions
-	inner join
-		KeyMappings
-		on
-			KeyMappings.KeyActionId = KeyActions.KeyActionId
-where
-	KeyActions.KeyActionKind = @KeyActionKind
-	and
-	KeyActions.KeyActionContent in (@KeyActionContents)
-order by
-	KeyMappings.Sequence
-
-*/
+	KeyActions.UsageCount desc,
+	KeyMappings.Sequence asc

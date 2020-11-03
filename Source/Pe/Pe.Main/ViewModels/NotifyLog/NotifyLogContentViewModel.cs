@@ -6,7 +6,6 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.ViewModels;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using Microsoft.Extensions.Logging;
-using Prism.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 {

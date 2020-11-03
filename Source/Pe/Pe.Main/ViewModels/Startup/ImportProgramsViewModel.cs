@@ -16,7 +16,7 @@ using ContentTypeTextNet.Pe.Main.Models.Element.Startup;
 using ContentTypeTextNet.Pe.Main.Models.Telemetry;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
+using Microsoft.Xaml.Behaviors;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.Startup
 {

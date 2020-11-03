@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;

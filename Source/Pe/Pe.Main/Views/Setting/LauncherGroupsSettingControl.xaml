@@ -4,7 +4,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-  xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:prism="http://prismlibrary.com/"
 
   xmlns:app_core_views_attached="clr-namespace:ContentTypeTextNet.Pe.Core.Views.Attached;assembly=Pe.Core"
@@ -74,9 +74,9 @@
       </ToolBar>
 
       <ListBox Grid.Row="1" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherGroups}" ItemsSource="{Binding Editor.GroupItems, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding Editor.SelectedGroup, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <i:Interaction.Behaviors>
+        <behaviors:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.GroupsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        </i:Interaction.Behaviors>
+        </behaviors:Interaction.Behaviors>
         <!--<ListBox.ItemTemplate>
           <DataTemplate>
             <StackPanel Orientation="Horizontal">
@@ -191,9 +191,9 @@
       </ToolBar>
 
       <ListBox x:Name="items" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedGroup.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.SelectedGroup.LauncherItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <i:Interaction.Behaviors>
+        <behaviors:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        </i:Interaction.Behaviors>
+        </behaviors:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel
@@ -238,9 +238,9 @@
 
 
       <ListBox x:Name="allItems" Grid.Row="1" ScrollViewer.CanContentScroll="True" AllowDrop="True" ItemTemplate="{StaticResource Setting-LauncherItems}" SelectedItem="{Binding Editor.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=UserControl}}" ItemsSource="{Binding Editor.AllLauncherItems, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <i:Interaction.Behaviors>
+        <behaviors:Interaction.Behaviors>
           <app_core_views_attached:DragAndDropBehavior DragAndDrop="{Binding Editor.LauncherItemsDragAndDrop, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-        </i:Interaction.Behaviors>
+        </behaviors:Interaction.Behaviors>
         <ListBox.ItemsPanel>
           <ItemsPanelTemplate>
             <VirtualizingStackPanel

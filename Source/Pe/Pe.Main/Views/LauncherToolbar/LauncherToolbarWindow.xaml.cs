@@ -18,7 +18,7 @@ using ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem;
 using ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
+using Microsoft.Xaml.Behaviors;
 
 namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
 {

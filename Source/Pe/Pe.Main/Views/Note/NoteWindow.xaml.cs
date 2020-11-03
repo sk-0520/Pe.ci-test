@@ -23,7 +23,7 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Note;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using Prism.Interactivity.InteractionRequest;
+using Microsoft.Xaml.Behaviors;
 
 namespace ContentTypeTextNet.Pe.Main.Views.Note
 {

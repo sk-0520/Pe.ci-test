@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -13,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public abstract class KeyboardJobSettingEditorElementBase : ElementBase, IKeyActionId
+    public abstract class KeyboardJobSettingEditorElementBase: ElementBase, IKeyActionId
     {
         protected KeyboardJobSettingEditorElementBase(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
@@ -136,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     }
 
-    public sealed class KeyboardReplaceJobSettingEditorElement : KeyboardJobSettingEditorElementBase
+    public sealed class KeyboardReplaceJobSettingEditorElement: KeyboardJobSettingEditorElementBase
     {
         public KeyboardReplaceJobSettingEditorElement(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -147,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
     }
 
-    public sealed class KeyboardDisableJobSettingEditorElement : KeyboardJobSettingEditorElementBase
+    public sealed class KeyboardDisableJobSettingEditorElement: KeyboardJobSettingEditorElementBase
     {
         public KeyboardDisableJobSettingEditorElement(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -173,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     }
 
-    public sealed class KeyboardPressedJobSettingEditorElement : KeyboardJobSettingEditorElementBase
+    public sealed class KeyboardPressedJobSettingEditorElement: KeyboardJobSettingEditorElementBase
     {
         public KeyboardPressedJobSettingEditorElement(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
