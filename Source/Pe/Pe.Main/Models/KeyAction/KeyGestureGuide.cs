@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         string GetCommandKey();
         string GetNoteKey(KeyActionContentNote keyActionContentNote);
-        string GetLauncherItemKey(Guid launcherItemId);
+        IEnumerable<string> GetLauncherItemKeys(Guid launcherItemId);
 
         #endregion
     }
@@ -53,15 +53,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
 
         #region function
 
-        private string ConvertKeyText(KeyGestureSetting setting)
+        private string ConvertKeyText(KeyGestureItem keyGestureItem)
+        {
+            var factory = new KeyMappingFactory();
+
+            var keyMessages = keyGestureItem.Mappings.Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
+            var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
+
+            return keyMessage;
+        }
+
+        private string ConvertFirstKeyText(KeyGestureSetting setting)
         {
             if(setting.Items.Count == 0) {
                 return string.Empty;
             }
 
-            var factory = new KeyMappingFactory();
-            var keyMessages = setting.Items[0].Mappings.Select(i => factory.ToString(CultureService.Instance, i, Properties.Resources.String_Hook_Keyboard_Join));
-            var keyMessage = string.Join(Properties.Resources.String_Hook_Keyboard_Separator, keyMessages);
+            var keyMessage = ConvertKeyText(setting.Items[0]);
 
             return keyMessage;
         }
@@ -74,10 +82,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 setting = dao.SelectKeyMappings(keyActionKind, parameter);
             }
 
-            return ConvertKeyText(setting);
+            return ConvertFirstKeyText(setting);
         }
 
-        private string GetLauncherItemKeyMappingSting(Guid launcherItemId)
+        private IEnumerable<string> GetLauncherItemKeyMappingStings(Guid launcherItemId)
         {
             KeyGestureSetting? setting = null;
             using(var commander = MainDatabaseBarrier.WaitRead()) {
@@ -85,7 +93,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
                 setting = dao.SelectLauncherKeyMappings(launcherItemId);
             }
 
-            return ConvertKeyText(setting);
+            if(setting.Items.Count == 0) {
+                return Enumerable.Empty<string>();
+            }
+
+            return setting.Items.Select(i => ConvertKeyText(i));
         }
 
         #endregion
@@ -113,10 +125,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.KeyAction
             return GetKeyMappingSting(KeyActionKind.Note, parameter);
         }
 
-        /// <inheritdoc cref="IKeyGestureGuide.GetLauncherItemKey(Guid)"/>
-        public string GetLauncherItemKey(Guid launcherItemId)
+        /// <inheritdoc cref="IKeyGestureGuide.GetLauncherItemKeys(Guid)"/>
+        public IEnumerable<string> GetLauncherItemKeys(Guid launcherItemId)
         {
-            return GetLauncherItemKeyMappingSting(launcherItemId);
+            return GetLauncherItemKeyMappingStings(launcherItemId);
         }
 
         #endregion
