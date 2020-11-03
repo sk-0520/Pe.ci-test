@@ -4,6 +4,7 @@ insert into
 		KeyActionId,
 		KeyActionKind,
 		KeyActionContent,
+		UsageCount,
 		Comment,
 
 		[CreatedTimestamp],
@@ -21,6 +22,7 @@ insert into
 /* KeyActionId              */ @KeyActionId,
 /* KeyActionKind            */ @KeyActionKind,
 /* KeyActionContent         */ @KeyActionContent,
+/* UsageCount               */ 0,
 /* Comment                  */ @Comment,
 /*                          */
 /* CreatedTimestamp         */ @CreatedTimestamp,

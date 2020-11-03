@@ -17,6 +17,7 @@ using System.Diagnostics;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
+using System.Collections.ObjectModel;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 {
@@ -108,8 +109,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         protected virtual bool CanExecuteMain => true;
 
-        public string ExecuteKeyGesture => KeyGestureGuide.GetLauncherItemKey(LauncherItemId);
-        public bool HasExecuteKeyGesture => !string.IsNullOrEmpty(ExecuteKeyGesture);
+        public ObservableCollection<string>? ExecuteKeyGestures { get; private set; }
+        public bool HasExecuteKeyGestures { get; set; }
 
         #endregion
 
@@ -151,6 +152,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
         {
             NowLoading = true;
             return InitializeImplAsync().ContinueWith(_ => {
+                var keys = KeyGestureGuide.GetLauncherItemKeys(LauncherItemId);
+                ExecuteKeyGestures = new ObservableCollection<string>(keys);
+                HasExecuteKeyGestures = ExecuteKeyGestures.Any();
+
+                RaisePropertyChanged(nameof(HasExecuteKeyGestures));
+                RaisePropertyChanged(nameof(ExecuteKeyGestures));
+
                 NowLoading = false;
             });
         }

@@ -236,9 +236,20 @@
                 <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextWrapping="Wrap" FontWeight="Bold"/>
               </StackPanel>
               <TextBlock TextWrapping="Wrap" Text="{Binding Comment}" Visibility="{Binding HasComment, Converter={StaticResource BooleanToVisibilityConverter}}" />
-              <StackPanel Visibility="{Binding HasExecuteKeyGesture, Converter={StaticResource BooleanToVisibilityConverter}}">
+              <StackPanel Visibility="{Binding HasExecuteKeyGestures, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Separator />
-                <TextBlock Text="{Binding ExecuteKeyGesture}" />
+                <ItemsControl ItemsSource="{Binding ExecuteKeyGestures}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding }" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
               </StackPanel>
             </StackPanel>
           </ToolTip>
