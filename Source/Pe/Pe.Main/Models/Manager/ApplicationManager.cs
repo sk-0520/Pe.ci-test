@@ -355,6 +355,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 ApplyThemeSetting();
                 RebuildHook();
                 RebuildSchedulerSetting();
+                ResetNotifyArea();
                 ExecuteElements();
 
                 if(CommandElement != null) {
@@ -1590,7 +1591,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             ClearScreenViewElements();
 
+            ResetNotifyArea();
+
             ExecuteElements();
+        }
+
+        void ResetNotifyArea()
+        {
+            var notifyIcon = (Hardcodet.Wpf.TaskbarNotification.TaskbarIcon)Application.Current.FindResource("root");
+            var viewModel = notifyIcon.DataContext;
+            Logger.LogDebug("通知領域再設定開始");
+            notifyIcon.DataContext = null;
+            ApplicationDiContainer.Get<IDispatcherWrapper>().Begin(() => {
+                notifyIcon.DataContext = viewModel;
+                Logger.LogDebug("通知領域再設定終了");
+            }, DispatcherPriority.SystemIdle);
+
         }
 
         private void DelayResetScreenViewElements()
