@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using ContentTypeTextNet.Pe.Bridge.Models;
@@ -12,12 +14,44 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Manager.Setting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
     public class KeyboardSettingEditorElement: SettingEditorElementBase
     {
+        #region define
+
+        private class ReplaceComparsion: Comparer<KeyboardReplaceJobSettingEditorElement>
+        {
+            #region Comparer
+
+            #endregion
+            public override int Compare([AllowNull] KeyboardReplaceJobSettingEditorElement x, [AllowNull] KeyboardReplaceJobSettingEditorElement y)
+            {
+                if(y == null) {
+                    return -1;
+                }
+                if(x == null) {
+                    return +1;
+                }
+
+                Debug.Assert(x.IsInitialized);
+                Debug.Assert(y.IsInitialized);
+
+                if(x.Mappings.Count == 0) {
+                    return -1;
+                }
+                if(y.Mappings.Count == 0) {
+                    return +1;
+                }
+
+                return x.Mappings[0].Data.Key - y.Mappings[0].Data.Key;
+            }
+        }
+
+        #endregion
         public KeyboardSettingEditorElement(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
         { }
@@ -138,7 +172,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 editor.Initialize();
             }
 
-            Array.Sort(replaceJobEditor);
+            Array.Sort(replaceJobEditor, new ReplaceComparsion());
 
             ReplaceJobEditors.SetRange(replaceJobEditor);
             DisableJobEditors.SetRange(disableJobEditor);

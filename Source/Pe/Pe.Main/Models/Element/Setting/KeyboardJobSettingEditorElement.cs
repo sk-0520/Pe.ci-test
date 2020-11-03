@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
     }
 
-    public sealed class KeyboardReplaceJobSettingEditorElement: KeyboardJobSettingEditorElementBase, IComparable<KeyboardReplaceJobSettingEditorElement>
+    public sealed class KeyboardReplaceJobSettingEditorElement: KeyboardJobSettingEditorElementBase
     {
         public KeyboardReplaceJobSettingEditorElement(KeyActionData keyActionData, bool isNewJob, IMainDatabaseBarrier mainDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(keyActionData, isNewJob, mainDatabaseBarrier, databaseStatementLoader, loggerFactory)
@@ -147,28 +147,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 throw new ArgumentException(nameof(keyActionData));
             }
         }
-
-        #region IComparable
-
-        public int CompareTo([AllowNull] KeyboardReplaceJobSettingEditorElement other)
-        {
-            if(other == null) {
-                return -1;
-            }
-
-            Debug.Assert(other.IsInitialized);
-
-            if(Mappings.Count == 0) {
-                return -1;
-            }
-            if(other.Mappings.Count == 0) {
-                return +1;
-            }
-
-            return Mappings[0].Data.Key - other.Mappings[0].Data.Key;
-        }
-
-        #endregion
     }
 
     public sealed class KeyboardDisableJobSettingEditorElement: KeyboardJobSettingEditorElementBase
