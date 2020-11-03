@@ -34,11 +34,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
         /// <para>開発メモ: リリース時のバージョンとクラス名に変更すること。</para>
         /// </summary>
         public abstract Version Version { get; }
+        /*
 #if DEBUG || BETA
-            //= new Version(0, 99, 60); // そん時のバージョンを設定する
+        = new Version(0, 99, 60); // そん時のバージョンを設定する
 #else
-#error SQL VERSION
+//#error SQL VERSION
 #endif
+        */
 
         const string TitleMark = "--//";
         const string TitleCapture = "TITLE";
