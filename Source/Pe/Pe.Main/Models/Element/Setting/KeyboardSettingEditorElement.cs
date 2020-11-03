@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 {
-    public class KeyboardSettingEditorElement : SettingEditorElementBase
+    public class KeyboardSettingEditorElement: SettingEditorElementBase
     {
         public KeyboardSettingEditorElement(ISettingNotifyManager settingNotifyManager, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, IIdFactory idFactory, IImageLoader imageLoader, IMediaConverter mediaConverter, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(settingNotifyManager, clipboardManager, mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseStatementLoader, idFactory, imageLoader, mediaConverter, dispatcherWrapper, loggerFactory)
@@ -125,23 +125,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 pressedKeyActions = keyActionsEntityDao.SelectAllKeyActionsIgnoreKinds(new[] { KeyActionKind.Replace, KeyActionKind.Disable }).ToList();
             }
 
-            var replaceJobEditor = replaceKeyActions.Select(i => new KeyboardReplaceJobSettingEditorElement(i, false, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory));
-            ReplaceJobEditors.SetRange(replaceJobEditor);
+            var replaceJobEditor = replaceKeyActions.Select(i => new KeyboardReplaceJobSettingEditorElement(i, false, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory)).ToArray();
+            var disableJobEditor = disableKeyActions.Select(i => new KeyboardDisableJobSettingEditorElement(i, false, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory)).ToArray();
+            var pressedJobEditor = pressedKeyActions.Select(i => new KeyboardPressedJobSettingEditorElement(i, false, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory)).ToArray();
 
-            var disableJobEditor = disableKeyActions.Select(i => new KeyboardDisableJobSettingEditorElement(i, false, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory));
-            DisableJobEditors.SetRange(disableJobEditor);
-
-            var pressedJobEditor = pressedKeyActions.Select(i => new KeyboardPressedJobSettingEditorElement(i, false, MainDatabaseBarrier, DatabaseStatementLoader, LoggerFactory));
-            PressedJobEditors.SetRange(pressedJobEditor);
-
-            var editors = ReplaceJobEditors
+            var editors = replaceJobEditor
                 .Cast<KeyboardJobSettingEditorElementBase>()
-                .Concat(DisableJobEditors)
-                .Concat(PressedJobEditors)
+                .Concat(disableJobEditor)
+                .Concat(pressedJobEditor)
             ;
             foreach(var editor in editors) {
                 editor.Initialize();
             }
+
+            Array.Sort(replaceJobEditor);
+
+            ReplaceJobEditors.SetRange(replaceJobEditor);
+            DisableJobEditors.SetRange(disableJobEditor);
+            PressedJobEditors.SetRange(pressedJobEditor);
         }
 
 
