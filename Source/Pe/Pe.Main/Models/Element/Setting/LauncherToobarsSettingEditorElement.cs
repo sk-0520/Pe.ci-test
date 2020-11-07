@@ -39,8 +39,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         protected override void LoadImpl()
         {
             IReadOnlyList<Guid> launcherToolbarIds;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var ids = launcherToolbarsEntityDao.SelectAllLauncherToolbarIds();
                 launcherToolbarIds = ids.ToList();
             }
@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Toolbars.AddRange(nonActiveToolbars);
         }
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack commandPack)
         {
             foreach(var toolbar in Toolbars) {
                 toolbar.Save(commandPack);

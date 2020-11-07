@@ -37,8 +37,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
     public class LauncherItemDomainDao : DomainDaoBase
     {
-        public LauncherItemDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherItemDomainDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region function
@@ -66,7 +66,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var param = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QuerySingle<LauncherItemIconRowDto>(statement, param);
+            var dto = Context.QuerySingle<LauncherItemIconRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
         }

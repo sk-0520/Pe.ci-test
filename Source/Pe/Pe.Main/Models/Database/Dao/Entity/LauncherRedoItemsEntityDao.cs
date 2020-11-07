@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherRedoItemsEntityDao: EntityDaoBase
     {
-        public LauncherRedoItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherRedoItemsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.QueryFirst<bool>(statement, parameter);
+            return Context.QueryFirst<bool>(statement, parameter);
         }
 
         public LauncherRedoData SelectLauncherRedoItem(Guid launcherItemId)
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QueryFirst<LauncherRedoItemsDto>(statement, parameter);
+            var dto = Context.QueryFirst<LauncherRedoItemsDto>(statement, parameter);
             return ConvertFromDto(dto);
         }
 
@@ -89,7 +89,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
 
@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, databaseCommonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool DeleteRedoItemByLauncherItemId(Guid launcherItemId)
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

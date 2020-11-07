@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class AppLauncherToolbarSettingEntityDao: EntityDaoBase
     {
-        public AppLauncherToolbarSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public AppLauncherToolbarSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public Guid SelectAppLauncherToolbarSettingFontId()
         {
             var statement = LoadStatement();
-            return Commander.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<Guid>(statement);
         }
 
         public AppLauncherToolbarSettingData SelectSettingLauncherToolbarSetting()
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var launcherGroupPositionTransfer = new EnumTransfer<LauncherGroupPosition>();
 
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppLauncherToolbarSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppLauncherToolbarSettingEntityDto>(statement);
             var result = new AppLauncherToolbarSettingData() {
                 ContentDropMode = launcherToolbarContentDropModeTransfer.ToEnum( dto.ContentDropMode),
                 GroupMenuPosition = launcherGroupPositionTransfer.ToEnum( dto.GroupMenuPosition),
@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 GroupMenuPosition = launcherGroupPositionTransfer.ToString(data.GroupMenuPosition),
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
 

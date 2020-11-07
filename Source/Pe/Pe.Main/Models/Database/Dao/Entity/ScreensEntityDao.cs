@@ -31,8 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class ScreensEntityDao : EntityDaoBase
     {
-        public ScreensEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public ScreensEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region function
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 ScreenName = screenName ?? string.Empty,
             };
-            return Commander.QuerySingle<bool>(statement, param);
+            return Context.QuerySingle<bool>(statement, param);
         }
 
         public bool InsertScreen(IScreen screen, IDatabaseCommonStatus commonStatus)
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             };
             commonStatus.WriteCommon(dto);
 
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         #endregion

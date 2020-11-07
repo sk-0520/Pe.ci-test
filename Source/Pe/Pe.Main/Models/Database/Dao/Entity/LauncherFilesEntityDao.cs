@@ -43,8 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherFilesEntityDao : EntityDaoBase
     {
-        public LauncherFilesEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-         : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherFilesEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+         : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QuerySingle<LauncherFilesEntityPathDto>(statement, parameter);
+            var dto = Context.QuerySingle<LauncherFilesEntityPathDto>(statement, parameter);
             var data = ConvertFromDto(dto);
             return data;
         }
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QueryFirst<LauncherFilesEntityDto>(statement, parameter);
+            var dto = Context.QueryFirst<LauncherFilesEntityDto>(statement, parameter);
             var data = ConvertFromDto(dto);
             return data;
 
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.WorkDirectory] = data.WorkDirectoryPath;
             param[Column.StandardIoEncoding] = encodingConverter.ToString(EncodingConverter.DefaultStandardInputOutputEncoding);
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateCustomizeLauncherFile(Guid launcherItemId, ILauncherExecutePathParameter pathParameter, ILauncherExecuteCustomParameter customParameter, IDatabaseCommonStatus commonStatus)
@@ -151,7 +151,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.RunAdministrator] = customParameter.RunAdministrator;
             parameter[Column.LauncherItemId] = launcherItemId;
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool DeleteFileByLauncherItemId(Guid launcherItemId)
@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

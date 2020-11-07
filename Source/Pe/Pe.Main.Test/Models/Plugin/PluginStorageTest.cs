@@ -64,8 +64,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
         [TestInitialize]
         public void Initialize()
         {
-            using var commander = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
-            var pluginsEntityDao = Test.DiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+            using var context = Test.DiContainer.Build<IMainDatabaseBarrier>().WaitWrite();
+            var pluginsEntityDao = Test.DiContainer.Build<PluginsEntityDao>(context, context.Implementation);
             if(pluginsEntityDao.SelecteExistsPlugin(this.Informations.PluginIdentifiers.PluginId)) {
                 return;
             }
@@ -77,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Plugin
                 },
                 DatabaseCommonStatus.CreateCurrentAccount()
             );
-            commander.Commit();
+            context.Commit();
         }
 
         [TestMethod]

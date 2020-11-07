@@ -94,8 +94,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
         {
             ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherItemsDao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherItemsDao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var launcherItemData = launcherItemsDao.SelectLauncherItem(LauncherItemId);
 
                 Name = launcherItemData.Name;
@@ -111,8 +111,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             ThrowIfDisposed();
 
             LauncherExecutePathData pathData;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 pathData = launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
 
@@ -151,11 +151,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             return result;
         }
 
-        List<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        List<LauncherEnvironmentVariableData> GetMergeEnvironmentVariableItems(IDatabaseContext context, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
 
-            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var launcherEnvVarsEntityDao = new LauncherEnvVarsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
             return launcherEnvVarsEntityDao.SelectEnvVarItems(LauncherItemId).ToList();
         }
 
@@ -166,10 +166,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             LauncherFileData fileData;
             List<LauncherEnvironmentVariableData> envItems;
             LauncherRedoData redoData;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
-                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherRedoItemsEntityDao = new LauncherRedoItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
+                var launcherRedoSuccessExitCodesEntityDao = new LauncherRedoSuccessExitCodesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
 
                 fileData = launcherFilesEntityDao.SelectFile(LauncherItemId);
                 if(customArgument != null) {
@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
                     fileData.Option = customArgument;
                 }
                 if(fileData.IsEnabledCustomEnvironmentVariable) {
-                    envItems = GetMergeEnvironmentVariableItems(commander, commander.Implementation);
+                    envItems = GetMergeEnvironmentVariableItems(context, context.Implementation);
                 } else {
                     envItems = new List<LauncherEnvironmentVariableData>();
                 }
@@ -220,8 +220,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             var launcherItemAddonViewSupporter = LauncherItemAddonViewSupporterCollection.Create(plugin.PluginInformations, LauncherItemId);
             var launcherItemExtensionExecuteParameter = LauncherItemAddonContextFactory.CreateExtensionExecuteParameter(plugin.PluginInformations, LauncherItemId, launcherItemAddonViewSupporter);
             DispatcherWrapper.Begin(() => {
-                using var databaseCommandsPack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformations));
-                using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseCommandsPack, false)) {
+                using var databaseContextsPack = PersistentHelper.WaitWritePack(MainDatabaseBarrier, FileDatabaseBarrier, TemporaryDatabaseBarrier, DatabaseCommonStatus.CreatePluginAccount(plugin.PluginInformations));
+                using(var context = LauncherItemAddonContextFactory.CreateContext(plugin.PluginInformations, LauncherItemId, databaseContextsPack, false)) {
                     addon.Execute(customArgument, commandExecuteParameter, launcherItemExtensionExecuteParameter, context);
                 }
             });
@@ -284,10 +284,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
 
         private void IncrementExecuteCount()
         {
-            using(var commander = MainDatabaseBarrier.WaitWrite()) {
-                var dao = new LauncherItemsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitWrite()) {
+                var dao = new LauncherItemsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 dao.UpdateExecuteCountIncrement(LauncherItemId, DatabaseCommonStatus.CreateCurrentAccount());
-                commander.Commit();
+                context.Commit();
             }
         }
 
@@ -315,8 +315,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem
             Debug.Assert(Kind == LauncherItemKind.File);
             ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherFilesEntityDao = new LauncherFilesEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherFilesEntityDao = new LauncherFilesEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 return launcherFilesEntityDao.SelectPath(LauncherItemId);
             }
         }

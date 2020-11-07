@@ -53,8 +53,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherItemsEntityDao : EntityDaoBase
     {
-        public LauncherItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation , loggerFactory)
+        public LauncherItemsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation , loggerFactory)
         { }
 
         #region property
@@ -120,13 +120,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public IEnumerable<string> SelectFuzzyCodes(string baseCode)
         {
             var statement = LoadStatement();
-            return Commander.Query<string>(statement, new { BaseCode = baseCode });
+            return Context.Query<string>(statement, new { BaseCode = baseCode });
         }
 
         public IEnumerable<Guid> SelectAllLauncherItemIds()
         {
             var statement = LoadStatement();
-            return Commander.Query<Guid>(statement);
+            return Context.Query<Guid>(statement);
         }
 
         public LauncherItemData SelectLauncherItem(Guid launcherItemId)
@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QuerySingle<LauncherItemsRowDto>(statement, param);
+            var dto = Context.QuerySingle<LauncherItemsRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
         }
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public IEnumerable<LauncherItemData> SelectApplicationLauncherItems()
         {
             var statement = LoadStatement();
-            return Commander.Query<LauncherItemsRowDto>(statement)
+            return Context.Query<LauncherItemsRowDto>(statement)
                 .Select(i => ConvertFromDto(i))
             ;
         }
@@ -154,14 +154,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.QueryFirst<bool>(statement, parameter);
+            return Context.QueryFirst<bool>(statement, parameter);
         }
 
         public void InsertLauncherItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            Commander.Execute(statement, dto);
+            Context.Execute(statement, dto);
         }
 
         public bool UpdateExecuteCountIncrement(Guid launcherItemId, IDatabaseCommonStatus databaseCommonStatus)
@@ -170,14 +170,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = databaseCommonStatus.CreateCommonDtoMapping();
             param[Column.LauncherItemId] = launcherItemId;
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateCustomizeLauncherItem(LauncherItemData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool DeleteLauncherItem(Guid launcherItemId)
@@ -186,7 +186,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

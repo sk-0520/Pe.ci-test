@@ -120,14 +120,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
             var appLauncherItemsMap = new Dictionary<Guid, LauncherSettingCommonData>();
 
-            using(var commander = ServiceLocator.Get<IMainDatabaseBarrier>().WaitRead()) {
-                var launcherItemsEntityDao = ServiceLocator.Build<LauncherItemsEntityDao>(commander, commander.Implementation);
+            using(var context = ServiceLocator.Get<IMainDatabaseBarrier>().WaitRead()) {
+                var launcherItemsEntityDao = ServiceLocator.Build<LauncherItemsEntityDao>(context, context.Implementation);
                 launcherItemIds = launcherItemsEntityDao.SelectAllLauncherItemIds().ToList();
 
-                var launcherGroupsEntityDao = ServiceLocator.Build<LauncherGroupsEntityDao>(commander, commander.Implementation);
+                var launcherGroupsEntityDao = ServiceLocator.Build<LauncherGroupsEntityDao>(context, context.Implementation);
                 groupIds = launcherGroupsEntityDao.SelectAllLauncherGroupIds().ToList();
 
-                var launcherTagsEntityDao = ServiceLocator.Build<LauncherTagsEntityDao>(commander, commander.Implementation);
+                var launcherTagsEntityDao = ServiceLocator.Build<LauncherTagsEntityDao>(context, context.Implementation);
                 var allTagMap = launcherTagsEntityDao.SelectAllTags();
 
                 foreach(var data in launcherItemsEntityDao.SelectApplicationLauncherItems()) {

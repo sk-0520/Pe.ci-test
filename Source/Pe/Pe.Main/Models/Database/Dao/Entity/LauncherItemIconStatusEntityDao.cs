@@ -33,8 +33,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         #endregion
 
 
-        public LauncherItemIconStatusEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherItemIconStatusEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            return Commander.QueryFirstOrDefault<bool>(statement, parameter);
+            return Context.QueryFirstOrDefault<bool>(statement, parameter);
         }
 
         public IEnumerable<LauncherIconStatus> SelectLauncherItemIconAllSizeStatus(Guid launcherItemId)
@@ -84,7 +84,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Query<LauncherItemIconLastUpdatedStatusDto>(statement, parameter)
+            return Context.Query<LauncherItemIconLastUpdatedStatusDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
         }
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            var dto = Commander.QueryFirstOrDefault<LauncherItemIconLastUpdatedStatusDto>(statement, parameter);
+            var dto = Context.QueryFirstOrDefault<LauncherItemIconLastUpdatedStatusDto>(statement, parameter);
             if(dto == null) {
                 return null;
             }
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconScale.Box);
             parameter[Column.IconScale] = iconScale.Dpi.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateLastUpdatedIconTimestamp(Guid launcherItemId, in IconScale iconScale, [DateTimeKind(DateTimeKind.Utc)] DateTime timestamp, IDatabaseCommonStatus commonStatus)
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.IconBox] = iconBoxTransfer.ToString(iconScale.Box);
             parameter[Column.IconScale] = iconScale.Dpi.X;
             parameter[Column.LastUpdatedTimestamp] = timestamp;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public int DeleteAllSizeLauncherItemIconState(Guid launcherItemId)
@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
             };
 
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

@@ -105,8 +105,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         IReadOnlyList<LauncherIconStatus> GetUpdateTartget(Guid launcherItemIs)
         {
-            using var commander = FileDatabaseBarrier.WaitRead();
-            var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using var context = FileDatabaseBarrier.WaitRead();
+            var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
             var status = launcherItemIconStatusEntityDao.SelectLauncherItemIconAllSizeStatus(launcherItemIs)
                 .Where(i => IsNeedUpdate(i, DateTime.UtcNow))
                 .ToList()
@@ -116,8 +116,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Launcher
 
         private Task UpdateTargetAsync(Guid launcherItemId, LauncherIconStatus target, CancellationToken cancellationToken)
         {
-            using(var commander = FileDatabaseBarrier.WaitRead()) {
-                var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = FileDatabaseBarrier.WaitRead()) {
+                var launcherItemIconStatusEntityDao = new LauncherItemIconStatusEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 var nowStatus = launcherItemIconStatusEntityDao.SelectLauncherItemIconSingleSizeStatus(launcherItemId, target.IconScale);
                 if(nowStatus == null) {
                     // 対象アイテムは破棄された

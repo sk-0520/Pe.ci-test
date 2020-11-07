@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherTagsEntityDao: EntityDaoBase
     {
-        public LauncherTagsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherTagsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Query<string>(statement, parameter);
+            return Context.Query<string>(statement, parameter);
         }
 
         public IEnumerable<string> SelectUniqueTags(Guid launcherItemId)
@@ -56,13 +56,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Query<string>(statement, parameter);
+            return Context.Query<string>(statement, parameter);
         }
 
         public IDictionary<Guid, List<string>> SelectAllTags()
         {
             var statement = LoadStatement();
-            var map = Commander.Query<(Guid id, string tag)>(statement)
+            var map = Context.Query<(Guid id, string tag)>(statement)
                 .GroupBy(i => i.id, i => i.tag)
                 .ToDictionary(i => i.Key, i => i.ToList())
             ;
@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                     TagName = tag,
                 };
                 commonStatus.WriteCommon(dto);
-                Commander.Execute(statement, dto);
+                Context.Execute(statement, dto);
             }
         }
 
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

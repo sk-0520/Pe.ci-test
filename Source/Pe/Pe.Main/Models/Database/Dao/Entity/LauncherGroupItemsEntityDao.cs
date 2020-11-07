@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherGroupItemsEntityDao : EntityDaoBase
     {
-        public LauncherGroupItemsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherGroupItemsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -46,13 +46,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public long SelectMaxSequence(Guid groupId)
         {
             var statement = LoadStatement();
-            return Commander.QuerySingle<long>(statement, new { LauncherGroupId = groupId });
+            return Context.QuerySingle<long>(statement, new { LauncherGroupId = groupId });
         }
 
         public IEnumerable<Guid> SelectAllLauncherGroupItemIds()
         {
             var statement = LoadStatement();
-            return Commander.Query<Guid>(statement);
+            return Context.Query<Guid>(statement);
         }
 
         public IEnumerable<Guid> SelectLauncherItemIds(Guid launcherGroupId)
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 LauncherGroupId = launcherGroupId,
             };
-            return Commander.Query<Guid>(statement, param);
+            return Context.Query<Guid>(statement, param);
         }
 
         public void InsertNewItems(Guid groupId, IEnumerable<Guid> itemIds, long startSequence, int sortStep, IDatabaseCommonStatus commonStatus)
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                     Sequence = startSequence + (sortStep * (counter++)),
                 };
                 commonStatus.WriteCommon(dto);
-                Commander.Execute(statement, dto);
+                Context.Execute(statement, dto);
             }
         }
 
@@ -85,7 +85,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         public int DeleteGroupItemsByLauncherGroupId(Guid launcherGroupId)
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherGroupId = launcherGroupId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         public bool DeleteGroupItemsLauncherItem(Guid launcherGroupId, Guid launcherItemId, int index)
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 LauncherItemId = launcherItemId,
                 ItemIndex = index,
             };
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

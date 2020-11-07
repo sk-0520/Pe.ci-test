@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class AppNoteSettingEntityDao : EntityDaoBase
     {
-        public AppNoteSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public AppNoteSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public Guid SelectAppNoteSettingFontId()
         {
             var statement = LoadStatement();
-            return Commander.QueryFirst<Guid>(statement);
+            return Context.QueryFirst<Guid>(statement);
         }
 
         public SettingAppNoteSettingData SelectSettingNoteSetting()
@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var noteCaptionPositionTransfer = new EnumTransfer<NoteCaptionPosition>();
 
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppNoteSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppNoteSettingEntityDto>(statement);
             var data = new SettingAppNoteSettingData() {
                 FontId = dto.FontId,
                 TitleKind = noteCreateTitleKindTransfer.ToEnum(dto.TitleKind),
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 CaptionPosition = noteCaptionPositionTransfer.ToString(data.CaptionPosition),
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         #endregion

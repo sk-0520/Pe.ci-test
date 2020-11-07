@@ -54,11 +54,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
 
         #region function
 
-        public void Save(IDatabaseCommandsPack commadPack)
+        public void Save(IDatabaseContextsPack commadPack)
         {
             Debug.Assert(Font != null);
 
-            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Commander, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var fontsEntityDao = new FontsEntityDao(commadPack.Main.Context, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
             fontsEntityDao.UpdateFont(Font.FontId, Font.FontData, commadPack.CommonStatus);
 
             var defaultLauncherGroupId = LauncherGroupId;
@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 }
             }
 
-            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Commander, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
+            var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commadPack.Main.Context, DatabaseStatementLoader, commadPack.Main.Implementation, LoggerFactory);
             var data = new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = LauncherToolbarId,
                 FontId = Font.FontId,
@@ -96,11 +96,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             LauncherToolbarsDisplayData data;
             LauncherToolbarsScreenData screenToolbar;
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var launcherToolbarsEntityDao = new LauncherToolbarsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 data = launcherToolbarsEntityDao.SelectDisplayData(LauncherToolbarId);
 
-                var launcherToolbarDomainDao = new LauncherToolbarDomainDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                var launcherToolbarDomainDao = new LauncherToolbarDomainDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 screenToolbar = launcherToolbarDomainDao.SelectScreenToolbar(LauncherToolbarId);
             }
 

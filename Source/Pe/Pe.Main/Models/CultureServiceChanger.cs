@@ -43,8 +43,8 @@ namespace ContentTypeTextNet.Pe.Main.Models
         string LoadLanguageName()
         {
             string lang;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new AppGeneralSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var dao = new AppGeneralSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 lang = dao.SelectLanguage();
             }
 

@@ -21,8 +21,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherStoreAppsEntityDao : EntityDaoBase
     {
-        public LauncherStoreAppsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherStoreAppsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            var dto = Commander.QueryFirst<LauncherStoreAppsEntityDto>(statement, parameter);
+            var dto = Context.QueryFirst<LauncherStoreAppsEntityDto>(statement, parameter);
             return ConvertFromDto(dto);
         }
 
@@ -71,14 +71,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, commonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdateStoreApp(Guid launcherItemId, LauncherStoreAppData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(launcherItemId, data, commonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         #endregion

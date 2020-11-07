@@ -159,8 +159,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             IReadOnlyList<KeyActionData> replaceKeyActions;
             IReadOnlyList<KeyActionData> disableKeyActions;
             IReadOnlyList<KeyActionData> pressedKeyActions;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var keyActionsEntityDao = new KeyActionsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var keyActionsEntityDao = new KeyActionsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 replaceKeyActions = keyActionsEntityDao.SelectAllKeyActionsFromKind(KeyActionKind.Replace).ToList();
                 disableKeyActions = keyActionsEntityDao.SelectAllKeyActionsFromKind(KeyActionKind.Disable).ToList();
                 pressedKeyActions = keyActionsEntityDao.SelectAllKeyActionsIgnoreKinds(new[] { KeyActionKind.Replace, KeyActionKind.Disable }).ToList();
@@ -188,7 +188,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
         }
 
 
-        protected override void SaveImpl(IDatabaseCommandsPack commandPack)
+        protected override void SaveImpl(IDatabaseContextsPack commandPack)
         {
             var jobs = ReplaceJobEditors
                 .Cast<KeyboardJobSettingEditorElementBase>()
@@ -196,10 +196,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 .Concat(PressedJobEditors)
             ;
             foreach(var job in jobs) {
-                job.Save(commandPack.Main.Commander, commandPack.Main.Implementation, commandPack.CommonStatus);
+                job.Save(commandPack.Main.Context, commandPack.Main.Implementation, commandPack.CommonStatus);
             }
             foreach(var job in RemovedJobEditors) {
-                job.Remove(commandPack.Main.Commander, commandPack.Main.Implementation);
+                job.Remove(commandPack.Main.Context, commandPack.Main.Implementation);
             }
         }
 

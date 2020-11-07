@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             return hasError;
         }
 
-        public void SavePreferences(IDatabaseCommandsPack databaseCommandPack)
+        public void SavePreferences(IDatabaseContextsPack databaseContextsPack)
         {
             if(!SupportedPreferences) {
                 throw new InvalidOperationException(nameof(SupportedPreferences));
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
             Debug.Assert(StartedPreferences);
             Debug.Assert(Plugin != null);
 
-            using var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseCommandPack);
+            using var context = PreferencesContextFactory.CreateSaveContext(Plugin.PluginInformations, databaseContextsPack);
             Preferences.SavePreferences(context);
         }
 

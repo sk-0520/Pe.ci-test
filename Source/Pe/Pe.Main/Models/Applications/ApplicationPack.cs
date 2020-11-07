@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    public interface IDatabaseCommandsPack: IApplicationPack<IDatabaseCommands>
+    public interface IDatabaseContextsPack: IApplicationPack<IDatabaseContexts>
     {
         #region property
 
@@ -156,17 +156,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         #endregion
     }
 
-    internal class ApplicationDatabaseCommandsPack: TApplicationPackBase<IDatabaseCommands, DatabaseCommands>, IDatabaseCommandsPack
+    internal class ApplicationDatabaseContextsPack: TApplicationPackBase<IDatabaseContexts, DatabaseContexts>, IDatabaseContextsPack
     {
-        public ApplicationDatabaseCommandsPack(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus)
+        public ApplicationDatabaseContextsPack(DatabaseContexts main, DatabaseContexts file, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus)
             : base(main, file, temporary)
         {
             CommonStatus = commonStatus;
         }
 
-        #region IDatabaseCommandsPack
+        #region IDatabaseContextsPack
 
-        /// <inheritdoc cref="IDatabaseCommandsPack.CommonStatus"/>
+        /// <inheritdoc cref="IDatabaseContextsPack.CommonStatus"/>
         public IDatabaseCommonStatus CommonStatus { get; }
 
         #endregion
@@ -177,8 +177,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
         #region function
 
-        IDatabaseCommandsPack WaitRead();
-        IDatabaseCommandsPack WaitWrite();
+        IDatabaseContextsPack WaitRead();
+        IDatabaseContextsPack WaitWrite();
 
         /// <summary>
         /// トランザクション処理を確定する。
@@ -193,9 +193,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
     {
         #region define
 
-        internal class Barriers: ApplicationDatabaseCommandsPack
+        internal class Barriers: ApplicationDatabaseContextsPack
         {
-            public Barriers(DatabaseCommands main, DatabaseCommands file, DatabaseCommands temporary, IDatabaseCommonStatus commonStatus, bool isReadOnly)
+            public Barriers(DatabaseContexts main, DatabaseContexts file, DatabaseContexts temporary, IDatabaseCommonStatus commonStatus, bool isReadOnly)
                 : base(main, file, temporary, commonStatus)
             {
                 IsReadOnly = isReadOnly;
@@ -225,7 +225,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 if(!IsDisposed) {
                     if(disposing) {
                         var disposableItems = Items
-                            .Select(i => i.Commander)
+                            .Select(i => i.Context)
                             .OfType<IDisposable>()
                             .ToList()
                         ;
@@ -263,16 +263,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             );
         }
 
-        DatabaseCommands WaitReadCore(IDatabaseBarrier barrier)
+        DatabaseContexts WaitReadCore(IDatabaseBarrier barrier)
         {
             var tran = barrier.WaitRead();
-            return new DatabaseCommands(tran, tran.Implementation);
+            return new DatabaseContexts(tran, tran.Implementation);
         }
 
-        DatabaseCommands WaitWriteCore(IDatabaseBarrier barrier)
+        DatabaseContexts WaitWriteCore(IDatabaseBarrier barrier)
         {
             var tran = barrier.WaitWrite();
-            return new DatabaseCommands(tran, tran.Implementation);
+            return new DatabaseContexts(tran, tran.Implementation);
         }
 
         #endregion
@@ -290,7 +290,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             return CurrentBarriers;
         }
 
-        IDatabaseCommandsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
+        IDatabaseContextsPack IDatabaseBarrierPack.WaitRead() => WaitRead();
 
         internal Barriers WaitWrite(IDatabaseCommonStatus databaseCommonStatus)
         {
@@ -302,7 +302,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             CurrentBarriers.Disposing += CurrentBarriers_Disposing;
             return CurrentBarriers;
         }
-        IDatabaseCommandsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
+        IDatabaseContextsPack IDatabaseBarrierPack.WaitWrite() => WaitRead();
 
         public void Save()
         {

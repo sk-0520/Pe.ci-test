@@ -131,28 +131,5 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
         public ApplicationDatabaseBarrier(IDatabaseAccessor accessor, ReaderWriterLocker locker)
             : base(accessor, locker)
         { }
-
-        //#region IDatabaseBarrier
-
-        //public IDatabaseAccessor Accessor { get; }
-        //public ReaderWriterLocker Locker { get; }
-
-        //public IDatabaseTransaction WaitWrite()
-        //{
-        //    var locker = Locker.WaitWriteByDefaultTimeout();
-        //    var commander = Accessor.BeginTransaction();
-        //    var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
-        //    return result;
-        //}
-
-        //public IDatabaseTransaction WaitRead()
-        //{
-        //    var locker = Locker.WaitWriteByDefaultTimeout();
-        //    var commander = Accessor.BeginTransaction();
-        //    var result = new ApplicationDatabaseBarrierTransaction(locker, commander, Accessor.DatabaseFactory.CreateImplementation());
-        //    return result;
-        //}
-
-        //#endregion
     }
 }

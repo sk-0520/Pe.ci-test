@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherToolbarsEntityDao : EntityDaoBase
     {
-        public LauncherToolbarsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherToolbarsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         public IEnumerable<Guid> SelectAllLauncherToolbarIds()
         {
             var statement = LoadStatement();
-            return Commander.Query<Guid>(statement);
+            return Context.Query<Guid>(statement);
         }
 
         public LauncherToolbarsDisplayData SelectDisplayData(Guid launcherToolbarId)
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 LauncherToolbarId = launcherToolbarId,
             };
-            var dto = Commander.QueryFirst<LauncherToolbarsDisplayRowDto>(statement, param);
+            var dto = Context.QueryFirst<LauncherToolbarsDisplayRowDto>(statement, param);
             var data = ConvertFromDto(dto);
             return data;
         }
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherToolbarId = launcherToolbarId,
             };
-            return Commander.QueryFirst<string>(statement, parameter);
+            return Context.QueryFirst<string>(statement, parameter);
         }
 
         public bool InsertNewToolbar(Guid toolbarId, Guid fontId, string? screenName, IDatabaseCommonStatus commonStatus)
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.FontId] = fontId;
             param[Column.ScreenName] = screenName ?? string.Empty;
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateToolbarPosition(Guid launcherToolbarId, AppDesktopToolbarPosition toolbarPosition, IDatabaseCommonStatus commonStatus)
@@ -154,7 +154,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.PositionKind] = toolbarPositionTransfer.ToString(toolbarPosition);
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdatIsTopmost(Guid launcherToolbarId, bool isTopmost, IDatabaseCommonStatus commonStatus)
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsTopmost] = isTopmost;
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdatIsAutoHide(Guid launcherToolbarId, bool isAutoHide, IDatabaseCommonStatus commonStatus)
@@ -176,7 +176,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsAutoHide] = isAutoHide;
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdatIsVisible(Guid launcherToolbarId, bool isVisible, IDatabaseCommonStatus commonStatus)
@@ -187,14 +187,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.LauncherToolbarId] = launcherToolbarId;
             param[Column.IsVisible] = isVisible;
 
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateDisplayData(LauncherToolbarsDisplayData data, IDatabaseCommonStatus commonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(data, commonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
         #endregion
     }

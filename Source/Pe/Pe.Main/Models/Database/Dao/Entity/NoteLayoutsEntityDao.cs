@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class NoteLayoutsEntityDao : EntityDaoBase
     {
-        public NoteLayoutsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public NoteLayoutsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 NoteId = noteId,
                 LayoutKind = noteLayoutKindTransfer.ToString(layoutKind),
             };
-            return Commander.QueryFirstOrDefault<NoteLayoutData>(statement, param);
+            return Context.QueryFirstOrDefault<NoteLayoutData>(statement, param);
         }
         public bool SelectExistsLayout(Guid noteId, NoteLayoutKind layoutKind)
         {
@@ -110,21 +110,21 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 NoteId = noteId,
                 LayoutKind = noteLayoutKindTransfer.ToString(layoutKind),
             };
-            return Commander.QuerySingle<bool>(statement, param);
+            return Context.QuerySingle<bool>(statement, param);
         }
 
         public bool InsertLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool UpdateLayout(NoteLayoutData noteLayout, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var param = ConvertFromData(noteLayout, databaseCommonStatus);
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
         public bool UpdatePickupLayout(NoteLayoutData noteLayout, bool isEnabledLocation, bool isEnabledSize, IDatabaseCommonStatus databaseCommonStatus)
         {
@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             param[Column.Height] = noteLayout.Height;
             param[nameof(isEnabledLocation)] = isEnabledLocation;
             param[nameof(isEnabledSize)] = isEnabledSize;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public int DeleteLayouts(Guid noteId)
@@ -149,7 +149,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 NoteId = noteId,
             };
-            return Commander.Execute(statement, parameter);
+            return Context.Execute(statement, parameter);
         }
 
         #endregion

@@ -41,14 +41,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             }
         }
 
-        protected override EntityRemoverResult RemoveMain(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        protected override EntityRemoverResult RemoveMain(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
             var reuslt = new EntityRemoverResult(Pack.Main);
 
             var daoGroup = new EntityDeleteDaoGroup();
-            daoGroup.Add(new NoteContentsEntityDao(commander, statementLoader, implementation, LoggerFactory), dao => dao.DeleteContents(NoteId));
-            daoGroup.Add(new NoteLayoutsEntityDao(commander, statementLoader, implementation, LoggerFactory), dao => dao.DeleteLayouts(NoteId));
-            daoGroup.Add(new NotesEntityDao(commander, statementLoader, implementation, LoggerFactory), dao => dao.DeleteNote(NoteId));
+            daoGroup.Add(new NoteContentsEntityDao(context, statementLoader, implementation, LoggerFactory), dao => dao.DeleteContents(NoteId));
+            daoGroup.Add(new NoteLayoutsEntityDao(context, statementLoader, implementation, LoggerFactory), dao => dao.DeleteLayouts(NoteId));
+            daoGroup.Add(new NotesEntityDao(context, statementLoader, implementation, LoggerFactory), dao => dao.DeleteNote(NoteId));
 
             foreach(var item in daoGroup.Execute()) {
                 reuslt.Items.Add(item);
@@ -57,12 +57,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Note
             return reuslt;
         }
 
-        protected override EntityRemoverResult RemoveFile(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        protected override EntityRemoverResult RemoveFile(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
             return new EntityRemoverResult(Pack.File);
         }
 
-        protected override EntityRemoverResult RemoveTemporary(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        protected override EntityRemoverResult RemoveTemporary(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
             throw new NotSupportedException();
         }

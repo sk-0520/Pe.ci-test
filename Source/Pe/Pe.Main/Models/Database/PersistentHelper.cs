@@ -11,13 +11,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
     {
         #region define
 
-        public class PersistentCommandsPack: ApplicationDatabaseCommandsPack
+        public class PersistentContextsPack: ApplicationDatabaseContextsPack
         {
-            public PersistentCommandsPack(IDatabaseTransaction mainTransaction, IDatabaseTransaction fileTransaction, IDatabaseTransaction temporaryTransaction, IDatabaseCommonStatus commonStatus)
+            public PersistentContextsPack(IDatabaseTransaction mainTransaction, IDatabaseTransaction fileTransaction, IDatabaseTransaction temporaryTransaction, IDatabaseCommonStatus commonStatus)
                 : base(
-                    new DatabaseCommands(mainTransaction, mainTransaction.Implementation),
-                    new DatabaseCommands(fileTransaction, mainTransaction.Implementation),
-                    new DatabaseCommands(temporaryTransaction, mainTransaction.Implementation),
+                    new DatabaseContexts(mainTransaction, mainTransaction.Implementation),
+                    new DatabaseContexts(fileTransaction, mainTransaction.Implementation),
+                    new DatabaseContexts(temporaryTransaction, mainTransaction.Implementation),
                     commonStatus
                 )
             {
@@ -52,7 +52,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
             #endregion
 
-            #region ApplicationDatabaseCommandsPack
+            #region ApplicationDatabaseContextsPack
 
             protected override void Dispose(bool disposing)
             {
@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
 
         #region function
 
-        static PersistentCommandsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
+        static PersistentContextsPack WaitPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus, bool isReadOnly)
         {
             static IDatabaseTransaction Do(IDatabaseBarrier databaseBarrier, bool isReadOnly)
             {
@@ -88,17 +88,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database
             var file = Do(fileDatabaseBarrier, isReadOnly);
             var temp = Do(temporaryDatabaseBarrier, isReadOnly);
 
-            var result = new PersistentCommandsPack(main, file, temp, databaseCommonStatus);
+            var result = new PersistentContextsPack(main, file, temp, databaseCommonStatus);
 
             return result;
         }
 
-        public static PersistentCommandsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        public static PersistentContextsPack WaitWritePack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
         {
             return WaitPack(mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, false);
         }
 
-        public static PersistentCommandsPack WaitReadPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
+        public static PersistentContextsPack WaitReadPack(IMainDatabaseBarrier mainDatabaseBarrier, IFileDatabaseBarrier fileDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseCommonStatus databaseCommonStatus)
         {
             return WaitPack(mainDatabaseBarrier, fileDatabaseBarrier, temporaryDatabaseBarrier, databaseCommonStatus, true);
         }

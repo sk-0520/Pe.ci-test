@@ -19,8 +19,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class AppNotifyLogSettingEntityDao : EntityDaoBase
     {
-        public AppNotifyLogSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public AppNotifyLogSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var notifyLogPositionTransfer = new EnumTransfer<NotifyLogPosition>();
 
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppNotifyLogSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppNotifyLogSettingEntityDto>(statement);
             var data = new SettingAppNotifyLogSettingData() {
                 IsVisible = dto.IsVisible,
                 Position = notifyLogPositionTransfer.ToEnum(dto.Position),
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 Position = notifyLogPositionTransfer.ToString(data.Position),
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         #endregion

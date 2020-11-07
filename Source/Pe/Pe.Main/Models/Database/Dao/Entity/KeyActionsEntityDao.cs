@@ -23,8 +23,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class KeyActionsEntityDao : EntityDaoBase
     {
-        public KeyActionsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public KeyActionsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var statement = LoadStatement();
             var parameter = new { KeyActionKind = keyActionKindTransfer.ToString(keyActionKind) };
-            return Commander.Query<KeyActionsEntityDto>(statement, parameter)
+            return Context.Query<KeyActionsEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
         }
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
             var statement = LoadStatement();
             var parameter = new { IgnoreKinds = ignoreKinds.Select(i => keyActionKindTransfer.ToString(i)) };
-            return Commander.Query<KeyActionsEntityDto>(statement, parameter)
+            return Context.Query<KeyActionsEntityDto>(statement, parameter)
                 .Select(i => ConvertFromDto(i))
             ;
         }
@@ -101,14 +101,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(keyActionData, databaseCommonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdateKeyAction(KeyActionData keyActionData, IDatabaseCommonStatus databaseCommonStatus)
         {
             var statement = LoadStatement();
             var dto = ConvertFromData(keyActionData, databaseCommonStatus);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdateUsageCountIncrement(Guid keyActionId, IDatabaseCommonStatus databaseCommonStatus)
@@ -116,14 +116,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.KeyActionId] = keyActionId;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool DeleteKeyAciton(Guid keyActionId)
         {
             var statement = LoadStatement();
             var parameter = new { KeyActionId = keyActionId };
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

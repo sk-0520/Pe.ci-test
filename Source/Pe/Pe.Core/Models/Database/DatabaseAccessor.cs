@@ -89,13 +89,13 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// <summary>
     /// データベースとの会話用インターフェイス。
     /// </summary>
-    public interface IDatabaseCommander: IDatabaseReader, IDatabaseWriter
+    public interface IDatabaseContext: IDatabaseReader, IDatabaseWriter
     { }
 
     /// <summary>
     /// DBアクセス処理。
     /// </summary>
-    public interface IDatabaseAccessor: IDatabaseCommander
+    public interface IDatabaseAccessor: IDatabaseContext
     {
         #region property
 
@@ -155,8 +155,8 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <returns></returns>
         IDatabaseTransaction BeginReadOnlyTransaction(IsolationLevel isolationLevel);
 
-        /// <inheritdoc cref="Batch(Func{IDatabaseCommander, bool}, IsolationLevel)"/>
-        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor);
+        /// <inheritdoc cref="Batch(Func{IDatabaseContext, bool}, IsolationLevel)"/>
+        IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor);
         /// <summary>
         /// バッチ処理の実行。
         /// <para>処理成功時に自動的にコミットされる。</para>
@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// <param name="executor">処理内容。</param>
         /// <param name="isolationLevel"></param>
         /// <returns>処理実行結果。</returns>
-        IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor, IsolationLevel isolationLevel);
+        IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel);
 
         #endregion
     }
@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
             return con;
         }
 
-        protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseCommander, bool> function)
+        protected virtual IResultFailureValue<Exception> BatchImpl(Func<IDatabaseTransaction> transactionCreator, Func<IDatabaseContext, bool> function)
         {
             ThrowIfDisposed();
 
@@ -463,14 +463,14 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         }
 
 
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor)
         {
             ThrowIfDisposed();
 
             return BatchImpl(() => new DatabaseTransaction(this), executor);
         }
 
-        public IResultFailureValue<Exception> Batch(Func<IDatabaseCommander, bool> executor, IsolationLevel isolationLevel)
+        public IResultFailureValue<Exception> Batch(Func<IDatabaseContext, bool> executor, IsolationLevel isolationLevel)
         {
             ThrowIfDisposed();
 

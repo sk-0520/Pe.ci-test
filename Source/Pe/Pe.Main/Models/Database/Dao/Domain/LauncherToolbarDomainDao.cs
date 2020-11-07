@@ -31,8 +31,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
     public class LauncherToolbarDomainDao : DomainDaoBase
     {
-        public LauncherToolbarDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherToolbarDomainDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region function
@@ -57,14 +57,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var parameter = new {
                 LauncherToolbarId = launcherToolbarId,
             };
-            var dto = Commander.QueryFirst<LauncherToolbarScreenRowDto>(statement, parameter);
+            var dto = Context.QueryFirst<LauncherToolbarScreenRowDto>(statement, parameter);
             return ConvertFromDto(dto);
         }
 
         public IEnumerable<LauncherToolbarsScreenData> SelectAllScreenToolbars()
         {
             var statement = LoadStatement();
-            return Commander.Query<LauncherToolbarScreenRowDto>(statement)
+            return Context.Query<LauncherToolbarScreenRowDto>(statement)
                 .Select(i => ConvertFromDto(i))
             ;
         }

@@ -62,8 +62,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
 
         public void RunLauncherItemAddon(Action<ILauncherItemAddonContext> callback)
         {
-            using var databaseCommandsPack = PluginContextFactory.BarrierWrite();
-            using var context = PluginContextFactory.CreateContext(PluginInformations, LauncherItemId, databaseCommandsPack, false);
+            using var databaseContextsPack = PluginContextFactory.BarrierWrite();
+            using var context = PluginContextFactory.CreateContext(PluginInformations, LauncherItemId, databaseContextsPack, false);
             callback(context);
         }
 

@@ -11,11 +11,11 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
     /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
-        protected DatabaseAccessObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        protected DatabaseAccessObjectBase(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory;
             Logger = LoggerFactory.CreateLogger(GetType());
-            Commander = commander;
+            Context = context;
             StatementLoader = statementLoader;
             Implementation = implementation;
         }
@@ -23,9 +23,9 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region property
 
         /// <summary>
-        /// データベースをお話担当。
+        /// データベースのお話担当。
         /// </summary>
-        protected IDatabaseCommander Commander { get; }
+        protected IDatabaseContext Context { get; }
         /// <summary>
         /// データベース文の読み込みストア。
         /// </summary>

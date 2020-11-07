@@ -516,16 +516,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             var pressedOptionConverter = new PressedOptionConverter();
 
-            using(var commander = mainBarrier.WaitWrite()) {
+            using(var context = mainBarrier.WaitWrite()) {
                 var status = new DatabaseCommonStatus() {
                     Account = "🍶",
                     ProgramName = "🍻",
                     ProgramVersion = BuildStatus.Version,
                 };
-                var appExecuteSettingEntityDao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
-                var keyActionsEntityDao = ApplicationDiContainer.Build<KeyActionsEntityDao>(commander, commander.Implementation);
-                var keyOptionsEntityDao = ApplicationDiContainer.Build<KeyOptionsEntityDao>(commander, commander.Implementation);
-                var keyMappingsEntityDao = ApplicationDiContainer.Build<KeyMappingsEntityDao>(commander, commander.Implementation);
+                var appExecuteSettingEntityDao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
+                var keyActionsEntityDao = ApplicationDiContainer.Build<KeyActionsEntityDao>(context, context.Implementation);
+                var keyOptionsEntityDao = ApplicationDiContainer.Build<KeyOptionsEntityDao>(context, context.Implementation);
+                var keyMappingsEntityDao = ApplicationDiContainer.Build<KeyMappingsEntityDao>(context, context.Implementation);
 
                 var userIdManager = ApplicationDiContainer.Build<UserIdManager>();
                 appExecuteSettingEntityDao.UpdateExecuteSettingAcceptInput(userIdManager.CreateFromRandom(), true, status);
@@ -543,7 +543,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                 }
 
 
-                commander.Commit();
+                context.Commit();
             }
         }
 #endif
@@ -646,8 +646,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // 戻ってきた突合情報を反映
             var barrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
-            using(var commander = barrier.WaitWrite()) {
-                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+            using(var context = barrier.WaitWrite()) {
+                var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
                 foreach(var pluginLoadStateItem in pluginLoadStateItems) {
                     // プラグインIDすら取得できなかったぶっこわれアセンブリは無視
                     if(pluginLoadStateItem.PluginId == Guid.Empty && pluginLoadStateItem.LoadState == PluginState.IllegalAssembly) {
@@ -688,7 +688,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                     }
                 }
 
-                commander.Commit();
+                context.Commit();
             }
 
             var enabledPluginLoadStateItems = pluginLoadStateItems
@@ -796,8 +796,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // プラグイン情報を更新
             if(0 < initializedPlugins.Count) {
-                using(var commander = barrier.WaitWrite()) {
-                    var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(commander, commander.Implementation);
+                using(var context = barrier.WaitWrite()) {
+                    var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
                     foreach(var initializedPlugin in initializedPlugins) {
                         pluginsEntityDao.UpdatePluginRunningState(
                             initializedPlugin.PluginInformations.PluginIdentifiers.PluginId,
@@ -807,7 +807,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
                         );
                     }
 
-                    commander.Commit();
+                    context.Commit();
                 }
             }
         }
@@ -961,8 +961,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             SettingAppExecuteSettingData setting;
-            using(var commander = mainDatabaseBarrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(commander, commander.Implementation);
+            using(var context = mainDatabaseBarrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Build<AppExecuteSettingEntityDao>(context, context.Implementation);
                 setting = dao.SelectSettingExecuteSetting();
             }
 
@@ -1066,8 +1066,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
             IList<Guid> launcherGroupIds;
-            using(var commander = barrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Build<LauncherGroupsEntityDao>(commander, commander.Implementation);
+            using(var context = barrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Build<LauncherGroupsEntityDao>(context, context.Implementation);
                 launcherGroupIds = dao.SelectAllLauncherGroupIds().ToList();
             }
 
@@ -1099,8 +1099,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
 
             IList<Guid> noteIds;
-            using(var commander = barrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Build<NotesEntityDao>(commander, commander.Implementation);
+            using(var context = barrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Build<NotesEntityDao>(context, context.Implementation);
                 noteIds = dao.SelectAllNoteIds().ToList();
             }
 
@@ -1262,8 +1262,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             }
 
             var showWidgets = new List<WidgetElement>(Widgets.Count);
-            using(var commander = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitRead()) {
-                var pluginWidgetSettingsEntityDao = ApplicationDiContainer.Build<PluginWidgetSettingsEntityDao>(commander, commander.Implementation);
+            using(var context = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitRead()) {
+                var pluginWidgetSettingsEntityDao = ApplicationDiContainer.Build<PluginWidgetSettingsEntityDao>(context, context.Implementation);
                 foreach(var element in Widgets) {
                     if(pluginWidgetSettingsEntityDao.SelectExistsPluginWidgetSetting(element.PluginId)) {
                         var setting = pluginWidgetSettingsEntityDao.SelectPluginWidgetSetting(element.PluginId);
@@ -1561,8 +1561,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             // バックアップ処理開始
             string userBackupDirectoryPath;
-            using(var commander = diContainer.Get<IMainDatabaseBarrier>().WaitRead()) {
-                var appGeneralSettingEntityDao = diContainer.Build<AppGeneralSettingEntityDao>(commander, commander.Implementation);
+            using(var context = diContainer.Get<IMainDatabaseBarrier>().WaitRead()) {
+                var appGeneralSettingEntityDao = diContainer.Build<AppGeneralSettingEntityDao>(context, context.Implementation);
                 userBackupDirectoryPath = appGeneralSettingEntityDao.SelectUserBackupDirectoryPath();
             }
             BackupSettings(
@@ -1632,8 +1632,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             var mainDatabaseBarrier = ApplicationDiContainer.Build<IMainDatabaseBarrier>();
             UpdateKind updateKind;
-            using(var commander = mainDatabaseBarrier.WaitRead()) {
-                var dao = ApplicationDiContainer.Build<AppUpdateSettingEntityDao>(commander, commander.Implementation);
+            using(var context = mainDatabaseBarrier.WaitRead()) {
+                var dao = ApplicationDiContainer.Build<AppUpdateSettingEntityDao>(context, context.Implementation);
                 updateKind = dao.SelectSettingUpdateSetting().UpdateKind;
             }
 

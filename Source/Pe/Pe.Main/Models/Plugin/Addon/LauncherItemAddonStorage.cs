@@ -66,9 +66,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
     /// <inheritdoc cref="ILauncherItemAddonPersistentStorage"/>
     public sealed class LauncherItemAddonPersistentStorage: PluginPersistentStorageBase, ILauncherItemAddonPersistentStorage
     {
-        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseCommands, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
-        public LauncherItemAddonPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseCommands databaseCommands, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
-            : base(pluginIdentifiers, pluginVersions, databaseCommands, databaseStatementLoader, isReadOnly, loggerFactory)
+        /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseContexts, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
+        public LauncherItemAddonPersistentStorage(IPluginIdentifiers pluginIdentifiers, IPluginVersions pluginVersions, IDatabaseContexts databaseContexts, IDatabaseStatementLoader databaseStatementLoader, bool isReadOnly, ILoggerFactory loggerFactory)
+            : base(pluginIdentifiers, pluginVersions, databaseContexts, databaseStatementLoader, isReadOnly, loggerFactory)
         { }
 
         /// <inheritdoc cref="PluginPersistentStorageBase.PluginPersistentStorageBase(IPluginIdentifiers, IPluginVersions, IDatabaseBarrier, IDatabaseStatementLoader, bool, ILoggerFactory)"/>
@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public bool Exists(Guid launcherItemId, string key)
         {
             return ExistsImpl((launcherItemId, key), (p, d) => {
-                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 return pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, launcherItemId, NormalizeKey(key));
             });
         }
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public bool TryGet<TValue>(Guid launcherItemId, string key, [MaybeNullWhen(returnValue: false)] out TValue value)
         {
             return TryGetImpl((launcherItemId, key), (p, d) => {
-                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 return pluginLauncherItemSettingsEntityDao.SelectPluginLauncherItemValue(PluginId, p.launcherItemId, NormalizeKey(p.key));
             }, out value);
         }
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public bool Set<TValue>(Guid launcherItemId, string key, TValue value, PluginPersistentFormat format)
         {
             return SetImpl(value, format, (launcherItemId, key), (p, d, v) => {
-                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 var normalizedKey = NormalizeKey(p.key);
                 if(pluginLauncherItemSettingsEntityDao.SelecteExistsPluginLauncherItemSetting(PluginId, p.launcherItemId, normalizedKey)) {
                     pluginLauncherItemSettingsEntityDao.UpdatePluginLauncherItemSetting(PluginId, p.launcherItemId, normalizedKey, v, DatabaseCommonStatus.CreatePluginAccount(PluginIdentifiers, PluginVersions));
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin.Addon
         public bool Delete(Guid launcherItemId, string key)
         {
             return DeleteImpl((launcherItemId, key), (p, d) => {
-                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseCommands.Commander, d.DatabaseStatementLoader, d.DatabaseCommands.Implementation, d.LoggerFactory);
+                var pluginLauncherItemSettingsEntityDao = new PluginLauncherItemSettingsEntityDao(d.DatabaseContexts.Context, d.DatabaseStatementLoader, d.DatabaseContexts.Implementation, d.LoggerFactory);
                 return pluginLauncherItemSettingsEntityDao.DeletePluginLauncherItemSetting(PluginId, p.launcherItemId, NormalizeKey(p.key));
             });
         }

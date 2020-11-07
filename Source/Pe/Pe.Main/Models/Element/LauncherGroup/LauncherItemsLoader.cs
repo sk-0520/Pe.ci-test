@@ -10,9 +10,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 {
     public class LauncherItemsLoader
     {
-        public LauncherItemsLoader(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+        public LauncherItemsLoader(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
         {
-            Commander = commander;
+            Context = context;
             StatementLoader = statementLoader;
             Implementation = implementation;
             LoggerFactory = loggerFactory;
@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         #region property
 
-        IDatabaseCommander Commander { get; }
+        IDatabaseContext Context { get; }
         IDatabaseStatementLoader StatementLoader { get; }
         IDatabaseImplementation Implementation { get; }
         ILoggerFactory LoggerFactory { get; }
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup
 
         IEnumerable<Guid> LoadNormalIds(Guid launcherGroupId)
         {
-                var dao = new LauncherGroupItemsEntityDao(Commander, StatementLoader, Implementation, LoggerFactory);
+                var dao = new LauncherGroupItemsEntityDao(Context, StatementLoader, Implementation, LoggerFactory);
                 return dao.SelectLauncherItemIds(launcherGroupId);
         }
 

@@ -9,8 +9,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao
 {
     public abstract class ApplicationDatabaseObjectBase : DatabaseAccessObjectBase
     {
-        protected ApplicationDatabaseObjectBase(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        protected ApplicationDatabaseObjectBase(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region function

@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 {
 
-    public class FontElement : ElementBase, IFlushable
+    public class FontElement: ElementBase, IFlushable
     {
         #region variable
 
@@ -84,8 +84,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         {
             ThrowIfDisposed();
 
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var dao = new FontsEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var dao = new FontsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 return dao.SelectFont(FontId);
             }
         }
@@ -133,9 +133,9 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         #endregion
     }
 
-    public delegate void ParentUpdater(SavingFontElement fontElement, IDatabaseCommander commander, IDatabaseImplementation implementation);
+    public delegate void ParentUpdater(SavingFontElement fontElement, IDatabaseContext context, IDatabaseImplementation implementation);
 
-    public class SavingFontElement : FontElement
+    public class SavingFontElement: FontElement
     {
         public SavingFontElement(DefaultFontKind defaultFontKind, Guid fontId, ParentUpdater parentUpdater, IMainDatabaseBarrier mainDatabaseBarrier, IMainDatabaseLazyWriter mainDatabaseLazyWriter, IDatabaseStatementLoader statementLoader, IIdFactory idFactory, ILoggerFactory loggerFactory)
             : base(fontId, mainDatabaseBarrier, statementLoader, loggerFactory)
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
 
         #region function
 
-        void CreateAndSaveFontId(IDatabaseCommander commander, IDatabaseImplementation implementation)
+        void CreateAndSaveFontId(IDatabaseContext context, IDatabaseImplementation implementation)
         {
             ThrowIfDisposed();
             if(!IsDefaultFont) {
@@ -182,14 +182,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
                 IsItalic = IsItalic,
             };
 
-            var dao = new FontsEntityDao(commander, DatabaseStatementLoader, implementation, LoggerFactory);
+            var dao = new FontsEntityDao(context, DatabaseStatementLoader, implementation, LoggerFactory);
             dao.InsertFont(fontId, fontData, DatabaseCommonStatus.CreateCurrentAccount());
 
             FontId = fontId;
             IsDefaultFont = false;
             RaisePropertyChanged(nameof(FontId));
 
-            ParentUpdater(this, commander, implementation);
+            ParentUpdater(this, context, implementation);
         }
 
         void UpdateValueDelaySave(Action<FontsEntityDao, IDatabaseCommonStatus> updater, object uniqueKey)
@@ -259,22 +259,22 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Font
         protected override FontData GetFontData()
         {
             Guid defaultFontId;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
+            using(var context = MainDatabaseBarrier.WaitRead()) {
                 switch(DefaultFontKind) {
                     case DefaultFontKind.Note: {
-                            var dao = new AppNoteSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                            var dao = new AppNoteSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                             defaultFontId = dao.SelectAppNoteSettingFontId();
                         }
                         break;
 
                     case DefaultFontKind.Command: {
-                            var dao = new AppCommandSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                            var dao = new AppCommandSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                             defaultFontId = dao.SelectCommandSettingFontId();
                         }
                         break;
 
                     case DefaultFontKind.LauncherToolbar: {
-                            var dao = new AppLauncherToolbarSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+                            var dao = new AppLauncherToolbarSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                             defaultFontId = dao.SelectAppLauncherToolbarSettingFontId();
                         }
                         break;

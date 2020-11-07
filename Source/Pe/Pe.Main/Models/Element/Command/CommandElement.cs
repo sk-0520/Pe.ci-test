@@ -156,8 +156,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Command
         private void RefreshSetting()
         {
             SettingAppCommandSettingData setting;
-            using(var commander = MainDatabaseBarrier.WaitRead()) {
-                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(commander, DatabaseStatementLoader, commander.Implementation, LoggerFactory);
+            using(var context = MainDatabaseBarrier.WaitRead()) {
+                var appCommandSettingEntityDao = new AppCommandSettingEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 setting = appCommandSettingEntityDao.SelectSettingCommandSetting();
             }
 

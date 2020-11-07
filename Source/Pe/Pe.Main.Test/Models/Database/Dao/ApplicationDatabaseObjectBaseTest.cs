@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao
     {
         #region define
 
-        class Dc : IDatabaseCommander
+        class Dc : IDatabaseContext
         {
             public int Execute(string statement, object? parameter = null)
             {

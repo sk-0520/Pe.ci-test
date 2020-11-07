@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class FontsEntityDao : EntityDaoBase
     {
-        public FontsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public FontsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 FontId = fontId,
             };
-            var dto = Commander.QueryFirst<FontsRowDto>(statement, param);
+            var dto = Context.QueryFirst<FontsRowDto>(statement, param);
             return ConvertFromDto(dto);
         }
 
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var param = ConvertFromData(fontData, databaseCommonStatus);
             param.FontId = fontId;
-            return Commander.Execute(statement, param) == 1;
+            return Context.Execute(statement, param) == 1;
         }
 
         public bool InsertCopyFont(Guid sourceFontId, Guid destinationFontId, IDatabaseCommonStatus commonStatus)
@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = commonStatus.CreateCommonDtoMapping();
             parameter["SrcFontId"] = sourceFontId;
             parameter["DstFontId"] = destinationFontId;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
 
@@ -115,7 +115,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.FamilyName] = familyName;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateBold(Guid fontId, bool isBold, IDatabaseCommonStatus databaseCommonStatus)
@@ -124,7 +124,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.IsBold] = isBold;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateItalic(Guid fontId, bool isItalic, IDatabaseCommonStatus databaseCommonStatus)
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.IsItalic] = isItalic;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateHeight(Guid fontId, double height, IDatabaseCommonStatus databaseCommonStatus)
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = databaseCommonStatus.CreateCommonDtoMapping();
             parameter[Column.FontId] = fontId;
             parameter[Column.Height] = height;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         public bool UpdateFont(Guid fontId, FontData data, IDatabaseCommonStatus commonStatus)
@@ -150,7 +150,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var statement = LoadStatement();
             var parameter = ConvertFromData(data, commonStatus);
             parameter.FontId = fontId;
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

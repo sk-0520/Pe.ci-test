@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class AppUpdateSettingEntityDao : EntityDaoBase
     {
-        public AppUpdateSettingEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public AppUpdateSettingEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var updateKindTransfer = new EnumTransfer<UpdateKind>();
 
             var statement = LoadStatement();
-            var dto = Commander.QueryFirst<AppUpdateSettingEntityDto>(statement);
+            var dto = Context.QueryFirst<AppUpdateSettingEntityDto>(statement);
             var result = new SettingAppUpdateSettingData() {
                 UpdateKind = updateKindTransfer.ToEnum(dto.UpdateKind),
             };
@@ -63,7 +63,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 UpdateKind = updateKindTransfer.ToString(data.UpdateKind),
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
         public bool UpdateReleaseVersion(UpdateKind updateKind, IDatabaseCommonStatus commonStatus)
@@ -75,7 +75,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 UpdateKind = updateKindTransfer.ToString(updateKind),
             };
             commonStatus.WriteCommon(dto);
-            return Commander.Execute(statement, dto) == 1;
+            return Context.Execute(statement, dto) == 1;
         }
 
 

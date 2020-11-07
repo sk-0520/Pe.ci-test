@@ -69,11 +69,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return new EntityRemoverResultItem(entityName, count);
         }
 
-        protected abstract EntityRemoverResult RemoveMain(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
-        protected abstract EntityRemoverResult RemoveFile(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
-        protected abstract EntityRemoverResult RemoveTemporary(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract EntityRemoverResult RemoveMain(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract EntityRemoverResult RemoveFile(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
+        protected abstract EntityRemoverResult RemoveTemporary(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation);
 
-        public EntityRemoverResult Remove(Pack pack, IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
+        public EntityRemoverResult Remove(Pack pack, IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation)
         {
 #if DEBUG
             if(!IsTarget(pack)) {
@@ -81,8 +81,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             }
 #endif
 
-            if(commander == null) {
-                throw new ArgumentNullException(nameof(commander));
+            if(context == null) {
+                throw new ArgumentNullException(nameof(context));
             }
             if(implementation == null) {
                 throw new ArgumentNullException(nameof(implementation));
@@ -90,13 +90,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
 
             switch(pack) {
                 case Pack.Main:
-                    return RemoveMain(commander, statementLoader, implementation);
+                    return RemoveMain(context, statementLoader, implementation);
 
                 case Pack.File:
-                    return RemoveMain(commander, statementLoader, implementation);
+                    return RemoveMain(context, statementLoader, implementation);
 
                 case Pack.Temporary:
-                    return RemoveMain(commander, statementLoader, implementation);
+                    return RemoveMain(context, statementLoader, implementation);
 
                 default:
                     throw new NotImplementedException();
@@ -182,11 +182,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             return null;
         }
 
-        IEnumerable<EntityRemoverResult> ExecuteCore(Pack pack, IDatabaseCommander commander, IDatabaseImplementation implementation)
+        IEnumerable<EntityRemoverResult> ExecuteCore(Pack pack, IDatabaseContext context, IDatabaseImplementation implementation)
         {
             var items = Items.Where(i => i.IsTarget(pack));
             foreach(var item in items) {
-                var entityResult = item.Remove(pack, commander, StatementLoader, implementation);
+                var entityResult = item.Remove(pack, context, StatementLoader, implementation);
                 yield return entityResult;
             }
         }

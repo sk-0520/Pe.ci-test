@@ -50,14 +50,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
 
         #region function
 
-        public abstract void ExecuteMainDDL(IDatabaseCommander commander, IReadOnlySetupDto dto);
-        public abstract void ExecuteMainDML(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteMainDDL(IDatabaseContext context, IReadOnlySetupDto dto);
+        public abstract void ExecuteMainDML(IDatabaseContext context, IReadOnlySetupDto dto);
 
-        public abstract void ExecuteFileDDL(IDatabaseCommander commander, IReadOnlySetupDto dto);
-        public abstract void ExecuteFileDML(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteFileDDL(IDatabaseContext context, IReadOnlySetupDto dto);
+        public abstract void ExecuteFileDML(IDatabaseContext context, IReadOnlySetupDto dto);
 
-        public abstract void ExecuteTemporaryDDL(IDatabaseCommander commander, IReadOnlySetupDto dto);
-        public abstract void ExecuteTemporaryDML(IDatabaseCommander commander, IReadOnlySetupDto dto);
+        public abstract void ExecuteTemporaryDDL(IDatabaseContext context, IReadOnlySetupDto dto);
+        public abstract void ExecuteTemporaryDML(IDatabaseContext context, IReadOnlySetupDto dto);
 
         protected IEnumerable<KeyValuePair<string, string>> SplitMultiStatement(string statement)
         {
@@ -98,17 +98,17 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
             }
         }
 
-        void ExecuteStatementCore(IDatabaseCommander commander, string statement, IReadOnlyDictionary<string, object> parameters)
+        void ExecuteStatementCore(IDatabaseContext context, string statement, IReadOnlyDictionary<string, object> parameters)
         {
             var pairs = SplitMultiStatement(statement);
             foreach(var pair in pairs) {
                 Logger.LogInformation(pair.Key);
-                var result = commander.Execute(pair.Value, parameters);
+                var result = context.Execute(pair.Value, parameters);
                 Logger.LogInformation("result: {0}", result);
             }
         }
 
-        protected void ExecuteStatement(IDatabaseCommander commander, string statement, IReadOnlySetupDto dto)
+        protected void ExecuteStatement(IDatabaseContext context, string statement, IReadOnlySetupDto dto)
         {
             var properties = dto.GetType().GetProperties();
             var parameters = new Dictionary<string, object>(properties.Length);
@@ -118,10 +118,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
                 parameters.Add(property.Name, rawValue!);
             }
 
-            ExecuteStatementCore(commander, statement, parameters);
+            ExecuteStatementCore(context, statement, parameters);
         }
 
-        protected void ExecuteStatement(IDatabaseCommander commander, string statement, IReadOnlySetupDto dto, IReadOnlyDictionary<string, object> mergeParameters)
+        protected void ExecuteStatement(IDatabaseContext context, string statement, IReadOnlySetupDto dto, IReadOnlyDictionary<string, object> mergeParameters)
         {
             var properties = dto.GetType().GetProperties();
             var parameters = new Dictionary<string, object>(properties.Length + mergeParameters.Count);
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Setupper
                 parameters[pair.Key] = pair.Value;
             }
 
-            ExecuteStatementCore(commander, statement, parameters);
+            ExecuteStatementCore(context, statement, parameters);
         }
 
 

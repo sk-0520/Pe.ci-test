@@ -28,8 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 
     public class LauncherItemIconsEntityDao : EntityDaoBase
     {
-        public LauncherItemIconsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherItemIconsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region property
@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            var rows = Commander.Query<byte[]>(statement, param);
+            var rows = Context.Query<byte[]>(statement, param);
             if(rows != null) {
                 return rows.ToArray();
             }
@@ -81,7 +81,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 commonStatus.WriteCreate(dto);
                 dto.Sequence = i;
                 dto.Image = binaryImageItems[i].ToArray();
-                resultCount += Commander.Execute(statement, dto);
+                resultCount += Context.Execute(statement, dto);
             }
 
             return resultCount;
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var param = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.Execute(statement, param);
+            return Context.Execute(statement, param);
         }
 
         public int DeleteImageBinary(Guid launcherItemId, in IconScale iconScale)
@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
                 IconBox = iconBoxTransfer.ToString(iconScale.Box),
                 IconScale = iconScale.Dpi.X,
             };
-            return Commander.Execute(statement, param);
+            return Context.Execute(statement, param);
         }
 
         #endregion

@@ -9,8 +9,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
 {
     public class LauncherAddonsEntityDao: EntityDaoBase
     {
-        public LauncherAddonsEntityDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public LauncherAddonsEntityDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         { }
 
         #region proeprty
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             var parameter = new {
                 LauncherItemId = launcherItemId,
             };
-            return Commander.QueryFirst<Guid>(statement, parameter);
+            return Context.QueryFirst<Guid>(statement, parameter);
         }
 
         public bool InsertAddonPluginId(Guid launcherItemId, Guid pluginId, IDatabaseCommonStatus databaseCommonStatus)
@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             parameter[Column.LauncherItemId] = launcherItemId;
             parameter[Column.PluginId] = pluginId;
 
-            return Commander.Execute(statement, parameter) == 1;
+            return Context.Execute(statement, parameter) == 1;
         }
 
         #endregion

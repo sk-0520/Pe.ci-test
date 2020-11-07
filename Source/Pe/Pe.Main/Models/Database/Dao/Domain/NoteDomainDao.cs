@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
     public class NoteDomainDao : DomainDaoBase
     {
-        public NoteDomainDao(IDatabaseCommander commander, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
-            : base(commander, statementLoader, implementation, loggerFactory)
+        public NoteDomainDao(IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation implementation, ILoggerFactory loggerFactory)
+            : base(context, statementLoader, implementation, loggerFactory)
         {}
 
         #region function
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var param = new {
                 NoteId = noteId,
             };
-            return Commander.Query<NoteScreenRowDto>(statement, param)
+            return Context.Query<NoteScreenRowDto>(statement, param)
                 .Select(i => ConvertFromDto(i))
             ;
         }
