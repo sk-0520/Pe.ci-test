@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
+    /// <summary>
+    /// データベース会話・データベース実装処理のペア。
+    /// </summary>
     public interface IDatabaseContexts
     {
         #region property

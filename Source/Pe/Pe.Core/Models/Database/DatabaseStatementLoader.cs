@@ -9,8 +9,8 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     /// <summary>
-    /// データベースに対する実行文を取得する。
-    /// <para>SQLだわな。</para>
+    /// データベースに対する問い合わせ文を取得する。
+    /// <para>RDB を主軸に実装しているので基本的に SQL となる。</para>
     /// </summary>
     public interface IDatabaseStatementLoader
     {

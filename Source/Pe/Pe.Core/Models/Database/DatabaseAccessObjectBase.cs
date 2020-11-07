@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 namespace ContentTypeTextNet.Pe.Core.Models.Database
 {
     /// <summary>
-    /// だお！
+    /// データベースアクセス基底！
+    /// <para>詳細なアクセス手法は実装先にて処理する。</para>
     /// </summary>
     public abstract class DatabaseAccessObjectBase
     {
@@ -27,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         /// </summary>
         protected IDatabaseContext Context { get; }
         /// <summary>
-        /// データベース文の読み込みストア。
+        /// データベース問い合わせ文の読み込みストア。
         /// </summary>
         protected IDatabaseStatementLoader StatementLoader { get; }
         /// <summary>
@@ -48,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Core.Models.Database
         #region function
 
         /// <summary>
-        /// <see cref="IDatabaseStatementLoader.LoadStatementByCurrent(Type, string)"/>のヘルパー巻数。
+        /// <see cref="IDatabaseStatementLoader.LoadStatementByCurrent(Type, string)"/>のヘルパー関数。
         /// </summary>
         /// <param name="callerMemberName"></param>
         /// <returns></returns>
