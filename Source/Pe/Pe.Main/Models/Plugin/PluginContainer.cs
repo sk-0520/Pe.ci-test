@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Addon;
 using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Core.Models;
+using ContentTypeTextNet.Pe.Core.Models.Database;
 using ContentTypeTextNet.Pe.Core.Models.DependencyInjection;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
@@ -61,6 +62,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
         #endregion
 
         #region function
+
+        public bool UninstallPlugin(PluginStateData plugin, IDatabaseContext context, IDatabaseStatementLoader statementLoader, IDatabaseImplementation databaseImplementation, DirectoryInfo pluginDirectory)
+        {
+            //ApplicationDiContainer.Build<PluginsEntityDao>(context, context.Implementation);
+            throw new NotImplementedException();
+        }
 
         public FileInfo? GetPluginFile(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
         {

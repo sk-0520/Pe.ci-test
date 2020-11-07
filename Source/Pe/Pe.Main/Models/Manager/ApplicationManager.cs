@@ -615,14 +615,29 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var pluginContextFactory = ApplicationDiContainer.Build<PluginContextFactory>();
             var environmentParameters = ApplicationDiContainer.Build<EnvironmentParameters>();
 
-            // プラグインディレクトリからプラグインDLL列挙
-            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
-
             // プラグイン情報取得
             var pluginStateItems = ApplicationDiContainer.Build<IMainDatabaseBarrier>().ReadData(c => {
                 var pluginsEntityDao = ApplicationDiContainer.Build<PluginsEntityDao>(c, c.Implementation);
                 return pluginsEntityDao.SelectePlguinStateData().ToList();
             });
+
+            // アンインストール対象を消しちゃう
+            var uninstallPlugins = pluginStateItems.Where(i => i.State == PluginState.Uninstall);
+            foreach(var uninstallPlugin in uninstallPlugins) {
+                // 毎度ロールバックが必要なのでループ内で処理
+                using(var context = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitWrite()) {
+                    var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
+                    try {
+                        PluginContainer.UninstallPlugin(uninstallPlugin, context, statementLoader, context.Implementation, environmentParameters.MachinePluginModuleDirectory);
+                        context.Commit();
+                    } catch(Exception ex) {
+                        Logger.LogError(ex, ex.Message);
+                    }
+                }
+            }
+
+            // プラグインディレクトリからプラグインDLL列挙
+            var pluginFiles = PluginContainer.GetPluginFiles(environmentParameters.MachinePluginModuleDirectory, environmentParameters.ApplicationConfiguration.Plugin.Extentions);
 
             FileInfo? testPluginFile = null;
             if(TestPluginDirectory != null) {
