@@ -28,6 +28,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         IllegalVersion,
 
         /// <summary>
+        /// アンインストール対象。
+        /// <para>次回起動時に該当プラグインは破棄する。</para>
+        /// </summary>
+        Uninstall,
+
+        /// <summary>
         /// なんかもうダメダメ。
         /// <para>プラグインの読み込み失敗時に発生するのでこの状態が状態として保存されることはない。</para>
         /// </summary>
