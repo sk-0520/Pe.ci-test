@@ -288,7 +288,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             {
                 foreach(var element in settingElement.PluginsSettingEditor.PluginItems) {
                     if(element.SupportedPreferences && element.StartedPreferences) {
-                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.PluginState.Name, element.PluginState.PluginId);
+                        logger.LogTrace("プラグイン処理設定完了: {0}({1})", element.PluginState.PluginName, element.PluginState.PluginId);
                         element.EndPreferences();
                     }
                 }
@@ -625,11 +625,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             var uninstallPlugins = pluginStateItems.Where(i => i.State == PluginState.Uninstall);
             foreach(var uninstallPlugin in uninstallPlugins) {
                 // 毎度ロールバックが必要なのでループ内で処理
-                using(var context = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitWrite()) {
+                using(var fileContext = ApplicationDiContainer.Build<IFileDatabaseBarrier>().WaitWrite())
+                using(var mainContext = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitWrite()) {
                     var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
                     try {
-                        PluginContainer.UninstallPlugin(uninstallPlugin, context, statementLoader, context.Implementation, environmentParameters.MachinePluginModuleDirectory);
-                        context.Commit();
+                        PluginContainer.UninstallPlugin(uninstallPlugin, new DatabaseContexts(mainContext, mainContext.Implementation), new DatabaseContexts(fileContext, fileContext.Implementation), statementLoader, environmentParameters.MachinePluginModuleDirectory);
+                        fileContext.Commit();
+                        mainContext.Commit();
                     } catch(Exception ex) {
                         Logger.LogError(ex, ex.Message);
                     }
@@ -680,7 +682,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
                     var pluginStateData = new PluginStateData() {
                         PluginId = pluginLoadStateItem.PluginId,
-                        Name = pluginLoadStateItem.PluginName,
+                        PluginName = pluginLoadStateItem.PluginName,
                         State = pluginLoadStateItem.LoadState
                     };
 

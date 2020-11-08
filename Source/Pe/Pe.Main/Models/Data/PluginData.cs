@@ -49,13 +49,13 @@ namespace ContentTypeTextNet.Pe.Main.Models.Data
         #endregion
     }
 
-    public class PluginStateData: DataBase
+    public class PluginStateData: DataBase, IPluginIdentifiers
     {
         #region property
 
         public Guid PluginId { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string PluginName { get; set; } = string.Empty;
         public PluginState State { get; set; }
 
         #endregion

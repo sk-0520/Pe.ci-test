@@ -67,6 +67,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                 var launcherItemIconsEntityDao = new LauncherItemIconsEntityDao(context, DatabaseStatementLoader, context.Implementation, LoggerFactory);
                 launcherItemIconsEntityDao.DeleteAllSizeImageBinary(launcherItemId);
 
+                //TODO: LauncherItemIconStatusEntityDao による状態破棄 実装漏れ
+
                 context.Commit();
             }
             using(var context = MainDatabaseBarrier.WaitWrite()) {

@@ -132,6 +132,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             return Context.Execute(statement, parameter) == 1;
         }
 
+        public int DeletePluginLauncherItemSettingsByPluginId(Guid pluginId)
+        {
+            var statement = LoadStatement();
+            var parameter = new {
+                PluginId = pluginId,
+            };
+
+            return Context.Execute(statement, parameter);
+        }
+
         #endregion
 
     }

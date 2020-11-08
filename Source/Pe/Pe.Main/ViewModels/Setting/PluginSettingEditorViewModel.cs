@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         IImageLoader ImageLoader { get; }
         IDispatcherWrapper DispatcherWrapper { get; }
 
-        public string PluginName => Model.PluginState.Name;
+        public string PluginName => Model.PluginState.PluginName;
         public string PluginVersion => Model.PluginVersion.ToString();
         public Guid PluginId => Model.PluginId;
         public string? PrimaryCategory => Model.Plugin?.PluginInformations.PluginCategory.PluginPrimaryCategory;
