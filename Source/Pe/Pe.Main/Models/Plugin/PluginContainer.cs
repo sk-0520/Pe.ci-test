@@ -64,11 +64,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         #region function
 
-        public void UninstallPlugin(IPluginIdentifiers pluginIdentifiers, IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseStatementLoader statementLoader, DirectoryInfo pluginDirectory)
+        private void UninstallPluginFiles(IPluginIdentifiers pluginIdentifiers)
         {
-            Logger.LogInformation("プラグインアンインストール: {0}", pluginIdentifiers);
-
-            // ファイル周り破棄
             var pluginDirManager = new PluginDirectoryManager(EnvironmentParameters);
             var dataDirItems = new[] {
                 new { Target = "一時", Directory = pluginDirManager.GetTemporaryDirectory(pluginIdentifiers) },
@@ -87,7 +84,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var moduleDirectory = pluginDirManager.GetModuleDirectory(pluginIdentifiers);
             moduleDirectory.Delete(true);
+        }
 
+        private void UninstallPluginPersistent(IPluginIdentifiers pluginIdentifiers, IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseStatementLoader statementLoader)
+        {
             // デカいデータ破棄
             var pluginValuesEntityDao = new PluginValuesEntityDao(fileContexts.Context, statementLoader, fileContexts.Implementation, LoggerFactory);
             pluginValuesEntityDao.DeletePluginValuesByPluginId(pluginIdentifiers.PluginId);
@@ -143,6 +143,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
             var pluginsEntityDao = new PluginsEntityDao(mainContexts.Context, statementLoader, mainContexts.Implementation, LoggerFactory);
             pluginsEntityDao.DeletePlugin(pluginIdentifiers.PluginId);
+        }
+
+        public void UninstallPlugin(IPluginIdentifiers pluginIdentifiers, IDatabaseContexts mainContexts, IDatabaseContexts fileContexts, IDatabaseStatementLoader statementLoader, DirectoryInfo pluginDirectory)
+        {
+            Logger.LogInformation("プラグインアンインストール: {0}", pluginIdentifiers);
+
+            UninstallPluginPersistent(pluginIdentifiers, mainContexts, fileContexts, statementLoader);
+            UninstallPluginFiles(pluginIdentifiers);
         }
 
         public FileInfo? GetPluginFile(DirectoryInfo pluginDirectory, string pluginName, IReadOnlyList<string> extensions)
