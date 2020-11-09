@@ -624,17 +624,19 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
             // アンインストール対象を消しちゃう
             var uninstallPlugins = pluginStateItems.Where(i => i.State == PluginState.Uninstall);
             foreach(var uninstallPlugin in uninstallPlugins) {
-                // 毎度ロールバックが必要なのでループ内で処理
-                using(var fileContext = ApplicationDiContainer.Build<IFileDatabaseBarrier>().WaitWrite())
-                using(var mainContext = ApplicationDiContainer.Build<IMainDatabaseBarrier>().WaitWrite()) {
-                    var statementLoader = ApplicationDiContainer.Build<IDatabaseStatementLoader>();
-                    try {
-                        PluginContainer.UninstallPlugin(uninstallPlugin, new DatabaseContexts(mainContext, mainContext.Implementation), new DatabaseContexts(fileContext, fileContext.Implementation), statementLoader, environmentParameters.MachinePluginModuleDirectory);
-                        fileContext.Commit();
-                        mainContext.Commit();
-                    } catch(Exception ex) {
-                        Logger.LogError(ex, ex.Message);
-                    }
+                // なんかが失敗したときに後続を続けたいので毎度ロールバックする
+                using var pack = PersistentHelper.WaitWritePack(
+                    ApplicationDiContainer.Build<IMainDatabaseBarrier>(),
+                    ApplicationDiContainer.Build<IFileDatabaseBarrier>(),
+                    ApplicationDiContainer.Build<ITemporaryDatabaseBarrier>(),
+                    DatabaseCommonStatus.CreateCurrentAccount()
+                );
+                try {
+                    var uninstaller = ApplicationDiContainer.Build<PluginUninstaller>(pack, environmentParameters.MachinePluginModuleDirectory);
+                    uninstaller.Uninstall(uninstallPlugin);
+                    pack.Commit();
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
                 }
             }
 
